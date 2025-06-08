@@ -114,7 +114,6 @@ local function archer_towers()
     tower_crossbow.attacks.list[3].fly_cooldown = 10
     tower_crossbow.attacks.list[3].range = 128
     tower_crossbow.attacks.list[3].range_inc = 32
-    tower_crossbow.attacks.list[3].excluded_templates = {}
     tower_crossbow.render.sprites[1].name = "terrain_specials_%04i"
     tower_crossbow.render.sprites[1].offset = vec_2(0, 7)
     tower_crossbow.render.sprites[2].name = "CossbowHunter_tower"

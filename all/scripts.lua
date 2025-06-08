@@ -2019,7 +2019,7 @@ function scripts.tower_barrack.update(this, store, script)
                             s.powers[pn].level = p.level
                         end
                     end
-
+                    s.unit.damage_factor = this.tower.damage_factor
                     queue_insert(store, s)
 
                     b.soldiers[i] = s

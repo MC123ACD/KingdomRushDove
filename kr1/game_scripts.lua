@@ -9,7 +9,30 @@ require("game_scripts_utils")
 require("hero_scripts")(scripts)
 require("tower_scripts")(scripts)
 -------------------------------------------
+scripts.mod_high_elven = {
+    insert = function(this, store, script)
+        local m = this.modifier
+        local target = store.entities[m.target_id]
 
+        if not target or not target.tower then
+            log.info("cannot insert mod_high_elven to entity %s - ", target.id, target.template_name)
+            return false
+        end
+        SU.insert_tower_damage_factor_buff(target, this.enhance_damage_factor + this.enhance_damage_factor_inc * m.level)
+
+        signal.emit("mod-applied", this, target)
+
+        return true
+    end,
+    remove = function(this, store, script)
+        local m = this.modifier
+        local target = store.entities[m.target_id]
+
+        SU.remove_tower_damage_factor_buff(target, this.enhance_damage_factor + this.enhance_damage_factor_inc * m.level)
+
+        return true
+    end
+}
 scripts.mod_crossbow_eagle = {}
 
 function scripts.mod_crossbow_eagle.insert(this, store, script)

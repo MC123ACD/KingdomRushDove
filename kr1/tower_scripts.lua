@@ -575,7 +575,6 @@ local function register_archer(scripts)
                             end)
                             local towers = table.filter(store.entities, function(_, e)
                                 return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
-                                           not table.contains(ea.excluded_templates, e.template_name) and
                                            U.is_inside_ellipse(e.pos, this.pos, eagle_range)
                             end)
 
@@ -1569,14 +1568,29 @@ local function register_mage(scripts)
             return o
         end,
         remove = function(this, store)
-            if this.sentinels then
-                for _, s in pairs(this.sentinels) do
-                    s.owner = nil
+            local mods = table.filter(store.entities, function(_, e)
+                return e.modifier and e.modifier.source_id == this.id and e.tower
+            end)
 
-                    queue_remove(store, s)
-                end
+            for _, m in pairs(mods) do
+                queue_remove(store, m)
             end
 
+            for _, s in pairs(this.sentinels) do
+                s.owner = nil
+                queue_remove(store, s)
+            end
+            return true
+        end,
+        insert = function(this, store)
+            for i = 1, this.max_sentinels do
+                local s = E:create_entity("high_elven_sentinel")
+                s.pos = V.vclone(this.pos)
+                queue_insert(store, s)
+                table.insert(this.sentinels, s)
+                s.owner = this
+                s.owner_idx = #this.sentinels
+            end
             return true
         end,
         update = function(this, store)
@@ -1587,7 +1601,6 @@ local function register_mage(scripts)
             local sa = this.attacks.list[3]
             local pow_t, pow_s = this.powers.timelapse, this.powers.sentinel
 
-            this.sentinels = {}
             ba.ts = store.tick_ts
 
             while true do
@@ -1600,23 +1613,33 @@ local function register_mage(scripts)
                     end
 
                     if pow_s.changed then
+                        pow_s.range = pow_s.range + pow_s.range_inc
                         pow_s.changed = nil
                     end
 
                     SU.tower_update_silenced_powers(store, this)
+                    if ready_to_use_power(pow_s, pow_s, store) then
+                        pow_s.ts = store.tick_ts
+                        local existing_mods = table.filter(store.entities, function(_, e)
+                            return e.modifier and e.template_name == "mod_high_elven" and e.modifier.level >= pow_s.level
+                        end)
+                        local busy_ids = table.map(existing_mods, function(k, v)
+                            return v.modifier.target_id
+                        end)
+                        local towers = table.filter(store.entities, function(_, e)
+                            return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
+                                       U.is_inside_ellipse(e.pos, this.pos, pow_s.range)
+                        end)
 
-                    if pow_s.level > 0 and not sa.silence_ts then
-                        for i = 1, pow_s.level - #this.sentinels do
-                            local s = E:create_entity("high_elven_sentinel")
-
-                            s.pos = V.vclone(this.pos)
-
-                            queue_insert(store, s)
-                            table.insert(this.sentinels, s)
-
-                            s.owner = this
-                            s.owner_idx = #this.sentinels
+                        for _, tower in pairs(towers) do
+                            local new_mod = E:create_entity("mod_high_elven")
+                            new_mod.modifier.level = pow_s.level
+                            new_mod.modifier.target_id = tower.id
+                            new_mod.modifier.source_id = this.id
+                            new_mod.pos = tower.pos
+                            queue_insert(store, new_mod)
                         end
+
                     end
 
                     if ready_to_use_power(pow_t, ta, store) then

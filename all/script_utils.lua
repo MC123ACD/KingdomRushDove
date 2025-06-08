@@ -3569,6 +3569,25 @@ local function remove_tower_cooldown_buff(target, cooldown_factor)
         end
     end
 end
+
+local function insert_tower_damage_factor_buff(target, damage_factor)
+    target.tower.damage_factor = target.tower.damage_factor * damage_factor
+    if target.barrack then
+        for _, s in pairs(target.barrack.soldiers) do
+            s.unit.damage_factor = s.unit.damage_factor * damage_factor
+        end
+    end
+end
+
+local function remove_tower_damage_factor_buff(target, damage_factor)
+    target.tower.damage_factor = target.tower.damage_factor / damage_factor
+    if target.barrack then
+        for _, s in pairs(target.barrack.soldiers) do
+            s.unit.damage_factor = s.unit.damage_factor / damage_factor
+        end
+    end
+end
+
 local SU = {
 	has_modifiers = U.has_modifiers,
 	ui_click_proxy_add = ui_click_proxy_add,
@@ -3668,6 +3687,8 @@ local SU = {
     insert_tower_cooldown_buff = insert_tower_cooldown_buff,
     remove_tower_range_buff = remove_tower_range_buff,
     remove_tower_cooldown_buff = remove_tower_cooldown_buff,
+    insert_tower_damage_factor_buff = insert_tower_damage_factor_buff,
+    remove_tower_damage_factor_buff = remove_tower_damage_factor_buff,
 }
 
 return SU

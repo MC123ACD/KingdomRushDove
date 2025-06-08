@@ -698,11 +698,14 @@ local function mage_towers()
     tt.powers.timelapse.target_count = {2, 3, 4}
     tt.powers.timelapse.enc_icon = 18
     tt.powers.sentinel = E:clone_c("power")
-    tt.powers.sentinel.attack_idx = 3
-    tt.powers.sentinel.max_level = 2
+    tt.powers.sentinel.max_level = 3
     tt.powers.sentinel.price_base = 250
-    tt.powers.sentinel.price_inc = 250
+    tt.powers.sentinel.price_inc = 100
+    tt.powers.sentinel.range = 120
+    tt.powers.sentinel.range_inc = 40
     tt.powers.sentinel.enc_icon = 19
+    tt.powers.sentinel.ts = 0
+    tt.powers.sentinel.cooldown = 0.5
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrains_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
@@ -729,6 +732,35 @@ local function mage_towers()
     tt.tween.props[1].sprite_id = 4
     tt.tween.props[1].ts = -10
     tt.sound_events.insert = "ElvesMageHighElvenTaunt"
+    tt.sentinels = {}
+    tt.max_sentinels = 2
+
+    local mod_high_elven = E:register_t("mod_high_elven", "modifier")
+    E:add_comps(mod_high_elven, "render", "tween")
+
+    mod_high_elven.enhance_damage_factor = 0.1
+    mod_high_elven.enhance_damage_factor_inc = 0.05
+    mod_high_elven.main_script.insert = scripts.mod_high_elven.insert
+    mod_high_elven.main_script.remove = scripts.mod_high_elven.remove
+    mod_high_elven.tween.remove = false
+    mod_high_elven.tween.props[1].name = "scale"
+    mod_high_elven.tween.props[1].loop = true
+    mod_high_elven.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(0.9, 0.9)}, {1, vec_2(1, 1)}}
+    mod_high_elven.render.sprites[1].name = "CossbowHunter_towerBuff"
+    mod_high_elven.render.sprites[1].animated = false
+    mod_high_elven.render.sprites[1].anchor.y = 0.21
+    mod_high_elven.render.sprites[1].z = Z_TOWER_BASES + 1
+    mod_high_elven.render.sprites[1].color = {40,0,255}
+
+    for i, p in ipairs({vec_2(22, 45), vec_2(40, 35), vec_2(58, 30), vec_2(77, 35), vec_2(95, 45)}) do
+        mod_high_elven.render.sprites[i + 1] = E:clone_c("sprite")
+        mod_high_elven.render.sprites[i + 1].prefix = "crossbow_eagle_buff"
+        mod_high_elven.render.sprites[i + 1].name = "idle"
+        mod_high_elven.render.sprites[i + 1].anchor.y = 0.21
+        mod_high_elven.render.sprites[i + 1].offset = vec_2(p.x - 58, p.y - 27)
+        mod_high_elven.render.sprites[i + 1].ts = math.random()
+        mod_high_elven.render.sprites[i + 1].color = {40,0,255}
+    end
 
     tt = E:register_t("high_elven_sentinel", "decal_scripted")
     E:add_comps(tt, "force_motion", "ranged", "tween")
@@ -778,8 +810,8 @@ local function mage_towers()
     tt = E:register_t("bolt_high_elven_weak", "bolt_elves")
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
-    tt.bullet.damage_max = 8
-    tt.bullet.damage_min = 4
+    tt.bullet.damage_max = 4
+    tt.bullet.damage_min = 2
     tt.bullet.hit_fx = "fx_bolt_high_elven_weak_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
     tt.bullet.pop = {"pop_mage"}
@@ -792,8 +824,8 @@ local function mage_towers()
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
     tt.bullet.align_with_trajectory = true
-    tt.bullet.damage_max = 54
-    tt.bullet.damage_min = 31
+    tt.bullet.damage_max = 27
+    tt.bullet.damage_min = 15
     tt.bullet.hit_fx = "fx_bolt_high_elven_strong_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
     tt.bullet.pop = {"pop_high_elven"}
@@ -810,8 +842,8 @@ local function mage_towers()
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].anchor = vec_2(0, 0.5)
     tt.bullet.mod = "mod_ray_high_elven_sentinel_hit"
-    tt.bullet.damage_min = 18
-    tt.bullet.damage_max = 35
+    tt.bullet.damage_min = 9
+    tt.bullet.damage_max = 16
     tt.bullet.damage_type = DAMAGE_MAGICAL
     tt.bullet.hit_time = fts(4)
     tt.sound_events.insert = "TowerHighMageSentinelShot"

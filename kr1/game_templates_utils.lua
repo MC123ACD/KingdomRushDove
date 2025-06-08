@@ -7,9 +7,6 @@ require("constants")
 IS_PHONE = KR_TARGET == "phone"
 IS_PHONE_OR_TABLET = KR_TARGET == "phone" or KR_TARGET == "tablet"
 IS_CONSOLE = KR_TARGET == "console"
-barrack_templates = {"tower_barrack_1", "tower_barrack_2", "tower_barrack_3", "tower_assassin", "tower_templar",
-                     "tower_paladin", "tower_barbarian", "tower_elf", "tower_barrack_amazonas", "tower_barrack_dwarf",
-                     "tower_barrack_pirates", "tower_barrack_mercenaries", "tower_blade", "tower_forest"}
 function vec_2(v1, v2)
     return {
         x = v1,
