@@ -1904,9 +1904,7 @@ tt = RT("mod_blackburn_stun", "mod_stun")
 tt.modifier.duration = 4
 tt.modifier.duration_heroes = 2
 tt = RT("mod_blackburn_tower", "modifier")
-
 AC(tt, "render", "tween", "main_script")
-
 tt.main_script.update = scripts.mod_blackburn_tower.update
 tt.modifier.duration = 4
 tt.render.sprites[1].draw_order = 10
@@ -1917,10 +1915,9 @@ tt.render.sprites[1].z = Z_OBJECTS
 tt.tween.remove = false
 tt.tween.disabled = true
 tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+
 tt = E:register_t("mod_veznan_tower", "modifier")
-
 E:add_comps(tt, "render", "ui")
-
 if IS_CONSOLE then
     E:add_comps(tt, "tween")
 end

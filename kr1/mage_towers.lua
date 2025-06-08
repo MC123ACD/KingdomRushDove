@@ -704,6 +704,7 @@ local function mage_towers()
     tt.powers.sentinel.price_inc = 200
     tt.powers.sentinel.range = 120
     tt.powers.sentinel.range_inc = 40
+    tt.powers.sentinel.max_range = 240
     tt.powers.sentinel.enc_icon = 19
     tt.powers.sentinel.ts = 0
     tt.powers.sentinel.cooldown = 0.5
@@ -736,32 +737,41 @@ local function mage_towers()
     tt.sentinels = {}
     tt.max_sentinels = 2
 
-    local mod_high_elven = E:register_t("mod_high_elven", "modifier")
-    E:add_comps(mod_high_elven, "render", "tween")
+    tt = E:register_t("mod_high_elven", "modifier")
+    E:add_comps(tt, "render", "tween")
+    tt.enhance_damage_factor = 0.1
+    tt.enhance_damage_factor_inc = 0.05
+    tt.main_script.insert = scripts.mod_high_elven.insert
+    tt.main_script.remove = scripts.mod_high_elven.remove
+    tt.render.sprites[1].draw_order = 10
+    tt.render.sprites[1].loop = true
+    tt.render.sprites[1].offset.y = 36
+    tt.render.sprites[1].name = "mod_blackburn_tower"
+    tt.render.sprites[1].z = Z_OBJECTS
+    tt.tween.remove = false
+    tt.tween.disabled = false
+    tt.tween.reverse = false
+    tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+    tt.render.sprites[1].color = {0, 255, 255}
+    -- tt.tween.remove = false
+    -- tt.tween.props[1].name = "scale"
+    -- tt.tween.props[1].loop = true
+    -- tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(0.9, 0.9)}, {1, vec_2(1, 1)}}
+    -- tt.render.sprites[1].name = "CossbowHunter_towerBuff"
+    -- tt.render.sprites[1].animated = false
+    -- tt.render.sprites[1].anchor.y = 0.21
+    -- tt.render.sprites[1].z = Z_TOWER_BASES + 1
+    -- tt.render.sprites[1].color = {40, 0, 255}
 
-    mod_high_elven.enhance_damage_factor = 0.1
-    mod_high_elven.enhance_damage_factor_inc = 0.05
-    mod_high_elven.main_script.insert = scripts.mod_high_elven.insert
-    mod_high_elven.main_script.remove = scripts.mod_high_elven.remove
-    mod_high_elven.tween.remove = false
-    mod_high_elven.tween.props[1].name = "scale"
-    mod_high_elven.tween.props[1].loop = true
-    mod_high_elven.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(0.9, 0.9)}, {1, vec_2(1, 1)}}
-    mod_high_elven.render.sprites[1].name = "CossbowHunter_towerBuff"
-    mod_high_elven.render.sprites[1].animated = false
-    mod_high_elven.render.sprites[1].anchor.y = 0.21
-    mod_high_elven.render.sprites[1].z = Z_TOWER_BASES + 1
-    mod_high_elven.render.sprites[1].color = {40, 0, 255}
-
-    for i, p in ipairs({vec_2(22, 45), vec_2(40, 35), vec_2(58, 30), vec_2(77, 35), vec_2(95, 45)}) do
-        mod_high_elven.render.sprites[i + 1] = E:clone_c("sprite")
-        mod_high_elven.render.sprites[i + 1].prefix = "crossbow_eagle_buff"
-        mod_high_elven.render.sprites[i + 1].name = "idle"
-        mod_high_elven.render.sprites[i + 1].anchor.y = 0.21
-        mod_high_elven.render.sprites[i + 1].offset = vec_2(p.x - 58, p.y - 27)
-        mod_high_elven.render.sprites[i + 1].ts = math.random()
-        mod_high_elven.render.sprites[i + 1].color = {40, 0, 255}
-    end
+    -- for i, p in ipairs({vec_2(22, 45), vec_2(40, 35), vec_2(58, 30), vec_2(77, 35), vec_2(95, 45)}) do
+    --     tt.render.sprites[i + 1] = E:clone_c("sprite")
+    --     tt.render.sprites[i + 1].prefix = "crossbow_eagle_buff"
+    --     tt.render.sprites[i + 1].name = "idle"
+    --     tt.render.sprites[i + 1].anchor.y = 0.21
+    --     tt.render.sprites[i + 1].offset = vec_2(p.x - 58, p.y - 27)
+    --     tt.render.sprites[i + 1].ts = math.random()
+    --     tt.render.sprites[i + 1].color = {40, 0, 255}
+    -- end
 
     local decal_high_elven_sentinel_preview = E:register_t("decal_high_elven_sentinel_preview", "decal_tween")
     decal_high_elven_sentinel_preview.render.sprites[1].name = "CrossbowHunterDecalDotted"

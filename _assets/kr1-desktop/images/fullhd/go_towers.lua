@@ -45901,7 +45901,439 @@ local kr1_data = {
 			8
 		},
 		alias = {}
-	}
+	},
+    CB_Boss_towerDebuff_0001 = {
+		a_name = "go_stage26-2.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			1825,
+			79,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0002 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			6,
+			894,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0003 = {
+		a_name = "go_stage26-2.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			9,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			1375,
+			79,
+			144,
+			124
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0004 = {
+		a_name = "go_stage26-2.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			9,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			1525,
+			79,
+			144,
+			124
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0005 = {
+		a_name = "go_stage26-2.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			9,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			1675,
+			79,
+			144,
+			124
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0006 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			322,
+			668,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0007 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			322,
+			795,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0008 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			6,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0009 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			133,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0010 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			260,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0011 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			387,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0012 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			514,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0013 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			641,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0014 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			768,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0015 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			472,
+			895,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0016 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			622,
+			6,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0017 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			622,
+			133,
+			144,
+			121
+		},
+		alias = {}
+	},
+	CB_Boss_towerDebuff_0018 = {
+		a_name = "go_stage26-3.png",
+		size = {
+			158,
+			140
+		},
+		trim = {
+			7,
+			12,
+			7,
+			7
+		},
+		a_size = {
+			2048,
+			1024
+		},
+		f_quad = {
+			622,
+			260,
+			144,
+			121
+		},
+		alias = {}
+	},
 }
 
 local scaleFactor = 0.7

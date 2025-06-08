@@ -1626,7 +1626,12 @@ local function register_mage(scripts)
                             table.insert(modded_ids, m.modifier.target_id)
                         end
 
-                        local range = pow_s.range + km.clamp(1, 3, pow_s.level + 1) * pow_s.range_inc
+                        local range
+                        if pow_s.level == 3 then
+                            range = pow_s.max_range
+                        else
+                            range = pow_s.range + pow_s.range_inc
+                        end
                         local targets = table.filter(store.entities, function(_, e)
                             return e ~= this and e.tower and not table.contains(modded_ids, e.id) and
                                        U.is_inside_ellipse(e.pos, this.pos, range)
