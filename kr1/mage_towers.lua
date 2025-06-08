@@ -701,7 +701,7 @@ local function mage_towers()
     tt.powers.sentinel = E:clone_c("power")
     tt.powers.sentinel.max_level = 3
     tt.powers.sentinel.price_base = 250
-    tt.powers.sentinel.price_inc = 100
+    tt.powers.sentinel.price_inc = 200
     tt.powers.sentinel.range = 120
     tt.powers.sentinel.range_inc = 40
     tt.powers.sentinel.enc_icon = 19
@@ -751,7 +751,7 @@ local function mage_towers()
     mod_high_elven.render.sprites[1].animated = false
     mod_high_elven.render.sprites[1].anchor.y = 0.21
     mod_high_elven.render.sprites[1].z = Z_TOWER_BASES + 1
-    mod_high_elven.render.sprites[1].color = {40,0,255}
+    mod_high_elven.render.sprites[1].color = {40, 0, 255}
 
     for i, p in ipairs({vec_2(22, 45), vec_2(40, 35), vec_2(58, 30), vec_2(77, 35), vec_2(95, 45)}) do
         mod_high_elven.render.sprites[i + 1] = E:clone_c("sprite")
@@ -760,8 +760,19 @@ local function mage_towers()
         mod_high_elven.render.sprites[i + 1].anchor.y = 0.21
         mod_high_elven.render.sprites[i + 1].offset = vec_2(p.x - 58, p.y - 27)
         mod_high_elven.render.sprites[i + 1].ts = math.random()
-        mod_high_elven.render.sprites[i + 1].color = {40,0,255}
+        mod_high_elven.render.sprites[i + 1].color = {40, 0, 255}
     end
+
+    local decal_high_elven_sentinel_preview = E:register_t("decal_high_elven_sentinel_preview", "decal_tween")
+    decal_high_elven_sentinel_preview.render.sprites[1].name = "CrossbowHunterDecalDotted"
+    decal_high_elven_sentinel_preview.render.sprites[1].animated = false
+    decal_high_elven_sentinel_preview.render.sprites[1].anchor = vec_2(0.5, 0.32)
+    decal_high_elven_sentinel_preview.render.sprites[1].offset.y = 0
+    decal_high_elven_sentinel_preview.render.sprites[1].color = {40, 0 , 255}
+    decal_high_elven_sentinel_preview.tween.remove = false
+    decal_high_elven_sentinel_preview.tween.props[1].name = "scale"
+    decal_high_elven_sentinel_preview.tween.props[1].loop = true
+    decal_high_elven_sentinel_preview.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.25, vec_2(1.15, 1.15)}, {0.5, vec_2(1, 1)}}
 
     tt = E:register_t("high_elven_sentinel", "decal_scripted")
     E:add_comps(tt, "force_motion", "ranged", "tween")

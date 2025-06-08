@@ -524,9 +524,8 @@ local function register_archer(scripts)
 
                         local range = ea.range + km.clamp(1, 3, pow_e.level + 1) * ea.range_inc
                         local targets = table.filter(store.entities, function(_, e)
-                            return
-                                e ~= this and e.tower  and
-                                    not table.contains(modded_ids, e.id) and U.is_inside_ellipse(e.pos, this.pos, range)
+                            return e ~= this and e.tower and not table.contains(modded_ids, e.id) and
+                                       U.is_inside_ellipse(e.pos, this.pos, range)
                         end)
 
                         for _, target in pairs(targets) do
@@ -1603,10 +1602,52 @@ local function register_mage(scripts)
 
             ba.ts = store.tick_ts
 
+            this.sentinel_previews = nil
+            local sentinel_previews_level
             while true do
                 if this.tower.blocked then
                     coroutine.yield()
                 else
+                    if this.ui.hover_active and this.ui.args == "sentinel" and
+                        (not this.sentinel_previews or sentinel_previews_level ~= pow_s.level) then
+                        if this.sentinel_previews then
+                            for _, decal in pairs(this.sentinel_previews) do
+                                queue_remove(store, decal)
+                            end
+                        end
+                        this.sentinel_previews = {}
+                        sentinel_previews_level = pow_s.level
+                        local mods = table.filter(store.entities, function(_, e)
+                            return e.modifier and e.modifier.source_id == this.id
+                        end)
+                        local modded_ids = {}
+
+                        for _, m in pairs(mods) do
+                            table.insert(modded_ids, m.modifier.target_id)
+                        end
+
+                        local range = pow_s.range + km.clamp(1, 3, pow_s.level + 1) * pow_s.range_inc
+                        local targets = table.filter(store.entities, function(_, e)
+                            return e ~= this and e.tower and not table.contains(modded_ids, e.id) and
+                                       U.is_inside_ellipse(e.pos, this.pos, range)
+                        end)
+
+                        for _, target in pairs(targets) do
+                            local decal = E:create_entity("decal_high_elven_sentinel_preview")
+
+                            decal.pos = target.pos
+                            decal.render.sprites[1].ts = store.tick_ts
+
+                            queue_insert(store, decal)
+                            table.insert(this.sentinel_previews, decal)
+                        end
+                    elseif this.sentinel_previews and (not this.ui.hover_active or this.ui.args ~= "sentinel") then
+                        for _, decal in pairs(this.sentinel_previews) do
+                            queue_remove(store, decal)
+                        end
+
+                        this.sentinel_previews = nil
+                    end
                     if pow_t.changed and pow_t.level == 1 then
                         pow_t.changed = nil
                         ta.ts = store.tick_ts
@@ -1621,7 +1662,8 @@ local function register_mage(scripts)
                     if ready_to_use_power(pow_s, pow_s, store) then
                         pow_s.ts = store.tick_ts
                         local existing_mods = table.filter(store.entities, function(_, e)
-                            return e.modifier and e.template_name == "mod_high_elven" and e.modifier.level >= pow_s.level
+                            return e.modifier and e.template_name == "mod_high_elven" and e.modifier.level >=
+                                       pow_s.level
                         end)
                         local busy_ids = table.map(existing_mods, function(k, v)
                             return v.modifier.target_id
