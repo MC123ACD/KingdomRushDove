@@ -525,7 +525,7 @@ local function register_archer(scripts)
                         local range = ea.range + km.clamp(1, 3, pow_e.level + 1) * ea.range_inc
                         local targets = table.filter(store.entities, function(_, e)
                             return
-                                e ~= this and e.tower and not table.contains(ea.excluded_templates, e.template_name) and
+                                e ~= this and e.tower  and
                                     not table.contains(modded_ids, e.id) and U.is_inside_ellipse(e.pos, this.pos, range)
                         end)
 
