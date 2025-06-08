@@ -1569,7 +1569,7 @@ local function register_mage(scripts)
         end,
         remove = function(this, store)
             local mods = table.filter(store.entities, function(_, e)
-                return e.modifier and e.modifier.source_id == this.id and e.tower
+                return e.modifier and e.modifier.source_id == this.id and e.template_name == "mod_high_elven"
             end)
 
             for _, m in pairs(mods) do

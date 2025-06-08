@@ -2104,7 +2104,7 @@ function scripts.tower_barrack_mercenaries.update(this, store, script)
                 s.pos = V.v(V.add(this.pos.x, this.pos.y, b.respawn_offset.x, b.respawn_offset.y))
                 s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(i, b)
                 s.nav_rally.new = true
-
+                s.unit.damage_factor = this.tower.damage_factor
                 if this.powers then
                     for pn, p in pairs(this.powers) do
                         -- 技能更新逻辑在 soldier_barrack.insert 中处理
@@ -2150,7 +2150,7 @@ function scripts.tower_barrack_mercenaries.update(this, store, script)
                     s.powers[pn].level = p.level
                 end
             end
-
+            s.unit.damage_factor = this.tower.damage_factor
             queue_insert(store, s)
 
             for i, ss in ipairs(b.soldiers) do

@@ -669,6 +669,7 @@ local function mage_towers()
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0008"
     tt.main_script.update = scripts.tower_high_elven.update
     tt.main_script.remove = scripts.tower_high_elven.remove
+    tt.main_script.insert = scripts.tower_high_elven.insert
     tt.tower.type = "high_elven"
     tt.tower.level = 1
     tt.tower.price = 275
