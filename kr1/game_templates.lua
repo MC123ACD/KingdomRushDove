@@ -1504,6 +1504,12 @@ tt = RT("mod_arcane_shatter", "mod_damage")
 tt.damage_min = 0.035
 tt.damage_max = 0.035
 tt.damage_type = bor(DAMAGE_ARMOR, DAMAGE_NO_SHIELD_HIT)
+
+tt = RT("mod_arcane_shatter_little", "mod_damage")
+tt.damage_min = 0.02
+tt.damage_max = 0.02
+tt.damage_type = bor(DAMAGE_ARMOR, DAMAGE_NO_SHIELD_HIT)
+
 tt = RT("mod_slow_curse", "mod_slow")
 tt.main_script.insert = scripts.mod_slow_curse.insert
 tt.modifier.excluded_templates = {"enemy_demon_cerberus"}

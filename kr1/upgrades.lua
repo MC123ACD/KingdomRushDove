@@ -115,7 +115,8 @@ upgrades.list = {
 		icon = DP(18, 11)
 	},
 	mage_arcane_shatter = {
-		mod = "mod_arcane_shatter",
+		mod_normal = "mod_arcane_shatter",
+        mod_little = "mod_arcane_shatter_little",
 		class = "mages",
 		price = 1,
 		level = 2,
@@ -589,10 +590,14 @@ function upgrades:patch_templates(max_level)
 
 	if u then
 		for _, n in pairs(self:bolts()) do
-			local mods = {
-				u.mod
-			}
+
 			local b = T(n).bullet
+            local mods
+            if b.damage_max >= 50 then
+                mods = {u.mod_normal}
+            else
+                mods = {u.mod_little}
+            end
 
 			if b.mod then
 				table.insert(mods, b.mod)

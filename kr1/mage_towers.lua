@@ -674,7 +674,7 @@ local function mage_towers()
     tt.tower.level = 1
     tt.tower.price = 275
     tt.tower.size = TOWER_SIZE_LARGE
-    tt.attacks.range = 200
+    tt.attacks.range = 210
     tt.attacks.list[1] = E:clone_c("bullet_attack")
     tt.attacks.list[1].animation = "shoot"
     tt.attacks.list[1].bullet = "bolt_high_elven_strong"
@@ -813,7 +813,7 @@ local function mage_towers()
     tt = E:register_t("bolt_high_elven_weak", "bolt_elves")
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
-    tt.bullet.damage_max = 4
+    tt.bullet.damage_max = 3
     tt.bullet.damage_min = 2
     tt.bullet.hit_fx = "fx_bolt_high_elven_weak_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
@@ -827,8 +827,8 @@ local function mage_towers()
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
     tt.bullet.align_with_trajectory = true
-    tt.bullet.damage_max = 27
-    tt.bullet.damage_min = 15
+    tt.bullet.damage_max = 25
+    tt.bullet.damage_min = 14
     tt.bullet.hit_fx = "fx_bolt_high_elven_strong_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
     tt.bullet.pop = {"pop_high_elven"}
