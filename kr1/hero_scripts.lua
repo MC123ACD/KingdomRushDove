@@ -7518,6 +7518,8 @@ return function(scripts)
         else
             this.armor_reduction = this.armor_reduction + 0.5 * this.magic_armor_reduction
         end
+        this.magic_armor_reduction = this.magic_armor_reduction * (1 - target.health.armor_resilience)
+        this.armor_reduction = this.armor_reduction * (1 - target.health.magic_armor_resilience)
         SU.armor_dec(target, this.armor_reduction)
         SU.magic_armor_dec(target, this.magic_armor_reduction)
 
@@ -11809,7 +11811,7 @@ return function(scripts)
                 -- block empty
             end
 
-            if ready_to_use_skill(this.ultimate, store)then
+            if ready_to_use_skill(this.ultimate, store) then
                 local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, true)
 
                 if target and target.pos and valid_land_node_nearby(target.pos) then
