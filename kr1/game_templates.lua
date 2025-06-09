@@ -407,9 +407,7 @@ tt.ui.click_rect = r(-40, -30, 80, 90)
 tt.ui.has_nav_mesh = true
 
 tt = RT("soldier_elemental", "soldier_militia")
-
 AC(tt, "melee")
-
 image_y = 64
 anchor_y = 0.15384615384615385
 tt.health.armor = 0.3
@@ -419,6 +417,7 @@ tt.health.hp_max = 550
 tt.health.hp_inc = 100
 tt.health_bar.offset = vec_2(0, 55)
 tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+tt.health.instakill_resistance = 0.3
 tt.info.i18n_key = "SOLDIER_ELEMENTAL"
 tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0017" or "info_portraits_sc_0017"
 tt.info.random_name_count = nil
@@ -836,17 +835,7 @@ tt.bullet.pop = nil
 tt.render.sprites[1].name = "demon_flareon_flare"
 tt.render.sprites[1].animated = true
 
-tt = RT("bolt_sorcerer", "bolt")
-tt.bullet.damage_max = 60
-tt.bullet.damage_min = 25
-tt.bullet.hit_fx = "fx_bolt_sorcerer_hit"
-tt.bullet.max_speed = 600
-tt.bullet.mods = {"mod_sorcerer_curse_dps", "mod_sorcerer_curse_armor"}
-tt.bullet.particles_name = "ps_bolt_sorcerer"
-tt.bullet.pop = {"pop_zap_sorcerer"}
-tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
-tt.render.sprites[1].prefix = "bolt_sorcerer"
-tt.sound_events.insert = "BoltSorcererSound"
+
 tt = RT("bolt_necromancer", "bolt_enemy")
 tt.bullet.align_with_trajectory = true
 tt.bullet.damage_max = 40
@@ -1513,6 +1502,7 @@ tt.damage_type = bor(DAMAGE_ARMOR, DAMAGE_NO_SHIELD_HIT)
 tt = RT("mod_slow_curse", "mod_slow")
 tt.main_script.insert = scripts.mod_slow_curse.insert
 tt.modifier.excluded_templates = {"enemy_demon_cerberus"}
+
 tt = RT("mod_ranger_poison", "mod_poison")
 tt.modifier.duration = 3
 tt.dps.damage_max = 0
@@ -1548,50 +1538,6 @@ tt.main_script.dequeue = scripts.mod_thorn.dequeue
 tt.main_script.insert = scripts.mod_thorn.insert
 tt.main_script.update = scripts.mod_thorn.update
 tt.main_script.remove = scripts.mod_thorn.remove
-
-tt = RT("mod_sorcerer_curse_armor", "modifier")
-AC(tt, "armor_buff")
-tt.modifier.duration = 8
-tt.modifier.vis_flags = F_MOD
-tt.armor_buff.magic = false
-tt.armor_buff.factor = -0.4
-tt.armor_buff.cycle_time = 1e+99
-tt.main_script.insert = scripts.mod_armor_buff.insert
-tt.main_script.remove = scripts.mod_armor_buff.remove
-tt.main_script.update = scripts.mod_armor_buff.update
-
-tt = RT("mod_sorcerer_curse_dps", "modifier")
-AC(tt, "render", "dps")
-tt.modifier.duration = 8
-tt.modifier.vis_flags = F_MOD
-tt.dps.damage_min = 12
-tt.dps.damage_max = 12
-tt.dps.damage_every = 1.25
-tt.dps.damage_type = DAMAGE_TRUE
-tt.main_script.insert = scripts.mod_dps.insert
-tt.main_script.update = scripts.mod_dps.update
-tt.render.sprites[1].name = "small"
-tt.render.sprites[1].prefix = "mod_sorcerer_curse"
-tt.render.sprites[1].size_names = {"small", "medium", "large"}
-tt.render.sprites[1].size_scales = {vec_1(1), vec_1(1), vec_1(1.5)}
-tt.render.sprites[1].sort_y_offset = -3
-tt = RT("mod_polymorph_sorcerer", "mod_polymorph")
-tt.modifier.use_mod_offset = true
-tt.modifier.remove_banned = true
-tt.modifier.ban_types = {MOD_TYPE_FAST}
-tt.polymorph.custom_entity_names.default = "enemy_sheep_ground"
-tt.polymorph.custom_entity_names.enemy_demon_imp = "enemy_sheep_fly"
-tt.polymorph.custom_entity_names.enemy_gargoyle = "enemy_sheep_fly"
-tt.polymorph.custom_entity_names.enemy_rocketeer = "enemy_sheep_fly"
-tt.polymorph.custom_entity_names.enemy_witch = "enemy_sheep_fly"
-tt.polymorph.hit_fx_sizes = {"fx_mod_polymorph_sorcerer_small", "fx_mod_polymorph_sorcerer_big",
-                             "fx_mod_polymorph_sorcerer_big"}
-tt.polymorph.pop = {"pop_puff"}
-tt.polymorph.transfer_gold_factor = 1
-tt.polymorph.transfer_health_factor = 0.5
-tt.polymorph.transfer_lives_cost_factor = 1
-tt.polymorph.transfer_speed_factor = 1.5
-
 
 tt = RT("mod_ray_sunray_hit", "modifier")
 

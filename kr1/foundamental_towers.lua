@@ -458,13 +458,11 @@ local function foundamental_towers()
     tt.bullet.damage_min = 30
 
     tt = E:register_t("mod_rock_slow", "mod_slow")
-    tt.modifier.duration = 1
+    tt.modifier.duration = 0.75
 
 
     tt = E:register_t("soldier_barrack_1", "soldier_militia")
-
     E:add_comps(tt, "revive")
-
     image_y = 46
     anchor_y = 11 / image_y
     tt.health.armor = 0.3

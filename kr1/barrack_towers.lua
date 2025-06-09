@@ -642,6 +642,7 @@ local function barrack_towers()
     tt.health.armor = 0
     tt.health.dead_lifetime = 10
     tt.health.hp_max = 200
+    tt.health.instakill_resistance = 0.5
     tt.health_bar.offset = vec_2(0, 32.86)
     tt.info.portrait = IS_PHONE and "portraits_sc_0005" or "kr2_info_portraits_soldiers_0005"
     tt.info.random_name_count = 20

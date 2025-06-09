@@ -201,6 +201,62 @@ local function mage_towers()
     tt.attacks.list[2].vis_bans = bor(F_BOSS)
     tt.attacks.list[2].vis_flags = bor(F_MOD, F_RANGED, F_POLYMORPH)
 
+    tt = RT("bolt_sorcerer", "bolt")
+    tt.bullet.damage_max = 60
+    tt.bullet.damage_min = 25
+    tt.bullet.hit_fx = "fx_bolt_sorcerer_hit"
+    tt.bullet.max_speed = 600
+    tt.bullet.mods = {"mod_sorcerer_curse_dps", "mod_sorcerer_curse_armor"}
+    tt.bullet.particles_name = "ps_bolt_sorcerer"
+    tt.bullet.pop = {"pop_zap_sorcerer"}
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].prefix = "bolt_sorcerer"
+    tt.sound_events.insert = "BoltSorcererSound"
+
+    tt = RT("mod_sorcerer_curse_armor", "modifier")
+    AC(tt, "armor_buff")
+    tt.modifier.duration = 9
+    tt.modifier.vis_flags = F_MOD
+    tt.armor_buff.magic = false
+    tt.armor_buff.factor = -0.4
+    tt.armor_buff.cycle_time = 1e+99
+    tt.main_script.insert = scripts.mod_armor_buff.insert
+    tt.main_script.remove = scripts.mod_armor_buff.remove
+    tt.main_script.update = scripts.mod_armor_buff.update
+
+    tt = RT("mod_sorcerer_curse_dps", "modifier")
+    AC(tt, "render", "dps")
+    tt.modifier.duration = 9
+    tt.modifier.vis_flags = F_MOD
+    tt.dps.damage_min = 12
+    tt.dps.damage_max = 12
+    tt.dps.damage_every = 1.25
+    tt.dps.damage_type = DAMAGE_TRUE
+    tt.main_script.insert = scripts.mod_dps.insert
+    tt.main_script.update = scripts.mod_dps.update
+    tt.render.sprites[1].name = "small"
+    tt.render.sprites[1].prefix = "mod_sorcerer_curse"
+    tt.render.sprites[1].size_names = {"small", "medium", "large"}
+    tt.render.sprites[1].size_scales = {vec_1(1), vec_1(1), vec_1(1.5)}
+    tt.render.sprites[1].sort_y_offset = -3
+
+    tt = RT("mod_polymorph_sorcerer", "mod_polymorph")
+    tt.modifier.use_mod_offset = true
+    tt.modifier.remove_banned = true
+    tt.modifier.ban_types = {MOD_TYPE_FAST}
+    tt.polymorph.custom_entity_names.default = "enemy_sheep_ground"
+    tt.polymorph.custom_entity_names.enemy_demon_imp = "enemy_sheep_fly"
+    tt.polymorph.custom_entity_names.enemy_gargoyle = "enemy_sheep_fly"
+    tt.polymorph.custom_entity_names.enemy_rocketeer = "enemy_sheep_fly"
+    tt.polymorph.custom_entity_names.enemy_witch = "enemy_sheep_fly"
+    tt.polymorph.hit_fx_sizes = {"fx_mod_polymorph_sorcerer_small", "fx_mod_polymorph_sorcerer_big",
+                                 "fx_mod_polymorph_sorcerer_big"}
+    tt.polymorph.pop = {"pop_puff"}
+    tt.polymorph.transfer_gold_factor = 1
+    tt.polymorph.transfer_health_factor = 0.5
+    tt.polymorph.transfer_lives_cost_factor = 1
+    tt.polymorph.transfer_speed_factor = 1.5
+
     local tower_archmage = E:register_t("tower_archmage", "tower")
     E:add_comps(tower_archmage, "attacks", "powers")
     tower_archmage.tower.type = "archmage"
@@ -274,7 +330,7 @@ local function mage_towers()
     tt.bullet.pop = {"pop_zapow"}
     tt.bullet.store = nil
     tt.bullet.store_sort_y_offset = -65
-    tt.bullet.acceleration_factor = 0.1
+    tt.bullet.acceleration_factor = 0.3
     tt.bullet.particles_name = "ps_bolt_archmage_trail"
     tt.sound_events.travel = "ArchmageBoltTravel"
     tt.sound_events.summon = "ArchmageBoltSummon"
@@ -759,11 +815,12 @@ local function mage_towers()
     decal_high_elven_sentinel_preview.render.sprites[1].animated = false
     decal_high_elven_sentinel_preview.render.sprites[1].anchor = vec_2(0.5, 0.32)
     decal_high_elven_sentinel_preview.render.sprites[1].offset.y = 0
-    decal_high_elven_sentinel_preview.render.sprites[1].color = {40, 0 , 255}
+    decal_high_elven_sentinel_preview.render.sprites[1].color = {40, 0, 255}
     decal_high_elven_sentinel_preview.tween.remove = false
     decal_high_elven_sentinel_preview.tween.props[1].name = "scale"
     decal_high_elven_sentinel_preview.tween.props[1].loop = true
-    decal_high_elven_sentinel_preview.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.25, vec_2(1.15, 1.15)}, {0.5, vec_2(1, 1)}}
+    decal_high_elven_sentinel_preview.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.25, vec_2(1.15, 1.15)},
+                                                             {0.5, vec_2(1, 1)}}
 
     tt = E:register_t("high_elven_sentinel", "decal_scripted")
     E:add_comps(tt, "force_motion", "ranged", "tween")
