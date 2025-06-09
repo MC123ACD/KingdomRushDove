@@ -5358,14 +5358,14 @@ function scripts.mod_armor_buff.insert(this, store, script)
         if buff.factor then
             inc = buff.factor * target.health.magic_armor
         end
-
+        inc = (1 - target.health.armor_resilience) * inc
         SU.magic_armor_inc(target, inc)
     end
     local function inc_armor()
         if buff.factor then
             inc = buff.factor * target.health.armor
         end
-
+        inc = (1 - target.health.armor_resilience) * inc
         SU.armor_inc(target, inc)
     end
 
