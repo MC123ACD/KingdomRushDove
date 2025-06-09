@@ -315,7 +315,7 @@ local function mage_towers()
     twister.render.sprites[1].prefix = "twister"
     twister.render.sprites[1].anchor.y = 0.14
     twister.aura.vis_flags = bor(F_RANGED, F_TWISTER)
-    twister.aura.vis_bans = bor(F_CLIFF, F_BOSS)
+    twister.aura.vis_bans = bor(F_CLIFF, F_BOSS, F_WATER)
 
     local mod_twister = E:register_t("mod_twister", "mod_slow")
     mod_twister.modifier.duration = 1
@@ -753,25 +753,6 @@ local function mage_towers()
     tt.tween.reverse = false
     tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
     tt.render.sprites[1].color = {0, 255, 255}
-    -- tt.tween.remove = false
-    -- tt.tween.props[1].name = "scale"
-    -- tt.tween.props[1].loop = true
-    -- tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(0.9, 0.9)}, {1, vec_2(1, 1)}}
-    -- tt.render.sprites[1].name = "CossbowHunter_towerBuff"
-    -- tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].anchor.y = 0.21
-    -- tt.render.sprites[1].z = Z_TOWER_BASES + 1
-    -- tt.render.sprites[1].color = {40, 0, 255}
-
-    -- for i, p in ipairs({vec_2(22, 45), vec_2(40, 35), vec_2(58, 30), vec_2(77, 35), vec_2(95, 45)}) do
-    --     tt.render.sprites[i + 1] = E:clone_c("sprite")
-    --     tt.render.sprites[i + 1].prefix = "crossbow_eagle_buff"
-    --     tt.render.sprites[i + 1].name = "idle"
-    --     tt.render.sprites[i + 1].anchor.y = 0.21
-    --     tt.render.sprites[i + 1].offset = vec_2(p.x - 58, p.y - 27)
-    --     tt.render.sprites[i + 1].ts = math.random()
-    --     tt.render.sprites[i + 1].color = {40, 0, 255}
-    -- end
 
     local decal_high_elven_sentinel_preview = E:register_t("decal_high_elven_sentinel_preview", "decal_tween")
     decal_high_elven_sentinel_preview.render.sprites[1].name = "CrossbowHunterDecalDotted"

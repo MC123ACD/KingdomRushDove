@@ -2162,7 +2162,9 @@ local function register_mage(scripts)
             local ta = this.attacks.list[2]
             local pow_b = this.powers.blast
             local pow_t = this.powers.twister
-
+            local blast_template = E:get_template("bolt_blast")
+            local blast_range = blast_template.bullet.damage_radius
+            local blast_range_inc = blast_template.bullet.damage_radius_inc
             ba.ts = store.tick_ts
             local function prepare_bullet(start_offset, i)
                 if #this._stored_bullets >= ba.max_stored_bullets then
@@ -2180,7 +2182,7 @@ local function register_mage(scripts)
                     local blast = E:create_entity(ba.payload_bullet)
                     blast.bullet.level = pow_b.level
                     blast.bullet.damage_factor = this.tower.damage_factor
-                    b.bullet.hit_payload = blast
+                    b.bullet.payload = blast
                 end
                 table.insert(this._stored_bullets, b)
                 queue_insert(store, b)
@@ -2195,6 +2197,10 @@ local function register_mage(scripts)
                         if pow_t.level == 1 then
                             ta.ts = store.tick_ts
                         end
+                    end
+                    if pow_b.changed then
+                        pow_b.changed = nil
+                        blast_range = blast_range + blast_range_inc
                     end
 
                     SU.tower_update_silenced_powers(store, this)
@@ -2245,8 +2251,13 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store) then
-                        local target = U.find_biggest_enemy(store.entities, tpos(this), 0, a.range, false, ba.vis_flags,
-                            ba.vis_bans)
+                        local target
+                        if pow_b.level > 0 then
+                            target = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range, nil, ba.vis_flags, ba.vis_bans, nil, nil, blast_range)
+                        else
+                            target = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, nil, ba.vis_flags,
+                                ba.vis_bans)
+                        end
 
                         if not target and (not ba.max_stored_bullets or ba.max_stored_bullets == #this._stored_bullets) then
                             -- block empty
