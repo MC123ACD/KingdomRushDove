@@ -308,7 +308,7 @@ local function mage_towers()
     vec_2(3, 81), vec_2(-8.5, 58), vec_2(13.5, 56), vec_2(-20, 69.5), vec_2(24, 68.5)}
     tower_archmage.attacks.list[1].payload_chance = 0.4
     tower_archmage.attacks.list[1].payload_bullet = "bolt_blast"
-    tower_archmage.attacks.list[1].repetition_rate = 0.25
+    tower_archmage.attacks.list[1].repetition_rate = 0.27
     tower_archmage.attacks.list[2] = E:clone_c("bullet_attack")
     tower_archmage.attacks.list[2].vis_flags = bor(F_RANGED, F_TWISTER)
     tower_archmage.attacks.list[2].vis_bans = bor(F_FLYING, F_CLIFF, F_BOSS)
