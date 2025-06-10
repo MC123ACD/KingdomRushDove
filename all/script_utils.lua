@@ -174,6 +174,8 @@ local function stun_dec(this, remove_all)
 		end
 	end
 end
+
+-- 请保证除了英雄，没有任何单位的 raw_armor 会变化
 -- 更新 armor，由 armor_buff 和 raw_armor 计算得出
 local function update_armor(this)
     if not this.health.raw_armor then

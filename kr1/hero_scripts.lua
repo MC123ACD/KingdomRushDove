@@ -17,6 +17,14 @@ end
 local function update_regen(this)
     this.regen.health = math.ceil(this.health.hp_max * GS.soldier_regen_factor)
 end
+local function inc_armor_by_skill(this, amount)
+    this.health.raw_armor = this.health.raw_armor + amount
+    this.health.armor = km.clamp(0,1,this.health.armor+amount)
+end
+local function inc_magic_armor_by_skill(this, amount)
+    this.health.raw_magic_armor = this.health.raw_magic_armor + amount
+    this.health.magic_armor = km.clamp(0,1,this.health.magic_armor+amount)
+end
 local function level_up_basic(this)
     local hl = this.hero.level
     local ls = this.hero.level_stats
@@ -2973,11 +2981,13 @@ return function(scripts)
                 for _, n in pairs(this.remove_mods) do
                     SU.remove_modifiers(store, target, n)
                 end
+                factor = factor * (1-target.health.armor_resilience)
 
                 if target.health.armor > 0 then
-                    target.health.armor = km.clamp(0, 1, target.health.armor * factor)
-                elseif target.health.magic_armor > 0 then
-                    target.health.magic_armor = km.clamp(0, 1, target.health.magic_armor * factor)
+                    SU.armor_dec(target, target.health.armor * factor)
+                end
+                if target.health.magic_armor > 0 then
+                    SU.magic_armor_dec(target, target.health.magic_armor * factor)
                 end
 
                 this.pos.x, this.pos.y = target.pos.x, target.pos.y
@@ -3680,7 +3690,7 @@ return function(scripts)
 
             this.health.hp_max = this.health.hp_max + this.divinehealth_extra_hp
             update_regen(this)
-            this.health.armor = km.clamp(0, 1, this.health.armor + this.blessedarmor_extra)
+            inc_armor_by_skill(this, this.blessedarmor_extra)
             this.health.hp = this.health.hp_max
         end,
         update = function(this, store)
@@ -5133,8 +5143,8 @@ return function(scripts)
             local gain = E:get_template("mod_vampiress_gain").gain
             this.health.hp_max = this.health.hp_max + this.gain_count * gain.hp
             update_regen(this)
-            this.health.armor = this.health.armor + this.gain_count * gain.armor
-            this.health.magic_armor = this.health.magic_armor + this.gain_count * gain.magic_armor
+            inc_armor_by_skill(this, this.gain_count * gain.armor)
+            inc_magic_armor_by_skill(this, this.gain_count * gain.magic_armor)
 
             local a = this.melee.attacks[1]
             a.damage_min = ls.melee_damage_min[hl] + this.gain_count * gain.damage
