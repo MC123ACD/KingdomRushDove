@@ -571,7 +571,7 @@ tt.editor.overrides = {
     ["health.hp"] = 250
 }
 tt = RT("re_farmer", "soldier_militia")
-AC(tt, "reinforcement", "tween")
+AC(tt, "reinforcement", "tween", "nav_grid")
 image_y = 44
 anchor_y = 0.1590909090909091
 tt.cooldown = 10
