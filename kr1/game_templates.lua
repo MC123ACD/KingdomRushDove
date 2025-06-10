@@ -571,17 +571,16 @@ tt.editor.overrides = {
     ["health.hp"] = 250
 }
 tt = RT("re_farmer", "soldier_militia")
-
 AC(tt, "reinforcement", "tween")
-
 image_y = 44
 anchor_y = 0.1590909090909091
 tt.cooldown = 10
 tt.health.armor = 0
 tt.health.hp_max = 30
 tt.health_bar.offset = vec_2(0, ady(32))
-tt.info.fn = scripts.soldier_reinforcement.get_info
+-- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait_idxs = {15, 16, 14}
+tt.controable = true
 tt.main_script.insert = scripts.soldier_reinforcement.insert
 tt.main_script.update = scripts.soldier_reinforcement.update
 tt.melee.attacks[1].cooldown = 0.9

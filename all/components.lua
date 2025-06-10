@@ -60,6 +60,8 @@ health.death_ts = 0
 health.instakill_resistance = 0
 health.armor_resilience = 0
 
+-- controable: 可操控
+
 local health_bar = E:register_c("health_bar")
 
 health_bar.offset = v(0, 35)

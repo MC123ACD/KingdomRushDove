@@ -1173,6 +1173,12 @@ function scripts.soldier_reinforcement.update(this, store, script)
         else
             SU.soldier_courage_upgrade(store, this)
 
+            while this.nav_rally.new do
+                if SU.y_soldier_new_rally(store, this) then
+                    goto label_34_1
+                end
+            end
+
             if this.melee then
                 brk, stam = SU.y_soldier_melee_block_and_attacks(store, this)
 

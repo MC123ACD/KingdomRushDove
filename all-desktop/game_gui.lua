@@ -1376,6 +1376,8 @@ function game_gui:select_entity(e)
 	elseif e.hero then
 		self:set_mode(GUI_MODE_RALLY_HERO)
 		self:select_hero(e.id)
+    elseif e.controable then
+        self:set_mode(GUI_MODE_RALLY_CONTROABLE)
 	end
 
 	if game_gui.bag_button then
@@ -6496,7 +6498,7 @@ function PickView:on_down(button, x, y)
 			else
 				game_gui:show_invalid_point_cross(x, y)
 			end
-		elseif game_gui.mode == GUI_MODE_RALLY_HERO then
+		elseif game_gui.mode == GUI_MODE_RALLY_HERO or game_gui.mode == GUI_MODE_RALLY_CONTROABLE then
 			local e = game_gui.selected_entity
 
 			log.debug("set rally point for hero %s to %s,%s", e, wx, sy)

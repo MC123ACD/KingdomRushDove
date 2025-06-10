@@ -39,7 +39,7 @@ function get_attack_ready(attack, store)
 end
 
 function enemy_is_silent_target(e)
-    return (band(e.vis.flags, F_SPELLCASTER) ~= 0 or e.ranged or e.timed_attacks) and e.enemy.can_do_magic
+    return (band(e.vis.flags, F_SPELLCASTER) ~= 0 or e.ranged or e.timed_attacks or e.auras or e.death_spawns) and e.enemy.can_do_magic
 end
 
 function fts(v)

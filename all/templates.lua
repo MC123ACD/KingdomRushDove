@@ -1,5 +1,4 @@
 ﻿-- chunkname: @./all/templates.lua
-
 local bit = require("bit")
 local bor = bit.bor
 local band = bit.band
@@ -22,41 +21,41 @@ local IS_KR2 = KR_GAME == "kr2"
 local IS_KR3 = KR_GAME == "kr3"
 
 local function v(v1, v2)
-	return {
-		x = v1,
-		y = v2
-	}
+    return {
+        x = v1,
+        y = v2
+    }
 end
 
 local function vv(v1)
-	return {
-		x = v1,
-		y = v1
-	}
+    return {
+        x = v1,
+        y = v1
+    }
 end
 
 local function r(x, y, w, h)
-	return {
-		pos = v(x, y),
-		size = v(w, h)
-	}
+    return {
+        pos = v(x, y),
+        size = v(w, h)
+    }
 end
 
 local function fts(v)
-	return v / FPS
+    return v / FPS
 end
 
 local function ady(v)
-	return v - anchor_y * image_y
+    return v - anchor_y * image_y
 end
 
 local function np(pi, spi, ni)
-	return {
-		dir = 1,
-		pi = pi,
-		spi = spi,
-		ni = ni
-	}
+    return {
+        dir = 1,
+        pi = pi,
+        spi = spi,
+        ni = ni
+    }
 end
 
 local damage = E:register_t("damage", E:get_component("damage"))
@@ -87,21 +86,8 @@ E:add_comps(tt, "editor")
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].z = Z_DECALS
 tt.render.sprites[1].scale = v(1, 1)
-tt.editor.props = {
-	{
-		"render.sprites[1].name",
-		PT_STRING
-	},
-	{
-		"render.sprites[1].scale",
-		PT_COORDS
-	},
-	{
-		"render.sprites[1].r",
-		PT_NUMBER,
-		math.pi / 180
-	}
-}
+tt.editor.props = {{"render.sprites[1].name", PT_STRING}, {"render.sprites[1].scale", PT_COORDS},
+                   {"render.sprites[1].r", PT_NUMBER, math.pi / 180}}
 tt = E:register_t("decal_loop", "decal")
 
 E:add_comps(tt, "editor")
@@ -109,21 +95,8 @@ E:add_comps(tt, "editor")
 tt.render.sprites[1].random_ts = 1
 tt.render.sprites[1].z = Z_DECALS
 tt.render.sprites[1].scale = v(1, 1)
-tt.editor.props = {
-	{
-		"render.sprites[1].name",
-		PT_STRING
-	},
-	{
-		"render.sprites[1].scale",
-		PT_COORDS
-	},
-	{
-		"render.sprites[1].r",
-		PT_NUMBER,
-		math.pi / 180
-	}
-}
+tt.editor.props = {{"render.sprites[1].name", PT_STRING}, {"render.sprites[1].scale", PT_COORDS},
+                   {"render.sprites[1].r", PT_NUMBER, math.pi / 180}}
 tt = E:register_t("decal_delayed_play", "decal")
 
 E:add_comps(tt, "main_script", "delayed_play", "editor")
@@ -131,28 +104,11 @@ E:add_comps(tt, "main_script", "delayed_play", "editor")
 tt.render.sprites[1].loop = false
 tt.render.sprites[1].scale = v(1, 1)
 tt.main_script.update = scripts.delayed_play.update
-tt.editor.props = {
-	{
-		"render.sprites[1].r",
-		PT_NUMBER,
-		math.pi / 180
-	},
-	{
-		"render.sprites[1].scale",
-		PT_COORDS
-	},
-	{
-		"delayed_play.min_delay",
-		PT_NUMBER
-	},
-	{
-		"delayed_play.max_delay",
-		PT_NUMBER
-	}
-}
+tt.editor.props = {{"render.sprites[1].r", PT_NUMBER, math.pi / 180}, {"render.sprites[1].scale", PT_COORDS},
+                   {"delayed_play.min_delay", PT_NUMBER}, {"delayed_play.max_delay", PT_NUMBER}}
 tt.editor.overrides = {
-	["render.sprites[1].hidden"] = false,
-	["render.sprites[1].loop"] = true
+    ["render.sprites[1].hidden"] = false,
+    ["render.sprites[1].loop"] = true
 }
 tt = E:register_t("decal_delayed_click_play", "decal")
 
@@ -192,38 +148,15 @@ E:add_comps(tt, "editor")
 
 tt.render.sprites[1].animated = false
 tt.pos = v(REF_W / 2, REF_H / 2)
-tt.editor.props = {
-	{
-		"render.sprites[1].name",
-		PT_STRING
-	},
-	{
-		"render.sprites[1].z",
-		PT_NUMBER,
-		1
-	},
-	{
-		"render.sprites[1].sort_y",
-		PT_NUMBER,
-		1
-	}
-}
+tt.editor.props = {{"render.sprites[1].name", PT_STRING}, {"render.sprites[1].z", PT_NUMBER, 1},
+                   {"render.sprites[1].sort_y", PT_NUMBER, 1}}
 tt = E:register_t("decal_defend_point", "decal_tween")
 
 E:add_comps(tt, "main_script", "editor")
 
 tt.main_script.insert = scripts.decal_defend_point.insert
 tt.tween.remove = false
-tt.tween.props[1].keys = {
-	{
-		2,
-		255
-	},
-	{
-		5,
-		0
-	}
-}
+tt.tween.props[1].keys = {{2, 255}, {5, 0}}
 tt.tween.props[1].sprite_id = 2
 tt.render.sprites[1].name = "defendFlag_0069"
 tt.render.sprites[1].animated = false
@@ -233,24 +166,14 @@ tt.render.sprites[2].name = "defendFlag_0060"
 tt.render.sprites[2].animated = false
 tt.render.sprites[2].z = Z_DECALS
 tt.editor.exit_id = 1
-tt.editor.props = {
-	{
-		"editor.exit_id",
-		PT_NUMBER
-	}
-}
+tt.editor.props = {{"editor.exit_id", PT_NUMBER}}
 
 local tt = E:register_t("decal_defense_flag", "decal")
 
 E:add_comps(tt, "editor")
 
 tt.editor.tag = 0
-tt.editor.props = {
-	{
-		"editor.tag",
-		PT_NUMBER
-	}
-}
+tt.editor.props = {{"editor.tag", PT_NUMBER}}
 tt.render.sprites[1].name = "DefenseFlag"
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].anchor = v(0.5, 0.17)
@@ -262,16 +185,7 @@ tt.render.sprites[1].anchor = v(0.5, 0.12962962962962962)
 
 local decal_bomb_crater = E:register_t("decal_bomb_crater", "decal_tween")
 
-decal_bomb_crater.tween.props[1].keys = {
-	{
-		1,
-		255
-	},
-	{
-		2.5,
-		0
-	}
-}
+decal_bomb_crater.tween.props[1].keys = {{1, 255}, {2.5, 0}}
 decal_bomb_crater.render.sprites[1].name = "decal_bomb_crater"
 decal_bomb_crater.render.sprites[1].animated = false
 tt = E:register_t("decal_ground_hit", "decal_timed")
@@ -305,20 +219,8 @@ tt.main_script.remove = scripts.clickable_hover_controller.remove
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].z = Z_TOWER_BASES - 1
 tt.render.sprites[1].draw_order = -1
-tt.tween.props[1].keys = {
-	{
-		0,
-		HOVER_PULSE_ALPHA_MAX_INGAME
-	},
-	{
-		HOVER_PULSE_PERIOD / 2,
-		HOVER_PULSE_ALPHA_MIN_INGAME
-	},
-	{
-		HOVER_PULSE_PERIOD,
-		HOVER_PULSE_ALPHA_MAX_INGAME
-	}
-}
+tt.tween.props[1].keys = {{0, HOVER_PULSE_ALPHA_MAX_INGAME}, {HOVER_PULSE_PERIOD / 2, HOVER_PULSE_ALPHA_MIN_INGAME},
+                          {HOVER_PULSE_PERIOD, HOVER_PULSE_ALPHA_MAX_INGAME}}
 tt.tween.props[1].loop = true
 tt.tween.remove = false
 tt.target = nil
@@ -367,10 +269,7 @@ arrow.bullet.miss_decal = "decal_arrow"
 arrow.bullet.miss_fx_water = "fx_splash_small"
 arrow.bullet.flight_time = fts(22)
 arrow.bullet.damage_type = DAMAGE_PHYSICAL
-arrow.bullet.pop = {
-	"pop_shunt",
-	"pop_oof"
-}
+arrow.bullet.pop = {"pop_shunt", "pop_oof"}
 arrow.bullet.pop_chance = 1
 arrow.bullet.pop_conds = DR_KILL
 arrow.render.sprites[1].name = "arrow"
@@ -394,9 +293,7 @@ shotgun.main_script.insert = scripts.shotgun.insert
 shotgun.main_script.update = scripts.shotgun.update
 shotgun.render.sprites[1].name = "bullet"
 shotgun.render.sprites[1].animated = false
-shotgun.bullet.pop = {
-	"pop_aack"
-}
+shotgun.bullet.pop = {"pop_aack"}
 shotgun.bullet.pop_chance = 1
 shotgun.bullet.pop_conds = DR_KILL
 shotgun.bullet.max_track_distance = REF_H / 6
@@ -415,9 +312,7 @@ bomb.bullet.damage_type = DAMAGE_EXPLOSION
 bomb.bullet.damage_min = 9
 bomb.bullet.damage_max = 17
 bomb.bullet.damage_radius = 62.400000000000006
-bomb.bullet.pop = {
-	"pop_kboom"
-}
+bomb.bullet.pop = {"pop_kboom"}
 bomb.bullet.damage_flags = F_AREA
 bomb.bullet.hide_radius = 8
 bomb.render.sprites[1].name = "bombs_0001"
@@ -453,9 +348,7 @@ tt.bullet.max_speed = 300
 tt.bullet.max_track_distance = REF_H / 6
 tt.bullet.damage_type = DAMAGE_MAGICAL
 tt.bullet.hit_fx = "fx_bolt_hit"
-tt.bullet.pop = {
-	"pop_zap"
-}
+tt.bullet.pop = {"pop_zap"}
 tt.bullet.pop_conds = DR_KILL
 tt.sound_events.insert = "BoltSound"
 tt = E:register_t("bolt_enemy", "bolt")
@@ -479,26 +372,13 @@ E:add_comps(fx_fade, "pos", "render", "tween")
 
 fx_fade.render.sprites[1].loop = false
 fx_fade.render.sprites[1].z = Z_EFFECTS
-fx_fade.tween.props[1].keys = {
-	{
-		0.5,
-		255
-	},
-	{
-		1.5,
-		0
-	}
-}
+fx_fade.tween.props[1].keys = {{0.5, 255}, {1.5, 0}}
 
 local fx_unit_explode = E:register_t("fx_unit_explode", "fx")
 
 fx_unit_explode.render.sprites[1].prefix = "explode"
 fx_unit_explode.render.sprites[1].name = "small"
-fx_unit_explode.render.sprites[1].size_names = {
-	"small",
-	"big",
-	"big"
-}
+fx_unit_explode.render.sprites[1].size_names = {"small", "big", "big"}
 fx_unit_explode.render.sprites[1].anchor.y = 0.22
 fx_unit_explode.render.sprites[1].z = Z_OBJECTS
 fx_unit_explode.render.sprites[1].draw_order = 1
@@ -515,11 +395,7 @@ local fx_enemy_desintegrate = E:register_t("fx_enemy_desintegrate", "fx_fade")
 fx_enemy_desintegrate.render.sprites[1].prefix = "desintegrate_enemy"
 fx_enemy_desintegrate.render.sprites[1].name = "small"
 fx_enemy_desintegrate.render.sprites[1].anchor.y = 0.22
-fx_enemy_desintegrate.render.sprites[1].size_names = {
-	"small",
-	"small",
-	"big"
-}
+fx_enemy_desintegrate.render.sprites[1].size_names = {"small", "small", "big"}
 fx_enemy_desintegrate.render.sprites[1].draw_order = 1
 fx_enemy_desintegrate.render.sprites[1].z = Z_OBJECTS
 
@@ -536,26 +412,13 @@ local fx_spider_explode = E:register_t("fx_spider_explode", "fx")
 fx_spider_explode.render.sprites[1].prefix = "spider_explode"
 fx_spider_explode.render.sprites[1].name = "small"
 fx_spider_explode.render.sprites[1].offset = v(0, 12)
-fx_spider_explode.render.sprites[1].size_names = {
-	"small",
-	"small",
-	"big"
-}
+fx_spider_explode.render.sprites[1].size_names = {"small", "small", "big"}
 fx_spider_explode.render.sprites[1].draw_order = 1
 fx_spider_explode.render.sprites[1].z = Z_OBJECTS
 
 local decal_blood_pool = E:register_t("decal_blood_pool", "decal_tween")
 
-decal_blood_pool.tween.props[1].keys = {
-	{
-		1,
-		255
-	},
-	{
-		5,
-		0
-	}
-}
+decal_blood_pool.tween.props[1].keys = {{1, 255}, {5, 0}}
 decal_blood_pool.render.sprites[1].prefix = "blood_pool"
 decal_blood_pool.render.sprites[1].name = "red"
 decal_blood_pool.render.sprites[1].z = Z_DECALS
@@ -564,11 +427,7 @@ local fx_bleeding = E:register_t("fx_bleeding", "fx")
 
 fx_bleeding.render.sprites[1].prefix = "bleeding"
 fx_bleeding.render.sprites[1].name = "big_red"
-fx_bleeding.render.sprites[1].size_names = {
-	"small",
-	"big",
-	"big"
-}
+fx_bleeding.render.sprites[1].size_names = {"small", "big", "big"}
 fx_bleeding.render.sprites[1].use_blood_color = true
 fx_bleeding.render.sprites[1].z = Z_OBJECTS
 fx_bleeding.render.sprites[1].draw_order = 20
@@ -626,11 +485,7 @@ local fx_enemy_splash = E:register_t("fx_enemy_splash", "fx")
 
 fx_enemy_splash.render.sprites[1].prefix = "enemy_water_splash"
 fx_enemy_splash.render.sprites[1].name = "small"
-fx_enemy_splash.render.sprites[1].size_names = {
-	"small",
-	"small",
-	"big"
-}
+fx_enemy_splash.render.sprites[1].size_names = {"small", "small", "big"}
 fx_enemy_splash.render.sprites[1].anchor.y = 0.23684210526315788
 fx_enemy_splash.render.sprites[1].z = Z_OBJECTS
 fx_enemy_splash.render.sprites[1].sort_y_offset = -8
@@ -664,20 +519,7 @@ fx_coin_jump.render.sprites[1].name = "fx_coin_jump"
 fx_coin_jump.render.sprites[1].z = Z_BULLETS
 fx_coin_jump.render.sprites[1].offset.y = 40
 fx_coin_jump.tween.props[1].name = "alpha"
-fx_coin_jump.tween.props[1].keys = {
-	{
-		0,
-		255
-	},
-	{
-		0.5,
-		255
-	},
-	{
-		0.8,
-		0
-	}
-}
+fx_coin_jump.tween.props[1].keys = {{0, 255}, {0.5, 255}, {0.8, 0}}
 fx_coin_jump.sound_events.insert = "AssassinGold"
 tt = E:register_t("fx_ground_hit", "fx")
 tt.render.sprites[1].name = "ground_hit_smoke"
@@ -687,14 +529,8 @@ tt.main_script.update = scripts.fx_coin_shower.update
 tt.coin_count = 10
 tt.coin_delay = fts(5)
 tt.coin_fx = "fx_coin_jump"
-tt.coin_tween_time = {
-	fts(7),
-	fts(10)
-}
-tt.coin_tween_x_offset = {
-	13,
-	25
-}
+tt.coin_tween_time = {fts(7), fts(10)}
+tt.coin_tween_x_offset = {13, 25}
 
 local modifier = E:register_t("modifier")
 
@@ -727,11 +563,7 @@ mod_poison.modifier.duration = 5
 mod_poison.modifier.vis_flags = F_POISON
 mod_poison.modifier.type = MOD_TYPE_POISON
 mod_poison.render.sprites[1].prefix = "poison"
-mod_poison.render.sprites[1].size_names = {
-	"small",
-	"big",
-	"big"
-}
+mod_poison.render.sprites[1].size_names = {"small", "big", "big"}
 mod_poison.render.sprites[1].name = "small"
 mod_poison.render.sprites[1].draw_order = 2
 mod_poison.dps.damage_min = 3
@@ -781,11 +613,7 @@ mod_stun.main_script.remove = scripts.mod_stun.remove
 mod_stun.modifier.duration = 2
 mod_stun.modifier.type = MOD_TYPE_STUN
 mod_stun.render.sprites[1].prefix = "stun"
-mod_stun.render.sprites[1].size_names = {
-	"small",
-	"big",
-	"big"
-}
+mod_stun.render.sprites[1].size_names = {"small", "big", "big"}
 mod_stun.render.sprites[1].name = "small"
 mod_stun.render.sprites[1].draw_order = 20
 
@@ -800,11 +628,7 @@ mod_lava.dps.damage_max = 1
 mod_lava.dps.damage_inc = 3
 mod_lava.dps.damage_type = DAMAGE_TRUE
 mod_lava.dps.damage_every = 0.2
-mod_lava.render.sprites[1].size_names = {
-	"small",
-	"medium",
-	"large"
-}
+mod_lava.render.sprites[1].size_names = {"small", "medium", "large"}
 mod_lava.render.sprites[1].prefix = "fire"
 mod_lava.render.sprites[1].name = "small"
 mod_lava.render.sprites[1].draw_order = 2
@@ -848,12 +672,7 @@ tt.freeze_decal_name = "decal_freeze_enemy"
 tt = E:register_t("decal_freeze_enemy", "decal")
 tt.shader = "p_tint"
 tt.shader_args = {
-	tint_color = {
-		0.6235294117647059,
-		0.9176470588235294,
-		1,
-		1
-	}
+    tint_color = {0.6235294117647059, 0.9176470588235294, 1, 1}
 }
 tt = E:register_t("mod_polymorph", "modifier")
 
@@ -897,26 +716,11 @@ local ps_power_fireball = E:register_t("ps_power_fireball", "particle_system")
 ps_power_fireball.particle_system.name = "fireball_particle"
 ps_power_fireball.particle_system.animated = true
 ps_power_fireball.particle_system.loop = false
-ps_power_fireball.particle_system.particle_lifetime = {
-	0.25,
-	0.35
-}
-ps_power_fireball.particle_system.alphas = {
-	255,
-	0
-}
-ps_power_fireball.particle_system.scales_x = {
-	1,
-	2.5
-}
-ps_power_fireball.particle_system.scales_y = {
-	1,
-	2.5
-}
-ps_power_fireball.particle_system.scale_var = {
-	0.4,
-	0.9
-}
+ps_power_fireball.particle_system.particle_lifetime = {0.25, 0.35}
+ps_power_fireball.particle_system.alphas = {255, 0}
+ps_power_fireball.particle_system.scales_x = {1, 2.5}
+ps_power_fireball.particle_system.scales_y = {1, 2.5}
+ps_power_fireball.particle_system.scale_var = {0.4, 0.9}
 ps_power_fireball.particle_system.scale_same_aspect = false
 ps_power_fireball.particle_system.emit_spread = math.pi
 ps_power_fireball.particle_system.emission_rate = 60
@@ -925,26 +729,11 @@ local ps_water_trail = E:register_t("ps_water_trail", "particle_system")
 
 ps_water_trail.particle_system.name = "UnderwaterParticle2"
 ps_water_trail.particle_system.animated = false
-ps_water_trail.particle_system.particle_lifetime = {
-	0.3,
-	1.2
-}
-ps_water_trail.particle_system.alphas = {
-	255,
-	10
-}
-ps_water_trail.particle_system.scales_x = {
-	1,
-	0.05
-}
-ps_water_trail.particle_system.scales_y = {
-	1,
-	0.05
-}
-ps_water_trail.particle_system.scale_var = {
-	0.9,
-	1.1
-}
+ps_water_trail.particle_system.particle_lifetime = {0.3, 1.2}
+ps_water_trail.particle_system.alphas = {255, 10}
+ps_water_trail.particle_system.scales_x = {1, 0.05}
+ps_water_trail.particle_system.scales_y = {1, 0.05}
+ps_water_trail.particle_system.scale_var = {0.9, 1.1}
 ps_water_trail.particle_system.emission_rate = 30
 ps_water_trail.particle_system.z = Z_OBJECTS
 tt = E:register_t("ps_missile")
@@ -953,26 +742,11 @@ E:add_comps(tt, "pos", "particle_system")
 
 tt.particle_system.name = "particle_smokelet"
 tt.particle_system.animated = false
-tt.particle_system.particle_lifetime = {
-	1.6,
-	1.8
-}
-tt.particle_system.alphas = {
-	255,
-	0
-}
-tt.particle_system.scales_x = {
-	1,
-	3
-}
-tt.particle_system.scales_y = {
-	1,
-	3
-}
-tt.particle_system.scale_var = {
-	0.4,
-	0.95
-}
+tt.particle_system.particle_lifetime = {1.6, 1.8}
+tt.particle_system.alphas = {255, 0}
+tt.particle_system.scales_x = {1, 3}
+tt.particle_system.scales_y = {1, 3}
+tt.particle_system.scale_var = {0.4, 0.95}
 tt.particle_system.scale_same_aspect = false
 tt.particle_system.emit_spread = math.pi
 tt.particle_system.emission_rate = 30
@@ -986,32 +760,8 @@ tt.render.sprites[1].z = Z_EFFECTS
 tt.render.sprites[1].hidden = features.pops_hidden
 tt.tween.remove = true
 tt.tween.props[1].name = "scale"
-tt.tween.props[1].keys = {
-	{
-		0,
-		v(0.75, 0.75)
-	},
-	{
-		0.1,
-		v(1.2, 1.2)
-	},
-	{
-		0.2,
-		v(1, 1)
-	},
-	{
-		0.3,
-		v(1.1, 1.1)
-	},
-	{
-		0.4,
-		v(1, 1)
-	},
-	{
-		0.9,
-		v(1, 1)
-	}
-}
+tt.tween.props[1].keys = {{0, v(0.75, 0.75)}, {0.1, v(1.2, 1.2)}, {0.2, v(1, 1)}, {0.3, v(1.1, 1.1)}, {0.4, v(1, 1)},
+                          {0.9, v(1, 1)}}
 tt = E:register_t("pop_aack", "pop")
 tt.render.sprites[1].name = "pop_0015"
 tt = E:register_t("pop_bzzt", "pop")
@@ -1061,7 +811,6 @@ tt.render.sprites[1].name = "pop_0017"
 tt = E:register_t("editor_wave_flag")
 
 E:add_comps(tt, "pos", "editor", "editor_script", "main_script", "render")
-
 tt.editor.path_id = 1
 tt.editor.r = 0
 tt.editor.len = 240
@@ -1078,25 +827,10 @@ tt.render.sprites[3]._width = 128
 tt.render.sprites[3].z = tt.render.sprites[1].z - 1
 tt.main_script.insert = scripts.editor_wave_flag.insert
 tt.editor_script.update = scripts.editor_wave_flag.editor_update
-tt.editor.props = {
-	{
-		"editor.path_id",
-		PT_NUMBER
-	},
-	{
-		"editor.r",
-		PT_NUMBER,
-		math.pi / 180
-	},
-	{
-		"editor.len",
-		PT_NUMBER
-	}
-}
+tt.editor.props = {{"editor.path_id", PT_NUMBER}, {"editor.r", PT_NUMBER, math.pi / 180}, {"editor.len", PT_NUMBER}}
+
 tt = E:register_t("editor_spawner_arrow")
-
 E:add_comps(tt, "pos", "render", "editor")
-
 tt.editor.scaffold = true
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].name = "editor_square_blue"
@@ -1109,24 +843,21 @@ tt.render.sprites[3] = E:clone_c("sprite")
 tt.render.sprites[3].animated = false
 tt.render.sprites[3].name = "editor_triangle_blue"
 tt.line_image_width = 128
+
 tt = E:register_t("editor_shape_square_blue")
-
 E:add_comps(tt, "pos", "render", "editor")
-
 tt.editor.scaffold = true
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].name = "editor_square_blue"
+
 tt = E:register_t("editor_shape_triangle_blue")
-
 E:add_comps(tt, "pos", "render", "editor")
-
 tt.editor.scaffold = true
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].name = "editor_triangle_blue"
+
 tt = E:register_t("editor_rally_point")
-
 E:add_comps(tt, "pos", "editor", "editor_script", "render")
-
 tt.editor.scaffold = true
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].name = "rally_feedback_0002"
@@ -1138,10 +869,9 @@ tt.tower_id = nil
 tt.image_width = 128
 tt.editor_script.update = scripts.editor_rally_point.update
 tt.editor_script.remove = scripts.editor_rally_point.remove
+
 tt = E:register_t("tower_build")
-
 E:add_comps(tt, "pos", "tower", "main_script", "render", "tween", "sound_events", "ui")
-
 tt.tower.type = "build_animation"
 tt.tower.can_be_mod = false
 tt.main_script.update = scripts.tower_build.update
@@ -1164,16 +894,7 @@ tt.render.sprites[4].name = "buildbar"
 tt.render.sprites[4].offset = v(-21, 50)
 tt.render.sprites[4].anchor = v(0, 0.5)
 tt.tween.props[1].name = "scale"
-tt.tween.props[1].keys = {
-	{
-		0,
-		v(0, 1)
-	},
-	{
-		0.8,
-		v(1, 1)
-	}
-}
+tt.tween.props[1].keys = {{0, v(0, 1)}, {0.8, v(1, 1)}}
 tt.tween.props[1].sprite_id = 4
 tt.tween.remove = false
 tt.ui.can_click = false
@@ -1181,37 +902,15 @@ tt.ui.can_select = false
 tt.sound_events.insert = "GUITowerBuilding"
 
 local tower = E:register_t("tower")
-
 E:add_comps(tower, "tower", "pos", "render", "main_script", "ui", "info", "sound_events", "editor", "editor_script")
-
 tower.tower.level = 1
 tower.render.sprites[1].z = Z_TOWER_BASES
 tower.ui.click_rect = r(-40, -12, 80, 70)
 tower.ui.has_nav_mesh = true
 tower.info.fn = scripts.tower_common.get_info
 tower.sound_events.sell = "GUITowerSell"
-tower.editor.props = {
-	{
-		"tower.terrain_style",
-		PT_NUMBER
-	},
-	{
-		"tower.default_rally_pos",
-		PT_COORDS
-	},
-	{
-		"tower.holder_id",
-		PT_STRING
-	},
-	{
-		"ui.nav_mesh_id",
-		PT_STRING
-	},
-	{
-		"editor.game_mode",
-		PT_NUMBER
-	}
-}
+tower.editor.props = {{"tower.terrain_style", PT_NUMBER}, {"tower.default_rally_pos", PT_COORDS},
+                      {"tower.holder_id", PT_STRING}, {"ui.nav_mesh_id", PT_STRING}, {"editor.game_mode", PT_NUMBER}}
 tower.editor_script.insert = scripts.editor_tower.insert
 tower.editor_script.remove = scripts.editor_tower.remove
 
@@ -1222,16 +921,15 @@ E:add_comps(unit, "unit", "pos", "heading", "health", "health_bar", "render", "u
 unit.ui.click_rect = IS_PHONE_OR_TABLET and r(-20, -5, 40, 40) or r(-15, 0, 30, 30)
 
 local soldier = E:register_t("soldier", "unit")
-
-E:add_comps(soldier, "soldier", "motion", "nav_rally", "main_script", "vis", "regen", "idle_flip", "sound_events", "info")
+E:add_comps(soldier, "soldier", "motion", "nav_rally", "main_script", "vis", "regen", "idle_flip", "sound_events",
+    "info")
 
 soldier.vis.flags = F_FRIEND
 soldier.sound_events.death_by_explosion = "DeathEplosion"
 soldier.damage_buff = 0
+
 tt = E:register_t("soldier_militia", "soldier")
-
 E:add_comps(tt, "melee")
-
 image_y = 52
 anchor_y = 0.17
 tt.health.dead_lifetime = 10
@@ -1241,7 +939,8 @@ tt.health_bar.type = HEALTH_BAR_SIZE_SMALL
 tt.idle_flip.chance = 0.4
 tt.idle_flip.cooldown = 5
 tt.info.fn = scripts.soldier_barrack.get_info
-tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0001" or IS_KR1 and "info_portraits_sc_0001" or "info_portraits_soldiers_0001"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0001" or IS_KR1 and "info_portraits_sc_0001" or
+                       "info_portraits_soldiers_0001"
 tt.info.random_name_count = 40
 tt.info.random_name_format = "SOLDIER_RANDOM_%i_NAME"
 tt.main_script.insert = scripts.soldier_barrack.insert
@@ -1257,32 +956,31 @@ tt.melee.attacks[1].vis_flags = F_BLOCK
 tt.melee.range = 60
 tt.motion.max_speed = 75
 tt.regen.cooldown = 1
--- tt.regen.health = 5
 tt.render.sprites[1] = E:clone_c("sprite")
 tt.render.sprites[1].anchor.y = anchor_y
 tt.render.sprites[1].angles = {}
-tt.render.sprites[1].angles.walk = {
-	"running"
-}
+tt.render.sprites[1].angles.walk = {"running"}
 tt.render.sprites[1].prefix = "soldiermilitia"
 tt.soldier.melee_slot_offset = v(5, 0)
 tt.ui.click_rect = IS_PHONE_OR_TABLET and r(-20, -5, 40, 40) or r(-10, -2, 20, 25)
 tt.unit.hit_offset = v(0, 12)
 tt.unit.marker_offset = v(0, ady(8))
 tt.unit.mod_offset = v(0, ady(21))
+
 tt = E:register_t("soldier_footmen", "soldier_militia")
-tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0002" or IS_KR1 and "info_portraits_sc_0002" or "info_portraits_soldiers_0002"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0002" or IS_KR1 and "info_portraits_sc_0002" or
+                       "info_portraits_soldiers_0002"
 tt.render.sprites[1].prefix = "soldierfootmen"
 tt.health.hp_max = 100
 tt.health.armor = 0.15
--- tt.regen.health = 7
 tt.melee.attacks[1].cooldown = 1 + fts(11)
 tt.melee.attacks[1].damage_min = 3
 tt.melee.attacks[1].damage_max = 4
+
 tt = E:register_t("soldier_knight", "soldier_militia")
-tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0003" or IS_KR1 and "info_portraits_sc_0003" or "info_portraits_soldiers_0003"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0003" or IS_KR1 and "info_portraits_sc_0003" or
+                       "info_portraits_soldiers_0003"
 tt.render.sprites[1].prefix = "soldierknight"
--- tt.regen.health = 10
 tt.health.hp_max = 150
 tt.health.armor = 0.3
 tt.melee.attacks[1].cooldown = 1 + fts(11)
@@ -1290,9 +988,7 @@ tt.melee.attacks[1].damage_min = 6
 tt.melee.attacks[1].damage_max = 10
 
 local hero = E:register_t("hero", "soldier")
-
 E:add_comps(hero, "hero", "nav_grid")
-
 hero.health_bar.hidden = true
 hero.vis.flags = bor(F_HERO, F_FRIEND)
 hero.vis.bans = bor(F_POLYMORPH, F_DISINTEGRATED, F_CANNIBALIZE, F_SKELETON)
@@ -1300,9 +996,7 @@ hero.main_script.insert = scripts.hero_basic.insert
 hero.info.fn = scripts.hero_basic.get_info
 hero.regen.last_hit_standoff_time = 1
 hero.render.sprites[1].angles = {}
-hero.render.sprites[1].angles.walk = {
-	"running"
-}
+hero.render.sprites[1].angles.walk = {"running"}
 hero.render.sprites[1].name = "idle"
 hero.ui.click_rect = IS_PHONE_OR_TABLET and r(-35, -15, 70, 70) or r(-20, -5, 40, 40)
 hero.ui.z = 2
@@ -1318,13 +1012,9 @@ E:add_comps(enemy, "enemy", "motion", "nav_path", "main_script", "sound_events",
 
 enemy.vis.flags = F_ENEMY
 enemy.render.sprites[1].angles = {}
-enemy.render.sprites[1].angles.walk = {
-	"walkingRightLeft",
-	"walkingUp",
-	"walkingDown"
-}
+enemy.render.sprites[1].angles.walk = {"walkingRightLeft", "walkingUp", "walkingDown"}
 enemy.render.sprites[1].angles_stickiness = {
-	walk = 10
+    walk = 10
 }
 enemy.info.fn = scripts.enemy_basic.get_info
 enemy.main_script.insert = scripts.enemy_basic.insert
@@ -1414,24 +1104,7 @@ tt.render.sprites[1].animated = true
 tt.render.sprites[1].z = Z_OBJECTS
 tt.render.sprites[1].sort_y_offset = -2
 tt.tween.remove = false
-tt.tween.props[1].keys = {
-	{
-		0,
-		0
-	},
-	{
-		fts(10),
-		255
-	},
-	{
-		"this.aura.duration-0.5",
-		255
-	},
-	{
-		"this.aura.duration",
-		0
-	}
-}
+tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}, {"this.aura.duration-0.5", 255}, {"this.aura.duration", 0}}
 tt.tween.props[1].loop = false
 tt.tween.props[1].sprite_id = 1
 tt = E:register_t("power_scorched_earth", "power_scorched_water")
@@ -1445,553 +1118,467 @@ tt.render.sprites[2].animated = false
 tt.tween.props[2] = E:clone_c("tween_prop")
 tt.tween.props[2].sprite_id = 2
 tt.tween.props[2].loop = true
-tt.tween.props[2].keys = {
-	{
-		0,
-		0
-	},
-	{
-		0.5,
-		255
-	},
-	{
-		1,
-		0
-	}
-}
+tt.tween.props[2].keys = {{0, 0}, {0.5, 255}, {1, 0}}
+
 tt = E:register_t("power_reinforcements_control")
-
 E:add_comps(tt, "user_power", "pos", "main_script", "user_selection")
-
 tt.main_script.insert = scripts.power_reinforcements_control.insert
 tt.user_selection.can_select_point_fn = scripts.power_reinforcements_control.can_select_point
 tt.cooldown = 99
 
-if IS_KR1 or IS_KR2 then
-	tt = E:register_t("abomination_explosion_aura", "aura")
-	tt.main_script.update = scripts.abomination_explosion_aura.update
-	tt.sound_events.insert = "HWAbominationExplosion"
-	tt.aura.damage_min = 250
-	tt.aura.damage_max = 250
-	tt.aura.damage_type = DAMAGE_EXPLOSION
-	tt.aura.radius = 100
-	tt.aura.hit_time = fts(10)
-	tt = E:register_t("werewolf_regen_aura", "aura")
-	tt.main_script.update = scripts.werewolf_regen_aura.update
-	tt = E:register_t("mod_lycanthropy", "modifier")
+tt = E:register_t("abomination_explosion_aura", "aura")
+tt.main_script.update = scripts.abomination_explosion_aura.update
+tt.sound_events.insert = "HWAbominationExplosion"
+tt.aura.damage_min = 250
+tt.aura.damage_max = 250
+tt.aura.damage_type = DAMAGE_EXPLOSION
+tt.aura.radius = 100
+tt.aura.hit_time = fts(10)
+tt = E:register_t("werewolf_regen_aura", "aura")
+tt.main_script.update = scripts.werewolf_regen_aura.update
 
-	E:add_comps(tt, "moon")
+tt = E:register_t("mod_lycanthropy", "modifier")
+E:add_comps(tt, "moon")
+tt.moon.transform_name = "enemy_werewolf"
+tt.main_script.insert = scripts.mod_lycanthropy.insert
+tt.main_script.update = scripts.mod_lycanthropy.update
+tt.spawn_hp = nil
+tt.active = false
+tt.nodeslimit = 30
+tt.extra_health = 700
+tt.modifier.vis_flags = bor(F_MOD, F_LYCAN)
+tt.modifier.vis_bans = bor(F_HERO)
+tt.sound_events.transform = "HWWerewolfTransformation"
 
-	tt.moon.transform_name = "enemy_werewolf"
-	tt.main_script.insert = scripts.mod_lycanthropy.insert
-	tt.main_script.update = scripts.mod_lycanthropy.update
-	tt.spawn_hp = nil
-	tt.active = false
-	tt.nodeslimit = 30
-	tt.extra_health = 700
-	tt.modifier.vis_flags = bor(F_MOD, F_LYCAN)
-	tt.modifier.vis_bans = bor(F_HERO)
-	tt.sound_events.transform = "HWWerewolfTransformation"
+tt = E:register_t("enemy_abomination", "enemy")
+E:add_comps(tt, "melee", "moon", "death_spawns", "auras")
+anchor_y = 0.13157894736842105
+image_y = 115
+tt.auras.list[1] = E:clone_c("aura_attack")
+tt.auras.list[1].name = "moon_enemy_aura"
+tt.auras.list[1].cooldown = 0
+-- end
+tt.auras.list[2] = E:clone_c("aura_attack")
+tt.auras.list[2].cooldown = 0
+tt.auras.list[2].name = "aura_abomination"
+tt.death_spawns.name = "abomination_explosion_aura"
+tt.death_spawns.concurrent_with_death = true
+tt.enemy.lives_cost = 3
+tt.enemy.gold = 50
+tt.enemy.melee_slot = v(38, 0)
+tt.health.damage_factor_magical = 1.5
+tt.health.hp_max = 3500
+tt.health.armor = 0
+tt.health.magic_armor = 0
+tt.health_bar.offset = v(0, 66)
+tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
+tt.info.i18n_key = "ENEMY_HALLOWEEN_ABOMINATION"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_sc_0086"
+tt.info.enc_icon = 65
+tt.main_script.insert = scripts.enemy_basic.insert
+tt.main_script.update = scripts.enemy_mixed.update
+tt.melee.attacks[1].cooldown = 2
+tt.melee.attacks[1].damage_max = IS_KR1 and 45 or 55
+tt.melee.attacks[1].damage_min = IS_KR1 and 35 or 45
+tt.melee.attacks[1].hit_time = fts(12)
+tt.moon.speed_factor = 2
+tt.motion.max_speed = 0.45 * FPS
+tt.render.sprites[1].prefix = "enemy_abomination"
+tt.render.sprites[1].anchor.y = anchor_y
+tt.sound_events.death = "HWAbominationExplosion"
+tt.ui.click_rect = r(-25, -10, 50, 60)
+tt.unit.blood_color = BLOOD_GREEN
+tt.unit.can_explode = false
+tt.unit.hit_offset = v(0, 30)
+tt.unit.marker_offset = v(0, 2)
+tt.unit.mod_offset = v(0, 30)
+tt.unit.hide_after_death = true
+tt.unit.size = UNIT_SIZE_MEDIUM
+tt.vis.bans = bor(F_POISON)
 
-	tt = E:register_t("enemy_abomination", "enemy")
-	E:add_comps(tt, "melee", "moon", "death_spawns","auras")
-	anchor_y = 0.13157894736842105
-	image_y = 115
+tt = E:register_t("aura_abomination", "aura")
+E:add_comps(tt, "render", "tween")
+tt.aura.active = false
+tt.aura.allowed_templates = {"enemy_halloween_zombie", "enemy_zombie_blackburn"}
+tt.aura.cooldown = 0
+tt.aura.delay = fts(30)
+tt.aura.duration = -1
+tt.aura.requires_magic = true
+tt.aura.mod = "mod_abomination"
+tt.aura.radius = 120
+tt.aura.track_source = true
+tt.aura.use_mod_offset = false
+tt.main_script.insert = scripts.aura_apply_mod.insert
+tt.main_script.update = game_scripts.aura_abomination.update
+tt.render.sprites[1].alpha = 0
+tt.render.sprites[1].anchor = v(0.5, 0.28125)
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].name = "CB_DeathKnight_aura_0001"
+tt.render.sprites[1].offset = v(0, -16)
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[2] = table.deepclone(tt.render.sprites[1])
+tt.render.sprites[2].alpha = 0
+tt.render.sprites[2].animated = true
+tt.render.sprites[2].name = "spectral_knight_aura"
+tt.tween.disabled = true
+tt.tween.props[1].keys = {{0, 0}, {fts(20), 200}}
+tt.tween.props[1].name = "alpha"
+tt.tween.props[2] = table.deepclone(tt.tween.props[1])
+tt.tween.props[2].sprite_id = 2
+tt.tween.remove = false
 
-	-- if IS_KR2 then
-	-- 	E:add_comps(tt, "auras")
+tt = E:register_t("mod_abomination", "mod_blood")
+tt.dps.damage_max = -2
+tt.dps.damage_min = -2
+tt.dps.damage_every = 1
+tt.max_times_applied = 1
 
-    tt.auras.list[1] = E:clone_c("aura_attack")
-    tt.auras.list[1].name = "moon_enemy_aura"
-    tt.auras.list[1].cooldown = 0
-	-- end
-    tt.auras.list[2] = E:clone_c("aura_attack")
-    tt.auras.list[2].cooldown = 0
-    tt.auras.list[2].name = "aura_abomination"
-	tt.death_spawns.name = "abomination_explosion_aura"
-	tt.death_spawns.concurrent_with_death = true
-	tt.enemy.lives_cost = 3
-	tt.enemy.gold = 50
-	tt.enemy.melee_slot = v(38, 0)
-    tt.health.damage_factor_magical = 1.5
-	tt.health.hp_max = 3500
-    tt.health.armor = 0
-	tt.health.magic_armor = 0
-	tt.health_bar.offset = v(0, 66)
-	tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
+tt = E:register_t("enemy_werewolf", "enemy")
 
-	if IS_KR1 then
-		tt.info.i18n_key = "ENEMY_HALLOWEEN_ABOMINATION"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_sc_0086"
-		tt.info.enc_icon = 65
-	elseif IS_KR2 then
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0087" or "info_portraits_enemies_0061"
-		tt.info.enc_icon = 54
-	end
+E:add_comps(tt, "melee", "moon", "auras", "regen")
 
-	tt.main_script.insert = scripts.enemy_basic.insert
-	tt.main_script.update = scripts.enemy_mixed.update
-	tt.melee.attacks[1].cooldown = 2
-	tt.melee.attacks[1].damage_max = IS_KR1 and 45 or 55
-	tt.melee.attacks[1].damage_min = IS_KR1 and 35 or 45
-	tt.melee.attacks[1].hit_time = fts(12)
-	tt.moon.speed_factor = 2
-	tt.motion.max_speed = (IS_KR1 and 0.9 or 1.28) * 0.5 * FPS
-	tt.render.sprites[1].prefix = "enemy_abomination"
-	tt.render.sprites[1].anchor.y = anchor_y
-	tt.sound_events.death = "HWAbominationExplosion"
-	tt.ui.click_rect = r(-25, -10, 50, 60)
-	tt.unit.blood_color = BLOOD_GREEN
-	tt.unit.can_explode = false
-	tt.unit.hit_offset = v(0, 30)
-	tt.unit.marker_offset = v(0, 2)
-	tt.unit.mod_offset = v(0, 30)
-	tt.unit.hide_after_death = true
-	tt.unit.size = UNIT_SIZE_MEDIUM
-    tt.vis.bans = bor(F_POISON)
+anchor_y = 0.18181818181818182
+image_y = 66
+tt.auras.list[1] = E:clone_c("aura_attack")
+tt.auras.list[1].name = "werewolf_regen_aura"
+tt.auras.list[1].cooldown = 0
 
-    tt = E:register_t("aura_abomination", "aura")
-    E:add_comps(tt, "render", "tween")
-    tt.aura.active = false
-    tt.aura.allowed_templates = {
-        "enemy_halloween_zombie",
-        "enemy_zombie_blackburn"
-    }
-    tt.aura.cooldown = 0
-    tt.aura.delay = fts(30)
-    tt.aura.duration = -1
-    tt.aura.requires_magic = true
-    tt.aura.mod = "mod_abomination"
-    tt.aura.radius = 120
-    tt.aura.track_source = true
-    tt.aura.use_mod_offset = false
-    tt.main_script.insert = scripts.aura_apply_mod.insert
-    tt.main_script.update = game_scripts.aura_abomination.update
-    tt.render.sprites[1].alpha = 0
-    tt.render.sprites[1].anchor = v(0.5, 0.28125)
-    tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "CB_DeathKnight_aura_0001"
-    tt.render.sprites[1].offset = v(0, -16)
-    tt.render.sprites[1].z = Z_DECALS
-    tt.render.sprites[2] = table.deepclone(tt.render.sprites[1])
-    tt.render.sprites[2].alpha = 0
-    tt.render.sprites[2].animated = true
-    tt.render.sprites[2].name = "spectral_knight_aura"
-    tt.tween.disabled = true
-    tt.tween.props[1].keys = {
-        {
-            0,
-            0
-        },
-        {
-            fts(20),
-            200
-        }
-    }
-    tt.tween.props[1].name = "alpha"
-    tt.tween.props[2] = table.deepclone(tt.tween.props[1])
-    tt.tween.props[2].sprite_id = 2
-    tt.tween.remove = false
+-- if IS_KR2 then
+tt.auras.list[2] = E:clone_c("aura_attack")
+tt.auras.list[2].name = "moon_enemy_aura"
+tt.auras.list[2].cooldown = 0
+-- end
 
-    tt = E:register_t("mod_abomination", "mod_blood")
-    tt.dps.damage_max = -2
-    tt.dps.damage_min = -2
-    tt.dps.damage_every = 1
-    tt.max_times_applied = 1
+tt.enemy.gold = 25
+tt.enemy.melee_slot = v(24, 0)
+tt.health.armor = 0
+tt.health.hp_max = 700
+tt.health.magic_armor = 0.3
+tt.health_bar.offset = v(0, 38)
 
-	tt = E:register_t("enemy_werewolf", "enemy")
-
-	E:add_comps(tt, "melee", "moon", "auras", "regen")
-
-	anchor_y = 0.18181818181818182
-	image_y = 66
-	tt.auras.list[1] = E:clone_c("aura_attack")
-	tt.auras.list[1].name = "werewolf_regen_aura"
-	tt.auras.list[1].cooldown = 0
-
-	-- if IS_KR2 then
-		tt.auras.list[2] = E:clone_c("aura_attack")
-		tt.auras.list[2].name = "moon_enemy_aura"
-		tt.auras.list[2].cooldown = 0
-	-- end
-
-	tt.enemy.gold = 25
-	tt.enemy.melee_slot = v(24, 0)
-	tt.health.armor = 0
-	tt.health.hp_max = 700
-	tt.health.magic_armor = 0.3
-	tt.health_bar.offset = v(0, 38)
-
-	if IS_KR1 then
-		tt.info.i18n_key = "ENEMY_HALLOWEEN_WEREWOLF"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0089" or "info_portraits_sc_0089"
-		tt.info.enc_icon = 67
-	elseif IS_KR2 then
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0084" or "info_portraits_enemies_0065"
-		tt.info.enc_icon = 50
-	end
-
-	tt.main_script.insert = scripts.enemy_basic.insert
-	tt.main_script.update = scripts.enemy_mixed.update
-	tt.melee.attacks[1].cooldown = 1
-	tt.melee.attacks[1].damage_max = 60
-	tt.melee.attacks[1].damage_min = 40
-	tt.melee.attacks[1].hit_time = fts(12)
-	tt.moon.regen_hp = 4
-	tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1.3 * FPS
-	tt.render.sprites[1].prefix = "enemy_werewolf"
-	tt.render.sprites[1].anchor.y = anchor_y
-	tt.regen.cooldown = 0.25
-	-- tt.regen.health = 2
-	tt.unit.blood_color = BLOOD_RED
-	tt.unit.hit_offset = v(0, 14)
-	tt.unit.marker_offset = v(0, 0)
-	tt.unit.mod_offset = v(0, 14)
-
-	tt = E:register_t("enemy_halloween_zombie", "enemy")
-	E:add_comps(tt, "melee", "moon")
-	anchor_y = 0.18
-	image_y = 50
-
-	-- if IS_KR2 then
-		E:add_comps(tt, "auras")
-		tt.auras.list[1] = E:clone_c("aura_attack")
-		tt.auras.list[1].name = "moon_enemy_aura"
-		tt.auras.list[1].cooldown = 0
-	-- end
-
-	tt.enemy.gold = 7
-	tt.enemy.melee_slot = v(18, 0)
-	tt.health.armor = 0
-	tt.health.hp_max = 360
-	tt.health.magic_armor = 0
-	tt.health_bar.offset = v(0, 32)
-
-	if IS_KR1 then
-		tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
-		tt.info.enc_icon = 60
-	elseif IS_KR2 then
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0081" or "info_portraits_enemies_0050"
-		tt.info.enc_icon = 53
-	end
-
-	tt.main_script.insert = scripts.enemy_basic.insert
-	tt.main_script.update = scripts.enemy_mixed.update
-	tt.melee.attacks[1].cooldown = 1.2
-	tt.melee.attacks[1].damage_max = 15
-	tt.melee.attacks[1].damage_min = 5
-	tt.melee.attacks[1].hit_time = fts(12)
-	tt.melee.attacks[1].sound = "HWZombieAmbient"
-	tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 0.4 * FPS
-	tt.moon.speed_factor = 2
-	tt.render.sprites[1].prefix = "enemy_halloween_zombie"
-
-	if IS_KR1 then
-		tt.render.sprites[1].name = "raise"
-	end
-
-	tt.render.sprites[1].anchor.y = anchor_y
-	tt.unit.blood_color = BLOOD_GREEN
-	tt.unit.hit_offset = v(0, 12)
-	tt.unit.marker_offset = v(0, ady(10))
-	tt.unit.mod_offset = v(0, 12)
-	tt.sound_events.death = "DeathSkeleton"
-	tt.sound_events.insert = "HWZombieAmbient"
-	tt.vis.bans = bor(F_POISON)
-	tt = E:register_t("enemy_lycan", "enemy")
-
-	E:add_comps(tt, "melee", "moon", "auras")
-
-	anchor_y = 0.14516129032258066
-	image_y = 62
-
-	-- if IS_KR2 then
-		tt.auras.list[1] = E:clone_c("aura_attack")
-		tt.auras.list[1].name = "moon_enemy_aura"
-		tt.auras.list[1].cooldown = 0
-	-- end
-
-	tt.enemy.gold = 65
-	tt.enemy.melee_slot = v(18, 0)
-	tt.health.armor = 0
-	tt.health.hp_max = 400
-	tt.health.magic_armor = 0.3
-	tt.health.on_damage = scripts.enemy_lycan.on_damage
-	tt.health_bar.offset = v(0, 37)
-
-	if IS_KR1 then
-		tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0091" or "info_portraits_sc_0091"
-		tt.info.enc_icon = 68
-	elseif IS_KR2 then
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0085" or "info_portraits_enemies_0051"
-		tt.info.enc_icon = 55
-	end
-
-	tt.main_script.insert = scripts.enemy_basic.insert
-	tt.main_script.update = scripts.enemy_mixed.update
-	tt.melee.attacks[1].cooldown = 1
-	tt.melee.attacks[1].damage_max = 20
-	tt.melee.attacks[1].damage_min = 10
-	tt.melee.attacks[1].hit_time = fts(10)
-	tt.moon.transform_name = "enemy_lycan_werewolf"
-	tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1 * FPS
-	tt.render.sprites[1].prefix = "enemy_lycan"
-	tt.render.sprites[1].anchor.y = anchor_y
-	tt.unit.blood_color = BLOOD_RED
-	tt.unit.hit_offset = v(0, 14)
-	tt.unit.marker_offset = v(0, 0)
-	tt.unit.mod_offset = v(0, 14)
-	tt.sound_events.death = nil
-	tt.lycan_trigger_factor = 0.25
-	tt = E:register_t("enemy_lycan_werewolf", "enemy")
-
-	E:add_comps(tt, "melee", "moon", "auras", "regen")
-
-	anchor_y = 0.18181818181818182
-	image_y = 66
-	tt.auras.list[1] = E:clone_c("aura_attack")
-	tt.auras.list[1].name = "werewolf_regen_aura"
-	tt.auras.list[1].cooldown = 0
-
-	-- if IS_KR2 then
-		tt.auras.list[2] = E:clone_c("aura_attack")
-		tt.auras.list[2].name = "moon_enemy_aura"
-		tt.auras.list[2].cooldown = 0
-	-- end
-
-	tt.enemy.gold = 65
-	tt.enemy.melee_slot = v(24, 0)
-	tt.health.armor = 0
-	tt.health.hp_max = 1100
-	tt.health.magic_armor = 0.6
-	tt.health_bar.offset = v(0, 47)
-	tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-
-	if IS_KR1 then
-		tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0092" or "info_portraits_sc_0091"
-	elseif IS_KR2 then
-		tt.info.i18n_key = "ENEMY_LYCAN"
-		tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_enemies_0051"
-	end
-
-	tt.main_script.insert = scripts.enemy_basic.insert
-	tt.main_script.update = scripts.enemy_mixed.update
-	tt.melee.attacks[1].cooldown = 1
-	tt.melee.attacks[1].damage_max = 70
-	tt.melee.attacks[1].damage_min = 50
-	tt.melee.attacks[1].hit_time = fts(12)
-	tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
-	tt.melee.attacks[2].mod = "mod_lycanthropy"
-	tt.melee.attacks[2].chance = 0.2
-	tt.moon.regen_hp = 8
-	tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 2 * FPS
-	tt.render.sprites[1].prefix = "enemy_lycan_werewolf"
-	tt.render.sprites[1].anchor.y = anchor_y
-	tt.regen.cooldown = 0.25
-	-- tt.regen.health = 4
-	tt.ui.click_rect = r(-20, -10, 40, 50)
-	tt.unit.blood_color = BLOOD_RED
-	tt.unit.hit_offset = v(0, 22)
-	tt.unit.marker_offset = v(0, 0)
-	tt.unit.mod_offset = v(0, 22)
-	tt.unit.size = UNIT_SIZE_MEDIUM
-	tt.sound_events.insert = "HWAlphaWolf"
-	tt = E:register_t("user_item_atomic_bomb")
-
-	E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
-
-	tt.main_script.update = scripts.user_item_atomic_bomb.update
-	tt.plane_transit_duration = 5
-	tt.plane_dest = nil
-	tt.bomb_dest = nil
-	tt = E:register_t("decal_atomic_bomb_plane", "decal_scripted")
-
-	E:add_comps(tt, "motion", "sound_events")
-
-	tt.render.sprites[1].name = "atomicBomb_plane"
-	tt.render.sprites[1].animated = false
-	tt.render.sprites[1].z = Z_OBJECTS_SKY
-	tt.render.sprites[2] = E:clone_c("sprite")
-	tt.render.sprites[2].name = "atomic_bomb_plane_engine"
-	tt.render.sprites[2].offset = v(52, -8)
-	tt.render.sprites[2].z = Z_OBJECTS_SKY
-	tt.render.sprites[3] = E:clone_c("sprite")
-	tt.render.sprites[3].name = "atomicBomb_bomb"
-	tt.render.sprites[3].animated = false
-	tt.render.sprites[3].offset = v(16, -38)
-	tt.render.sprites[3].z = Z_OBJECTS_SKY + 1
-	tt.render.sprites[4] = E:clone_c("sprite")
-	tt.render.sprites[4].name = "atomic_bomb_plane_wing"
-	tt.render.sprites[4].offset = v(9, -27)
-	tt.render.sprites[4].z = Z_OBJECTS_SKY + 2
-	tt.render.sprites[5] = E:clone_c("sprite")
-	tt.render.sprites[5].name = "atomicBomb_shadow"
-	tt.render.sprites[5].animated = false
-	tt.render.sprites[5].scale = v(0.6, 0.6)
-	tt.render.sprites[5].alpha = 100
-	tt.render.sprites[5].offset = v(0, 0)
-	tt.render.sprites[5].z = Z_DECALS
-	tt.main_script.insert = scripts.decal_atomic_bomb_plane.insert
-	tt.main_script.update = scripts.decal_atomic_bomb_plane.update
-	tt.sound_events.insert = "InAppAtomicBomb"
-	tt = E:register_t("atomic_bomb", "bullet")
-	tt.bullet.damage_min = 3000
-	tt.bullet.damage_max = 3000
-	tt.bullet.damage_type = bor(DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE, DAMAGE_NO_SPAWNS, DAMAGE_IGNORE_SHIELD)
-	tt.bullet.flight_time = fts(26)
-	tt.bullet.hit_decal = "decal_atomic_bomb_crater"
-	tt.bullet.hit_fx = "fx_explosion_big"
-	tt.render.sprites[1].name = "atomicBomb_bomb"
-	tt.render.sprites[1].animated = false
-	tt.render.sprites[1].z = Z_OBJECTS_SKY + 1
-	tt.render.sprites[2] = E:clone_c("sprite")
-	tt.render.sprites[2].name = "atomicBomb_shadow"
-	tt.render.sprites[2].animated = false
-	tt.render.sprites[2].z = Z_DECALS
-	tt.render.sprites[2].alpha = 0
-	tt.main_script.insert = scripts.atomic_bomb.insert
-	tt.main_script.update = scripts.atomic_bomb.update
-	tt.sound_events.insert = "InAppAtomicBombFalling"
-	tt = E:register_t("decal_atomic_bomb_crater", "decal_tween")
-	tt.render.sprites[1].name = "atomicBomb_decal"
-	tt.render.sprites[1].animated = false
-	tt.render.sprites[1].z = Z_DECALS
-	tt.tween.props[1].keys = {
-		{
-			2,
-			255
-		},
-		{
-			3.5,
-			0
-		}
-	}
-	tt = E:register_t("user_item_atomic_freeze")
-
-	E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
-
-	tt.duration = 15
-	tt.main_script.insert = scripts.user_item_atomic_freeze.insert
-	tt.main_script.update = scripts.user_item_atomic_freeze.update
-	tt.excluded_templates = {
-		"eb_umbra",
-		"enemy_umbra_piece",
-		"enemy_umbra_piece_flying",
-		"enemy_tremor",
-		"enemy_headless_horseman"
-	}
-	tt.vis_flags = bor(F_RANGED, F_FREEZE)
-	tt.vis_bans = 0
-	tt.mod = "mod_user_item_freeze"
-	tt = E:register_t("decal_user_item_atomic_freeze_slab", "decal_tween")
-	tt.render.sprites[1].name = "freeze_decals_%04d"
-	tt.render.sprites[1].animated = false
-	tt.render.sprites[1].z = Z_DECALS
-	tt.tween.props[1].keys = {
-		{
-			"this.duration",
-			255
-		},
-		{
-			"this.duration+0.5",
-			0
-		}
-	}
-	tt.decals_count = 4
-	tt = E:register_t("user_item_freeze", "bullet")
-
-	E:add_comps(tt, "sound_events", "user_item", "user_selection")
-
-	tt.bullet.flight_time = fts(21)
-	tt.bullet.g = -1.4 / (fts(1) * fts(1))
-	tt.bullet.rotation_speed = 20 * FPS * math.pi / 180
-	tt.bullet.hit_fx = "fx_user_item_freeze_explosion"
-	tt.bullet.hit_decal = "decal_user_item_freeze"
-	tt.bullet.damage_radius = 60
-	tt.bullet.mod = "mod_user_item_freeze"
-	tt.bullet.hide_radius = 4
-	tt.bullet.excluded_templates = E:get_template("user_item_atomic_freeze").excluded_templates
-	tt.bullet.half_time_templates = {
-		"enemy_demon_cerberus",
-		"enemy_hobgoblin"
-	}
-	tt.bullet.vis_flags = bor(F_RANGED, F_FREEZE)
-	tt.render.sprites[1].name = "small_freeze_bomb"
-	tt.render.sprites[1].animated = false
-	tt.user_selection.can_select_point_fn = scripts.user_item_freeze.can_select_point
-	tt.main_script.insert = scripts.user_item_freeze.insert
-	tt.main_script.update = scripts.user_item_freeze.update
-	tt.sound_events.insert = "InAppFreeze"
-	tt = E:register_t("mod_user_item_freeze", "mod_freeze")
-
-	E:add_comps(tt, "render")
-
-	tt.modifier.duration = 5
-	tt.render.sprites[1].prefix = "freeze_creep"
-	tt.render.sprites[1].sort_y_offset = -2
-	tt.custom_offsets = {}
-	tt.custom_offsets.flying = v(-5, 32)
-	tt.custom_offsets.enemy_wasp_queen = v(-5, 38)
-	tt.custom_offsets.eb_efreeti = v(100, 15)
-	tt.custom_suffixes = {}
-	tt.custom_suffixes.flying = "_air"
-	tt.custom_animations = {
-		"start",
-		"end"
-	}
-	tt = E:register_t("decal_user_item_freeze", "decal_tween")
-	tt.render.sprites[1].name = "small_freeze_decal"
-	tt.render.sprites[1].animated = false
-	tt.tween.props[1].keys = {
-		{
-			0.8,
-			255
-		},
-		{
-			2.1,
-			0
-		}
-	}
-	tt.tween.props[2] = E:clone_c("tween_prop")
-	tt.tween.props[2].name = "scale"
-	tt.tween.props[2].keys = {
-		{
-			0,
-			v(0, 0)
-		},
-		{
-			0.2,
-			v(1, 1)
-		}
-	}
-	tt = E:register_t("fx_user_item_freeze_explosion", "fx")
-	tt.render.sprites[1].name = "small_freeze_explosion"
-	tt.render.sprites[1].anchor.y = 0.29
-	tt.render.sprites[1].z = Z_OBJECTS
-	tt.render.sprites[1].sort_y_offset = -2
-	tt = E:register_t("user_item_hearts")
-
-	E:add_comps(tt, "pos", "user_item", "user_selection")
-
-	tt.reward = 5
-	tt = E:register_t("user_item_coins")
-
-	E:add_comps(tt, "pos", "user_item", "user_selection")
-
-	tt.reward = 500
-	tt = E:register_t("user_item_dynamite", "bomb")
-
-	E:add_comps(tt, "user_item", "user_selection")
-
-	tt.user_selection.can_select_point_fn = scripts.user_item_dynamite.can_select_point
-	tt.main_script.insert = scripts.user_item_dynamite.insert
-	tt.render.sprites[1].name = "dynamite"
-	tt.bullet.damage_min = 150
-	tt.bullet.damage_max = 250
-	tt.bullet.damage_radius = 45
-	tt.bullet.flight_time = fts(21)
-	tt.bullet.g = -1.4 / (fts(1) * fts(1))
+if IS_KR1 then
+    tt.info.i18n_key = "ENEMY_HALLOWEEN_WEREWOLF"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0089" or "info_portraits_sc_0089"
+    tt.info.enc_icon = 67
+elseif IS_KR2 then
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0084" or "info_portraits_enemies_0065"
+    tt.info.enc_icon = 50
 end
+
+tt.main_script.insert = scripts.enemy_basic.insert
+tt.main_script.update = scripts.enemy_mixed.update
+tt.melee.attacks[1].cooldown = 1
+tt.melee.attacks[1].damage_max = 60
+tt.melee.attacks[1].damage_min = 40
+tt.melee.attacks[1].hit_time = fts(12)
+tt.moon.regen_hp = 4
+tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1.3 * FPS
+tt.render.sprites[1].prefix = "enemy_werewolf"
+tt.render.sprites[1].anchor.y = anchor_y
+tt.regen.cooldown = 0.25
+-- tt.regen.health = 2
+tt.unit.blood_color = BLOOD_RED
+tt.unit.hit_offset = v(0, 14)
+tt.unit.marker_offset = v(0, 0)
+tt.unit.mod_offset = v(0, 14)
+
+tt = E:register_t("enemy_halloween_zombie", "enemy")
+E:add_comps(tt, "melee", "moon")
+anchor_y = 0.18
+image_y = 50
+
+-- if IS_KR2 then
+E:add_comps(tt, "auras")
+tt.auras.list[1] = E:clone_c("aura_attack")
+tt.auras.list[1].name = "moon_enemy_aura"
+tt.auras.list[1].cooldown = 0
+-- end
+
+tt.enemy.gold = 7
+tt.enemy.melee_slot = v(18, 0)
+tt.health.armor = 0
+tt.health.hp_max = 360
+tt.health.magic_armor = 0
+tt.health_bar.offset = v(0, 32)
+
+if IS_KR1 then
+    tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
+    tt.info.enc_icon = 60
+elseif IS_KR2 then
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0081" or "info_portraits_enemies_0050"
+    tt.info.enc_icon = 53
+end
+
+tt.main_script.insert = scripts.enemy_basic.insert
+tt.main_script.update = scripts.enemy_mixed.update
+tt.melee.attacks[1].cooldown = 1.2
+tt.melee.attacks[1].damage_max = 15
+tt.melee.attacks[1].damage_min = 5
+tt.melee.attacks[1].hit_time = fts(12)
+tt.melee.attacks[1].sound = "HWZombieAmbient"
+tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 0.4 * FPS
+tt.moon.speed_factor = 2
+tt.render.sprites[1].prefix = "enemy_halloween_zombie"
+
+if IS_KR1 then
+    tt.render.sprites[1].name = "raise"
+end
+
+tt.render.sprites[1].anchor.y = anchor_y
+tt.unit.blood_color = BLOOD_GREEN
+tt.unit.hit_offset = v(0, 12)
+tt.unit.marker_offset = v(0, ady(10))
+tt.unit.mod_offset = v(0, 12)
+tt.sound_events.death = "DeathSkeleton"
+tt.sound_events.insert = "HWZombieAmbient"
+tt.vis.bans = bor(F_POISON)
+tt = E:register_t("enemy_lycan", "enemy")
+
+E:add_comps(tt, "melee", "moon", "auras")
+
+anchor_y = 0.14516129032258066
+image_y = 62
+
+-- if IS_KR2 then
+tt.auras.list[1] = E:clone_c("aura_attack")
+tt.auras.list[1].name = "moon_enemy_aura"
+tt.auras.list[1].cooldown = 0
+-- end
+
+tt.enemy.gold = 65
+tt.enemy.melee_slot = v(18, 0)
+tt.health.armor = 0
+tt.health.hp_max = 400
+tt.health.magic_armor = 0.3
+tt.health.on_damage = scripts.enemy_lycan.on_damage
+tt.health_bar.offset = v(0, 37)
+
+if IS_KR1 then
+    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0091" or "info_portraits_sc_0091"
+    tt.info.enc_icon = 68
+elseif IS_KR2 then
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0085" or "info_portraits_enemies_0051"
+    tt.info.enc_icon = 55
+end
+
+tt.main_script.insert = scripts.enemy_basic.insert
+tt.main_script.update = scripts.enemy_mixed.update
+tt.melee.attacks[1].cooldown = 1
+tt.melee.attacks[1].damage_max = 20
+tt.melee.attacks[1].damage_min = 10
+tt.melee.attacks[1].hit_time = fts(10)
+tt.moon.transform_name = "enemy_lycan_werewolf"
+tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1 * FPS
+tt.render.sprites[1].prefix = "enemy_lycan"
+tt.render.sprites[1].anchor.y = anchor_y
+tt.unit.blood_color = BLOOD_RED
+tt.unit.hit_offset = v(0, 14)
+tt.unit.marker_offset = v(0, 0)
+tt.unit.mod_offset = v(0, 14)
+tt.sound_events.death = nil
+tt.lycan_trigger_factor = 0.25
+tt = E:register_t("enemy_lycan_werewolf", "enemy")
+
+E:add_comps(tt, "melee", "moon", "auras", "regen")
+
+anchor_y = 0.18181818181818182
+image_y = 66
+tt.auras.list[1] = E:clone_c("aura_attack")
+tt.auras.list[1].name = "werewolf_regen_aura"
+tt.auras.list[1].cooldown = 0
+
+-- if IS_KR2 then
+tt.auras.list[2] = E:clone_c("aura_attack")
+tt.auras.list[2].name = "moon_enemy_aura"
+tt.auras.list[2].cooldown = 0
+-- end
+
+tt.enemy.gold = 65
+tt.enemy.melee_slot = v(24, 0)
+tt.health.armor = 0
+tt.health.hp_max = 1100
+tt.health.magic_armor = 0.6
+tt.health_bar.offset = v(0, 47)
+tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+
+if IS_KR1 then
+    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0092" or "info_portraits_sc_0091"
+elseif IS_KR2 then
+    tt.info.i18n_key = "ENEMY_LYCAN"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_enemies_0051"
+end
+
+tt.main_script.insert = scripts.enemy_basic.insert
+tt.main_script.update = scripts.enemy_mixed.update
+tt.melee.attacks[1].cooldown = 1
+tt.melee.attacks[1].damage_max = 70
+tt.melee.attacks[1].damage_min = 50
+tt.melee.attacks[1].hit_time = fts(12)
+tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
+tt.melee.attacks[2].mod = "mod_lycanthropy"
+tt.melee.attacks[2].chance = 0.2
+tt.moon.regen_hp = 8
+tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 2 * FPS
+tt.render.sprites[1].prefix = "enemy_lycan_werewolf"
+tt.render.sprites[1].anchor.y = anchor_y
+tt.regen.cooldown = 0.25
+-- tt.regen.health = 4
+tt.ui.click_rect = r(-20, -10, 40, 50)
+tt.unit.blood_color = BLOOD_RED
+tt.unit.hit_offset = v(0, 22)
+tt.unit.marker_offset = v(0, 0)
+tt.unit.mod_offset = v(0, 22)
+tt.unit.size = UNIT_SIZE_MEDIUM
+tt.sound_events.insert = "HWAlphaWolf"
+tt = E:register_t("user_item_atomic_bomb")
+
+E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
+
+tt.main_script.update = scripts.user_item_atomic_bomb.update
+tt.plane_transit_duration = 5
+tt.plane_dest = nil
+tt.bomb_dest = nil
+tt = E:register_t("decal_atomic_bomb_plane", "decal_scripted")
+
+E:add_comps(tt, "motion", "sound_events")
+
+tt.render.sprites[1].name = "atomicBomb_plane"
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].z = Z_OBJECTS_SKY
+tt.render.sprites[2] = E:clone_c("sprite")
+tt.render.sprites[2].name = "atomic_bomb_plane_engine"
+tt.render.sprites[2].offset = v(52, -8)
+tt.render.sprites[2].z = Z_OBJECTS_SKY
+tt.render.sprites[3] = E:clone_c("sprite")
+tt.render.sprites[3].name = "atomicBomb_bomb"
+tt.render.sprites[3].animated = false
+tt.render.sprites[3].offset = v(16, -38)
+tt.render.sprites[3].z = Z_OBJECTS_SKY + 1
+tt.render.sprites[4] = E:clone_c("sprite")
+tt.render.sprites[4].name = "atomic_bomb_plane_wing"
+tt.render.sprites[4].offset = v(9, -27)
+tt.render.sprites[4].z = Z_OBJECTS_SKY + 2
+tt.render.sprites[5] = E:clone_c("sprite")
+tt.render.sprites[5].name = "atomicBomb_shadow"
+tt.render.sprites[5].animated = false
+tt.render.sprites[5].scale = v(0.6, 0.6)
+tt.render.sprites[5].alpha = 100
+tt.render.sprites[5].offset = v(0, 0)
+tt.render.sprites[5].z = Z_DECALS
+tt.main_script.insert = scripts.decal_atomic_bomb_plane.insert
+tt.main_script.update = scripts.decal_atomic_bomb_plane.update
+tt.sound_events.insert = "InAppAtomicBomb"
+tt = E:register_t("atomic_bomb", "bullet")
+tt.bullet.damage_min = 3000
+tt.bullet.damage_max = 3000
+tt.bullet.damage_type = bor(DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE, DAMAGE_NO_SPAWNS, DAMAGE_IGNORE_SHIELD)
+tt.bullet.flight_time = fts(26)
+tt.bullet.hit_decal = "decal_atomic_bomb_crater"
+tt.bullet.hit_fx = "fx_explosion_big"
+tt.render.sprites[1].name = "atomicBomb_bomb"
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].z = Z_OBJECTS_SKY + 1
+tt.render.sprites[2] = E:clone_c("sprite")
+tt.render.sprites[2].name = "atomicBomb_shadow"
+tt.render.sprites[2].animated = false
+tt.render.sprites[2].z = Z_DECALS
+tt.render.sprites[2].alpha = 0
+tt.main_script.insert = scripts.atomic_bomb.insert
+tt.main_script.update = scripts.atomic_bomb.update
+tt.sound_events.insert = "InAppAtomicBombFalling"
+tt = E:register_t("decal_atomic_bomb_crater", "decal_tween")
+tt.render.sprites[1].name = "atomicBomb_decal"
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].z = Z_DECALS
+tt.tween.props[1].keys = {{2, 255}, {3.5, 0}}
+tt = E:register_t("user_item_atomic_freeze")
+
+E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
+
+tt.duration = 15
+tt.main_script.insert = scripts.user_item_atomic_freeze.insert
+tt.main_script.update = scripts.user_item_atomic_freeze.update
+tt.excluded_templates = {"eb_umbra", "enemy_umbra_piece", "enemy_umbra_piece_flying", "enemy_tremor",
+                         "enemy_headless_horseman"}
+tt.vis_flags = bor(F_RANGED, F_FREEZE)
+tt.vis_bans = 0
+tt.mod = "mod_user_item_freeze"
+tt = E:register_t("decal_user_item_atomic_freeze_slab", "decal_tween")
+tt.render.sprites[1].name = "freeze_decals_%04d"
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].z = Z_DECALS
+tt.tween.props[1].keys = {{"this.duration", 255}, {"this.duration+0.5", 0}}
+tt.decals_count = 4
+tt = E:register_t("user_item_freeze", "bullet")
+
+E:add_comps(tt, "sound_events", "user_item", "user_selection")
+
+tt.bullet.flight_time = fts(21)
+tt.bullet.g = -1.4 / (fts(1) * fts(1))
+tt.bullet.rotation_speed = 20 * FPS * math.pi / 180
+tt.bullet.hit_fx = "fx_user_item_freeze_explosion"
+tt.bullet.hit_decal = "decal_user_item_freeze"
+tt.bullet.damage_radius = 60
+tt.bullet.mod = "mod_user_item_freeze"
+tt.bullet.hide_radius = 4
+tt.bullet.excluded_templates = E:get_template("user_item_atomic_freeze").excluded_templates
+tt.bullet.half_time_templates = {"enemy_demon_cerberus", "enemy_hobgoblin"}
+tt.bullet.vis_flags = bor(F_RANGED, F_FREEZE)
+tt.render.sprites[1].name = "small_freeze_bomb"
+tt.render.sprites[1].animated = false
+tt.user_selection.can_select_point_fn = scripts.user_item_freeze.can_select_point
+tt.main_script.insert = scripts.user_item_freeze.insert
+tt.main_script.update = scripts.user_item_freeze.update
+tt.sound_events.insert = "InAppFreeze"
+tt = E:register_t("mod_user_item_freeze", "mod_freeze")
+
+E:add_comps(tt, "render")
+
+tt.modifier.duration = 5
+tt.render.sprites[1].prefix = "freeze_creep"
+tt.render.sprites[1].sort_y_offset = -2
+tt.custom_offsets = {}
+tt.custom_offsets.flying = v(-5, 32)
+tt.custom_offsets.enemy_wasp_queen = v(-5, 38)
+tt.custom_offsets.eb_efreeti = v(100, 15)
+tt.custom_suffixes = {}
+tt.custom_suffixes.flying = "_air"
+tt.custom_animations = {"start", "end"}
+tt = E:register_t("decal_user_item_freeze", "decal_tween")
+tt.render.sprites[1].name = "small_freeze_decal"
+tt.render.sprites[1].animated = false
+tt.tween.props[1].keys = {{0.8, 255}, {2.1, 0}}
+tt.tween.props[2] = E:clone_c("tween_prop")
+tt.tween.props[2].name = "scale"
+tt.tween.props[2].keys = {{0, v(0, 0)}, {0.2, v(1, 1)}}
+tt = E:register_t("fx_user_item_freeze_explosion", "fx")
+tt.render.sprites[1].name = "small_freeze_explosion"
+tt.render.sprites[1].anchor.y = 0.29
+tt.render.sprites[1].z = Z_OBJECTS
+tt.render.sprites[1].sort_y_offset = -2
+tt = E:register_t("user_item_hearts")
+
+E:add_comps(tt, "pos", "user_item", "user_selection")
+
+tt.reward = 5
+tt = E:register_t("user_item_coins")
+
+E:add_comps(tt, "pos", "user_item", "user_selection")
+
+tt.reward = 500
+tt = E:register_t("user_item_dynamite", "bomb")
+
+E:add_comps(tt, "user_item", "user_selection")
+
+tt.user_selection.can_select_point_fn = scripts.user_item_dynamite.can_select_point
+tt.main_script.insert = scripts.user_item_dynamite.insert
+tt.render.sprites[1].name = "dynamite"
+tt.bullet.damage_min = 150
+tt.bullet.damage_max = 250
+tt.bullet.damage_radius = 45
+tt.bullet.flight_time = fts(21)
+tt.bullet.g = -1.4 / (fts(1) * fts(1))
+
