@@ -1064,7 +1064,7 @@ function scripts.soldier_reinforcement.get_info(this)
 
     for _, a in pairs(attacks) do
         if a.damage_min then
-            min, max = a.damage_min+this.damage_buff, a.damage_max+this.damage_buff
+            min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
             melee_damage_type = a.damage_type
             break
         end
@@ -1075,7 +1075,8 @@ function scripts.soldier_reinforcement.get_info(this)
             if a.bullet then
                 local b = E:get_template(a.bullet)
                 if b and b.bullet.damage_min and b.bullet.damage_max then
-                    ranged_min, ranged_max = b.bullet.damage_min+this.damage_buff, b.bullet.damage_max+this.damage_buff
+                    ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff,
+                        b.bullet.damage_max + this.damage_buff
                     ranged_damage_type = b.bullet.damage_type
                     break
                 end
@@ -1111,7 +1112,7 @@ function scripts.soldier_reinforcement.get_info(this)
         ranged_damage_type = ranged_damage_type,
         -- damage_icon = this.info.damage_icon,
         armor = this.health.armor,
-        magic_armor = this.health.magic_armor,
+        magic_armor = this.health.magic_armor
     }
 end
 
@@ -1174,6 +1175,19 @@ function scripts.soldier_reinforcement.update(this, store, script)
             SU.soldier_courage_upgrade(store, this)
 
             while this.nav_rally.new do
+                if this.sound_events and this.sound_events.change_rally_point then
+                    S:queue(this.sound_events.change_rally_point)
+                end
+                -- if this.friend_id then
+                --     local friend = store.entities[this.friend_id]
+                --     if friend and not friend.nav_rally.new then
+                --         friend.nav_grid = table.deepclone(this.nav_grid)
+                --         friend.nav_rally.new = true
+                --         friend.nav_rally.pos = V.v(this.nav_rally.pos.x,this.nav_rally.pos.y)
+                --         friend.nav_rally.center = V.v(this.nav_rally.center.x, this.nav_rally.center.y)
+                --     end
+                -- end
+
                 if SU.y_soldier_new_rally(store, this) then
                     goto label_34_1
                 end
@@ -1259,9 +1273,8 @@ function scripts.soldier_barrack.get_info(this)
                 local level = a.level
                 if b and b.bullet.damage_min and b.bullet.damage_max then
                     if level and b.bullet.damage_inc then
-                        ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff +
-                            (b.bullet.damage_inc * level), b.bullet.damage_max + this.damage_buff +
-                            (b.bullet.damage_inc * level)
+                        ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff + (b.bullet.damage_inc * level),
+                            b.bullet.damage_max + this.damage_buff + (b.bullet.damage_inc * level)
                     else
                         ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff,
                             b.bullet.damage_max + this.damage_buff
@@ -7167,58 +7180,112 @@ end
 
 function scripts.power_reinforcements_control.insert(this, store, script)
     local x, y = this.pos.x, this.pos.y
-    local i = math.random(1, 3)
-    local e = E:create_entity("re_current_" .. i)
 
-    e.pos.x = x + 10
-    e.pos.y = y - 10
-    e.nav_rally.center = V.v(x, y)
-    e.nav_rally.pos = V.vclone(e.pos)
+    local i1 = math.random(1, 3)
+    local e1 = E:create_entity("re_current_" .. i1)
+    e1.pos.x = x + 10
+    e1.pos.y = y - 10
+    e1.nav_rally.center = V.v(x, y)
+    e1.nav_rally.pos = V.vclone(e1.pos)
 
-    queue_insert(store, e)
+    local i2 = math.random(1, 3)
+    local e2 = E:create_entity("re_current_" .. i2)
+    e2.pos.x = x - 10
+    e2.pos.y = y + 10
+    e2.nav_rally.center = V.v(x, y)
+    e2.nav_rally.pos = V.vclone(e2.pos)
 
-    i = math.random(1, 3)
-    e = E:create_entity("re_current_" .. i)
-    e.pos.x = x - 10
-    e.pos.y = y + 10
-    e.nav_rally.center = V.v(x, y)
-    e.nav_rally.pos = V.vclone(e.pos)
-
-    queue_insert(store, e)
+    -- e1.friend_id = e2.id
+    -- e2.friend_id = e1.id
+    -- if e1.friend_id then
+    -- queue_insert(store, e1)
+    -- end
+    -- if e2.friend_id then
+    -- queue_insert(store, e2)
+    -- end
+    queue_insert(store, e1)
+    queue_insert(store, e2)
 
     return true
 end
 
-if IS_KR1 or IS_KR2 then
-    scripts.abomination_explosion_aura = {}
+scripts.abomination_explosion_aura = {}
 
-    function scripts.abomination_explosion_aura.update(this, store)
-        U.y_wait(store, this.aura.hit_time)
+function scripts.abomination_explosion_aura.update(this, store)
+    U.y_wait(store, this.aura.hit_time)
 
-        local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, this.aura.radius, this.aura.vis_flags,
-            this.aura.vis_bans)
+    local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+        this.aura.vis_bans)
 
-        if targets then
-            for _, target in pairs(targets) do
-                local d = E:create_entity("damage")
+    if targets then
+        for _, target in pairs(targets) do
+            local d = E:create_entity("damage")
 
-                d.damage_type = this.aura.damage_type
-                d.value = this.aura.damage_max
-                d.target_id = target.id
-                d.source_id = this.id
+            d.damage_type = this.aura.damage_type
+            d.value = this.aura.damage_max
+            d.target_id = target.id
+            d.source_id = this.id
 
-                queue_damage(store, d)
-            end
+            queue_damage(store, d)
         end
-
-        queue_remove(store, this)
     end
 
-    scripts.werewolf_regen_aura = {}
+    queue_remove(store, this)
+end
 
-    function scripts.werewolf_regen_aura.update(this, store)
-        while true do
-            local target = store.entities[this.aura.source_id]
+scripts.werewolf_regen_aura = {}
+
+function scripts.werewolf_regen_aura.update(this, store)
+    while true do
+        local target = store.entities[this.aura.source_id]
+
+        if not target or target.health.dead then
+            queue_remove(store, this)
+
+            return
+        end
+
+        if target.unit.is_stunned and U.has_modifier_types(store, target, MOD_TYPE_FREEZE) then
+            -- block empty
+        elseif target.regen and store.tick_ts - this.aura.ts >= target.regen.cooldown then
+            this.aura.ts = store.tick_ts
+            target.health.hp = target.health.hp + target.regen.health
+            target.health.hp = km.clamp(0, target.health.hp_max, target.health.hp)
+        end
+
+        coroutine.yield()
+    end
+end
+
+scripts.mod_lycanthropy = {}
+
+function scripts.mod_lycanthropy.insert(this, store)
+    local source = store.entities[this.modifier.source_id]
+    local target = store.entities[this.modifier.target_id]
+
+    if not target or target.health.dead then
+        return false
+    end
+
+    if source and P:nodes_to_defend_point(source.nav_path) < this.nodeslimit then
+        return false
+    end
+
+    if source and source.enemy and not source.enemy.can_do_magic then
+        return false
+    end
+
+    if band(this.modifier.vis_flags, target.vis.bans) ~= 0 or band(this.modifier.vis_bans, target.vis.flags) ~= 0 then
+        return false
+    end
+
+    return true
+end
+
+function scripts.mod_lycanthropy.update(this, store)
+    while true do
+        if IS_KR1 or this.active or store.level.moon_controller and store.level.moon_controller.moon_active then
+            local target = store.entities[this.modifier.target_id]
 
             if not target or target.health.dead then
                 queue_remove(store, this)
@@ -7226,438 +7293,389 @@ if IS_KR1 or IS_KR2 then
                 return
             end
 
-            if target.unit.is_stunned and U.has_modifier_types(store, target, MOD_TYPE_FREEZE) then
-                -- block empty
-            elseif target.regen and store.tick_ts - this.aura.ts >= target.regen.cooldown then
-                this.aura.ts = store.tick_ts
-                target.health.hp = target.health.hp + target.regen.health
-                target.health.hp = km.clamp(0, target.health.hp_max, target.health.hp)
-            end
+            S:queue(this.sound_events.transform)
 
-            coroutine.yield()
-        end
-    end
+            local e = E:create_entity(this.moon.transform_name)
 
-    scripts.mod_lycanthropy = {}
+            e.pos.x, e.pos.y = target.pos.x, target.pos.y
+            e.health.hp = this.spawn_hp or e.health.hp
+            e.health.hp_max = this.spawn_hp_max or e.health.hp_max
 
-    function scripts.mod_lycanthropy.insert(this, store)
-        local source = store.entities[this.modifier.source_id]
-        local target = store.entities[this.modifier.target_id]
+            if target.nav_path then
+                e.nav_path = table.deepclone(target.nav_path)
+            else
+                local nearest = P:nearest_nodes(e.pos.x, e.pos.y, nil, {1, 2, 3}, true, NF_RALLY)
 
-        if not target or target.health.dead then
-            return false
-        end
-
-        if source and P:nodes_to_defend_point(source.nav_path) < this.nodeslimit then
-            return false
-        end
-
-        if source and source.enemy and not source.enemy.can_do_magic then
-            return false
-        end
-
-        if band(this.modifier.vis_flags, target.vis.bans) ~= 0 or band(this.modifier.vis_bans, target.vis.flags) ~= 0 then
-            return false
-        end
-
-        return true
-    end
-
-    function scripts.mod_lycanthropy.update(this, store)
-        while true do
-            if IS_KR1 or this.active or store.level.moon_controller and store.level.moon_controller.moon_active then
-                local target = store.entities[this.modifier.target_id]
-
-                if not target or target.health.dead then
+                if nearest and nearest[1] then
+                    e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = unpack(nearest[1])
+                else
+                    log.error("Could not find path to transform creature: %s (%s,%s)", target.id, e.pos.x, e.pos.y)
                     queue_remove(store, this)
 
                     return
                 end
-
-                S:queue(this.sound_events.transform)
-
-                local e = E:create_entity(this.moon.transform_name)
-
-                e.pos.x, e.pos.y = target.pos.x, target.pos.y
-                e.health.hp = this.spawn_hp or e.health.hp
-                e.health.hp_max = this.spawn_hp_max or e.health.hp_max
-
-                if target.nav_path then
-                    e.nav_path = table.deepclone(target.nav_path)
-                else
-                    local nearest = P:nearest_nodes(e.pos.x, e.pos.y, nil, {1, 2, 3}, true, NF_RALLY)
-
-                    if nearest and nearest[1] then
-                        e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = unpack(nearest[1])
-                    else
-                        log.error("Could not find path to transform creature: %s (%s,%s)", target.id, e.pos.x, e.pos.y)
-                        queue_remove(store, this)
-
-                        return
-                    end
-                end
-
-                e.enemy.gold = target.enemy and target.enemy.gold or 0
-                e.render.sprites[1].name = "raise"
-                e.render.sprites[1].flip_x = target.render.sprites[1].flip_x
-
-                queue_insert(store, e)
-
-                local d = E:create_entity("damage")
-
-                d.damage_type = DAMAGE_EAT
-                d.source_id = this.id
-                d.target_id = target.id
-
-                queue_damage(store, d)
-
-                if target.enemy then
-                    target.enemy.gold = 0
-                    target.enemy.gold_bag = 0
-                end
-
-                queue_remove(store, this)
-
-                return
             end
 
-            coroutine.yield()
-        end
-    end
+            e.enemy.gold = target.enemy and target.enemy.gold or 0
+            e.render.sprites[1].name = "raise"
+            e.render.sprites[1].flip_x = target.render.sprites[1].flip_x
 
-    scripts.enemy_lycan = {}
+            queue_insert(store, e)
 
-    function scripts.enemy_lycan.on_damage(this, store, damage)
-        log.paranoid("  LYCAN DAMAGE: %s \n%s", damage.value, getfulldump(damage))
-
-        if this.unit.is_stunned then
-            return true
-        end
-
-        local h = this.health
-        local predicted_damage = U.predict_damage(this, damage)
-        local threshold = this.lycan_trigger_factor * h.hp_max
-
-        if not h.dead and band(damage.damage_type, bor(DAMAGE_EAT, DAMAGE_DISINTEGRATE)) == 0 and threshold >= h.hp -
-            predicted_damage then
-            local m = E:create_entity("mod_lycanthropy")
-
-            m.modifier.target_id = this.id
-            m.spawn_hp = math.max(1, h.hp - predicted_damage) + m.extra_health
-            m.spawn_hp_max = h.hp_max + m.extra_health
-            m.active = true
-            m.moon.transform_name = this.moon.transform_name
-
-            queue_insert(store, m)
-
-            h.on_damage = nil
-
-            return false
-        else
-            return true
-        end
-    end
-
-    scripts.user_item_atomic_bomb = {}
-
-    function scripts.user_item_atomic_bomb.update(this, store, script)
-        local plane = E:create_entity("decal_atomic_bomb_plane")
-
-        plane.pos.x, plane.pos.y = this.pos.x, this.pos.y
-        plane.motion.max_speed = (this.plane_dest.x - this.pos.x) / this.plane_transit_duration
-        plane.bomb_dest = this.bomb_dest
-
-        U.set_destination(plane, this.plane_dest)
-        queue_insert(store, plane)
-        queue_remove(store, this)
-    end
-
-    scripts.decal_atomic_bomb_plane = {}
-
-    function scripts.decal_atomic_bomb_plane.insert(this, store, script)
-        this.render.sprites[5].offset.y = this.bomb_dest.y - this.pos.y
-
-        return true
-    end
-
-    function scripts.decal_atomic_bomb_plane.update(this, store, script)
-        local initial_y = this.pos.y
-        local s_bomb = this.render.sprites[3]
-        local bomb = E:create_entity("atomic_bomb")
-        local bomb_drop_x = this.bomb_dest.x - this.motion.max_speed * bomb.bullet.flight_time
-
-        while not this.motion.arrived do
-            U.walk(this, store.tick_length)
-
-            if not s_bomb.hidden and bomb_drop_x <= this.pos.x then
-                bomb.pos.x, bomb.pos.y = this.pos.x + s_bomb.offset.x, this.pos.y + s_bomb.offset.y
-                bomb.bullet.from = V.vclone(bomb.pos)
-                bomb.bullet.to = this.bomb_dest
-
-                queue_insert(store, bomb)
-                coroutine.yield()
-
-                s_bomb.hidden = true
-            end
-
-            this.pos.y = initial_y + 2 * math.sin(2 * math.pi * store.ts / (12 / FPS))
-
-            coroutine.yield()
-        end
-
-        queue_remove(store, this)
-    end
-
-    scripts.atomic_bomb = {}
-
-    function scripts.atomic_bomb.insert(this, store)
-        local b = this.bullet
-
-        b.g = 2 * (b.to.y - b.from.y) / b.flight_time
-        b.ts = store.tick_ts
-        b.last_pos = V.vclone(b.from)
-        b.speed = SU.initial_parabola_speed(b.from, b.to, b.flight_time, b.g)
-        b.speed.y = 0
-
-        return true
-    end
-
-    function scripts.atomic_bomb.update(this, store)
-        local b = this.bullet
-
-        b.ts = store.tick_ts
-
-        while store.tick_ts - b.ts + store.tick_length < b.flight_time do
-            coroutine.yield()
-
-            b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
-            this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
-            this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
-            this.render.sprites[2].offset.y = b.to.y - this.pos.y
-
-            local fall_phase = math.abs((b.to.y - this.pos.y) / (b.to.y - b.from.y))
-
-            this.render.sprites[2].alpha = 255 * (1 - fall_phase)
-        end
-
-        local fx = E:create_entity(b.hit_fx)
-
-        fx.render.sprites[1].scale = V.v(2, 2)
-        fx.render.sprites[1].ts = store.tick_ts
-        fx.pos.x, fx.pos.y = b.to.x, b.to.y
-
-        queue_insert(store, fx)
-
-        fx = E:create_entity(b.hit_decal)
-        fx.pos.x, fx.pos.y = b.to.x, b.to.y
-        fx.render.sprites[1].ts = store.tick_ts
-
-        queue_insert(store, fx)
-        coroutine.yield()
-        U.sprites_hide(this)
-        signal.emit("atomic-bomb-starts")
-        U.y_wait(store, 0.3)
-
-        local targets = table.filter(store.entities, function(k, v)
-            return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
-                       band(v.vis.bans, b.damage_flags) == 0
-        end)
-
-        for _, target in pairs(targets) do
             local d = E:create_entity("damage")
 
+            d.damage_type = DAMAGE_EAT
             d.source_id = this.id
             d.target_id = target.id
 
-            if U.flag_has(target.vis.flags, F_BOSS) then
-                d.value = b.damage_max
-            else
-                d.value = target.health.hp * 1000
-            end
-
-            d.damage_type = b.damage_type
-
             queue_damage(store, d)
-        end
 
-        for i = 0, 16 do
-            if i % 3 == 0 then
-                S:queue("BombExplosionSound")
+            if target.enemy then
+                target.enemy.gold = 0
+                target.enemy.gold_bag = 0
             end
 
-            local x, y = math.random(50, 900), math.random(50, 700)
-            local cell_type = GR:cell_type(x, y)
-            local fx
+            queue_remove(store, this)
 
-            if band(cell_type, TERRAIN_WATER) ~= 0 then
-                fx = E:create_entity("fx_explosion_water")
-            else
-                fx = E:create_entity("fx_explosion_small")
-            end
-
-            fx.pos.x, fx.pos.y = x, y
-            fx.render.sprites[1].ts = store.tick_ts
-
-            queue_insert(store, fx)
-            U.y_wait(store, fts(3))
+            return
         end
 
-        queue_remove(store, this)
+        coroutine.yield()
     end
+end
 
-    scripts.user_item_atomic_freeze = {}
+scripts.enemy_lycan = {}
 
-    function scripts.user_item_atomic_freeze.insert(this, store, script)
-        for _, e in pairs(store.entities) do
-            if e.template_name == this.template_name then
-                log.debug("atomic_freeze already exists, force silent removal")
-                queue_remove(store, e)
+function scripts.enemy_lycan.on_damage(this, store, damage)
+    log.paranoid("  LYCAN DAMAGE: %s \n%s", damage.value, getfulldump(damage))
 
-                this.skip_ice_slabs = true
-            end
-        end
-
+    if this.unit.is_stunned then
         return true
     end
 
-    function scripts.user_item_atomic_freeze.update(this, store, script)
-        this.ts = store.tick_ts
+    local h = this.health
+    local predicted_damage = U.predict_damage(this, damage)
+    local threshold = this.lycan_trigger_factor * h.hp_max
 
-        signal.emit("atomic-freeze-starts")
+    if not h.dead and band(damage.damage_type, bor(DAMAGE_EAT, DAMAGE_DISINTEGRATE)) == 0 and threshold >= h.hp -
+        predicted_damage then
+        local m = E:create_entity("mod_lycanthropy")
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, 9999, this.vis_flags, this.vis_bans,
-            function(e)
-                return not table.contains(this.excluded_templates, e.template_name)
-            end)
+        m.modifier.target_id = this.id
+        m.spawn_hp = math.max(1, h.hp - predicted_damage) + m.extra_health
+        m.spawn_hp_max = h.hp_max + m.extra_health
+        m.active = true
+        m.moon.transform_name = this.moon.transform_name
 
-        if targets then
-            for _, target in pairs(targets) do
-                local mod = E:create_entity(this.mod)
+        queue_insert(store, m)
 
-                mod.modifier.target_id = target.id
-                mod.modifier.duration = this.duration
+        h.on_damage = nil
 
-                if band(target.vis.flags, F_BOSS) ~= 0 then
-                    mod.modifier.duration = mod.modifier.duration * 0.5
-                end
-
-                queue_insert(store, mod)
-            end
-        end
-
-        if this.skip_ice_slabs then
-            for _, e in pairs(store.entities) do
-                if e.template_name == "decal_user_item_atomic_freeze_slab" then
-                    e.render.sprites[1].ts = store.tick_ts
-                end
-            end
-        else
-            for i = 1, 10 do
-                local rpos = P:get_random_position(20, bor(TERRAIN_LAND, TERRAIN_WATER))
-
-                if not rpos then
-                    log.debug("user_item_atomic_freeze: could not find random position for slab decal. i:%s", i)
-                else
-                    local e = E:create_entity("decal_user_item_atomic_freeze_slab")
-
-                    e.duration = this.duration
-                    e.pos = rpos
-                    e.render.sprites[1].ts = store.tick_ts
-                    e.render.sprites[1].name = string.format(e.render.sprites[1].name, math.random(1, e.decals_count))
-                    e.render.sprites[1].scale = V.v(U.random_sign(), 1)
-
-                    queue_insert(store, e)
-                end
-            end
-        end
-
-        U.y_wait(store, this.duration)
-        signal.emit("atomic-freeze-ends")
-        queue_remove(store, this)
+        return false
+    else
+        return true
     end
+end
 
-    scripts.user_item_freeze = {}
+scripts.user_item_atomic_bomb = {}
 
-    function scripts.user_item_freeze.can_select_point(this, x, y)
-        return P:valid_node_nearby(x, y, nil, NF_POWER_1)
-    end
+function scripts.user_item_atomic_bomb.update(this, store, script)
+    local plane = E:create_entity("decal_atomic_bomb_plane")
 
-    function scripts.user_item_freeze.insert(this, store, script)
-        local x, y = this.pos.x, this.pos.y
-        local b = this.bullet
+    plane.pos.x, plane.pos.y = this.pos.x, this.pos.y
+    plane.motion.max_speed = (this.plane_dest.x - this.pos.x) / this.plane_transit_duration
+    plane.bomb_dest = this.bomb_dest
 
-        b.from = V.v(x, y)
-        b.to = V.v(x, y)
+    U.set_destination(plane, this.plane_dest)
+    queue_insert(store, plane)
+    queue_remove(store, this)
+end
 
-        return scripts.bomb.insert(this, store)
-    end
+scripts.decal_atomic_bomb_plane = {}
 
-    function scripts.user_item_freeze.update(this, store)
-        local b = this.bullet
+function scripts.decal_atomic_bomb_plane.insert(this, store, script)
+    this.render.sprites[5].offset.y = this.bomb_dest.y - this.pos.y
 
-        while store.tick_ts - b.ts + store.tick_length < b.flight_time do
+    return true
+end
+
+function scripts.decal_atomic_bomb_plane.update(this, store, script)
+    local initial_y = this.pos.y
+    local s_bomb = this.render.sprites[3]
+    local bomb = E:create_entity("atomic_bomb")
+    local bomb_drop_x = this.bomb_dest.x - this.motion.max_speed * bomb.bullet.flight_time
+
+    while not this.motion.arrived do
+        U.walk(this, store.tick_length)
+
+        if not s_bomb.hidden and bomb_drop_x <= this.pos.x then
+            bomb.pos.x, bomb.pos.y = this.pos.x + s_bomb.offset.x, this.pos.y + s_bomb.offset.y
+            bomb.bullet.from = V.vclone(bomb.pos)
+            bomb.bullet.to = this.bomb_dest
+
+            queue_insert(store, bomb)
             coroutine.yield()
 
-            b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
-            this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
-            this.render.sprites[1].r = this.render.sprites[1].r + b.rotation_speed * store.tick_length
-
-            if b.hide_radius then
-                this.render.sprites[1].hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or
-                                                    V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
-            end
+            s_bomb.hidden = true
         end
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
-            function(e)
-                return not table.contains(b.excluded_templates, e.template_name)
-            end)
+        this.pos.y = initial_y + 2 * math.sin(2 * math.pi * store.ts / (12 / FPS))
 
-        if targets then
-            for _, target in pairs(targets) do
-                local mod = E:create_entity(b.mod)
+        coroutine.yield()
+    end
 
-                mod.modifier.target_id = target.id
+    queue_remove(store, this)
+end
 
-                if band(target.vis.flags, F_BOSS) ~= 0 or table.contains(b.half_time_templates, target.template_name) then
-                    mod.modifier.duration = mod.modifier.duration * 0.5
-                end
+scripts.atomic_bomb = {}
 
-                queue_insert(store, mod)
-            end
+function scripts.atomic_bomb.insert(this, store)
+    local b = this.bullet
+
+    b.g = 2 * (b.to.y - b.from.y) / b.flight_time
+    b.ts = store.tick_ts
+    b.last_pos = V.vclone(b.from)
+    b.speed = SU.initial_parabola_speed(b.from, b.to, b.flight_time, b.g)
+    b.speed.y = 0
+
+    return true
+end
+
+function scripts.atomic_bomb.update(this, store)
+    local b = this.bullet
+
+    b.ts = store.tick_ts
+
+    while store.tick_ts - b.ts + store.tick_length < b.flight_time do
+        coroutine.yield()
+
+        b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
+        this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
+        this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
+        this.render.sprites[2].offset.y = b.to.y - this.pos.y
+
+        local fall_phase = math.abs((b.to.y - this.pos.y) / (b.to.y - b.from.y))
+
+        this.render.sprites[2].alpha = 255 * (1 - fall_phase)
+    end
+
+    local fx = E:create_entity(b.hit_fx)
+
+    fx.render.sprites[1].scale = V.v(2, 2)
+    fx.render.sprites[1].ts = store.tick_ts
+    fx.pos.x, fx.pos.y = b.to.x, b.to.y
+
+    queue_insert(store, fx)
+
+    fx = E:create_entity(b.hit_decal)
+    fx.pos.x, fx.pos.y = b.to.x, b.to.y
+    fx.render.sprites[1].ts = store.tick_ts
+
+    queue_insert(store, fx)
+    coroutine.yield()
+    U.sprites_hide(this)
+    signal.emit("atomic-bomb-starts")
+    U.y_wait(store, 0.3)
+
+    local targets = table.filter(store.entities, function(k, v)
+        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
+                   band(v.vis.bans, b.damage_flags) == 0
+    end)
+
+    for _, target in pairs(targets) do
+        local d = E:create_entity("damage")
+
+        d.source_id = this.id
+        d.target_id = target.id
+
+        if U.flag_has(target.vis.flags, F_BOSS) then
+            d.value = b.damage_max
+        else
+            d.value = target.health.hp * 1000
         end
 
-        local fx = E:create_entity(b.hit_fx)
+        d.damage_type = b.damage_type
 
+        queue_damage(store, d)
+    end
+
+    for i = 0, 16 do
+        if i % 3 == 0 then
+            S:queue("BombExplosionSound")
+        end
+
+        local x, y = math.random(50, 900), math.random(50, 700)
+        local cell_type = GR:cell_type(x, y)
+        local fx
+
+        if band(cell_type, TERRAIN_WATER) ~= 0 then
+            fx = E:create_entity("fx_explosion_water")
+        else
+            fx = E:create_entity("fx_explosion_small")
+        end
+
+        fx.pos.x, fx.pos.y = x, y
         fx.render.sprites[1].ts = store.tick_ts
-        fx.pos = V.vclone(b.to)
 
         queue_insert(store, fx)
-
-        local decal = E:create_entity(b.hit_decal)
-
-        decal.render.sprites[1].ts = store.tick_ts
-        decal.pos = V.vclone(b.to)
-
-        queue_insert(store, decal)
-        queue_remove(store, this)
+        U.y_wait(store, fts(3))
     end
 
-    scripts.user_item_dynamite = {}
+    queue_remove(store, this)
+end
 
-    function scripts.user_item_dynamite.can_select_point(this, x, y)
-        return P:valid_node_nearby(x, y, nil, NF_POWER_1)
+scripts.user_item_atomic_freeze = {}
+
+function scripts.user_item_atomic_freeze.insert(this, store, script)
+    for _, e in pairs(store.entities) do
+        if e.template_name == this.template_name then
+            log.debug("atomic_freeze already exists, force silent removal")
+            queue_remove(store, e)
+
+            this.skip_ice_slabs = true
+        end
     end
 
-    function scripts.user_item_dynamite.insert(this, store, script)
-        local x, y = this.pos.x, this.pos.y
-        local b = this.bullet
+    return true
+end
 
-        b.from = V.v(x, y)
-        b.to = V.v(x, y)
+function scripts.user_item_atomic_freeze.update(this, store, script)
+    this.ts = store.tick_ts
 
-        return scripts.bomb.insert(this, store)
+    signal.emit("atomic-freeze-starts")
+
+    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, 9999, this.vis_flags, this.vis_bans,
+        function(e)
+            return not table.contains(this.excluded_templates, e.template_name)
+        end)
+
+    if targets then
+        for _, target in pairs(targets) do
+            local mod = E:create_entity(this.mod)
+
+            mod.modifier.target_id = target.id
+            mod.modifier.duration = this.duration
+
+            if band(target.vis.flags, F_BOSS) ~= 0 then
+                mod.modifier.duration = mod.modifier.duration * 0.5
+            end
+
+            queue_insert(store, mod)
+        end
     end
+
+    if this.skip_ice_slabs then
+        for _, e in pairs(store.entities) do
+            if e.template_name == "decal_user_item_atomic_freeze_slab" then
+                e.render.sprites[1].ts = store.tick_ts
+            end
+        end
+    else
+        for i = 1, 10 do
+            local rpos = P:get_random_position(20, bor(TERRAIN_LAND, TERRAIN_WATER))
+
+            if not rpos then
+                log.debug("user_item_atomic_freeze: could not find random position for slab decal. i:%s", i)
+            else
+                local e = E:create_entity("decal_user_item_atomic_freeze_slab")
+
+                e.duration = this.duration
+                e.pos = rpos
+                e.render.sprites[1].ts = store.tick_ts
+                e.render.sprites[1].name = string.format(e.render.sprites[1].name, math.random(1, e.decals_count))
+                e.render.sprites[1].scale = V.v(U.random_sign(), 1)
+
+                queue_insert(store, e)
+            end
+        end
+    end
+
+    U.y_wait(store, this.duration)
+    signal.emit("atomic-freeze-ends")
+    queue_remove(store, this)
+end
+
+scripts.user_item_freeze = {}
+
+function scripts.user_item_freeze.can_select_point(this, x, y)
+    return P:valid_node_nearby(x, y, nil, NF_POWER_1)
+end
+
+function scripts.user_item_freeze.insert(this, store, script)
+    local x, y = this.pos.x, this.pos.y
+    local b = this.bullet
+
+    b.from = V.v(x, y)
+    b.to = V.v(x, y)
+
+    return scripts.bomb.insert(this, store)
+end
+
+function scripts.user_item_freeze.update(this, store)
+    local b = this.bullet
+
+    while store.tick_ts - b.ts + store.tick_length < b.flight_time do
+        coroutine.yield()
+
+        b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
+        this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
+        this.render.sprites[1].r = this.render.sprites[1].r + b.rotation_speed * store.tick_length
+
+        if b.hide_radius then
+            this.render.sprites[1].hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or
+                                                V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
+        end
+    end
+
+    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
+        function(e)
+            return not table.contains(b.excluded_templates, e.template_name)
+        end)
+
+    if targets then
+        for _, target in pairs(targets) do
+            local mod = E:create_entity(b.mod)
+
+            mod.modifier.target_id = target.id
+
+            if band(target.vis.flags, F_BOSS) ~= 0 or table.contains(b.half_time_templates, target.template_name) then
+                mod.modifier.duration = mod.modifier.duration * 0.5
+            end
+
+            queue_insert(store, mod)
+        end
+    end
+
+    local fx = E:create_entity(b.hit_fx)
+
+    fx.render.sprites[1].ts = store.tick_ts
+    fx.pos = V.vclone(b.to)
+
+    queue_insert(store, fx)
+
+    local decal = E:create_entity(b.hit_decal)
+
+    decal.render.sprites[1].ts = store.tick_ts
+    decal.pos = V.vclone(b.to)
+
+    queue_insert(store, decal)
+    queue_remove(store, this)
+end
+
+scripts.user_item_dynamite = {}
+
+function scripts.user_item_dynamite.can_select_point(this, x, y)
+    return P:valid_node_nearby(x, y, nil, NF_POWER_1)
+end
+
+function scripts.user_item_dynamite.insert(this, store, script)
+    local x, y = this.pos.x, this.pos.y
+    local b = this.bullet
+
+    b.from = V.v(x, y)
+    b.to = V.v(x, y)
+
+    return scripts.bomb.insert(this, store)
 end
 
 scripts.heal = function(this, amount)

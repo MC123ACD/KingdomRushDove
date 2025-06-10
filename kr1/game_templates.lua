@@ -561,7 +561,6 @@ tt.melee.attacks[2].hit_time = fts(6)
 tt.melee.cooldown = 1
 tt.melee.range = 72.5
 tt.motion.max_speed = 60
--- tt.regen.health = 25
 tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
 tt.render.sprites[1].prefix = "soldier_s6_imperial_guard"
 tt.soldier.melee_slot_offset = vec_2(8, 0)
@@ -578,7 +577,6 @@ tt.cooldown = 10
 tt.health.armor = 0
 tt.health.hp_max = 30
 tt.health_bar.offset = vec_2(0, ady(32))
--- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait_idxs = {15, 16, 14}
 tt.controable = true
 tt.main_script.insert = scripts.soldier_reinforcement.insert
@@ -590,10 +588,10 @@ tt.melee.attacks[1].hit_time = fts(5)
 tt.melee.range = 60
 tt.motion.max_speed = 60
 tt.regen.cooldown = 1
--- tt.regen.health = 3
 tt.reinforcement.duration = 25
 tt.render.sprites[1].anchor.y = anchor_y
 tt.sound_events.insert = "ReinforcementTaunt"
+tt.sound_events.change_rally_point = "ReinforcementTaunt"
 tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
 tt.tween.props[1].name = "alpha"
 tt.tween.remove = false
@@ -604,38 +602,37 @@ tt = RT("re_farmer_well_fed", "re_farmer")
 tt.unit.level = 1
 tt.health.hp_max = 50
 tt.health.armor = 0
--- tt.regen.health = 6
 tt.melee.attacks[1].damage_max = 3
+tt.motion.max_speed = 65
 tt = RT("re_conscript", "re_farmer")
 tt.info.portrait_idxs = {41, 38, 35}
 tt.unit.level = 2
 tt.health.hp_max = 70
 tt.health.armor = 0.1
--- tt.regen.health = 9
 tt.melee.attacks[1].damage_min = 2
 tt.melee.attacks[1].damage_max = 4
+tt.motion.max_speed = 70
 tt = RT("re_warrior", "re_farmer")
 tt.info.portrait_idxs = {42, 39, 36}
 tt.unit.level = 3
 tt.health.hp_max = 90
 tt.health.armor = 0.2
--- tt.regen.health = 12
 tt.melee.attacks[1].damage_min = 3
 tt.melee.attacks[1].damage_max = 6
+tt.motion.max_speed = 75
 tt = RT("re_legionnaire", "re_farmer")
 tt.info.portrait_idxs = {43, 40, 37}
 tt.unit.level = 4
 tt.health.hp_max = 110
 tt.health.armor = 0.3
 tt.health_bar.offset = vec_2(0, ady(34))
--- tt.regen.health = 15
 tt.melee.attacks[1].damage_min = 6
 tt.melee.attacks[1].damage_max = 10
+tt.motion.max_speed = 80
 tt = RT("re_legionnaire_ranged", "re_legionnaire")
-
 AC(tt, "ranged")
-
 tt.unit.level = 5
+tt.motion.max_speed = 85
 tt.ranged.attacks[1].bullet = "spear_legionnaire"
 tt.ranged.attacks[1].shoot_time = fts(3)
 tt.ranged.attacks[1].cooldown = 1 + fts(12)
@@ -8882,7 +8879,7 @@ tt.sequence_groups = nil
 -- tt.user_selection.can_select_point_fn = scripts.power_hero_control.can_select_point
 
 -- E:set_template("user_power_1", E:get_template("power_thunder_control"))
-E:set_template("user_power_2", E:get_template("power_reinforcements_control"))
+-- E:set_template("user_power_2", E:get_template("power_reinforcements_control"))
 -- E:set_template("user_power_3", E:get_template("power_hero_control"))
 
 tt = RT("user_item_teleport_scroll", "user_item")

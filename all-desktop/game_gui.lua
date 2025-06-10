@@ -1377,7 +1377,8 @@ function game_gui:select_entity(e)
 		self:set_mode(GUI_MODE_RALLY_HERO)
 		self:select_hero(e.id)
     elseif e.controable then
-        self:set_mode(GUI_MODE_RALLY_CONTROABLE)
+        self.mode = GUI_MODE_RALLY_CONTROABLE
+        self.mouse_pointer:update_pointer(GUI_MODE_RALLY_HERO)
 	end
 
 	if game_gui.bag_button then
