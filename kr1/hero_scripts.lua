@@ -8738,9 +8738,9 @@ return function(scripts)
                             clone.hero.xp = this.hero.xp
                             clone.unit.damage_factor = 0.8
                             local r,g,b
-                            r = 255 * math.random()
-                            g = 255 * math.random()
-                            b = 255 * math.random()
+                            r = math.random(0,255)
+                            g = math.random(0,255)
+                            b = math.random(0,255)
                             clone.render.sprites[1].color = {r, g, b}
                             for sn, s in pairs(this.hero.skills) do
                                 clone.hero.skills[sn].level = s.level

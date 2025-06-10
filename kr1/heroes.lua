@@ -7138,11 +7138,11 @@ local function heroes()
     AC(tt, "tween")
     tt.clone = {}
     tt.clone.duration = nil
-    tt.render.sprites[1].shader = "p_tint"
-    tt.render.sprites[1].shader_args = {
-        tint_factor = 0.25,
-        tint_color = {0, 0.75, 1, 1}
-    }
+    -- tt.render.sprites[1].shader = "p_tint"
+    -- tt.render.sprites[1].shader_args = {
+    --     tint_factor = 0.25,
+    --     tint_color = {0, 0.75, 1, 1}
+    -- }
     tt.health.dead_lifetime = 3
     tt.sound_events.change_rally_point = "ElvesHeroDuraxTaunt"
     tt.sound_events.death = "ElvesHeroDuraxDeath"

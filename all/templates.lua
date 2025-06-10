@@ -1340,31 +1340,29 @@ E:add_comps(boss, "enemy", "motion", "nav_path", "main_script", "vis", "info", "
 boss.vis.flags = bor(F_ENEMY, F_BOSS)
 boss.info.fn = scripts.enemy_basic.get_info
 boss.ui.click_rect = r(-20, -5, 40, 90)
+boss.health.armor_resilience = 0.5
+
 tt = E:register_t("mega_spawner")
-
 E:add_comps(tt, "main_script", "editor", "editor_script")
-
 tt.main_script.insert = scripts.mega_spawner.insert
 tt.main_script.update = scripts.mega_spawner.update
 tt.manual_wave = nil
 tt.interrupt = false
 tt.editor_script.insert = scripts.editor_mega_spawner.insert
 tt.editor_script.remove = scripts.editor_mega_spawner.remove
+
 tt = E:register_t("background_sounds")
-
 E:add_comps(tt, "main_script")
-
 tt.main_script.update = scripts.background_sounds.insert
 tt.main_script.update = scripts.background_sounds.update
 tt.min_delay = 15
 tt.max_delay = 25
 tt.sounds = {}
-tt = E:register_t("user_item")
 
+tt = E:register_t("user_item")
 E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
 
 tt = E:register_t("power_fireball_control")
-
 E:add_comps(tt, "user_power", "pos", "main_script", "user_selection")
 
 tt.main_script.update = scripts.power_fireball_control.update
@@ -1373,6 +1371,7 @@ tt.max_spread = 20
 tt.fireball_count = 3
 tt.cataclysm_count = 0
 tt.user_selection.can_select_point_fn = scripts.power_fireball_control.can_select_point
+
 tt = E:register_t("power_fireball", "bullet")
 tt.bullet.min_speed = 0
 tt.bullet.max_speed = 15 * FPS
@@ -1389,17 +1388,18 @@ tt.main_script.update = scripts.power_fireball.update
 tt.scorch_earth = false
 tt.sound_events.insert = "FireballRelease"
 tt.sound_events.hit = "FireballHit"
+
 tt = E:register_t("fx_fireball_explosion", "fx")
 tt.render.sprites[1].name = "fireball_explosion"
 tt.render.sprites[1].anchor.y = 0.15
 tt.render.sprites[1].z = Z_OBJECTS
+
 tt = E:register_t("decal_fireball_shadow", "decal")
 tt.render.sprites[1].name = "fireball_shadow"
 tt.render.sprites[1].loop = false
+
 tt = E:register_t("power_scorched_water", "aura")
-
 E:add_comps(tt, "render", "tween")
-
 tt.main_script.update = scripts.aura_apply_damage.update
 tt.aura.duration = 5
 tt.aura.radius = 65
