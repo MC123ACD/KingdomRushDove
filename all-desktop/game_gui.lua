@@ -1014,7 +1014,7 @@ function game_gui:keypressed(key, isrepeat)
             self:deselect_controables()
         else
             for _, e in pairs(self.game.simulation.store.entities) do
-                if e.controable then
+                if e.controable and not e.health.dead then
                     self:select_controable(e)
                 end
             end
