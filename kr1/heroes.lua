@@ -6768,7 +6768,7 @@ local function heroes()
     tt.bullet.shoot_fx = "fx_shot_wilbur_flash"
     tt.bullet.flight_time = fts(8)
     tt.bullet.damage_type = DAMAGE_TRUE
-    tt.bullet.xp_gain_factor = 1.8
+    tt.bullet.xp_gain_factor = 1.6
     tt.main_script.update = scripts.shot_wilbur.update
     tt.render = nil
 

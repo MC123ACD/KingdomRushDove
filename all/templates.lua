@@ -1178,8 +1178,8 @@ tt.info.enc_icon = 65
 tt.main_script.insert = scripts.enemy_basic.insert
 tt.main_script.update = scripts.enemy_mixed.update
 tt.melee.attacks[1].cooldown = 2
-tt.melee.attacks[1].damage_max = IS_KR1 and 45 or 55
-tt.melee.attacks[1].damage_min = IS_KR1 and 35 or 45
+tt.melee.attacks[1].damage_max = 45
+tt.melee.attacks[1].damage_min = 35
 tt.melee.attacks[1].hit_time = fts(12)
 tt.moon.speed_factor = 2
 tt.motion.max_speed = 0.45 * FPS
@@ -1194,12 +1194,12 @@ tt.unit.marker_offset = v(0, 2)
 tt.unit.mod_offset = v(0, 30)
 tt.unit.hide_after_death = true
 tt.unit.size = UNIT_SIZE_MEDIUM
-tt.vis.bans = bor(F_POISON)
+tt.vis.bans = F_POISON
 
 tt = E:register_t("aura_abomination", "aura")
 E:add_comps(tt, "render", "tween")
 tt.aura.active = false
-tt.aura.allowed_templates = {"enemy_halloween_zombie", "enemy_zombie_blackburn"}
+tt.aura.allowed_templates = {"enemy_halloween_zombie", "enemy_zombie_blackburn","enemy_cannibal_zombie"}
 tt.aura.cooldown = 0
 tt.aura.delay = fts(30)
 tt.aura.duration = -1
