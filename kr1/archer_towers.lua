@@ -267,9 +267,7 @@ local function archer_towers()
     axe_totem.sound_events.insert = "AxeSound"
 
     local mod_silence_totem = E:register_t("mod_silence_totem", "modifier")
-
     E:add_comps(mod_silence_totem, "render")
-
     mod_silence_totem.modifier.duration = 3
     mod_silence_totem.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal"}
     mod_silence_totem.modifier.remove_banned = true

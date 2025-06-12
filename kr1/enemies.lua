@@ -1103,6 +1103,7 @@ local function enemies()
     image_x = 52
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_goblin_zapper_death"
+    tt.unit.explode_when_silenced_death = true
     tt.death_spawns.delay = 0.11
     tt.enemy.gold = 10
     tt.enemy.melee_slot = vec_2(18, 0)
@@ -1124,7 +1125,6 @@ local function enemies()
     tt.ranged.attacks[1].max_range = 165
     tt.ranged.attacks[1].min_range = 60
     tt.ranged.attacks[1].shoot_time = fts(7)
-    tt.ranged.attacks[1].requires_magic = true
     tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
     tt.render.sprites[1].prefix = "enemy_goblin_zapper"
     tt.sound_events.death = "BombExplosionSound"
@@ -1142,6 +1142,7 @@ local function enemies()
     image_y = 38
     image_x = 44
     tt.death_spawns.concurrent_with_death = true
+    tt.unit.disintegrate_when_silenced_death = true
     tt.death_spawns.name = "aura_demon_death"
     tt.death_spawns.delay = 0.11
     tt.enemy.gold = 20
@@ -1177,6 +1178,7 @@ local function enemies()
     image_x = 58
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_demon_mage_death"
+    tt.unit.disintegrate_when_silenced_death = true
     tt.death_spawns.delay = 0.11
     tt.enemy.gold = 60
     tt.enemy.lives_cost = 5
@@ -1227,6 +1229,7 @@ local function enemies()
     image_x = 58
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_demon_wolf_death"
+    tt.unit.disintegrate_when_silenced_death = true
     tt.death_spawns.delay = 0.11
     tt.dodge.chance = 0.5
     tt.dodge.silent = true
@@ -1381,6 +1384,7 @@ local function enemies()
     image_x = 90
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_rotten_lesser_death"
+    tt.unit.disintegrate_when_silenced_death = true
     tt.enemy.gold = 20
     tt.enemy.melee_slot = vec_2(26, 0)
     tt.health.hp_max = 500
@@ -1787,7 +1791,6 @@ local function enemies()
     tt.ranged.attacks[1].max_range = 150
     tt.ranged.attacks[1].min_range = 50
     tt.ranged.attacks[1].shoot_time = fts(9)
-    tt.ranged.attacks[1].requires_magic = true
     tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
     tt.render.sprites[1].prefix = "enemy_demon_flareon"
     tt.render.sprites[1].offset.y = 1
@@ -1798,6 +1801,7 @@ local function enemies()
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(0, 12)
     tt.unit.show_blood_pool = false
+    tt.unit.disintegrate_when_silenced_death = true
     tt.is_demon = true
 
     tt = RT("enemy_demon_legion", "enemy")
@@ -1808,6 +1812,7 @@ local function enemies()
     anchor_x = 0.5
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_demon_death"
+    tt.unit.disintegrate_when_silenced_death = true
     tt.enemy.gold = 60
     tt.enemy.melee_slot = vec_2(23, 0)
     tt.health.armor = 0.8
@@ -1857,6 +1862,7 @@ local function enemies()
     image_x = 108
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_gulaemon_death"
+    tt.unit.disintegrate_when_silenced_death = true
     tt.enemy.gold = 80
     tt.enemy.lives_cost = 2
     tt.enemy.melee_slot = vec_2(28, 0)
@@ -1973,6 +1979,7 @@ local function enemies()
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_demon_cerberus_death"
     tt.death_spawns.delay = 0.11
+    tt.unit.disintegrate_when_silenced_death = true
     tt.enemy.gold = 350
     tt.enemy.lives_cost = 5
     tt.enemy.melee_slot = vec_2(41, 0)
@@ -4612,6 +4619,7 @@ local function enemies()
     tt.death_spawns.name = "blazefang_explosion"
     tt.death_spawns.quantity = 1
     tt.death_spawns.concurrent_with_death = true
+    tt.unit.explode_when_silenced_death = true
     tt.enemy.gold = 40
     tt.enemy.lives_cost = 2
     tt.enemy.melee_slot = vec_2(25, 0)
@@ -7082,6 +7090,7 @@ local function enemies()
     tt.info.portrait = "kr3_portraits_sc_0017"
     tt.death_spawns.concurrent_with_death = true
     tt.death_spawns.name = "aura_boomshrooms_death"
+    tt.unit.explode_when_silenced_death = true
     tt.enemy.gold = 6
     tt.enemy.melee_slot = vec_2(25, 0)
     tt.health.hp_max = 75

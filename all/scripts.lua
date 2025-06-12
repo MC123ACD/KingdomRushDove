@@ -4737,7 +4737,6 @@ function scripts.mod_track_target.update(this, store, script)
 
     if not target or not target.pos then
         queue_remove(store, this)
-
         return
     end
 
@@ -5481,9 +5480,14 @@ end
 scripts.remove_silence = function(target)
     if target then
         target.silence_cast_count = target.silence_cast_count - 1
-        if target.enemy and target.silence_cast_count < 1 then
-            target.enemy.can_do_magic = true
-            target.enemy.can_accept_magic = true
+        if target.enemy then
+            if target.health.dead then
+                target.enemy.can_do_magic = false
+                target.enemy.can_accept_magic = false
+            elseif target.silence_cast_count < 1 then
+                target.enemy.can_do_magic = true
+                target.enemy.can_accept_magic = true
+            end
         end
     end
 end

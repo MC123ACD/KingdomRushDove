@@ -2698,7 +2698,7 @@ local function y_enemy_death(store, this)
 
 	local terrain_type = band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_TYPES_MASK)
 
-	if band(this.health.last_damage_types, bor(DAMAGE_EXPLOSION, DAMAGE_INSTAKILL, DAMAGE_FX_EXPLODE, DAMAGE_SHOT)) ~= 0 and band(this.health.last_damage_types, bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_DISINTEGRATE)) == 0 and this.unit.can_explode and this.unit.explode_fx and band(terrain_type, TERRAIN_WATER) == 0 then
+	if (band(this.health.last_damage_types, bor(DAMAGE_EXPLOSION, DAMAGE_INSTAKILL, DAMAGE_FX_EXPLODE, DAMAGE_SHOT)) ~= 0 and band(this.health.last_damage_types, bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_DISINTEGRATE)) == 0 and this.unit.can_explode) or (this.unit.explode_when_silenced_death and not this.enemy.can_do_magic) and this.unit.explode_fx and band(terrain_type, TERRAIN_WATER) == 0 then
 		S:queue(this.sound_events.death_by_explosion)
 
 		local fx = E:create_entity(this.unit.explode_fx)
@@ -2711,7 +2711,7 @@ local function y_enemy_death(store, this)
 		show_blood_pool(this, terrain_type)
 
 		this.unit.hide_during_death = true
-	elseif band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE)) ~= 0 and this.unit.can_disintegrate and this.unit.disintegrate_fx then
+	elseif (band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE)) ~= 0 or this.unit.disintegrate_when_silenced_death and not this.enemy.can_do_magic) and this.unit.can_disintegrate and this.unit.disintegrate_fx then
 		local fx = E:create_entity(this.unit.disintegrate_fx)
 
 		fx.pos.x, fx.pos.y = this.pos.x, this.pos.y

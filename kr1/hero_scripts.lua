@@ -6175,7 +6175,6 @@ return function(scripts)
 
                 queue_insert(store, sm)
 
-                -- if band(target.vis.flags, F_SPELLCASTER) ~= 0 then
                 scripts.cast_silence(target)
 
                 local s = this.render.sprites[1]
@@ -6204,11 +6203,7 @@ return function(scripts)
 
             return false
         end,
-        remove = function(this, store)
-            local target = store.entities[this.modifier.target_id]
-            scripts.remove_silence(target)
-            return true
-        end
+        remove = scripts.mod_silence.remove
     }
     -- 艾利丹
     scripts.hero_elves_archer = {
@@ -7637,7 +7632,7 @@ return function(scripts)
         scripts.remove_silence(target)
         return true
     end
-
+    
     -- 威尔伯
     scripts.hero_wilbur = {}
 

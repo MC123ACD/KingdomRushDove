@@ -1162,6 +1162,7 @@ tt.auras.list[2].cooldown = 0
 tt.auras.list[2].name = "aura_abomination"
 tt.death_spawns.name = "abomination_explosion_aura"
 tt.death_spawns.concurrent_with_death = true
+tt.unit.disintegrate_when_silenced_death = true
 tt.enemy.lives_cost = 3
 tt.enemy.gold = 50
 tt.enemy.melee_slot = v(38, 0)
