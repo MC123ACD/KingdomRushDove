@@ -7504,6 +7504,7 @@ local function heroes()
     tt.stone_extra_per_stone = 0
     tt.melee_raw_min = 0
     tt.melee_raw_max = 0
+
     tt = E:register_t("ray_arivan_simple", "bullet")
     tt.bullet.damage_type = DAMAGE_TRUE
     tt.bullet.damage_max = nil
@@ -7602,7 +7603,7 @@ local function heroes()
     tt.render.sprites[1].hide_after_runs = 1
     tt.render.sprites[1].hidden = true
     tt.render.sprites[1].anchor.y = 0.083333333333333
-    tt.owner_vis_bans = bor(F_MOD, F_POISON, F_DRIDER_POISON)
+    tt.owner_vis_bans = bor(F_BURN, F_POISON, F_DRIDER_POISON, F_STUN, F_NET)
     tt.rot_speed = 3 * FPS * math.pi / 180
     tt.rot_radius = 25
 

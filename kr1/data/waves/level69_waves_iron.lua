@@ -1,7 +1,7 @@
 ﻿-- chunkname: @./kr3/data/waves/level21_waves_iron.lua
 
 return {
-	cash = 1500,
+	cash = 1600,
 	groups = {
 		{
 			interval = 800,

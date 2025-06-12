@@ -1157,7 +1157,6 @@ image_y = 115
 tt.auras.list[1] = E:clone_c("aura_attack")
 tt.auras.list[1].name = "moon_enemy_aura"
 tt.auras.list[1].cooldown = 0
--- end
 tt.auras.list[2] = E:clone_c("aura_attack")
 tt.auras.list[2].cooldown = 0
 tt.auras.list[2].name = "aura_abomination"
