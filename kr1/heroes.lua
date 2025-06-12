@@ -3581,7 +3581,7 @@ local function heroes()
     tt.unit.hide_after_death = true
     tt.unit.marker_offset = vec_2(0, -0.15)
     tt.unit.mod_offset = vec_2(0, 134.85)
-    tt.vis.bans = bor(tt.vis.bans, F_EAT, F_NET, F_POISON)
+    tt.vis.bans = bor(tt.vis.bans, F_EAT, F_NET, F_POISON, F_BURN)
     tt.vis.flags = bor(tt.vis.flags, F_FLYING)
     tt.ranged.attacks[1] = E:clone_c("bullet_attack")
     tt.ranged.attacks[1].bullet = "fireball_dragon"

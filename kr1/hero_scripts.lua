@@ -7524,7 +7524,7 @@ return function(scripts)
             this.armor_reduction = this.armor_reduction + 0.5 * this.magic_armor_reduction
         end
         this.magic_armor_reduction = this.magic_armor_reduction * (1 - target.health.armor_resilience)
-        this.armor_reduction = this.armor_reduction * (1 - target.health.magic_armor_resilience)
+        this.armor_reduction = this.armor_reduction * (1 - target.health.armor_resilience)
         SU.armor_dec(target, this.armor_reduction)
         SU.magic_armor_dec(target, this.magic_armor_reduction)
 
@@ -7632,7 +7632,7 @@ return function(scripts)
         scripts.remove_silence(target)
         return true
     end
-    
+
     -- 威尔伯
     scripts.hero_wilbur = {}
 
