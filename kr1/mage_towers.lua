@@ -302,9 +302,7 @@ local function mage_towers()
     tower_archmage.attacks.list[1].cooldown = 1.1
     tower_archmage.attacks.list[1].shoot_time = fts(19)
     tower_archmage.attacks.list[1].max_stored_bullets = 5
-    tower_archmage.attacks.list[1].storage_offsets = { -- vec_2(3, 81),
-    -- vec_2(-20, 58),
-    -- vec_2(24, 56),
+    tower_archmage.attacks.list[1].storage_offsets = {
     vec_2(3, 81), vec_2(-8.5, 58), vec_2(13.5, 56), vec_2(-20, 69.5), vec_2(24, 68.5)}
     tower_archmage.attacks.list[1].payload_chance = 0.4
     tower_archmage.attacks.list[1].payload_bullet = "bolt_blast"

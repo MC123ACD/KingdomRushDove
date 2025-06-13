@@ -1234,37 +1234,24 @@ tt.dps.damage_every = 1
 tt.max_times_applied = 1
 
 tt = E:register_t("enemy_werewolf", "enemy")
-
 E:add_comps(tt, "melee", "moon", "auras", "regen")
-
 anchor_y = 0.18181818181818182
 image_y = 66
 tt.auras.list[1] = E:clone_c("aura_attack")
 tt.auras.list[1].name = "werewolf_regen_aura"
 tt.auras.list[1].cooldown = 0
-
--- if IS_KR2 then
 tt.auras.list[2] = E:clone_c("aura_attack")
 tt.auras.list[2].name = "moon_enemy_aura"
 tt.auras.list[2].cooldown = 0
--- end
-
 tt.enemy.gold = 25
 tt.enemy.melee_slot = v(24, 0)
 tt.health.armor = 0
 tt.health.hp_max = 700
 tt.health.magic_armor = 0.3
 tt.health_bar.offset = v(0, 38)
-
-if IS_KR1 then
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_WEREWOLF"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0089" or "info_portraits_sc_0089"
-    tt.info.enc_icon = 67
-elseif IS_KR2 then
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0084" or "info_portraits_enemies_0065"
-    tt.info.enc_icon = 50
-end
-
+tt.info.i18n_key = "ENEMY_HALLOWEEN_WEREWOLF"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0089" or "info_portraits_sc_0089"
+tt.info.enc_icon = 67
 tt.main_script.insert = scripts.enemy_basic.insert
 tt.main_script.update = scripts.enemy_mixed.update
 tt.melee.attacks[1].cooldown = 1
@@ -1276,7 +1263,7 @@ tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1.3 * FPS
 tt.render.sprites[1].prefix = "enemy_werewolf"
 tt.render.sprites[1].anchor.y = anchor_y
 tt.regen.cooldown = 0.25
--- tt.regen.health = 2
+tt.regen.health = 2
 tt.unit.blood_color = BLOOD_RED
 tt.unit.hit_offset = v(0, 14)
 tt.unit.marker_offset = v(0, 0)
@@ -1286,30 +1273,19 @@ tt = E:register_t("enemy_halloween_zombie", "enemy")
 E:add_comps(tt, "melee", "moon")
 anchor_y = 0.18
 image_y = 50
-
--- if IS_KR2 then
 E:add_comps(tt, "auras")
 tt.auras.list[1] = E:clone_c("aura_attack")
 tt.auras.list[1].name = "moon_enemy_aura"
 tt.auras.list[1].cooldown = 0
--- end
-
 tt.enemy.gold = 7
 tt.enemy.melee_slot = v(18, 0)
 tt.health.armor = 0
 tt.health.hp_max = 360
 tt.health.magic_armor = 0
 tt.health_bar.offset = v(0, 32)
-
-if IS_KR1 then
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
-    tt.info.enc_icon = 60
-elseif IS_KR2 then
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0081" or "info_portraits_enemies_0050"
-    tt.info.enc_icon = 53
-end
-
+tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
+tt.info.enc_icon = 60
 tt.main_script.insert = scripts.enemy_basic.insert
 tt.main_script.update = scripts.enemy_mixed.update
 tt.melee.attacks[1].cooldown = 1.2
@@ -1320,11 +1296,7 @@ tt.melee.attacks[1].sound = "HWZombieAmbient"
 tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 0.4 * FPS
 tt.moon.speed_factor = 2
 tt.render.sprites[1].prefix = "enemy_halloween_zombie"
-
-if IS_KR1 then
-    tt.render.sprites[1].name = "raise"
-end
-
+tt.render.sprites[1].name = "raise"
 tt.render.sprites[1].anchor.y = anchor_y
 tt.unit.blood_color = BLOOD_GREEN
 tt.unit.hit_offset = v(0, 12)
@@ -1333,19 +1305,14 @@ tt.unit.mod_offset = v(0, 12)
 tt.sound_events.death = "DeathSkeleton"
 tt.sound_events.insert = "HWZombieAmbient"
 tt.vis.bans = bor(F_POISON)
+
 tt = E:register_t("enemy_lycan", "enemy")
-
 E:add_comps(tt, "melee", "moon", "auras")
-
 anchor_y = 0.14516129032258066
 image_y = 62
-
--- if IS_KR2 then
 tt.auras.list[1] = E:clone_c("aura_attack")
 tt.auras.list[1].name = "moon_enemy_aura"
 tt.auras.list[1].cooldown = 0
--- end
-
 tt.enemy.gold = 65
 tt.enemy.melee_slot = v(18, 0)
 tt.health.armor = 0
@@ -1353,16 +1320,9 @@ tt.health.hp_max = 400
 tt.health.magic_armor = 0.3
 tt.health.on_damage = scripts.enemy_lycan.on_damage
 tt.health_bar.offset = v(0, 37)
-
-if IS_KR1 then
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0091" or "info_portraits_sc_0091"
-    tt.info.enc_icon = 68
-elseif IS_KR2 then
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0085" or "info_portraits_enemies_0051"
-    tt.info.enc_icon = 55
-end
-
+tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0091" or "info_portraits_sc_0091"
+tt.info.enc_icon = 68
 tt.main_script.insert = scripts.enemy_basic.insert
 tt.main_script.update = scripts.enemy_mixed.update
 tt.melee.attacks[1].cooldown = 1
@@ -1379,22 +1339,17 @@ tt.unit.marker_offset = v(0, 0)
 tt.unit.mod_offset = v(0, 14)
 tt.sound_events.death = nil
 tt.lycan_trigger_factor = 0.25
+
 tt = E:register_t("enemy_lycan_werewolf", "enemy")
-
 E:add_comps(tt, "melee", "moon", "auras", "regen")
-
 anchor_y = 0.18181818181818182
 image_y = 66
 tt.auras.list[1] = E:clone_c("aura_attack")
 tt.auras.list[1].name = "werewolf_regen_aura"
 tt.auras.list[1].cooldown = 0
-
--- if IS_KR2 then
 tt.auras.list[2] = E:clone_c("aura_attack")
 tt.auras.list[2].name = "moon_enemy_aura"
 tt.auras.list[2].cooldown = 0
--- end
-
 tt.enemy.gold = 65
 tt.enemy.melee_slot = v(24, 0)
 tt.health.armor = 0
@@ -1402,15 +1357,8 @@ tt.health.hp_max = 1100
 tt.health.magic_armor = 0.6
 tt.health_bar.offset = v(0, 47)
 tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-
-if IS_KR1 then
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0092" or "info_portraits_sc_0091"
-elseif IS_KR2 then
-    tt.info.i18n_key = "ENEMY_LYCAN"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_enemies_0051"
-end
-
+tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0092" or "info_portraits_sc_0091"
 tt.main_script.insert = scripts.enemy_basic.insert
 tt.main_script.update = scripts.enemy_mixed.update
 tt.melee.attacks[1].cooldown = 1
@@ -1425,7 +1373,7 @@ tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 2 * FPS
 tt.render.sprites[1].prefix = "enemy_lycan_werewolf"
 tt.render.sprites[1].anchor.y = anchor_y
 tt.regen.cooldown = 0.25
--- tt.regen.health = 4
+tt.regen.health = 4
 tt.ui.click_rect = r(-20, -10, 40, 50)
 tt.unit.blood_color = BLOOD_RED
 tt.unit.hit_offset = v(0, 22)
@@ -1433,18 +1381,16 @@ tt.unit.marker_offset = v(0, 0)
 tt.unit.mod_offset = v(0, 22)
 tt.unit.size = UNIT_SIZE_MEDIUM
 tt.sound_events.insert = "HWAlphaWolf"
+
 tt = E:register_t("user_item_atomic_bomb")
-
 E:add_comps(tt, "user_item", "pos", "main_script", "user_selection")
-
 tt.main_script.update = scripts.user_item_atomic_bomb.update
 tt.plane_transit_duration = 5
 tt.plane_dest = nil
 tt.bomb_dest = nil
+
 tt = E:register_t("decal_atomic_bomb_plane", "decal_scripted")
-
 E:add_comps(tt, "motion", "sound_events")
-
 tt.render.sprites[1].name = "atomicBomb_plane"
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].z = Z_OBJECTS_SKY
