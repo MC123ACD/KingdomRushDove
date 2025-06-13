@@ -1888,7 +1888,8 @@ local function register_mage(scripts)
                     if pow_d.changed then
                         pow_d.changed = nil
                         if pow_d.level == 1 then
-                            ad.ts = store.tick_ts
+                            -- ad.ts = store.tick_ts
+                            ad.ts = -20
                             base_damage = ray_damage_min
                         elseif pow_d.level == 2 then
                             base_damage = (ray_damage_min + ray_damage_max) * 0.5
@@ -1946,6 +1947,24 @@ local function register_mage(scripts)
                     end
                 end
                 ::continue::
+                if (ad.ts <= last_ts - ad.cooldown + a.min_cooldown) or (store.tick_ts + a.min_cooldown - ad.ts >= ad.cooldown) and pow_d.level > 0 then
+                    local mod = E:create_entity("decalmod_arcane_wizard_disintegrate_ready")
+                    mod.modifier.target_id = this.id
+                    mod.modifier.source_id = this.id
+                    mod.pos = this.pos
+                    queue_insert(store, mod)
+                    this.decalmod_disintegrate_ready = true
+                elseif this.decalmod_disintegrate_ready then
+                    local mods = table.filter(store.entities, function(_, e)
+                        return e.modifier and e.modifier.source_id == this.id and e.template_name ==
+                                   "decalmod_arcane_wizard_disintegrate_ready"
+                    end)
+
+                    for _, m in pairs(mods) do
+                        queue_remove(store, m)
+                    end
+                    this.decalmod_disintegrate_ready = false
+                end
                 if store.tick_ts - ar.ts > this.tower.long_idle_cooldown then
                     local an, af = U.animation_name_facing_point(this, "idle", this.tower.long_idle_pos, shooter_sid)
                     U.animation_start(this, an, af, store.tick_ts, true, shooter_sid)

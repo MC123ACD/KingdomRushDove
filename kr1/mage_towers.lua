@@ -131,6 +131,36 @@ local function mage_towers()
     tt.nodes_offset_max = -17
     tt.nodes_offset_inc = -5
 
+    tt = RT("decalmod_arcane_wizard_disintegrate_ready", "modifier")
+    E:add_comps(tt, "render", "tween")
+    tt.main_script.insert = scripts.mod_tower_decal.insert
+    tt.main_script.remove = scripts.mod_tower_decal.remove
+    tt.tween.remove = false
+    tt.tween.props[1].name = "scale"
+    tt.tween.props[1].loop = true
+    tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(1, 1)}, {1, vec_2(1, 1)}}
+    -- tt.render.sprites[1].name = "CossbowHunter_towerBuff"
+    -- tt.render.sprites[1].animated = false
+    -- tt.render.sprites[1].anchor.y = 0.21
+    -- tt.render.sprites[1].z = Z_TOWER_BASES + 1
+
+    for i, p in ipairs({vec_2(22, 45),vec_2(31,40), vec_2(40, 35),vec_2(49,32.5), vec_2(58, 30),vec_2(67.5,32.5), vec_2(77, 35),vec_2(86,40), vec_2(95, 45)}) do
+        tt.render.sprites[i] = E:clone_c("sprite")
+        tt.render.sprites[i].prefix = "crossbow_eagle_buff"
+        tt.render.sprites[i].name = "idle"
+        tt.render.sprites[i].anchor.y = 0.21
+        tt.render.sprites[i].offset = vec_2(p.x - 58, p.y - 27)
+        tt.render.sprites[i].ts = math.random()
+    end
+
+    -- tt.render.sprites[1].offset = vec_1(0)
+    for _, sprite in ipairs(tt.render.sprites) do
+        sprite.offset.y = sprite.offset.y + 10  -- 向上平移 10 单位
+        sprite.color = {120,0,255}
+        -- sprite.scale = vec_2(1.2, 1.2)  -- 放大 20%
+    end
+
+
     tt = RT("tower_sorcerer", "tower_mage_1")
     AC(tt, "attacks", "powers", "barrack")
     image_y = 74

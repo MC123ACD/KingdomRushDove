@@ -1332,10 +1332,9 @@ tt.tween.props[1].name = "alpha"
 tt.tween.props[1].keys = {{fts(0), 0}, {fts(30), 255}}
 tt.tween.props[1].loop = false
 tt.tween.props[1].sprite_id = 2
+
 tt = E:register_t("burning_floor_controller")
-
 E:add_comps(tt, "main_script")
-
 tt.main_script.update = scripts.burning_floor_controller.update
 tt = E:register_t("aura_demon_cerberus_death", "aura_demon_death")
 tt.aura.damage_min = 666

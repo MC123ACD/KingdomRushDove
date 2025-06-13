@@ -5125,6 +5125,7 @@ function scripts.mod_dps.insert(this, store, script)
     return true
 end
 
+
 function scripts.mod_dps.update(this, store, script)
     local cycles, total_damage = 0, 0
     local m = this.modifier
@@ -5153,7 +5154,6 @@ function scripts.mod_dps.update(this, store, script)
 
     if not target then
         queue_remove(store, this)
-
         return
     end
 

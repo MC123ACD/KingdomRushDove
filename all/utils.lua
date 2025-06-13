@@ -1288,7 +1288,11 @@ function U.predict_damage(entity, damage)
     local d = damage
 
     if band(d.damage_type, bor(DAMAGE_INSTAKILL, DAMAGE_EAT)) ~= 0 then
-        return math.ceil(e.health.hp * (1 - e.health.instakill_resistance) * e.health.damage_factor)
+        if e.health.damage_factor > 1 then
+            return math.ceil(e.health.hp * (1 - e.health.instakill_resistance) * e.health.damage_factor)
+        else
+            return math.ceil(e.health.hp * (1 - e.health.instakill_resistance))
+        end
     end
 
     local protection

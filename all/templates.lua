@@ -533,11 +533,8 @@ tt.coin_tween_time = {fts(7), fts(10)}
 tt.coin_tween_x_offset = {13, 25}
 
 local modifier = E:register_t("modifier")
-
 E:add_comps(modifier, "pos", "modifier", "sound_events", "main_script")
-
 tt = E:register_t("mod_blood", "modifier")
-
 E:add_comps(tt, "dps")
 
 tt.modifier.level = 1
