@@ -353,13 +353,19 @@ local function register_archer(scripts)
                                 local seeker_idx = km.zmod(shooter_idx + 1, #shooter_sids)
                                 local an, af, ai = shot_animation(ax, shooter_idx, enemy)
 
+                                local m = E:create_entity("mod_van_helsing_crosshair")
+                                m.modifier.source_id = this.id
+                                m.modifier.target_id = enemy.id
+                                m.render.sprites[1].ts = store.tick_ts
+                                queue_insert(store, m)
+
                                 shot_animation(ax, seeker_idx, enemy, ax.animation_seeker)
                                 U.y_wait(store, ax.shoot_time)
 
                                 if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= ax.range then
                                     shot_bullet(ax, shooter_idx, ai, enemy, pow_sn.level)
                                 end
-
+                                queue_remove(store, m)
                                 U.y_animation_wait(this, shooter_sids[shooter_idx])
                             end
                             ::continue_ax::

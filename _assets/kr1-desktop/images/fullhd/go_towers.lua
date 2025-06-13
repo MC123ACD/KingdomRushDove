@@ -46334,6 +46334,110 @@ local kr1_data = {
 		},
 		alias = {}
 	},
+    Halloween_hero_vhelsing_sniper_0001 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {9, 10, 9, 9},
+        a_size = {1024, 1024},
+        f_quad = {6, 936, 89, 88},
+        alias = {"Halloween_hero_vhelsing_sniper_0002"}
+    },
+    Halloween_hero_vhelsing_sniper_0003 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {13, 14, 13, 13},
+        a_size = {1024, 1024},
+        f_quad = {118, 411, 81, 80},
+        alias = {"Halloween_hero_vhelsing_sniper_0004"}
+    },
+    Halloween_hero_vhelsing_sniper_0005 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {19, 20, 19, 19},
+        a_size = {1024, 1024},
+        f_quad = {376, 949, 69, 68},
+        alias = {"Halloween_hero_vhelsing_sniper_0006"}
+    },
+    Halloween_hero_vhelsing_sniper_0007 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {23, 24, 23, 23},
+        a_size = {1024, 1024},
+        f_quad = {667, 705, 61, 60},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0008 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {27, 28, 27, 27},
+        a_size = {1024, 1024},
+        f_quad = {915, 944, 53, 52},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0009 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {29, 29, 28, 28},
+        a_size = {1024, 1024},
+        f_quad = {974, 886, 50, 50},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0010 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {29, 30, 30, 30},
+        a_size = {1024, 1024},
+        f_quad = {120, 688, 48, 47},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0011 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {30, 31, 30, 30},
+        a_size = {1024, 1024},
+        f_quad = {556, 64, 47, 46},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0012 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {30, 30, 30, 30},
+        a_size = {1024, 1024},
+        f_quad = {227, 116, 47, 47},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0013 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {107, 107},
+        trim = {29, 29, 28, 28},
+        a_size = {1024, 1024},
+        f_quad = {974, 944, 50, 50},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0014 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {27, 28, 27, 27},
+        a_size = {1024, 1024},
+        f_quad = {6, 6, 53, 52},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0015 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {28, 29, 28, 28},
+        a_size = {1024, 1024},
+        f_quad = {6, 411, 51, 50},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_sniper_0016 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {107, 107},
+        trim = {29, 30, 29, 29},
+        a_size = {1024, 1024},
+        f_quad = {64, 839, 49, 48},
+        alias = {}
+    },
 }
 
 local scaleFactor = 0.7
