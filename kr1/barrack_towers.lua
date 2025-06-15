@@ -604,7 +604,7 @@ local function barrack_towers()
     tt.revive.power_name = "holygrail"
     tt.revive.sound = "TemplarHolygrail"
     tt.revive.resist_stun = true
-    tt.revive.resist_stun_cost = 0.1
+    tt.revive.resist_stun_cost = 0.05
     tt.soldier.melee_slot_offset = vec_2(5, 0)
     tt.unit.marker_offset = vec_2(0, ady(7))
     tt.unit.mod_offset = vec_2(0, ady(23))

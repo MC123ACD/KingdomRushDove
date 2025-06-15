@@ -1444,6 +1444,12 @@ function scripts.soldier_barrack.update(this, store, script)
                 this.revive.protect = this.revive.protect - this.revive.resist_stun_cost
                 this.unit.is_stunned = nil
                 this.health.ignore_damage = true
+                local mods = table.filter(store.entities, function(k,v)
+                    return v.modifier and v.modifier.type == MOD_TYPE_STUN and v.modifier.target_id == this.id
+                end)
+                for _, m in pairs(mods) do
+                    queue_remove(store, m)
+                end
                 if r.fx then
                     local fx = E:create_entity(r.fx)
                     fx.pos = this.pos
