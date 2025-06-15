@@ -1439,7 +1439,38 @@ function scripts.soldier_barrack.update(this, store, script)
         end
 
         if this.unit.is_stunned then
-            SU.soldier_idle(store, this)
+            if this.revive and this.revive.resist_stun and this.revive.protect - this.revive.resist_stun_cost > 0 then
+                local r = this.revive
+                this.revive.protect = this.revive.protect - this.revive.resist_stun_cost
+                this.unit.is_stunned = nil
+                this.health.ignore_damage = true
+                if r.fx then
+                    local fx = E:create_entity(r.fx)
+                    fx.pos = this.pos
+                    fx.render.sprites[1].ts = store.tick_ts
+                    queue_insert(store, fx)
+                end
+
+                if r.animation then
+                    S:queue(r.sound)
+                    U.animation_start(this, r.animation, nil, store.tick_ts, false)
+
+                    r.ts = store.tick_ts
+
+                    while store.tick_ts - r.ts < r.hit_time do
+                        coroutine.yield()
+                    end
+                end
+
+                if r.animation then
+                    while not U.animation_finished(this) do
+                        coroutine.yield()
+                    end
+                end
+                this.health.ignore_damage = false
+            else
+                SU.soldier_idle(store, this)
+            end
         else
             SU.soldier_courage_upgrade(store, this)
 

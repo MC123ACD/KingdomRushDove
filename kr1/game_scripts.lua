@@ -1425,7 +1425,7 @@ function scripts.soldier_barbarian.on_power_upgrade(this, power_name, power)
 		this.soldier.melee_slot_offset = V.v(7, 0)
         this.melee.attacks[1].damage_type = DAMAGE_RUDE
         this.melee.attacks[2].damage_type = DAMAGE_RUDE
-        this.ranged.attacks[1].damage_type = DAMAGE_RUDE
+        this.ranged.attacks[1].bullet = "axe_barbarian_rude"
 	end
 end
 

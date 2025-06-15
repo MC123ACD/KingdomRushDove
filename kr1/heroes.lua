@@ -250,6 +250,7 @@ local function heroes()
     tt.bullet.damage_max = 50
     tt.bullet.damage_type = DAMAGE_TRUE
     tt.bullet.prediction_error = false
+    -- tt.bullet.mod = "mod_alleria_poison"
     tt.extra_arrows_range = 200
     tt.extra_arrows = 2
     tt.main_script.insert = scripts.arrow_multishot_hero_alleria.insert

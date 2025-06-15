@@ -86,6 +86,7 @@ local function barrack_towers()
     tt.melee.attacks[3].hit_time = fts(15)
     tt.melee.attacks[3].level = 0
     tt.melee.attacks[3].pop = nil
+    tt.melee.attacks[3].mod = "mod_paladin_silence"
     tt.melee.attacks[3].power_name = "holystrike"
     tt.melee.attacks[3].shared_cooldown = true
     tt.melee.attacks[3].signal = "holystrike"
@@ -126,6 +127,20 @@ local function barrack_towers()
     tt.modifier.duration = fts(1)
     tt.modifier.ban_types = {MOD_TYPE_POISON}
     tt.modifier.remove_banned = true
+
+    tt = E:register_t("mod_paladin_silence", "modifier")
+    E:add_comps(tt, "render")
+    tt.modifier.duration = 8
+    tt.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal"}
+    tt.modifier.remove_banned = true
+    tt.main_script.insert = scripts.mod_silence.insert
+    tt.main_script.remove = scripts.mod_silence.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.render.sprites[1].prefix = "vanhelsing_silence"
+    tt.render.sprites[1].size_names = {"small", "big", "big"}
+    tt.render.sprites[1].name = "small"
+    tt.render.sprites[1].loop = true
+    tt.render.sprites[1].sort_y_offset = -2
 
     tt = RT("tower_barbarian", "tower_barrack_1")
     AC(tt, "powers")
@@ -229,6 +244,9 @@ local function barrack_towers()
     tt.render.sprites[1].animated = false
     tt.bullet.pop = nil
     tt.sound_events.insert = "AxeSound"
+
+    tt = RT("axe_barbarian_rude", "axe_barbarian")
+    tt.bullet.damage_type = DAMAGE_RUDE
 
     tt = RT("tower_elf_holder")
     AC(tt, "tower", "tower_holder", "pos", "render", "ui", "info", "editor", "editor_script")
@@ -585,6 +603,8 @@ local function barrack_towers()
     tt.revive.hit_time = fts(10)
     tt.revive.power_name = "holygrail"
     tt.revive.sound = "TemplarHolygrail"
+    tt.revive.resist_stun = true
+    tt.revive.resist_stun_cost = 0.1
     tt.soldier.melee_slot_offset = vec_2(5, 0)
     tt.unit.marker_offset = vec_2(0, ady(7))
     tt.unit.mod_offset = vec_2(0, ady(23))

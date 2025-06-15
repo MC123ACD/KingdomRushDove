@@ -1012,10 +1012,8 @@ local function y_soldier_revive(store, this)
 	end
 
 	local r = this.revive
-    local chance = r.chance
-    if r.protect then
-        chance = chance + r.protect
-    end
+    local chance = r.chance + r.protect
+    
 	if math.random() < chance then
 		local r = this.revive
         r.protect = r.protect * 0.5

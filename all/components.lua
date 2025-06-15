@@ -816,6 +816,9 @@ revive.remove_modifiers = true
 revive.sound = nil
 revive.ts = 0
 revive.last_target_id = nil
+revive.resist_stun = false
+revive.resist_stun_cost = 0.1
+revive.protect = 0
 
 local death_spawns = E:register_c("death_spawns")
 

@@ -46438,6 +46438,294 @@ local kr1_data = {
         f_quad = {64, 839, 49, 48},
         alias = {}
     },
+    Halloween_hero_vhelsing_waterFx_big_0001 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {540, 239, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0002 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {622, 239, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0003 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 16, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 239, 76, 68},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0004 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 16, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {376, 239, 76, 68},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0005 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {704, 239, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0006 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {786, 239, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0007 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {868, 239, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0008 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 313, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0009 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 385, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0010 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 457, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0011 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 529, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0012 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 601, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0013 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 673, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0014 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 745, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0015 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 15, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {210, 831, 76, 69},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0016 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 15, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {210, 906, 76, 69},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0017 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 817, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_big_0018 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {87, 90},
+        trim = {3, 18, 8, 6},
+        a_size = {1024, 1024},
+        f_quad = {294, 889, 76, 66},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0001 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {777, 465, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0002 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {827, 465, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0003 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {877, 465, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0004 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {927, 465, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0005 = {
+        a_name = "go_hero_van_helsing-1.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {977, 465, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0006 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {892, 116, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0007 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {942, 116, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0008 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 301, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0009 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 346, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0010 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 391, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0011 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 436, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0012 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 481, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0013 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 526, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0014 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 571, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0015 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 616, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0016 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 661, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0017 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 706, 44, 39},
+        alias = {}
+    },
+    Halloween_hero_vhelsing_waterFx_small_0018 = {
+        a_name = "go_hero_van_helsing-2.png",
+        size = {56, 45},
+        trim = {4, 6, 8, 0},
+        a_size = {1024, 1024},
+        f_quad = {174, 751, 44, 39},
+        alias = {}
+    }
 }
 
 local scaleFactor = 0.7
