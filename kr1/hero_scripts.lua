@@ -1612,23 +1612,6 @@ return function(scripts)
     }
     -- 博林
     scripts.hero_bolin = {
-        get_info = function(this)
-            local a = this.timed_attacks.list[1]
-            local b = E:get_template(a.bullet)
-            local min, max = b.bullet.damage_min * this.unit.damage_factor,
-                b.bullet.damage_max * this.unit.damage_factor
-            return {
-                type = STATS_TYPE_SOLDIER,
-                hp = this.health.hp,
-                hp_max = this.health.hp_max,
-                damage_min = min,
-                damage_max = max,
-                damage_type = b.bullet.damage_type,
-                damage_icon = this.info.damage_icon,
-                armor = this.health.armor,
-                respawn = this.health.dead_lifetime
-            }
-        end,
         level_up = function(this, store)
             local hl, ls = level_up_basic(this)
 
@@ -1744,7 +1727,7 @@ return function(scripts)
                         if not nearest or #nearest < 1 then
                             SU.delay_attack(store, a, 0.5)
                         else
-                            local target_is_enemy = math.random() < 0.5
+                            local target_is_enemy = true
                             local mine_pos
                             if target_is_enemy then
                                 local _, enemy_pos = U.find_random_enemy_with_pos(store.entities, this.pos, a.min_range,

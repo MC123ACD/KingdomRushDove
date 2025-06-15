@@ -307,7 +307,6 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(60)
     tt.info.damage_icon = "shot"
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0003" or "heroPortrait_portraits_0003"
-    tt.info.fn = scripts.hero_bolin.get_info
     tt.info.i18n_key = "HERO_RIFLEMAN"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0003" or "info_portraits_hero_0002"
     tt.melee.range = 65
@@ -340,7 +339,7 @@ local function heroes()
     tt.timed_attacks.list[1].cooldown = 2
     tt.timed_attacks.list[1].shoot_times = {fts(10), fts(12), fts(12), fts(12), fts(12)}
     tt.timed_attacks.list[1].max_shoots = 5
-    tt.timed_attacks.list[1].min_range = 50
+    tt.timed_attacks.list[1].min_range = 40
     tt.timed_attacks.list[1].max_range = 200
     tt.timed_attacks.list[1].shoot_time = fts(2)
     tt.timed_attacks.list[1].vis_bans = 0
@@ -364,7 +363,8 @@ local function heroes()
     tt.timed_attacks.list[3].count = 5
     tt.timed_attacks.list[3].cooldown = 6 + fts(19)
     tt.timed_attacks.list[3].disabled = true
-    tt.timed_attacks.list[3].max_range = 10
+    tt.timed_attacks.list[3].min_range = 30
+    tt.timed_attacks.list[3].max_range = 200
     tt.timed_attacks.list[3].shoot_time = fts(3)
     tt.timed_attacks.list[3].node_offset = {-12, 12}
     -- 狂热射击

@@ -1039,6 +1039,7 @@ tt.main_script.update = scripts.ray_thor.update
 tt = RT("shotgun_bolin", "shotgun")
 tt.bullet.damage_max = 90
 tt.bullet.damage_min = 45
+tt.bullet.damage_type = bor(DAMAGE_SHOT, DAMAGE_NO_DODGE)
 tt.bullet.hit_blood_fx = "fx_blood_splat"
 tt.bullet.miss_fx = "fx_smoke_bullet"
 tt.bullet.start_fx = nil
