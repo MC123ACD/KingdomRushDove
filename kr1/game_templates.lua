@@ -5410,8 +5410,6 @@ tt.sound_events.custom_loop_end = "ElvesHeroBruceGuardianLionsLoopEnd"
 tt.tween.remove = false
 tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
 
-
-
 -- tt = E:register_t("hero_alleria", "stage_hero")
 
 -- E:add_comps(tt, "melee", "ranged")
