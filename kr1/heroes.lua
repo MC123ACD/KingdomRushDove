@@ -1275,6 +1275,13 @@ local function heroes()
     tt.hero.level_stats.hp_max = {425, 450, 475, 500, 525, 550, 575, 600, 625, 650}
     tt.hero.level_stats.melee_damage_max = {41, 45, 49, 53, 56, 60, 64, 68, 71, 75}
     tt.hero.level_stats.melee_damage_min = {18, 19, 20, 21, 23, 24, 25, 26, 27, 28}
+    tt.hero.skills.rage = CC("hero_skill")
+    tt.hero.skills.rage.rage_max = {30, 37, 45}
+    tt.hero.skills.rage.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
+    }
     tt.hero.skills.death_strike = CC("hero_skill")
     tt.hero.skills.death_strike.chance = {0.1, 0.15, 0.2}
     tt.hero.skills.death_strike.damage = {180, 260, 340}
@@ -1299,7 +1306,6 @@ local function heroes()
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
     tt.hero.fn_level_up = scripts.hero_oni.level_up
     tt.hero.tombstone_show_time = fts(150)
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0011" or "heroPortrait_portraits_0011"
     tt.info.i18n_key = "HERO_SAMURAI"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0013" or "info_portraits_hero_0013"
@@ -1361,6 +1367,8 @@ local function heroes()
     tt.timed_attacks.list[1].sound_hit = "HeroSamuraiTorment"
     tt.timed_attacks.list[1].vis_bans = bor(F_FLYING)
     tt.timed_attacks.list[1].torment_swords = {{0.01, 20, 8}, {0.2, 37.5, 8}, {0.3, 55, 8}}
+    tt.rage = 0
+    tt.rage_max = 0
 
     tt = RT("hero_hacksaw", "hero")
     AC(tt, "melee", "ranged")

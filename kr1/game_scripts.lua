@@ -3317,6 +3317,10 @@ function scripts.hero_oni.update(this, store)
 			SU.y_hero_death_and_respawn(store, this)
 		end
 
+        local rage = (this.health.hp_max - this.health.hp)/this.health.hp_max * this.rage_max
+        this.damage_buff = this.damage_buff - this.rage + rage
+        this.rage = rage
+
 		if this.unit.is_stunned then
 			SU.soldier_idle(store, this)
 		else
@@ -3371,9 +3375,11 @@ function scripts.hero_oni.update(this, store)
 
 						for _, target in pairs(targets) do
 							local d = SU.create_attack_damage(a, target.id, this.id)
+                            d.value = (d.value + this.damage_buff) * this.unit.damage_factor
                             if target.is_demon then
                                 d.value = d.value * 1.6
                             end
+
 							queue_damage(store, d)
 						end
 
