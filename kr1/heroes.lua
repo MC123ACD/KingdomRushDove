@@ -8639,7 +8639,7 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 23)
     tt.melee.attacks[1].cooldown = 1.5
     tt.melee.attacks[1].hit_time = fts(12)
-    tt.melee.attacks[1].xp_gain_factor = 4.1
+    tt.melee.attacks[1].xp_gain_factor = 4.3
     tt.melee.attacks[1].sound_hit = "ElvesHeroXinPoleHit"
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
