@@ -52,7 +52,7 @@ function difficulty:patch_templates()
     for _, t in pairs(E:filter_templates("enemy")) do
         if not PT(t.health, "hp_max") and hp_factor_enemy ~= 1 then
             if self.level == DIFFICULTY_IMPOSSIBLE and t.health.hp_max > 2000 then
-                t.health.instakill_resistance = 0.4
+                t.health.instakill_resistance = km.clamp(0,1,(t.health.hp_max - 2000)*0.0002)
             end
             t.health.hp_max = math.floor(t.health.hp_max * hp_factor_enemy)
         end
