@@ -7604,7 +7604,7 @@ local function heroes()
     tt.render.sprites[1].hide_after_runs = 1
     tt.render.sprites[1].hidden = true
     tt.render.sprites[1].anchor.y = 0.083333333333333
-    tt.owner_vis_bans = bor(F_BURN, F_POISON, F_DRIDER_POISON, F_STUN, F_NET)
+    tt.owner_vis_bans = bor(F_BURN, F_POISON, F_STUN, F_NET, F_BLOOD)
     tt.rot_speed = 3 * FPS * math.pi / 180
     tt.rot_radius = 25
 
@@ -8705,6 +8705,38 @@ local function heroes()
     tt.vis_bans = bor(F_FLYING)
     tt.entity = "soldier_xin_ultimate"
 
+    tt = E:register_t("mod_xin_stun", "mod_shock_and_awe")
+    tt.modifier.duration = 1.3
+    tt = E:register_t("mod_xin_inspire", "modifier")
+    E:add_comps(tt, "render")
+    tt.modifier.duration = nil
+    tt.modifier.use_mod_offset = false
+    tt.inflicted_damage_factor = 2
+    tt.main_script.insert = scripts.mod_damage_factors.insert
+    tt.main_script.remove = scripts.mod_damage_factors.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.render.sprites[1].name = "mod_xin_inspire"
+    tt.render.sprites[1].z = Z_DECALS
+
+    tt = E:register_t("mod_xin_mind_over_body", "modifier")
+    E:add_comps(tt, "render", "hps")
+    tt.hps.heal_min = nil
+    tt.hps.heal_max = nil
+    tt.hps.heal_every = nil
+    tt.main_script.insert = scripts.mod_hps.insert
+    tt.main_script.update = scripts.mod_hps.update
+    tt.modifier.duration = nil
+    tt.modifier.use_mod_offset = false
+    tt.modifier.remove_banned = true
+    tt.modifier.ban_types = {MOD_TYPE_BLEED, MOD_TYPE_POISON, MOD_TYPE_STUN}
+    tt.render.sprites[1].name = "fx_xin_drink_bubbles"
+    tt.render.sprites[1].draw_order = 10
+    tt.render.sprites[1].anchor.y = 0.25925925925925924
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].name = "xin_hero_drink_decal"
+    tt.render.sprites[2].animated = false
+    tt.render.sprites[2].z = Z_DECALS
+
     tt = E:register_t("hero_faustus", "hero")
     E:add_comps(tt, "ranged", "timed_attacks")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -8889,7 +8921,7 @@ local function heroes()
     tt.ultimate = {
         ts = 0,
         cooldown = 32,
-        disabled = true,
+        disabled = true
     }
 
     tt = E:register_t("bolt_faustus", "bolt_elves")

@@ -4797,7 +4797,7 @@ tt.unit.hit_offset = vec_2(0, 30)
 tt.unit.mod_offset = vec_2(0, 28)
 tt.unit.hide_after_death = true
 tt.vis.flags = bor(tt.vis.flags, F_HERO)
-tt.vis.bans = bor(F_POISON, F_NET, F_STUN, F_BURN, F_DRIDER_POISON)
+tt.vis.bans = bor(F_POISON, F_NET, F_STUN, F_BURN)
 tt = RT("rabbit_kamihare", "decal_scripted")
 
 AC(tt, "nav_path", "motion", "custom_attack")
@@ -7785,41 +7785,7 @@ tt.render.sprites[1].prefix = "stun"
 tt.render.sprites[1].size_names = {"small", "big", "big"}
 tt.render.sprites[1].name = "small"
 tt.render.sprites[1].draw_order = 10
-tt = E:register_t("mod_forest_circle", "modifier")
 
-E:add_comps(tt, "hps", "render")
-
-tt.render.sprites[1].name = "decal_mod_forest_circle"
-tt.render.sprites[1].z = Z_DECALS
-tt.render.sprites[2] = E:clone_c("sprite")
-tt.render.sprites[2].name = "forestKeeper_soldierBuff"
-tt.render.sprites[2].animated = false
-tt.render.sprites[2].sort_y_offset = -1
-tt.render.sprites[2].anchor.y = 0.21428571428571427
-tt.modifier.duration = 4
-tt.modifier.use_mod_offset = false
-tt.modifier.bans = {"mod_son_of_mactans_poison", "mod_drider_poison", "mod_dark_spitters", "mod_balrog"}
-tt.modifier.remove_banned = true
-tt.hps.heal_min = 0
-tt.hps.heal_max = 0
-tt.hps.heal_inc = 4
-tt.hps.heal_every = 0.2
-tt.main_script.insert = scripts.mod_hps.insert
-tt.main_script.update = scripts.mod_hps.update
-tt = E:register_t("mod_forest_eerie_slow", "mod_slow")
-tt.modifier.duration = 0.5
-tt.slow.factor = 0.5
-tt = E:register_t("mod_forest_eerie_dps", "modifier")
-
-E:add_comps(tt, "dps")
-
-tt.dps.damage_max = 2
-tt.dps.damage_min = 2
-tt.dps.damage_inc = 1
-tt.dps.damage_every = fts(5)
-tt.modifier.duration = 0.5
-tt.main_script.insert = scripts.mod_dps.insert
-tt.main_script.update = scripts.mod_dps.update
 tt = E:register_t("mod_plant_poison_pumpkin_slow", "mod_slow")
 tt.modifier.duration = 4
 tt.slow.factor = 0.5
@@ -7833,9 +7799,7 @@ tt.dps.kill = true
 tt.dps.damage_every = fts(3)
 tt.dps.damage_type = bor(DAMAGE_POISON, DAMAGE_MODIFIER)
 tt = RT("mod_life_drain_drow", "modifier")
-
 AC(tt, "render")
-
 tt.heal_factor = 1
 tt.heal_remove_modifiers = {"mod_drider_poison", "mod_son_of_mactans_poison"}
 tt.main_script.insert = scripts.mod_heal_on_damage.insert
@@ -7920,37 +7884,6 @@ tt.render.sprites[1].anchor.y = 0.1
 tt.render.sprites[1].sort_y_offset = -1
 tt.tween.remove = false
 tt.tween.props[1].keys = {{0, 0}, {0.15, 255}}
-tt = E:register_t("mod_xin_stun", "mod_shock_and_awe")
-tt.modifier.duration = 1.3
-tt = E:register_t("mod_xin_inspire", "modifier")
-E:add_comps(tt, "render")
-tt.modifier.duration = nil
-tt.modifier.use_mod_offset = false
-tt.inflicted_damage_factor = 2
-tt.main_script.insert = scripts.mod_damage_factors.insert
-tt.main_script.remove = scripts.mod_damage_factors.remove
-tt.main_script.update = scripts.mod_track_target.update
-tt.render.sprites[1].name = "mod_xin_inspire"
-tt.render.sprites[1].z = Z_DECALS
-
-tt = E:register_t("mod_xin_mind_over_body", "modifier")
-E:add_comps(tt, "render", "hps")
-tt.hps.heal_min = nil
-tt.hps.heal_max = nil
-tt.hps.heal_every = nil
-tt.main_script.insert = scripts.mod_hps.insert
-tt.main_script.update = scripts.mod_hps.update
-tt.modifier.duration = nil
-tt.modifier.use_mod_offset = false
-tt.modifier.remove_banned = true
-tt.modifier.ban_types = {MOD_TYPE_BLEED, MOD_TYPE_POISON, MOD_TYPE_STUN}
-tt.render.sprites[1].name = "fx_xin_drink_bubbles"
-tt.render.sprites[1].draw_order = 10
-tt.render.sprites[1].anchor.y = 0.25925925925925924
-tt.render.sprites[2] = E:clone_c("sprite")
-tt.render.sprites[2].name = "xin_hero_drink_decal"
-tt.render.sprites[2].animated = false
-tt.render.sprites[2].z = Z_DECALS
 
 tt = RT("mod_catha_curse", "mod_stun")
 tt.main_script.insert = scripts.mod_catha_curse.insert
@@ -8383,7 +8316,7 @@ tt = E:register_t("mod_drider_poison", "modifier")
 E:add_comps(tt, "render", "dps")
 
 tt.modifier.duration = 10
-tt.modifier.vis_flags = bor(F_MOD, F_DRIDER_POISON)
+tt.modifier.vis_flags = bor(F_MOD, F_POISON)
 tt.render.sprites[1].name = "mod_drider_poison"
 tt.main_script.insert = scripts.mod_dps.insert
 tt.main_script.update = scripts.mod_drider_poison.update

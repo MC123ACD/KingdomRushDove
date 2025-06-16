@@ -130,7 +130,7 @@ local function barrack_towers()
 
     tt = E:register_t("mod_paladin_silence", "modifier")
     E:add_comps(tt, "render")
-    tt.modifier.duration = 8
+    tt.modifier.duration = 6
     tt.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal"}
     tt.modifier.remove_banned = true
     tt.main_script.insert = scripts.mod_silence.insert
@@ -1240,6 +1240,40 @@ local function barrack_towers()
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(0, 25)
     tt.unit.hit_offset = vec_2(0, 25)
+
+    tt = E:register_t("mod_forest_circle", "modifier")
+    E:add_comps(tt, "hps", "render")
+    tt.render.sprites[1].name = "decal_mod_forest_circle"
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].name = "forestKeeper_soldierBuff"
+    tt.render.sprites[2].animated = false
+    tt.render.sprites[2].sort_y_offset = -1
+    tt.render.sprites[2].anchor.y = 0.21428571428571427
+    tt.modifier.duration = 4
+    tt.modifier.use_mod_offset = false
+    tt.modifier.ban_types = {MOD_TYPE_POISON}
+    tt.modifier.remove_banned = true
+    tt.hps.heal_min = 0
+    tt.hps.heal_max = 0
+    tt.hps.heal_inc = 4
+    tt.hps.heal_every = 0.2
+    tt.main_script.insert = scripts.mod_hps.insert
+    tt.main_script.update = scripts.mod_hps.update
+
+    tt = E:register_t("mod_forest_eerie_slow", "mod_slow")
+    tt.modifier.duration = 0.5
+    tt.slow.factor = 0.5
+
+    tt = E:register_t("mod_forest_eerie_dps", "modifier")
+    E:add_comps(tt, "dps")
+    tt.dps.damage_max = 2
+    tt.dps.damage_min = 2
+    tt.dps.damage_inc = 1
+    tt.dps.damage_every = fts(5)
+    tt.modifier.duration = 0.5
+    tt.main_script.insert = scripts.mod_dps.insert
+    tt.main_script.update = scripts.mod_dps.update
 
     tt = RT("tower_drow", "tower_barrack_1")
     AC(tt, "powers")

@@ -1727,15 +1727,13 @@ return function(scripts)
                         if not nearest or #nearest < 1 then
                             SU.delay_attack(store, a, 0.5)
                         else
-                            local target_is_enemy = true
                             local mine_pos
-                            if target_is_enemy then
-                                local _, enemy_pos = U.find_random_enemy_with_pos(store.entities, this.pos, a.min_range,
-                                    a.max_range, fts(24), a.vis_flags, a.vis_bans)
-                                if enemy_pos then
-                                    mine_pos = enemy_pos
-                                end
+                            local _, enemy_pos = U.find_random_enemy_with_pos(store.entities, this.pos, a.min_range,
+                                a.max_range, fts(24), a.vis_flags, a.vis_bans)
+                            if enemy_pos then
+                                mine_pos = enemy_pos
                             end
+
                             if not mine_pos then
                                 local pi, spi, ni = unpack(nearest[1])
                                 spi = math.random(1, 3)
