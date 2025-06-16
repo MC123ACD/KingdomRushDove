@@ -3325,7 +3325,7 @@ function scripts.hero_oni.update(this, store)
         local unyield = rate * this.unyield_max
         this.health.damage_factor = this.health.damage_factor + this.unyield - unyield
         this.unyield = unyield
-        
+
 		if this.unit.is_stunned then
 			SU.soldier_idle(store, this)
 		else
@@ -3434,8 +3434,6 @@ function scripts.decal_oni_torment_sword.update(this, store)
 	U.y_animation_play(this, "out", nil, store.tick_ts)
 	queue_remove(store, this)
 end
-
-
 
 function scripts.hero_thor.update(this, store)
 	local h = this.health

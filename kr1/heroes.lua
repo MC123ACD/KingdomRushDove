@@ -2378,7 +2378,7 @@ local function heroes()
     tt.vis.flags = F_FRIEND
 
     tt = E:register_t("hero_beastmaster", "hero")
-    E:add_comps(tt, "melee", "ranged", "timed_attacks")
+    E:add_comps(tt, "melee", "timed_attacks")
     anchor_y = 0.175
     image_y = 80
     tt.hero.level_stats.hp_max = {310, 340, 370, 400, 430, 460, 490, 520, 550, 580}
@@ -2418,7 +2418,7 @@ local function heroes()
     tt.hero.skills.deeplashes.damage = {14, 28, 42}
     tt.hero.skills.deeplashes.blood_damage = {20, 40, 60}
     tt.hero.skills.deeplashes.cooldown = {6.9, 6.15, 5.4}
-    tt.hero.skills.deeplashes.xp_gain = {40, 80, 120}
+    tt.hero.skills.deeplashes.xp_gain = {50, 100, 150}
     tt.hero.skills.deeplashes.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -2432,7 +2432,6 @@ local function heroes()
     tt.hero.fn_level_up = scripts.hero_beastmaster.level_up
     tt.hero.tombstone_show_time = fts(60)
     tt.idle_flip.cooldown = 1
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.hero_portrait = "kr2_hero_portraits_0003"
     tt.info.portrait = IS_PHONE and "portraits_hero_0003" or "kr2_info_portraits_heroes_0003"
     tt.info.i18n_key = "HERO_BEASTMASTER"
@@ -2459,7 +2458,7 @@ local function heroes()
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[1].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[1].vis_flags = F_BLOCK
-    tt.melee.attacks[1].xp_gain_factor = 4
+    tt.melee.attacks[1].xp_gain_factor = 4.2
     tt.melee.attacks[2] = E:clone_c("melee_attack")
     tt.melee.attacks[2].disabled = true
     tt.melee.attacks[2].hit_time = fts(15)
@@ -4927,7 +4926,7 @@ local function heroes()
     tt.force_motion.ramp_radius = 50
     tt.main_script.update = scripts.voodoo_witch_skull.update
     tt.max_flight_height = 25
-    tt.max_shots = 8
+    tt.max_shots = 10
     tt.min_flight_height = 15
     tt.ranged.attacks[1].bullet = "bolt_voodoo_witch_skull"
     tt.ranged.attacks[1].cooldown = 1.1
@@ -5017,8 +5016,8 @@ local function heroes()
     tt.sound_events.insert = "HeroVoodooWitchAttack"
 
     tt = E:register_t("bolt_voodoo_witch_skull", "bolt_voodoo_witch")
-    tt.bullet.damage_max = 4
-    tt.bullet.damage_min = 4
+    tt.bullet.damage_max = 5
+    tt.bullet.damage_min = 5
     tt.bullet.particles_name = "ps_bolt_voodoo_witch_skull"
     tt.bullet.xp_gain_factor = 1.8
     tt.render.sprites[1].scale = vec_2(0.75, 0.75)
