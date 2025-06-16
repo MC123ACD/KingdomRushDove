@@ -324,7 +324,6 @@ local function barrack_towers()
     tt.health.hp_max = 90
     tt.health_bar.offset = vec_2(0, ady(31))
     tt.health.dead_lifetime = 14
-    tt.info.fn = scripts.soldier_mercenary.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0044" or "info_portraits_sc_0044"
     tt.info.random_name_count = 10
     tt.info.random_name_format = "SOLDIER_ELVES_RANDOM_%i_NAME"
@@ -441,7 +440,6 @@ local function barrack_towers()
     tt.health.hp_inc = 50
     tt.health.power_name = "valkyrie"
     tt.health_bar.offset = vec_2(0, ady(56))
-    tt.info.fn = scripts.soldier_mercenary.get_info
     tt.info.portrait = IS_PHONE and "portraits_sc_0026" or "kr2_info_portraits_soldiers_0027"
     tt.info.random_name_count = 10
     tt.info.random_name_format = "SOLDIER_AMAZONAS_RANDOM_%i_NAME"
@@ -856,7 +854,6 @@ local function barrack_towers()
     tt.health.hp_max = 300
     tt.health_bar.offset = vec_2(0, ady(58))
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-    tt.info.fn = scripts.soldier_mercenary.get_info
     tt.info.portrait = IS_PHONE and "portraits_sc_0023" or "kr2_info_portraits_soldiers_0023"
     tt.info.random_name_count = 10
     tt.info.random_name_format = "SOLDIER_DJINN_RANDOM_%i_NAME"
@@ -974,7 +971,6 @@ local function barrack_towers()
     tt.health.dead_lifetime = 10
     tt.health.hp_max = 100
     tt.health_bar.offset = vec_2(0, ady(32))
-    tt.info.fn = scripts.soldier_mercenary.get_info
     tt.info.portrait = IS_PHONE and "portraits_sc_0025" or "kr2_info_portraits_soldiers_0025"
     tt.info.random_name_count = 10
     tt.info.random_name_format = "SOLDIER_PIRATES_RANDOM_%i_NAME"
@@ -1492,9 +1488,10 @@ local function barrack_towers()
     tt.unit.mod_offset = vec_2(0, 10)
 
     tt = E:register_t("bullet_soldier_ewok", "arrow")
-    tt.bullet.damage_max = 14
-    tt.bullet.damage_min = 10
-    tt.bullet.damage_inc = 6
+    tt.bullet.damage_max = 24
+    tt.bullet.damage_min = 17
+    tt.bullet.damage_inc = 10
+    tt.bullet.damage_type = DAMAGE_STAB
     tt.bullet.align_with_trajectory = true
     tt.bullet.prediction_error = false
     tt.bullet.reset_to_target_pos = true

@@ -3078,7 +3078,7 @@ return function(scripts)
 
             while true do
                 if h.dead then
-                    if band(this.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE_BOSS)) == 0 then
+                    if band(this.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE)) == 0 then
                         S:queue(this.sound_events.death)
                         U.unblock_target(store, this)
 
@@ -4574,7 +4574,7 @@ return function(scripts)
 
             while true do
                 if h.dead then
-                    if band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE_BOSS, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
+                    if band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
                         this.unit.hide_after_death = true
 
                         local remains = E:create_entity("giant_death_remains")
@@ -11054,7 +11054,7 @@ return function(scripts)
                 local chance_pass = math.random() < (this.revive.chance + this.revive.protect)
 
                 if not this.revive.disabled and
-                    not U.flag_has(h.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE_BOSS)) and
+                    not U.flag_has(h.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE)) and
                     chance_pass then
                     h.ignore_damage = true
                     h.dead = false

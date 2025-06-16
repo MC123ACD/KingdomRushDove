@@ -9166,7 +9166,7 @@ function scripts.enemy_cannibal.update(this, store, script)
 
                 if blocker and blocker.health.dead and not in_water and
                     band(blocker.health.last_damage_types,
-                        bor(DAMAGE_DISINTEGRATE_BOSS, DAMAGE_DISINTEGRATE, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
+                        bor(DAMAGE_DISINTEGRATE, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
                     local target = blocker
 
                     if band(target.vis.bans, F_CANNIBALIZE) ~= 0 then
@@ -12188,7 +12188,7 @@ function scripts.eb_efreeti.update(this, store, script)
             local target = targets[i]
             local d = E:create_entity("damage")
 
-            d.damage_type = bor(DAMAGE_DISINTEGRATE_BOSS, DAMAGE_INSTAKILL)
+            d.damage_type = bor(DAMAGE_DISINTEGRATE, DAMAGE_INSTAKILL)
             d.source_id = this.id
             d.target_id = target.id
 

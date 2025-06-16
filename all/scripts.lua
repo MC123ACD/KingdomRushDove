@@ -1231,16 +1231,6 @@ function scripts.soldier_reinforcement.update(this, store, script)
     end
 end
 
-scripts.soldier_mercenary = {}
-
-function scripts.soldier_mercenary.get_info(this)
-    local t = scripts.soldier_barrack.get_info(this)
-
-    -- t.respawn = nil
-
-    return t
-end
-
 scripts.soldier_barrack = {}
 
 function scripts.soldier_barrack.get_info(this)
@@ -1298,8 +1288,20 @@ function scripts.soldier_barrack.get_info(this)
         local b = E:get_template(this.timed_attacks.list[1].bullet)
 
         if b and b.bullet.damage_min and b.bullet.damage_max then
-            ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff, b.bullet.damage_max + this.damage_buff
+            ranged_min, ranged_max = math.ceil((b.bullet.damage_min + this.damage_buff)*this.unit.damage_factor), math.ceil((b.bullet.damage_max + this.damage_buff)*this.unit.damage_factor)
             ranged_damage_type = b.bullet.damage_type
+        end
+    end
+    if damage_type == DAMAGE_STAB then
+        if min and max then
+            min = math.ceil(min / 2)
+            max = math.ceil(max / 2)
+        end
+    end
+    if ranged_damage_type == DAMAGE_STAB then
+        if ranged_max and ranged_min then
+            ranged_max = math.ceil(ranged_max/2)
+            ranged_min = math.ceil(ranged_min/2)
         end
     end
     return {
@@ -1308,7 +1310,6 @@ function scripts.soldier_barrack.get_info(this)
         hp_max = this.health.hp_max,
         damage_min = min,
         damage_max = max,
-        -- damage_icon = this.info.damage_icon,
         damage_type = damage_type,
         ranged_damage_min = ranged_min,
         ranged_damage_max = ranged_max,
@@ -1597,44 +1598,6 @@ end
 
 scripts.hero_basic = {}
 scripts.hero_basic.get_info = scripts.soldier_barrack.get_info
-
--- function scripts.hero_basic.get_info(this)
---     local a = this.melee.attacks[1]
---     local min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
-
---     min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
-
---     return {
---         type = STATS_TYPE_SOLDIER,
---         hp = this.health.hp,
---         hp_max = this.health.hp_max,
---         damage_min = min,
---         damage_max = max,
---         damage_icon = this.info.damage_icon,
---         armor = this.health.armor,
---         magic_armor = this.health.magic_armor,
---         respawn = this.health.dead_lifetime
---     }
--- end
-
--- function scripts.hero_basic.get_info(this)
---     local a = this.ranged.attacks[1]
---     local b = E:get_template(a.bullet)
---     local min, max = (b.bullet.damage_min + this.damage_buff) * this.unit.damage_factor, (b.bullet.damage_max + this.damage_buff) * this.unit.damage_factor
-
---     return {
---         type = STATS_TYPE_SOLDIER,
---         hp = this.health.hp,
---         hp_max = this.health.hp_max,
---         damage_min = min,
---         damage_max = max,
---         damage_type = b.bullet.damage_type,
---         damage_icon = this.info.damage_icon,
---         armor = this.health.armor,
---         magic_armor = this.health.magic_armor,
---         respawn = this.health.dead_lifetime
---     }
--- end
 
 function scripts.hero_basic.insert(this, store)
     this.hero.fn_level_up(this, store, true)

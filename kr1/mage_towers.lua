@@ -531,7 +531,6 @@ local function mage_towers()
     tt.health.dead_lifetime = 3
     tt.health.hp_max = 40
     tt.health_bar.offset = vec_2(0, ady(38))
-    tt.info.fn = scripts.soldier_mercenary.get_info
     tt.info.portrait = IS_PHONE and "portraits_sc_0007" or "kr2_info_portraits_soldiers_0007"
     tt.info.random_name_format = nil
     tt.melee.attacks[1].cooldown = 1

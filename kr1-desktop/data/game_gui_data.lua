@@ -1299,12 +1299,14 @@ return {
 		arrow = "base_info_icons_0010",
 		shot = "base_info_icons_0011",
 		[DAMAGE_TRUE] = "base_info_icons_0001",
+        -- 远程的物理攻击在 game_gui 中额外处理，显示为箭伤
 		[DAMAGE_PHYSICAL] = "base_info_icons_0001",
 		[DAMAGE_MAGICAL] = "base_info_icons_0002",
         [DAMAGE_MAGICAL_EXPLOSION] = "base_info_icons_0002",
 		[DAMAGE_EXPLOSION] = "base_info_icons_0012",
-        [DAMAGE_ELECTRICAL] = "base_info_icons_0001",
+        [DAMAGE_ELECTRICAL] = "base_info_icons_0012",
         [DAMAGE_SHOT] = "base_info_icons_0011",
         [DAMAGE_RUDE] = "base_info_icons_0001",
+        [DAMAGE_STAB] = "base_info_icons_0010"
 	}
 }

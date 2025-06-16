@@ -5140,7 +5140,7 @@ local function heroes()
     tt.invuln.cooldown = 4
     tt.invuln.disabled = true
     tt.invuln.duration = 4
-    tt.invuln.exclude_damage_types = bor(DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_DISINTEGRATE_BOSS, DAMAGE_EAT)
+    tt.invuln.exclude_damage_types = bor(DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_DISINTEGRATE, DAMAGE_EAT)
     tt.invuln.sound = "HeroCrabShield"
     tt.invuln.trigger_factor = 0.4
     tt.invuln.ts = 0

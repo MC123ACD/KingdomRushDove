@@ -792,7 +792,7 @@ local function y_hero_death_and_respawn(store, this)
 
 	U.unblock_target(store, this)
 
-	if this.selfdestruct and not this.selfdestruct.disabled and band(h.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE_BOSS)) == 0 then
+	if this.selfdestruct and not this.selfdestruct.disabled and band(h.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE)) == 0 then
 		local sd = this.selfdestruct
 
 		this.unit.hide_after_death = true
@@ -833,7 +833,7 @@ local function y_hero_death_and_respawn(store, this)
 		end
 
 		U.y_animation_wait(this)
-	elseif band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE_BOSS)) ~= 0 then
+	elseif band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE)) ~= 0 then
 		this.unit.hide_after_death = true
 
 		local fx = E:create_entity("fx_soldier_desintegrate")
@@ -1007,13 +1007,13 @@ local function y_soldier_new_rally(store, this)
 end
 
 local function y_soldier_revive(store, this)
-	if not this.revive or this.revive.disabled or this.unit.is_stunned or band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_EAT, DAMAGE_DISINTEGRATE_BOSS)) ~= 0 then
+	if not this.revive or this.revive.disabled or this.unit.is_stunned or band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_EAT)) ~= 0 then
 		return false
 	end
 
 	local r = this.revive
     local chance = r.chance + r.protect
-    
+
 	if math.random() < chance then
 		local r = this.revive
         r.protect = r.protect * 0.5
@@ -1078,7 +1078,7 @@ local function y_soldier_death(store, this)
 
 	local h = this.health
 
-	if band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_DISINTEGRATE_BOSS)) ~= 0 then
+	if band(h.last_damage_types, DAMAGE_DISINTEGRATE) ~= 0 then
 		this.unit.hide_during_death = true
 
 		local fx = E:create_entity("fx_soldier_desintegrate")

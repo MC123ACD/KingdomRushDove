@@ -3101,7 +3101,6 @@ function InfoBar:update_stats()
         sv.l_hp.text = string.format("%i/%i", stats.hp, stats.hp_max)
         sv.l_damage.text = GU.damage_value_desc(stats.damage_min, stats.damage_max)
         sv.l_damage:set_image(damage_icon, V.v(sv.l_damage.size.x, sv.l_damage.size.y))
-
         sv.l_ranged_damage.text = GU.damage_value_desc(stats.ranged_damage_min, stats.ranged_damage_max)
         sv.l_ranged_damage:set_image(ranged_damage_icon, V.v(sv.l_ranged_damage.size.x, sv.l_ranged_damage.size.y))
 
