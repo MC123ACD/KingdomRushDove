@@ -445,7 +445,8 @@ local function create_bullet_damage(bullet, target_id, source_id)
 	return d
 end
 
-local function create_attack_damage(a, target_id, source_id)
+-- 包含对 damage_buff 和 damage_factor 的判断与处理
+local function create_attack_damage(a, target_id, this)
 	local vmax, vmin = a.damage_max, a.damage_min
 
 	if a.level and a.level > 0 then
@@ -465,10 +466,16 @@ local function create_attack_damage(a, target_id, source_id)
 
 	local d = E:create_entity("damage")
 
-	d.value = math.ceil(U.frandom(vmin, vmax))
+	d.value = U.frandom(vmin, vmax)
+    if this.damage_buff then
+        d.value = d.value + this.damage_buff
+    end
+    if this.unit and this.unit.damage_factor then
+        d.value = math.ceil(d.value * this.unit.damage_factor)
+    end
 	d.damage_type = a.damage_type
 	d.target_id = target_id
-	d.source_id = source_id
+	d.source_id = this.id
 
 	return d
 end

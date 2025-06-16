@@ -8003,7 +8003,7 @@ return function(scripts)
                             coroutine.yield()
                         end
 
-                        local d = SU.create_attack_damage(ca, target.id, this.id)
+                        local d = SU.create_attack_damage(ca, target.id, this)
 
                         queue_damage(store, d)
                     end
@@ -8364,7 +8364,7 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             for _, t in pairs(targets) do
-                                queue_damage(store, SU.create_attack_damage(a, t.id, this.id))
+                                queue_damage(store, SU.create_attack_damage(a, t.id, this))
 
                                 local m = E:create_entity(a.mod)
 
@@ -10472,7 +10472,7 @@ return function(scripts)
                                 spawn_spikes(13, hit_center, a.decal_range, math.pi * 2 / 26, 0.17, 0.5)
 
                                 for _, target in pairs(targets) do
-                                    local d = SU.create_attack_damage(a, target.id, this.id)
+                                    local d = SU.create_attack_damage(a, target.id, this)
 
                                     queue_damage(store, d)
                                 end
@@ -11541,13 +11541,12 @@ return function(scripts)
                     S:queue(a.sounds[2])
 
                     this.health_bar.hidden = nil
-
-                    queue_damage(store, (SU.create_attack_damage(a, target.id, this.id) + this.damage_buff) * this.unit.damage_factor)
+                    queue_damage(store, SU.create_attack_damage(a, target.id, this))
                     U.y_animation_wait(this)
 
                     if target and not target.health.dead then
                         U.animation_start(this, a.animations[3], lflip, store.tick_ts)
-                        queue_damage(store, (SU.create_attack_damage(a, target.id, this.id) + this.damage_buff) * this.unit.damage_factor)
+                        queue_damage(store, SU.create_attack_damage(a, target.id, this) )
                         U.y_animation_wait(this)
                     end
 

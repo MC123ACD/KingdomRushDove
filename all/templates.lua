@@ -1019,6 +1019,7 @@ enemy.main_script.update = scripts.enemy_mixed.update
 enemy.ui.click_rect = IS_PHONE_OR_TABLET and r(-25, -10, 50, 50) or r(-10, -5, 20, 30)
 enemy.sound_events.death = "DeathHuman"
 enemy.sound_events.death_by_explosion = "DeathEplosion"
+enemy.damage_buff = 0
 
 local boss = E:register_t("boss", "unit")
 
@@ -1028,6 +1029,7 @@ boss.vis.flags = bor(F_ENEMY, F_BOSS)
 boss.info.fn = scripts.enemy_basic.get_info
 boss.ui.click_rect = r(-20, -5, 40, 90)
 boss.health.armor_resilience = 0.5
+boss.damage_buff = 0
 
 tt = E:register_t("mega_spawner")
 E:add_comps(tt, "main_script", "editor", "editor_script")
