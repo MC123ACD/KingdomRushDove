@@ -8587,9 +8587,9 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.mind_over_body = E:clone_c("hero_skill")
-    tt.hero.skills.mind_over_body.duration = {4, 6, 9}
-    tt.hero.skills.mind_over_body.heal_every = {fts(10), fts(5), fts(5)}
-    tt.hero.skills.mind_over_body.heal_hp = {5, 4, 4}
+    tt.hero.skills.mind_over_body.duration = {4, 7, 10}
+    tt.hero.skills.mind_over_body.heal_every = {fts(5), fts(5), fts(5)}
+    tt.hero.skills.mind_over_body.heal_hp = {3, 5, 7}
     tt.hero.skills.mind_over_body.xp_gain_factor = 55
     tt.hero.skills.mind_over_body.xp_level_steps = {
         [1] = 1,
