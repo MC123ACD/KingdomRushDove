@@ -130,7 +130,7 @@ local function barrack_towers()
 
     tt = E:register_t("mod_paladin_silence", "modifier")
     E:add_comps(tt, "render")
-    tt.modifier.duration = 6
+    tt.modifier.duration = 4
     tt.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal"}
     tt.modifier.remove_banned = true
     tt.main_script.insert = scripts.mod_silence.insert

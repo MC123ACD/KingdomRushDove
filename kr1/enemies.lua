@@ -2162,10 +2162,9 @@ local function enemies()
 
     tt = RT("enemy_spectral_knight_spawn", "enemy_spectral_knight")
     tt.enemy.gold = 0
+
     tt = RT("enemy_fallen_knight", "enemy")
-
     AC(tt, "melee", "death_spawns")
-
     anchor_y = 0.1595744680851064
     anchor_x = 0.5
     image_y = 94
@@ -2173,6 +2172,7 @@ local function enemies()
     tt.death_spawns.name = "enemy_spectral_knight_spawn"
     tt.death_spawns.spawn_animation = "raise"
     tt.death_spawns.delay = fts(11)
+    tt.unit.disintegrate_when_silenced_death = true
     tt.enemy.gold = 40
     tt.enemy.melee_slot = vec_2(26, 0)
     tt.health.dead_lifetime = 1
@@ -2200,10 +2200,9 @@ local function enemies()
     tt.unit.mod_offset = vec_2(0, 19)
     tt.unit.show_blood_pool = false
     tt.unit.size = UNIT_SIZE_MEDIUM
+
     tt = RT("enemy_troll_skater", "enemy")
-
     AC(tt, "melee", "auras")
-
     anchor_y = 0.18
     anchor_x = 0.5
     image_y = 50
