@@ -8213,9 +8213,7 @@ for i = 1, 5 do
 end
 
 tt = E:register_t("mod_spider_web", "modifier")
-
 E:add_comps(tt, "render")
-
 tt.main_script.insert = scripts.mod_spider_web.insert
 tt.main_script.update = scripts.mod_stun.update
 tt.main_script.remove = scripts.mod_stun.remove
@@ -8236,13 +8234,13 @@ tt.modifier.custom_scales.hero_bravebark = vec_1(1)
 tt.modifier.custom_scales.hero_xin = vec_1(1)
 tt.modifier.custom_scales.soldier_forest = vec_1(0.75)
 tt.modifier.custom_scales.soldier_druid_bear = vec_1(0.75)
+
 tt = E:register_t("mod_mactans_spider_web", "mod_spider_web")
 tt.modifier.duration = 5
 tt.modifier.duration_heroes = 3
+
 tt = E:register_t("mod_twilight_evoker_silence", "modifier")
-
 E:add_comps(tt, "render", "tween")
-
 tt.main_script.update = scripts.mod_tower_silence.update
 tt.modifier.duration = 4
 tt.modifier.replaces_lower = false

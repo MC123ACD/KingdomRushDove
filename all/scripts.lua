@@ -1448,6 +1448,27 @@ function scripts.soldier_barrack.update(this, store, script)
                     return v.modifier and v.modifier.type == MOD_TYPE_STUN and v.modifier.target_id == this.id
                 end)
                 for _, m in pairs(mods) do
+                    if m.modifier.animation_phases then
+                        U.animation_start(m, "end", nil, store.tick_ts)
+
+                        if  m.modifier.hide_target_delay then
+                            if this.ui then
+                                this.ui.can_click = true
+                            end
+
+                            if this.health_bar and not this.health.dead then
+                                this.health_bar.hidden = nil
+                            end
+
+                            U.sprites_show(this, nil, nil, true)
+                            SU.show_modifiers(store, this, true, m)
+                            SU.show_auras(store, this, true)
+                        end
+
+                        while not U.animation_finished(m) do
+                            coroutine.yield()
+                        end
+                    end
                     queue_remove(store, m)
                 end
                 if r.fx then

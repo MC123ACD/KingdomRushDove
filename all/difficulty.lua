@@ -81,31 +81,27 @@ function difficulty:patch_templates()
             end
         end
 
-        if t.ranged and ranged_attack_cooldown_factor_enemy ~= 1 then
-            if t.ranged.cooldown then
+        if t.ranged then
+            if t.ranged.cooldown and not PT(t.ranged, "cooldown") and ranged_attack_cooldown_factor_enemy ~= 1 then
                 t.ranged.cooldown = math.ceil(t.ranged.cooldown * ranged_attack_cooldown_factor_enemy)
             end
             for i, a in ipairs(t.ranged.attacks) do
-                if not PT(a, "cooldown") then
-                    if a.cooldown then
-                        a.cooldown = math.ceil(a.cooldown * ranged_attack_cooldown_factor_enemy)
-                    end
+                if a.cooldown and not PT(a, "cooldown") and ranged_attack_cooldown_factor_enemy ~= 1 then
+                    a.cooldown = math.ceil(a.cooldown * ranged_attack_cooldown_factor_enemy)
                 end
             end
         end
 
-        if t.timed_attacks and t.timed_attacks.list and timed_attack_cooldown_factor_enemy ~= 1 then
+        if t.timed_attacks and t.timed_attacks.list then
             for i, a in ipairs(t.timed_attacks.list) do
-                if not PT(a, "cooldown") then
-                    if a.cooldown then
-                        a.cooldown = math.ceil(a.cooldown * timed_attack_cooldown_factor_enemy)
-                    end
-                    if a.max_cooldown then
-                        a.max_cooldown = math.ceil(a.max_cooldown * timed_attack_cooldown_factor_enemy)
-                    end
-                    if a.min_cooldown then
-                        a.min_cooldown = math.ceil(a.min_cooldown * timed_attack_cooldown_factor_enemy)
-                    end
+                if a.cooldown and not PT(a, "cooldown") and timed_attack_cooldown_factor_enemy ~= 1 then
+                    a.cooldown = math.ceil(a.cooldown * timed_attack_cooldown_factor_enemy)
+                end
+                if a.max_cooldown and not PT(a, "max_cooldown") and timed_attack_cooldown_factor_enemy ~= 1 then
+                    a.max_cooldown = math.ceil(a.max_cooldown * timed_attack_cooldown_factor_enemy)
+                end
+                if a.min_cooldown and not PT(a, "min_cooldown") and timed_attack_cooldown_factor_enemy ~= 1 then
+                    a.min_cooldown = math.ceil(a.min_cooldown * timed_attack_cooldown_factor_enemy)
                 end
                 PT(a, "damage_max")
                 PT(a, "damage_min")
