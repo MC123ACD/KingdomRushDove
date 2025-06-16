@@ -4963,6 +4963,7 @@ return function(scripts)
 
             upgrade_skill(this, "rage", function (this, s)
                 this.rage_max = s.rage_max[s.level]
+                this.unyield_max = s.unyield_max[s.level]
             end)
 
             this.health.hp = this.health.hp_max

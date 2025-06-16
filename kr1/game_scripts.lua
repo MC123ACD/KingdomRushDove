@@ -3317,10 +3317,15 @@ function scripts.hero_oni.update(this, store)
 			SU.y_hero_death_and_respawn(store, this)
 		end
 
-        local rage = (this.health.hp_max - this.health.hp)/this.health.hp_max * this.rage_max
+        local rate = (this.health.hp_max - this.health.hp)/this.health.hp_max
+        local rage = rate * this.rage_max
         this.damage_buff = this.damage_buff - this.rage + rage
         this.rage = rage
 
+        local unyield = rate * this.unyield_max
+        this.health.damage_factor = this.health.damage_factor + this.unyield - unyield
+        this.unyield = unyield
+        
 		if this.unit.is_stunned then
 			SU.soldier_idle(store, this)
 		else

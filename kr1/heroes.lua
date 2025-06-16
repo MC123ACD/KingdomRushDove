@@ -1277,6 +1277,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {18, 19, 20, 21, 23, 24, 25, 26, 27, 28}
     tt.hero.skills.rage = CC("hero_skill")
     tt.hero.skills.rage.rage_max = {30, 37, 45}
+    tt.hero.skills.rage.unyield_max = {0.2,0.25,0.3}
     tt.hero.skills.rage.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -1369,7 +1370,7 @@ local function heroes()
     tt.timed_attacks.list[1].torment_swords = {{0.01, 20, 8}, {0.2, 37.5, 8}, {0.3, 55, 8}}
     tt.rage = 0
     tt.rage_max = 0
-
+    tt.unyield_max = 0
     tt = RT("hero_hacksaw", "hero")
     AC(tt, "melee", "ranged")
     anchor_y = 0.13636363636363635
