@@ -8474,7 +8474,7 @@ local function heroes()
     tt.melee.attacks[1].hit_time = fts(14)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"
-    tt.melee.attacks[1].xp_gain_factor = 3.1
+    tt.melee.attacks[1].xp_gain_factor = 3.2
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
@@ -8559,7 +8559,7 @@ local function heroes()
     tt.bullet.prediction_error = false
     tt.bullet.predict_target_pos = true
     tt.bullet.use_unit_damage_factor = true
-    tt.bullet.xp_gain_factor = 3.1
+    tt.bullet.xp_gain_factor = 3.2
     tt.render.sprites[1].name = "fallen_angel_hero_proy_0001-f"
     tt.sound_events.insert = "ElvesHeroLilithRangeShoot"
 
