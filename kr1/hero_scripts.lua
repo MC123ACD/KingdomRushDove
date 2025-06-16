@@ -11423,9 +11423,7 @@ return function(scripts)
 
                 if ready_to_use_skill(a, store) then
                     local soldiers = U.find_soldiers_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
-                        a.vis_bans, function(e)
-                            return e.id ~= this.id
-                        end)
+                        a.vis_bans)
                     local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
 
@@ -11544,12 +11542,12 @@ return function(scripts)
 
                     this.health_bar.hidden = nil
 
-                    queue_damage(store, SU.create_attack_damage(a, target.id, this.id))
+                    queue_damage(store, (SU.create_attack_damage(a, target.id, this.id) + this.damage_buff) * this.unit.damage_factor)
                     U.y_animation_wait(this)
 
                     if target and not target.health.dead then
                         U.animation_start(this, a.animations[3], lflip, store.tick_ts)
-                        queue_damage(store, SU.create_attack_damage(a, target.id, this.id))
+                        queue_damage(store, (SU.create_attack_damage(a, target.id, this.id) + this.damage_buff) * this.unit.damage_factor)
                         U.y_animation_wait(this)
                     end
 
