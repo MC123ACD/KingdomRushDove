@@ -2415,7 +2415,7 @@ local function heroes()
         [10] = 3
     }
     tt.hero.skills.deeplashes = E:clone_c("hero_skill")
-    tt.hero.skills.deeplashes.damage = {14, 28, 42}
+    tt.hero.skills.deeplashes.damage = {20, 40, 60}
     tt.hero.skills.deeplashes.blood_damage = {20, 40, 60}
     tt.hero.skills.deeplashes.cooldown = {6.9, 6.15, 5.4}
     tt.hero.skills.deeplashes.xp_gain = {50, 100, 150}
@@ -5809,7 +5809,7 @@ local function heroes()
     tt.melee.attacks[1].sound = "HeroMonkeyGodAttack1"
     tt.melee.attacks[1].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[1].vis_flags = F_BLOCK
-    tt.melee.attacks[1].xp_gain_factor = 3
+    tt.melee.attacks[1].xp_gain_factor = 3.5
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
