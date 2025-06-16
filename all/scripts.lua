@@ -1440,61 +1440,65 @@ function scripts.soldier_barrack.update(this, store, script)
 
         if this.unit.is_stunned then
             if this.revive and this.revive.resist_stun and this.revive.protect - this.revive.resist_stun_cost > 0 then
-                local r = this.revive
-                this.revive.protect = this.revive.protect - this.revive.resist_stun_cost
-                this.unit.is_stunned = nil
-                this.health.ignore_damage = true
                 local mods = table.filter(store.entities, function(k,v)
-                    return v.modifier and v.modifier.type == MOD_TYPE_STUN and v.modifier.target_id == this.id
+                    return v.modifier and v.modifier.mod_type == MOD_TYPE_STUN and v.modifier.target_id == this.id
                 end)
-                for _, m in pairs(mods) do
-                    if m.modifier.animation_phases then
-                        U.animation_start(m, "end", nil, store.tick_ts)
-
-                        if  m.modifier.hide_target_delay then
-                            if this.ui then
-                                this.ui.can_click = true
-                            end
-
-                            if this.health_bar and not this.health.dead then
-                                this.health_bar.hidden = nil
-                            end
-
-                            U.sprites_show(this, nil, nil, true)
-                            SU.show_modifiers(store, this, true, m)
-                            SU.show_auras(store, this, true)
+                if mods and #mods > 0 then
+                    local r = this.revive
+                    this.revive.protect = this.revive.protect - this.revive.resist_stun_cost
+                    this.health.ignore_damage = true
+                    for _, m in pairs(mods) do
+                        m.abort = true
+                        while not m.aborted do
+                            coroutine.yield()
                         end
+                        if m.modifier.animation_phases then
+                            U.animation_start(m, "end", nil, store.tick_ts)
 
-                        while not U.animation_finished(m) do
+                            if m.modifier.hide_target_delay then
+                                if this.ui then
+                                    this.ui.can_click = true
+                                end
+
+                                if this.health_bar and not this.health.dead then
+                                    this.health_bar.hidden = nil
+                                end
+
+                                U.sprites_show(this, nil, nil, true)
+                                SU.show_modifiers(store, this, true, m)
+                                SU.show_auras(store, this, true)
+                            end
+
+                            while not U.animation_finished(m) do
+                                coroutine.yield()
+                            end
+                        end
+                        queue_remove(store, m)
+                    end
+                    if r.fx then
+                        local fx = E:create_entity(r.fx)
+                        fx.pos = this.pos
+                        fx.render.sprites[1].ts = store.tick_ts
+                        queue_insert(store, fx)
+                    end
+
+                    if r.animation then
+                        S:queue(r.sound)
+                        U.animation_start(this, r.animation, nil, store.tick_ts, false)
+
+                        r.ts = store.tick_ts
+
+                        while store.tick_ts - r.ts < r.hit_time do
+                            coroutine.yield()
+                        end
+                        while not U.animation_finished(this) do
                             coroutine.yield()
                         end
                     end
-                    queue_remove(store, m)
-                end
-                if r.fx then
-                    local fx = E:create_entity(r.fx)
-                    fx.pos = this.pos
-                    fx.render.sprites[1].ts = store.tick_ts
-                    queue_insert(store, fx)
-                end
 
-                if r.animation then
-                    S:queue(r.sound)
-                    U.animation_start(this, r.animation, nil, store.tick_ts, false)
-
-                    r.ts = store.tick_ts
-
-                    while store.tick_ts - r.ts < r.hit_time do
-                        coroutine.yield()
-                    end
+                    this.unit.is_stunned = nil
+                    this.health.ignore_damage = false
                 end
-
-                if r.animation then
-                    while not U.animation_finished(this) do
-                        coroutine.yield()
-                    end
-                end
-                this.health.ignore_damage = false
             else
                 SU.soldier_idle(store, this)
             end
@@ -5068,6 +5072,11 @@ function scripts.mod_stun.update(this, store, script)
         U.animation_start(this, "start", nil, store.tick_ts)
 
         while not U.animation_finished(this) do
+            if this.abort then
+                -- goto abort
+                this.aborted = true
+                return
+            end
             if not target_hidden and m.hide_target_delay and store.tick_ts - start_ts > m.hide_target_delay then
                 target_hidden = true
 
@@ -5088,9 +5097,20 @@ function scripts.mod_stun.update(this, store, script)
         end
     end
 
+    if this.abort then
+        -- goto abort
+        this.aborted = true
+        return
+    end
+
     U.animation_start(this, "loop", nil, store.tick_ts, true)
 
     while store.tick_ts - m.ts < m.duration and target and not target.health.dead do
+        if this.abort then
+            -- goto abort
+            this.aborted = true
+            return
+        end
         if this.render and m.use_mod_offset and target.unit.mod_offset and not m.custom_offsets then
             for i = 1, #this.render.sprites do
                 local s = this.render.sprites[i]
@@ -5101,7 +5121,7 @@ function scripts.mod_stun.update(this, store, script)
 
         coroutine.yield()
     end
-
+    ::abort::
     if m.animation_phases then
         U.animation_start(this, "end", nil, store.tick_ts)
 
