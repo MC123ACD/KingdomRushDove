@@ -8687,6 +8687,7 @@ local function heroes()
     tt.timed_attacks.list[1].damage_min = nil
     tt.timed_attacks.list[1].node_margin = 10
     tt.timed_attacks.list[1].damage_type = DAMAGE_TRUE
+    tt.timed_attacks.list[1].mod = "mod_xin_slow"
     tt.timed_attacks.list[2] = E:clone_c("mod_attack")
     tt.timed_attacks.list[2].animation = "inspire"
     tt.timed_attacks.list[2].disabled = true
@@ -8762,6 +8763,9 @@ local function heroes()
     tt.render.sprites[2].name = "xin_hero_drink_decal"
     tt.render.sprites[2].animated = false
     tt.render.sprites[2].z = Z_DECALS
+
+    tt = RT("mod_xin_slow", "mod_slow")
+    tt.modifier.duration = 6
 
     tt = E:register_t("hero_faustus", "hero")
     E:add_comps(tt, "ranged", "timed_attacks")

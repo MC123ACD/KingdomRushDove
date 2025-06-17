@@ -11601,6 +11601,13 @@ return function(scripts)
                         U.y_animation_wait(this)
                     end
 
+                    if target and not target.health.dead then
+                        local m = E:create_entity(a.mod)
+                        m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
+                        m.modifier.ts = store.tick_ts
+                        queue_insert(store, m)
+                    end
                     this.health_bar.hidden = true
 
                     U.animation_start(this, a.animations[4], lflip, store.tick_ts)
