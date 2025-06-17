@@ -1953,7 +1953,7 @@ local function register_mage(scripts)
                     end
                 end
                 ::continue::
-                if (ad.ts <= last_ts - ad.cooldown + a.min_cooldown) or (store.tick_ts + a.min_cooldown - ad.ts >= ad.cooldown) and pow_d.level > 0 then
+                if ((ad.ts <= last_ts - ad.cooldown + a.min_cooldown) or (store.tick_ts + a.min_cooldown - ad.ts >= ad.cooldown)) and pow_d.level > 0 then
                     local mod = E:create_entity("decalmod_arcane_wizard_disintegrate_ready")
                     mod.modifier.target_id = this.id
                     mod.modifier.source_id = this.id
