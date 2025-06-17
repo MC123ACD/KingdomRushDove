@@ -502,7 +502,6 @@ local function heroes()
     tt.hero.fn_level_up = scripts.hero_magnus.level_up
     tt.hero.tombstone_show_time = fts(60)
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0005" or "heroPortrait_portraits_0005"
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.i18n_key = "HERO_MAGE"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0005" or "info_portraits_hero_0004"
     tt.main_script.update = scripts.hero_magnus.update
@@ -8672,6 +8671,7 @@ local function heroes()
     tt.melee.attacks[3].sound = "ElvesHeroXinPandaStyle"
     tt.melee.attacks[3].xp_from_skill = "panda_style"
     tt.melee.range = 65
+    tt.nav_grid.ignore_waypoints = true
     tt.timed_attacks.list[1] = E:clone_c("custom_attack")
     tt.timed_attacks.list[1].animations = {"teleport_out", "teleport_hit", "teleport_hit2", "teleport_hit_out",
                                            "teleport_in"}
