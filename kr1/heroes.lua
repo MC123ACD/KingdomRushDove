@@ -749,12 +749,12 @@ local function heroes()
     tt.melee.attacks[1].cooldown = 1.5
     tt.melee.attacks[1].hit_time = fts(5)
     tt.melee.attacks[1].shared_cooldown = true
-    tt.melee.attacks[1].xp_gain_factor = 1.5
+    tt.melee.attacks[1].xp_gain_factor = 1.6
     tt.melee.attacks[1].sound_hit = "HeroReinforcementHit"
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.3
-    tt.melee.attacks[2].xp_gain_factor = 3.5
+    tt.melee.attacks[2].xp_gain_factor = 3.6
     tt.melee.attacks[2].mod = "mod_malik_stun"
     tt.melee.attacks[3] = CC("area_attack")
     tt.melee.attacks[3].animation = "smash"
@@ -2458,7 +2458,7 @@ local function heroes()
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[1].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[1].vis_flags = F_BLOCK
-    tt.melee.attacks[1].xp_gain_factor = 4.2
+    tt.melee.attacks[1].xp_gain_factor = 4.4
     tt.melee.attacks[2] = E:clone_c("melee_attack")
     tt.melee.attacks[2].disabled = true
     tt.melee.attacks[2].hit_time = fts(15)
@@ -2477,7 +2477,7 @@ local function heroes()
     tt.falcons_name = "beastmaster_falcon"
     tt.timed_attacks.list[1] = E:clone_c("spawn_attack")
     tt.timed_attacks.list[1].animation = "stampede"
-    tt.timed_attacks.list[1].cooldown = 18.75
+    tt.timed_attacks.list[1].cooldown = 18
     tt.timed_attacks.list[1].count = nil
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].entity = "beastmaster_rhino"
@@ -8654,6 +8654,7 @@ local function heroes()
             this.melee.attacks[3].ts = this.melee.attacks[3].ts - this.melee.attacks[3].cooldown * 0.1
             this.timed_attacks.list[1].ts = this.timed_attacks.list[1].ts - this.timed_attacks.list[1].cooldown * 0.1
             this.timed_attacks.list[2].ts = this.timed_attacks.list[2].ts - this.timed_attacks.list[2].cooldown * 0.1
+            this.ultimate.ts = this.ultimate.ts - this.ultimate.cooldown * 0.1
         end
     end
     tt.melee.attacks[3] = E:clone_c("area_attack")

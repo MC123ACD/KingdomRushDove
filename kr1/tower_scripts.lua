@@ -1894,8 +1894,7 @@ local function register_mage(scripts)
                     if pow_d.changed then
                         pow_d.changed = nil
                         if pow_d.level == 1 then
-                            -- ad.ts = store.tick_ts
-                            ad.ts = -20
+                            ad.ts = store.tick_ts
                             base_damage = ray_damage_min
                         elseif pow_d.level == 2 then
                             base_damage = (ray_damage_min + ray_damage_max) * 0.5
