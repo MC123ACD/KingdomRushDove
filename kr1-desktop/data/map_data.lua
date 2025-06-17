@@ -558,7 +558,7 @@ return {
     	available_level = 15,
     	starting_level = 5,
     	icon = 38,
-        stats = {6, 5, 0, 5}
+        stats = {6, 4, 0, 8}
     },
     {
     	portrait = 9,
@@ -569,14 +569,15 @@ return {
     	icon = 39,
         stats = {6, 6, 6, 6}
     },
-    -- {
-    -- 	portrait = 10,
-    -- 	thumb = 43,
-    -- 	name = "hero_rag",
-    -- 	available_level = 10,
-    -- 	starting_level = 5,
-    -- 	icon = 40
-    -- },
+    {
+    	portrait = 10,
+    	thumb = 43,
+    	name = "hero_rag",
+    	available_level = 10,
+    	starting_level = 5,
+    	icon = 40,
+        stats = {5, 4, 4, 5}
+    },
     {
     	portrait = 11,
     	thumb = 44,

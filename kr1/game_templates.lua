@@ -740,10 +740,9 @@ tt.unit.marker_offset = vec_2(0, 0)
 tt.unit.mod_offset = vec_2(0, 15)
 tt.unit.price = 0
 tt.vis.bans = bor(F_LYCAN, F_SKELETON, F_CANNIBALIZE)
+
 tt = RT("soldier_ingvar_ancestor", "soldier_militia")
-
 AC(tt, "reinforcement", "melee")
-
 image_y = 60
 image_x = 72
 anchor_y = 0.17
@@ -4815,40 +4814,7 @@ tt.custom_attack.vis_flags = bor(F_RANGED)
 tt.custom_attack.vis_bans = bor(F_FLYING)
 tt.custom_attack.aura = "aura_rabbit_kamihare"
 tt.custom_attack.hit_fx = "fx_rabbit_kamihare_explode"
-tt = RT("soldier_rag", "soldier_militia")
 
-AC(tt, "reinforcement")
-
-tt.health.armor = 0
-tt.health.hp_max = nil
-tt.health_bar.offset = vec_2(0, 37)
-tt.health_bar.size = HEALTH_BAR_SIZE_SMALL
-tt.info.fn = scripts.soldier_reinforcement.get_info
-tt.info.portrait = "kr3_portraits_sc_0068"
-tt.info.i18n_key = "ELVES_SOLDIER_RAG_DOLL"
-tt.info.random_name_format = nil
-tt.main_script.insert = scripts.soldier_reinforcement.insert
-tt.main_script.update = scripts.soldier_reinforcement.update
-tt.melee.attacks[1].damage_max = 50
-tt.melee.attacks[1].damage_min = 40
-tt.melee.attacks[1].hit_time = fts(11)
-tt.melee.attacks[1].shared_cooldown = true
-tt.melee.attacks[1].xp_gain_factor = 0
-tt.melee.cooldown = 1
-tt.melee.range = 45
-tt.motion.max_speed = 60
-tt.regen.cooldown = 1
-tt.regen.health = 0
-tt.reinforcement.duration = nil
-tt.reinforcement.fade = nil
-tt.render.sprites[1].anchor.y = 0.22
-tt.render.sprites[1].prefix = "rag_polymorphed"
-tt.render.sprites[1].name = "idle"
-tt.soldier.melee_slot_offset = vec_2(4, 0)
-tt.unit.level = 0
-tt.unit.mod_offset = vec_2(0, 15)
-tt.unit.hide_after_death = true
-tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN)
 tt = RT("soldier_lilith_angel", "soldier_xin_shadow")
 tt.angel_damage_type = DAMAGE_TRUE
 tt.sound_events.insert = "ElvesHeroLilithAngelsCast"
@@ -5046,190 +5012,6 @@ tt.render.sprites[2].offset = vec_2(0, 70)
 tt.emit_ox = 180
 tt.cast_ox = 80
 tt.image_w = 40
-
-
-
-tt = RT("hero_rag", "hero")
-
-AC(tt, "melee", "ranged", "timed_attacks")
-
-tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-tt.hero.level_stats.hp_max = {350, 375, 400, 425, 450, 475, 500, 525, 550, 575}
-tt.hero.level_stats.melee_damage_max = {12, 14, 16, 17, 19, 21, 23, 25, 26, 28}
-tt.hero.level_stats.melee_damage_min = {8, 9, 10, 12, 13, 14, 15, 16, 18, 19}
-tt.hero.level_stats.regen_health = {23, 25, 27, 28, 30, 32, 33, 35, 37, 38}
-tt.hero.level_stats.ranged_damage_max = {12, 14, 16, 17, 19, 21, 23, 25, 26, 28}
-tt.hero.level_stats.ranged_damage_min = {8, 9, 10, 12, 13, 14, 15, 16, 18, 19}
-tt.hero.skills.raggified = E:clone_c("hero_skill")
-tt.hero.skills.raggified.hr_cost = {3, 3, 3}
-tt.hero.skills.raggified.hr_icon = "0049"
-tt.hero.skills.raggified.hr_order = 1
-tt.hero.skills.raggified.max_target_hp = {200, 600, 10000}
-tt.hero.skills.raggified.xp_gain = {94, 188, 282}
-tt.hero.skills.raggified.doll_duration = {3, 5, 7}
-tt.hero.skills.kamihare = E:clone_c("hero_skill")
-tt.hero.skills.kamihare.hr_cost = {2, 2, 2}
-tt.hero.skills.kamihare.hr_icon = "0046"
-tt.hero.skills.kamihare.hr_order = 2
-tt.hero.skills.kamihare.count = {4, 8, 12}
-tt.hero.skills.kamihare.xp_gain = {70, 140, 210}
-tt.hero.skills.angry_gnome = E:clone_c("hero_skill")
-tt.hero.skills.angry_gnome.hr_cost = {1, 1, 1}
-tt.hero.skills.angry_gnome.hr_icon = "0047"
-tt.hero.skills.angry_gnome.hr_order = 3
-tt.hero.skills.angry_gnome.damage_max = {45, 90, 135}
-tt.hero.skills.angry_gnome.damage_min = {25, 50, 75}
-tt.hero.skills.angry_gnome.xp_gain = {21, 42, 63}
-tt.hero.skills.hammer_time = E:clone_c("hero_skill")
-tt.hero.skills.hammer_time.duration = {3, 4, 5}
-tt.hero.skills.hammer_time.hr_cost = {2, 2, 2}
-tt.hero.skills.hammer_time.hr_icon = "0048"
-tt.hero.skills.hammer_time.hr_order = 4
-tt.hero.skills.hammer_time.xp_gain = {105, 210, 315}
-tt.hero.skills.ultimate = E:clone_c("hero_skill")
-tt.hero.skills.ultimate.controller_name = "hero_rag_ultimate"
-tt.hero.skills.ultimate.hr_cost = {4, 4, 4}
-tt.hero.skills.ultimate.hr_icon = "0050"
-tt.hero.skills.ultimate.hr_order = 5
-tt.hero.skills.ultimate.key = "ONE_GNOME_ARMY"
-tt.hero.skills.ultimate.max_count = {
-    [0] = 2,
-    4,
-    6,
-    8
-}
-tt.health.dead_lifetime = 15
-tt.health_bar.offset = vec_2(0, 58)
-tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-tt.hero.fn_level_up = scripts.hero_rag.level_up
-tt.hero.tombstone_show_time = fts(90)
-tt.info.fn = scripts.hero_basic.get_info
-tt.info.hero_portrait = "hero_portraits_0010"
-tt.info.i18n_key = "HERO_ELVES_RAG"
-tt.info.portrait = (IS_PHONE and "portraits_hero" or "info_portraits_heroes") .. "_0010"
-tt.info.ultimate_icon = "0010"
-tt.info.ultimate_pointer_style = "area"
-tt.main_script.update = scripts.hero_rag.update
-tt.motion.max_speed = 2 * FPS
-tt.regen.cooldown = 1
-
-for i = 1, 2 do
-    tt.render.sprites[i] = CC("sprite")
-    tt.render.sprites[i].anchor.y = 0.239
-    tt.render.sprites[i].prefix = "hero_rag_layer" .. i
-    tt.render.sprites[i].name = "idle"
-    tt.render.sprites[i].angles = {}
-    tt.render.sprites[i].angles.walk = {"running"}
-end
-
-tt.soldier.melee_slot_offset = vec_2(7, 0)
-tt.sound_events.change_rally_point = "ElvesHeroRagTaunt"
-tt.sound_events.death = "ElvesHeroRagDeath"
-tt.sound_events.insert = "ElvesHeroRagTauntIntro"
-tt.sound_events.respawn = "ElvesHeroRagTauntIntro"
-tt.sound_events.hero_room_select = "ElvesHeroRagTauntSelect"
-tt.unit.hit_offset = vec_2(0, 16)
-tt.unit.mod_offset = vec_2(6, 20)
-tt.melee.attacks[1] = CC("area_attack")
-tt.melee.attacks[1].hit_offset = vec_2(32, -5)
-tt.melee.attacks[1].cooldown = 2
-tt.melee.attacks[1].hit_time = fts(11)
-tt.melee.attacks[1].damage_radius = 75
-tt.melee.attacks[1].damage_max = nil
-tt.melee.attacks[1].damage_min = nil
-tt.melee.attacks[1].count = 5
-tt.melee.attacks[1].sound = "MeleeSword"
-tt.melee.attacks[1].xp_gain_factor = 0.38
-tt.melee.attacks[1].sound_hit = "ElvesHeroRagGroundStomp"
-tt.melee.range = 50
-tt.ranged.attacks[1] = CC("bullet_attack")
-tt.ranged.attacks[1].max_range = 110
-tt.ranged.attacks[1].min_range = 45
-tt.ranged.attacks[1].cooldown = 1
-tt.ranged.attacks[1].bullet = "bullet_rag"
-tt.ranged.attacks[1].bullet_start_offset = {vec_2(3, 80)}
-tt.ranged.attacks[1].shoot_time = fts(5)
-tt.timed_attacks.list[1] = CC("bullet_attack")
-tt.timed_attacks.list[1].animation = "throw"
-tt.timed_attacks.list[1].bullet_prefix = "bullet_rag_throw_"
-tt.timed_attacks.list[1].bullet_start_offset = {vec_2(3, 80)}
-tt.timed_attacks.list[1].cooldown = 17
-tt.timed_attacks.list[1].disabled = true
-tt.timed_attacks.list[1].max_range = 125
-tt.timed_attacks.list[1].min_range = 45
-tt.timed_attacks.list[1].shoot_time = fts(20)
-tt.timed_attacks.list[1].sound = "ElvesHeroRagSpawn"
-tt.timed_attacks.list[1].things = {"bolso", "anchor", "fungus", "pan", "chair"}
-tt.timed_attacks.list[1].vis_bans = 0
-tt.timed_attacks.list[1].vis_flags = bor(F_RANGED)
-tt.timed_attacks.list[1].xp_from_skill = "angry_gnome"
-tt.timed_attacks.list[2] = E:clone_c("spawn_attack")
-tt.timed_attacks.list[2].animations = {"rabbitCall", "rabbitCallEnd"}
-tt.timed_attacks.list[2].bullet = "bullet_kamihare"
-tt.timed_attacks.list[2].cooldown = 35
-tt.timed_attacks.list[2].count = nil
-tt.timed_attacks.list[2].disabled = true
-tt.timed_attacks.list[2].entity = "rabbit_kamihare"
-tt.timed_attacks.list[2].range_nodes_max = 200
-tt.timed_attacks.list[2].range_nodes_min = 5
-tt.timed_attacks.list[2].sound = "ElvesHeroRagKamihare"
-tt.timed_attacks.list[2].sound_delay = fts(12)
-tt.timed_attacks.list[2].spawn_offset = vec_2(0, 31)
-tt.timed_attacks.list[2].spawn_time = fts(15)
-tt.timed_attacks.list[2].vis_flags = bor(F_RANGED, F_BLOCK)
-tt.timed_attacks.list[2].vis_bans = bor(F_FLYING)
-tt.timed_attacks.list[2].xp_from_skill = "kamihare"
-tt.timed_attacks.list[3] = E:clone_c("area_attack")
-tt.timed_attacks.list[3].animations = {"hammer_start", "hammer_walk", "hammer_end"}
-tt.timed_attacks.list[3].cooldown = 35
-tt.timed_attacks.list[3].damage_every = fts(10)
-tt.timed_attacks.list[3].damage_max = 15
-tt.timed_attacks.list[3].damage_min = 10
-tt.timed_attacks.list[3].damage_radius = 65
-tt.timed_attacks.list[3].damage_type = DAMAGE_PHYSICAL
-tt.timed_attacks.list[3].disabled = true
-tt.timed_attacks.list[3].max_range = 100
-tt.timed_attacks.list[3].mod = "mod_rag_hammer_time_stun"
-tt.timed_attacks.list[3].nodes_range = 5
-tt.timed_attacks.list[3].sound_hit = "ElvesHeroRagHammer"
-tt.timed_attacks.list[3].sound_loop = "ElvesHeroRagHammerTime"
-tt.timed_attacks.list[3].speed_factor = 1.25
-tt.timed_attacks.list[3].trigger_hp = 100
-tt.timed_attacks.list[3].vis_bans = bor(F_FLYING)
-tt.timed_attacks.list[3].vis_flags = bor(F_RANGED)
-tt.timed_attacks.list[3].xp_from_skill = "hammer_time"
-tt.timed_attacks.list[4] = E:clone_c("bullet_attack")
-tt.timed_attacks.list[4].animation = "polymorph"
-tt.timed_attacks.list[4].bullet = "ray_rag"
-tt.timed_attacks.list[4].bullet_start_offset = {vec_2(5, 77)}
-tt.timed_attacks.list[4].cooldown = 25
-tt.timed_attacks.list[4].disabled = true
-tt.timed_attacks.list[4].max_range = 125
-tt.timed_attacks.list[4].max_target_hp = nil
-tt.timed_attacks.list[4].min_range = 60
-tt.timed_attacks.list[4].shoot_time = fts(17)
-tt.timed_attacks.list[4].sound = "ElvesHeroRagAttack"
-tt.timed_attacks.list[4].vis_bans = bor(F_FLYING, F_BOSS)
-tt.timed_attacks.list[4].vis_flags = bor(F_RANGED, F_MOD, F_RAGGIFY)
-tt.timed_attacks.list[4].xp_from_skill = "raggified"
-tt = RT("hero_rag_ultimate")
-
-E:add_comps(tt, "pos", "main_script", "sound_events")
-
-tt.can_fire_fn = scripts.hero_rag_ultimate.can_fire_fn
-tt.cooldown = 60
-tt.max_count = nil
-tt.range = 100
-tt.doll_duration = 10
-tt.mod = "mod_rag_raggified"
-tt.hit_fx = "fx_rag_ultimate"
-tt.hit_decal = "decal_rag_ultimate"
-tt.main_script.update = scripts.hero_rag_ultimate.update
-tt.vis_flags = bor(F_RANGED, F_MOD, F_RAGGIFY)
-tt.vis_bans = bor(F_BOSS, F_FLYING)
-tt.hit_time = fts(2)
-
-
 
 tt = RT("hero_bruce", "hero")
 
@@ -6857,23 +6639,7 @@ tt.render.sprites[1].anchor = vec_2(0, 0.5)
 tt.bullet.damage_type = DAMAGE_NONE
 tt.bullet.hit_time = fts(5)
 tt.bullet.mod = "mod_rag_raggified"
-tt = RT("bullet_rag", "arrow")
-tt.bullet.damage_max = nil
-tt.bullet.damage_min = nil
-tt.bullet.damage_type = DAMAGE_MAGICAL
-tt.bullet.flight_time = fts(18)
-tt.bullet.hit_blood_fx = nil
-tt.bullet.hit_fx = "fx_bullet_rag_hit"
-tt.bullet.miss_decal = nil
-tt.bullet.miss_fx = "fx_bullet_rag_hit"
-tt.bullet.miss_fx_water = nil
-tt.bullet.particles_name = "ps_bullet_rag_trail"
-tt.bullet.pop = nil
-tt.bullet.predict_target_pos = true
-tt.bullet.prediction_error = false
-tt.bullet.xp_gain_factor = 0.38
-tt.render.sprites[1].name = "razzAndRaggs_hero_proy-f"
-tt.sound_events.insert = "ElvesHeroRagGnomeShot"
+
 tt = RT("bullet_rag_throw", "arrow")
 tt.bullet.damage_max = nil
 tt.bullet.damage_min = nil
