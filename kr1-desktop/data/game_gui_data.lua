@@ -1306,7 +1306,7 @@ return {
 		[DAMAGE_EXPLOSION] = "base_info_icons_0012",
         [DAMAGE_ELECTRICAL] = "base_info_icons_0012",
         [DAMAGE_SHOT] = "base_info_icons_0011",
-        [DAMAGE_RUDE] = "base_info_icons_0001",
+        [DAMAGE_RUDE] = "damage_rude_icon",
         [DAMAGE_STAB] = "base_info_icons_0010"
 	}
 }

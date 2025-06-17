@@ -168,6 +168,30 @@ local kr1 = {
 		},
 		alias = {}
 	},
+    damage_rude_icon = {
+		a_name = "gui_common-1.png",
+		size = {
+			22,
+			22
+		},
+		trim = {
+			2,
+			0,
+			1,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1266,
+			88,
+			19,
+			22
+		},
+		alias = {}
+	},
 	base_info_icons_0003 = {
 		a_name = "gui_common-1.png",
 		size = {

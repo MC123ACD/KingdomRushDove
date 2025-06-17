@@ -2916,7 +2916,8 @@ function scripts.hero_ingvar.get_info(this)
 		hp_max = this.health.hp_max,
 		damage_min = min,
 		damage_max = max,
-		damage_icon = this.info.damage_icon,
+        damage_type = a.damage_type,
+		-- damage_icon = this.info.damage_icon,
 		armor = this.health.armor,
         magic_armor = this.health.magic_armor,
 		respawn = this.health.dead_lifetime
@@ -3498,7 +3499,8 @@ function scripts.hero_10yr.get_info(this)
 		hp_max = this.health.hp_max,
 		damage_min = min,
 		damage_max = max,
-		damage_icon = this.info.damage_icon,
+        damage_type = a.damage_type,
+		-- damage_icon = this.info.damage_icon,
 		armor = this.health.armor,
         magic_armor = this.health.magic_armor,
 		respawn = this.health.dead_lifetime
@@ -33451,8 +33453,10 @@ function scripts.tower_baby_ashbite.get_info(this)
         hp_max = e.health.hp_max,
         damage_min = min,
         damage_max = max,
-        damage_icon = this.info.damage_icon,
+        -- damage_icon = this.info.damage_icon,
+        damage_type = b.bullet.damage_type,
         armor = e.health.armor,
+        magic_armor = e.health.magic_armor,
         respawn = e.health.dead_lifetime
     }
 end
@@ -33542,8 +33546,9 @@ function scripts.soldier_baby_ashbite.get_info(this)
         hp_max = this.health.hp_max,
         damage_min = min,
         damage_max = max,
-        damage_icon = this.info.damage_icon,
+        -- damage_icon = this.info.damage_icon,
         armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
         respawn = this.health.dead_lifetime
     }
 end

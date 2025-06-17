@@ -4032,8 +4032,9 @@ return function(scripts)
                 damage_min = min,
                 damage_max = max,
                 damage_type = b.bullet.damage_type,
-                damage_icon = this.info.damage_icon,
-                armor = this.health.armor
+                -- damage_icon = this.info.damage_icon,
+                armor = this.health.armor,
+                magic_armor = this.health.magic_armor,
             }
         end,
         update = function(this, store)

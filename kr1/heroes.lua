@@ -7072,8 +7072,9 @@ local function heroes()
     tt.transfer.animations = {"lethalPrismStart", "specialwalkLoop", "lethalPrismEnd"}
     tt.transfer.particles_name = "ps_durax_transfer"
     tt.melee.attacks[1].hit_time = fts(8)
-    tt.melee.attacks[1].xp_gain_factor = 4
+    tt.melee.attacks[1].xp_gain_factor = 3.8
     tt.melee.attacks[1].shared_cooldown = true
+    tt.melee.attacks[1].damage_type = DAMAGE_TRUE
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
