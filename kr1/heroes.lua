@@ -8590,6 +8590,7 @@ local function heroes()
     tt.hero.skills.mind_over_body.duration = {4, 7, 10}
     tt.hero.skills.mind_over_body.heal_every = {fts(5), fts(5), fts(5)}
     tt.hero.skills.mind_over_body.heal_hp = {3, 5, 7}
+    tt.hero.skills.mind_over_body.damage_buff = {12, 19, 25}
     tt.hero.skills.mind_over_body.xp_gain_factor = 55
     tt.hero.skills.mind_over_body.xp_level_steps = {
         [1] = 1,
@@ -8679,9 +8680,9 @@ local function heroes()
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].cast_time = fts(15)
     tt.timed_attacks.list[2].cooldown = 16
-    tt.timed_attacks.list[2].max_count = 6
+    tt.timed_attacks.list[2].max_count = 7
     tt.timed_attacks.list[2].max_range = 90
-    tt.timed_attacks.list[2].min_count = 2
+    tt.timed_attacks.list[2].min_count = 3
     tt.timed_attacks.list[2].mod = "mod_xin_inspire"
     tt.timed_attacks.list[2].sound = "ElvesHeroXinInspire"
     tt.timed_attacks.list[2].vis_bans = bor(F_FLYING)
@@ -8700,6 +8701,11 @@ local function heroes()
         disabled = true,
         range = 180
     }
+    tt.mind_over_body_last_ts = 0
+    tt.mind_over_body_active = false
+    tt.mind_over_body_damage_buff_max = 0
+    tt.mind_over_body_damage_buff = 0
+    tt.mind_over_body_duration = 0
 
     tt = E:register_t("hero_xin_ultimate")
     E:add_comps(tt, "pos", "main_script", "sound_events")

@@ -11336,7 +11336,8 @@ return function(scripts)
 
             a.disabled = nil
             a.ts = store.tick_ts
-
+            this.mind_over_body_damage_buff_max = s.damage_buff[s.level]
+            this.mind_over_body_duration = s.duration[s.level]
             local m = E:get_template(a.mod)
 
             m.modifier.duration = s.duration[s.level]
@@ -11380,6 +11381,14 @@ return function(scripts)
         this.health_bar.hidden = false
 
         while true do
+            if this.mind_over_body_active and store.tick_ts - this.mind_over_body_last_ts >=
+                this.mind_over_body_duration then
+                    this.damage_buff = this.damage_buff - this.mind_over_body_damage_buff
+                this.mind_over_body_active = false
+                this.melee.attacks[3].ts = this.melee.attacks[3].ts - this.melee.attacks[3].cooldown * 0.1
+                this.timed_attacks.list[1].ts = this.timed_attacks.list[1].ts - this.timed_attacks.list[1].cooldown * 0.1
+                this.timed_attacks.list[2].ts = this.timed_attacks.list[2].ts - this.timed_attacks.list[2].cooldown * 0.1
+            end
             if h.dead then
                 SU.y_hero_death_and_respawn(store, this)
             end
@@ -11406,15 +11415,15 @@ return function(scripts)
                     U.y_wait(store, a.cast_time)
                     S:queue(a.sound)
                     SU.insert_sprite(store, "decal_xin_drink_circle", this.pos)
-
                     local mod = E:create_entity(a.mod)
-
                     mod.modifier.target_id = this.id
                     mod.modifier.source_id = this.id
-
                     queue_insert(store, mod)
+                    this.mind_over_body_active = true
+                    this.mind_over_body_damage_buff = this.mind_over_body_damage_buff_max
+                    this.mind_over_body_last_ts = store.tick_ts
+                    this.damage_buff = this.damage_buff + this.mind_over_body_damage_buff
                     U.y_animation_wait(this)
-
                     a.ts = store.tick_ts
                 end
 
