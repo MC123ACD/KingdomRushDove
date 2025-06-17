@@ -157,7 +157,7 @@ local function heroes()
     tt.hero.level_stats.hp_max = {200, 220, 240, 260, 280, 300, 320, 350, 380, 410}
     tt.hero.level_stats.melee_damage_max = {5, 7, 9, 12, 15, 18, 22, 26, 30, 34}
     tt.hero.level_stats.melee_damage_min = {3, 5, 7, 9, 11, 13, 15, 17, 19, 21}
-    tt.hero.level_stats.ranged_damage_max = {15, 18, 22, 25, 28, 33, 38, 43, 46, 50}
+    tt.hero.level_stats.ranged_damage_max = {16, 19, 24, 27, 30, 36, 41, 47, 50, 55}
     tt.hero.level_stats.ranged_damage_min = {4, 4, 5, 5, 6, 6, 7, 8, 9, 10}
     tt.hero.skills.multishot = CC("hero_skill")
     tt.hero.skills.multishot.count_base = -2
@@ -8993,7 +8993,7 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.angry_gnome = E:clone_c("hero_skill")
-    tt.hero.skills.angry_gnome.damage_max = {45, 90, 135}
+    tt.hero.skills.angry_gnome.damage_max = {50, 100, 150}
     tt.hero.skills.angry_gnome.damage_min = {25, 50, 75}
     tt.hero.skills.angry_gnome.xp_gain = {21, 42, 63}
     tt.hero.skills.angry_gnome.xp_level_steps = {
@@ -9078,7 +9078,7 @@ local function heroes()
     tt.timed_attacks.list[1].animation = "throw"
     tt.timed_attacks.list[1].bullet_prefix = "bullet_rag_throw_"
     tt.timed_attacks.list[1].bullet_start_offset = {vec_2(3, 80)}
-    tt.timed_attacks.list[1].cooldown = 16
+    tt.timed_attacks.list[1].cooldown = 15
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].max_range = 125
     tt.timed_attacks.list[1].min_range = 45
