@@ -14244,6 +14244,30 @@ local kr1 = {
 		},
 		alias = {}
 	},
+    damage_true_icon = {
+        a_name = "gui_common-1.png",
+        size = {
+            25,
+            25
+        },
+        trim = {
+            4,
+            3,
+            4,
+            3
+        },
+        a_size = {
+            2048,
+            2048
+        },
+        f_quad = {
+            1867,
+            798,
+            17,
+            19
+        },
+        alias = {}
+    },
 	tooltip_icons_0004 = {
 		a_name = "gui_common-1.png",
 		size = {

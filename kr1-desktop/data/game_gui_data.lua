@@ -1298,7 +1298,7 @@ return {
 		fireball = "base_info_icons_0002",
 		arrow = "base_info_icons_0010",
 		shot = "base_info_icons_0011",
-		[DAMAGE_TRUE] = "base_info_icons_0001",
+		[DAMAGE_TRUE] = "damage_true_icon",
         -- 远程的物理攻击在 game_gui 中额外处理，显示为箭伤
 		[DAMAGE_PHYSICAL] = "base_info_icons_0001",
 		[DAMAGE_MAGICAL] = "base_info_icons_0002",
