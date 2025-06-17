@@ -8589,8 +8589,8 @@ local function heroes()
     tt.hero.skills.mind_over_body = E:clone_c("hero_skill")
     tt.hero.skills.mind_over_body.duration = {4, 7, 10}
     tt.hero.skills.mind_over_body.heal_every = {fts(5), fts(5), fts(5)}
-    tt.hero.skills.mind_over_body.heal_hp = {3, 5, 7}
-    tt.hero.skills.mind_over_body.damage_buff = {12, 19, 25}
+    tt.hero.skills.mind_over_body.heal_hp = {4, 6, 8}
+    tt.hero.skills.mind_over_body.damage_buff = {14, 23, 31}
     tt.hero.skills.mind_over_body.xp_gain_factor = 55
     tt.hero.skills.mind_over_body.xp_level_steps = {
         [1] = 1,
@@ -8643,9 +8643,19 @@ local function heroes()
     tt.melee.attacks[1].xp_gain_factor = 4.3
     tt.melee.attacks[1].sound_hit = "ElvesHeroXinPoleHit"
     tt.melee.attacks[1].shared_cooldown = true
+    tt.melee.attacks[1].side_effect = function(this, store, attack, target)
+        this.timed_attacks.list[3].ts = this.timed_attacks.list[3].ts - this.timed_attacks.list[3].cooldown * 0.1
+    end
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].chance = 0.5
     tt.melee.attacks[2].animation = "attack2"
+    tt.melee.attacks[2].side_effect = function(this, store, attack, target)
+        if this.mind_over_body_active then
+            this.melee.attacks[3].ts = this.melee.attacks[3].ts - this.melee.attacks[3].cooldown * 0.1
+            this.timed_attacks.list[1].ts = this.timed_attacks.list[1].ts - this.timed_attacks.list[1].cooldown * 0.1
+            this.timed_attacks.list[2].ts = this.timed_attacks.list[2].ts - this.timed_attacks.list[2].cooldown * 0.1
+        end
+    end
     tt.melee.attacks[3] = E:clone_c("area_attack")
     tt.melee.attacks[3].animation = "buttStrike"
     tt.melee.attacks[3].cooldown = 26
@@ -8653,7 +8663,7 @@ local function heroes()
     tt.melee.attacks[3].damage_max = nil
     tt.melee.attacks[3].damage_min = nil
     tt.melee.attacks[3].damage_radius = 60
-    tt.melee.attacks[3].damage_type = DAMAGE_RUDE
+    tt.melee.attacks[3].damage_type = DAMAGE_PHYSICAL
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].hit_fx = "fx_xin_panda_style_smoke"
     tt.melee.attacks[3].hit_time = fts(19)

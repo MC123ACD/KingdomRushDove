@@ -11397,9 +11397,44 @@ return function(scripts)
                 SU.soldier_idle(store, this)
             else
                 while this.nav_rally.new do
-                    if SU.y_hero_new_rally(store, this) then
-                        goto label_126_1
+                    -- if SU.y_hero_new_rally(store, this) then
+                    --     goto label_126_1
+                    -- end
+                    a = this.timed_attacks.list[1]
+                    local initial_flip = this.render.sprites[1].flip_x
+                    local shadow
+                    S:queue(a.sounds[1])
+                    U.animation_start(this, a.animations[1], nil, store.tick_ts)
+                    SU.insert_sprite(store, "fx_xin_smoke_teleport_out", this.pos, initial_flip)
+                    this.health_bar.hidden = true
+                    if U.is_blocked_valid(store, this) then
+                        local blocked = store.entities[this.soldier.target_id]
+                        local m = E:create_entity("mod_xin_stun")
+
+                        m.modifier.target_id = blocked.id
+                        m.modifier.source_id = this.id
+
+                        queue_insert(store, m)
+
+                        shadow = E:create_entity("soldier_xin_shadow")
+                        shadow.pos.x, shadow.pos.y = this.pos.x, this.pos.y
+                        shadow.nav_rally.center = V.vclone(this.pos)
+                        shadow.nav_rally.pos = V.vclone(this.pos)
+                        shadow.render.sprites[1].flip_x = this.render.sprites[1].flip_x
+
+                        queue_insert(store, shadow)
+                        U.replace_blocker(store, this, shadow)
                     end
+                    U.y_animation_wait(this)
+                    this.health_bar.hidden = nil
+                    this.pos.x = this.nav_rally.pos.x
+                    this.pos.y = this.nav_rally.pos.y
+
+                    SU.insert_sprite(store, "fx_xin_smoke_teleport_in", this.pos, initial_flip)
+                    if shadow then
+                        shadow.health.dead = true
+                    end
+                    this.nav_rally.new = false
                 end
 
                 if SU.hero_level_up(store, this) then
@@ -11411,6 +11446,7 @@ return function(scripts)
 
                 if ready_to_use_skill(a, store) and this.health.hp / this.health.hp_max <= a.min_health_factor then
                     SU.hero_gain_xp_from_skill(this, skill)
+                    this.health.ignore_damage = true
                     U.animation_start(this, a.animation, nil, store.tick_ts)
                     U.y_wait(store, a.cast_time)
                     S:queue(a.sound)
@@ -11424,6 +11460,7 @@ return function(scripts)
                     this.mind_over_body_last_ts = store.tick_ts
                     this.damage_buff = this.damage_buff + this.mind_over_body_damage_buff
                     U.y_animation_wait(this)
+                    this.health.ignore_damage = false
                     a.ts = store.tick_ts
                 end
 
@@ -11439,6 +11476,7 @@ return function(scripts)
                     if not soldiers or #soldiers < a.min_count or not enemies then
                         SU.delay_attack(store, a, 0.3333333333333333)
                     else
+                        this.health.ignore_damage = true
                         U.animation_start(this, a.animation, nil, store.tick_ts)
                         U.y_wait(store, a.cast_time)
                         S:queue(a.sound)
@@ -11459,6 +11497,7 @@ return function(scripts)
                         SU.hero_gain_xp_from_skill(this, skill)
 
                         a.ts = store.tick_ts
+                        this.health.ignore_damage = false
                     end
                 end
 
@@ -11506,11 +11545,11 @@ return function(scripts)
                     S:queue(a.sounds[1])
                     U.animation_start(this, a.animations[1], nil, store.tick_ts)
                     SU.insert_sprite(store, "fx_xin_smoke_teleport_out", this.pos, initial_flip)
-                    U.y_wait(store, fts(14))
+                    -- U.y_wait(store, fts(14))
 
                     this.health_bar.hidden = true
 
-                    U.y_wait(store, fts(3))
+                    -- U.y_wait(store, fts(3))
 
                     if U.is_blocked_valid(store, this) then
                         local blocked = store.entities[this.soldier.target_id]
@@ -11546,7 +11585,7 @@ return function(scripts)
 
                     U.animation_start(this, a.animations[2], lflip, store.tick_ts)
                     SU.insert_sprite(store, "fx_xin_smoke_teleport_hit", this.pos, lflip)
-                    U.y_wait(store, fts(5))
+                    -- U.y_wait(store, fts(5))
                     S:queue(a.sounds[2])
 
                     this.health_bar.hidden = nil
@@ -11582,7 +11621,7 @@ return function(scripts)
                         U.replace_blocker(store, shadow, this)
                     end
 
-                    U.y_wait(store, fts(5))
+                    -- U.y_wait(store, fts(5))
 
                     this.health_bar.hidden = nil
                     this.vis.bans = _bans
@@ -11598,7 +11637,9 @@ return function(scripts)
                     local target = find_target_at_critical_moment(this, store, this.ultimate.range)
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
+                        this.health.ignore_damage = true
                         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                        this.health.ignore_damage = false
                         S:queue(this.sound_events.change_rally_point)
                         local e = E:create_entity(this.hero.skills.ultimate.controller_name)
 
