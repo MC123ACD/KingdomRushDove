@@ -423,7 +423,7 @@ function upgrades:bolts()
 			"bolt_elora_slow",
 			"bolt_magnus",
 			"bolt_magnus_illusion","bolt_priest",
-            "bolt_voodoo_witch","bolt_veznan","ray_arivan_simple"
+            "bolt_voodoo_witch","bolt_veznan","ray_arivan_simple","bullet_rag"
     }
     return table.append(other_bolts, self:mage_tower_bolts())
 end

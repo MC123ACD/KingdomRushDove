@@ -29056,7 +29056,6 @@ function scripts.mod_rag_raggified.update(this, store)
     e.health.hp = target.health.hp
     e.nav_rally.center = V.vclone(target.pos)
     e.nav_rally.pos = V.vclone(target.pos)
-    e.reinforcement.duration = this.doll_duration
     e.render.sprites[1].flip_x = target.render.sprites[1].flip_x
     e.render.sprites[1].scale = target.unit.size == UNIT_SIZE_SMALL and V.vv(0.75) or V.vv(1)
 
@@ -29064,11 +29063,14 @@ function scripts.mod_rag_raggified.update(this, store)
 
     local start_ts = store.tick_ts
 
-    while not e.health.dead do
+    while (not e.health.dead) and (e.health.hp_max - e.health.hp < e.health.hp_max * this.break_factor or store.tick_ts - start_ts < this.doll_duration) do
         coroutine.yield()
     end
 
-    if e.reinforcement.hp_before_timeout then
+    if not e.health.dead then
+        local hp = e.health.hp
+        e.health.dead = true
+        queue_remove(store, e)
         local nodes = P:nearest_nodes(e.pos.x, e.pos.y, {target.nav_path.pi}, nil)
 
         if #nodes > 0 then
@@ -29078,7 +29080,7 @@ function scripts.mod_rag_raggified.update(this, store)
         target.pos = V.vclone(e.pos)
         target.main_script.runs = 1
         target.health.dead = false
-        target.health.hp = e.reinforcement.hp_before_timeout
+        target.health.hp = hp
 
         if target.ui then
             target.ui.can_click = true

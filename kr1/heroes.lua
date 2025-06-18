@@ -8984,10 +8984,11 @@ local function heroes()
     tt.hero.skills.raggified.max_target_hp = {300, 900, 10000}
     tt.hero.skills.raggified.xp_gain = {94, 188, 282}
     tt.hero.skills.raggified.doll_duration = {5, 7, 9}
+    tt.hero.skills.raggified.break_factor = {0.25, 0.375, 0.5}
     tt.hero.skills.raggified.xp_level_steps = {
-        [2] = 1,
-        [5] = 2,
-        [8] = 3
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
     }
     tt.hero.skills.kamihare = E:clone_c("hero_skill")
     tt.hero.skills.kamihare.count = {4, 8, 12}
@@ -9002,9 +9003,9 @@ local function heroes()
     tt.hero.skills.angry_gnome.damage_min = {25, 50, 75}
     tt.hero.skills.angry_gnome.xp_gain = {21, 42, 63}
     tt.hero.skills.angry_gnome.xp_level_steps = {
-        [1] = 1,
-        [4] = 2,
-        [7] = 3
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
     }
     tt.hero.skills.hammer_time = E:clone_c("hero_skill")
     tt.hero.skills.hammer_time.duration = {3, 4, 5}
@@ -9202,7 +9203,7 @@ local function heroes()
     tt.motion.max_speed = 60
     tt.regen.cooldown = 100
     tt.regen.health = 0
-    tt.reinforcement.duration = nil
+    tt.reinforcement.duration = 1200
     tt.reinforcement.fade = nil
     tt.render.sprites[1].anchor.y = 0.22
     tt.render.sprites[1].prefix = "rag_polymorphed"

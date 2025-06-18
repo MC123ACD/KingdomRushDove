@@ -12100,7 +12100,7 @@ return function(scripts)
             local m = E:get_template("mod_rag_raggified")
 
             m.doll_duration = s.doll_duration[s.level]
-
+            m.break_factor = s.break_factor[s.level]
         end)
         upgrade_skill(this, "kamihare", function(this, s)
             local a = this.timed_attacks.list[2]
