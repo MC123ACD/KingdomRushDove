@@ -2558,10 +2558,11 @@ end
 function LevelSelectDifficultyButton:on_click()
     S:queue("GUIButtonCommon")
 
-    local campaign_done = #screen_map.user_data.levels > GS.main_campaign_levels
+    -- local campaign_done = #screen_map.user_data.levels > GS.main_campaign_levels
     local diff = screen_map.user_data.difficulty
 
-    diff = km.zmod(diff + 1, campaign_done and GS.max_difficulty or 3)
+    -- diff = km.zmod(diff + 1, campaign_done and GS.max_difficulty or 3)
+    diff = km.zmod(diff + 1, GS.max_difficulty)
     screen_map.user_data.difficulty = diff
 
     storage:save_slot(screen_map.user_data)
@@ -5291,11 +5292,15 @@ function DifficultyView:initialize(sw, sh)
                      {_("LEVEL_SELECT_DIFFICULTY_NORMAL"), _("A good challenge!")},
                      {_("LEVEL_SELECT_DIFFICULTY_VETERAN"), _("Hardcore! play at your own risk!")}}
 
+    -- if impo then
+    --     table.insert(b_texts,
+    --         {_("LEVEL_SELECT_DIFFICULTY_IMPOSSIBLE"),
+    --          campaign_done and _("DIFFICULTY_SELECTION_IMPOSSIBLE_DESCRIPTION") or
+    --             _("DIFFICULTY_SELECTION_IMPOSSIBLE_LOCKED_DESCRIPTION")})
+    -- end
     if impo then
-        table.insert(b_texts,
-            {_("LEVEL_SELECT_DIFFICULTY_IMPOSSIBLE"),
-             campaign_done and _("DIFFICULTY_SELECTION_IMPOSSIBLE_DESCRIPTION") or
-                _("DIFFICULTY_SELECTION_IMPOSSIBLE_LOCKED_DESCRIPTION")})
+        table.insert(b_texts, {_("LEVEL_SELECT_DIFFICULTY_IMPOSSIBLE"),
+            _("DIFFICULTY_SELECTION_IMPOSSIBLE_DESCRIPTION")})
     end
 
     for i, set in pairs(b_texts) do
@@ -5312,9 +5317,9 @@ function DifficultyView:initialize(sw, sh)
 
         b.pos = V.v(x, b_y)
 
-        if i == 4 and not campaign_done then
-            b:disable()
-        end
+        -- if i == 4 and not campaign_done then
+        --     b:disable()
+        -- end
 
         function b.on_click(this, b, x, y)
             S:queue("GUIButtonCommon")

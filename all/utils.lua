@@ -1297,6 +1297,14 @@ function U.predict_damage(entity, damage)
 
     local protection
 
+    local function calc_explosion_protection(armor)
+        return armor * (0.6 - 0.2 * armor)
+    end
+
+    local function calc_stab_protection(armor)
+        return armor * (2 - armor)
+    end
+
     if band(d.damage_type, DAMAGE_POISON) ~= 0 then
         protection = e.health.poison_armor
     elseif band(d.damage_type, DAMAGE_TRUE) ~= 0 then
@@ -1306,15 +1314,15 @@ function U.predict_damage(entity, damage)
     elseif band(d.damage_type, DAMAGE_MAGICAL) ~= 0 then
         protection = e.health.magic_armor - d.reduce_magic_armor
     elseif band(d.damage_type, DAMAGE_MAGICAL_EXPLOSION) ~= 0 then
-        protection = (e.health.magic_armor - d.reduce_magic_armor) * 0.5
+        protection = calc_explosion_protection(e.health.magic_armor - d.reduce_magic_armor)
     elseif band(d.damage_type, DAMAGE_DISINTEGRATE) ~= 0 then
         protection = 0
     elseif band(d.damage_type, bor(DAMAGE_EXPLOSION, DAMAGE_ELECTRICAL, DAMAGE_RUDE)) ~= 0 then
-        protection = (e.health.armor - d.reduce_armor) * 0.5
+        protection = calc_explosion_protection(e.health.armor - d.reduce_armor)
     elseif band(d.damage_type, DAMAGE_SHOT) ~= 0 then
-        protection = (e.health.armor - d.reduce_armor) * 0.65
+        protection = (e.health.armor - d.reduce_armor) * 0.7
     elseif band(d.damage_type, DAMAGE_STAB) ~= 0 then
-        protection = e.health.armor * (2-e.health.armor)
+        protection = calc_stab_protection(e.health.armor - d.reduce_armor)
     elseif d.damage_type == DAMAGE_NONE then
         protection = 1
     end

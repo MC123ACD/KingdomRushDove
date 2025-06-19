@@ -2060,10 +2060,9 @@ local function enemies()
     tt.unit.show_blood_pool = false
     tt.vis.bans = bor(F_BLOCK, F_THORN)
     tt.vis.flags = bor(F_ENEMY, F_FLYING)
+
     tt = RT("enemy_spectral_knight", "enemy")
-
     AC(tt, "melee", "auras")
-
     image_y = 94
     image_x = 128
     anchor_y = 0.1595744680851064
@@ -2108,9 +2107,7 @@ local function enemies()
     tt.vis.flags = bor(F_ENEMY)
 
     tt = RT("aura_spectral_knight", "aura")
-
     AC(tt, "render", "tween")
-
     tt.aura.active = false
     tt.aura.allowed_templates = {"enemy_fallen_knight", "enemy_skeleton", "enemy_skeleton_warrior",
                                  "enemy_skeleton_big", "enemy_skeleton_blackburn"}
@@ -2568,7 +2565,7 @@ local function enemies()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(20, 0)
-    tt.health.hp_max = {6666, 7999, 9666}
+    tt.health.hp_max = {6666, 7999, 9666, 11666}
     tt.health.on_damage = scripts.eb_veznan.on_damage
     tt.health.ignore_damage = true
     tt.health_bar.hidden = true
@@ -2629,7 +2626,7 @@ local function enemies()
     tt.melee.attacks[1].damage_min = 666
     tt.melee.attacks[1].damage_max = 999
     tt.melee.attacks[1].damage_radius = 75
-    tt.melee.attacks[1].damage_type = DAMAGE_PHYSICAL
+    tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
     tt.melee.attacks[1].hit_offset = vec_2(-10, -2)
     tt.melee.attacks[1].hit_time = fts(17)
     tt.melee.attacks[1].hit_decal = "decal_veznan_strike"
