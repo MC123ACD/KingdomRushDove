@@ -7632,7 +7632,7 @@ local function heroes()
                               {2, vec_2(0, 0)}}
     tt.tween.props[1].loop = true
     tt.tween.remove = false
-    tt.hp = 40
+    tt.hp = 60
 
     tt = E:register_t("fx_arivan_stone_explosion", "fx")
     tt.render.sprites[1].name = "arivan_stone_explosion"
