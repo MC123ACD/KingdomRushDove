@@ -3581,7 +3581,9 @@ local function insert_tower_damage_factor_buff(target, damage_factor)
     target.tower.damage_factor = target.tower.damage_factor + damage_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
-            s.unit.damage_factor = s.unit.damage_factor + damage_factor
+            if s.unit then
+                s.unit.damage_factor = s.unit.damage_factor + damage_factor
+            end
         end
     end
 end
