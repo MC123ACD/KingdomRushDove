@@ -7369,8 +7369,8 @@ local function heroes()
     E:add_comps(tt, "melee", "ranged", "timed_attacks")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     tt.hero.level_stats.hp_max = {115, 130, 145, 160, 175, 190, 205, 220, 235, 250}
-    tt.hero.level_stats.melee_damage_max = {8, 9, 10, 12, 13, 14, 16, 17, 18, 20}
-    tt.hero.level_stats.melee_damage_min = {4, 5, 6, 6, 7, 8, 8, 9, 10, 11}
+    tt.hero.level_stats.melee_damage_max = {27, 30, 34, 37, 41, 44, 47, 51, 54, 57}
+    tt.hero.level_stats.melee_damage_min = {9, 10, 11, 12, 14, 15, 16, 17, 18, 19}
     tt.hero.level_stats.ranged_damage_min = {9, 10, 11, 12, 14, 15, 16, 17, 18, 19}
     tt.hero.level_stats.ranged_damage_max = {27, 30, 34, 37, 41, 44, 47, 51, 54, 57}
     tt.hero.skills.icy_prison = E:clone_c("hero_skill")
@@ -7452,7 +7452,7 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 13)
     tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].hit_time = fts(15)
-    tt.melee.attacks[1].xp_gain_factor = 2.56
+    tt.melee.attacks[1].xp_gain_factor = 2.1
     tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.range = 50
