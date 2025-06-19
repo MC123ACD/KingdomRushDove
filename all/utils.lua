@@ -1298,7 +1298,7 @@ function U.predict_damage(entity, damage)
     local protection
 
     local function calc_explosion_protection(armor)
-        return armor * (0.6 - 0.2 * armor)
+        return armor * (0.2 * armor + 0.4)
     end
 
     local function calc_stab_protection(armor)
