@@ -1442,7 +1442,7 @@ function scripts.soldier_barrack.update(this, store, script)
         if this.unit.is_stunned then
             if this.revive and this.revive.resist_stun and this.revive.protect - this.revive.resist_stun_cost > 0 then
                 local mods = table.filter(store.entities, function(k,v)
-                    return v.modifier and v.modifier.mod_type == MOD_TYPE_STUN and v.modifier.target_id == this.id
+                    return v.modifier and v.modifier.type == MOD_TYPE_STUN and v.modifier.target_id == this.id
                 end)
                 if mods and #mods > 0 then
                     local r = this.revive

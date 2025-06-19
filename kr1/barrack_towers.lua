@@ -549,7 +549,7 @@ local function barrack_towers()
     E:add_comps(tt, "revive", "powers")
     anchor_y = 0.19
     image_y = 42
-    tt.health.armor = 0.4
+    tt.health.armor = 0.5
     tt.health.dead_lifetime = 15
     tt.health.hp_inc = 50
     tt.health.hp_max = 250

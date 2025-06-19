@@ -70,7 +70,7 @@ end
 
 local function remove_modifiers_by_type(store, entity, mod_type, exclude_name)
 	local mods = table.filter(store.entities, function(k, v)
-		return v.modifier and v.modifier.target_id == entity.id and v.modifier.mod_type == mod_type and (not exclude_name or exclude_name ~= v.template_name)
+		return v.modifier and v.modifier.target_id == entity.id and v.modifier.type == mod_type and (not exclude_name or exclude_name ~= v.template_name)
 	end)
 
 	for _, m in pairs(mods) do
