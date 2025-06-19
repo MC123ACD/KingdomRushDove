@@ -309,9 +309,9 @@ local function heroes()
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0003" or "heroPortrait_portraits_0003"
     tt.info.i18n_key = "HERO_RIFLEMAN"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0003" or "info_portraits_hero_0002"
-    tt.melee.range = 65
+    tt.melee.range = 50
     tt.main_script.update = scripts.hero_bolin.update
-    tt.motion.max_speed = 2.5 * FPS
+    tt.motion.max_speed = 2.6 * FPS
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor = vec_2(0.5, 0.24)
     tt.render.sprites[1].prefix = "hero_bolin"

@@ -1337,11 +1337,10 @@ local function enemies()
     tt.unit.hit_offset = vec_2(0, 24)
     tt.unit.mod_offset = vec_2(adx(53), ady(38))
     tt.unit.size = UNIT_SIZE_LARGE
-    tt.vis.bans = bor(F_POISON, F_LAVA)
+    tt.vis.bans = bor(F_POISON, F_BURN)
+
     tt = RT("enemy_sarelgaz_small", "enemy")
-
     AC(tt, "melee")
-
     anchor_y = 0.19
     anchor_x = 0.5
     image_y = 68

@@ -1180,6 +1180,8 @@ function scripts.soldier_reinforcement.update(this, store, script)
     end
 end
 
+
+
 scripts.soldier_barrack = {}
 
 function scripts.soldier_barrack.get_info(this)
@@ -1413,70 +1415,10 @@ function scripts.soldier_barrack.update(this, store, script)
             return
         end
 
+        scripts.soldier_revive_resist(this, store)
+
         if this.unit.is_stunned then
-            if this.revive and this.revive.resist_stun and this.revive.protect - this.revive.resist_stun_cost > 0 then
-                local mods = table.filter(store.entities, function(k,v)
-                    return v.modifier and v.modifier.type == MOD_TYPE_STUN and v.modifier.target_id == this.id
-                end)
-                if mods and #mods > 0 then
-                    local r = this.revive
-                    this.revive.protect = this.revive.protect - this.revive.resist_stun_cost
-                    this.health.ignore_damage = true
-                    for _, m in pairs(mods) do
-                        m.abort = true
-                        while not m.aborted do
-                            coroutine.yield()
-                        end
-                        if m.modifier.animation_phases then
-                            U.animation_start(m, "end", nil, store.tick_ts)
-
-                            if m.modifier.hide_target_delay then
-                                if this.ui then
-                                    this.ui.can_click = true
-                                end
-
-                                if this.health_bar and not this.health.dead then
-                                    this.health_bar.hidden = nil
-                                end
-
-                                U.sprites_show(this, nil, nil, true)
-                                SU.show_modifiers(store, this, true, m)
-                                SU.show_auras(store, this, true)
-                            end
-
-                            while not U.animation_finished(m) do
-                                coroutine.yield()
-                            end
-                        end
-                        queue_remove(store, m)
-                    end
-                    if r.fx then
-                        local fx = E:create_entity(r.fx)
-                        fx.pos = this.pos
-                        fx.render.sprites[1].ts = store.tick_ts
-                        queue_insert(store, fx)
-                    end
-
-                    if r.animation then
-                        S:queue(r.sound)
-                        U.animation_start(this, r.animation, nil, store.tick_ts, false)
-
-                        r.ts = store.tick_ts
-
-                        while store.tick_ts - r.ts < r.hit_time do
-                            coroutine.yield()
-                        end
-                        while not U.animation_finished(this) do
-                            coroutine.yield()
-                        end
-                    end
-
-                    this.unit.is_stunned = nil
-                    this.health.ignore_damage = false
-                end
-            else
-                SU.soldier_idle(store, this)
-            end
+            SU.soldier_idle(store, this)
         else
             SU.soldier_courage_upgrade(store, this)
 
@@ -7697,11 +7639,143 @@ function scripts.user_item_dynamite.insert(this, store, script)
     return scripts.bomb.insert(this, store)
 end
 
+-- 恢复生命值
 scripts.heal = function(this, amount)
     this.health.hp = this.health.hp + amount
     if this.health.hp > this.health.hp_max then
         this.health.hp = this.health.hp_max
     end
+end
+
+-- 通过复生特性来抵抗异常状态
+scripts.soldier_revive_resist = function(this, store)
+    if not this.revive or not this.revive.resist then
+        return
+    end
+    local r = this.revive.resist
+    if this.revive.protect < r.cost then
+        return
+    end
+    local mods = table.filter(store.entities, function(k, v)
+        return v.modifier and v.modifier.target_id == this.id and band(v.modifier.vis_flags, r.bans) ~= 0
+    end)
+    if not mods or #mods == 0 then
+        return
+    end
+    this.revive.protect = this.revive.protect - r.cost
+    local clear_stun = false
+    this.health.ignore_damage = true
+    for _, m in pairs(mods) do
+        if band (m.modifier.vis_flags, F_STUN) ~= 0 then
+            m.abort = true
+            while not m.aborted do
+                coroutine.yield()
+            end
+            if m.modifier.animation_phases then
+                U.animation_start(m, "end", nil, store.tick_ts)
+
+                if m.modifier.hide_target_delay then
+                    if this.ui then
+                        this.ui.can_click = true
+                    end
+
+                    if this.health_bar and not this.health.dead then
+                        this.health_bar.hidden = nil
+                    end
+
+                    U.sprites_show(this, nil, nil, true)
+                    SU.show_modifiers(store, this, true, m)
+                    SU.show_auras(store, this, true)
+                end
+
+                while not U.animation_finished(m) do
+                    coroutine.yield()
+                end
+            end
+            clear_stun = true
+        end
+        m.modifier.removed_by_ban = true
+        queue_remove(store, m)
+    end
+
+    if this.revive.fx then
+        local fx = E:create_entity(this.revive.fx)
+        fx.pos = this.pos
+        fx.render.sprites[1].ts = store.tick_ts
+        queue_insert(store, fx)
+    end
+
+    if this.revive.animation then
+        S:queue(this.revive.sound)
+        U.animation_start(this, this.revive.animation, nil, store.tick_ts, false)
+
+        this.revive.ts = store.tick_ts
+
+        while store.tick_ts - this.revive.ts < this.revive.hit_time do
+            coroutine.yield()
+        end
+        while not U.animation_finished(this) do
+            coroutine.yield()
+        end
+    end
+
+    if clear_stun then
+        this.unit.is_stunned = nil
+    end
+    this.health.ignore_damage = false
+
+    local mod_ban = E:create_entity("mod_ban")
+    mod_ban.modifier.ban_vis = r.bans
+    mod_ban.modifier.target_id = this.id
+    mod_ban.modifier.duration = r.duration
+    queue_insert(store, mod_ban)
+
+    if r.side_effect then
+        r.side_effect(this, store)
+    end
+end
+
+scripts.mod_ban = {}
+scripts.mod_ban.insert = function(this, store)
+    local target = store.entities[this.modifier.target_id]
+    if not target or target.health.dead then
+        return false
+    end
+    if not target.origin_vis_bans then
+        target.origin_vis_bans = target.vis.bans
+    end
+    if not target.mod_ban_count then
+        target.mod_ban_count = 0
+    end
+    target.mod_ban_count = target.mod_ban_count + 1
+    target.vis.bans = bor(target.vis.bans, this.modifier.ban_vis)
+    return true
+end
+scripts.mod_ban.update = function(this, store)
+    local target = store.entities[this.modifier.target_id]
+    if not target or target.health.dead then
+        return
+    end
+
+    this.modifier.ts = store.tick_ts
+    while store.tick_ts - this.modifier.ts < this.modifier.duration do
+        coroutine.yield()
+    end
+    queue_remove(store, this)
+end
+
+scripts.mod_ban.remove = function(this, store)
+    local target = store.entities[this.modifier.target_id]
+    if not target or target.health.dead then
+        return
+    end
+
+    target.mod_ban_count = target.mod_ban_count - 1
+    if target.mod_ban_count <= 0 then
+        target.vis.bans = target.origin_vis_bans
+        target.mod_ban_count = 0
+    end
+    return true
 end
 
 return scripts

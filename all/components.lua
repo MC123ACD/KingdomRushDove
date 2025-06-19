@@ -381,7 +381,7 @@ water.last_terrain_type = nil
 
 local cliff = E:register_c("cliff")
 
-cliff.vis_bans = bor(F_BLOCK, F_SKELETON, F_LAVA, F_DRILL)
+cliff.vis_bans = bor(F_BLOCK, F_SKELETON, F_BURN, F_DRILL)
 cliff.sprite_suffix = "_cliff"
 cliff.hide_sprite_ids = nil
 cliff.speed_factor = 0.7
@@ -816,8 +816,7 @@ revive.remove_modifiers = true
 revive.sound = nil
 revive.ts = 0
 revive.last_target_id = nil
-revive.resist_stun = false
-revive.resist_stun_cost = 0.1
+revive.resist = nil
 revive.protect = 0
 
 local death_spawns = E:register_c("death_spawns")

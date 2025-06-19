@@ -534,9 +534,9 @@ tt.coin_tween_x_offset = {13, 25}
 
 local modifier = E:register_t("modifier")
 E:add_comps(modifier, "pos", "modifier", "sound_events", "main_script")
+
 tt = E:register_t("mod_blood", "modifier")
 E:add_comps(tt, "dps")
-
 tt.modifier.level = 1
 tt.modifier.duration = 3
 tt.modifier.vis_flags = F_BLOOD
@@ -553,9 +553,7 @@ tt.main_script.insert = scripts.mod_dps.insert
 tt.main_script.update = scripts.mod_dps.update
 
 local mod_poison = E:register_t("mod_poison", "modifier")
-
 E:add_comps(mod_poison, "dps", "render")
-
 mod_poison.modifier.duration = 5
 mod_poison.modifier.vis_flags = F_POISON
 mod_poison.modifier.type = MOD_TYPE_POISON
@@ -572,7 +570,6 @@ mod_poison.main_script.insert = scripts.mod_dps.insert
 mod_poison.main_script.update = scripts.mod_dps.update
 
 local mod_pestilence = E:register_t("mod_pestilence", "mod_poison")
-
 mod_pestilence.dps.damage_min = 2
 mod_pestilence.dps.damage_max = 2
 mod_pestilence.dps.damage_every = fts(3)
@@ -580,9 +577,7 @@ mod_pestilence.dps.kill = true
 mod_pestilence.modifier.duration = 1
 
 local mod_slow = E:register_t("mod_slow", "modifier")
-
 E:add_comps(mod_slow, "slow")
-
 mod_slow.modifier.duration = 0.5
 mod_slow.modifier.type = MOD_TYPE_SLOW
 mod_slow.slow.factor = 0.5
@@ -601,25 +596,32 @@ mod_slow_dwaarp.modifier.duration = fts(12)
 mod_slow_dwaarp.slow.factor = 0.35
 
 local mod_stun = E:register_t("mod_stun", "modifier")
-
 E:add_comps(mod_stun, "render")
-
 mod_stun.main_script.insert = scripts.mod_stun.insert
 mod_stun.main_script.update = scripts.mod_stun.update
 mod_stun.main_script.remove = scripts.mod_stun.remove
 mod_stun.modifier.duration = 2
 mod_stun.modifier.type = MOD_TYPE_STUN
+mod_stun.modifier.vis_flags = F_STUN
 mod_stun.render.sprites[1].prefix = "stun"
 mod_stun.render.sprites[1].size_names = {"small", "big", "big"}
 mod_stun.render.sprites[1].name = "small"
 mod_stun.render.sprites[1].draw_order = 20
 
+-- 用于使实体对于某些效果不可见
+local mod_ban = E:register_t("mod_ban", "modifier")
+mod_ban.main_script.insert = scripts.mod_ban.insert
+mod_ban.main_script.update = scripts.mod_ban.update
+mod_ban.main_script.remove = scripts.mod_ban.remove
+mod_ban.modifier.duration = 6
+mod_ban.modifier.ban_vis = 0
+
 local mod_shock_and_awe = E:register_t("mod_shock_and_awe", "mod_stun")
+
 local mod_lava = E:register_t("mod_lava", "modifier")
-
 E:add_comps(mod_lava, "dps", "render")
-
 mod_lava.modifier.duration = 2
+mod_lava.modifier.vis_flags = F_BURN
 mod_lava.dps.damage_min = 1
 mod_lava.dps.damage_max = 1
 mod_lava.dps.damage_inc = 3
@@ -689,15 +691,15 @@ lava.aura.duration = 3
 lava.aura.cycle_time = 0.3
 lava.aura.radius = 70.4
 lava.aura.vis_bans = bor(F_FRIEND, F_FLYING)
-lava.aura.vis_flags = bor(F_MOD, F_LAVA)
+lava.aura.vis_flags = bor(F_MOD, F_BURN)
 lava.main_script.insert = scripts.aura_apply_mod.insert
 lava.main_script.update = scripts.aura_apply_mod.update
+
 tt = E:register_t("tunnel", "aura")
-
 E:add_comps(tt, "tunnel")
-
 tt.main_script.update = scripts.tunnel.update
 tt.tunnel.speed_factor = 2
+
 tt = E:register_t("aura_screen_shake", "aura")
 tt.main_script.update = scripts.aura_screen_shake.update
 tt.aura.duration = 0.5
