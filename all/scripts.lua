@@ -1292,12 +1292,31 @@ function scripts.soldier_barrack.get_info(this)
             ranged_damage_type = b.bullet.damage_type
         end
     end
+
+    if not ranged_damage_type and this.melee and this.melee.attacks and this.melee.attacks[2] then
+        local a = this.melee.attacks[2]
+        if a.damage_min and not a.disabled then
+            ranged_min, ranged_max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
+            ranged_damage_type = a.damage_type
+        end
+
+        if this.unit and ranged_min then
+            ranged_min, ranged_max = ranged_min * this.unit.damage_factor, ranged_max * this.unit.damage_factor
+        end
+
+        if ranged_min and ranged_max then
+            ranged_min, ranged_max = math.ceil(ranged_min), math.ceil(ranged_max)
+        end
+
+    end
+
     if damage_type == DAMAGE_STAB then
         if min and max then
             min = math.ceil(min / 2)
             max = math.ceil(max / 2)
         end
     end
+
     if ranged_damage_type == DAMAGE_STAB then
         if ranged_max and ranged_min then
             ranged_max = math.ceil(ranged_max/2)

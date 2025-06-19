@@ -731,7 +731,7 @@ local function heroes()
     tt.info.fn = scripts.hero_basic.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0001" or "info_portraits_hero_0006"
     tt.main_script.update = scripts.hero_malik.update
-    tt.motion.max_speed = 2.5 * FPS
+    tt.motion.max_speed = 2.6 * FPS
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor = vec_2(0.5, 0.1)
     tt.render.sprites[1].prefix = "hero_malik"
@@ -1370,6 +1370,7 @@ local function heroes()
     tt.rage = 0
     tt.rage_max = 0
     tt.unyield_max = 0
+
     tt = RT("hero_hacksaw", "hero")
     AC(tt, "melee", "ranged")
     anchor_y = 0.13636363636363635
@@ -1383,7 +1384,7 @@ local function heroes()
     tt.hero.level_stats.armor = {0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8}
     tt.hero.level_stats.hp_max = {420, 440, 460, 480, 500, 520, 540, 560, 580, 600}
     tt.hero.level_stats.melee_damage_max = {27, 30, 33, 36, 39, 42, 45, 48, 51, 54}
-    tt.hero.level_stats.melee_damage_min = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18}
+    tt.hero.level_stats.melee_damage_min = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
     tt.hero.skills.timber = CC("hero_skill")
     tt.hero.skills.timber.cooldown = {35 + fts(35), 30 + fts(35), 25 + fts(35)}
     tt.hero.skills.timber.xp_level_steps = {
