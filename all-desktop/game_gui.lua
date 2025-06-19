@@ -3050,7 +3050,7 @@ function InfoBar:update_stats()
 
     local ddi = data.damage_icons
     local damage_icon = ddi[stats.damage_icon] or ddi[band(DAMAGE_BASE_TYPES, stats.damage_type or 0)] or ddi.default
-    if stats.ranged_damage_type and band(stats.ranged_damage_type, DAMAGE_PHYSICAL) ~= 0 then
+    if stats.ranged_damage_type and not stats.no_ranged and band(stats.ranged_damage_type, DAMAGE_PHYSICAL) ~= 0 then
         stats.ranged_damage_icon = "arrow"
     end
     local ranged_damage_icon = ddi[stats.ranged_damage_icon] or

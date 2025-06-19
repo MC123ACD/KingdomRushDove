@@ -3196,7 +3196,7 @@ local function heroes()
     tt.health.armor = 0
     tt.health.hp_max = nil
     tt.health_bar.offset = vec_2(0, 36)
-    tt.info.fn = scripts.soldier_reinforcement.get_info
+    -- tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.reinforcement.duration = nil
     tt.reinforcement.fade = false
     tt.main_script.insert = scripts.soldier_reinforcement.insert
@@ -7319,7 +7319,7 @@ local function heroes()
     tt.health.armor = 0.4
     tt.health.hp_max = 200
     tt.health_bar.offset = vec_2(0, 40)
-    tt.info.fn = scripts.soldier_reinforcement.get_info
+    -- tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.info.portrait = "kr3_portraits_sc_0059"
     tt.info.random_name_count = 15
     tt.info.random_name_format = "ELVES_SOLDIER_IMPERIAL_%i_NAME"
@@ -9188,7 +9188,7 @@ local function heroes()
     tt.health_bar.offset = vec_2(0, 37)
     tt.health_bar.size = HEALTH_BAR_SIZE_SMALL
     tt.health.damage_factor = 1.5
-    tt.info.fn = scripts.soldier_reinforcement.get_info
+    -- tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.info.portrait = "kr3_portraits_sc_0068"
     tt.info.i18n_key = "ELVES_SOLDIER_RAG_DOLL"
     tt.info.random_name_format = nil
@@ -9214,7 +9214,6 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 15)
     tt.unit.hide_after_death = true
     tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN)
-
 end
 
 return heroes

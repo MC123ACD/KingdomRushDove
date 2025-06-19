@@ -4604,7 +4604,7 @@ tt.health.armor = 0
 tt.health.hp_max = 50
 tt.health_bar.offset = vec_2(0, 44)
 tt.health_bar.size = HEALTH_BAR_SIZE_MEDIUM
-tt.info.fn = scripts.soldier_reinforcement.get_info
+-- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait = "kr3_portraits_sc_0057"
 tt.info.i18n_key = "HERO_ELVES_FOREST_ELEMENTAL_MINION"
 tt.info.random_name_format = nil
@@ -4690,14 +4690,13 @@ end
 
 tt.sound_events.insert = "ElvesHeroXinAfterTeleportIn"
 tt.sound_events.death = "ElvesHeroXinAfterTeleportOut"
+
 tt = RT("soldier_catha", "soldier_militia")
-
 AC(tt, "reinforcement", "ranged", "tween")
-
 tt.health.armor = 0
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 45)
-tt.info.fn = scripts.soldier_reinforcement.get_info
+-- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait = "kr3_portraits_sc_0066"
 tt.info.random_name_count = nil
 tt.info.random_name_format = nil
@@ -4742,15 +4741,14 @@ tt.unit.level = 0
 tt.unit.hit_offset = vec_2(0, 16)
 tt.unit.mod_offset = vec_2(0, 22)
 tt.unit.hide_after_death = true
+
 tt = RT("soldier_veznan_demon", "soldier_militia")
-
 AC(tt, "reinforcement", "ranged")
-
 tt.health.armor = 0
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 65)
 tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-tt.info.fn = scripts.soldier_reinforcement.get_info
+-- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait = "kr3_portraits_sc_0058"
 tt.info.random_name_count = 8
 tt.info.random_name_format = "ELVES_SOLDIER_VEZNAN_DEMON_%i_NAME"
@@ -4851,16 +4849,14 @@ tt.sound_events.insert = "ElvesHeroGyroBombsMarch"
 tt.sound_events.remove_stop = "ElvesHeroGyroBombsMarch"
 
 tt = E:register_t("soldier_re_0", "soldier_militia")
-
 E:add_comps(tt, "reinforcement", "tween")
-
 image_y = 54
 anchor_y = 10 / image_y
 tt.cooldown = 15
 tt.health.armor = 0
 tt.health.hp_max = 40
 tt.health_bar.offset = vec_2(0, 30)
-tt.info.fn = scripts.soldier_reinforcement.get_info
+-- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait_idxs = {38, 42, 46}
 tt.info.random_name_format = "ELVES_SOLDIER_REINFORCEMENT_%i_NAME"
 tt.info.random_name_count = 20

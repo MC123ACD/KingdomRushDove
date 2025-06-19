@@ -516,62 +516,11 @@ end
 scripts.enemy_basic = {}
 
 function scripts.enemy_basic.get_info(this)
-    local min, max, attacks, melee_damage_type
-    local ranged_min, ranged_max, ranged_damage_type
-    if this.melee and this.melee.attacks then
-        for _, a in pairs(this.melee.attacks) do
-            if a.damage_min then
-                min, max = a.damage_min, a.damage_max
-                melee_damage_type = a.damage_type
-                break
-            end
-        end
-
-        if this.unit and min then
-            min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
-        end
-    end
-    if this.ranged and this.ranged.attacks then
-        for _, a in pairs(this.ranged.attacks) do
-            if a.bullet then
-                local b = E:get_template(a.bullet)
-
-                if b and b.bullet.damage_min and b.bullet.damage_max then
-                    ranged_min, ranged_max = b.bullet.damage_min, b.bullet.damage_max
-                    ranged_damage_type = b.bullet.damage_type
-                    break
-                end
-            end
-        end
-    end
-
-    if min and max then
-        min, max = math.ceil(min), math.ceil(max)
-    end
-
-    if ranged_min and ranged_max then
-        min, max = math.ceil(ranged_min), math.ceil(ranged_max)
-    end
-
-    local armor = band(this.health.immune_to, DAMAGE_PHYSICAL) ~= 0 and 1 or this.health.armor
-    local magic_armor = band(this.health.immune_to, DAMAGE_MAGICAL) ~= 0 and 1 or this.health.magic_armor
-
-    return {
-        type = STATS_TYPE_ENEMY,
-        hp = this.health.hp,
-        hp_max = this.health.hp_max,
-        damage_min = min,
-        damage_max = max,
-        ranged_damage_min = ranged_min,
-        ranged_damage_max = ranged_max,
-        -- damage_icon = this.info.damage_icon,
-        damage_type = melee_damage_type,
-        ranged_damage_type = ranged_damage_type,
-        armor = armor,
-        magic_armor = magic_armor,
-        lives = this.enemy.lives_cost,
-        immune = this.health.immune_to == DAMAGE_ALL_TYPES
-    }
+    local info = scripts.soldier_barrack.get_info(this)
+    info.lives = this.enemy.lives_cost
+    info.immune = this.health.immune_to == DAMAGE_ALL_TYPES
+    info.type = STATS_TYPE_ENEMY
+    return info
 end
 
 function scripts.enemy_basic.insert(this, store, script)
@@ -1049,72 +998,72 @@ end
 
 scripts.soldier_reinforcement = {}
 
-function scripts.soldier_reinforcement.get_info(this)
-    local attacks
-    local ranged_attacks = nil
-    local melee_damage_type, ranged_damage_type
-    if this.melee and this.melee.attacks then
-        attacks = this.melee.attacks
-    end
-    if this.ranged and this.ranged.attacks then
-        ranged_attacks = this.ranged.attacks
-    end
+-- function scripts.soldier_reinforcement.get_info(this)
+--     local attacks
+--     local ranged_attacks = nil
+--     local melee_damage_type, ranged_damage_type
+--     if this.melee and this.melee.attacks then
+--         attacks = this.melee.attacks
+--     end
+--     if this.ranged and this.ranged.attacks then
+--         ranged_attacks = this.ranged.attacks
+--     end
 
-    local min, max, ranged_min, ranged_max
+--     local min, max, ranged_min, ranged_max
 
-    for _, a in pairs(attacks) do
-        if a.damage_min then
-            min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
-            melee_damage_type = a.damage_type
-            break
-        end
-    end
+--     for _, a in pairs(attacks) do
+--         if a.damage_min then
+--             min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
+--             melee_damage_type = a.damage_type
+--             break
+--         end
+--     end
 
-    if ranged_attacks then
-        for _, a in pairs(ranged_attacks) do
-            if a.bullet then
-                local b = E:get_template(a.bullet)
-                if b and b.bullet.damage_min and b.bullet.damage_max then
-                    ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff,
-                        b.bullet.damage_max + this.damage_buff
-                    ranged_damage_type = b.bullet.damage_type
-                    break
-                end
-            end
-        end
-    end
+--     if ranged_attacks then
+--         for _, a in pairs(ranged_attacks) do
+--             if a.bullet then
+--                 local b = E:get_template(a.bullet)
+--                 if b and b.bullet.damage_min and b.bullet.damage_max then
+--                     ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff,
+--                         b.bullet.damage_max + this.damage_buff
+--                     ranged_damage_type = b.bullet.damage_type
+--                     break
+--                 end
+--             end
+--         end
+--     end
 
-    if this.unit and min then
-        min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
-    end
+--     if this.unit and min then
+--         min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
+--     end
 
-    if this.unit and ranged_min then
-        ranged_min, ranged_max = ranged_min * this.unit.damage_factor, ranged_max * this.unit.damage_factor
-    end
+--     if this.unit and ranged_min then
+--         ranged_min, ranged_max = ranged_min * this.unit.damage_factor, ranged_max * this.unit.damage_factor
+--     end
 
-    if min and max then
-        min, max = math.ceil(min), math.ceil(max)
-    end
+--     if min and max then
+--         min, max = math.ceil(min), math.ceil(max)
+--     end
 
-    if ranged_min and ranged_max then
-        min, max = math.ceil(ranged_min), math.ceil(ranged_max)
-    end
+--     if ranged_min and ranged_max then
+--         min, max = math.ceil(ranged_min), math.ceil(ranged_max)
+--     end
 
-    return {
-        type = STATS_TYPE_SOLDIER,
-        hp = this.health.hp,
-        hp_max = this.health.hp_max,
-        damage_min = min,
-        damage_max = max,
-        damage_type = melee_damage_type,
-        ranged_damage_min = ranged_min,
-        ranged_damage_max = ranged_max,
-        ranged_damage_type = ranged_damage_type,
-        -- damage_icon = this.info.damage_icon,
-        armor = this.health.armor,
-        magic_armor = this.health.magic_armor
-    }
-end
+--     return {
+--         type = STATS_TYPE_SOLDIER,
+--         hp = this.health.hp,
+--         hp_max = this.health.hp_max,
+--         damage_min = min,
+--         damage_max = max,
+--         damage_type = melee_damage_type,
+--         ranged_damage_min = ranged_min,
+--         ranged_damage_max = ranged_max,
+--         ranged_damage_type = ranged_damage_type,
+--         -- damage_icon = this.info.damage_icon,
+--         armor = this.health.armor,
+--         magic_armor = this.health.magic_armor
+--     }
+-- end
 
 function scripts.soldier_reinforcement.insert(this, store, script)
     if this.melee then
@@ -1236,6 +1185,7 @@ scripts.soldier_barrack = {}
 function scripts.soldier_barrack.get_info(this)
     local attacks, damage_type
     local min, max
+    local no_ranged = true
     if this.melee and this.melee.attacks then
         attacks = this.melee.attacks
         for _, a in pairs(attacks) do
@@ -1293,6 +1243,10 @@ function scripts.soldier_barrack.get_info(this)
         end
     end
 
+    if ranged_damage_type then
+        no_ranged = false
+    end
+
     if not ranged_damage_type and this.melee and this.melee.attacks and this.melee.attacks[2] then
         local a = this.melee.attacks[2]
         if a.damage_min and not a.disabled then
@@ -1335,7 +1289,8 @@ function scripts.soldier_barrack.get_info(this)
         ranged_damage_type = ranged_damage_type,
         armor = this.health.armor,
         magic_armor = this.health.magic_armor,
-        respawn = this.health.dead_lifetime
+        respawn = this.health.dead_lifetime,
+        no_ranged = no_ranged
     }
 end
 
