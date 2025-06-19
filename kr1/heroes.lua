@@ -701,7 +701,7 @@ local function heroes()
     tt.hero.level_stats.armor = {0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2}
     tt.hero.level_stats.hp_max = {450, 500, 550, 600, 650, 720, 790, 860, 930, 1000}
     tt.hero.level_stats.melee_damage_max = {26, 29, 31, 34, 36, 38, 41, 43, 45, 47}
-    tt.hero.level_stats.melee_damage_min = {18, 19, 21, 22, 24, 26, 27, 29, 31, 33}
+    tt.hero.level_stats.melee_damage_min = {19, 20, 23, 24, 26, 28, 29, 31, 34, 37}
     tt.hero.skills.smash = CC("hero_skill")
     tt.hero.skills.smash.damage_min = {25, 50, 70}
     tt.hero.skills.smash.damage_max = {45, 70, 95}
