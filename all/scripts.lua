@@ -1249,8 +1249,13 @@ function scripts.soldier_barrack.get_info(this)
         no_ranged = false
     end
 
-    if not ranged_damage_type and this.melee and this.melee.attacks and this.melee.attacks[2] then
-        local a = this.melee.attacks[2]
+    local melee_count
+    if this.melee and this.melee.attacks then
+        melee_count = #this.melee.attacks
+    end
+
+    if not ranged_damage_type and melee_count then
+        local a = this.melee.attacks[melee_count]
         if a.damage_min and not a.disabled then
             ranged_min, ranged_max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
             ranged_damage_type = a.damage_type
@@ -1263,7 +1268,6 @@ function scripts.soldier_barrack.get_info(this)
         if ranged_min and ranged_max then
             ranged_min, ranged_max = math.ceil(ranged_min), math.ceil(ranged_max)
         end
-
     end
 
     if damage_type == DAMAGE_STAB then
@@ -1275,8 +1279,8 @@ function scripts.soldier_barrack.get_info(this)
 
     if ranged_damage_type == DAMAGE_STAB then
         if ranged_max and ranged_min then
-            ranged_max = math.ceil(ranged_max/2)
-            ranged_min = math.ceil(ranged_min/2)
+            ranged_max = math.ceil(ranged_max / 2)
+            ranged_min = math.ceil(ranged_min / 2)
         end
     end
     return {
