@@ -8468,6 +8468,15 @@ local function heroes()
     tt.revive.animation = "resurrection"
     tt.revive.sound = "ElvesHeroLilithResurrection"
     tt.revive.protect = 0.1
+    tt.revive.resist = {
+        bans = bor(F_STUN, F_BLOOD, F_POISON, F_BURN),
+        duration = 8,
+        cost = 0.05,
+        side_effect = function(this, store)
+            this.melee.attacks[3].ts = 0
+            this.melee.attacks[4].ts = 0
+        end
+    }
     tt.soul_eater = {}
     tt.soul_eater.last_ts = 0
     tt.soul_eater.active = true
@@ -8484,7 +8493,7 @@ local function heroes()
     end
     tt.melee.attacks[3] = CC("melee_attack")
     tt.melee.attacks[3].side_effect = function(this, store, attack, target)
-        this.revive.protect = this.revive.protect + 0.01
+        this.revive.protect = this.revive.protect + 0.02
     end
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].cooldown = 20
@@ -8501,7 +8510,7 @@ local function heroes()
     tt.melee.attacks[3].hit_offset = vec_2(30, 0)
     tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[4].side_effect = function(this, store, attack, target)
-        this.revive.protect = this.revive.protect + 0.02
+        this.revive.protect = this.revive.protect + 0.03
     end
     tt.melee.attacks[4].instakill = true
     tt.melee.attacks[4].chance = nil
