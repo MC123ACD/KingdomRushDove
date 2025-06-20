@@ -20582,7 +20582,9 @@ function scripts.soldier_drow.update(this, store)
         end
 
         if not this.health.dead or SU.y_soldier_revive(store, this) then
-            -- block empty
+            if this.powers["blade_mail"].level > 0 then
+                aura.hidden = nil
+            end
         else
             aura.hidden = true
 
@@ -20615,8 +20617,6 @@ function scripts.soldier_drow.update(this, store)
 
                 if brk or sta == A_DONE then
                     goto label_61_1
-                -- elseif sta == A_IN_COOLDOWN then
-                --     goto label_61_0
                 end
 
                 if SU.soldier_go_back_step(store, this) then

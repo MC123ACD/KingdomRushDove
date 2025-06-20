@@ -3822,7 +3822,7 @@ return function(scripts)
 
                                 for _, s in pairs(targets) do
                                     -- 复活
-                                    if s.health.dead and not s.unit.hide_during_death and not s.unit.hide_after_death and
+                                    if s.health.dead and not s.unit.hide_during_death and
                                         (math.random() < a.revive_chance) and not s.reinforcement and not s.hero and
                                         not table.contains(a.excluded_templates, s.template_name) then
 
