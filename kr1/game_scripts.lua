@@ -28409,12 +28409,6 @@ function scripts.mod_timelapse.queue(this, store, insertion)
 
         if U.flags_pass(target.vis, this.modifier) then
             this._target_prev_bans = target.vis.bans
-            -- target.vis.bans = F_ALL
-            -- target.health.ignore_damage = true
-            if target.enemy.can_do_magic == true then
-                target.enemy.can_do_magic = false
-                this._target_prev_can_do_magic = true
-            end
         end
     else
         log.debug("%s (%s) queue/removal", this.template_name, this.id)
@@ -28443,24 +28437,7 @@ function scripts.mod_timelapse.queue(this, store, insertion)
 end
 
 function scripts.mod_timelapse.dequeue(this, store, insertion)
-    local target = store.entities[this.modifier.target_id]
-
-    if not target then
-        return
-    end
-
-    if insertion then
-        log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
-
-        if this._target_prev_bans then
-            -- target.vis.bans = this._target_prev_bans
-            -- target.health.ignore_damage = false
-        end
-
-        if this._target_prev_can_do_magic then
-            target.enemy.can_do_magic = true
-        end
-    end
+    return
 end
 
 function scripts.mod_timelapse.insert(this, store)
@@ -28468,7 +28445,7 @@ function scripts.mod_timelapse.insert(this, store)
 
     if target and target.health and not target.health.dead and this._target_prev_bans ~= nil then
         SU.stun_inc(target)
-
+        scripts.cast_silence(target)
         return true
     else
         return false
@@ -28480,6 +28457,7 @@ function scripts.mod_timelapse.remove(this, store)
 
     if target then
         SU.stun_dec(target)
+        scripts.remove_silence(target)
     end
 
     return true

@@ -11086,7 +11086,7 @@ return function(scripts)
 
                 this.revive.ts = store.tick_ts
             end
-
+            scripts.soldier_revive_resist(this, store)
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else

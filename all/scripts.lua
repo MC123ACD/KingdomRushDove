@@ -7702,6 +7702,12 @@ scripts.soldier_revive_resist = function(this, store)
         queue_remove(store, m)
     end
 
+    local mod_ban = E:create_entity("mod_ban")
+    mod_ban.modifier.ban_vis = r.bans
+    mod_ban.modifier.target_id = this.id
+    mod_ban.modifier.duration = r.duration
+    queue_insert(store, mod_ban)
+
     if this.revive.fx then
         local fx = E:create_entity(this.revive.fx)
         fx.pos = this.pos
@@ -7727,12 +7733,6 @@ scripts.soldier_revive_resist = function(this, store)
         this.unit.is_stunned = nil
     end
     this.health.ignore_damage = false
-
-    local mod_ban = E:create_entity("mod_ban")
-    mod_ban.modifier.ban_vis = r.bans
-    mod_ban.modifier.target_id = this.id
-    mod_ban.modifier.duration = r.duration
-    queue_insert(store, mod_ban)
 
     if r.side_effect then
         r.side_effect(this, store)

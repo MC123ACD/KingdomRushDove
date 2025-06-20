@@ -8393,8 +8393,8 @@ local function heroes()
     tt.hero.level_stats.hp_max = {240, 260, 280, 300, 320, 340, 360, 380, 400, 420}
     tt.hero.level_stats.melee_damage_max = {14, 16, 17, 18, 19, 20, 22, 23, 24, 25}
     tt.hero.level_stats.melee_damage_min = {10, 10, 11, 12, 13, 14, 14, 15, 16, 17}
-    tt.hero.level_stats.ranged_damage_max = {14, 16, 17, 18, 19, 20, 22, 23, 24, 25}
-    tt.hero.level_stats.ranged_damage_min = {10, 10, 11, 12, 13, 14, 14, 15, 16, 17}
+    tt.hero.level_stats.ranged_damage_max = {28, 32, 34, 36, 38, 40, 44, 46, 48, 50}
+    tt.hero.level_stats.ranged_damage_min = {20, 21, 22, 24, 26, 28, 29, 30, 32, 34}
     tt.hero.skills.reapers_harvest = E:clone_c("hero_skill")
     tt.hero.skills.reapers_harvest.damage = {110, 220, 330}
     tt.hero.skills.reapers_harvest.instakill_chance = {0.1, 0.2, 0.3}
@@ -8522,7 +8522,7 @@ local function heroes()
     tt.ranged.attacks[1].animation = "throw"
     tt.ranged.attacks[1].max_range = 165
     tt.ranged.attacks[1].min_range = 20
-    tt.ranged.attacks[1].cooldown = 1
+    tt.ranged.attacks[1].cooldown = 2
     tt.ranged.attacks[1].bullet = "bullet_lilith"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(5, 40)}
     tt.ranged.attacks[1].shoot_time = fts(28)
