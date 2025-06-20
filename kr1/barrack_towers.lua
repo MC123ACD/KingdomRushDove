@@ -1361,13 +1361,14 @@ local function barrack_towers()
     tt.vis.flags = bor(tt.vis.flags, F_DARK_ELF)
 
     tt = RT("dagger_drow", "bullet")
-    tt.bullet.damage_max = 16
-    tt.bullet.damage_min = 11
+    tt.bullet.damage_max = 32
+    tt.bullet.damage_min = 22
     tt.bullet.hide_radius = 6
     tt.bullet.hit_distance = 22
     tt.bullet.hit_fx = "fx_dagger_drow_hit"
     tt.bullet.particles_name = "ps_dagger_drow"
     tt.bullet.predict_target_pos = true
+    tt.bullet.damage_type = DAMAGE_STAB
     tt.flight_time_range = {fts(9), fts(16)}
     tt.main_script.insert = scripts.dagger_drow.insert
     tt.main_script.update = scripts.arrow.update

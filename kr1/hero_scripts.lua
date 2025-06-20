@@ -3608,7 +3608,7 @@ return function(scripts)
             m.ts = store.tick_ts
             this.tween.disabled = false
             this.tween.ts = store.tick_ts
-            target.tower.damage_factor = target.tower.damage_factor + this.extra_damage
+            SU.insert_tower_damage_factor_buff(target, this.extra_damage)
 
             while store.tick_ts - m.ts < m.duration do
                 coroutine.yield()
@@ -3617,8 +3617,8 @@ return function(scripts)
                     goto label_374_0
                 end
             end
+            SU.remove_tower_damage_factor_buff(target, this.extra_damage)
 
-            target.tower.damage_factor = target.tower.damage_factor - this.extra_damage
             ::label_374_0::
             this.tween.reverse = true
             this.tween.ts = store.tick_ts
