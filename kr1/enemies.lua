@@ -1476,8 +1476,9 @@ local function enemies()
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.enemy_spider_big.update
     tt.melee.attacks[1].cooldown = 1
-    tt.melee.attacks[1].damage_max = 40
-    tt.melee.attacks[1].damage_min = 20
+    tt.melee.attacks[1].damage_max = 30
+    tt.melee.attacks[1].damage_min = 15
+    tt.melee.attacks[1].mod = "mod_spider_rotten_poison"
     tt.melee.attacks[1].hit_time = fts(12)
     tt.melee.attacks[1].sound_hit = "SpiderAttack"
     tt.motion.max_speed = 0.6 * FPS
@@ -1499,6 +1500,9 @@ local function enemies()
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = bor(F_POISON, F_SKELETON)
 
+    RT("mod_spider_rotten_poison", "mod_poison")
+    tt.modifier.damage_every = 0.5
+
     tt = RT("enemy_spider_rotten_tiny", "enemy")
     AC(tt, "melee")
     anchor_y = 0.1875
@@ -1517,6 +1521,7 @@ local function enemies()
     tt.melee.attacks[1].damage_min = 10
     tt.melee.attacks[1].hit_time = fts(12)
     tt.melee.attacks[1].sound_hit = "SpiderAttack"
+    tt.melee.attacks[1].mod = "mod_spider_rotten_tiny_poison"
     tt.motion.max_speed = 1.0 * FPS
     tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
     tt.render.sprites[1].prefix = "enemy_spider_rotten_tiny"
@@ -1528,6 +1533,9 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(1), ady(14))
     tt.unit.mod_offset = vec_2(adx(18), ady(13))
     tt.vis.bans = bor(F_POISON, F_SKELETON)
+
+    RT("mod_spider_rotten_tiny_poison", "mod_poison")
+    tt.modifier.damage_every = 1
 
     tt = RT("enemy_rotten_tree", "enemy")
     AC(tt, "melee")
