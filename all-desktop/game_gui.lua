@@ -5928,8 +5928,8 @@ function PickView:on_down(button, x, y)
             if P:valid_node_nearby(wx, wy, nil, NF_RALLY) then
                 local num = #game_gui.selected_controables
                 for idx, e in ipairs(game_gui.selected_controables) do
-                    if GR:cell_is_only(wx, wy, e.nav_grid.valid_terrains_dest) then
-                        local rally_pos = calc_rally_pos(idx)
+                    local rally_pos = calc_rally_pos(idx)
+                    if GR:cell_is_only(rally_pos.x, rally_pos.y, e.nav_grid.valid_terrains_dest) then
                         local waypoints = GR:find_waypoints(e.pos, e.nav_rally.pos, rally_pos,
                             e.nav_grid.valid_terrains)
                         if waypoints then
