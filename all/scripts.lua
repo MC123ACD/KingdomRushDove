@@ -1127,17 +1127,8 @@ function scripts.soldier_reinforcement.update(this, store, script)
                 if this.sound_events and this.sound_events.change_rally_point then
                     S:queue(this.sound_events.change_rally_point)
                 end
-                -- if this.friend_id then
-                --     local friend = store.entities[this.friend_id]
-                --     if friend and not friend.nav_rally.new then
-                --         friend.nav_grid = table.deepclone(this.nav_grid)
-                --         friend.nav_rally.new = true
-                --         friend.nav_rally.pos = V.v(this.nav_rally.pos.x,this.nav_rally.pos.y)
-                --         friend.nav_rally.center = V.v(this.nav_rally.center.x, this.nav_rally.center.y)
-                --     end
-                -- end
 
-                if SU.y_soldier_new_rally(store, this) then
+                if SU.y_hero_new_rally(store, this) then
                     goto label_34_1
                 end
             end
