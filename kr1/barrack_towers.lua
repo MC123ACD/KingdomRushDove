@@ -1375,6 +1375,19 @@ local function barrack_towers()
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "mercenaryDraw_proy"
 
+    tt = RT("mod_life_drain_drow", "modifier")
+    AC(tt, "render")
+    tt.heal_factor = 1
+    tt.heal_bans = bor(F_POISON)
+    tt.main_script.insert = scripts.mod_heal_on_damage.insert
+    tt.main_script.update = scripts.mod_heal_on_damage.update
+    tt.modifier.use_mod_offset = false
+    tt.render.sprites[1].name = "soldier_drow_heal"
+    tt.render.sprites[1].anchor.y = 0.2037037037037037
+    tt.render.sprites[1].hidden = true
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].hide_after_runs = 1
+
     tt = E:register_t("tower_ewok", "tower_barrack_1")
     E:add_comps(tt, "powers")
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0013"

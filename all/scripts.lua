@@ -1239,7 +1239,7 @@ function scripts.soldier_barrack.get_info(this)
     if not ranged_damage_type and this.timed_attacks and this.timed_attacks.list[1].bullet then
         local b = E:get_template(this.timed_attacks.list[1].bullet)
 
-        if b and b.bullet.damage_min and b.bullet.damage_max then
+        if b and b.bullet and b.bullet.damage_min and b.bullet.damage_max then
             ranged_min, ranged_max = math.ceil((b.bullet.damage_min + this.damage_buff)*this.unit.damage_factor), math.ceil((b.bullet.damage_max + this.damage_buff)*this.unit.damage_factor)
             ranged_damage_type = b.bullet.damage_type
         end
@@ -1254,7 +1254,7 @@ function scripts.soldier_barrack.get_info(this)
         melee_count = #this.melee.attacks
     end
 
-    if not ranged_damage_type and melee_count then
+    if not ranged_damage_type and melee_count and melee_count > 1 then
         local a = this.melee.attacks[melee_count]
         if a.damage_min and not a.disabled then
             ranged_min, ranged_max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
@@ -5748,9 +5748,12 @@ function scripts.mod_heal_on_damage.update(this, store)
             target.track_damage.damaged = {}
             target.health.hp = km.clamp(0, target.health.hp_max, target.health.hp)
 
-            if this.heal_remove_modifiers then
-                for _, n in pairs(this.heal_remove_modifiers) do
-                    SU.remove_modifiers(store, target, n)
+            if this.heal_bans then
+                local mods = scripts.find_modifiers_with_flags(this, store, this.heal_bans)
+                if mods and #mods > 0 then
+                    for _, mod in pairs(mods) do
+                        queue_remove(store, mod)
+                    end
                 end
             end
 
@@ -7564,6 +7567,12 @@ scripts.heal = function(this, amount)
     end
 end
 
+scripts.find_modifiers_with_flags = function(this, store, bans)
+    return table.filter(store.entities, function(k, v)
+        return v.modifier and band(v.modifier.vis_flags, bans) ~= 0 and v.modifier.target_id == this.id
+    end)
+end
+
 -- 通过复生特性来抵抗异常状态
 scripts.soldier_revive_resist = function(this, store)
     if not this.revive or not this.revive.resist then
@@ -7573,9 +7582,7 @@ scripts.soldier_revive_resist = function(this, store)
     if this.revive.protect < r.cost then
         return
     end
-    local mods = table.filter(store.entities, function(k, v)
-        return v.modifier and v.modifier.target_id == this.id and band(v.modifier.vis_flags, r.bans) ~= 0
-    end)
+    local mods = scripts.find_modifiers_with_flags(this, store, r.bans)
     if not mods or #mods == 0 then
         return
     end

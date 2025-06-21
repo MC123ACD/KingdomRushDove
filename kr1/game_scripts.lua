@@ -7951,28 +7951,48 @@ function scripts.mod_hero_thor_chainlightning.update(this, store)
 	local targets = U.find_enemies_in_range(store.entities, chain_pos, cl.min_range, cl.max_range, cl.vis_flags or 0, cl.vis_bans or 0)
 
 	if targets then
-		local random_targets = table.random_order(targets)
-		local count = 0
+        -- local last_num = 0
+        for i = 1, cl.count do
+            local num = math.random(1, #targets)
+            local t = targets[num]
+            local dest = V.vclone(t.pos)
+            local b = E:create_entity(cl.bullet)
 
-		for _, t in pairs(random_targets) do
-			if count >= cl.count then
-				break
-			end
+            b.pos = V.vclone(chain_pos)
+            b.bullet.from = V.vclone(b.pos)
+            b.bullet.to = dest
+            b.bullet.target_id = t.id
+            b.bullet.source_id = m.source_id
+            b.bullet.level = m.level
+            -- if last_num == num then
+                -- b.bullet.damage_factor = b.bullet.damage_factor * 0.5
+            -- end
+            -- last_num = num
+            queue_insert(store, b)
+        end
+		-- local random_targets = table.random_order(targets)
+		-- local count = 0
 
-			local dest = V.vclone(t.pos)
-			local b = E:create_entity(cl.bullet)
+		-- for _, t in pairs(random_targets) do
 
-			b.pos = V.vclone(chain_pos)
-			b.bullet.from = V.vclone(b.pos)
-			b.bullet.to = dest
-			b.bullet.target_id = t.id
-			b.bullet.source_id = m.source_id
-			b.bullet.level = m.level
+		-- 	if count >= cl.count then
+		-- 		break
+		-- 	end
 
-			queue_insert(store, b)
+		-- 	local dest = V.vclone(t.pos)
+		-- 	local b = E:create_entity(cl.bullet)
 
-			count = count + 1
-		end
+		-- 	b.pos = V.vclone(chain_pos)
+		-- 	b.bullet.from = V.vclone(b.pos)
+		-- 	b.bullet.to = dest
+		-- 	b.bullet.target_id = t.id
+		-- 	b.bullet.source_id = m.source_id
+		-- 	b.bullet.level = m.level
+
+		-- 	queue_insert(store, b)
+
+		-- 	count = count + 1
+		-- end
 	end
 
 	queue_remove(store, this)

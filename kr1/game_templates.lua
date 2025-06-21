@@ -1547,6 +1547,7 @@ tt.dps.damage_every = fts(2)
 tt.dps.damage_min = 5
 tt.dps.damage_max = 5
 tt.dps.damage_type = DAMAGE_ELECTRICAL
+tt.modifier.allows_duplicates = true
 
 tt = RT("mod_hero_thor_chainlightning", "modifier")
 tt.chainlightning = {
@@ -1561,10 +1562,9 @@ tt.chainlightning = {
     mod = "mod_tesla_overcharge"
 }
 tt.main_script.update = scripts.mod_hero_thor_chainlightning.update
+
 tt = RT("mod_hero_thor_thunderclap", "modifier")
-
 AC(tt, "render")
-
 tt.thunderclap = {
     damage = 60,
     offset = vec_2(0, 10),
@@ -7556,18 +7556,7 @@ tt.dps.damage_max = 2
 tt.dps.kill = true
 tt.dps.damage_every = fts(3)
 tt.dps.damage_type = bor(DAMAGE_POISON, DAMAGE_MODIFIER)
-tt = RT("mod_life_drain_drow", "modifier")
-AC(tt, "render")
-tt.heal_factor = 1
-tt.heal_remove_modifiers = {"mod_drider_poison", "mod_son_of_mactans_poison"}
-tt.main_script.insert = scripts.mod_heal_on_damage.insert
-tt.main_script.update = scripts.mod_heal_on_damage.update
-tt.modifier.use_mod_offset = false
-tt.render.sprites[1].name = "soldier_drow_heal"
-tt.render.sprites[1].anchor.y = 0.2037037037037037
-tt.render.sprites[1].hidden = true
-tt.render.sprites[1].loop = false
-tt.render.sprites[1].hide_after_runs = 1
+
 tt = E:register_t("mod_teleport_faustus", "mod_teleport")
 tt.modifier.vis_flags = bor(F_MOD, F_TELEPORT)
 tt.modifier.vis_bans = bor(F_BOSS)

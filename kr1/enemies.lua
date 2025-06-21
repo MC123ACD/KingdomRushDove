@@ -1500,8 +1500,8 @@ local function enemies()
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = bor(F_POISON, F_SKELETON)
 
-    RT("mod_spider_rotten_poison", "mod_poison")
-    tt.modifier.damage_every = 0.5
+    tt = RT("mod_spider_rotten_poison", "mod_poison")
+    tt.dps.damage_every = 0.5
 
     tt = RT("enemy_spider_rotten_tiny", "enemy")
     AC(tt, "melee")
@@ -1534,8 +1534,8 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(18), ady(13))
     tt.vis.bans = bor(F_POISON, F_SKELETON)
 
-    RT("mod_spider_rotten_tiny_poison", "mod_poison")
-    tt.modifier.damage_every = 1
+    tt = RT("mod_spider_rotten_tiny_poison", "mod_poison")
+    tt.dps.damage_every = 1
 
     tt = RT("enemy_rotten_tree", "enemy")
     AC(tt, "melee")
