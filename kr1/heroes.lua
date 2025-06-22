@@ -9335,7 +9335,7 @@ local function heroes()
         delay = fts(3)
     }
     tt.melee.attacks[4].xp_from_skill = "grievous_bites"
-    tt.melee.attacks[4].xp_gain_factor = 10
+    tt.melee.attacks[4].xp_gain_factor = 7.5
     tt.melee.cooldown = 1
     tt.melee.range = 55
     tt.timed_attacks.list[1] = CC("mod_attack")
