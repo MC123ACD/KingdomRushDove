@@ -54,6 +54,7 @@ local function heroes()
     tt.hero.skills.paladin.hp_max = {150, 200, 250}
     tt.hero.skills.paladin.melee_damage_min = {6, 8, 10}
     tt.hero.skills.paladin.melee_damage_max = {20, 25, 30}
+    tt.hero.skills.paladin.max_speed = {60, 65, 70}
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 36)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
@@ -1048,6 +1049,7 @@ local function heroes()
     tt.hero.skills.ancestors_call.hp_max = {150, 200, 250, 300}
     tt.hero.skills.ancestors_call.damage_min = {2, 4, 6, 8}
     tt.hero.skills.ancestors_call.damage_max = {6, 8, 10, 12}
+    tt.hero.skills.ancestors_call.max_speed = {69, 72, 75, 78}
     tt.hero.skills.ancestors_call.xp_level_steps = {
         [2] = 1,
         [4] = 2,

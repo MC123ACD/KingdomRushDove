@@ -104,6 +104,7 @@ return function(scripts)
                 a = e.melee.attacks[2]
                 a.damage_min = s.melee_damage_min[s.level]
                 a.damage_max = s.melee_damage_max[s.level]
+                e.motion.max_speed = s.max_speed[s.level]
             end)
             this.health.hp = this.health.hp_max
         end,
@@ -4887,6 +4888,7 @@ return function(scripts)
                 e.health.hp_max = s.hp_max[s.level]
                 e.melee.attacks[1].damage_min = s.damage_min[s.level]
                 e.melee.attacks[1].damage_max = s.damage_max[s.level]
+                e.motion.max_speed = s.max_speed[s.level]
             end)
 
             upgrade_skill(this, "bear", function(this, s)
