@@ -503,7 +503,6 @@ anchor_y = 0.15
 anchor_x = 0.5
 image_y = 41
 image_x = 58
-tt.controable = true
 tt.health.armor = 0.4
 tt.health.dead_lifetime = 3
 tt.health.hp_max = nil
@@ -757,7 +756,6 @@ tt.health.dead_lifetime = fts(30)
 tt.info.portrait = IS_PHONE_OR_TABLET and
 "portraits_hero_0011" or "info_portraits_hero_0011"
 tt.info.i18n_key = "HERO_VIKING_ANCESTOR"
-tt.controable = true
 tt.info.random_name_format = nil
 tt.main_script.insert = scripts.soldier_reinforcement.insert
 tt.main_script.remove = scripts.soldier_reinforcement.remove

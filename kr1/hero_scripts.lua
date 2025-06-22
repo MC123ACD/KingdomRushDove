@@ -4945,12 +4945,13 @@ return function(scripts)
 
                 this.melee.attacks[3].disabled = true
 
+                this.is_bear = false
                 U.y_animation_play(this, "toViking", nil, store.tick_ts, 1)
 
                 this.render.sprites[1].prefix = "hero_ingvar"
 
                 this.health.immune_to = DAMAGE_NONE
-                this.is_bear = false
+
                 ba.ts = store.tick_ts
             end
 
@@ -4989,7 +4990,7 @@ return function(scripts)
                     a = ba
                     skill = this.hero.skills.bear
 
-                    if not this.is_bear and ready_to_use_skill(ba, store) and this.health.hp < this.health.hp_max * a.transform_health_factor then
+                    if not this.is_bear and ready_to_use_skill(a, store) and this.health.hp < this.health.hp_max * a.transform_health_factor then
                         SU.hero_gain_xp_from_skill(this, skill)
                         go_bear()
                     elseif this.is_bear and store.tick_ts - a.ts >= a.duration then
@@ -5001,7 +5002,7 @@ return function(scripts)
 
                     if ready_to_use_skill(a, store) then
                         if this.is_bear then
-                            local compensation = a.duration - (store.tick_ts - a.ts)
+                            local compensation = ba.duration - (store.tick_ts - ba.ts)
                             go_viking()
                             ba.ts = ba.ts - compensation
                         end
