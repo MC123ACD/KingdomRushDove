@@ -498,11 +498,13 @@ tt.unit.mod_offset = vec_2(0, ady(30))
 tt.unit.price = 400
 
 tt = RT("soldier_gerald_paladin", "soldier_militia")
-AC(tt, "reinforcement", "melee", "tween")
+AC(tt, "reinforcement", "melee", "tween", "nav_grid")
 anchor_y = 0.15
 anchor_x = 0.5
 image_y = 41
 image_x = 58
+tt.controable = true
+tt.ban_global_control = true
 tt.health.armor = 0.4
 tt.health.dead_lifetime = 3
 tt.health.hp_max = nil
@@ -745,10 +747,12 @@ tt.unit.price = 0
 tt.vis.bans = bor(F_LYCAN, F_SKELETON, F_CANNIBALIZE)
 
 tt = RT("soldier_ingvar_ancestor", "soldier_militia")
-AC(tt, "reinforcement", "melee")
+AC(tt, "reinforcement", "melee", "nav_grid")
 image_y = 60
 image_x = 72
 anchor_y = 0.17
+tt.controable = true
+tt.ban_global_control = true
 tt.health.armor = 0.25
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 46)
