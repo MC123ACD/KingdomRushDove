@@ -1068,6 +1068,7 @@ local kr1 = {
     TOWER_RANGERS_POISON_NAME = "剧毒箭矢",
     ENEMY_ABOMINATION_SPECIAL = "*死亡时爆炸，增益僵尸，惧怕魔法",
     ENEMY_NECROMANCER_SPECIAL = "*召唤亡灵，远程攻击",
+    ENEMY_ZOMBIEMANCER_NAME = "邪尸法师",
     ENDLESS_GUI_VICTORY_TAUNT_0051 = "如诗如画！",
     ["MAGIC RESISTANT ENEMIES!"] = "魔法抗性敌人！",
     ENEMY_GOBLIN_EXTRA = "- 低生命值\n- 中速",

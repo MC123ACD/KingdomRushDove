@@ -161,7 +161,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 0,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 1,
 							interval_next = 1600,
 							max = 0
@@ -197,7 +197,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 1,
 							interval_next = 300,
 							max = 1

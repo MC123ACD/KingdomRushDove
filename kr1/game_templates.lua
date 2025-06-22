@@ -246,6 +246,10 @@ tt.render.sprites[1].draw_order = 2
 tt = RT("decal_paladin_holystrike", "decal_timed")
 tt.render.sprites[1].name = "decal_paladin_holystrike"
 tt.render.sprites[1].z = Z_DECALS
+tt = RT("decal_zombiemancer_raise", "decal_timed")
+tt.render.sprites[1].name = "decal_paladin_holystrike"
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].color = {0, 255, 0}
 
 tt = E:register_t("decal_oni_torment_sword", "decal_scripted")
 tt.render.sprites[1].prefix = "decal_oni_torment_sword_1"

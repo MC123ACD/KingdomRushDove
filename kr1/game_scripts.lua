@@ -4224,6 +4224,164 @@ function scripts.enemy_demon_gulaemon.update(this, store)
 	end
 end
 
+scripts.enemy_zombiemancer = {
+    update = function(this, store)
+        local a = this.timed_actions.list[1]
+        local a2 = this.timed_actions.list[2]
+        local cg = store.count_groups[a.count_group_type]
+
+        a.ts = store.tick_ts
+
+        local function summon_count_exceeded()
+            return cg[a.count_group_name] and cg[a.count_group_name] >= a.count_group_max
+        end
+
+        local function ready_to_summon()
+            if U.get_blocker(store, this) then
+                a.ts = store.tick_ts
+
+                return false
+            end
+            return enemy_ready_to_magic_attack(this, store, a) and not summon_count_exceeded()
+        end
+
+        local function ready_to_raise()
+            if U.get_blocker(store, this) then
+                a2.ts = store.tick_ts
+
+                return false
+            end
+            return enemy_ready_to_magic_attack(this, store, a2) and cg[a.count_group_name] and cg[a.count_group_name] > 0
+        end
+
+        local function get_zombies()
+            return table.filter(store.entities, function(k,v)
+                return v.owner and v.owner == this.id and v.health and not v.health.dead
+            end)
+        end
+
+        local function break_fn()
+            return ready_to_summon() or ready_to_raise()
+        end
+
+        ::label_117_0::
+
+        while true do
+            if this.health.dead then
+                SU.y_enemy_death(store, this)
+
+                return
+            end
+
+            if this.unit.is_stunned then
+                SU.y_enemy_stun(store, this)
+            else
+                if ready_to_summon() then
+                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
+
+                    if SU.y_enemy_wait(store, this, a.spawn_time) then
+                        goto label_117_0
+                    end
+
+                    for i = 1, a.max_count do
+                        if SU.y_enemy_wait(store, this, a.spawn_delay) then
+                            goto label_117_0
+                        end
+
+                        if i ~= 1 and summon_count_exceeded() then
+                            break
+                        end
+
+                        local e = E:create_entity(a.entity)
+                        local noff = a.summon_offsets[i] or a.summon_offsets[1]
+
+                        e.nav_path.pi = this.nav_path.pi
+                        e.nav_path.spi = noff[1]
+                        e.nav_path.ni = this.nav_path.ni + math.random(noff[2], noff[3])
+                        e.render.sprites[1].name = a.spawn_animation
+                        e.enemy.gold = 0
+                        e.owner = this.id
+                        e.motion.max_speed = (0.5 + math.random() * 0.1 ) * FPS
+                        E:add_comps(e, "count_group")
+                        e.count_group.name = a.count_group_name
+                        e.count_group.type = a.count_group_type
+                        if P:is_node_valid(e.nav_path.pi, e.nav_path.ni) then
+                            queue_insert(store, e)
+                        end
+
+                        coroutine.yield()
+                    end
+
+                    U.y_animation_wait(this)
+
+                    a.ts = store.tick_ts
+                end
+
+                if ready_to_raise() then
+                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
+
+                    local zombies = get_zombies()
+                    local raise_index = math.random(1, #zombies)
+                    local anchor = zombies[raise_index]
+
+                    local fx = E:create_entity("decal_zombiemancer_raise")
+                    fx.pos = V.vclone(anchor.pos)
+                    for i = 1, #fx.render.sprites do
+                        fx.render.sprites[i].ts = store.tick_ts
+                    end
+                    queue_insert(store, fx)
+
+                    local hp_sum = 0
+                    for _, zombie in pairs(zombies) do
+                        if zombie.health and not zombie.health.dead then
+                            local mod = E:create_entity("mod_blood")
+                            mod.modifier.duration = 1
+                            mod.dps.damage_inc = 0
+                            local deal = this.health.hp / 4
+                            mod.dps.damage_max = deal
+                            mod.dps.damage_min = deal
+                            hp_sum = hp_sum + deal
+
+                            mod.modifier.source_id = this.id
+                            mod.modifier.target_id = zombie.id
+                            queue_insert(store, mod)
+                        end
+                    end
+
+                    local abomination = E:create_entity("enemy_abomination")
+                    abomination.nav_path.pi = anchor.nav_path.pi
+                    abomination.nav_path.spi = anchor.nav_path.spi
+                    abomination.nav_path.ni = anchor.nav_path.ni
+                    abomination.enemy.gold = 0
+                    abomination.render.sprites[1].alpha = 100
+                    abomination.health.hp_max = 3 * hp_sum
+                    abomination.health.hp = abomination.health.hp_max
+                    if P:is_node_valid(abomination.nav_path.pi, abomination.nav_path.ni) then
+                        queue_insert(store, abomination)
+                    end
+
+                    SU.stun_inc(abomination)
+                    if SU.y_enemy_wait(store, this, a.spawn_time) then
+                        goto label_117_0
+                    end
+
+                    U.y_animation_wait(this)
+                    abomination.render.sprites[1].alpha = 255
+                    SU.stun_dec(abomination)
+
+                    a2.ts = store.tick_ts
+                end
+
+                if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, break_fn, break_fn) then
+                    -- block empty
+                else
+                    coroutine.yield()
+                end
+            end
+        end
+    end
+}
+
 scripts.enemy_necromancer = {}
 
 function scripts.enemy_necromancer.update(this, store)

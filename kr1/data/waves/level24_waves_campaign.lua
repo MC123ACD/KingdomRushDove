@@ -2831,7 +2831,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 1,
 							interval_next = 212,
 							max = 1
@@ -2891,7 +2891,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 3,
 							interval_next = 353,
 							max = 1
@@ -3369,7 +3369,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 2,
 							interval_next = 141,
 							max = 1
@@ -3414,7 +3414,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_necromancer",
+							creep = "enemy_zombiemancer",
 							path = 3,
 							interval_next = 918,
 							max = 1

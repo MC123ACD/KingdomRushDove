@@ -1920,10 +1920,9 @@ local function enemies()
     tt.unit.show_blood_pool = false
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.is_demon = true
+
     tt = RT("enemy_necromancer", "enemy")
-
     AC(tt, "melee", "ranged", "timed_actions")
-
     anchor_y = 0.2
     anchor_x = 0.5
     image_y = 38
@@ -1973,6 +1972,60 @@ local function enemies()
     tt.unit.can_explode = false
     tt.unit.hit_offset = vec_2(0, 15)
     tt.unit.mod_offset = vec_2(adx(23), ady(17))
+
+    tt = RT("enemy_zombiemancer", "enemy")
+    AC(tt, "melee", "ranged", "timed_actions")
+    anchor_y = 0.2
+    anchor_x = 0.5
+    image_y = 38
+    image_x = 44
+    tt.enemy.gold = 70
+    tt.enemy.lives_cost = 3
+    tt.enemy.melee_slot = vec_2(18, 0)
+    tt.health.hp_max = 1000
+    tt.health.magic_armor = 0.5
+    tt.health_bar.offset = vec_2(0, 30)
+    tt.info.i18n_key = "ENEMY_ZOMBIEMANCER"
+    tt.info.enc_icon = 29
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0054" or "info_portraits_sc_0054"
+    tt.main_script.update = scripts.enemy_zombiemancer.update
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].damage_max = 35
+    tt.melee.attacks[1].damage_min = 20
+    tt.melee.attacks[1].hit_time = fts(10)
+    tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
+    tt.motion.max_speed = 0.5 * FPS
+    tt.ranged.attacks[1] = E:clone_c("bullet_attack")
+    tt.ranged.attacks[1].bullet = "bolt_necromancer"
+    tt.ranged.attacks[1].bullet_start_offset = {vec_2(-8, 22)}
+    tt.ranged.attacks[1].cooldown = 1 + fts(23)
+    tt.ranged.attacks[1].hold_advance = true
+    tt.ranged.attacks[1].max_range = 145
+    tt.ranged.attacks[1].min_range = 60
+    tt.ranged.attacks[1].shoot_time = fts(9)
+    tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
+    tt.render.sprites[1].prefix = "enemy_necromancer"
+    tt.render.sprites[1].color = {0, 255, 0}
+    tt.sound_events.death = "DeathPuff"
+    tt.timed_actions.list[1] = E:clone_c("spawn_attack")
+    tt.timed_actions.list[1].cooldown = 8
+    tt.timed_actions.list[1].spawn_time = fts(12)
+    tt.timed_actions.list[1].spawn_delay = fts(4)
+    tt.timed_actions.list[1].entity = "enemy_halloween_zombie"
+    tt.timed_actions.list[1].animation = "summon"
+    tt.timed_actions.list[1].spawn_animation = "raise"
+    tt.timed_actions.list[1].max_count = 5
+    tt.timed_actions.list[1].count_group_name = "zombiemancer_zombies"
+    tt.timed_actions.list[1].count_group_type = COUNT_GROUP_CONCURRENT
+    tt.timed_actions.list[1].count_group_max = 35
+    tt.timed_actions.list[1].summon_offsets = {{2, 0, 0}, {3, 0, 0}, {1, 3, 8}, {2, 3, 8}, {3, 3, 8}, {1, -3, -8},
+                                            {2, -3, -8}, {3, -3, -8}}
+    tt.timed_actions.list[2] = E:clone_c("spawn_attack")
+    tt.timed_actions.list[2].cooldown = 16
+    tt.unit.can_explode = false
+    tt.unit.hit_offset = vec_2(0, 15)
+    tt.unit.mod_offset = vec_2(adx(23), ady(17))
+
     tt = RT("enemy_skeleton_blackburn", "enemy_skeleton")
     tt = RT("enemy_zombie_blackburn", "enemy_halloween_zombie")
     tt = RT("enemy_skeleton_warrior", "enemy_skeleton_big")
