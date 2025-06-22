@@ -1820,7 +1820,7 @@ local function heroes()
     }
     tt.hero.skills.shadowdance = E:clone_c("hero_skill")
     tt.hero.skills.shadowdance.copies = {3, 4, 5}
-    tt.hero.skills.shadowdance.xp_gain = {20, 35, 50}
+    tt.hero.skills.shadowdance.xp_gain_factor = 20
     tt.hero.skills.shadowdance.xp_level_steps = {
         [2] = 1,
         [5] = 2,
@@ -1828,7 +1828,7 @@ local function heroes()
     }
     tt.hero.skills.lethalstrike = E:clone_c("hero_skill")
     tt.hero.skills.lethalstrike.instakill_chance = {0.1, 0.17, 0.25}
-    tt.hero.skills.lethalstrike.xp_gain = {40, 80, 120}
+    tt.hero.skills.lethalstrike.xp_gain_factor = 50
     tt.hero.skills.lethalstrike.xp_level_steps = {
         [3] = 1,
         [6] = 2,
