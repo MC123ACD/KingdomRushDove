@@ -1106,8 +1106,8 @@ local function heroes()
     tt.melee.attacks[2].hit_decal = "decal_ingvar_attack"
     tt.melee.attacks[2].shared_cooldown = true
     tt.melee.attacks[2].animation = "attack2"
-    tt.melee.attacks[2].chance = 0.5
-    tt.melee.attacks[2].xp_gain_factor = 1.8
+    tt.melee.attacks[2].chance = 0.4
+    tt.melee.attacks[2].xp_gain_factor = 1.6
     tt.melee.attacks[2].hit_time = fts(15)
     tt.melee.attacks[2].hit_offset = vec_2(0, 2)
     tt.melee.attacks[2].damage_radius = 70
