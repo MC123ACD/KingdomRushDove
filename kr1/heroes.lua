@@ -1058,8 +1058,8 @@ local function heroes()
     }
     tt.hero.skills.ancestors_call.xp_gain = {100, 200, 300, 350}
     tt.hero.skills.bear = CC("hero_skill")
-    tt.hero.skills.bear.damage_min = {26, 46, 66}
-    tt.hero.skills.bear.damage_max = {54, 72, 92}
+    tt.hero.skills.bear.damage_min = {24, 42, 60}
+    tt.hero.skills.bear.damage_max = {50, 66, 86}
     tt.hero.skills.bear.duration = {10, 12, 14}
     tt.hero.skills.bear.xp_level_steps = {
         [4] = 1,
