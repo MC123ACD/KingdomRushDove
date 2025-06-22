@@ -998,73 +998,6 @@ end
 
 scripts.soldier_reinforcement = {}
 
--- function scripts.soldier_reinforcement.get_info(this)
---     local attacks
---     local ranged_attacks = nil
---     local melee_damage_type, ranged_damage_type
---     if this.melee and this.melee.attacks then
---         attacks = this.melee.attacks
---     end
---     if this.ranged and this.ranged.attacks then
---         ranged_attacks = this.ranged.attacks
---     end
-
---     local min, max, ranged_min, ranged_max
-
---     for _, a in pairs(attacks) do
---         if a.damage_min then
---             min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
---             melee_damage_type = a.damage_type
---             break
---         end
---     end
-
---     if ranged_attacks then
---         for _, a in pairs(ranged_attacks) do
---             if a.bullet then
---                 local b = E:get_template(a.bullet)
---                 if b and b.bullet.damage_min and b.bullet.damage_max then
---                     ranged_min, ranged_max = b.bullet.damage_min + this.damage_buff,
---                         b.bullet.damage_max + this.damage_buff
---                     ranged_damage_type = b.bullet.damage_type
---                     break
---                 end
---             end
---         end
---     end
-
---     if this.unit and min then
---         min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
---     end
-
---     if this.unit and ranged_min then
---         ranged_min, ranged_max = ranged_min * this.unit.damage_factor, ranged_max * this.unit.damage_factor
---     end
-
---     if min and max then
---         min, max = math.ceil(min), math.ceil(max)
---     end
-
---     if ranged_min and ranged_max then
---         min, max = math.ceil(ranged_min), math.ceil(ranged_max)
---     end
-
---     return {
---         type = STATS_TYPE_SOLDIER,
---         hp = this.health.hp,
---         hp_max = this.health.hp_max,
---         damage_min = min,
---         damage_max = max,
---         damage_type = melee_damage_type,
---         ranged_damage_min = ranged_min,
---         ranged_damage_max = ranged_max,
---         ranged_damage_type = ranged_damage_type,
---         -- damage_icon = this.info.damage_icon,
---         armor = this.health.armor,
---         magic_armor = this.health.magic_armor
---     }
--- end
-
 function scripts.soldier_reinforcement.insert(this, store, script)
     if this.melee then
         this.melee.order = U.attack_order(this.melee.attacks)
@@ -1124,11 +1057,7 @@ function scripts.soldier_reinforcement.update(this, store, script)
             SU.soldier_courage_upgrade(store, this)
 
             while this.nav_rally.new do
-                if this.sound_events and this.sound_events.change_rally_point then
-                    S:queue(this.sound_events.change_rally_point)
-                end
-
-                if SU.y_hero_new_rally(store, this) then
+                if SU.y_controable_new_rally(store, this) then
                     goto label_34_1
                 end
             end
@@ -7050,6 +6979,7 @@ function scripts.power_reinforcements_control.can_select_point(this, x, y)
     return P:valid_node_nearby(x, y, nil, NF_RALLY) and GR:cell_is_only(x, y, bor(TERRAIN_LAND, TERRAIN_ICE))
 end
 
+-- 经证实，该代码并没有被执行
 function scripts.power_reinforcements_control.insert(this, store, script)
     local x, y = this.pos.x, this.pos.y
 
@@ -7067,14 +6997,6 @@ function scripts.power_reinforcements_control.insert(this, store, script)
     e2.nav_rally.center = V.v(x, y)
     e2.nav_rally.pos = V.vclone(e2.pos)
 
-    -- e1.friend_id = e2.id
-    -- e2.friend_id = e1.id
-    -- if e1.friend_id then
-    -- queue_insert(store, e1)
-    -- end
-    -- if e2.friend_id then
-    -- queue_insert(store, e2)
-    -- end
     queue_insert(store, e1)
     queue_insert(store, e2)
 

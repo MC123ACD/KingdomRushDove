@@ -1056,8 +1056,8 @@ local function heroes()
     }
     tt.hero.skills.ancestors_call.xp_gain = {100, 200, 300, 350}
     tt.hero.skills.bear = CC("hero_skill")
-    tt.hero.skills.bear.damage_min = {24, 42, 60}
-    tt.hero.skills.bear.damage_max = {48, 66, 84}
+    tt.hero.skills.bear.damage_min = {26, 46, 66}
+    tt.hero.skills.bear.damage_max = {54, 72, 92}
     tt.hero.skills.bear.duration = {10, 12, 14}
     tt.hero.skills.bear.xp_level_steps = {
         [4] = 1,
@@ -1126,7 +1126,7 @@ local function heroes()
     tt.melee.attacks[3].xp_gain_factor = 2
     tt.timed_attacks.list[1] = CC("spawn_attack")
     tt.timed_attacks.list[1].animation = "ancestors"
-    tt.timed_attacks.list[1].cooldown = 12 + fts(40)
+    tt.timed_attacks.list[1].cooldown = 12
     tt.timed_attacks.list[1].cast_time = fts(15)
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].entity = "soldier_ingvar_ancestor"
@@ -1139,13 +1139,12 @@ local function heroes()
     tt.timed_attacks.list[2].cooldown = 10
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].duration = nil
-    tt.timed_attacks.list[2].transform_health_factor = 0.7
+    tt.timed_attacks.list[2].transform_health_factor = 0.5
     tt.timed_attacks.list[2].immune_to = bor(DAMAGE_BASE_TYPES, DAMAGE_MODIFIER)
     tt.timed_attacks.list[2].sound = "HeroVikingBearTransform"
+
     tt = RT("hero_elora", "hero")
-
     AC(tt, "melee", "ranged", "timed_attacks")
-
     anchor_y = 0.17
     anchor_x = 0.5
     tt.hero.fixed_stat_attack = 2
@@ -1500,8 +1499,8 @@ local function heroes()
     tt.hero.level_stats.melee_cooldown = {1, 0.98, 0.96, 0.94, 0.92, 0.9, 0.88, 0.86, 0.84, 0.82}
     tt.hero.level_stats.lightning_heal = {19, 20, 22, 23, 25, 26, 28, 29, 31, 32}
     tt.hero.skills.chainlightning = CC("hero_skill")
-    tt.hero.skills.chainlightning.count = {3, 4, 5}
-    tt.hero.skills.chainlightning.damage_max = {40, 70, 100}
+    tt.hero.skills.chainlightning.count = {4, 6, 8}
+    tt.hero.skills.chainlightning.damage_max = {40, 50, 60}
     tt.hero.skills.chainlightning.xp_level_steps = {
         [2] = 1,
         [5] = 2,

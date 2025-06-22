@@ -2255,91 +2255,46 @@ end
 Power2Button = class("Power2Button", PowerButton)
 
 function Power2Button:initialize()
-    if IS_KR3 then
-        Power2Button.super.initialize(self, "power_button_icons_0018", "power_button_mask_0001")
+    Power2Button.super.initialize(self, "reinforcements_0001")
 
-        local mask_prefix = "power_button_mask"
-
-        self.animations = {
-            default = {
-                to = 1,
-                from = 1,
-                prefix = mask_prefix
-            },
-            highlighted = {
-                to = 45,
-                from = 45,
-                prefix = mask_prefix
-            },
-            cooldown = {
-                to = 1,
-                from = 1,
-                prefix = mask_prefix
-            },
-            locked = {
-                to = 30,
-                from = 30,
-                prefix = mask_prefix
-            },
-            unlocked = {
-                to = 44,
-                from = 30,
-                prefix = mask_prefix
-            },
-            selected = {
-                to = 29,
-                from = 29,
-                prefix = mask_prefix
-            },
-            ready = {
-                to = 28,
-                from = 1,
-                prefix = mask_prefix,
-                post = {1}
-            }
+    self.animations = {
+        default = {
+            to = 1,
+            prefix = "reinforcements",
+            from = 1
+        },
+        highlighted = {
+            to = 2,
+            prefix = "reinforcements",
+            from = 2
+        },
+        cooldown = {
+            to = 1,
+            prefix = "reinforcements",
+            from = 1
+        },
+        locked = {
+            to = 30,
+            prefix = "reinforcement_ready",
+            from = 30
+        },
+        unlocked = {
+            to = 44,
+            prefix = "reinforcement_ready",
+            from = 30
+        },
+        selected = {
+            to = 29,
+            prefix = "reinforcement_ready",
+            from = 29
+        },
+        ready = {
+            to = 28,
+            prefix = "reinforcement_ready",
+            from = 1,
+            post = {1}
         }
-    else
-        Power2Button.super.initialize(self, "reinforcements_0001")
-
-        self.animations = {
-            default = {
-                to = 1,
-                prefix = "reinforcements",
-                from = 1
-            },
-            highlighted = {
-                to = 2,
-                prefix = "reinforcements",
-                from = 2
-            },
-            cooldown = {
-                to = 1,
-                prefix = "reinforcements",
-                from = 1
-            },
-            locked = {
-                to = 30,
-                prefix = "reinforcement_ready",
-                from = 30
-            },
-            unlocked = {
-                to = 44,
-                prefix = "reinforcement_ready",
-                from = 30
-            },
-            selected = {
-                to = 29,
-                prefix = "reinforcement_ready",
-                from = 29
-            },
-            ready = {
-                to = 28,
-                prefix = "reinforcement_ready",
-                from = 1,
-                post = {1}
-            }
-        }
-    end
+    }
 
     self.selected_gui_mode = GUI_MODE_POWER_2
 
@@ -2348,6 +2303,7 @@ end
 
 function Power2Button:fire(wx, wy)
     Power2Button.super.fire(self, wx, wy)
+
 
     local i = math.random(1, 3)
     local e = E:create_entity("re_current_" .. i)
@@ -2367,6 +2323,7 @@ function Power2Button:fire(wx, wy)
     e.nav_rally.pos = V.vclone(e.pos)
 
     game_gui.game.simulation:insert_entity(e)
+
     signal.emit("power-used", 2)
 end
 

@@ -4899,6 +4899,173 @@ return function(scripts)
             end)
 
             this.health.hp = this.health.hp_max
+        end,
+        get_info = function(this)
+            local info = scripts.soldier_barrack.get_info(this)
+            if this.is_bear then
+                info.ranged_damage_max = nil
+                info.ranged_damage_min = nil
+                info.ranged_damage_type = nil
+                info.damage_min = (this.melee.attacks[3].damage_min + this.damage_buff) * this.unit.damage_factor
+                info.damage_max = (this.melee.attacks[3].damage_max + this.damage_buff) * this.unit.damage_factor
+                info.damage_type = this.melee.attacks[3].damage_type
+            end
+            return info
+        end,
+        update = function(this, store)
+            local h = this.health
+            local he = this.hero
+            local ba = this.timed_attacks.list[2]
+            local a, skill, brk, sta
+
+            local function go_bear()
+                this.sound_events.change_rally_point = this.sound_events.change_rally_point_bear
+
+                for i = 1, 2 do
+                    this.melee.attacks[i].disabled = true
+                end
+
+                this.melee.attacks[3].disabled = false
+                this.health.immune_to = ba.immune_to
+
+                S:queue(ba.sound)
+                U.y_animation_play(this, "toBear", nil, store.tick_ts, 1)
+
+                this.render.sprites[1].prefix = "hero_ingvar_bear"
+                ba.ts = store.tick_ts
+                this.is_bear = true
+            end
+
+            local function go_viking()
+                this.sound_events.change_rally_point = this.sound_events.change_rally_point_viking
+
+                for i = 1, 2 do
+                    this.melee.attacks[i].disabled = false
+                end
+
+                this.melee.attacks[3].disabled = true
+
+                U.y_animation_play(this, "toViking", nil, store.tick_ts, 1)
+
+                this.render.sprites[1].prefix = "hero_ingvar"
+
+                this.health.immune_to = DAMAGE_NONE
+                this.is_bear = false
+                ba.ts = store.tick_ts
+            end
+
+            for _, an in pairs(this.auras.list) do
+                local aura = E:create_entity(an.name)
+                aura.aura.source_id = this.id
+                queue_insert(store, aura)
+            end
+
+            U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+
+            this.health_bar.hidden = false
+
+            while true do
+                if h.dead then
+                    if this.is_bear then
+                        go_viking()
+                    end
+
+                    SU.y_hero_death_and_respawn(store, this)
+                end
+
+                if this.unit.is_stunned then
+                    SU.soldier_idle(store, this)
+                else
+                    while this.nav_rally.new do
+                        if SU.y_hero_new_rally(store, this) then
+                            goto label_67_0
+                        end
+                    end
+
+                    if SU.hero_level_up(store, this) and not this.is_bear then
+                        U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                    end
+
+                    a = ba
+                    skill = this.hero.skills.bear
+
+                    if not this.is_bear and ready_to_use_skill(ba, store) and this.health.hp < this.health.hp_max * a.transform_health_factor then
+                        SU.hero_gain_xp_from_skill(this, skill)
+                        go_bear()
+                    elseif this.is_bear and store.tick_ts - a.ts >= a.duration then
+                        go_viking()
+                    end
+
+                    a = this.timed_attacks.list[1]
+                    skill = this.hero.skills.ancestors_call
+
+                    if ready_to_use_skill(a, store) then
+                        if this.is_bear then
+                            local compensation = a.duration - (store.tick_ts - a.ts)
+                            go_viking()
+                            ba.ts = ba.ts - compensation
+                        end
+                        local nodes = P:nearest_nodes(this.pos.x, this.pos.y, nil, nil, nil, NF_RALLY)
+
+                        if #nodes < 1 then
+                            SU.delay_attack(store, a, 0.4)
+                        else
+                            U.animation_start(this, a.animation, nil, store.tick_ts, 1)
+                            S:queue(a.sound, a.sound_args)
+
+                            if SU.y_hero_wait(store, this, a.cast_time) then
+                                goto label_67_0
+                            end
+
+                            SU.hero_gain_xp_from_skill(this, skill)
+
+                            a.ts = store.tick_ts
+
+                            local pi, spi, ni = unpack(nodes[1])
+                            local no_min, no_max = unpack(a.nodes_offset)
+                            local no
+
+                            for i = 1, a.count do
+                                local e = E:create_entity(a.entity)
+                                local e_spi, e_ni = math.random(1, 3), ni
+
+                                no = math.random(no_min, no_max) * U.random_sign()
+
+                                if P:is_node_valid(pi, e_ni + no) then
+                                    e_ni = e_ni + no
+                                end
+
+                                e.nav_rally.center = P:node_pos(pi, e_spi, e_ni)
+                                e.nav_rally.pos = V.vclone(e.nav_rally.center)
+                                e.pos = V.vclone(e.nav_rally.center)
+                                e.render.sprites[1].name = "raise"
+                                e.owner = this
+
+                                queue_insert(store, e)
+                            end
+
+                            SU.y_hero_animation_wait(this)
+
+                            goto label_67_0
+                        end
+                    end
+
+                    brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                    if brk or sta ~= A_NO_TARGET then
+                        -- block empty
+                    elseif SU.soldier_go_back_step(store, this) then
+                        -- block empty
+                    else
+                        SU.soldier_idle(store, this)
+                        SU.soldier_regen(store, this)
+                    end
+                end
+
+                ::label_67_0::
+
+                coroutine.yield()
+            end
         end
     }
     -- 火男

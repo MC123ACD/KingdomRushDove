@@ -3597,6 +3597,35 @@ local function remove_tower_damage_factor_buff(target, damage_factor)
     end
 end
 
+local function y_controable_new_rally(store, this)
+    local r = this.nav_rally
+
+    if r.new then
+        r.new = false
+
+        U.unblock_target(store, this)
+
+        if this.sound_events then
+            S:queue(this.sound_events.change_rally_point)
+        end
+
+        local vis_bans = this.vis.bans
+        local prev_immune = this.health.immune_to
+
+        this.vis.bans = F_ALL
+        this.health.immune_to = r.immune_to
+
+        local out = y_hero_walk_waypoints(store, this)
+
+        U.animation_start(this, "idle", nil, store.tick_ts, true)
+
+        this.vis.bans = vis_bans
+        this.health.immune_to = prev_immune
+
+        return out
+    end
+end
+
 local SU = {
 	has_modifiers = U.has_modifiers,
 	ui_click_proxy_add = ui_click_proxy_add,

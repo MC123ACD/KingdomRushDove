@@ -503,6 +503,7 @@ anchor_y = 0.15
 anchor_x = 0.5
 image_y = 41
 image_x = 58
+tt.controable = true
 tt.health.armor = 0.4
 tt.health.dead_lifetime = 3
 tt.health.hp_max = nil
@@ -524,7 +525,6 @@ tt.melee.attacks[2].hit_time = fts(6)
 tt.melee.cooldown = 1
 tt.melee.range = 72.5
 tt.motion.max_speed = 60
--- tt.regen.health = 25
 tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
 tt.render.sprites[1].prefix = "soldier_s6_imperial_guard"
 tt.soldier.melee_slot_offset = vec_2(8, 0)
@@ -754,8 +754,10 @@ tt.health.armor = 0.25
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 46)
 tt.health.dead_lifetime = fts(30)
-tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0011" or "info_portraits_hero_0011"
+tt.info.portrait = IS_PHONE_OR_TABLET and
+"portraits_hero_0011" or "info_portraits_hero_0011"
 tt.info.i18n_key = "HERO_VIKING_ANCESTOR"
+tt.controable = true
 tt.info.random_name_format = nil
 tt.main_script.insert = scripts.soldier_reinforcement.insert
 tt.main_script.remove = scripts.soldier_reinforcement.remove
@@ -1216,7 +1218,8 @@ AC(tt, "regen")
 tt.aura.duration = 0
 tt.main_script.update = scripts.aura_ingvar_bear_regenerate.update
 tt.regen.cooldown = 1
-tt.regen.health = 2
+tt.regen.health = 5
+
 tt = RT("aura_10yr_idle", "aura")
 tt.aura.duration = 0
 tt.particles_name = "ps_hero_10yr_idle"
@@ -4700,7 +4703,6 @@ AC(tt, "reinforcement", "ranged", "tween")
 tt.health.armor = 0
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 45)
--- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait = "kr3_portraits_sc_0066"
 tt.info.random_name_count = nil
 tt.info.random_name_format = nil
@@ -4852,124 +4854,123 @@ tt.custom_attack.hit_fx = nil
 tt.sound_events.insert = "ElvesHeroGyroBombsMarch"
 tt.sound_events.remove_stop = "ElvesHeroGyroBombsMarch"
 
-tt = E:register_t("soldier_re_0", "soldier_militia")
-E:add_comps(tt, "reinforcement", "tween")
-image_y = 54
-anchor_y = 10 / image_y
-tt.cooldown = 15
-tt.health.armor = 0
-tt.health.hp_max = 40
-tt.health_bar.offset = vec_2(0, 30)
--- tt.info.fn = scripts.soldier_reinforcement.get_info
-tt.info.portrait_idxs = {38, 42, 46}
-tt.info.random_name_format = "ELVES_SOLDIER_REINFORCEMENT_%i_NAME"
-tt.info.random_name_count = 20
-tt.main_script.insert = scripts.soldier_reinforcement.insert
-tt.main_script.update = scripts.soldier_reinforcement.update
-tt.melee.attacks[1].cooldown = 1
-tt.melee.attacks[1].damage_max = 3
-tt.melee.attacks[1].damage_min = 1
-tt.melee.attacks[1].hit_time = fts(5)
-tt.melee.range = 60
-tt.motion.max_speed = 60
-tt.regen.cooldown = 1
-tt.regen.health = 15
-tt.reinforcement.duration = 20
-tt.render.sprites[1].anchor.y = anchor_y
-tt.render.sprites[1].prefix = "soldier_re_%s0"
-tt.soldier.melee_slot_offset = vec_2(3, 0)
-tt.sound_events.insert = "ReinforcementTaunt"
-tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
-tt.tween.props[1].name = "alpha"
-tt.tween.remove = false
-tt.tween.reverse = false
-tt.unit.hit_offset = vec_2(0, 5)
-tt.unit.mod_offset = vec_2(0, 14)
-tt.unit.level = 0
-tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN)
-tt = E:register_t("soldier_re_1", "soldier_re_0")
-tt.unit.level = 1
-tt.health.hp_max = 60
-tt.health.armor = 0.2
-tt.melee.attacks[1].damage_max = 5
-tt.melee.attacks[1].damage_min = 3
-tt.render.sprites[1].prefix = "soldier_re_%s0"
-tt = E:register_t("soldier_re_2", "soldier_re_1")
+-- tt = E:register_t("soldier_re_0", "soldier_militia")
+-- E:add_comps(tt, "reinforcement", "tween")
+-- image_y = 54
+-- anchor_y = 10 / image_y
+-- tt.cooldown = 15
+-- tt.health.armor = 0
+-- tt.health.hp_max = 40
+-- tt.health_bar.offset = vec_2(0, 30)
+-- tt.info.portrait_idxs = {38, 42, 46}
+-- tt.info.random_name_format = "ELVES_SOLDIER_REINFORCEMENT_%i_NAME"
+-- tt.info.random_name_count = 20
+-- tt.main_script.insert = scripts.soldier_reinforcement.insert
+-- tt.main_script.update = scripts.soldier_reinforcement.update
+-- tt.melee.attacks[1].cooldown = 1
+-- tt.melee.attacks[1].damage_max = 3
+-- tt.melee.attacks[1].damage_min = 1
+-- tt.melee.attacks[1].hit_time = fts(5)
+-- tt.melee.range = 60
+-- tt.motion.max_speed = 60
+-- tt.regen.cooldown = 1
+-- tt.regen.health = 15
+-- tt.reinforcement.duration = 20
+-- tt.render.sprites[1].anchor.y = anchor_y
+-- tt.render.sprites[1].prefix = "soldier_re_%s0"
+-- tt.soldier.melee_slot_offset = vec_2(3, 0)
+-- tt.sound_events.insert = "ReinforcementTaunt"
+-- tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+-- tt.tween.props[1].name = "alpha"
+-- tt.tween.remove = false
+-- tt.tween.reverse = false
+-- tt.unit.hit_offset = vec_2(0, 5)
+-- tt.unit.mod_offset = vec_2(0, 14)
+-- tt.unit.level = 0
+-- tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN)
 
-E:add_comps(tt, "ranged")
+-- tt = E:register_t("soldier_re_1", "soldier_re_0")
+-- tt.unit.level = 1
+-- tt.health.hp_max = 60
+-- tt.health.armor = 0.2
+-- tt.melee.attacks[1].damage_max = 5
+-- tt.melee.attacks[1].damage_min = 3
+-- tt.render.sprites[1].prefix = "soldier_re_%s0"
 
-tt.unit.level = 2
-tt.health.hp_max = 60
-tt.health.armor = 0.2
-tt.info.portrait_idxs = {39, 43, 47}
-tt.melee.attacks[1].damage_max = 5
-tt.melee.attacks[1].damage_min = 3
-tt.render.sprites[1].prefix = "soldier_re_%s1"
-tt.ranged.attacks[1].bullet = "arrow_soldier_re_2"
-tt.ranged.attacks[1].shoot_time = fts(10)
-tt.ranged.attacks[1].cooldown = 1 + fts(18)
-tt.ranged.attacks[1].max_range = 140
-tt.ranged.attacks[1].min_range = 10
-tt.ranged.attacks[1].animation = "shoot"
-tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 22)}
-tt = E:register_t("soldier_re_3", "soldier_re_2")
-tt.unit.level = 3
-tt.health.hp_max = 100
-tt.health.armor = 0.35
-tt.info.portrait_idxs = {40, 44, 48}
-tt.melee.attacks[1].damage_max = 10
-tt.melee.attacks[1].damage_min = 5
-tt.render.sprites[1].prefix = "soldier_re_%s2"
-tt.ranged.attacks[1].bullet = "arrow_soldier_re_3"
-tt.ranged.attacks[1].max_range = 150
-tt = E:register_t("soldier_re_4", "soldier_re_3")
-tt.cooldown = 10
-tt.unit.level = 4
-tt.health.hp_max = 100
-tt.health.armor = 0.35
-tt.info.portrait_idxs = {40, 44, 48}
-tt.melee.attacks[1].damage_max = 10
-tt.melee.attacks[1].damage_min = 5
-tt.render.sprites[1].prefix = "soldier_re_%s2"
-tt.ranged.attacks[1].bullet = "arrow_soldier_re_4"
-tt.ranged.attacks[1].max_range = 150
-tt = E:register_t("soldier_re_5", "soldier_re_4")
-tt.unit.level = 5
-tt.health.hp_max = 150
-tt.health.armor = 0.5
-tt.health_bar.offset = vec_2(0, 46)
-tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-tt.info.portrait_idxs = {41, 45, 49}
-tt.melee.attacks[1].damage_max = 15
-tt.melee.attacks[1].damage_min = 10
-tt.melee.attacks[1].hit_time = fts(11)
-tt.motion.max_speed = 84
-tt.render.sprites[1].prefix = "soldier_re_%s3"
-tt.ranged.attacks[1].bullet = "arrow_soldier_re_5"
-tt.ranged.attacks[1].max_range = 160
-tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 36)}
-tt.soldier.melee_slot_offset = vec_2(8, 0)
-tt.unit.hit_offset = vec_2(0, 15)
-tt.unit.mod_offset = vec_2(0, 22)
+-- tt = E:register_t("soldier_re_2", "soldier_re_1")
+-- E:add_comps(tt, "ranged")
+-- tt.unit.level = 2
+-- tt.health.hp_max = 60
+-- tt.health.armor = 0.2
+-- tt.info.portrait_idxs = {39, 43, 47}
+-- tt.melee.attacks[1].damage_max = 5
+-- tt.melee.attacks[1].damage_min = 3
+-- tt.render.sprites[1].prefix = "soldier_re_%s1"
+-- tt.ranged.attacks[1].bullet = "arrow_soldier_re_2"
+-- tt.ranged.attacks[1].shoot_time = fts(10)
+-- tt.ranged.attacks[1].cooldown = 1 + fts(18)
+-- tt.ranged.attacks[1].max_range = 140
+-- tt.ranged.attacks[1].min_range = 10
+-- tt.ranged.attacks[1].animation = "shoot"
+-- tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 22)}
 
-for i, k in ipairs({"A", "B", "C"}) do
-    for j = 0, 5 do
-        local name = string.format("soldier_re_%i", j)
-        local base_t = E:get_template(name)
-        local fn = name .. "_" .. i
-        local t = E:register_t(fn, base_t)
+-- tt = E:register_t("soldier_re_3", "soldier_re_2")
+-- tt.unit.level = 3
+-- tt.health.hp_max = 100
+-- tt.health.armor = 0.35
+-- tt.info.portrait_idxs = {40, 44, 48}
+-- tt.melee.attacks[1].damage_max = 10
+-- tt.melee.attacks[1].damage_min = 5
+-- tt.render.sprites[1].prefix = "soldier_re_%s2"
+-- tt.ranged.attacks[1].bullet = "arrow_soldier_re_3"
+-- tt.ranged.attacks[1].max_range = 150
 
-        t.render.sprites[1].prefix = string.format(t.render.sprites[1].prefix, k)
-        t.info.portrait = string.format("kr3_portraits_sc_00%02d", t.info.portrait_idxs[i])
-    end
-end
+-- tt = E:register_t("soldier_re_4", "soldier_re_3")
+-- tt.cooldown = 10
+-- tt.unit.level = 4
+-- tt.health.hp_max = 100
+-- tt.health.armor = 0.35
+-- tt.info.portrait_idxs = {40, 44, 48}
+-- tt.melee.attacks[1].damage_max = 10
+-- tt.melee.attacks[1].damage_min = 5
+-- tt.render.sprites[1].prefix = "soldier_re_%s2"
+-- tt.ranged.attacks[1].bullet = "arrow_soldier_re_4"
+-- tt.ranged.attacks[1].max_range = 150
 
-for i = 1, 3 do
-    E:set_template("re_current_" .. i, E:get_template("soldier_re_0_" .. i))
-end
+-- tt = E:register_t("soldier_re_5", "soldier_re_4")
+-- tt.unit.level = 5
+-- tt.health.hp_max = 150
+-- tt.health.armor = 0.5
+-- tt.health_bar.offset = vec_2(0, 46)
+-- tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+-- tt.info.portrait_idxs = {41, 45, 49}
+-- tt.melee.attacks[1].damage_max = 15
+-- tt.melee.attacks[1].damage_min = 10
+-- tt.melee.attacks[1].hit_time = fts(11)
+-- tt.motion.max_speed = 84
+-- tt.render.sprites[1].prefix = "soldier_re_%s3"
+-- tt.ranged.attacks[1].bullet = "arrow_soldier_re_5"
+-- tt.ranged.attacks[1].max_range = 160
+-- tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 36)}
+-- tt.soldier.melee_slot_offset = vec_2(8, 0)
+-- tt.unit.hit_offset = vec_2(0, 15)
+-- tt.unit.mod_offset = vec_2(0, 22)
 
+-- for i, k in ipairs({"A", "B", "C"}) do
+--     for j = 0, 5 do
+--         local name = string.format("soldier_re_%i", j)
+--         local base_t = E:get_template(name)
+--         local fn = name .. "_" .. i
+--         local t = E:register_t(fn, base_t)
 
+--         t.render.sprites[1].prefix = string.format(t.render.sprites[1].prefix, k)
+--         t.info.portrait = string.format("kr3_portraits_sc_00%02d", t.info.portrait_idxs[i])
+--     end
+-- end
 
+-- for i = 1, 3 do
+--     E:set_template("re_current_" .. i, E:get_template("soldier_re_0_" .. i))
+-- end
 
 tt = E:register_t("fx_elves_denas_flash", "fx")
 tt.render.sprites[1].name = "fx_elves_denas_flash"
@@ -4986,12 +4987,8 @@ tt = E:register_t("fx_shield_elves_denas_hit", "fx")
 tt.render.sprites[1].name = "fx_shield_elves_denas_hit"
 tt.render.sprites[1].z = Z_EFFECTS - 1
 
-
-
 tt = E:register_t("decal_minidragon_faustus", "decal_scripted")
-
 E:add_comps(tt, "motion", "attacks")
-
 tt.main_script.update = scripts.decal_minidragon_faustus.update
 tt.motion.max_speed = 10 * FPS
 tt.attacks.list[1] = E:clone_c("aura_attack")
@@ -10908,9 +10905,7 @@ tt.walk_points = {
     gnoll_right = {vec_2(1016, 673), vec_2(795, 631)}
 }
 tt = RT("decal_gnoll_gnawer", "decal_scripted")
-
 AC(tt, "motion", "nav_grid", "motion", "tween")
-
 tt.render.sprites[1].anchor = vec_2(0.5, 0.25)
 tt.render.sprites[1].prefix = "gnoll_gnawer"
 tt.render.sprites[1].name = "idle"
@@ -10918,16 +10913,16 @@ tt.motion.max_speed = 2 * FPS
 tt.main_script.update = scripts.decal_walking.update
 tt.tween.disabled = true
 tt.tween.props[1].keys = {{0, 255}, {1, 0}}
+
 tt = RT("decal_baby_malik_slave", "decal_scripted")
-
 AC(tt, "motion", "nav_grid", "motion")
-
 tt.render.sprites[1].anchor.y = 0.184
 tt.render.sprites[1].prefix = "decal_baby_malik"
 tt.render.sprites[1].name = "idle"
 tt.main_script.update = scripts.decal_walking.update
 tt.motion.max_speed = 2 * FPS
 tt.main_script.update = scripts.decal_walking.update
+
 tt = RT("decal_baby_malik_slave_banner", "decal_tween")
 tt.render.sprites[1].name = "malikAfro_sign"
 tt.render.sprites[1].animated = false
