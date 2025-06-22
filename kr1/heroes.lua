@@ -4254,7 +4254,6 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(90)
     tt.health_bar.draw_order = -1
     tt.idle_flip.cooldown = 1
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.hero_portrait = "kr2_hero_portraits_0017"
     tt.info.portrait = IS_PHONE and "portraits_hero_0020" or "kr2_info_portraits_heroes_0020"
     tt.info.i18n_key = "HERO_VAMPIRESS"
@@ -9026,12 +9025,7 @@ local function heroes()
     }
     tt.hero.skills.ultimate = E:clone_c("hero_skill")
     tt.hero.skills.ultimate.controller_name = "hero_rag_ultimate"
-    tt.hero.skills.ultimate.max_count = {
-        2,
-        4,
-        6,
-        8
-    }
+    tt.hero.skills.ultimate.max_count = {2, 4, 6, 8}
     tt.hero.skills.ultimate.xp_gain_factor = 48
     tt.hero.skills.ultimate.xp_level_steps = {
         [1] = 1,
@@ -9155,7 +9149,7 @@ local function heroes()
     tt.ultimate = {
         ts = 0,
         cooldown = 48,
-        disabled = true,
+        disabled = true
     }
 
     tt = RT("hero_rag_ultimate")
@@ -9222,6 +9216,190 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 15)
     tt.unit.hide_after_death = true
     tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN)
+
+    tt = RT("hero_bruce", "hero")
+    AC(tt, "melee", "timed_attacks")
+    tt.hero.level_stats.armor = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5}
+    tt.hero.level_stats.hp_max = {365, 390, 415, 440, 465, 490, 515, 540, 565, 590}
+    tt.hero.level_stats.melee_damage_max = {27, 31, 34, 38, 41, 45, 49, 52, 56, 59}
+    tt.hero.level_stats.melee_damage_min = {18, 20, 23, 25, 28, 30, 32, 35, 37, 40}
+    tt.hero.skills.sharp_claws = E:clone_c("hero_skill")
+    tt.hero.skills.sharp_claws.damage = {3, 6, 9}
+    tt.hero.skills.sharp_claws.extra_damage = {15, 30, 45}
+    tt.hero.skills.sharp_claws.xp_gain = {10, 20, 30}
+    tt.hero.skills.sharp_claws.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
+    }
+    tt.hero.skills.kings_roar = E:clone_c("hero_skill")
+    tt.hero.skills.kings_roar.stun_duration = {1, 2, 3}
+    tt.hero.skills.kings_roar.xp_gain = {100, 120, 150}
+    tt.hero.skills.kings_roar.xp_level_steps = {
+        [3] = 1,
+        [6] = 2,
+        [9] = 3
+    }
+    tt.hero.skills.lions_fur = E:clone_c("hero_skill")
+    tt.hero.skills.lions_fur.extra_hp = {30, 60, 90}
+    tt.hero.skills.lions_fur.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
+    }
+    tt.hero.skills.grievous_bites = E:clone_c("hero_skill")
+    tt.hero.skills.grievous_bites.damage = {20, 50, 95}
+    tt.hero.skills.grievous_bites.xp_gain = {30, 60, 90}
+    tt.hero.skills.grievous_bites.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.ultimate = E:clone_c("hero_skill")
+    tt.hero.skills.ultimate.controller_name = "hero_bruce_ultimate"
+    tt.hero.skills.ultimate.damage_per_tick = {
+        8,
+        12,
+        14,
+        16
+    }
+    tt.hero.skills.ultimate.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.hero.skills.ultimate.damage_boss = {
+        150,
+        200,
+        350,
+        500
+    }
+    tt.hero.skills.ultimate.count = {
+        2,
+        3,
+        4,
+        5
+    }
+    tt.health.dead_lifetime = 15
+    tt.health_bar.offset = vec_2(0, 53)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.hero.fn_level_up = scripts.hero_bruce.level_up
+    tt.hero.tombstone_show_time = fts(90)
+    tt.info.hero_portrait = "kr3_hero_portraits_0015"
+    tt.info.i18n_key = "HERO_ELVES_BRUCE"
+    tt.info.portrait = (IS_PHONE and "portraits_hero" or "kr3_info_portraits_heroes") .. "_0015"
+    tt.main_script.insert = scripts.hero_bruce.insert
+    tt.main_script.update = scripts.hero_bruce.update
+    tt.motion.max_speed = 3.3 * FPS
+    tt.regen.cooldown = 1
+    tt.render.sprites[1].anchor.y = 0.16666666666667
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"walk"}
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].prefix = "hero_bruce"
+    tt.soldier.melee_slot_offset = vec_2(12, -1)
+    tt.sound_events.change_rally_point = "ElvesHeroBruceTaunt"
+    tt.sound_events.death = "ElvesHeroBruceDeath"
+    tt.sound_events.hero_room_select = "ElvesHeroBruceTauntSelect"
+    tt.sound_events.insert = "ElvesHeroBruceTauntIntro"
+    tt.sound_events.respawn = "ElvesHeroBruceTauntIntro"
+    tt.unit.hit_offset = vec_2(0, 16)
+    tt.unit.mod_offset = vec_2(0, 22)
+    tt.melee.attacks[1].hit_time = fts(10)
+    tt.melee.attacks[1].shared_cooldown = true
+    tt.melee.attacks[1].sound = "MeleeSword"
+    tt.melee.attacks[1].xp_gain_factor = 3.1
+    tt.melee.attacks[1].damage_type = DAMAGE_RUDE
+    tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
+    tt.melee.attacks[2].animation = "attack2"
+    tt.melee.attacks[2].chance = 0.5
+    tt.melee.attacks[3] = table.deepclone(tt.melee.attacks[1])
+    tt.melee.attacks[3].animation = "attack3"
+    tt.melee.attacks[3].chance = 0.1
+    tt.melee.attacks[3].fn_chance = scripts.hero_bruce.fn_chance_sharp_claws
+    tt.melee.attacks[3].disabled = true
+    tt.melee.attacks[3].mod = "mod_bruce_sharp_claws"
+    tt.melee.attacks[4] = CC("melee_attack")
+    tt.melee.attacks[4].animations = {nil, "eat"}
+    tt.melee.attacks[4].cooldown = 16
+    tt.melee.attacks[4].damage_max = nil
+    tt.melee.attacks[4].damage_min = nil
+    tt.melee.attacks[4].damage_type = DAMAGE_TRUE
+    tt.melee.attacks[4].disabled = true
+    tt.melee.attacks[4].hit_times = {fts(8), fts(16), fts(25)}
+    tt.melee.attacks[4].interrupt_on_dead_target = true
+    tt.melee.attacks[4].loops = 1
+    tt.melee.attacks[4].sound = "ElvesHeroBruceGriveousBites"
+    tt.melee.attacks[4].sound_args = {
+        delay = fts(3)
+    }
+    tt.melee.attacks[4].xp_from_skill = "grievous_bites"
+    tt.melee.attacks[4].xp_gain_factor = 10
+    tt.melee.cooldown = 1
+    tt.melee.range = 55
+    tt.timed_attacks.list[1] = CC("mod_attack")
+    tt.timed_attacks.list[1].animation = "specialAttack"
+    tt.timed_attacks.list[1].cooldown = 20
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].hit_time = fts(17)
+    tt.timed_attacks.list[1].max_count = 7
+    tt.timed_attacks.list[1].min_count = 3
+    tt.timed_attacks.list[1].mod = "mod_bruce_kings_roar"
+    tt.timed_attacks.list[1].range = 125
+    tt.timed_attacks.list[1].sound = "ElvesHeroBruceKingsRoar"
+    tt.timed_attacks.list[1].sound_args = {
+        delay = fts(9)
+    }
+    tt.timed_attacks.list[1].vis_bans = bor(F_BOSS)
+    tt.timed_attacks.list[1].vis_flags = bor(F_MOD, F_STUN, F_RANGED)
+    tt.timed_attacks.list[1].xp_from_skill = "kings_roar"
+    tt.ultimate = {
+        ts = 0,
+        cooldown = 36,
+        disabled = true
+    }
+
+    tt = RT("hero_bruce_ultimate")
+    AC(tt, "pos", "main_script", "sound_events")
+    tt.cooldown = 36
+    tt.main_script.update = scripts.hero_bruce_ultimate.update
+    tt.sound_events.insert = "ElvesHeroBruceGuardianLionsCast"
+    tt.entity = "lion_bruce"
+    tt.count = nil
+    tt.range_nodes_min = 0
+    tt.range_nodes_max = 999
+    tt.vis_flags = bor(F_RANGED)
+    tt.vis_bans = bor(F_FLYING)
+
+    tt = RT("lion_bruce", "decal_scripted")
+    AC(tt, "nav_path", "motion", "custom_attack", "sound_events", "tween")
+    tt.custom_attack.cooldown = fts(6)
+    tt.custom_attack.mods = {"mod_lion_bruce_stun", "mod_lion_bruce_damage"}
+    tt.custom_attack.damage_boss = nil
+    tt.custom_attack.range = 40
+    tt.custom_attack.vis_flags = bor(F_RANGED, F_STUN, F_CUSTOM)
+    tt.custom_attack.vis_bans = bor(F_FLYING)
+    tt.custom_attack.damage_type = DAMAGE_TRUE
+    tt.duration = 5
+    tt.motion.max_speed = 150
+    tt.main_script.insert = scripts.lion_bruce.insert
+    tt.main_script.update = scripts.lion_bruce.update
+    tt.nav_path.dir = -1
+    tt.render.sprites[1].anchor.y = 0.22058823529411764
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"walkingRightLeft", "walkingUp", "walkingDown"}
+    tt.render.sprites[1].angles_custom = {
+        walk = {55, 135, 240, 315}
+    }
+    tt.render.sprites[1].angles_stickiness = {
+        walk = 10
+    }
+    tt.render.sprites[1].loop_forced = true
+    tt.render.sprites[1].prefix = "bruce_ultimate"
+    tt.sound_events.custom_loop_end = "ElvesHeroBruceGuardianLionsLoopEnd"
+    tt.tween.remove = false
+    tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
 end
 
 return heroes

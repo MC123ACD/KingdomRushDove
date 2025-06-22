@@ -608,14 +608,16 @@ return {
         starting_level = 5,
         icon = 43,
         stats = {6, 6, 0, 5}
-    }, -- {
-    -- 	portrait = 14,
-    -- 	thumb = 47,
-    -- 	name = "hero_bruce",
-    -- 	available_level = 15,
-    -- 	starting_level = 5,
-    -- 	icon = 44
-    -- },
+    },
+    {
+    	portrait = 14,
+    	thumb = 47,
+    	name = "hero_bruce",
+    	available_level = 15,
+    	starting_level = 5,
+    	icon = 44,
+        stats = {6, 6, 0, 5}
+    },
     {
     	portrait = 15,
     	thumb = 48,

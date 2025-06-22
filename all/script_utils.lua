@@ -3727,6 +3727,7 @@ local SU = {
     remove_tower_cooldown_buff = remove_tower_cooldown_buff,
     insert_tower_damage_factor_buff = insert_tower_damage_factor_buff,
     remove_tower_damage_factor_buff = remove_tower_damage_factor_buff,
+    y_controable_new_rally = y_controable_new_rally,
 }
 
 return SU
