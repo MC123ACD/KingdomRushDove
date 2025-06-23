@@ -1286,6 +1286,23 @@ return {
                             scale = v(0.85,0.85)
 						},
                         {
+							id = "portrait_hero_bruce",
+							hidden = true,
+							class = "KView",
+							children = {
+								{
+									class = "KImageView",
+									image_name = "kr3_portrait_notxt_0014"
+								},{
+									id = "name_img",
+									image_name = "heroroom_bigportraits_name_0013",
+									class = "KImageView"
+								},
+							},
+                            pos = v(140, 95),
+                            scale = v(0.85,0.85)
+						},
+                        {
 							id = "portrait_hero_lilith",
 							hidden = true,
 							class = "KView",

@@ -248,7 +248,760 @@ return {
                 thickness = 1 * rs,
                 glow_color = fc(105, 40, 0, 255)
             }, {}}
-        }
+        },
+        hero_alric = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(255, 183, 95, 255),
+					c3 = fc(255, 98, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(88, 19, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(88, 19, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_mirage = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(255, 177, 252, 255),
+					c3 = fc(140, 46, 212, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(77, 0, 75, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(77, 0, 75, 255)
+				},
+				{}
+			}
+		},
+		hero_pirate = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(215, 253, 255, 255),
+					c3 = fc(29, 203, 217, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(0, 81, 84, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(0, 81, 84, 255)
+				},
+				{}
+			}
+		},
+		hero_beastmaster = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(228, 255, 95, 255),
+					c3 = fc(107, 189, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(32, 58, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(32, 58, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_voodoo_witch = {
+			shader_args = {
+				{
+					margin = 2 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(231, 192, 255, 0),
+					c2 = fc(209, 136, 255, 255),
+					c3 = fc(128, 68, 190, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(61, 27, 86, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(61, 27, 86, 255)
+				},
+				{}
+			}
+		},
+		hero_wizard = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(255, 246, 83, 255),
+					c3 = fc(255, 129, 5, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(79, 44, 26, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(79, 44, 26, 255)
+				},
+				{}
+			}
+		},
+		hero_priest = {
+			shader_args = {
+				{
+					margin = 2 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(215, 251, 255, 255),
+					c3 = fc(81, 202, 255, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(0, 97, 121, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(0, 97, 121, 255)
+				},
+				{}
+			}
+		},
+		hero_giant = {
+			shader_args = {
+				{
+					margin = 2 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(187, 251, 255, 255),
+					c3 = fc(0, 177, 172, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(0, 83, 86, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(0, 83, 86, 255)
+				},
+				{}
+			}
+		},
+		hero_alien = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(222, 180, 255, 255),
+					c3 = fc(117, 65, 215, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(70, 20, 109, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(70, 20, 109, 255)
+				},
+				{}
+			}
+		},
+		hero_dragon = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 210, 0, 0),
+					c2 = fc(255, 151, 25, 255),
+					c3 = fc(222, 77, 22, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(98, 20, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(98, 20, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_crab = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(226, 255, 123, 255),
+					c3 = fc(133, 170, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(56, 72, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(56, 72, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_monk = {
+			shader_args = {
+				{
+					margin = 2 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(251, 255, 184, 0),
+					c2 = fc(255, 214, 28, 255),
+					c3 = fc(255, 126, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(98, 47, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(98, 47, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_van_helsing = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(255, 179, 175, 255),
+					c3 = fc(212, 68, 83, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(100, 0, 16, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(100, 0, 16, 255)
+				},
+				{}
+			}
+		},
+		hero_dracolich = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(228, 255, 95, 255),
+					c3 = fc(107, 173, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(29, 51, 1, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(29, 51, 1, 255)
+				},
+				{}
+			}
+		},
+		hero_minotaur = {
+			shader_args = {
+				{
+					margin = 0 * rs,
+					p1 = p11,
+					p2 = p12,
+					c1 = fc(0, 0, 0, 0),
+					c2 = fc(255, 170, 88, 255),
+					c3 = fc(255, 42, 0, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(81, 17, 0, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(81, 17, 0, 255)
+				},
+				{}
+			}
+		},
+		hero_monkey_god = {
+			shader_args = {
+				{
+					margin = 2 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 255, 255, 0),
+					c2 = fc(212, 255, 133, 255),
+					c3 = fc(109, 212, 3, 255)
+				},
+				{
+					thickness = 4.5 * rs,
+					outline_color = fc(49, 107, 6, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					glow_color = fc(49, 107, 6, 255)
+				},
+				{}
+			}
+		},
+        hero_elves_archer = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 2.5 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(253, 255, 222, 255),
+					c2 = fc(221, 236, 110, 255),
+					c3 = fc(124, 156, 43, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(32, 41, 8, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(32, 41, 8, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_arivan = {
+			shader_args = {
+				{
+					sharpness = 10,
+					margin = 2 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 215, 154, 255),
+					c2 = fc(255, 141, 98, 255),
+					c3 = fc(175, 45, 0, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(91, 24, 0, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(91, 24, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_catha = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1.5 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(253, 243, 212, 255),
+					c2 = fc(245, 242, 128, 255),
+					c3 = fc(213, 119, 44, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(89, 29, 0, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(89, 29, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_regson = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(212, 225, 255, 255),
+					c2 = fc(156, 165, 255, 255),
+					c3 = fc(76, 74, 224, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(47, 31, 124, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(47, 31, 124, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_elves_denas = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 252, 222, 255),
+					c2 = fc(250, 224, 76, 255),
+					c3 = fc(209, 138, 48, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(107, 65, 0, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(107, 65, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_bravebark = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 249, 180, 255),
+					c2 = fc(202, 216, 78, 255),
+					c3 = fc(114, 113, 34, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(60, 56, 0, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(60, 56, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_veznan = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(230, 216, 247, 255),
+					c2 = fc(176, 148, 248, 255),
+					c3 = fc(94, 78, 204, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(51, 22, 127, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(51, 22, 127, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_faustus = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(206, 204, 249, 255),
+					c2 = fc(169, 135, 245, 255),
+					c3 = fc(96, 68, 153, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(56, 38, 80, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(56, 38, 80, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_xin = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(252, 240, 196, 255),
+					c2 = fc(242, 176, 65, 255),
+					c3 = fc(187, 86, 34, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(89, 29, 0, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(89, 29, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_rag = {
+			single_line = true,
+			shader_args = {
+				{
+					sharpness = 10,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 204, 241, 255),
+					c2 = fc(255, 132, 186, 255),
+					c3 = fc(206, 0, 119, 255)
+				},
+				{
+					thickness = 1.5 * rs,
+					outline_color = fc(140, 0, 81, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(140, 0, 81, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_durax = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1.5 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(160, 255, 252, 255),
+					c2 = fc(0, 156, 189, 255),
+					c3 = fc(0, 74, 90, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(165, 235, 233, 255)
+				},
+				{
+					thickness = 1 * rs,
+					glow_color = fc(165, 235, 233, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_lilith = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 225, 177, 255),
+					c2 = fc(255, 171, 51, 255),
+					c3 = fc(207, 73, 19, 255)
+				},
+				{
+					thickness = 2.5 * rs,
+					outline_color = fc(107, 12, 3, 255)
+				},
+				{
+					thickness = 0.2 * rs,
+					glow_color = fc(89, 29, 0, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 2 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_bruce = {
+			shader_args = {
+				{
+					sharpness = 20,
+					margin = 1.5 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 255, 255, 255),
+					c2 = fc(192, 253, 254, 255),
+					c3 = fc(90, 168, 186, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(30, 72, 88, 255)
+				},
+				{
+					thickness = 1 * rs,
+					glow_color = fc(30, 72, 88, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_lynn = {
+			shader_args = {
+				{
+					sharpness = 10,
+					p1 = 0.5,
+					p2 = 0.5,
+					margin = 2.5 * rs,
+					c1 = fc(252, 239, 254, 255),
+					c2 = fc(229, 118, 246, 255),
+					c3 = fc(252, 239, 254, 255)
+				},
+				{
+					thickness = 3 * rs,
+					outline_color = fc(104, 21, 127, 255)
+				},
+				{
+					thickness = 2 * rs,
+					glow_color = fc(150, 135, 190, 155)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_phoenix = {
+			shader_args = {
+				{
+					sharpness = 10,
+					p1 = 0.5,
+					p2 = 0.5,
+					margin = 2.5 * rs,
+					c1 = fc(255, 255, 218, 255),
+					c2 = fc(255, 254, 104, 255),
+					c3 = fc(255, 255, 218, 255)
+				},
+				{
+					thickness = 2 * rs,
+					outline_color = fc(236, 121, 48, 255)
+				},
+				{
+					thickness = 3 * rs,
+					glow_color = fc(112, 42, 15, 200)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		},
+		hero_wilbur = {
+			shader_args = {
+				{
+					sharpness = 10,
+					margin = 2 * rs,
+					p1 = p21,
+					p2 = p22,
+					c1 = fc(255, 255, 203, 255),
+					c2 = fc(255, 254, 84, 255),
+					c3 = fc(237, 132, 50, 255)
+				},
+				{
+					thickness = 3 * rs,
+					outline_color = fc(67, 20, 5, 255)
+				},
+				{
+					thickness = 0.4 * rs,
+					glow_color = fc(67, 20, 5, 255)
+				},
+				{
+					shadow_width = 0.5 * rs,
+					shadow_height = 3 * rs,
+					shadow_color = fc(0, 0, 0, 255)
+				}
+			}
+		}
     },
     hero_data = {{
         portrait = 1,

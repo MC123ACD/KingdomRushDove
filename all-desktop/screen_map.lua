@@ -4645,33 +4645,26 @@ function HeroRoomViewKR1:initialize(size)
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
 
         local v2
+        if d.thumb == 26 then
+            v2 = KImageView:new("heroroom_thumbs_0026", nil, 0.385)
+            v2.size.x = v2.size.x / 0.385 * 0.5
+            v2.size.y = v2.size.y / 0.385 * 0.5
+        elseif d.thumb >= 17 then
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.217)
+            v2.size.x = v2.size.x / 0.217 * 0.5
+            v2.size.y = v2.size.y / 0.217 * 0.5
+        else
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.5)
+        end
+
+        v2.pos = tpos
+        ht:add_child(v2)
 
         if last_level < d.available_level then
-            local v1 = KImageView:new(string.format("heroroom_thumbs__off_%04d", d.thumb))
-
-            v2 = KImageView:new("heroroom_portraitsLock")
-            v1.pos = tpos
-            v2.pos = tpos
+            local v1 = KImageView:new("heroroom_portraitsLock")
             v1.scale = V.v(0.5, 0.5)
-            v2.scale = V.v(0.5, 0.5)
+            v1.pos = tpos
             ht:add_child(v1)
-            ht:add_child(v2)
-        else
-            if d.thumb == 26 then
-                v2 = KImageView:new("heroroom_thumbs_0026", nil, 0.385)
-                v2.size.x = v2.size.x / 0.385 * 0.5
-                v2.size.y = v2.size.y / 0.385 * 0.5
-            elseif d.thumb >= 17 then
-                v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.217)
-                v2.size.x = v2.size.x / 0.217 * 0.5
-                v2.size.y = v2.size.y / 0.217 * 0.5
-            else
-                v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.5)
-            end
-
-            v2.pos = tpos
-
-            ht:add_child(v2)
         end
 
         v2.id = d.name
@@ -4697,8 +4690,7 @@ function HeroRoomViewKR1:initialize(size)
     self.hover_image = KImageView("heroroom_thumbs_0008")
     self.check_image_1.scale = V.v(0.5, 0.5)
     self.check_image_2.scale = V.v(0.5, 0.5)
-    self.check_image_1.anchor.x = self.check_image_1.anchor.x + single_hero_thumb_x_size - self.check_image_1.size.x *
-                                      0.06
+    self.check_image_1.anchor.x = self.check_image_1.anchor.x + single_hero_thumb_x_size - self.check_image_1.size.x * 0.06
     self.border_image.scale = V.v(0.5, 0.5)
     self.hover_image.scale = V.v(0.5, 0.5)
     self.check_image_1.hidden = true
