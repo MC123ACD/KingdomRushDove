@@ -245,9 +245,13 @@ GS.gems_per_level = {
     0
 }
 GS.encyclopedia_tower_fmt = "encyclopedia_towers_00%02i"
+GS.encyclopedia_tower_fmt2 = "encyclopedia_towers_02%02i"
 GS.encyclopedia_tower_thumb_fmt = "encyclopedia_tower_thumbs_00%02i"
+GS.encyclopedia_tower_thumb_fmt2 = "encyclopedia_tower_thumbs_02%02i"
 GS.encyclopedia_enemy_fmt = "encyclopedia_creeps_00%02i"
+GS.encyclopedia_enemy_fmt2 = "encyclopedia_creeps_02%02i"
 GS.encyclopedia_enemy_thumb_fmt = "encyclopedia_creep_thumbs_00%02i"
+GS.encyclopedia_enemy_thumb_fmt2 = "encyclopedia_creep_thumbs_02%02i"
 GS.encyclopedia_enemies = {
 	{
 		always_shown = true,
@@ -453,6 +457,187 @@ GS.encyclopedia_enemies = {
 	},
 	{
 		name = "eb_blackburn"
+	},
+	{
+		always_shown = true,
+		name = "enemy_bouncer"
+	},
+	{
+		name = "enemy_desert_raider"
+	},
+	{
+		name = "enemy_desert_archer"
+	},
+	{
+		name = "enemy_desert_wolf_small"
+	},
+	{
+		name = "enemy_desert_wolf"
+	},
+	{
+		name = "enemy_immortal"
+	},
+	{
+		name = "enemy_fallen"
+	},
+	{
+		name = "enemy_executioner"
+	},
+	{
+		name = "enemy_scorpion"
+	},
+	{
+		name = "enemy_wasp"
+	},
+	{
+		name = "enemy_wasp_queen"
+	},
+	{
+		name = "enemy_tremor"
+	},
+	{
+		name = "enemy_munra"
+	},
+	{
+		name = "enemy_jungle_spider_small"
+	},
+	{
+		name = "enemy_jungle_spider_big"
+	},
+	{
+		name = "enemy_cannibal"
+	},
+	{
+		name = "enemy_hunter"
+	},
+	{
+		name = "enemy_shaman_priest"
+	},
+	{
+		name = "enemy_shaman_shield"
+	},
+	{
+		name = "enemy_shaman_magic"
+	},
+	{
+		name = "enemy_shaman_necro"
+	},
+	{
+		name = "enemy_cannibal_zombie"
+	},
+	{
+		name = "enemy_gorilla"
+	},
+	{
+		name = "enemy_savage_bird_rider"
+	},
+	{
+		name = "enemy_alien_breeder"
+	},
+	{
+		name = "enemy_alien_reaper"
+	},
+	{
+		name = "enemy_razorwing"
+	},
+	{
+		name = "enemy_quetzal"
+	},
+	{
+		name = "enemy_broodguard"
+	},
+	{
+		name = "enemy_myrmidon"
+	},
+	{
+		name = "enemy_blazefang"
+	},
+	{
+		name = "enemy_nightscale"
+	},
+	{
+		name = "enemy_darter"
+	},
+	{
+		name = "enemy_brute"
+	},
+	{
+		name = "enemy_savant"
+	},
+	{
+		name = "enemy_efreeti_small"
+	},
+	{
+		name = "eb_efreeti"
+	},
+	{
+		name = "enemy_gorilla_small"
+	},
+	{
+		name = "eb_gorilla"
+	},
+	{
+		name = "enemy_umbra_minion"
+	},
+	{
+		name = "eb_umbra"
+	},
+	{
+		name = "enemy_greenfin"
+	},
+	{
+		name = "enemy_deviltide"
+	},
+	{
+		name = "enemy_redspine"
+	},
+	{
+		name = "enemy_blacksurge"
+	},
+	{
+		name = "enemy_bluegale"
+	},
+	{
+		name = "enemy_bloodshell"
+	},
+	{
+		name = "eb_leviathan"
+	},
+	{
+		name = "enemy_halloween_zombie"
+	},
+	{
+		name = "enemy_ghoul"
+	},
+	{
+		name = "enemy_bat"
+	},
+	{
+		name = "enemy_werewolf"
+	},
+	{
+		name = "enemy_abomination"
+	},
+	{
+		name = "enemy_lycan"
+	},
+	{
+		name = "enemy_ghost"
+	},
+	{
+		name = "enemy_phantom_warrior"
+	},
+	{
+		name = "enemy_elvira"
+	},
+	{
+		name = "eb_dracula"
+	},
+	{
+		name = "enemy_sniper"
+	},
+	{
+		name = "eb_saurian_king"
 	}
 }
 

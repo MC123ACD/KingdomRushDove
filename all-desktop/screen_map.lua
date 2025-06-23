@@ -4131,6 +4131,7 @@ function EncyclopediaView:detail_tower(index)
     end
 end
 
+-- 加载一页的敌人图鉴资源
 function EncyclopediaView:load_creeps(index)
     if self.creep then
         self.back:remove_child(self.creep)
@@ -4177,7 +4178,7 @@ function EncyclopediaView:load_creeps(index)
 
     self.creep:add_child(right_deco)
 
-    local creeps_per_page = 36
+    local creeps_per_page = 64
     local creeps_data = GS.encyclopedia_enemies
     local max_creeps = #creeps_data
 
@@ -4186,9 +4187,24 @@ function EncyclopediaView:load_creeps(index)
 
         if i <= max_creeps then
             local t = E:get_template(creeps_data[i].name)
-            local icon = string.format(GS.encyclopedia_enemy_thumb_fmt, t.info.enc_icon)
+            local enemy_thumb_fmt
+            if i <= 68 then
+                enemy_thumb_fmt = GS.encyclopedia_enemy_thumb_fmt
+            elseif i <= 128 then
+                if i == 117 or i == 120 or i == 121 or i == 122 then
+                    enemy_thumb_fmt = GS.encyclopedia_enemy_thumb_fmt
+                else
+                    enemy_thumb_fmt = GS.encyclopedia_enemy_thumb_fmt2
+                end
+            else
+                enemy_thumb_fmt = GS.encyclopedia_enemy_thumb_fmt3
+            end
+            if t.info.enc_icon == 67 then
+                enemy_thumb_fmt = GS.encyclopedia_enemy_thumb_fmt
+            end
+            local icon = string.format(enemy_thumb_fmt, t.info.enc_icon)
 
-            self:create_creep(icon, v(math.fmod(d - 1, 6) * 63 + 35, math.floor((d - 1) / 6) * 63 + 140), i, true)
+            self:create_creep(icon, v(math.fmod(d - 1, 8) * 47.25 + 35, math.floor((d - 1) / 8) * 47.25 + 140), i, true)
         end
     end
 
@@ -4197,12 +4213,13 @@ function EncyclopediaView:load_creeps(index)
     self.over_sprite.hidden = true
     self.over_sprite.anchor = v(self.over_sprite.size.x / 2, self.over_sprite.size.y / 2)
     self.over_sprite.propagate_on_click = true
-
+    self.over_sprite.scale = v(0.75, 0.75)
     self.creep:add_child(self.select_sprite2)
 
     self.select_sprite2.anchor = v(self.select_sprite2.size.x / 2, self.select_sprite2.size.y / 2)
     self.select_sprite2.hidden = false
     self.select_sprite2.pos = v(35, 140)
+    self.select_sprite2.scale = v(0.75, 0.75)
     self.page_buttons = {}
 
     local total_pages = math.ceil(max_creeps / creeps_per_page)
@@ -4261,7 +4278,7 @@ function EncyclopediaView:create_creep(icon, pos, information, enabled)
 
         b.anchor = v(b.size.x / 2, b.size.y / 2)
         b.pos = pos
-
+        b.scale = V.v(0.75, 0.75)
         self.creep:add_child(b)
 
         function b.on_enter()
@@ -4278,7 +4295,7 @@ function EncyclopediaView:create_creep(icon, pos, information, enabled)
         end
     else
         local b = KImageView:new("encyclopedia_creep_thumbs_0049")
-
+        b.scale = V.v(0.75, 0.75)
         b.anchor = v(b.size.x / 2, b.size.y / 2)
         b.pos = pos
 
@@ -4339,8 +4356,20 @@ function EncyclopediaView:detail_creep(index)
     right_decoration.scale.x = -0.7
 
     self.right_panel:add_child(right_decoration)
+    local enemy_fmt
+    if index <= 68 then
+        enemy_fmt = GS.encyclopedia_enemy_fmt
+    elseif index <= 128 then
+        if index == 117 or index == 120 or index == 121 or index == 122 then
+            enemy_fmt = GS.encyclopedia_enemy_fmt
+        else
+            enemy_fmt = GS.encyclopedia_enemy_fmt2
+        end
+    else
+        enemy_fmt = GS.encyclopedia_enemy_fmt3
+    end
 
-    local portrait = KImageView:new(string.format(GS.encyclopedia_enemy_fmt, ce.info.enc_icon))
+    local portrait = KImageView:new(string.format(enemy_fmt, ce.info.enc_icon))
 
     portrait.anchor = v(portrait.size.x / 2, portrait.size.y / 2)
     portrait.pos = v(300, 175)

@@ -2548,7 +2548,6 @@ local function enemies()
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.sound_events.insert = "HWAlphaWolf"
 
-
     -- unknown
     tt = RT("enemy_hobgoblin", "enemy")
     AC(tt, "melee", "death_spawns")

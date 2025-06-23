@@ -699,9 +699,7 @@ local function boss()
 
     -- 阿古克汗
     tt = RT("eb_ulgukhai", "boss")
-
     AC(tt, "melee", "auras")
-
     anchor_y = 0.1792452830188679
     anchor_x = 0.5
     image_y = 150
