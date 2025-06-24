@@ -147,7 +147,6 @@ GS.hero_xp_thresholds = {
 	26000
 }
 GS.hero_xp_ephemeral = true
-GS.hero_level_expected = {}
 
 GS.skill_points_for_hero_level = {
 	0,

@@ -254,6 +254,7 @@ function screen_map:init(w, h, done_callback)
                     if victory.level_idx < GS["last_level" .. generation] and not levels[victory.level_idx + 1] then
                         levels[victory.level_idx + 1] = {}
                         self.unlock_data.new_level = victory.level_idx + 1
+                        self.unlock_data.last_finished_level = victory.level_idx
 
                         table.insert(self.unlock_data.unlocked_levels, self.unlock_data.new_level)
                     end
@@ -543,7 +544,7 @@ function screen_map:init(w, h, done_callback)
         return v.available_level
     end)
 
-    if DBG_SHOW_BALLOONS or table.contains(hero_unlock_levels, self.unlock_data.new_level) then
+    if DBG_SHOW_BALLOONS or table.contains(hero_unlock_levels, self.unlock_data.last_finished_level) then
         self.heroTip = KImageView:new("mapBalloon_heroUnlocked_notxt")
         self.heroTip.anchor = v(self.heroTip.size.x / 2, self.heroTip.size.y)
         self.heroTip.pos = v(h_button.pos.x, sh - 165)
@@ -630,23 +631,16 @@ function screen_map:init(w, h, done_callback)
         self.gems_to_spend_view = g
     end
 
-    if IS_KR3 then
-        local stars_banner = StarsBanner:new()
+    local map_counters = GG9View:new_from_table(kui_db:get_table("map_counters_view", {
+        ref_h = self.ref_h,
+        sw = self.sw,
+        premium = self.is_premium
+    }))
 
-        stars_banner.pos = v(sw - 190, 30)
+    self.window:add_child(map_counters)
 
-        self.window:add_child(stars_banner)
-    else
-        local map_counters = GG9View:new_from_table(kui_db:get_table("map_counters_view", {
-            ref_h = self.ref_h,
-            sw = self.sw,
-            premium = self.is_premium
-        }))
+    wid("map_counters_stars").text = string.format("%s/%s", screen_map.total_stars, GS.max_stars)
 
-        self.window:add_child(map_counters)
-
-        wid("map_counters_stars").text = string.format("%s/%s", screen_map.total_stars, GS.max_stars)
-    end
 
     local upgrades = UpgradesView:new(sw, sh)
 
@@ -4694,13 +4688,23 @@ end
 
 HeroRoomViewKR1 = class("HeroRoomViewKR1", PopUpView)
 
+function HeroRoomViewKR1:get_finished_levels()
+    local finished_levels = {}
+
+    for level, level_stats in pairs(screen_map.user_data.levels) do
+        if level_stats.stars then
+            table.insert(finished_levels, level)
+        end
+    end
+
+    return finished_levels
+end
+
 function HeroRoomViewKR1:initialize(size)
     HeroRoomViewKR1.super.initialize(self, size)
 
     local ht = self:get_child_by_id("hero_thumbs")
-    local finished_levels = table.filter(screen_map.user_data.levels, function (k, v)
-        return v.stars ~= nil
-    end)
+    local finished_levels = self:get_finished_levels()
     local single_hero_thumb_x_size
     for i, d in ipairs(screen_map.hero_data) do
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
@@ -4842,7 +4846,8 @@ function HeroRoomViewKR1:show_hero(name)
     local bs = self:get_child_by_id("hero_room_sel_select")
     local bd = self:get_child_by_id("hero_room_sel_deselect")
 
-    if hd.available_level > #screen_map.user_data.levels then
+    local finished_levels = self:get_finished_levels()
+    if not table.contains(finished_levels, hd.available_level) then
         ll.hidden = false
         ll.text = string.format(_("MAP_HERO_ROOM_UNLOCK"), hd.available_level)
         bs.hidden = true
