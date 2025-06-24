@@ -2338,7 +2338,7 @@ local function enemies()
     tt.health.magic_armor = 0
     tt.health_bar.offset = vec_2(0, 66)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_ABOMINATION"
+    tt.info.i18n_key = "ENEMY_ABOMINATION"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0086" or "info_portraits_sc_0086"
     tt.info.enc_icon = 65
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -2415,7 +2415,7 @@ local function enemies()
     tt.health.hp_max = 700
     tt.health.magic_armor = 0.3
     tt.health_bar.offset = vec_2(0, 38)
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_WEREWOLF"
+    tt.info.i18n_key = "ENEMY_WEREWOLF"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0089" or "info_portraits_sc_0089"
     tt.info.enc_icon = 67
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -2486,7 +2486,7 @@ local function enemies()
     tt.health.magic_armor = 0.3
     tt.health.on_damage = scripts.enemy_lycan.on_damage
     tt.health_bar.offset = vec_2(0, 37)
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+    tt.info.i18n_key = "ENEMY_LYCAN"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0091" or "info_portraits_sc_0091"
     tt.info.enc_icon = 68
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -2523,7 +2523,7 @@ local function enemies()
     tt.health.magic_armor = 0.6
     tt.health_bar.offset = vec_2(0, 47)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_LYCAN"
+    tt.info.i18n_key = "ENEMY_LYCAN"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0092" or "info_portraits_sc_0091"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.enemy_mixed.update
@@ -6032,7 +6032,7 @@ local function enemies()
     E:add_comps(tt, "melee", "ranged", "timed_attacks")
     tt.enemy.gold = 65
     tt.enemy.melee_slot = vec_2(15, 0)
-    tt.info.i18n_key = "ENEMY_EVOKER"
+    tt.info.i18n_key = "ENEMY_TWILIGHT_EVOKER"
     tt.info.enc_icon = 21
     tt.info.portrait = "kr3_portraits_sc_0033"
     tt.health.hp_max = 600
@@ -6441,7 +6441,7 @@ local function enemies()
     tt.health.hp_max = 260
     tt.health.magic_armor = 0.9
     tt.health_bar.offset = vec_2(0, 32)
-    tt.info.i18n_key = "ENEMY_SON_OF_MACTANS"
+    tt.info.i18n_key = "ENEMY_SPIDER_SON_OF_MACTANS"
     tt.motion.max_speed = {2 * FPS, 2 * FPS, 2.2 * FPS}
     tt.render.sprites[1].anchor = vec_2(0.5, 0.128571)
     tt.render.sprites[1].prefix = "son_of_mactans"

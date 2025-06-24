@@ -3203,6 +3203,1206 @@ return {
 		},
 		alias = {}
 	},
+    encyclopedia_creeps_0301 = {
+		a_name = "encyclopedia-169.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0302 = {
+		a_name = "encyclopedia-170.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0303 = {
+		a_name = "encyclopedia-171.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0304 = {
+		a_name = "encyclopedia-172.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0305 = {
+		a_name = "encyclopedia-173.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0306 = {
+		a_name = "encyclopedia-174.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0307 = {
+		a_name = "encyclopedia-175.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0308 = {
+		a_name = "encyclopedia-176.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0309 = {
+		a_name = "encyclopedia-177.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0310 = {
+		a_name = "encyclopedia-178.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0311 = {
+		a_name = "encyclopedia-179.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0312 = {
+		a_name = "encyclopedia-180.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0313 = {
+		a_name = "encyclopedia-181.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0314 = {
+		a_name = "encyclopedia-182.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0315 = {
+		a_name = "encyclopedia-183.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0316 = {
+		a_name = "encyclopedia-184.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0317 = {
+		a_name = "encyclopedia-185.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0318 = {
+		a_name = "encyclopedia-186.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0319 = {
+		a_name = "encyclopedia-187.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0320 = {
+		a_name = "encyclopedia-188.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0321 = {
+		a_name = "encyclopedia-189.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0322 = {
+		a_name = "encyclopedia-190.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0323 = {
+		a_name = "encyclopedia-191.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0324 = {
+		a_name = "encyclopedia-192.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0325 = {
+		a_name = "encyclopedia-193.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0326 = {
+		a_name = "encyclopedia-194.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0327 = {
+		a_name = "encyclopedia-195.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0328 = {
+		a_name = "encyclopedia-196.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0329 = {
+		a_name = "encyclopedia-197.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0330 = {
+		a_name = "encyclopedia-198.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0331 = {
+		a_name = "encyclopedia-199.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0332 = {
+		a_name = "encyclopedia-200.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0333 = {
+		a_name = "encyclopedia-201.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0334 = {
+		a_name = "encyclopedia-202.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0335 = {
+		a_name = "encyclopedia-203.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0336 = {
+		a_name = "encyclopedia-204.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0337 = {
+		a_name = "encyclopedia-205.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0338 = {
+		a_name = "encyclopedia-206.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0339 = {
+		a_name = "encyclopedia-207.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0340 = {
+		a_name = "encyclopedia-208.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0341 = {
+		a_name = "encyclopedia-209.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0342 = {
+		a_name = "encyclopedia-210.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0343 = {
+		a_name = "encyclopedia-211.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0344 = {
+		a_name = "encyclopedia-212.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0345 = {
+		a_name = "encyclopedia-213.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0346 = {
+		a_name = "encyclopedia-214.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0347 = {
+		a_name = "encyclopedia-215.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_creeps_0348 = {
+		a_name = "encyclopedia-216.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
 	encyclopedia_towers_0001 = {
 		a_name = "encyclopedia-1.png",
 		defer = true,
@@ -3700,6 +4900,1006 @@ return {
 			0,
 			260,
 			252
+		},
+		alias = {}
+	},
+    encyclopedia_towers_0301 = {
+		a_name = "encyclopedia-49.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0302 = {
+		a_name = "encyclopedia-50.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0303 = {
+		a_name = "encyclopedia-51.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0304 = {
+		a_name = "encyclopedia-52.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0305 = {
+		a_name = "encyclopedia-53.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0306 = {
+		a_name = "encyclopedia-54.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0307 = {
+		a_name = "encyclopedia-55.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0308 = {
+		a_name = "encyclopedia-56.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0309 = {
+		a_name = "encyclopedia-57.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0310 = {
+		a_name = "encyclopedia-58.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0311 = {
+		a_name = "encyclopedia-59.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0312 = {
+		a_name = "encyclopedia-60.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0313 = {
+		a_name = "encyclopedia-229.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0314 = {
+		a_name = "encyclopedia-230.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0315 = {
+		a_name = "encyclopedia-231.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0316 = {
+		a_name = "encyclopedia-232.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0317 = {
+		a_name = "encyclopedia-233.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0318 = {
+		a_name = "encyclopedia-234.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0319 = {
+		a_name = "encyclopedia-235.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0320 = {
+		a_name = "encyclopedia-236.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+    encyclopedia_towers_0201 = {
+		a_name = "encyclopedia-61.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0202 = {
+		a_name = "encyclopedia-62.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0203 = {
+		a_name = "encyclopedia-63.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0204 = {
+		a_name = "encyclopedia-64.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0205 = {
+		a_name = "encyclopedia-65.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0206 = {
+		a_name = "encyclopedia-66.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0207 = {
+		a_name = "encyclopedia-67.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0208 = {
+		a_name = "encyclopedia-68.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0209 = {
+		a_name = "encyclopedia-69.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0210 = {
+		a_name = "encyclopedia-70.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0211 = {
+		a_name = "encyclopedia-71.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0212 = {
+		a_name = "encyclopedia-72.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0213 = {
+		a_name = "encyclopedia-161.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0214 = {
+		a_name = "encyclopedia-162.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0215 = {
+		a_name = "encyclopedia-163.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0216 = {
+		a_name = "encyclopedia-164.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0217 = {
+		a_name = "encyclopedia-165.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0218 = {
+		a_name = "encyclopedia-166.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0219 = {
+		a_name = "encyclopedia-167.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
+		},
+		alias = {}
+	},
+	encyclopedia_towers_0220 = {
+		a_name = "encyclopedia-168.png",
+		defer = true,
+		size = {
+			260,
+			250
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			260,
+			250
+		},
+		f_quad = {
+			0,
+			0,
+			260,
+			250
 		},
 		alias = {}
 	}

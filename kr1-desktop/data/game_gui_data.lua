@@ -319,7 +319,7 @@ return {
 		},
 		enemy_abomination = {
 			icon = "alert_creep_notxt_0053",
-			i18n_key = "ENEMY_HALLOWEEN_ABOMINATION",
+			i18n_key = "ENEMY_ABOMINATION",
 			image = "encyclopedia_creeps_0065",
 			layout = N_ENEMY
 		},
@@ -331,13 +331,13 @@ return {
 		},
 		enemy_werewolf = {
 			icon = "alert_creep_notxt_0055",
-			i18n_key = "ENEMY_HALLOWEEN_WEREWOLF",
+			i18n_key = "ENEMY_WEREWOLF",
 			image = "encyclopedia_creeps_0067",
 			layout = N_ENEMY
 		},
 		enemy_lycan = {
 			icon = "alert_creep_notxt_0056",
-			i18n_key = "ENEMY_HALLOWEEN_LYCAN",
+			i18n_key = "ENEMY_LYCAN",
 			image = "encyclopedia_creeps_0068",
 			layout = N_ENEMY
 		},

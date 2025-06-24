@@ -2219,16 +2219,16 @@ return {
         place = 1,
         halo = "glow_ico_special",
         sounds = {"ElvesArcherArcaneBurstTaunt"},
-        tt_phrase = _("TOWER_ARCANE_BURST_NOTE"),
+        tt_phrase = _("TOWER_ARCANE_ARCHER_BURST_NOTE"),
         tt_list = {{
-            tt_title = _("TOWER_ARCANE_BURST_NAME_1"),
-            tt_desc = _("TOWER_ARCANE_BURST_DESCRIPTION_1")
+            tt_title = _("TOWER_ARCANE_ARCHER_BURST_NAME_1"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_BURST_DESCRIPTION_1")
         }, {
-            tt_title = _("TOWER_ARCANE_BURST_NAME_2"),
-            tt_desc = _("TOWER_ARCANE_BURST_DESCRIPTION_2")
+            tt_title = _("TOWER_ARCANE_ARCHER_BURST_NAME_2"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_BURST_DESCRIPTION_2")
         }, {
-            tt_title = _("TOWER_ARCANE_BURST_NAME_3"),
-            tt_desc = _("TOWER_ARCANE_BURST_DESCRIPTION_3")
+            tt_title = _("TOWER_ARCANE_ARCHER_BURST_NAME_3"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_BURST_DESCRIPTION_3")
         }},
         is_kr3 = true
     }, {
@@ -2239,16 +2239,16 @@ return {
         place = 2,
         halo = "glow_ico_special",
         sounds = {"ElvesArcherArcaneSleepTaunt"},
-        tt_phrase = _("TOWER_ARCANE_SLUMBER_NOTE"),
+        tt_phrase = _("TOWER_ARCANE_ARCHER_SLUMBER_NOTE"),
         tt_list = {{
-            tt_title = _("TOWER_ARCANE_SLUMBER_NAME_1"),
-            tt_desc = _("TOWER_ARCANE_SLUMBER_DESCRIPTION_1")
+            tt_title = _("TOWER_ARCANE_ARCHER_SLUMBER_NAME_1"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_SLUMBER_DESCRIPTION_1")
         }, {
-            tt_title = _("TOWER_ARCANE_SLUMBER_NAME_2"),
-            tt_desc = _("TOWER_ARCANE_SLUMBER_DESCRIPTION_2")
+            tt_title = _("TOWER_ARCANE_ARCHER_SLUMBER_NAME_2"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_SLUMBER_DESCRIPTION_2")
         }, {
-            tt_title = _("TOWER_ARCANE_SLUMBER_NAME_3"),
-            tt_desc = _("TOWER_ARCANE_SLUMBER_DESCRIPTION_3")
+            tt_title = _("TOWER_ARCANE_ARCHER_SLUMBER_NAME_3"),
+            tt_desc = _("TOWER_ARCANE_ARCHER_SLUMBER_DESCRIPTION_3")
         }},
         is_kr3 = true
     }, {

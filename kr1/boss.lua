@@ -524,7 +524,7 @@ local function boss()
     tt.health.hp_max = 12000
     tt.health_bar.offset = vec_2(0, 95)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
-    tt.info.i18n_key = "ENEMY_BOSS_GOBLIN_CHIEFTAIN"
+    tt.info.i18n_key = "EB_GOBLIN_CHIEFTAIN"
     tt.info.enc_icon = 40
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0063" or "info_portraits_sc_0063"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -646,7 +646,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 125)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_kingpin.get_info
-    tt.info.i18n_key = "ENEMY_BOSS_BANDIT"
+    tt.info.i18n_key = "EB_BANDIT"
     tt.info.enc_icon = 48
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0072" or "info_portraits_sc_0072"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -905,7 +905,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 125)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_blackburn.get_info
-    tt.info.i18n_key = "ENEMY_BOSS_BLACKBURN"
+    tt.info.i18n_key = "EB_BLACKBURN"
     tt.info.enc_icon = 69
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0093" or "info_portraits_sc_0092"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -1919,7 +1919,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.enc_icon = 26
-    tt.info.i18n_key = "ENEMY_BOSS_GNOLL"
+    tt.info.i18n_key = "EB_GNOLL"
     tt.info.portrait = "kr3_portraits_sc_0013"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_gnoll.update
@@ -2006,7 +2006,7 @@ local function boss()
     tt = E:register_t("eb_drow_queen", "boss")
     E:add_comps(tt, "melee", "taunts", "tween")
     tt.info.enc_icon = 27
-    tt.info.i18n_key = "ENEMY_BOSS_DROW_QUEEN"
+    tt.info.i18n_key = "EB_DROW_QUEEN"
     tt.info.portrait = "kr3_portraits_sc_0062"
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
@@ -2225,7 +2225,7 @@ local function boss()
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.enc_icon = 33
     tt.info.portrait = "kr3_portraits_sc_0067"
-    tt.info.i18n_key = "ENEMY_BOSS_SPIDER"
+    tt.info.i18n_key = "EB_SPIDER"
     tt.info.fn = scripts.eb_spider.get_info
     tt.main_script.update = scripts.eb_spider.update
     tt.motion.max_speed = 0.83 * FPS
@@ -2257,7 +2257,7 @@ local function boss()
         death = CC("taunt_set")
     }
     tt.taunts.sets.intro.format = "ELVES_ENEMY_QUEEN_TAUNT_KIND_OURS"
-    tt.taunts.sets.death.format = "ENEMY_BOSS_SPIDER_DEATH_TAUNT"
+    tt.taunts.sets.death.format = "EB_SPIDER_DEATH_TAUNT"
     tt.ranged.attacks[1].bullet = "ray_eb_spider"
     tt.ranged.attacks[1].cooldown = 0.5 + fts(29)
     tt.ranged.attacks[1].animation = "attack"
@@ -2421,7 +2421,7 @@ local function boss()
     tt.health_bar.hidden = true
     tt.info.enc_icon = 38
     tt.info.portrait = "kr3_portraits_sc_0072"
-    tt.info.i18n_key = "ENEMY_BOSS_BRAM"
+    tt.info.i18n_key = "EB_BRAM"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_bram.update
     tt.motion.max_speed = 1 * FPS
@@ -2518,7 +2518,7 @@ local function boss()
     tt.health_bar.offset = vec_2(-15, 145)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.enc_icon = 42
-    tt.info.i18n_key = "ENEMY_BOSS_BAJNIMEN"
+    tt.info.i18n_key = "EB_BAJNIMEN"
     tt.info.portrait = "kr3_portraits_sc_0076"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_bajnimen.update
@@ -2619,7 +2619,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
     tt.info.enc_icon = 48
-    tt.info.i18n_key = "ENEMY_BOSS_BALROG"
+    tt.info.i18n_key = "EB_BALROG"
     tt.info.portrait = "kr3_portraits_sc_0083"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_balrog.update

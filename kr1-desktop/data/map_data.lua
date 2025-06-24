@@ -1813,45 +1813,117 @@ return {
         iron = {"archers", "druids"}
     }},
     tower_data = {{
-        name = "tower_archer_1"
+    --     name = "tower_archer_1"
+    -- }, {
+    --     name = "tower_barrack_1"
+    -- }, {
+    --     name = "tower_mage_1"
+    -- }, {
+    --     name = "tower_engineer_1"
+    -- }, {
+    --     name = "tower_archer_2"
+    -- }, {
+    --     name = "tower_barrack_2"
+    -- }, {
+    --     name = "tower_mage_2"
+    -- }, {
+    --     name = "tower_engineer_2"
+    -- }, {
+    --     name = "tower_archer_3"
+    -- }, {
+    --     name = "tower_barrack_3"
+    -- }, {
+    --     name = "tower_mage_3"
+    -- }, {
+    --     name = "tower_engineer_3"
+    -- },{
+        name = "tower_ranger",
+        icon = 13
     }, {
-        name = "tower_barrack_1"
+        name = "tower_paladin",
+        icon = 14
     }, {
-        name = "tower_mage_1"
+        name = "tower_arcane_wizard",
+        icon = 15
     }, {
-        name = "tower_engineer_1"
+        name = "tower_bfg",
+        icon = 16
     }, {
-        name = "tower_archer_2"
+        name = "tower_musketeer",
+        icon = 17
     }, {
-        name = "tower_barrack_2"
+        name = "tower_barbarian",
+        icon = 18
     }, {
-        name = "tower_mage_2"
+        name = "tower_sorcerer",
+        icon = 19
     }, {
-        name = "tower_engineer_2"
-    }, {
-        name = "tower_archer_3"
-    }, {
-        name = "tower_barrack_3"
-    }, {
-        name = "tower_mage_3"
-    }, {
-        name = "tower_engineer_3"
-    }, {
-        name = "tower_ranger"
-    }, {
-        name = "tower_paladin"
-    }, {
-        name = "tower_arcane_wizard"
-    }, {
-        name = "tower_bfg"
-    }, {
-        name = "tower_musketeer"
-    }, {
-        name = "tower_barbarian"
-    }, {
-        name = "tower_sorcerer"
-    }, {
-        name = "tower_tesla"
+        name = "tower_tesla",
+        icon = 20
+    },
+    {
+        name = "tower_crossbow",
+        icon = 13
+    },
+    {
+        name = "tower_assassin",
+        icon = 14
+    },
+    {
+        name = "tower_archmage",
+        icon = 15
+    },
+    {
+        name = "tower_dwaarp",
+        icon = 16
+    },
+    {
+        name = "tower_totem",
+        icon = 17
+    },
+    {
+        name = "tower_templar",
+        icon = 18
+    },
+    {
+        name = "tower_necromancer",
+        icon = 19
+    },
+    {
+        name = "tower_mech",
+        icon = 20
+    },
+    {
+        icon = 17,
+        name = "tower_arcane"
+    },
+    {
+        icon = 20,
+        name = "tower_blade"
+    },
+    {
+        icon = 16,
+        name = "tower_wild_magus"
+    },
+    {
+        icon = 13,
+        name = "tower_druid"
+    },
+    {
+        icon = 18,
+        name = "tower_silver"
+    },
+    {
+        icon = 19,
+        name = "tower_forest"
+    },
+    {
+        icon = 15,
+        name = "tower_high_elven"
+    },
+    {
+        icon = 14,
+        name = "tower_entwood"
     }},
     map_animations1 = {{
         sail_time = 15,

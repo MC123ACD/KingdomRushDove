@@ -54,12 +54,20 @@ end
 function GU.speed_value_desc(v)
 	if not v or type(v) ~= "number" then
 		return _("None")
+    elseif v >= 80 then
+        return _("CSpeed4")
+    elseif v >= 60 then
+        return _("CSpeed3")
 	elseif v >= 45 then
 		return _("CSpeed2")
 	elseif v >= 21 then
 		return _("CSpeed1")
-	else
+    elseif v >= 16 then
 		return _("CSpeed0")
+    elseif v >= 12 then
+        return _("CSpeed_1")
+    else
+        return _("CSpeed_2")
 	end
 end
 

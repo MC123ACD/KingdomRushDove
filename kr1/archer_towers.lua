@@ -666,6 +666,7 @@ local function archer_towers()
     tt.info.enc_icon = 17
     tt.info.fn = scripts.tower_arcane.get_info
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0009"
+    tt.info.i18n_key = "TOWER_ARCANE_ARCHER"
     tt.powers.burst = E:clone_c("power")
     tt.powers.burst.price_base = 200
     tt.powers.burst.price_inc = 200

@@ -5832,5 +5832,2439 @@ return {
 			79
 		},
 		alias = {}
+	},
+    -- 睡眠箭矢
+    encyclopedia_tower_specials_0301 = {
+		a_name = "encyclopedia-239.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+    -- 爆裂箭矢
+	encyclopedia_tower_specials_0302 = {
+		a_name = "encyclopedia-240.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+    -- 猎人印记
+	encyclopedia_tower_specials_0303 = {
+		a_name = "encyclopedia-256.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+    -- 血色审判
+	encyclopedia_tower_specials_0304 = {
+		a_name = "encyclopedia-255.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0305 = {
+		a_name = "encyclopedia-248.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0306 = {
+		a_name = "encyclopedia-257.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0307 = {
+		a_name = "encyclopedia-252.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0308 = {
+		a_name = "encyclopedia-237.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {
+			"encyclopedia_tower_specials_0309"
+		}
+	},
+	encyclopedia_tower_specials_0310 = {
+		a_name = "encyclopedia-241.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0311 = {
+		a_name = "encyclopedia-246.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0312 = {
+		a_name = "encyclopedia-247.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0313 = {
+		a_name = "encyclopedia-254.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0314 = {
+		a_name = "encyclopedia-249.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0315 = {
+		a_name = "encyclopedia-251.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0316 = {
+		a_name = "encyclopedia-258.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0317 = {
+		a_name = "encyclopedia-259.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0318 = {
+		a_name = "encyclopedia-260.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0319 = {
+		a_name = "encyclopedia-238.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0320 = {
+		a_name = "encyclopedia-255.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0321 = {
+		a_name = "encyclopedia-256.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0322 = {
+		a_name = "encyclopedia-257.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0323 = {
+		a_name = "encyclopedia-258.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0324 = {
+		a_name = "encyclopedia-259.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0325 = {
+		a_name = "encyclopedia-260.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0326 = {
+		a_name = "encyclopedia-261.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0327 = {
+		a_name = "encyclopedia-262.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0328 = {
+		a_name = "encyclopedia-263.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+	encyclopedia_tower_specials_0329 = {
+		a_name = "encyclopedia-264.png",
+		defer = true,
+		size = {
+			42,
+			42
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			42,
+			42
+		},
+		f_quad = {
+			0,
+			0,
+			42,
+			42
+		},
+		alias = {}
+	},
+    encyclopedia_creep_thumbs_0301 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			181,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0302 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			248,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0303 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			315,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0304 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			382,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0305 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			449,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0306 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			516,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0307 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			583,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0308 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			650,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0309 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			717,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0310 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			784,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0311 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			851,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0312 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			918,
+			91,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0313 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0314 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			233,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0315 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			295,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0316 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			357,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0317 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			419,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0318 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			481,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0319 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			543,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0320 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			605,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0321 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			667,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0322 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			729,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0323 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			791,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0324 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			853,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0325 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			915,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0326 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0327 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			233,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0328 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			295,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0329 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			357,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0330 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			419,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0331 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			481,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0332 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			543,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0333 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			605,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0334 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			667,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0335 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			729,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0336 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			791,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0337 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			853,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0338 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			163,
+			915,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0339 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			230,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0340 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			297,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0341 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			364,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0342 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			431,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0343 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			498,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0344 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			565,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0345 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			632,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0346 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			699,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0347 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			766,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0348 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			833,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_creep_thumbs_0349 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			64,
+			62
+		},
+		trim = {
+			1,
+			5,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			900,
+			171,
+			61,
+			56
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0301 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0302 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0303 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			186,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0304 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			276,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0305 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			366,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0306 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			456,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0307 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			546,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0308 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			636,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0309 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			726,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0310 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			816,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0311 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			906,
+			6,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0312 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			91,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0313 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			176,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0314 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			261,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0315 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			346,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0316 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			431,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0317 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			516,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0318 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			601,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0319 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			686,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0320 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			771,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0321 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			0,
+			2,
+			2,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			856,
+			84,
+			79
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0322 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			3,
+			3,
+			4,
+			5
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			96,
+			91,
+			79,
+			74
+		},
+		alias = {}
+	},
+	encyclopedia_tower_thumbs_0323 = {
+		a_name = "encyclopedia_thumbs-3.png",
+		size = {
+			86,
+			82
+		},
+		trim = {
+			3,
+			3,
+			3,
+			4
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			941,
+			80,
+			75
+		},
+		alias = {}
 	}
 }

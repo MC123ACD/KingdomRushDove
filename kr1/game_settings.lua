@@ -246,12 +246,19 @@ GS.gems_per_level = {
 }
 GS.encyclopedia_tower_fmt = "encyclopedia_towers_00%02i"
 GS.encyclopedia_tower_fmt2 = "encyclopedia_towers_02%02i"
+GS.encyclopedia_tower_fmt3 = "encyclopedia_towers_03%02i"
 GS.encyclopedia_tower_thumb_fmt = "encyclopedia_tower_thumbs_00%02i"
 GS.encyclopedia_tower_thumb_fmt2 = "encyclopedia_tower_thumbs_02%02i"
+GS.encyclopedia_tower_thumb_fmt3 = "encyclopedia_tower_thumbs_03%02i"
 GS.encyclopedia_enemy_fmt = "encyclopedia_creeps_00%02i"
 GS.encyclopedia_enemy_fmt2 = "encyclopedia_creeps_02%02i"
+GS.encyclopedia_enemy_fmt3 = "encyclopedia_creeps_03%02i"
 GS.encyclopedia_enemy_thumb_fmt = "encyclopedia_creep_thumbs_00%02i"
 GS.encyclopedia_enemy_thumb_fmt2 = "encyclopedia_creep_thumbs_02%02i"
+GS.encyclopedia_enemy_thumb_fmt3 = "encyclopedia_creep_thumbs_03%02i"
+GS.encyclopedia_tower_specials_fmt= "encyclopedia_tower_specials_00%02i"
+GS.encyclopedia_tower_specials_fmt2 = "encyclopedia_tower_specials_02%02i"
+GS.encyclopedia_tower_specials_fmt3 = "encyclopedia_tower_specials_03%02i"
 GS.encyclopedia_enemies = {
 	{
 		always_shown = true,
@@ -638,6 +645,150 @@ GS.encyclopedia_enemies = {
 	},
 	{
 		name = "eb_saurian_king"
+	},
+    {
+		always_shown = true,
+		name = "enemy_gnoll_reaver"
+	},
+	{
+		name = "enemy_gnoll_burner"
+	},
+	{
+		name = "enemy_gnoll_gnawer"
+	},
+	{
+		name = "enemy_hyena"
+	},
+	{
+		name = "enemy_perython"
+	},
+	{
+		name = "enemy_gnoll_blighter"
+	},
+	{
+		name = "enemy_ettin"
+	},
+	{
+		name = "enemy_twilight_elf_harasser"
+	},
+	{
+		name = "eb_gnoll"
+	},
+	{
+		target = "phone",
+		name = "enemy_gnoll_warleader"
+	},
+	{
+		name = "enemy_sword_spider"
+	},
+	{
+		name = "enemy_satyr_cutthroat"
+	},
+	{
+		name = "enemy_satyr_hoplite"
+	},
+	{
+		name = "enemy_webspitting_spider"
+	},
+	{
+		name = "enemy_gloomy"
+	},
+	{
+		name = "enemy_twilight_scourger"
+	},
+	{
+		name = "enemy_bandersnatch"
+	},
+	{
+		name = "enemy_redcap"
+	},
+	{
+		name = "enemy_twilight_avenger"
+	},
+	{
+		name = "enemy_boomshrooms"
+	},
+	{
+		name = "enemy_munchshrooms"
+	},
+	{
+		name = "enemy_shroom_breeder"
+	},
+	{
+		name = "eb_drow_queen"
+	},
+	{
+		name = "enemy_razorboar"
+	},
+	{
+		name = "enemy_twilight_evoker"
+	},
+	{
+		name = "enemy_twilight_golem"
+	},
+	{
+		name = "enemy_mantaray"
+	},
+	{
+		name = "enemy_spider_arachnomancer"
+	},
+	{
+		name = "enemy_twilight_heretic"
+	},
+	{
+		name = "enemy_spider_son_of_mactans"
+	},
+	{
+		name = "enemy_arachnomancer"
+	},
+	{
+		name = "enemy_drider"
+	},
+	{
+		name = "eb_spider"
+	},
+	{
+		name = "enemy_gnoll_bloodsydian"
+	},
+	{
+		name = "enemy_bloodsydian_warlock"
+	},
+	{
+		name = "enemy_ogre_magi"
+	},
+	{
+		name = "eb_bram"
+	},
+	{
+		name = "enemy_blood_servant"
+	},
+	{
+		name = "enemy_screecher_bat"
+	},
+	{
+		name = "enemy_mounted_avenger"
+	},
+	{
+		name = "eb_bajnimen"
+	},
+	{
+		target = "phone",
+		name = "enemy_twilight_brute"
+	},
+	{
+		name = "enemy_shadows_spawns"
+	},
+	{
+		name = "enemy_grim_devourers"
+	},
+	{
+		name = "enemy_dark_spitters"
+	},
+	{
+		name = "enemy_shadow_champion"
+	},
+	{
+		name = "eb_balrog"
 	}
 }
 

@@ -3811,37 +3811,46 @@ function EncyclopediaView:load_towers()
 
     self.towers:add_child(right_deco)
 
-    local st1 = GGLabel:new(V.v(self.towers.size.x, 24))
+    -- local st1 = GGLabel:new(V.v(self.towers.size.x, 24))
 
-    st1.pos.y = 88
-    st1.font_name = "body"
-    st1.font_size = 15
-    st1.font_align = "center"
-    st1.colors.text = {100, 89, 51, 255}
-    st1.text = _("Basic")
+    -- st1.pos.y = 88
+    -- st1.font_name = "body"
+    -- st1.font_size = 15
+    -- st1.font_align = "center"
+    -- st1.colors.text = {100, 89, 51, 255}
+    -- st1.text = _("Basic")
 
-    self.towers:add_child(st1)
+    -- self.towers:add_child(st1)
 
-    local st2 = GGLabel:new(V.v(self.towers.size.x, 24))
+    -- local st2 = GGLabel:new(V.v(self.towers.size.x, 24))
 
-    st2.pos.y = 363
-    st2.font_name = "body"
-    st2.font_size = 15
-    st2.font_align = "center"
-    st2.colors.text = {100, 89, 51, 255}
-    st2.text = _("Advanced")
+    -- st2.pos.y = 363
+    -- st2.font_name = "body"
+    -- st2.font_size = 15
+    -- st2.font_align = "center"
+    -- st2.colors.text = {100, 89, 51, 255}
+    -- st2.text = _("Advanced")
 
-    self.towers:add_child(st2)
+    -- self.towers:add_child(st2)
 
     self.over_sprite = KImageView:new("encyclopedia_tower_thumbs_0022")
     self.select_sprite = KImageView:new("encyclopedia_tower_thumbs_0023")
     self.select_sprite.pos = v(50, 150)
     self.select_sprite.hidden = false
-
-    for i = 1, 20 do
-        local icon_idx = screen_map.tower_data[i].icon or i
-        local icon = string.format(GS.encyclopedia_tower_thumb_fmt, icon_idx)
-        local off_y = i <= 12 and 150 or 170
+    local tower_count = #screen_map.tower_data
+    for i = 1, tower_count do
+        local icon_idx = screen_map.tower_data[i].icon
+        local tower_thumb_fmt
+        if i <= 8 then
+            tower_thumb_fmt = GS.encyclopedia_tower_thumb_fmt
+        elseif i <= 16 then
+            tower_thumb_fmt = GS.encyclopedia_tower_thumb_fmt2
+        else
+            tower_thumb_fmt = GS.encyclopedia_tower_thumb_fmt3
+        end
+        local icon = string.format(tower_thumb_fmt, icon_idx)
+        -- local off_y = i <= 12 and 150 or 170
+        local off_y = 120
 
         self:create_tower(icon, v(math.fmod(i - 1, 4) * 88 + 50, math.floor((i - 1) / 4) * 85 + off_y), i, true)
     end
@@ -3862,7 +3871,8 @@ function EncyclopediaView:load_towers()
 end
 
 function EncyclopediaView:create_tower(icon, pos, information, enabled)
-    if information <= 4 or screen_map.user_data.seen[screen_map.tower_data[information].name] then
+    -- if information <= 4 or screen_map.user_data.seen[screen_map.tower_data[information].name] then
+    if screen_map.user_data.seen[screen_map.tower_data[information].name] then
         local tower = KButton:new()
 
         tower:set_image(icon)
@@ -3956,9 +3966,16 @@ function EncyclopediaView:detail_tower(index)
     right_decoration.scale.x = -0.7
 
     self.right_panel:add_child(right_decoration)
-
+    local tower_fmt
+    if index <= 8 then
+        tower_fmt = GS.encyclopedia_tower_fmt
+    elseif index <= 16 then
+        tower_fmt = GS.encyclopedia_tower_fmt2
+    else
+        tower_fmt = GS.encyclopedia_tower_fmt3
+    end
     local portrait =
-        KImageView:new(string.format(GS.encyclopedia_tower_fmt, screen_map.tower_data[index].icon or index))
+        KImageView:new(string.format(tower_fmt, screen_map.tower_data[index].icon))
 
     portrait.anchor = v(portrait.size.x / 2, portrait.size.y / 2)
     portrait.pos = v(300, 175)
@@ -4107,7 +4124,15 @@ function EncyclopediaView:detail_tower(index)
         for i, k in pairs(power_names) do
             local power = dt.powers[k]
             local px = 120 + (2 * i - 1) * iw / 2
-            local icon = KImageView:new(string.format("encyclopedia_tower_specials_%04i", power.enc_icon))
+            local tower_specials_fmt
+            if index <= 8 then
+                tower_specials_fmt = GS.encyclopedia_tower_specials_fmt
+            elseif index <= 16 then
+                tower_specials_fmt = GS.encyclopedia_tower_specials_fmt2
+            else
+                tower_specials_fmt = GS.encyclopedia_tower_specials_fmt3
+            end
+            local icon = KImageView:new(string.format(tower_specials_fmt, power.enc_icon))
 
             icon.pos = v(px, 515)
             icon.anchor = v(icon.size.x / 2, icon.size.y / 2)
