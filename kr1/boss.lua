@@ -162,7 +162,7 @@ local function boss()
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, ady(120))
     tt.info.fn = scripts.eb_juggernaut.get_info
-    tt.info.i18n_key = "ENEMY_JUGGERNAUT"
+    tt.info.i18n_key = "EB_JUGGERNAUT"
     tt.info.enc_icon = 32
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0027" or "info_portraits_sc_0027"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -229,7 +229,7 @@ local function boss()
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, ady(172))
     tt.info.fn = scripts.eb_jt.get_info
-    tt.info.i18n_key = "ENEMY_YETI_BOSS"
+    tt.info.i18n_key = "EB_JT"
     tt.info.enc_icon = 33
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0047" or "info_portraits_sc_0047"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -308,7 +308,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 43)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_MEDIUM
     tt.health.magic_armor = 0.35
-    tt.info.i18n_key = "ENEMY_VEZNAN"
+    tt.info.i18n_key = "EB_VEZNAN"
     tt.info.enc_icon = 34
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0056" or "info_portraits_sc_0056"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -450,7 +450,7 @@ local function boss()
     tt.health.magic_armor = 0.4
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, 108)
-    tt.info.i18n_key = "ENEMY_SARELGAZ"
+    tt.info.i18n_key = "EB_SARELGAZ"
     tt.info.enc_icon = 35
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0057" or "info_portraits_sc_0057"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -584,7 +584,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 135)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_greenmuck.get_info
-    tt.info.i18n_key = "ENEMY_ROTTEN_TREE_BOSS"
+    tt.info.i18n_key = "EB_GREENMUCK"
     tt.info.enc_icon = 45
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0069" or "info_portraits_sc_0069"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -716,7 +716,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 90)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_ulgukhai.get_info
-    tt.info.i18n_key = "ENEMY_TROLL_BOSS"
+    tt.info.i18n_key = "EB_ULGUKHAI"
     tt.info.enc_icon = 52
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0075" or "info_portraits_sc_0075"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -770,7 +770,7 @@ local function boss()
     tt.health.magic_armor = 0.5
     tt.health_bar.offset = vec_2(0, 125)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
-    tt.info.i18n_key = "ENEMY_DEMON_MOLOCH"
+    tt.info.i18n_key = "EB_MOLOCH"
     tt.info.enc_icon = 57
     tt.info.fn = scripts.eb_moloch.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0080" or "info_portraits_sc_0080"
@@ -843,7 +843,7 @@ local function boss()
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_myconid.get_info
-    tt.info.i18n_key = "ENEMY_ROTTEN_MYCONID"
+    tt.info.i18n_key = "EB_MYCONID"
     tt.info.enc_icon = 59
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0082" or "info_portraits_sc_0082"
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -2085,18 +2085,18 @@ local function boss()
         casting = {},
         sitting = {}
     }
-    tt.taunts.sets.welcome.format = "ELVES_ENEMY_DROW_QUEEN_TAUNT_KIND_WELCOME_%04d"
+    tt.taunts.sets.welcome.format = "EB_DROW_QUEEN_TAUNT_KIND_WELCOME_%04d"
     tt.taunts.sets.welcome.start_idx = 1
     tt.taunts.sets.welcome.end_idx = 2
-    tt.taunts.sets.prebattle.format = "ELVES_ENEMY_DROW_QUEEN_TAUNT_KIND_PREBATTLE_%04d"
+    tt.taunts.sets.prebattle.format = "EB_DROW_QUEEN_TAUNT_KIND_PREBATTLE_%04d"
     tt.taunts.sets.prebattle.start_idx = 1
     tt.taunts.sets.prebattle.end_idx = 3
-    tt.taunts.sets.casting.format = "ELVES_ENEMY_DROW_QUEEN_TAUNT_KIND_CASTING_%04d"
+    tt.taunts.sets.casting.format = "EB_DROW_QUEEN_TAUNT_KIND_CASTING_%04d"
     tt.taunts.sets.casting.start_idx = 1
     tt.taunts.sets.casting.end_idx = 4
     tt.taunts.sets.casting.pos = vec_2(791, 348)
     tt.taunts.sets.casting.decal_name = "decal_drow_queen_shoutbox_casting"
-    tt.taunts.sets.sitting.format = "ELVES_ENEMY_DROW_QUEEN_TAUNT_KIND_SITTING_%04d"
+    tt.taunts.sets.sitting.format = "EB_DROW_QUEEN_TAUNT_KIND_SITTING_%04d"
     tt.taunts.sets.sitting.start_idx = 1
     tt.taunts.sets.sitting.end_idx = 5
     tt.taunts.decal_name = "decal_drow_queen_shoutbox"
@@ -2256,7 +2256,7 @@ local function boss()
         intro = CC("taunt_set"),
         death = CC("taunt_set")
     }
-    tt.taunts.sets.intro.format = "ELVES_ENEMY_QUEEN_TAUNT_KIND_OURS"
+    tt.taunts.sets.intro.format = "EB_SPIDER_TAUNT_KIND_OURS"
     tt.taunts.sets.death.format = "EB_SPIDER_DEATH_TAUNT"
     tt.ranged.attacks[1].bullet = "ray_eb_spider"
     tt.ranged.attacks[1].cooldown = 0.5 + fts(29)

@@ -612,7 +612,7 @@ local function mage_towers()
     tt.main_script.update = scripts.necromancer_aura.update
     tt.aura.cycle_time = 0.5
     tt.aura.duration = -1
-    tt.min_health_for_knight = 600
+    tt.min_health_for_knight = 416
     tt.count_group_name = "skeletons"
     tt.count_group_type = COUNT_GROUP_CONCURRENT
     tt.count_group_max = 30
