@@ -3806,29 +3806,6 @@ function EncyclopediaView:load_towers()
     right_deco.scale.x = -1
 
     self.towers:add_child(right_deco)
-
-    -- local st1 = GGLabel:new(V.v(self.towers.size.x, 24))
-
-    -- st1.pos.y = 88
-    -- st1.font_name = "body"
-    -- st1.font_size = 15
-    -- st1.font_align = "center"
-    -- st1.colors.text = {100, 89, 51, 255}
-    -- st1.text = _("Basic")
-
-    -- self.towers:add_child(st1)
-
-    -- local st2 = GGLabel:new(V.v(self.towers.size.x, 24))
-
-    -- st2.pos.y = 363
-    -- st2.font_name = "body"
-    -- st2.font_size = 15
-    -- st2.font_align = "center"
-    -- st2.colors.text = {100, 89, 51, 255}
-    -- st2.text = _("Advanced")
-
-    -- self.towers:add_child(st2)
-
     self.over_sprite = KImageView:new("encyclopedia_tower_thumbs_0022")
     self.select_sprite = KImageView:new("encyclopedia_tower_thumbs_0023")
     self.select_sprite.pos = v(50, 150)
@@ -3845,7 +3822,6 @@ function EncyclopediaView:load_towers()
             tower_thumb_fmt = GS.encyclopedia_tower_thumb_fmt3
         end
         local icon = string.format(tower_thumb_fmt, icon_idx)
-        -- local off_y = i <= 12 and 150 or 170
         local off_y = 120
 
         self:create_tower(icon, v(math.fmod(i - 1, 4) * 88 + 50, math.floor((i - 1) / 4) * 85 + off_y), i, true)
@@ -3859,7 +3835,7 @@ function EncyclopediaView:load_towers()
 
     self.towers:add_child(self.select_sprite)
 
-    self.select_sprite.pos = v(50, 150)
+    self.select_sprite.pos = v(50, 120)
     self.select_sprite.anchor = v(self.select_sprite.size.x / 2, self.select_sprite.size.y / 2)
     self.select_sprite.hidden = false
 
@@ -3867,7 +3843,6 @@ function EncyclopediaView:load_towers()
 end
 
 function EncyclopediaView:create_tower(icon, pos, information, enabled)
-    -- if information <= 4 or screen_map.user_data.seen[screen_map.tower_data[information].name] then
     if screen_map.user_data.seen[screen_map.tower_data[information].name] then
         local tower = KButton:new()
 
