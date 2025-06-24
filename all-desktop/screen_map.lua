@@ -3088,6 +3088,7 @@ function EndlessLevelSelectView:load_score()
     self.score_label.text = tostring(high_score)
 end
 
+-- 科技
 UpgradesView = class("UpgradesView", PopUpView)
 
 function UpgradesView:initialize(sw, sh)
@@ -3100,15 +3101,6 @@ function UpgradesView:initialize(sw, sh)
     self:add_child(self.back)
 
     self.back.alpha = 1
-
-    if IS_KR3 then
-        local header_bg = KImageView("kr3_title_bg")
-
-        header_bg.anchor.x = km.round(header_bg.size.x / 2)
-        header_bg.pos = v(km.round(self.back.size.x / 2) - 10, -34)
-
-        self.back:add_child(header_bg)
-    end
 
     local header = GGPanelHeader:new(_("UPGRADES"), 274)
 
@@ -3579,6 +3571,11 @@ function UpgradeButtons:on_click(button, x, y)
 
             self.explotion = nil
         end)
+    elseif self.bought then
+        S:queue("GUIBuyUpgrade")
+        screen_map.upgrades:hide_tip_panel()
+        self:ungrey_me()
+        screen_map.upgrades:upgrade_bought(self.data_values.class, self.data_values.level - 1, self.data_values.price)
     end
 end
 

@@ -755,12 +755,12 @@ local function hero_level_up(store, this)
 
 	local expected_level_multiplier = 1
     local level_based
-    if store.level_idx <= 5 then
-        expected_level_multiplier = 0.15 * store.level_idx + 0.05
-    elseif store.level_idx <= 31 then
-        expected_level_multiplier = 0.15 * (store.level_idx - 26) + 0.05
-    elseif store.level_idx <= 53 then
-        expected_level_multiplier = 0.15 * (store.level_idx - 48) + 0.05
+    if store.level_idx <= 9 then
+        expected_level_multiplier = 0.1 * store.level_idx
+    elseif store.level_idx <= 35 then
+        expected_level_multiplier = 0.1 * (store.level_idx - 26)
+    elseif store.level_idx <= 57 then
+        expected_level_multiplier = 0.1 * (store.level_idx - 48)
     end
 	local difficulty_multiplier = GS.hero_xp_gain_per_difficulty_mode[store.level_difficulty]
 	local net_xp = h.xp_queued * expected_level_multiplier * difficulty_multiplier
