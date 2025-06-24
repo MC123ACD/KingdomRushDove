@@ -42,6 +42,7 @@ function level:init(store)
 			"tower_build_engineer"
 		}
 	end
+    self.unlock_towers = {"tower_pirate_watchtower"}
 end
 
 function level:load(store)

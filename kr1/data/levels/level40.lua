@@ -52,6 +52,7 @@ function level:init(store)
 			"tower_build_engineer"
 		}
 	end
+    self.unlock_towers = {"tower_barrack_dwarf","tower_archer_dwarf"}
 end
 
 function level:load(store)

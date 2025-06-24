@@ -791,6 +791,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_entwood"},
 	nav_mesh = {
 		{
 			3,

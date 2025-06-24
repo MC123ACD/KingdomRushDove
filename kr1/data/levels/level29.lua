@@ -28,39 +28,17 @@ function level:init(store)
 	if store.level_mode == GAME_MODE_CAMPAIGN then
 		self.max_upgrade_level = 5
 		self.locked_towers = {
-			"tower_totem",
-			"tower_crossbow",
-			"tower_assassin",
-			"tower_templar",
-			"tower_dwaarp",
-			"tower_mech",
-			"tower_archmage",
-			"tower_necromancer"
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = true
 		self.max_upgrade_level = 2
 		self.locked_towers = {
-			"tower_totem",
-			"tower_crossbow",
-			"tower_assassin",
-			"tower_templar",
-			"tower_dwaarp",
-			"tower_mech",
-			"tower_archmage",
-			"tower_necromancer"
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = true
 		self.max_upgrade_level = 2
 		self.locked_towers = {
-			"tower_totem",
-			"tower_crossbow",
-			"tower_assassin",
-			"tower_templar",
 			"tower_build_engineer",
-			"tower_archmage",
-			"tower_necromancer"
 		}
 	end
 

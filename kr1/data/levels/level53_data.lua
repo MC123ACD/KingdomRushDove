@@ -779,39 +779,22 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_silver",
-				"tower_forest",
-				"tower_wild_magus",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 2,
 			locked_towers = {
-				"tower_silver",
-				"tower_forest",
-				"tower_wild_magus",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 2,
 			locked_towers = {
-				"tower_silver",
-				"tower_forest",
-				"tower_wild_magus",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood",
 				"tower_build_barrack",
 				"tower_build_engineer"
 			}
 		}
 	},
+    unlock_towers = {"tower_blade"},
 	nav_mesh = {
 		[10] = {
 			18,

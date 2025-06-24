@@ -271,6 +271,11 @@ function screen_map:init(w, h, done_callback)
             level[victory.level_mode] = math.max(victory.level_difficulty, level[victory.level_mode] or 0)
         end
 
+        if self.user_data.locked_towers then
+            for _, tower in pairs(self.user_data.last_victory.unlock_towers) do
+                table.removeobject(self.user_data.locked_towers, tower)
+            end
+        end
         self.user_data.last_victory = nil
 
         storage:save_slot(self.user_data)
@@ -4693,7 +4698,9 @@ function HeroRoomViewKR1:initialize(size)
     HeroRoomViewKR1.super.initialize(self, size)
 
     local ht = self:get_child_by_id("hero_thumbs")
-    local last_level = #screen_map.user_data.levels
+    local finished_levels = table.filter(screen_map.user_data.levels, function (k, v)
+        return v.stars ~= nil
+    end)
     local single_hero_thumb_x_size
     for i, d in ipairs(screen_map.hero_data) do
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
@@ -4714,7 +4721,7 @@ function HeroRoomViewKR1:initialize(size)
         v2.pos = tpos
         ht:add_child(v2)
 
-        if last_level < d.available_level then
+        if not table.find(finished_levels, d.available_level) then
             local v1 = KImageView:new("heroroom_portraitsLock")
             v1.scale = V.v(0.5, 0.5)
             v1.pos = tpos
@@ -4893,6 +4900,10 @@ function HeroRoomViewKR1:deselect_hero(name)
 end
 
 function HeroRoomViewKR1:select_hero(name, silent)
+    local hd = screen_map.hero_data[get_hero_index(name)]
+    if not hd then
+        return
+    end
     local thumbs = self:get_child_by_id("hero_thumbs")
     local th = thumbs:get_child_by_id(name)
     local bs = self:get_child_by_id("hero_room_sel_select")
@@ -4901,7 +4912,6 @@ function HeroRoomViewKR1:select_hero(name, silent)
     bs.hidden = true
     bd.hidden = false
 
-    local hd = screen_map.hero_data[get_hero_index(name)]
     local ht = E:get_template(hd.name)
 
     if not silent then

@@ -371,6 +371,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_tesla"},
 	nav_mesh = {
 		{
 			2,

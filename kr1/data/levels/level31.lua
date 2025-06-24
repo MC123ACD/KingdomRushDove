@@ -39,38 +39,23 @@ function level:init(store)
 		self.locked_powers = {}
 		self.max_upgrade_level = 5
 		self.locked_towers = {
-			"tower_totem",
-			"tower_templar",
-			"tower_archmage",
-			"tower_necromancer",
-			"tower_mech"
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = false
 		self.locked_powers = {}
 		self.max_upgrade_level = 2
 		self.locked_towers = {
-			"tower_totem",
-			"tower_templar",
-			"tower_archmage",
-			"tower_necromancer",
-			"tower_mech"
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = false
 		self.locked_powers = {}
 		self.max_upgrade_level = 2
 		self.locked_towers = {
-			"tower_totem",
 			"tower_build_barrack",
             "tower_build_engineer",
-			"tower_templar",
-			"tower_archmage",
-			"tower_necromancer",
-			"tower_mech"
 		}
 	end
-
+    self.unlock_towers = {"tower_dwaarp", "tower_barrack_pirates"}
 	store.level_terrain_type = TERRAIN_STYLE_DESERT
 	self.locations = LU.load_locations(store, self)
 end

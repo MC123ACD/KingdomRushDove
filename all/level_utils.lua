@@ -92,12 +92,19 @@ function LU.load_level(store, name)
 			"custom_spawn_pos",
 			"pan_extension",
 			"show_comic_idx",
-			"nav_mesh"
+			"nav_mesh",
+            "unlock_towers"
 		}) do
 			level[n] = level.data[n]
 		end
 	end
 
+    if not level["unlock_towers"] then
+        level.unlock_towers = {}
+    end
+    if not level["locked_towers"] then
+        level.locked_towers = {}
+    end
 	return level
 end
 

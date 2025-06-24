@@ -1175,13 +1175,11 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 4,
 			locked_towers = {
-				"tower_entwood"
 			}
 		},
 		{
@@ -1189,10 +1187,10 @@ return {
 			locked_towers = {
 				"tower_build_barrack",
 				"tower_build_mage",
-				"tower_entwood"
 			}
 		}
 	},
+    unlock_towers = {"tower_high_elven", "tower_faerie_dragon"},
 	nav_mesh = {
 		{
 			4,

@@ -1007,7 +1007,7 @@ return {
         portrait = 1,
         thumb = 1,
         name = "hero_gerald",
-        available_level = 4,
+        available_level = 6,
         starting_level = 1,
         icon = 1,
         stats = {6, 5, 0, 4}
@@ -1023,7 +1023,7 @@ return {
         portrait = 2,
         thumb = 2,
         name = "hero_malik",
-        available_level = 8,
+        available_level = 3,
         starting_level = 1,
         icon = 2,
         stats = {8, 6, 0, 3}
@@ -1039,7 +1039,7 @@ return {
         portrait = 5,
         thumb = 5,
         name = "hero_magnus",
-        available_level = 9,
+        available_level = 6,
         starting_level = 1,
         icon = 5,
         stats = {3, 2, 7, 8}
@@ -1079,7 +1079,7 @@ return {
         portrait = 11,
         thumb = 13,
         name = "hero_hacksaw",
-        available_level = 12,
+        available_level = 22,
         starting_level = 1,
         icon = 11,
         stats = {6, 5, 0, 2}
@@ -1087,7 +1087,7 @@ return {
         portrait = 10,
         thumb = 14,
         name = "hero_oni",
-        available_level = 10,
+        available_level = 20,
         starting_level = 1,
         icon = 12,
         stats = {7, 8, 0, 6}
@@ -1103,7 +1103,7 @@ return {
         portrait = 14,
         thumb = 16,
         name = "hero_10yr",
-        available_level = 12,
+        available_level = 16,
         starting_level = 1,
         icon = 14,
         stats = {6, 5, 0, 8}
@@ -1111,7 +1111,7 @@ return {
         portrait = 2,
         thumb = 17,
         name = "hero_mirage",
-        available_level = 5,
+        available_level = 30,
         starting_level = 1,
         icon = 15,
         stats = {4, 3, 5, 7}
@@ -1119,7 +1119,7 @@ return {
         portrait = 7,
         thumb = 18,
         name = "hero_wizard",
-        available_level = 9,
+        available_level = 32,
         starting_level = 1,
         icon = 16,
         stats = {3, 2, 6, 8}
@@ -1127,7 +1127,7 @@ return {
         portrait = 1,
         thumb = 19,
         name = "hero_alric",
-        available_level = 5,
+        available_level = 27,
         starting_level = 1,
         icon = 17,
         stats = {6, 5, 0, 4}
@@ -1135,7 +1135,7 @@ return {
         portrait = 5,
         thumb = 20,
         name = "hero_beastmaster",
-        available_level = 7,
+        available_level = 33,
         starting_level = 1,
         icon = 18,
         stats = {7, 5, 0, 3}
@@ -1143,7 +1143,7 @@ return {
         portrait = 3,
         thumb = 21,
         name = "hero_priest",
-        available_level = 10,
+        available_level = 40,
         starting_level = 1,
         icon = 19,
         stats = {6, 3, 5, 8}
@@ -1151,7 +1151,7 @@ return {
         portrait = 13,
         thumb = 22,
         name = "hero_dracolich",
-        available_level = 15,
+        available_level = 46,
         starting_level = 1,
         icon = 20,
         stats = {7, 5, 5, 6}
@@ -1159,7 +1159,7 @@ return {
         portrait = 4,
         thumb = 23,
         name = "hero_pirate",
-        available_level = 5,
+        available_level = 31,
         starting_level = 1,
         icon = 21,
         stats = {5, 5, 5, 5}
@@ -1167,7 +1167,7 @@ return {
         portrait = 9,
         thumb = 24,
         name = "hero_dragon",
-        available_level = 15,
+        available_level = 39,
         starting_level = 1,
         icon = 22,
         stats = {7, 6, 5, 6}
@@ -1175,7 +1175,7 @@ return {
         portrait = 12,
         thumb = 25,
         name = "hero_van_helsing",
-        available_level = 15,
+        available_level = 45,
         starting_level = 1,
         icon = 23,
         stats = {6, 7, 5, 6}
@@ -1183,7 +1183,7 @@ return {
         portrait = 12,
         thumb = 26,
         name = "hero_vampiress",
-        available_level = 15,
+        available_level = 47,
         starting_level = 1,
         icon = 23,
         stats = {7, 6, 0, 6}
@@ -1191,7 +1191,7 @@ return {
         portrait = 8,
         thumb = 27,
         name = "hero_alien",
-        available_level = 15,
+        available_level = 35,
         starting_level = 1,
         icon = 24,
         stats = {4, 5, 0, 6}
@@ -1199,7 +1199,7 @@ return {
         portrait = 11,
         thumb = 28,
         name = "hero_monk",
-        available_level = 15,
+        available_level = 36,
         starting_level = 1,
         icon = 25,
         stats = {6, 5, 0, 6}
@@ -1207,7 +1207,7 @@ return {
         portrait = 10,
         thumb = 29,
         name = "hero_voodoo_witch",
-        available_level = 8,
+        available_level = 34,
         starting_level = 4,
         icon = 26,
         stats = {6, 5, 6, 5}
@@ -1215,7 +1215,7 @@ return {
         portrait = 10,
         thumb = 30,
         name = "hero_crab",
-        available_level = 15,
+        available_level = 42,
         starting_level = 5,
         icon = 27,
         stats = {7, 5, 0, 6}
@@ -1223,7 +1223,7 @@ return {
         portrait = 6,
         thumb = 31,
         name = "hero_giant",
-        available_level = 12,
+        available_level = 38,
         starting_level = 5,
         icon = 28,
         stats = {7, 5, 0, 2}
@@ -1231,7 +1231,7 @@ return {
         portrait = 10,
         thumb = 32,
         name = "hero_minotaur",
-        available_level = 15,
+        available_level = 41,
         starting_level = 5,
         icon = 29,
         stats = {5, 5, 0, 5}
@@ -1239,7 +1239,7 @@ return {
         portrait = 10,
         thumb = 33,
         name = "hero_monkey_god",
-        available_level = 15,
+        available_level = 37,
         starting_level = 5,
         icon = 30,
         stats = {5, 5, 0, 7}
@@ -1247,7 +1247,7 @@ return {
         portrait = 1,
         thumb = 34,
         name = "hero_elves_archer",
-        available_level = 4,
+        available_level = 49,
         starting_level = 1,
         icon = 31,
         stats = {6, 5, 6, 6}
@@ -1255,7 +1255,7 @@ return {
     	portrait = 2,
     	thumb = 35,
     	name = "hero_arivan",
-    	available_level = 3,
+    	available_level = 51,
     	starting_level = 3,
     	icon = 32,
         stats = {5, 6, 6, 6}
@@ -1264,7 +1264,7 @@ return {
     	portrait = 3,
     	thumb = 36,
     	name = "hero_catha",
-    	available_level = 6,
+    	available_level = 58,
     	starting_level = 4,
     	icon = 33,
         stats = {5, 3, 6, 6}
@@ -1273,7 +1273,7 @@ return {
         portrait = 4,
         thumb = 37,
         name = "hero_regson",
-        available_level = 8,
+        available_level = 59,
         starting_level = 5,
         icon = 34,
         stats = {7, 5, 0, 6}
@@ -1282,7 +1282,7 @@ return {
     	portrait = 5,
     	thumb = 38,
     	name = "hero_elves_denas",
-    	available_level = 8,
+    	available_level = 54,
     	starting_level = 5,
     	icon = 35,
         stats = {7, 4, 0, 4}
@@ -1291,7 +1291,7 @@ return {
         portrait = 6,
         thumb = 39,
         name = "hero_veznan",
-        available_level = 15,
+        available_level = 63,
         starting_level = 5,
         icon = 36,
         stats = {3, 5, 0, 8}
@@ -1299,7 +1299,7 @@ return {
     	portrait = 7,
     	thumb = 40,
     	name = "hero_bravebark",
-    	available_level = 11,
+    	available_level = 52,
     	starting_level = 5,
     	icon = 37,
         stats = {6, 5, 0, 7}
@@ -1308,7 +1308,7 @@ return {
     	portrait = 8,
     	thumb = 41,
     	name = "hero_xin",
-    	available_level = 15,
+    	available_level = 53,
     	starting_level = 5,
     	icon = 38,
         stats = {6, 4, 0, 8}
@@ -1317,7 +1317,7 @@ return {
     	portrait = 9,
     	thumb = 42,
     	name = "hero_faustus",
-    	available_level = 15,
+    	available_level = 62,
     	starting_level = 5,
     	icon = 39,
         stats = {6, 6, 6, 6}
@@ -1326,7 +1326,7 @@ return {
     	portrait = 10,
     	thumb = 43,
     	name = "hero_rag",
-    	available_level = 10,
+    	available_level = 56,
     	starting_level = 5,
     	icon = 40,
         stats = {5, 4, 4, 5}
@@ -1335,7 +1335,7 @@ return {
     	portrait = 11,
     	thumb = 44,
     	name = "hero_phoenix",
-    	available_level = 15,
+    	available_level = 61,
     	starting_level = 5,
     	icon = 41,
         stats = {
@@ -1346,7 +1346,7 @@ return {
     	portrait = 12,
     	thumb = 45,
     	name = "hero_durax",
-    	available_level = 15,
+    	available_level = 57,
     	starting_level = 5,
     	icon = 42,
         stats = {
@@ -1357,7 +1357,7 @@ return {
         portrait = 13,
         thumb = 46,
         name = "hero_lynn",
-        available_level = 15,
+        available_level = 69,
         starting_level = 5,
         icon = 43,
         stats = {6, 6, 0, 5}
@@ -1366,7 +1366,7 @@ return {
     	portrait = 14,
     	thumb = 47,
     	name = "hero_bruce",
-    	available_level = 15,
+    	available_level = 64,
     	starting_level = 5,
     	icon = 44,
         stats = {6, 6, 0, 5}
@@ -1375,7 +1375,7 @@ return {
     	portrait = 15,
     	thumb = 48,
     	name = "hero_lilith",
-    	available_level = 15,
+    	available_level = 60,
     	starting_level = 5,
     	icon = 45,
         stats = {6, 5, 5, 6}
@@ -1384,7 +1384,7 @@ return {
         portrait = 16,
         thumb = 49,
         name = "hero_wilbur",
-        available_level = 15,
+        available_level = 67,
         starting_level = 5,
         icon = 46,
         stats = {6, 7, 5, 5}

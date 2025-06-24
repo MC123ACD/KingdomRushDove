@@ -798,4 +798,6 @@ for i = #GS.encyclopedia_enemies, 1, -1 do
 	end
 end
 
+
+
 return GS

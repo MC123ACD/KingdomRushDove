@@ -45,16 +45,12 @@ function level:init(store)
 		self.locked_powers = {}
 		self.max_upgrade_level = 5
 		self.locked_towers = {
-			"tower_necromancer",
-			"tower_mech"
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = false
 		self.locked_powers = {}
 		self.max_upgrade_level = 3
 		self.locked_towers = {
-			"tower_necromancer",
-			"tower_mech"
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = false
@@ -62,12 +58,11 @@ function level:init(store)
 		self.max_upgrade_level = 3
 		self.locked_towers = {
 			"tower_build_mage",
-			"tower_necromancer",
 			"tower_build_mage",
 			"tower_build_engineer",
-			"tower_mech"
 		}
 	end
+    self.unlock_towers = {"tower_totem"}
 end
 
 function level:load(store)

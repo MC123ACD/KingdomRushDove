@@ -261,9 +261,7 @@ return {
 		},
 		{
 			locked_hero = true,
-            -- locked_hero = false,
 			max_upgrade_level = 1,
-            -- max_upgrade_level = 5,
 			locked_towers = {
 				"tower_barrack_2",
 				"tower_engineer_2",

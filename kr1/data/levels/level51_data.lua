@@ -1196,38 +1196,18 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_arcane",
-				"tower_silver",
-				"tower_blade",
-				"tower_forest",
-				"tower_wild_magus",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 2,
 			locked_towers = {
-				"tower_arcane",
-				"tower_silver",
-				"tower_blade",
-				"tower_forest",
-				"tower_wild_magus",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 2,
 			locked_towers = {
 				"tower_build_archer",
-				"tower_blade",
-				"tower_forest",
 				"tower_build_mage",
-				"tower_druid",
-				"tower_entwood"
 			}
 		}
 	},

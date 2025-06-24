@@ -367,21 +367,11 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_silver",
-				"tower_forest",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 3,
 			locked_towers = {
-				"tower_silver",
-				"tower_forest",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		},
 		{
@@ -389,12 +379,10 @@ return {
 			locked_towers = {
 				"tower_build_archer",
 				"tower_build_barrack",
-				"tower_high_elven",
-				"tower_druid",
-				"tower_entwood"
 			}
 		}
 	},
+    unlock_towers = {"tower_wild_magus"},
 	nav_mesh = {
 		{
 			7,

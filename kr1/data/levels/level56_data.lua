@@ -647,15 +647,11 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_high_elven",
-				"tower_entwood"
 			}
 		},
 		{
 			max_upgrade_level = 3,
 			locked_towers = {
-				"tower_high_elven",
-				"tower_entwood"
 			}
 		},
 		{
@@ -666,6 +662,9 @@ return {
 			}
 		}
 	},
+    unlock_towers = {
+        "tower_silver","tower_forest"
+    },
 	nav_mesh = {
 		[11] = {
 			nil,

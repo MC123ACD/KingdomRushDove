@@ -88,6 +88,18 @@ function sys.level:init(store)
     store.level.run_complete = nil
     store.player_gold = W:initial_gold()
 
+    if slot.locked_towers then
+        for _, tower in pairs(slot.locked_towers) do
+            if not table.find(store.level.locked_towers, tower) then
+                table.insert(store.level.locked_towers, tower)
+            end
+        end
+    end
+
+    for _, unlock_tower in pairs(store.level.unlock_towers) do
+        table.removeobject(store.level.locked_towers, unlock_tower)
+    end
+
     if store.level_mode == GAME_MODE_CAMPAIGN then
         store.lives = 20
     elseif store.level_mode == GAME_MODE_HEROIC then
@@ -233,7 +245,8 @@ function sys.level:on_update(dt, ts, store)
                 level_idx = store.level_idx,
                 level_difficulty = store.level_difficulty,
                 level_mode = store.level_mode,
-                stars = stars
+                stars = stars,
+                unlock_towers = store.level.unlock_towers
             }
 
             store_hero_xp(slot)

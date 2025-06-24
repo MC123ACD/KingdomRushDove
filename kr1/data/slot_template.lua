@@ -73,5 +73,43 @@ return {
 				skills = {}
 			}
 		}
-	}
+	},
+    locked_towers = {
+        "tower_paladin",
+        "tower_barbarian",
+        "tower_assassin",
+        "tower_elf",
+        "tower_templar",
+        "tower_barrack_amazonas",
+        "tower_barrack_pirates",
+        "tower_blade",
+        "tower_forest",
+        "tower_drow",
+        "tower_barrack_dwarf",
+        "tower_ewok",
+        "tower_barrack_mercenaries",
+        "tower_arcane_wizard",
+        "tower_sorcerer",
+        "tower_sunray",
+        "tower_necromancer",
+        "tower_archmage",
+        "tower_high_elven",
+        "tower_wild_magus",
+        "tower_faerie_dragon",
+        "tower_ranger",
+        "tower_musketeer",
+        "tower_crossbow",
+        "tower_totem",
+        "tower_archer_dwarf",
+        "tower_arcane",
+        "tower_silver",
+        "tower_pirate_watchtower",
+        "tower_bfg",
+        "tower_tesla",
+        "tower_dwaarp",
+        "tower_mech",
+        "tower_frankenstein",
+        "tower_druid",
+        "tower_entwood"
+    }
 }

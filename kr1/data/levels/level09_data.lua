@@ -794,14 +794,12 @@ return {
 		{
 			max_upgrade_level = 5,
 			locked_towers = {
-				"tower_tesla"
 			}
 		},
 		{
 			locked_hero = true,
 			max_upgrade_level = 4,
 			locked_towers = {
-				"tower_tesla"
 			}
 		},
 		{
@@ -814,6 +812,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_sorcerer","tower_sunray"},
 	nav_mesh = {
 		{
 			11,

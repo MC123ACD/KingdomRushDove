@@ -45,6 +45,7 @@ function level:init(store)
 			"tower_build_mage"
 		}
 	end
+    self.unlock_towers = {"tower_frankenstein"}
 end
 
 function level:load(store)

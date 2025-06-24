@@ -1018,6 +1018,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_drow"},
 	nav_mesh = {
 		{
 			11,

@@ -1190,7 +1190,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(50, 0)
     tt.health.dead_lifetime = fts(300)
-    tt.health.hp_max = {8000, 12000, 12000}
+    tt.health.hp_max = 8000
     tt.health_bar.offset = vec_2(0, ady(160))
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.idle_flip.chance = 1

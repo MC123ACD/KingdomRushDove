@@ -617,47 +617,19 @@ return {
 	level_mode_overrides = {
 		{
 			max_upgrade_level = 5,
-			locked_towers = {
-				"tower_ranger",
-				"tower_musketeer",
-				"tower_paladin",
-				"tower_barbarian",
-				"tower_arcane_wizard",
-				"tower_sorcerer",
-				"tower_bfg",
-				"tower_tesla",
-                "tower_elf",
-                "tower_sunray"
-			}
+			locked_towers = {}
+		},
+		{
+			locked_hero = true,
+			max_upgrade_level = 2,
+			locked_towers = {}
 		},
 		{
 			locked_hero = true,
 			max_upgrade_level = 2,
 			locked_towers = {
-				"tower_ranger",
-				"tower_musketeer",
-				"tower_paladin",
-				"tower_barbarian",
-				"tower_arcane_wizard",
-				"tower_sorcerer",
-				"tower_bfg",
-				"tower_tesla",
-                "tower_elf",
-                "tower_sunray"
-			}
-		},
-		{
-			locked_hero = true,
-			max_upgrade_level = 2,
-			locked_towers = {
-				"tower_ranger",
-				"tower_musketeer",
-				"tower_paladin",
-				"tower_barbarian",
 				"tower_build_mage",
 				"tower_build_engineer",
-                "tower_elf",
-                "tower_sunray"
 			}
 		}
 	},

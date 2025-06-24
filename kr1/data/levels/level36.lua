@@ -57,10 +57,9 @@ function level:init(store)
 		self.locked_towers = {
 			"tower_build_mage",
 			"tower_build_engineer",
-			"tower_build_mage",
-			"tower_build_engineer"
 		}
 	end
+    self.unlock_towers = {"tower_mech"}
 end
 
 function level:load(store)

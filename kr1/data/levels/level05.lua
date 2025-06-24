@@ -19,15 +19,15 @@ local level = {}
 
 function level:update(store)
 	if store.level_mode == GAME_MODE_CAMPAIGN then
-		if not table.contains(store.level.locked_towers, "tower_ranger") then
-			table.insert(store.level.locked_towers, "tower_ranger")
-		end
+		-- if not table.contains(store.level.locked_towers, "tower_ranger") then
+		-- 	table.insert(store.level.locked_towers, "tower_ranger")
+		-- end
 
-		while store.wave_group_number < 5 do
-			coroutine.yield()
-		end
+		-- while store.wave_group_number < 5 do
+		-- 	coroutine.yield()
+		-- end
 
-		table.removeobject(store.level.locked_towers, "tower_ranger")
+		-- table.removeobject(store.level.locked_towers, "tower_ranger")
 
 		while not store.waves_finished or LU.has_alive_enemies(store) do
 			coroutine.yield()
