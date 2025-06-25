@@ -685,7 +685,6 @@ tt.melee.attacks[1].vis_flags = F_BLOCK
 tt.melee.attacks[1].sound = "HeroArcherWildCatHit"
 tt.melee.range = 90
 tt.motion.max_speed = 4.8 * FPS
--- tt.regen.health = 75
 tt.regen.cooldown = 1
 tt.render.sprites[1].anchor.y = anchor_y
 tt.render.sprites[1].name = "spawn"

@@ -10259,8 +10259,7 @@ return function(scripts)
                     local enemies = U.find_enemies_in_range(store.entities, e.pos, 0, a.enemies_range,
                         a.enemies_vis_flags, a.enemies_vis_bans)
 
-                    return (table.contains(UP:non_barrack_towers_with_barrack_attribute(), e.template_name) or
-                               not e.barrack) and e.tower.can_be_mod and enemies and #enemies >= a.enemies_min_count
+                    return e.tower.can_be_mod and enemies and #enemies >= a.enemies_min_count
                 end)
 
                 if not targets then
