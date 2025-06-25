@@ -158,10 +158,9 @@ local function boss()
     tt.enemy.melee_slot = vec_2(40, 0)
     tt.health.dead_lifetime = 10
     tt.health.hp_max = 10000
-    tt.health.armor = 0.5
+    tt.health.armor = 0.6
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, ady(120))
-    tt.info.fn = scripts.eb_juggernaut.get_info
     tt.info.i18n_key = "EB_JUGGERNAUT"
     tt.info.enc_icon = 32
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0027" or "info_portraits_sc_0027"
@@ -209,6 +208,96 @@ local function boss()
     tt.timed_attacks.list[2] = table.deepclone(tt.timed_attacks.list[1])
     tt.timed_attacks.list[2].bullet = "bomb_juggernaut"
     tt.timed_attacks.list[2].cooldown = 4
+
+    tt = RT("bomb_juggernaut", "bomb")
+    tt.bullet.damage_bans = F_ALL
+    tt.bullet.damage_flags = 0
+    tt.bullet.damage_max = 0
+    tt.bullet.damage_min = 0
+    tt.bullet.damage_radius = 1
+    tt.bullet.flight_time_base = fts(45)
+    tt.bullet.flight_time_factor = fts(0.025)
+    tt.bullet.pop = nil
+    tt.bullet.hit_payload = "juggernaut_bomb_spawner"
+    tt.main_script.insert = scripts.enemy_bomb.insert
+    tt.main_script.update = scripts.enemy_bomb.update
+    tt.bullet.hit_fx = nil
+    tt.render.sprites[1].name = "bossJuggernaut_bomb_"
+    tt.sound_events.hit = "BombExplosionSound"
+
+    tt = RT("juggernaut_bomb_spawner", "decal_scripted")
+    E:add_comps(tt, "render", "spawner", "tween")
+    tt.main_script.update = scripts.enemies_spawner.update
+    tt.render.sprites[1].anchor.y = 0.22
+    tt.render.sprites[1].prefix = "bomb_juggernaut_spawner"
+    tt.render.sprites[1].loop = false
+    tt.spawner.animation_concurrent = "open"
+    tt.spawner.count = 7
+    tt.spawner.count_inc = 1
+    tt.spawner.cycle_time = fts(6)
+    tt.spawner.entity = "enemy_golem_head"
+    tt.spawner.keep_gold = true
+    tt.spawner.node_offset = 2
+    tt.spawner.pos_offset = vec_2(0, 0)
+    tt.spawner.allowed_subpaths = {1, 2, 3}
+    tt.spawner.random_subpath = false
+    tt.tween.disabled = true
+    tt.tween.props[1].keys = {{0, 255}, {4, 0}}
+    tt.tween.remove = true
+    tt.total_gold = 70
+
+    tt = RT("enemy_golem_head", "enemy")
+    AC(tt, "melee")
+    anchor_y = 0.20588235294117646
+    anchor_x = 0.5
+    image_y = 34
+    image_x = 40
+    tt.enemy.gold = 10
+    tt.enemy.melee_slot = vec_2(20, 0)
+    tt.health.hp_max = 90
+    tt.health.armor = 0.6
+    tt.health_bar.offset = vec_2(0, 23)
+    tt.info.i18n_key = "ENEMY_GOLEM_HEAD"
+    tt.info.enc_icon = 15
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0028" or "info_portraits_sc_0028"
+    tt.melee.attacks[1].cooldown = 1 + fts(20)
+    tt.melee.attacks[1].damage_max = 20
+    tt.melee.attacks[1].damage_min = 10
+    tt.melee.attacks[1].hit_time = fts(8)
+    tt.motion.max_speed = 0.7 * FPS
+    tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
+    tt.render.sprites[1].prefix = "enemy_golem_head"
+    tt.sound_events.death = "DeathPuff"
+    tt.unit.blood_color = BLOOD_GRAY
+    tt.unit.can_explode = false
+    tt.unit.hide_after_death = true
+    tt.unit.hit_offset = vec_2(0, 8)
+    tt.unit.mod_offset = vec_2(adx(22), ady(15))
+    tt.unit.show_blood_pool = false
+
+    tt = RT("missile_juggernaut", "bullet")
+    tt.bullet.acceleration_factor = 0.1
+    tt.bullet.damage_bans = bor(F_ENEMY, F_BOSS)
+    tt.bullet.damage_flags = F_AREA
+    tt.bullet.damage_max = 250
+    tt.bullet.damage_min = 150
+    tt.bullet.damage_radius = 41.25
+    tt.bullet.damage_type = DAMAGE_PHYSICAL
+    tt.bullet.hit_fx = "fx_explosion_air"
+    tt.bullet.hit_fx_air = "fx_explosion_air"
+    tt.bullet.max_speed = 450
+    tt.bullet.min_speed = 300
+    tt.bullet.particles_name = "ps_missile"
+    tt.bullet.retarget_range = 99999
+    tt.bullet.rot_dir_from_long_angle = true
+    tt.bullet.turn_speed = 10 * math.pi / 180 * 30
+    tt.bullet.vis_bans = bor(F_ENEMY)
+    tt.bullet.vis_flags = F_RANGED
+    tt.main_script.update = scripts.enemy_missile.update
+    tt.render.sprites[1].prefix = "missile_bfg"
+    tt.render.sprites[1].name = "flying"
+    tt.sound_events.insert = "RocketLaunchSound"
+    tt.sound_events.hit = "BombExplosionSound"
 
     -- 大雪怪
     tt = RT("eb_jt", "boss")
@@ -275,7 +364,7 @@ local function boss()
     tt.timed_attacks.list[1] = CC("custom_attack")
     tt.timed_attacks.list[1].cooldown = 10 + fts(29)
     tt.timed_attacks.list[1].count = 4
-    tt.timed_attacks.list[1].exhausted_duration = 2.5
+    tt.timed_attacks.list[1].exhausted_duration = 2
     tt.timed_attacks.list[1].exhausted_sound = "JtRest"
     tt.timed_attacks.list[1].exhausted_sound_args = {
         delay = fts(34)
@@ -307,7 +396,7 @@ local function boss()
     tt.health_bar.hidden = true
     tt.health_bar.offset = vec_2(0, 43)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_MEDIUM
-    tt.health.magic_armor = 0.35
+    tt.health.magic_armor = 0.4
     tt.info.i18n_key = "EB_VEZNAN"
     tt.info.enc_icon = 34
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0056" or "info_portraits_sc_0056"
@@ -524,6 +613,7 @@ local function boss()
     tt.health.hp_max = 12000
     tt.health_bar.offset = vec_2(0, 95)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
+    tt.health.magic_armor = 0.1
     tt.info.i18n_key = "EB_GOBLIN_CHIEFTAIN"
     tt.info.enc_icon = 40
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0063" or "info_portraits_sc_0063"
@@ -642,7 +732,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(60, 0)
     tt.health.dead_lifetime = 12
-    tt.health.hp_max = 10000
+    tt.health.hp_max = 12000
     tt.health_bar.offset = vec_2(0, 125)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_kingpin.get_info
@@ -664,7 +754,7 @@ local function boss()
     tt.sound_events.insert = "MusicBossFight"
     tt.stop_time = 5
     tt.stop_cooldown = 5
-    tt.stop_wait = fts(25)
+    tt.stop_wait = fts(20)
     tt.ui.click_rect = r(-50, 0, 100, 75)
     tt.unit.fade_time_after_death = 2
     tt.unit.hit_offset = vec_2(0, 80)
@@ -712,7 +802,7 @@ local function boss()
     tt.enemy.melee_slot = vec_2(40, 0)
     tt.health.dead_lifetime = 12
     tt.health.hp_max = 9000
-    tt.health.armor = 0.3
+    tt.health.armor = 0.55
     tt.health_bar.offset = vec_2(0, 90)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_ulgukhai.get_info
@@ -766,13 +856,12 @@ local function boss()
     tt.enemy.melee_slot = vec_2(33, 0)
     tt.health.dead_lifetime = 100
     tt.health.ignore_damage = true
-    tt.health.hp_max = {11111, 13333, 15555}
+    tt.health.hp_max = {11111, 13333, 15555, 18888}
     tt.health.magic_armor = 0.5
     tt.health_bar.offset = vec_2(0, 125)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.i18n_key = "EB_MOLOCH"
     tt.info.enc_icon = 57
-    tt.info.fn = scripts.eb_moloch.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0080" or "info_portraits_sc_0080"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_moloch.update
@@ -842,13 +931,12 @@ local function boss()
     tt.health.hp_max = 4500
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
-    tt.info.fn = scripts.eb_myconid.get_info
     tt.info.i18n_key = "EB_MYCONID"
     tt.info.enc_icon = 59
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0082" or "info_portraits_sc_0082"
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.eb_myconid.update
-    tt.motion.max_speed = 0.6 * FPS
+    tt.motion.max_speed = 0.65 * FPS
     tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
     tt.render.sprites[1].prefix = "eb_myconid"
     tt.render.sprites[1].angles_stickiness = {
@@ -1092,7 +1180,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(50, 0)
     tt.health.dead_lifetime = fts(200)
-    tt.health.hp_max = 8400
+    tt.health.hp_max = 9000
     tt.health_bar.offset = vec_2(0, ady(195))
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_efreeti.get_info
@@ -1366,7 +1454,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(25, 0)
     tt.health.dead_lifetime = fts(1000)
-    tt.health.hp_max = {7000, 9000, 9999}
+    tt.health.hp_max = {7000, 9000, 9999, 11111}
     tt.health_bar.offset = vec_2(0, ady(166))
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.hidden = true
@@ -1699,7 +1787,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(50, 0)
     tt.health.dead_lifetime = fts(200)
-    tt.health.hp_max = {10000, 12000, 14000}
+    tt.health.hp_max = 8500
     tt.health_bar.offset = vec_2(0, ady(120))
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.info.fn = scripts.eb_leviathan.get_info
@@ -1773,7 +1861,7 @@ local function boss()
     tt.health.hp_max = 8475
     tt.health_bar.offset = vec_2(0, 60)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-    tt.info.fn = scripts.eb_dracula.get_info
+    -- tt.info.fn = scripts.eb_dracula.get_info
     tt.info.portrait = IS_PHONE and "portraits_sc_0090" or "kr2_info_portraits_enemies_0067"
     tt.info.enc_icon = 57
     tt.main_script.insert = scripts.eb_dracula.insert
@@ -2499,11 +2587,13 @@ local function boss()
     tt.taunts.sets.prebattle = CC("taunt_set")
     tt.taunts.sets.prebattle.format = "BOSS_BRAM_TAUNT_PREBATTLE_%04d"
     tt.taunts.sets.prebattle.end_idx = 3
+
     tt = E:register_t("mod_bram_slap", "modifier")
     tt.main_script.queue = scripts.mod_bram_slap.queue
     tt.main_script.update = scripts.mod_bram_slap.update
     tt.custom_anchors = {}
     tt.custom_anchors.default = vec_2(0.5, 0.45)
+
     tt = E:register_t("decal_bram_enemy_clone", "decal_bravebark_branchball_enemy_clone")
 
     tt = RT("eb_bajnimen", "boss")
@@ -2512,7 +2602,8 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(60, 0)
     tt.health.dead_lifetime = 100
-    tt.health.magic_armor = {0, 0, 0.5}
+    tt.health.armor = 0.2
+    tt.health.magic_armor = {0, 0, 0.5, 0.5}
     tt.health.hp_max = 10000
     tt.health.on_damage = scripts.eb_bajnimen.on_damage
     tt.health_bar.offset = vec_2(-15, 145)
@@ -2601,10 +2692,9 @@ local function boss()
     tt.bullet.max_speed = 360
     tt.render.sprites[1].prefix = "bolt_bajnimen"
     tt.sound_events.insert = "BoltSorcererSound"
+
     tt = RT("fx_bolt_bajnimen_hit", "fx")
-
     AC(tt, "sound_events")
-
     tt.sound_events.insert = "ElvesBajNimenBossRangedAttack"
     tt.render.sprites[1].name = "fx_bolt_bajnimen_hit"
     tt.render.sprites[1].anchor.y = 0.16666666666666666
@@ -2615,7 +2705,8 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(60, 0)
     tt.health.dead_lifetime = 100
-    tt.health.hp_max = 12000
+    tt.health.hp_max = 11000
+    tt.health.armor = 0.7
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
     tt.info.enc_icon = 48

@@ -1062,36 +1062,6 @@ local function enemies()
     tt.unit.hit_offset = vec_2(0, 20)
     tt.unit.mod_offset = vec_2(adx(37), ady(18))
     tt.unit.size = UNIT_SIZE_MEDIUM
-    tt = RT("enemy_golem_head", "enemy")
-
-    AC(tt, "melee")
-
-    anchor_y = 0.20588235294117646
-    anchor_x = 0.5
-    image_y = 34
-    image_x = 40
-    tt.enemy.gold = 10
-    tt.enemy.melee_slot = vec_2(20, 0)
-    tt.health.hp_max = 90
-    tt.health.armor = 0.5
-    tt.health_bar.offset = vec_2(0, 23)
-    tt.info.i18n_key = "ENEMY_GOLEM_HEAD"
-    tt.info.enc_icon = 15
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0028" or "info_portraits_sc_0028"
-    tt.melee.attacks[1].cooldown = 1 + fts(20)
-    tt.melee.attacks[1].damage_max = 20
-    tt.melee.attacks[1].damage_min = 10
-    tt.melee.attacks[1].hit_time = fts(8)
-    tt.motion.max_speed = 0.7 * FPS
-    tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
-    tt.render.sprites[1].prefix = "enemy_golem_head"
-    tt.sound_events.death = "DeathPuff"
-    tt.unit.blood_color = BLOOD_GRAY
-    tt.unit.can_explode = false
-    tt.unit.hide_after_death = true
-    tt.unit.hit_offset = vec_2(0, 8)
-    tt.unit.mod_offset = vec_2(adx(22), ady(15))
-    tt.unit.show_blood_pool = false
 
     tt = RT("enemy_goblin_zapper", "enemy")
     AC(tt, "melee", "ranged", "death_spawns")

@@ -855,6 +855,12 @@ function scripts.enemies_spawner.update(this, store, script)
         U.animation_start(this, sp.animation_loop, nil, store.tick_ts, true)
     end
 
+    if this.level then
+        if sp.count_inc then
+            sp.count = sp.count + sp.count_inc * this.level
+        end
+    end
+
     for i = 1, sp.count do
         if sp.interrupt then
             break
@@ -894,6 +900,9 @@ function scripts.enemies_spawner.update(this, store, script)
             if this.health_factor then
                 spawn.health.hp = spawn.health.hp_max * this.health_factor
                 spawn.enemy.gold = math.floor(spawn.enemy.gold * this.health_factor)
+            end
+            if this.total_gold then
+                spawn.enemy.gold = math.floor(this.total_gold / spawn.enemy.gold)
             end
             spawn.nav_path.pi = e_pi
             spawn.nav_path.spi = e_spi

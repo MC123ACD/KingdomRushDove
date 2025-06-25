@@ -4440,21 +4440,21 @@ end
 
 scripts.eb_juggernaut = {}
 
-function scripts.eb_juggernaut.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+-- function scripts.eb_juggernaut.get_info(this)
+-- 	local ma = this.melee.attacks[1]
+-- 	local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
-end
+-- 	return {
+-- 		type = STATS_TYPE_ENEMY,
+-- 		hp = this.health.hp,
+-- 		hp_max = this.health.hp_max,
+-- 		damage_min = min,
+-- 		damage_max = max,
+-- 		armor = this.health.armor,
+-- 		magic_armor = this.health.magic_armor,
+-- 		lives = this.enemy.lives_cost
+-- 	}
+-- end
 
 function scripts.eb_juggernaut.insert(this, store, script)
 	this.melee.order = U.attack_order(this.melee.attacks)
@@ -4473,7 +4473,7 @@ function scripts.eb_juggernaut.update(this, store, script)
 		end
 		return false
 	end
-
+    local spawn_level = 0
 	ma.ts = store.tick_ts
 	ba.ts = store.tick_ts
 
@@ -4527,8 +4527,10 @@ function scripts.eb_juggernaut.update(this, store, script)
 						b.bullet.to = V.v(b.pos.x + a.launch_vector.x, b.pos.y + a.launch_vector.y)
 					else
 						b.bullet.to = P:get_random_position(20, TERRAIN_LAND, NF_RANGE, 30)
+                        E:get_template(b.bullet.hit_payload).level = spawn_level < 7 and spawn_level or 7
 						b.bullet.hit_payload = E:create_entity(b.bullet.hit_payload)
 						b.bullet.hit_payload.spawner.owner_id = this.id
+                        spawn_level = spawn_level + 1
 					end
 
 					if b.bullet.to then
@@ -5102,8 +5104,8 @@ function scripts.eb_veznan.update(this, store)
 	U.y_animation_play(this, "demonTransform", nil, store.tick_ts, 1)
 
 	this.enemy.melee_slot = this.demon.melee_slot
-	this.health.hp = initial_hp
-	this.health.hp_max = initial_hp
+	this.health.hp = initial_hp * 1.5
+	this.health.hp_max = initial_hp * 1.5
 	this.health_bar.offset = this.demon.health_bar_offset
 	this.health_bar.frames[1].bar_width = this.health_bar.frames[1].bar_width * this.demon.health_bar_scale
 	this.health_bar.frames[2].bar_width = this.health_bar.frames[2].bar_width * this.demon.health_bar_scale
@@ -5650,21 +5652,21 @@ end
 
 scripts.eb_moloch = {}
 
-function scripts.eb_moloch.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+-- function scripts.eb_moloch.get_info(this)
+-- 	local ma = this.melee.attacks[1]
+-- 	local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
-end
+-- 	return {
+-- 		type = STATS_TYPE_ENEMY,
+-- 		hp = this.health.hp,
+-- 		hp_max = this.health.hp_max,
+-- 		damage_min = min,
+-- 		damage_max = max,
+-- 		armor = this.health.armor,
+-- 		magic_armor = this.health.magic_armor,
+-- 		lives = this.enemy.lives_cost
+-- 	}
+-- end
 
 function scripts.eb_moloch.update(this, store)
 	local ha = this.timed_attacks.list[1]
@@ -5796,21 +5798,21 @@ end
 
 scripts.eb_myconid = {}
 
-function scripts.eb_myconid.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+-- function scripts.eb_myconid.get_info(this)
+-- 	local ma = this.melee.attacks[1]
+-- 	local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
-end
+-- 	return {
+-- 		type = STATS_TYPE_ENEMY,
+-- 		hp = this.health.hp,
+-- 		hp_max = this.health.hp_max,
+-- 		damage_min = min,
+-- 		damage_max = max,
+-- 		armor = this.health.armor,
+-- 		magic_armor = this.health.magic_armor,
+-- 		lives = this.enemy.lives_cost
+-- 	}
+-- end
 
 function scripts.eb_myconid.update(this, store)
 	local sa = this.timed_attacks.list[1]
@@ -13783,18 +13785,18 @@ end
 
 scripts.eb_dracula = {}
 
-function scripts.eb_dracula.get_info(this)
-    return {
-        damage_min = 150,
-        damage_max = 200,
-        type = STATS_TYPE_ENEMY,
-        hp = this.health.hp,
-        hp_max = this.health.hp_max,
-        armor = this.health.armor,
-        magic_armor = this.health.magic_armor,
-        lives = this.enemy.lives_cost
-    }
-end
+-- function scripts.eb_dracula.get_info(this)
+--     return {
+--         damage_min = 150,
+--         damage_max = 200,
+--         type = STATS_TYPE_ENEMY,
+--         hp = this.health.hp,
+--         hp_max = this.health.hp_max,
+--         armor = this.health.armor,
+--         magic_armor = this.health.magic_armor,
+--         lives = this.enemy.lives_cost
+--     }
+-- end
 
 function scripts.eb_dracula.insert(this, store, script)
     this.melee.order = U.attack_order(this.melee.attacks)
