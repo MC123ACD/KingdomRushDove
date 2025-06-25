@@ -4020,24 +4020,6 @@ return function(scripts)
     }
     -- 马格努斯-幻影
     scripts.soldier_magnus_illusion = {
-        get_info = function(this)
-            local a = this.ranged.attacks[1]
-            local b = E:get_template(a.bullet)
-            local min, max = b.bullet.damage_min * this.unit.damage_factor,
-                b.bullet.damage_max * this.unit.damage_factor
-
-            return {
-                type = STATS_TYPE_SOLDIER,
-                hp = this.health.hp,
-                hp_max = this.health.hp_max,
-                damage_min = min,
-                damage_max = max,
-                damage_type = b.bullet.damage_type,
-                -- damage_icon = this.info.damage_icon,
-                armor = this.health.armor,
-                magic_armor = this.health.magic_armor,
-            }
-        end,
         update = function(this, store)
             -- as a soldier
             local brk, stam, star

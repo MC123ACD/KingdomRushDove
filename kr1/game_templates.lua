@@ -700,10 +700,9 @@ tt.unit.mod_offset = vec_2(0, 14)
 tt.unit.hide_after_death = true
 tt.unit.explode_fx = nil
 tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE)
+
 tt = RT("soldier_magnus_illusion", "soldier_militia")
-
 AC(tt, "reinforcement", "ranged", "tween")
-
 image_y = 76
 image_x = 60
 anchor_y = 0.14
@@ -713,7 +712,6 @@ tt.health.dead_lifetime = fts(14)
 tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0005" or "info_portraits_hero_0004"
 tt.info.i18n_key = "HERO_MAGE_SHADOW"
 tt.info.random_name_format = nil
-tt.info.fn = scripts.soldier_magnus_illusion.get_info
 tt.main_script.insert = scripts.soldier_reinforcement.insert
 tt.main_script.update = scripts.soldier_magnus_illusion.update
 tt.melee.attacks[1].damage_max = nil
