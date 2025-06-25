@@ -1330,15 +1330,30 @@ function game_gui:select_entity(e)
     end
 
     game_gui.hud_bottom.infobar:show()
+-- game_gui:set_mode(GUI_MODE_RALLY_TOWER)
+
+-- local ux, uy = game_gui:g2u(V.v(V.add(e.pos.x, e.pos.y, e.tower.range_offset.x, e.tower.range_offset.y)))
+
+-- game_gui:show_rally_range(ux, uy, e.barrack.rally_range)
 
     if e.enemy or e.soldier or e.barrack then
-        local m = E:create_entity("entity_marker_controller")
+        if e.soldier and e.soldier.tower_id and
+            self.game.simulation.store.entities[e.soldier.tower_id] then
+            local tower = self.game.simulation.store.entities[e.soldier.tower_id]
 
-        m.target = e
+            game_gui:set_mode(GUI_MODE_RALLY_TOWER)
+            local ux, uy = game_gui:g2u(V.v(V.add(tower.pos.x, tower.pos.y,
+                tower.tower.range_offset.x, tower.tower.range_offset.y)))
 
-        self.game.simulation:insert_entity(m)
+            game_gui:show_rally_range(ux, uy, tower.barrack.rally_range)
 
-        self.selected_entity_marker = m
+            -- self.selected_entity = tower
+        else
+            local m = E:create_entity("entity_marker_controller")
+            m.target = e
+            self.game.simulation:insert_entity(m)
+            self.selected_entity_marker = m
+        end
     end
 end
 
@@ -5834,7 +5849,11 @@ function PickView:on_down(button, x, y)
             log.debug("set rally point. view:%s,%s -> game:%s,%s", x, y, wx, wy)
 
             local e = game_gui.selected_entity
+            if not e.barrack then
+                e = game_gui.game.simulation.store.entities[e.soldier.tower_id]
+            end
             local b = e.barrack
+
             local rc = V.v(V.add(e.pos.x, e.pos.y, e.tower.range_offset.x, e.tower.range_offset.y))
 
             if U.is_inside_ellipse(v(wx, wy), rc, b.rally_range) and
