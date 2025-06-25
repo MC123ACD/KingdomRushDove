@@ -220,12 +220,12 @@ local function archer_towers()
     tower_totem.attacks.list[1].bullet_start_offset = {vec_2(-12, 72), vec_2(12, 72)}
     tower_totem.attacks.list[2] = E:clone_c("bullet_attack")
     tower_totem.attacks.list[2].bullet = "totem_weakness"
-    tower_totem.attacks.list[2].cooldown = 10
+    tower_totem.attacks.list[2].cooldown = 9.5
     tower_totem.attacks.list[2].vis_bans = bor(F_CLIFF)
     tower_totem.attacks.list[3] = E:clone_c("bullet_attack")
     tower_totem.attacks.list[3].bullet = "totem_silence"
     tower_totem.attacks.list[3].cooldown = 8
-    tower_totem.attacks.list[3].vis_bans = bor(F_CLIFF, F_BOSS)
+    tower_totem.attacks.list[3].vis_bans = bor(F_CLIFF)
     tower_totem.render.sprites[1].name = "terrain_specials_%04i"
     tower_totem.render.sprites[1].offset = vec_2(0, 6)
     tower_totem.render.sprites[2].name = "TotemTower"
