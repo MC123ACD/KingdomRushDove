@@ -535,7 +535,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(80, 0)
     tt.health.dead_lifetime = 8
-    tt.health.hp_max = 18000
+    tt.health.hp_max = 17500
     tt.health.magic_armor = 0.4
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, 108)
@@ -587,6 +587,7 @@ local function boss()
     tt.render.sprites[1].scale = vec_2(2, 2)
     tt.render.sprites[1].prefix = "enemy_spider_egg"
     tt.render.sprites[1].loop = false
+    tt.render.sprites[1].color = {0, 80, 255}
     tt.spawner.count = 3
     tt.spawner.cycle_time = fts(6)
     tt.spawner.entity = "enemy_sarelgaz_small"

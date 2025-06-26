@@ -119,7 +119,7 @@ return {
 							interval = 102,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_spider_big",
+							creep = "enemy_spider_small_big",
 							path = 3,
 							interval_next = 100,
 							max = 1
@@ -1012,7 +1012,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_spider_big",
+							creep = "enemy_spider_small_big",
 							path = 1,
 							interval_next = 280,
 							max = 1
@@ -1039,7 +1039,7 @@ return {
 							interval = 38,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_spider_big",
+							creep = "enemy_spider_small_big",
 							path = 3,
 							interval_next = 300,
 							max = 1
@@ -1281,7 +1281,7 @@ return {
 							interval = 0,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_spider_big",
+							creep = "enemy_sarelgaz_small",
 							path = 1,
 							interval_next = 280,
 							max = 1
@@ -1308,7 +1308,7 @@ return {
 							interval = 38,
 							max_same = 0,
 							fixed_sub_path = 1,
-							creep = "enemy_spider_big",
+							creep = "enemy_spider_small_big",
 							path = 3,
 							interval_next = 300,
 							max = 1

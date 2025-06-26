@@ -1113,6 +1113,7 @@ local function heroes()
     tt.melee.attacks[2].hit_time = fts(15)
     tt.melee.attacks[2].hit_offset = vec_2(0, 2)
     tt.melee.attacks[2].damage_radius = 70
+    tt.melee.attacks[2].damage_type = DAMAGE_RUDE
     tt.melee.attacks[3] = CC("melee_attack")
     tt.melee.attacks[3].animations = {nil, "attack"}
     tt.melee.attacks[3].cooldown = 3
@@ -3195,16 +3196,15 @@ local function heroes()
     anchor_y = 0.16666666666666666
     tt.info.portrait = IS_PHONE and "portraits_hero_0021" or "kr2_info_portraits_heroes_0022"
     tt.health.armor = 0
-    tt.health.hp_max = nil
+    tt.health.hp_max = 80
     tt.health_bar.offset = vec_2(0, 36)
-    -- tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.reinforcement.duration = nil
     tt.reinforcement.fade = false
     tt.main_script.insert = scripts.soldier_reinforcement.insert
     tt.main_script.update = scripts.soldier_reinforcement.update
     tt.melee.attacks[1].cooldown = 2
-    tt.melee.attacks[1].damage_max = nil
-    tt.melee.attacks[1].damage_min = nil
+    tt.melee.attacks[1].damage_max = 6
+    tt.melee.attacks[1].damage_min = 2
     tt.melee.attacks[1].hit_time = fts(7)
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[1].vis_bans = bor(F_FLYING, F_CLIFF, F_WATER)
@@ -9192,7 +9192,6 @@ local function heroes()
     tt.health_bar.offset = vec_2(0, 37)
     tt.health_bar.size = HEALTH_BAR_SIZE_SMALL
     tt.health.damage_factor = 1.5
-    -- tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.info.portrait = "kr3_portraits_sc_0068"
     tt.info.i18n_key = "ELVES_SOLDIER_RAG_DOLL"
     tt.info.random_name_format = nil

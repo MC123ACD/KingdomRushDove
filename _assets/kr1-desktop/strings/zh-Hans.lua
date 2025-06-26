@@ -426,6 +426,7 @@ local kr1 = {
     ENEMY_ORC_ARMORED_EXTRA = "- 慢速\n- 厚甲\n- 低血时加速",
     ACHIEVEMENT_FEARLESS_DESCRIPTION = "在一个任务中提前召唤每一波敌人。",
     ENEMY_SPIDERSMALL_DESCRIPTION = "能抵抗魔法的快速邪恶敌人。",
+    ENEMY_SPIDER_SMALL_BIG_NAME = "巨蛛主母",
     ["DIFFICULTY LEVEL"] = "难度级别",
     INAPP_NAME_0005 = "心之瓶",
     ENEMY_ORC_RIDER_SPECIAL = "下马作战",

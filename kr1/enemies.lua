@@ -371,6 +371,66 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(20), ady(15))
     tt.vis.bans = bor(F_SKELETON, F_POISON)
 
+    tt = RT("enemy_spider_small_derived", "enemy_spider_small")
+    tt.enemy.gold = 0
+    tt.motion.max_speed = 2 * FPS
+
+    tt = RT("enemy_spider_small_big", "enemy")
+    AC(tt, "melee", "timed_attacks")
+    anchor_y = 0.25
+    anchor_x = 0.5
+    image_y = 28
+    image_x = 36
+    tt.enemy.gold = 25
+    tt.enemy.melee_slot = vec_2(20 * 2, 0)
+    tt.health.hp_max = 600
+    tt.health.magic_armor = 0.65
+    tt.health_bar.offset = vec_2(0, 22 * 2)
+    tt.info.i18n_key = "ENEMY_SPIDER_SMALL_BIG"
+    tt.info.enc_icon = 8
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0022" or "info_portraits_sc_0022"
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].damage_max = 18
+    tt.melee.attacks[1].damage_min = 10
+    tt.melee.attacks[1].hit_time = fts(12)
+    tt.melee.attacks[1].sound_hit = "SpiderAttack"
+    tt.main_script.update = scripts.enemy_spider_big.update
+    tt.motion.max_speed = 1.2 * FPS
+    tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
+    tt.render.sprites[1].prefix = "enemy_spider_small"
+    tt.render.sprites[1].scale = vec_1(1.3)
+    tt.sound_events.death = "DeathEplosion"
+    tt.unit.blood_color = BLOOD_GREEN
+    tt.unit.explode_fx = "fx_spider_explode"
+    tt.unit.hit_offset = vec_2(0, 8*2)
+    tt.unit.marker_offset = vec_2(0, -1*2)
+    tt.unit.mod_offset = vec_2(adx(20)*2, ady(15)*2)
+    tt.vis.bans = bor(F_SKELETON, F_POISON)
+    tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
+    tt.timed_attacks.list[1].bullet = "enemy_spider_bigger_egg"
+    tt.timed_attacks.list[1].max_cooldown = 10
+    tt.timed_attacks.list[1].max_count = 3
+    tt.timed_attacks.list[1].min_cooldown = 5
+
+    tt = E:register_t("enemy_spider_bigger_egg", "decal_scripted")
+    E:add_comps(tt, "render", "spawner", "tween")
+    tt.main_script.update = scripts.enemies_spawner.update
+    tt.render.sprites[1].anchor.y = 0.22
+    tt.render.sprites[1].prefix = "enemy_spider_egg"
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].scale = vec_1(1.4)
+    tt.spawner.count = 3
+    tt.spawner.cycle_time = fts(6)
+    tt.spawner.entity = "enemy_spider_small_derived"
+    tt.spawner.node_offset = 5
+    tt.spawner.pos_offset = vec_2(0, 1)
+    tt.spawner.allowed_subpaths = {1, 2, 3}
+    tt.spawner.random_subpath = false
+    tt.spawner.animation_start = "start"
+    tt.tween.disabled = true
+    tt.tween.props[1].keys = {{0, 255}, {4, 0}}
+    tt.tween.remove = true
+
     tt = RT("enemy_spider_big", "enemy")
     AC(tt, "melee", "timed_attacks")
     anchor_y = 0.25
