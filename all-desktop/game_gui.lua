@@ -398,17 +398,16 @@ function game_gui:init(w, h, game)
     self.key_shortcuts.pow_1 = settings.key_pow_1 or KEYPRESS_1
     self.key_shortcuts.pow_2 = settings.key_pow_2 or KEYPRESS_2
     self.key_shortcuts.pow_3 = settings.key_pow_3 or KEYPRESS_3
-    -- self.key_shortcuts.hero_1 = settings.key_hero_1 or KEYPRESS_A
     self.key_shortcuts.hero_1 = KEYPRESS_A
-    -- self.key_shortcuts.hero_2 = settings.key_hero_2 or KEYPRESS_D
     self.key_shortcuts.hero_2 = KEYPRESS_D
-    -- self.key_shortcuts.hero_3 = settings.key_hero_3 or KEYPRESS_S
     self.key_shortcuts.hero_no_panel_1 = KEYPRESS_S
     self.key_shortcuts.hero_no_panel_2 = KEYPRESS_Q
     self.key_shortcuts.hero_no_panel_3 = KEYPRESS_R
     self.key_shortcuts.controable = KEYPRESS_F
     self.key_shortcuts.bag = settings.key_wave or KEYPRESS_Q
     self.key_shortcuts.wave = settings.key_wave or KEYPRESS_W
+    self.key_shortcuts.slow = KEYPRESS_4
+    self.key_shortcuts.quick = KEYPRESS_5
 
     if IS_KR1 or IS_KR2 then
         self.key_shortcuts.item_coins = settings.key_item_coins or KEYPRESS_F1
@@ -1019,6 +1018,18 @@ function game_gui:keypressed(key, isrepeat)
                 end
             end
             self:set_mode(GUI_MODE_RALLY_CONTROABLES)
+        end
+    elseif key == ks.slow then
+        if self.game.simulation.store.speed_factor ~= 2 then
+            self.game.simulation.store.speed_factor = 2
+        else
+            self.game.simulation.store.speed_factor = 1
+        end
+    elseif key == ks.quick then
+        if self.game.simulation.store.speed_factor ~= 0.5 then
+            self.game.simulation.store.speed_factor = 0.5
+        else
+            self.game.simulation.store.speed_factor = 1
         end
     elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
         if self.bag_button and not self.bag_button:is_disabled() then
