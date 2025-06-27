@@ -1625,28 +1625,6 @@ return {
         alias = {}
     },
     heroroom_thumbs_0026 = {
-        -- a_name = "screen_map-8.png",
-        -- size = {
-        -- 	84,
-        -- 	84
-        -- },
-        -- trim = {
-        -- 	18,
-        -- 	16,
-        -- 	18,
-        -- 	14
-        -- },
-        -- a_size = {
-        -- 	2048,
-        -- 	2048
-        -- },
-        -- f_quad = {
-        -- 	286,
-        -- 	1629,
-        -- 	152,
-        -- 	156
-        -- },
-        -- alias = {}
         a_name = "gui_portraits-3.png",
         size = {84, 84},
         trim = {12, 10, 12, 9},
@@ -1836,6 +1814,14 @@ return {
         trim = {18, 16, 18, 14},
         a_size = {2048, 2048},
         f_quad = {565, 1154, 152, 156},
+        alias = {}
+    },
+    heroroom_thumbs_0050 = {
+        a_name = "gui_portraits-5.png",
+        size = {84, 84},
+        trim = {12, 10, 12, 9},
+        a_size = {1024, 1024},
+        f_quad = {2, 625, 87, 87},
         alias = {}
     },
     heroroom_tooltip_coin = {

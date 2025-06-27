@@ -2809,7 +2809,7 @@ function InfoBar:initialize()
     local s_9 = 44.44444444444444
     local s_12 = 33.333333333333336
     local margin = v(10, 14)
-    local padding = v(20, CJK(1, -2, 3, -1.5))
+    local padding = v(20, CJK(1, 0, 3, -1.5))
     local label_height = 14
     local stat_labels = {}
 
@@ -2819,7 +2819,7 @@ function InfoBar:initialize()
                                              {"label", "l_magic_armor", "base_info_icons_0004", 0.8 * s_4},
                                              {"label", "l_respawn", "base_info_icons_0007", 0.8 * s_4}}
     stat_labels[STATS_TYPE_SOLDIER] = {{"bar", "b_hp", "base_info_bar_bg", "base_info_bar", 3.3 * s_12},
-                                       {"label", "l_hp", nil, 3.3 * s_12, "center", true, v(0, CJK(1, -2, 3, -1))},
+                                       {"label", "l_hp", nil, 3.3 * s_12, "center", true, v(0, CJK(1, 0, 3, -1))},
                                        {"label", "l_damage", "base_info_icons_0001", 2.2 * s_12},
                                        {"label", "l_ranged_damage", "base_info_icons_0001", 2.2 * s_12},
                                        {"label", "l_armor", "base_info_icons_0003", 1.5 * s_12},

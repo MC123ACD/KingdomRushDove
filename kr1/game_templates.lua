@@ -21,8 +21,8 @@ require("mage_towers")()
 require("engineer_towers")()
 require("archer_towers")()
 require("barrack_towers")()
-require("heroes")()
 require("enemies")()
+require("heroes")()
 require("boss")()
 ----------
 
@@ -5181,63 +5181,6 @@ tt.melee.attacks[4].hit_offset = vec_2(22, 0)
 tt.melee.attacks[4].hit_time = fts(17)
 tt.melee.attacks[4].sound = "HeroReinforcementJump"
 tt.melee.attacks[4].xp_from_skill = "fissure"
-tt = RT("hero_bolverk", "stage_hero")
-
-AC(tt, "melee", "timed_attacks")
-
-tt.health.armor = 0
-tt.health.dead_lifetime = 15
-tt.health.hp_max = 545
-tt.health_bar.offset = vec_2(0, 43)
-tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-tt.hero.level = 10
-tt.hero.xp = 115300
-tt.hero.tombstone_show_time = fts(90)
-tt.info.hero_portrait = "kr3_hero_portraits_0018"
-tt.info.i18n_key = "HERO_ELVES_BOLVERK"
-tt.info.portrait = (IS_PHONE and "portraits_hero" or "kr3_info_portraits_heroes") .. "_0018"
-tt.main_script.insert = scripts.hero_bolverk.insert
-tt.main_script.update = scripts.hero_bolverk.update
-tt.motion.max_speed = 3 * FPS
-tt.regen.health = 33
-tt.regen.cooldown = 1
-tt.render.sprites[1].anchor.y = 0.22727272727273
-tt.render.sprites[1].prefix = "hero_bolverk"
-tt.render.sprites[1].angles = {}
-tt.render.sprites[1].angles.walk = {"walk"}
-tt.render.sprites[1].name = "idle"
-tt.soldier.melee_slot_offset = vec_2(2, 0)
-tt.sound_events.change_rally_point = "ElvesHeroBolverkTaunt"
-tt.sound_events.death = "ElvesHeroBolverkDeath"
-tt.sound_events.insert = "ElvesHeroBolverkTauntIntro"
-tt.sound_events.respawn = "ElvesHeroBolverkTauntIntro"
-tt.unit.hit_offset = vec_2(0, 20)
-tt.unit.mod_offset = vec_2(0, 20)
-tt.melee.attacks[1].damage_max = 41
-tt.melee.attacks[1].damage_min = 27
-tt.melee.attacks[1].cooldown = 1
-tt.melee.attacks[1].hit_time = fts(10)
-tt.melee.attacks[1].xp_gain_factor = 0
-tt.melee.attacks[2] = CC("melee_attack")
-tt.melee.attacks[2].animation = "hit"
-tt.melee.attacks[2].cooldown = 20
-tt.melee.attacks[2].damage_max = 100
-tt.melee.attacks[2].damage_min = 80
-tt.melee.attacks[2].hit_time = fts(9)
-tt.melee.attacks[2].sound = "ElvesHeroBolverkSlash"
-tt.melee.attacks[2].vis_bans = F_BOSS
-tt.melee.range = 55
-tt.timed_attacks.list[1] = CC("mod_attack")
-tt.timed_attacks.list[1].animation = "scream"
-tt.timed_attacks.list[1].cooldown = 10
-tt.timed_attacks.list[1].max_range = 60
-tt.timed_attacks.list[1].min_range = 0
-tt.timed_attacks.list[1].min_count = 3
-tt.timed_attacks.list[1].mod = "mod_bolverk_scream"
-tt.timed_attacks.list[1].hit_time = fts(9)
-tt.timed_attacks.list[1].sound = "ElvesHeroBolverkCry"
-tt.timed_attacks.list[1].vis_flags = F_RANGED
-tt.timed_attacks.list[1].vis_bans = bor(F_FLYING, F_BOSS)
 
 tt = E:register_t("plant_magic_blossom", "decal_scripted")
 E:add_comps(tt, "custom_attack", "ui", "plant")
@@ -6743,26 +6686,9 @@ tt.main_script.update = scripts.mod_dps.update
 tt.main_script.queue = scripts.mod_mark_flags.queue
 tt.main_script.dequeue = scripts.mod_mark_flags.dequeue
 
-
-
 tt = RT("mod_slow_wilbur", "mod_slow")
 tt.slow.factor = nil
-tt = RT("mod_bolverk_scream", "modifier")
 
-AC(tt, "render")
-
-tt.received_damage_factor = 1.5
-tt.modifier.duration = 20
-tt.modifier.resets_same = false
-tt.modifier.use_mod_offset = false
-tt.main_script.insert = scripts.mod_damage_factors.insert
-tt.main_script.remove = scripts.mod_damage_factors.remove
-tt.main_script.update = scripts.mod_track_target.update
-tt.render.sprites[1].prefix = "mod_weakness"
-tt.render.sprites[1].size_names = {"small", "big", "big"}
-tt.render.sprites[1].name = "small"
-tt.render.sprites[1].loop = true
-tt.render.sprites[1].z = Z_DECALS
 tt = E:register_t("mod_gnoll_burner", "modifier")
 
 E:add_comps(tt, "dps", "render", "mark_flags")
@@ -7094,10 +7020,9 @@ tt.modifier.duration_heroes = 3
 tt.render.sprites[1].prefix = "mod_screecher_bat_stun"
 tt.render.sprites[1].name = "loop"
 tt.render.sprites[1].size_names = nil
+
 tt = RT("mod_dark_spitters", "modifier")
-
 AC(tt, "render", "dps")
-
 tt.explode_fx = "fx_unit_explode"
 tt.modifier.duration = 3 - fts(11)
 tt.modifier.vis_flags = bor(F_MOD, F_BURN)
@@ -7111,6 +7036,7 @@ tt.dps.damage_every = fts(11)
 tt.dps.damage_max = 10
 tt.dps.damage_min = 10
 tt.dps.damage_type = DAMAGE_POISON
+
 tt = RT("mod_shadow_champion", "mod_gnoll_boss")
 tt.main_script.insert = scripts.mod_shadow_champion.insert
 tt.main_script.remove = scripts.mod_shadow_champion.remove

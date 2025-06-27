@@ -847,7 +847,10 @@ local kr3 = {
                  "kro_sfx_faerydragon_attack[solocristalizacion].ogg", "kro_sfx_faerydragon_buydragon[op1].ogg",
                  "kro_sfx_faerydragon_extraability[solochimes].ogg",
                  "kro_sfx_faerydragon_sfx_attack[op2][soloattack]_B.ogg",
-                 "Drow_01c.ogg", "Drow_02c.ogg", "Drow_03b.ogg","Awok_01b.ogg", "Awok_02c.ogg"},
+                 "Drow_01c.ogg", "Drow_02c.ogg", "Drow_03b.ogg","Awok_01b.ogg", "Awok_02c.ogg",    "VarlBerserker_confirm-01a.ogg", "VarlBerserker_confirm-02a.ogg", "VarlBerserker_confirm-03c.ogg",
+                 "VarlBerserker_confirm-04a.ogg", "VarlBerserker_death-01c.ogg", "kro_sfx_bolverk_bearcry[op1].ogg",
+                 "kro_sfx_bolverk_doubleslash[gore].ogg"
+    },
         ids = {}
     }
 }

@@ -772,7 +772,7 @@ local function heroes()
     -- tt.melee.attacks[3].xp_from_skill = "smash"
     tt.melee.attacks[3].mod = "mod_malik_stun"
     tt.melee.attacks[3].mod_chance = 0.2
-    tt.melee.attacks[3].xp_gain_factor = 2.1
+    tt.melee.attacks[3].xp_gain_factor = 1.6
     tt.melee.attacks[4] = CC("area_attack")
     tt.melee.attacks[4].animation = "fissure"
     tt.melee.attacks[4].cooldown = 10 + fts(37)
@@ -9258,30 +9258,15 @@ local function heroes()
     }
     tt.hero.skills.ultimate = E:clone_c("hero_skill")
     tt.hero.skills.ultimate.controller_name = "hero_bruce_ultimate"
-    tt.hero.skills.ultimate.damage_per_tick = {
-        8,
-        12,
-        14,
-        16
-    }
+    tt.hero.skills.ultimate.damage_per_tick = {8, 12, 14, 16}
     tt.hero.skills.ultimate.xp_level_steps = {
         [1] = 1,
         [4] = 2,
         [7] = 3,
         [10] = 4
     }
-    tt.hero.skills.ultimate.damage_boss = {
-        150,
-        200,
-        350,
-        500
-    }
-    tt.hero.skills.ultimate.count = {
-        2,
-        3,
-        4,
-        5
-    }
+    tt.hero.skills.ultimate.damage_boss = {150, 200, 350, 500}
+    tt.hero.skills.ultimate.count = {2, 3, 4, 5}
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 53)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
@@ -9401,6 +9386,130 @@ local function heroes()
     tt.sound_events.custom_loop_end = "ElvesHeroBruceGuardianLionsLoopEnd"
     tt.tween.remove = false
     tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
+
+    tt = RT("hero_bolverk", "hero")
+    AC(tt, "melee", "timed_attacks")
+    tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    tt.hero.level_stats.hp_max = {410, 425, 440, 455, 470, 485, 500, 515, 530, 545}
+    tt.hero.level_stats.melee_damage_max = {23, 25, 27, 29, 31, 33, 35, 37, 39, 41}
+    tt.hero.level_stats.melee_damage_min = {18, 19, 20, 21, 22, 23, 24, 25, 26, 27}
+    tt.hero.skills.slash = E:clone_c("hero_skill")
+    tt.hero.skills.slash.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.slash.damage_max = {60, 80, 100}
+    tt.hero.skills.slash.damage_min = {40, 60, 80}
+    tt.hero.skills.scream = E:clone_c("hero_skill")
+    tt.hero.skills.scream.xp_level_steps = {
+        [3] = 1,
+        [6] = 2,
+        [9] = 3
+    }
+    tt.hero.skills.scream.fire_damage = {5, 10, 15}
+    tt.hero.skills.scream.xp_gain_factor = 60
+    tt.hero.skills.berserker = E:clone_c("hero_skill")
+    tt.hero.skills.berserker.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.hero.skills.berserker.factor = {0.5, 0.4, 0.3, 0.2}
+    tt.health.armor = 0
+    tt.health.dead_lifetime = 15
+    tt.health.hp_max = 545
+    tt.health_bar.offset = vec_2(0, 43)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.hero.tombstone_show_time = fts(90)
+    tt.info.hero_portrait = "kr3_hero_portraits_0018"
+    tt.info.i18n_key = "HERO_ELVES_BOLVERK"
+    tt.info.portrait = (IS_PHONE and "portraits_hero" or "kr3_info_portraits_heroes") .. "_0018"
+    tt.hero.fn_level_up = scripts.hero_bolverk.level_up
+    tt.main_script.insert = scripts.hero_bolverk.insert
+    tt.main_script.update = scripts.hero_bolverk.update
+    tt.motion.max_speed = 3.3 * FPS
+    tt.regen.cooldown = 1
+    tt.render.sprites[1].anchor.y = 0.22727272727273
+    tt.render.sprites[1].prefix = "hero_bolverk"
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"walk"}
+    tt.render.sprites[1].name = "idle"
+    tt.soldier.melee_slot_offset = vec_2(2, 0)
+    tt.sound_events.change_rally_point = "ElvesHeroBolverkTaunt"
+    tt.sound_events.death = "ElvesHeroBolverkDeath"
+    tt.sound_events.insert = "ElvesHeroBolverkTauntIntro"
+    tt.sound_events.respawn = "ElvesHeroBolverkTauntIntro"
+    tt.unit.hit_offset = vec_2(0, 20)
+    tt.unit.mod_offset = vec_2(0, 20)
+    tt.melee.attacks[1].damage_max = 41
+    tt.melee.attacks[1].damage_min = 27
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].raw_cooldown = 1
+    tt.melee.attacks[1].hit_time = fts(10)
+    tt.melee.attacks[1].xp_gain_factor = 3.5
+    tt.melee.attacks[2] = CC("melee_attack")
+    tt.melee.attacks[2].animation = "hit"
+    tt.melee.attacks[2].cooldown = 20
+    tt.melee.attacks[2].raw_cooldown = 20
+    tt.melee.attacks[2].damage_max = 100
+    tt.melee.attacks[2].damage_min = 80
+    tt.melee.attacks[2].damage_type = DAMAGE_RUDE
+    tt.melee.attacks[2].hit_time = fts(9)
+    tt.melee.attacks[2].sound = "ElvesHeroBolverkSlash"
+    tt.melee.attacks[2].xp_gain_factor = 3.5
+    tt.melee.attacks[2].disabled = true
+    tt.melee.attacks[2].side_effect = function(this, store, attack, target)
+        scripts.heal(this, (this.health.hp_max-this.health.hp) * 0.12)
+    end
+    tt.melee.range = 55
+    tt.timed_attacks.list[1] = CC("mod_attack")
+    tt.timed_attacks.list[1].animation = "scream"
+    tt.timed_attacks.list[1].cooldown = 10
+    tt.timed_attacks.list[1].raw_cooldown = 10
+    tt.timed_attacks.list[1].max_range = 60
+    tt.timed_attacks.list[1].min_range = 0
+    tt.timed_attacks.list[1].min_count = 1
+    tt.timed_attacks.list[1].mods = {"mod_bolverk_scream","mod_bolverk_fire"}
+    tt.timed_attacks.list[1].hit_time = fts(9)
+    tt.timed_attacks.list[1].sound = "ElvesHeroBolverkCry"
+    tt.timed_attacks.list[1].vis_flags = F_RANGED
+    tt.timed_attacks.list[1].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[1].disabled = true
+    tt.vis.bans = bor(tt.vis.bans, F_BURN)
+    tt.berserker_factor = 0.5
+
+    tt = RT("mod_bolverk_scream", "modifier")
+    AC(tt, "render")
+    tt.received_damage_factor = 1.5
+    tt.inflicted_damage_factor = 0.7
+    tt.modifier.duration = 20
+    tt.modifier.resets_same = false
+    tt.modifier.use_mod_offset = false
+    tt.main_script.insert = scripts.mod_damage_factors.insert
+    tt.main_script.remove = scripts.mod_damage_factors.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.render.sprites[1].prefix = "mod_weakness"
+    tt.render.sprites[1].size_names = {"small", "big", "big"}
+    tt.render.sprites[1].name = "small"
+    tt.render.sprites[1].loop = true
+    tt.render.sprites[1].z = Z_DECALS
+
+    tt = RT("mod_bolverk_fire", "modifier")
+    AC(tt, "render", "dps")
+    tt.explode_fx = "fx_unit_explode"
+    tt.modifier.duration = 7
+    tt.modifier.vis_flags = bor(F_MOD, F_BURN)
+    tt.nodes_limit = 20
+    tt.render.sprites[1].name = "mod_dark_spitters"
+    tt.render.sprites[1].draw_order = 10
+    tt.main_script.insert = scripts.mod_dps.insert
+    tt.main_script.update = scripts.mod_dps.update
+    tt.dps.damage_every = 0.5
+    tt.dps.damage_max = 5
+    tt.dps.damage_min = 5
+    tt.dps.damage_type = DAMAGE_POISON
 end
 
 return heroes

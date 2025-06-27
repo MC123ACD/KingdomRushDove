@@ -1388,6 +1388,15 @@ return {
         starting_level = 5,
         icon = 46,
         stats = {6, 7, 5, 5}
+    },
+    {
+        portrait = 17,
+        thumb = 50,
+        name = "hero_bolverk",
+        available_level = 68,
+        starting_level = 5,
+        icon = 46,
+        stats = {5, 5, 0, 6}
     }},
     level_data = {{
         upgrades = {

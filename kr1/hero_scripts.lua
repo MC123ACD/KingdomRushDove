@@ -4974,7 +4974,8 @@ return function(scripts)
                     a = ba
                     skill = this.hero.skills.bear
 
-                    if not this.is_bear and ready_to_use_skill(a, store) and this.health.hp < this.health.hp_max * a.transform_health_factor then
+                    if not this.is_bear and ready_to_use_skill(a, store) and this.health.hp < this.health.hp_max *
+                        a.transform_health_factor then
                         SU.hero_gain_xp_from_skill(this, skill)
                         go_bear()
                     elseif this.is_bear and store.tick_ts - a.ts >= a.duration then
@@ -12321,7 +12322,8 @@ return function(scripts)
                 if ready_to_use_skill(a, store) then
                     local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans, function(e)
-                            return e.health.hp < a.max_target_hp * this.unit.damage_factor and GR:cell_is_only(e.pos.x, e.pos.y, bor(TERRAIN_LAND, TERRAIN_ICE))
+                            return e.health.hp < a.max_target_hp * this.unit.damage_factor and
+                                       GR:cell_is_only(e.pos.x, e.pos.y, bor(TERRAIN_LAND, TERRAIN_ICE))
                         end)
 
                     if not target then
@@ -12341,7 +12343,8 @@ return function(scripts)
                 if ready_to_use_skill(a, store) then
                     local target_info = U.find_enemies_in_paths(store.entities, this.pos, a.range_nodes_min,
                         a.range_nodes_max, nil, a.vis_flags, a.vis_bans, true, function(e)
-                            return not U.flag_has(P:path_terrain_props(e.nav_path.pi), bor(TERRAIN_FAERIE, TERRAIN_WATER))
+                            return not U.flag_has(P:path_terrain_props(e.nav_path.pi),
+                                bor(TERRAIN_FAERIE, TERRAIN_WATER))
                         end)
 
                     if not target_info then
@@ -12526,7 +12529,7 @@ return function(scripts)
                     end
                 end
 
-                if ready_to_use_skill(this.ultimate, store)then
+                if ready_to_use_skill(this.ultimate, store) then
                     local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
@@ -12661,7 +12664,7 @@ return function(scripts)
         this.melee.attacks[3].damage_min = ls.melee_damage_min[hl]
         this.melee.attacks[3].damage_max = ls.melee_damage_max[hl]
 
-        upgrade_skill(this, "sharp_claws", function (this, s)
+        upgrade_skill(this, "sharp_claws", function(this, s)
             local a = this.melee.attacks[3]
             a.disabled = nil
             local m = E:get_template(a.mod)
@@ -12670,25 +12673,25 @@ return function(scripts)
             m.extra_bleeding_damage = s.extra_damage[s.level]
         end)
 
-        upgrade_skill(this, "kings_roar", function (this, s)
+        upgrade_skill(this, "kings_roar", function(this, s)
             local a = this.timed_attacks.list[1]
             a.disabled = nil
             local m = E:get_template(a.mod)
             m.modifier.duration = s.stun_duration[s.level]
         end)
 
-        upgrade_skill(this, "lions_fur", function (this, s)
+        upgrade_skill(this, "lions_fur", function(this, s)
             this.lion_fur_extra = s.extra_hp[s.level]
         end)
 
-        upgrade_skill(this, "grievous_bites", function (this, s)
+        upgrade_skill(this, "grievous_bites", function(this, s)
             local a = this.melee.attacks[4]
             a.disabled = nil
             a.damage_max = s.damage[s.level]
             a.damage_min = s.damage[s.level]
         end)
 
-        upgrade_skill(this, "ultimate", function (this, s)
+        upgrade_skill(this, "ultimate", function(this, s)
             this.ultimate.disabled = nil
             local u = E:get_template(s.controller_name)
             u.count = s.count[s.level]
@@ -12752,7 +12755,8 @@ return function(scripts)
                 skill = this.hero.skills.kings_roar
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                        a.vis_bans)
 
                     if not targets or #targets < a.min_count then
                         SU.delay_attack(store, a, 0.13333333333333333)
@@ -12766,7 +12770,8 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             a.ts = store.tick_ts
-                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                                a.vis_bans)
 
                             if targets then
                                 for i, target in ipairs(targets) do
@@ -12827,8 +12832,8 @@ return function(scripts)
 
     function scripts.hero_bruce_ultimate.update(this, store)
         local pi, spi, ni
-        local target_info = U.find_enemies_in_paths(store.entities, this.pos, this.range_nodes_min, this.range_nodes_max,
-            nil, this.vis_flags, this.vis_bans, true, function(e)
+        local target_info = U.find_enemies_in_paths(store.entities, this.pos, this.range_nodes_min,
+            this.range_nodes_max, nil, this.vis_flags, this.vis_bans, true, function(e)
                 return not U.flag_has(P:path_terrain_props(e.nav_path.pi), TERRAIN_FAERIE)
             end)
 
@@ -12956,4 +12961,132 @@ return function(scripts)
 
         queue_remove(store, this)
     end
+
+    scripts.hero_bolverk = {}
+    function scripts.hero_bolverk.level_up(this, store)
+        local hl, ls = level_up_basic(this, store)
+
+        this.melee.attacks[1].damage_min = ls.melee_damage_min[hl]
+        this.melee.attacks[1].damage_max = ls.melee_damage_max[hl]
+
+        upgrade_skill(this, "slash", function (this, s)
+            this.melee.attacks[2].disabled = nil
+            this.melee.attacks[2].damage_min = s.damage_min[s.level]
+            this.melee.attacks[2].damage_max = s.damage_max[s.level]
+        end)
+
+        upgrade_skill(this, "scream", function (this, s)
+            this.timed_attacks.list[1].disabled = nil
+            local mod = E:get_template("mod_bolverk_fire")
+            mod.dps.damage_min = s.fire_damage[s.level]
+            mod.dps.damage_max = s.fire_damage[s.level]
+        end)
+
+        upgrade_skill(this, "berserker", function (this, s)
+            this.berserker_factor = s.factor[s.level]
+        end)
+
+        this.health.hp = this.health.hp_max
+    end
+    function scripts.hero_bolverk.insert(this, store)
+        this.hero.fn_level_up(this, store)
+        this.melee.order = U.attack_order(this.melee.attacks)
+        return true
+    end
+
+    function scripts.hero_bolverk.update(this, store)
+        local h = this.health
+        local he = this.hero
+        local brk, sta, a, skill
+
+        U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
+
+        this.health_bar.hidden = false
+
+        while true do
+            if h.dead then
+                SU.y_hero_death_and_respawn(store, this)
+            end
+
+            if this.unit.is_stunned then
+                SU.soldier_idle(store, this)
+            else
+                while this.nav_rally.new do
+                    if SU.y_hero_new_rally(store, this) then
+                        goto label_223_0
+                    end
+                end
+
+                if SU.hero_level_up(store, this) then
+                    U.y_animation_play(this,"respawn", nil, store.tick_ts)
+                end
+
+                local factor = (this.health.hp / this.health.hp_max) * (1 - this.berserker_factor) + this.berserker_factor
+                this.timed_attacks.list[1].cooldown = this.timed_attacks.list[1].raw_cooldown * factor
+                this.melee.attacks[1].cooldown = this.melee.attacks[1].raw_cooldown * factor
+                this.melee.attacks[2].cooldown = this.melee.attacks[2].raw_cooldown * factor
+
+                a = this.timed_attacks.list[1]
+
+                if ready_to_use_skill(a, store) then
+                    local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                        a.vis_flags, a.vis_bans)
+
+                    if not targets or #targets < a.min_count then
+                        SU.delay_attack(store, a, 0.13333333333333333)
+                    else
+                        S:queue(a.sound, a.sound_args)
+                        U.animation_start(this, a.animation, nil, store.tick_ts)
+
+                        if SU.y_hero_wait(store, this, a.hit_time) then
+                            -- block empty
+                        else
+                            targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                                a.vis_flags, a.vis_bans)
+
+                            if targets then
+                                for _, target in pairs(targets) do
+                                    local m1 = E:create_entity(a.mods[1])
+                                    m1.modifier.target_id = target.id
+                                    m1.modifier.source_id = this.id
+
+                                    queue_insert(store, m1)
+                                    local m2 = E:create_entity(a.mods[2])
+                                    m2.modifier.target_id = target.id
+                                    m2.modifier.source_id = this.id
+                                    queue_insert(store, m2)
+                                end
+                            end
+                            scripts.heal(this, (this.health.hp_max - this.health.hp) * 0.06)
+                            SU.y_hero_animation_wait(this)
+                            SU.hero_gain_xp_from_skill(this,this.hero.skills.scream)
+                            a.ts = store.tick_ts
+                        end
+
+                        goto label_223_0
+                    end
+                end
+
+                if this.melee then
+                    brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                    if brk or sta ~= A_NO_TARGET then
+                        goto label_223_0
+                    end
+                end
+
+                if SU.soldier_go_back_step(store, this) then
+                    -- block empty
+                else
+                    SU.soldier_idle(store, this)
+                    SU.soldier_regen(store, this)
+                end
+            end
+
+            ::label_223_0::
+
+            coroutine.yield()
+        end
+    end
+
 end

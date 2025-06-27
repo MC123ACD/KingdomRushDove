@@ -16493,7 +16493,7 @@ function scripts.hero_vampiress.update(this, store, script)
 
                             d.source_id = this.id
                             d.target_id = e.id
-                            d.value = math.random(a.damage_min, a.damage_max)
+                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
                             d.damage_type = a.damage_type
                             d.track_kills = true
                             if table.contains(a.extra_damage_templates, e.template_name) then
@@ -21209,97 +21209,6 @@ function scripts.aura_baby_malik_fissure.update(this, store)
     ::label_219_0::
 
     queue_remove(store, this)
-end
-
-scripts.hero_bolverk = {}
-
-function scripts.hero_bolverk.insert(this, store)
-    this.melee.order = U.attack_order(this.melee.attacks)
-
-    return true
-end
-
-function scripts.hero_bolverk.update(this, store)
-    local h = this.health
-    local he = this.hero
-    local brk, sta, a, skill
-
-    U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
-
-    this.health_bar.hidden = false
-
-    while true do
-        if h.dead then
-            SU.y_hero_death_and_respawn(store, this)
-        end
-
-        if this.unit.is_stunned then
-            SU.soldier_idle(store, this)
-        else
-            while this.nav_rally.new do
-                if SU.y_hero_new_rally(store, this) then
-                    goto label_223_0
-                end
-            end
-
-            a = this.timed_attacks.list[1]
-
-            if store.tick_ts - a.ts > a.cooldown then
-                local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
-                    a.vis_bans)
-
-                if not targets or #targets < a.min_count then
-                    SU.delay_attack(store, a, 0.13333333333333333)
-                else
-                    S:queue(a.sound, a.sound_args)
-                    U.animation_start(this, a.animation, nil, store.tick_ts)
-
-                    if SU.y_hero_wait(store, this, a.hit_time) then
-                        -- block empty
-                    else
-                        targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
-                            a.vis_flags, a.vis_bans)
-
-                        if targets then
-                            for _, target in pairs(targets) do
-                                local m = E:create_entity(a.mod)
-
-                                m.modifier.target_id = target.id
-                                m.modifier.source_id = this.id
-
-                                queue_insert(store, m)
-                            end
-                        end
-
-                        SU.y_hero_animation_wait(this)
-
-                        a.ts = store.tick_ts
-                    end
-
-                    goto label_223_0
-                end
-            end
-
-            if this.melee then
-                brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
-
-                if brk or sta ~= A_NO_TARGET then
-                    goto label_223_0
-                end
-            end
-
-            if SU.soldier_go_back_step(store, this) then
-                -- block empty
-            else
-                SU.soldier_idle(store, this)
-                SU.soldier_regen(store, this)
-            end
-        end
-
-        ::label_223_0::
-
-        coroutine.yield()
-    end
 end
 
 scripts.enemy_gnoll_blighter = {}
