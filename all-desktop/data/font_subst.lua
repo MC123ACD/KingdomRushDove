@@ -96,21 +96,24 @@ return {
 	["zh-Hans"] = {
 		{
 			"body",
-			"NotoSansCJKkr-Regular",
+			-- "NotoSansCJKkr-Regular",
+            "msyh",
 			{
 				size = 1.2
 			}
 		},
 		{
 			"body_bold",
-			"NotoSansCJKkr-Bold",
+			-- "NotoSansCJKkr-Bold",
+            "msyhbd",
 			{
 				size = 1.2
 			}
 		},
 		{
 			"body_slides",
-			"NotoSansCJKkr-Regular",
+			-- "NotoSansCJKkr-Regular",
+            "msyh",
 			{
 				size = 1.1
 			}
@@ -182,14 +185,16 @@ return {
 		},
 		{
 			"hud",
-			"NotoSansCJKkr-Bold",
+			-- "NotoSansCJKkr-Bold",
+            "msyhbd",
 			{
 				size = 1.4
 			}
 		},
 		{
 			"infobar_name",
-			"NotoSansCJKkr-Regular",
+			-- "NotoSansCJKkr-Regular",
+            "msyh",
 			{
 				bottom = 0.15,
 				size = 1
@@ -197,22 +202,26 @@ return {
 		},
 		{
 			"infobar_stats",
-			"NotoSansCJKkr-Regular",
+			-- "NotoSansCJKkr-Regular",
+            "msyh",
 			{
 				size = 1
 			}
 		},
 		{
 			"sans",
-			"NotoSansCJKkr-Regular"
+			-- "NotoSansCJKkr-Regular"
+            "msyh"
 		},
 		{
 			"sans_bold",
-			"NotoSansCJKkr-Bold"
+			-- "NotoSansCJKkr-Bold"
+            "msyhbd"
 		},
 		{
 			"taunts",
-			"NotoSansCJKkr-Bold",
+			-- "NotoSansCJKkr-Bold",
+            "msyhbd",
 			{
 				["middle-caps"] = -0.05,
 				size = 1.2

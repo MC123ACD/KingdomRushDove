@@ -1396,6 +1396,8 @@ return {
 							id = "skills_bio_desc",
 							fit_size = true,
 							font_name = "body",
+                            -- font_name = "NotoSansCJKkr-Regular",
+                            -- font_name = "taunts",
 							pos = v(47, 36),
 							size = v(330, 78),
 							line_height = ctx.cjk(0.85, 0.85, 1.2, 0.85),

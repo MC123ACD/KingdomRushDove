@@ -81,11 +81,12 @@ function font_db:load(font_sizes)
 					break
 				end
 			end
-		elseif string.match(f, ".TTF$") or string.match(f, ".ttf$") or string.match(f, ".otf$") then
+		elseif string.match(f, ".TTF$") or string.match(f, ".ttf$") or string.match(f, ".otf$") or string.match(f, ".ttc$") or string.match(f, ".TTC$")then
 			local key = string.gsub(f, ".TTF$", "")
 
 			key = string.gsub(key, ".ttf$", "")
 			key = string.gsub(key, ".otf$", "")
+            key = string.gsub(key, ".ttc$", "")
 			key = string.gsub(key, "^" .. string.gsub(path, "%-", "%%-") .. "/", "")
 
 			if settings and settings.cache and table.contains(settings.cache, key) then

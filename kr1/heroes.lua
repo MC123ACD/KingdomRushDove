@@ -704,15 +704,15 @@ local function heroes()
     tt.hero.level_stats.melee_damage_max = {26, 29, 31, 34, 36, 38, 41, 43, 45, 47}
     tt.hero.level_stats.melee_damage_min = {19, 20, 23, 24, 26, 28, 29, 31, 34, 37}
     tt.hero.skills.smash = CC("hero_skill")
-    tt.hero.skills.smash.damage_min = {25, 50, 70}
-    tt.hero.skills.smash.damage_max = {45, 70, 95}
+    tt.hero.skills.smash.damage_min = {23, 28, 37}
+    tt.hero.skills.smash.damage_max = {31, 38, 47}
     tt.hero.skills.smash.stun_chance = {0.2, 0.3, 0.4}
     tt.hero.skills.smash.xp_level_steps = {
         [2] = 1,
         [5] = 2,
         [8] = 3
     }
-    tt.hero.skills.smash.xp_gain = {50, 100, 150}
+    -- tt.hero.skills.smash.xp_gain = {50, 100, 150}
     tt.hero.skills.fissure = CC("hero_skill")
     tt.hero.skills.fissure.damage_min = {15, 25, 35}
     tt.hero.skills.fissure.damage_max = {35, 45, 55}
@@ -729,7 +729,6 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(60)
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0001" or "heroPortrait_portraits_0001"
     tt.info.i18n_key = "HERO_REINFORCEMENT"
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0001" or "info_portraits_hero_0006"
     tt.main_script.update = scripts.hero_malik.update
     tt.motion.max_speed = 2.6 * FPS
@@ -746,7 +745,7 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 20)
     tt.melee.range = 65
     tt.melee.cooldown = 1
-    tt.melee.attacks[1].cooldown = 1.5
+    tt.melee.attacks[1].cooldown = 1.2
     tt.melee.attacks[1].hit_time = fts(5)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].xp_gain_factor = 1.6
@@ -758,7 +757,7 @@ local function heroes()
     tt.melee.attacks[2].mod = "mod_malik_stun"
     tt.melee.attacks[3] = CC("area_attack")
     tt.melee.attacks[3].animation = "smash"
-    tt.melee.attacks[3].cooldown = 4 + fts(28)
+    tt.melee.attacks[3].cooldown = 3.2
     tt.melee.attacks[3].damage_max = nil
     tt.melee.attacks[3].damage_min = nil
     tt.melee.attacks[3].damage_radius = 90
@@ -770,9 +769,10 @@ local function heroes()
     tt.melee.attacks[3].hit_offset = vec_2(22, 0)
     tt.melee.attacks[3].min_count = 1
     tt.melee.attacks[3].sound = "HeroReinforcementSpecial"
-    tt.melee.attacks[3].xp_from_skill = "smash"
+    -- tt.melee.attacks[3].xp_from_skill = "smash"
     tt.melee.attacks[3].mod = "mod_malik_stun"
     tt.melee.attacks[3].mod_chance = 0.2
+    tt.melee.attacks[3].xp_gain_factor = 2.1
     tt.melee.attacks[4] = CC("area_attack")
     tt.melee.attacks[4].animation = "fissure"
     tt.melee.attacks[4].cooldown = 10 + fts(37)
