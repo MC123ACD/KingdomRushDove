@@ -1259,20 +1259,22 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
 		coroutine.yield()
 	end
 
-    -- if attack.check_target_before_shot then
-    --     if (not target) or target.health.dead or (not store.entities[target.id]) then
-    --         target = U.find_foremost_enemy(store.entities, this.pos, attack.min_range, attack.max_range, attack.node_prediction, attack.vis_flags, attack.vis_bans, attack.filter_fn, F_FLYING)
-    --         if target and not pred_pos and not target.health.dead then
-    --             bullet_to = target.pos
-    --             bullet_to_start = V.vclone(bullet_to)
-    --             an, af, ai = U.animation_name_facing_point(this, attack.animation, bullet_to)
-    --         end
-    --     end
-    -- end
+    if attack.check_target_before_shot then
+        if (not target) or target.health.dead or (not store.entities[target.id]) then
+            local trash
+            target, trash ,pred_pos = U.find_foremost_enemy(store.entities, this.pos, attack.min_range, attack.max_range, attack.node_prediction, attack.vis_flags, attack.vis_bans, attack.filter_fn, F_FLYING)
+            if target and not target.health.dead then
+                bullet_to = pred_pos or target.pos
+                bullet_to_start = V.vclone(bullet_to)
+            else
+                goto label_60_0
+            end
+        end
+    end
 
-	if attack.check_target_before_shot and ((not target) or target.health.dead or (not store.entities[target.id])) then
-		log.debug("target (%s) is dead or removed from store", target.id)
-	elseif attack.max_track_distance and V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
+	-- if attack.check_target_before_shot and ((not target) or target.health.dead or (not store.entities[target.id])) then
+	-- 	log.debug("target (%s) is dead or removed from store", target.id)
+	if attack.max_track_distance and V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
 		log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id, target.pos.x, target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
 	else
 		S:queue(attack.sound_shoot)
