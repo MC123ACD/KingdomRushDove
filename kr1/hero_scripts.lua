@@ -6257,9 +6257,14 @@ return function(scripts)
 
                                         m.modifier.target_id = target.id
                                         m.modifier.source_id = this.id
-                                        m.modifier.duration = m.modifier.duration + U.frandom(-0.15, 0.15)
                                         m.render.sprites[1].ts = store.tick_ts
 
+                                        queue_insert(store, m)
+
+                                        local m = E:create_entity("mod_monkey_god_fire")
+                                        m.modifier.target_id = target.id
+                                        m.modifier.source_id = this.id
+                                        m.modifier.level = skill.level
                                         queue_insert(store, m)
                                     end
                                 end

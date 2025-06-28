@@ -5898,6 +5898,20 @@ local function heroes()
     tt.render.sprites[1].draw_order = 2
     tt.render.sprites[1].anchor.y = 0.46551724137931033
 
+    tt = E:register_t("mod_monkey_god_fire", "modifier")
+    E:add_comps(tt, "dps")
+    tt.modifier.level = 1
+    tt.modifier.duration = 2
+    tt.modifier.vis_flags = F_BURN
+    tt.dps.damage_min = 1
+    tt.dps.damage_max = 1
+    tt.dps.damage_inc = 3
+    tt.dps.damage_every = 0.5
+    tt.dps.damage_type = DAMAGE_TRUE
+    tt.main_script.insert = scripts.mod_dps.insert
+    tt.main_script.update = scripts.mod_dps.update
+
+
     tt = E:register_t("mod_monkey_god_palm", "modifier")
     E:add_comps(tt, "render")
     tt.main_script.insert = scripts.mod_monkey_god_palm.insert
