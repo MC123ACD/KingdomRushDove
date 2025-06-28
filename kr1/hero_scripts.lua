@@ -6271,6 +6271,7 @@ return function(scripts)
 
                                 while not U.animation_finished(this) do
                                     if SU.hero_interrupted(this) then
+                                        a.ts = a.ts - a.cooldown * (a.loops - i)/a.loops
                                         goto label_452_1
                                     end
 

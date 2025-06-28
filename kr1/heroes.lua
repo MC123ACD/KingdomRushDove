@@ -5829,7 +5829,6 @@ local function heroes()
     tt.melee.attacks[3].min_count = 2
     tt.melee.attacks[3].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[3].vis_flags = F_BLOCK
-    -- tt.melee.attacks[3].xp_gain_factor = 3
     tt.melee.attacks[3].xp_from_skill = "spinningpole"
     tt.melee.attacks[3].sound = "HeroMonkeyGodSpinningPoleLoop"
     tt.melee.attacks[3].sound_end = "HeroMonkeyGodSpinningPoleLoopEnd"
@@ -5844,7 +5843,6 @@ local function heroes()
     tt.melee.attacks[4].loops = 1
     tt.melee.attacks[4].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[4].vis_flags = F_BLOCK
-    -- tt.melee.attacks[4].xp_gain_factor = 5
     tt.melee.attacks[4].xp_from_skill = "tetsubostorm"
     tt.melee.attacks[4].sound = "HeroMonkeyGodTetsuboStorm"
     tt.melee.attacks[5] = E:clone_c("melee_attack")
