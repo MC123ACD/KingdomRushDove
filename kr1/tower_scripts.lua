@@ -373,9 +373,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_use_power(pow_sh, ash, store) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, ash.range, false,
-                            ash.vis_flags, ash.vis_bans)
-
+                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, ash.range, false, ash.vis_flags, ash.vis_bans, nil, nil, ash.min_spread + 48)
                         if not enemy then
                             -- block empty
                         else

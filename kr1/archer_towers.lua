@@ -362,7 +362,7 @@ local function archer_towers()
     tt.powers.shrapnel = CC("power")
     tt.powers.shrapnel.attack_idx = 4
     tt.powers.shrapnel.price_base = 300
-    tt.powers.shrapnel.price_inc = 275
+    tt.powers.shrapnel.price_inc = 300
     tt.powers.shrapnel.enc_icon = 4
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_archer_musketeer_%04i"
