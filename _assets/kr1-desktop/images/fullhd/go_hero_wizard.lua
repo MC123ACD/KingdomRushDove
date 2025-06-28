@@ -222,57 +222,57 @@ return {
         trim = {34, 39, 19, 21},
         a_size = {1024, 1024},
         f_quad = {615, 483, 48, 50},
-        alias = {"hero_wizard_0054"}
+        alias = {}
     },
-    hero_wizard_0055 = {
+    hero_wizard_0054 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 42, 19, 21},
         a_size = {1024, 1024},
         f_quad = {938, 212, 61, 47},
-        alias = {"hero_wizard_0056"}
+        alias = {}
     },
-    hero_wizard_0057 = {
+    hero_wizard_0055 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 46, 19, 19},
         a_size = {1024, 1024},
         f_quad = {6, 979, 61, 45},
-        alias = {"hero_wizard_0058"}
+        alias = {}
     },
-    hero_wizard_0059 = {
+    hero_wizard_0056 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 41, 19, 21},
         a_size = {1024, 1024},
         f_quad = {737, 212, 61, 48},
-        alias = {"hero_wizard_0060"}
+        alias = {}
     },
-    hero_wizard_0061 = {
+    hero_wizard_0057 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 43, 19, 19},
         a_size = {1024, 1024},
         f_quad = {804, 212, 61, 48},
-        alias = {"hero_wizard_0062"}
+        alias = {}
     },
-    hero_wizard_0063 = {
+    hero_wizard_0058 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 43, 19, 19},
         a_size = {1024, 1024},
         f_quad = {871, 212, 61, 48},
-        alias = {"hero_wizard_0064"}
+        alias = {}
     },
-    hero_wizard_0065 = {
+    hero_wizard_0059 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 43, 19, 20},
         a_size = {1024, 1024},
         f_quad = {268, 270, 61, 47},
-        alias = {"hero_wizard_0066"}
+        alias = {}
     },
-    hero_wizard_0067 = {
+    hero_wizard_0060 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 40, 19, 20},
@@ -280,7 +280,7 @@ return {
         f_quad = {469, 212, 61, 50},
         alias = {}
     },
-    hero_wizard_0068 = {
+    hero_wizard_0061 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 40, 19, 20},
@@ -288,23 +288,23 @@ return {
         f_quad = {536, 212, 61, 50},
         alias = {}
     },
-    hero_wizard_0069 = {
+    hero_wizard_0062 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 39, 19, 20},
         a_size = {1024, 1024},
         f_quad = {335, 212, 61, 51},
-        alias = {"hero_wizard_0070"}
+        alias = {}
     },
-    hero_wizard_0071 = {
+    hero_wizard_0063 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 38, 19, 20},
         a_size = {1024, 1024},
         f_quad = {268, 212, 61, 52},
-        alias = {"hero_wizard_0072"}
+        alias = {}
     },
-    hero_wizard_0073 = {
+    hero_wizard_0064 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 41, 19, 20},
@@ -312,7 +312,7 @@ return {
         f_quad = {670, 212, 61, 49},
         alias = {}
     },
-    hero_wizard_0074 = {
+    hero_wizard_0065 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {21, 39, 19, 20},
@@ -320,7 +320,7 @@ return {
         f_quad = {402, 212, 61, 51},
         alias = {}
     },
-    hero_wizard_0075 = {
+    hero_wizard_0066 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {15, 30, 17, 12},
@@ -328,7 +328,7 @@ return {
         f_quad = {187, 361, 69, 68},
         alias = {}
     },
-    hero_wizard_0076 = {
+    hero_wizard_0067 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {15, 30, 17, 12},
@@ -336,7 +336,7 @@ return {
         f_quad = {187, 435, 69, 68},
         alias = {}
     },
-    hero_wizard_0077 = {
+    hero_wizard_0068 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {15, 30, 17, 12},
@@ -344,7 +344,7 @@ return {
         f_quad = {187, 509, 69, 68},
         alias = {}
     },
-    hero_wizard_0078 = {
+    hero_wizard_0069 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {7, 23, 10, 5},
@@ -352,7 +352,7 @@ return {
         f_quad = {6, 803, 84, 82},
         alias = {}
     },
-    hero_wizard_0079 = {
+    hero_wizard_0070 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {6, 21, 8, 4},
@@ -360,7 +360,7 @@ return {
         f_quad = {6, 314, 87, 85},
         alias = {}
     },
-    hero_wizard_0080 = {
+    hero_wizard_0071 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {19, 33, 21, 16},
@@ -368,14 +368,174 @@ return {
         f_quad = {187, 889, 61, 61},
         alias = {}
     },
-    hero_wizard_0081 = {
+    hero_wizard_0072 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {42, 56, 43, 38},
         a_size = {1024, 1024},
         f_quad = {886, 34, 16, 16},
-        alias = {"hero_wizard_0082", "hero_wizard_0083"}
+        alias = {}
     },
+    -- hero_wizard_0053 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {34, 39, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {615, 483, 48, 50},
+    --     alias = {"hero_wizard_0054"}
+    -- },
+    -- hero_wizard_0055 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 42, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {938, 212, 61, 47},
+    --     alias = {"hero_wizard_0056"}
+    -- },
+    -- hero_wizard_0057 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 46, 19, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 979, 61, 45},
+    --     alias = {"hero_wizard_0058"}
+    -- },
+    -- hero_wizard_0059 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 41, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {737, 212, 61, 48},
+    --     alias = {"hero_wizard_0060"}
+    -- },
+    -- hero_wizard_0061 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 43, 19, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {804, 212, 61, 48},
+    --     alias = {"hero_wizard_0062"}
+    -- },
+    -- hero_wizard_0063 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 43, 19, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {871, 212, 61, 48},
+    --     alias = {"hero_wizard_0064"}
+    -- },
+    -- hero_wizard_0065 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 43, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 270, 61, 47},
+    --     alias = {"hero_wizard_0066"}
+    -- },
+    -- hero_wizard_0067 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 40, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {469, 212, 61, 50},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0068 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 40, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {536, 212, 61, 50},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0069 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 39, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {335, 212, 61, 51},
+    --     alias = {"hero_wizard_0070"}
+    -- },
+    -- hero_wizard_0071 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 38, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 212, 61, 52},
+    --     alias = {"hero_wizard_0072"}
+    -- },
+    -- hero_wizard_0073 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 41, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {670, 212, 61, 49},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0074 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {21, 39, 19, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {402, 212, 61, 51},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0075 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {15, 30, 17, 12},
+    --     a_size = {1024, 1024},
+    --     f_quad = {187, 361, 69, 68},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0076 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {15, 30, 17, 12},
+    --     a_size = {1024, 1024},
+    --     f_quad = {187, 435, 69, 68},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0077 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {15, 30, 17, 12},
+    --     a_size = {1024, 1024},
+    --     f_quad = {187, 509, 69, 68},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0078 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {7, 23, 10, 5},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 803, 84, 82},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0079 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {6, 21, 8, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 314, 87, 85},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0080 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {19, 33, 21, 16},
+    --     a_size = {1024, 1024},
+    --     f_quad = {187, 889, 61, 61},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0081 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {42, 56, 43, 38},
+    --     a_size = {1024, 1024},
+    --     f_quad = {886, 34, 16, 16},
+    --     alias = {"hero_wizard_0082", "hero_wizard_0083"}
+    -- },
     hero_wizard_0084 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
@@ -390,73 +550,73 @@ return {
         trim = {41, 53, 38, 28},
         a_size = {1024, 1024},
         f_quad = {784, 34, 22, 29},
-        alias = {"hero_wizard_0087"}
+        alias = {}
     },
-    hero_wizard_0088 = {
+    hero_wizard_0087 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {38, 66, 25, 20},
         a_size = {1024, 1024},
         f_quad = {345, 34, 38, 24},
-        alias = {"hero_wizard_0089"}
+        alias = {}
     },
-    hero_wizard_0090 = {
+    hero_wizard_0088 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {37, 78, 28, 9},
         a_size = {1024, 1024},
         f_quad = {431, 34, 36, 23},
-        alias = {"hero_wizard_0091"}
+        alias = {}
     },
-    hero_wizard_0092 = {
+    hero_wizard_0089 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {38, 75, 28, 11},
         a_size = {1024, 1024},
         f_quad = {473, 34, 35, 24},
-        alias = {"hero_wizard_0093"}
+        alias = {}
     },
-    hero_wizard_0094 = {
+    hero_wizard_0090 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {37, 77, 28, 9},
         a_size = {1024, 1024},
         f_quad = {389, 34, 36, 24},
-        alias = {"hero_wizard_0095"}
+        alias = {}
     },
-    hero_wizard_0096 = {
+    hero_wizard_0091 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {37, 66, 28, 9},
         a_size = {1024, 1024},
         f_quad = {978, 483, 36, 35},
-        alias = {"hero_wizard_0097"}
+        alias = {}
     },
-    hero_wizard_0098 = {
+    hero_wizard_0092 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {37, 59, 28, 9},
         a_size = {1024, 1024},
         f_quad = {936, 483, 36, 42},
-        alias = {"hero_wizard_0099"}
+        alias = {}
     },
-    hero_wizard_0100 = {
+    hero_wizard_0093 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {37, 41, 28, 9},
         a_size = {1024, 1024},
         f_quad = {559, 543, 36, 60},
-        alias = {"hero_wizard_0101"}
+        alias = {}
     },
-    hero_wizard_0102 = {
+    hero_wizard_0094 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {30, 33, 28, 9},
         a_size = {1024, 1024},
         f_quad = {507, 738, 43, 68},
-        alias = {"hero_wizard_0103"}
+        alias = {}
     },
-    hero_wizard_0104 = {
+    hero_wizard_0095 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {31, 36, 28, 9},
@@ -464,7 +624,7 @@ return {
         f_quad = {507, 812, 42, 65},
         alias = {}
     },
-    hero_wizard_0105 = {
+    hero_wizard_0096 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {31, 36, 28, 9},
@@ -472,7 +632,7 @@ return {
         f_quad = {507, 883, 42, 65},
         alias = {}
     },
-    hero_wizard_0106 = {
+    hero_wizard_0097 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {24, 25, 19, 9},
@@ -480,7 +640,7 @@ return {
         f_quad = {268, 390, 58, 76},
         alias = {}
     },
-    hero_wizard_0107 = {
+    hero_wizard_0098 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {24, 25, 19, 9},
@@ -488,63 +648,63 @@ return {
         f_quad = {268, 472, 58, 76},
         alias = {}
     },
-    hero_wizard_0108 = {
+    hero_wizard_0099 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {25, 29, 20, 11},
         a_size = {1024, 1024},
         f_quad = {268, 752, 56, 70},
-        alias = {"hero_wizard_0109"}
+        alias = {}
     },
-    hero_wizard_0110 = {
+    hero_wizard_0100 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {25, 28, 21, 11},
         a_size = {1024, 1024},
         f_quad = {268, 897, 55, 71},
-        alias = {"hero_wizard_0111"}
+        alias = {}
     },
-    hero_wizard_0112 = {
+    hero_wizard_0101 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {32, 35, 21, 21},
         a_size = {1024, 1024},
         f_quad = {507, 483, 48, 54},
-        alias = {"hero_wizard_0113"}
+        alias = {}
     },
-    hero_wizard_0114 = {
+    hero_wizard_0102 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {30, 39, 20, 21},
         a_size = {1024, 1024},
         f_quad = {394, 483, 51, 50},
-        alias = {"hero_wizard_0115"}
+        alias = {}
     },
-    hero_wizard_0116 = {
+    hero_wizard_0103 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {30, 41, 19, 21},
         a_size = {1024, 1024},
         f_quad = {334, 877, 52, 48},
-        alias = {"hero_wizard_0117"}
+        alias = {}
     },
-    hero_wizard_0118 = {
+    hero_wizard_0104 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {30, 42, 19, 21},
         a_size = {1024, 1024},
         f_quad = {837, 270, 52, 47},
-        alias = {"hero_wizard_0119"}
+        alias = {}
     },
-    hero_wizard_0120 = {
+    hero_wizard_0105 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {30, 40, 19, 21},
         a_size = {1024, 1024},
         f_quad = {334, 822, 52, 49},
-        alias = {"hero_wizard_0121"}
+        alias = {}
     },
-    hero_wizard_0122 = {
+    hero_wizard_0106 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {31, 42, 19, 21},
@@ -552,14 +712,190 @@ return {
         f_quad = {394, 592, 51, 47},
         alias = {}
     },
-    hero_wizard_0123 = {
+    hero_wizard_0107 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},
         trim = {31, 42, 19, 21},
         a_size = {1024, 1024},
         f_quad = {394, 645, 51, 47},
-        alias = {"hero_wizard_0124"}
+        alias = {}
     },
+    -- hero_wizard_0086 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {41, 53, 38, 28},
+    --     a_size = {1024, 1024},
+    --     f_quad = {784, 34, 22, 29},
+    --     alias = {"hero_wizard_0087"}
+    -- },
+    -- hero_wizard_0088 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {38, 66, 25, 20},
+    --     a_size = {1024, 1024},
+    --     f_quad = {345, 34, 38, 24},
+    --     alias = {"hero_wizard_0089"}
+    -- },
+    -- hero_wizard_0090 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {37, 78, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {431, 34, 36, 23},
+    --     alias = {"hero_wizard_0091"}
+    -- },
+    -- hero_wizard_0092 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {38, 75, 28, 11},
+    --     a_size = {1024, 1024},
+    --     f_quad = {473, 34, 35, 24},
+    --     alias = {"hero_wizard_0093"}
+    -- },
+    -- hero_wizard_0094 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {37, 77, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {389, 34, 36, 24},
+    --     alias = {"hero_wizard_0095"}
+    -- },
+    -- hero_wizard_0096 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {37, 66, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {978, 483, 36, 35},
+    --     alias = {"hero_wizard_0097"}
+    -- },
+    -- hero_wizard_0098 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {37, 59, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {936, 483, 36, 42},
+    --     alias = {"hero_wizard_0099"}
+    -- },
+    -- hero_wizard_0100 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {37, 41, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {559, 543, 36, 60},
+    --     alias = {"hero_wizard_0101"}
+    -- },
+    -- hero_wizard_0102 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {30, 33, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {507, 738, 43, 68},
+    --     alias = {"hero_wizard_0103"}
+    -- },
+    -- hero_wizard_0104 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {31, 36, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {507, 812, 42, 65},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0105 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {31, 36, 28, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {507, 883, 42, 65},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0106 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {24, 25, 19, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 390, 58, 76},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0107 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {24, 25, 19, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 472, 58, 76},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0108 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {25, 29, 20, 11},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 752, 56, 70},
+    --     alias = {"hero_wizard_0109"}
+    -- },
+    -- hero_wizard_0110 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {25, 28, 21, 11},
+    --     a_size = {1024, 1024},
+    --     f_quad = {268, 897, 55, 71},
+    --     alias = {"hero_wizard_0111"}
+    -- },
+    -- hero_wizard_0112 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {32, 35, 21, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {507, 483, 48, 54},
+    --     alias = {"hero_wizard_0113"}
+    -- },
+    -- hero_wizard_0114 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {30, 39, 20, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {394, 483, 51, 50},
+    --     alias = {"hero_wizard_0115"}
+    -- },
+    -- hero_wizard_0116 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {30, 41, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {334, 877, 52, 48},
+    --     alias = {"hero_wizard_0117"}
+    -- },
+    -- hero_wizard_0118 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {30, 42, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {837, 270, 52, 47},
+    --     alias = {"hero_wizard_0119"}
+    -- },
+    -- hero_wizard_0120 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {30, 40, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {334, 822, 52, 49},
+    --     alias = {"hero_wizard_0121"}
+    -- },
+    -- hero_wizard_0122 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {31, 42, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {394, 592, 51, 47},
+    --     alias = {}
+    -- },
+    -- hero_wizard_0123 = {
+    --     a_name = "go_hero_wizard-1.png",
+    --     size = {101, 110},
+    --     trim = {31, 42, 19, 21},
+    --     a_size = {1024, 1024},
+    --     f_quad = {394, 645, 51, 47},
+    --     alias = {"hero_wizard_0124"}
+    -- },
     hero_wizard_0125 = {
         a_name = "go_hero_wizard-1.png",
         size = {101, 110},

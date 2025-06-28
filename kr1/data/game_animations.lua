@@ -9966,17 +9966,20 @@ local kr2_a = {
     },
     hero_wizard_teleport_out = {
         prefix = "hero_wizard",
-        to = 83,
+        -- to = 83,
+        to = 72,
         from = 52
     },
     hero_wizard_teleport_in = {
         prefix = "hero_wizard",
-        to = 124,
+        -- to = 124,
+        to = 107,
         from = 86
     },
     hero_wizard_respawn = {
         prefix = "hero_wizard",
-        to = 124,
+        -- to = 124,
+        to = 107,
         from = 86
     },
     hero_wizard_death = {
