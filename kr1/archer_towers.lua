@@ -833,8 +833,7 @@ local function archer_towers()
     tt.attacks.list[3].sound_args = {
         delay = fts(15)
     }
-    -- tt.attacks.list[3].vis_bans = bor(F_BOSS)
-    -- tt.attacks.list[3].use_obsidian_upgrade = true
+
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0010"
     tt.info.fn = scripts.tower_silver.get_info
     tt.powers.sentence = E:clone_c("power")

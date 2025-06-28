@@ -5345,12 +5345,15 @@ function scripts.mod_damage_factors.insert(this, store, script)
     if not target or target.health.dead or not target.unit then
         return false
     end
+    local boss_factor = band(target.vis.flags, F_BOSS) ~= 0 and 0.5 or 1
 
     if this.received_damage_factor then
+        this.received_damage_factor = (this.received_damage_factor - 1) * boss_factor + 1
         target.health.damage_factor = target.health.damage_factor * this.received_damage_factor
     end
 
     if this.inflicted_damage_factor then
+        this.inflicted_damage_factor = 1 - (1 - this.inflicted_damage_factor) * boss_factor
         target.unit.damage_factor = target.unit.damage_factor * this.inflicted_damage_factor
     end
 

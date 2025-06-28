@@ -28187,6 +28187,9 @@ function scripts.mod_arrow_silver_mark.insert(this, store)
         return false
     end
 
+    local boss_factor = band(target.vis.flags, F_BOSS) ~= 0 and 0.5 or 1
+    this.received_damage_factor = (this.received_damage_factor - 1) * boss_factor + 1
+
     target.health.damage_factor = target.health.damage_factor * this.received_damage_factor
 
     signal.emit("mod-applied", this, target)
