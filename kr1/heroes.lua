@@ -6220,7 +6220,7 @@ local function heroes()
     tt.melee.attacks[1].hit_time = fts(10)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"
-    tt.melee.attacks[1].xp_gain_factor = 2.7
+    tt.melee.attacks[1].xp_gain_factor = 2.8
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
@@ -7244,7 +7244,7 @@ local function heroes()
     tt.melee.attacks[1].cooldown = 1.2
     tt.melee.attacks[1].hit_time = fts(10)
     tt.melee.attacks[1].sound = "MeleeSword"
-    tt.melee.attacks[1].xp_gain_factor = 3.8
+    tt.melee.attacks[1].xp_gain_factor = 4
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
