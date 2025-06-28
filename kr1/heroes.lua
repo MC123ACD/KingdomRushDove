@@ -7478,9 +7478,9 @@ local function heroes()
     tt.ranged.attacks[1].shoot_time = fts(11)
     tt.ranged.attacks[2] = E:clone_c("bullet_attack")
     tt.ranged.attacks[2].animation = "rayShoot"
-    tt.ranged.attacks[2].cooldown = 18
+    tt.ranged.attacks[2].cooldown = 16.2
     tt.ranged.attacks[2].disabled = true
-    tt.ranged.attacks[2].min_range = 20
+    tt.ranged.attacks[2].min_range = 0
     tt.ranged.attacks[2].max_range = 175
     tt.ranged.attacks[2].node_prediction = fts(19)
     tt.ranged.attacks[2].bullet = "lightning_arivan"
@@ -7490,9 +7490,9 @@ local function heroes()
     tt.ranged.attacks[2].xp_from_skill = "lightning_rod"
     tt.ranged.attacks[3] = E:clone_c("bullet_attack")
     tt.ranged.attacks[3].animation = "freezeBall"
-    tt.ranged.attacks[3].cooldown = 14
+    tt.ranged.attacks[3].cooldown = 12.6
     tt.ranged.attacks[3].disabled = true
-    tt.ranged.attacks[3].min_range = 20
+    tt.ranged.attacks[3].min_range = 0
     tt.ranged.attacks[3].max_range = 130
     tt.ranged.attacks[3].node_prediction = fts(25)
     tt.ranged.attacks[3].bullet = "bolt_freeze_arivan"
@@ -7502,8 +7502,8 @@ local function heroes()
     tt.ranged.attacks[3].xp_from_skill = "icy_prison"
     tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
     tt.timed_attacks.list[1].disabled = true
-    tt.timed_attacks.list[1].cooldown = 23
-    tt.timed_attacks.list[1].min_range = 30
+    tt.timed_attacks.list[1].cooldown = 21.7
+    tt.timed_attacks.list[1].min_range = 0
     tt.timed_attacks.list[1].max_range = 160
     tt.timed_attacks.list[1].bullet = "fireball_arivan"
     tt.timed_attacks.list[1].bullet_start_offset = {vec_2(-7, 50), vec_2(7, 50)}
