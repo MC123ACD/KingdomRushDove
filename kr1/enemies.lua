@@ -2633,7 +2633,7 @@ local function enemies()
     tt.enemy.gold = 5
     tt.enemy.melee_slot = vec_2(18, 0)
     tt.health.armor = 0
-    tt.health.hp_max = {40, 50, 60}
+    tt.health.hp_max = {40, 50, 60, 70}
     tt.health.magic_armor = 0
     tt.health_bar.offset = vec_2(0, ady(38))
     tt.info.portrait = IS_PHONE and "portraits_sc_0027" or "kr2_info_portraits_enemies_0001"
@@ -3529,7 +3529,7 @@ local function enemies()
     tt.enemy.gold = 0
     tt.enemy.melee_slot = vec_2(20, 0)
     tt.health.armor = 0
-    tt.health.hp_max = {15, 20, 25}
+    tt.health.hp_max = {15, 20, 25, 30}
     tt.health.magic_armor = 0.5
     tt.health_bar.offset = vec_2(0, ady(24))
     tt.info.portrait = IS_PHONE and "portraits_sc_0043" or "kr2_info_portraits_enemies_0018"
@@ -5352,7 +5352,7 @@ local function enemies()
     tt.info.enc_icon = 6
     tt.info.portrait = "kr3_portraits_sc_0009"
     tt.enemy.gold = 18
-    tt.health.hp_max = {90, 120, 120}
+    tt.health.hp_max = {90, 120, 120, 150}
     tt.health_bar.offset = vec_2(0, 90)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
     tt.main_script.insert = scripts.enemy_basic.insert
@@ -5640,7 +5640,7 @@ local function enemies()
     tt.count_group.type = COUNT_GROUP_CONCURRENT
     tt.enemy.gold = 5
     tt.enemy.melee_slot = vec_2(18, 0)
-    tt.health.hp_max = {30, 35, 40}
+    tt.health.hp_max = {30, 35, 40, 45}
     tt.health_bar.offset = vec_2(0, 67)
     tt.main_script.insert = scripts.enemy_basic.insert
     tt.main_script.update = scripts.enemy_gloomy.update
