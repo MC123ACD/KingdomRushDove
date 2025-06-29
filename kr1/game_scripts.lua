@@ -7713,8 +7713,8 @@ function scripts.mod_troll_rage.insert(this, store)
 	end
 
 	m.ts = store.tick_ts
-	this._speed_factor = (target.motion.max_speed + this.extra_speed) / target.motion.max_speed
-	target.motion.max_speed = target.motion.max_speed * this._speed_factor
+
+    target.motion.max_speed = target.motion.max_speed + this.extra_speed
 
     if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
         SU.armor_inc(target, this.extra_armor)
@@ -7735,7 +7735,7 @@ function scripts.mod_troll_rage.remove(this, store)
 	local target = store.entities[m.target_id]
 
 	if target then
-		target.motion.max_speed = target.motion.max_speed / this._speed_factor
+		target.motion.max_speed = target.motion.max_speed - this.extra_speed
 
         if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
             SU.armor_dec(target, this.extra_armor)

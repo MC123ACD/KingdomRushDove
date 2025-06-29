@@ -1591,10 +1591,9 @@ tt.modifier.type = MOD_TYPE_FAST
 tt.sound_events.insert = "EnemyRocketeer"
 tt.fast.factor = 3.6041666666666665
 tt.walk_angles = {"walkingRightLeft_fast", "walkingUp_fast", "walkingDown_fast"}
+
 tt = RT("mod_troll_rage", "modifier")
-
 AC(tt, "render")
-
 tt.extra_armor = 0.5
 tt.extra_damage_max = 30
 tt.extra_damage_min = 15

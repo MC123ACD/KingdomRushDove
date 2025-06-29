@@ -1030,10 +1030,9 @@ local function enemies()
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(adx(75), ady(47))
     tt.unit.size = UNIT_SIZE_MEDIUM
+
     tt = RT("enemy_troll_brute", "enemy")
-
     AC(tt, "melee", "auras")
-
     anchor_y = 0.2125
     anchor_x = 0.5
     image_y = 80
@@ -3349,7 +3348,7 @@ local function enemies()
     tt = E:register_t("shaman_magic_aura", "aura")
     E:add_comps(tt, "render")
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
-                                 "enemy_shaman_necro"}
+                                "enemy_shaman_necro","enemy_shaman_rage"}
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
     tt.aura.mod = "mod_shaman_magic_armor"
@@ -3375,6 +3374,70 @@ local function enemies()
     tt.main_script.update = scripts.mod_armor_buff.update
     tt.modifier.duration = 1.5
     tt.render.sprites[1].name = "shaman_magic_mod"
+
+    tt = E:register_t("enemy_shaman_rage", "enemy")
+    E:add_comps(tt, "melee", "auras")
+    anchor_y = 0.18
+    image_y = 62
+    tt.auras.list[1] = E:clone_c("aura_attack")
+    tt.auras.list[1].cooldown = 0
+    tt.auras.list[1].name = "shaman_rage_aura"
+    tt.enemy.gold = 50
+    tt.enemy.melee_slot = vec_2(20, 0)
+    tt.health.armor = 0
+    tt.health.hp_max = 800
+    tt.health_bar.offset = vec_2(0, ady(50))
+    tt.info.portrait = IS_PHONE and "portraits_sc_0048" or "kr2_info_portraits_enemies_0023"
+    tt.info.enc_icon = 22
+    tt.main_script.insert = scripts.enemy_basic.insert
+    tt.main_script.update = scripts.enemy_mixed.update
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].damage_max = 26
+    tt.melee.attacks[1].damage_min = 14
+    tt.melee.attacks[1].hit_time = fts(12)
+    tt.motion.max_speed = 0.96 * FPS
+    tt.render.sprites[1].anchor.y = anchor_y
+    tt.render.sprites[1].prefix = "enemy_shaman_magic"
+    tt.render.sprites[1].color = {255, 150, 150}
+    tt.unit.hit_offset = vec_2(0, 14)
+    tt.unit.marker_offset = vec_2(0, ady(11))
+    tt.unit.mod_offset = vec_2(0, ady(26))
+    tt.vis.flags = bor(tt.vis.flags, F_SPELLCASTER)
+
+    tt = E:register_t("shaman_rage_aura", "aura")
+    E:add_comps(tt, "render")
+    tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
+                                "enemy_shaman_necro","enemy_shaman_rage","enemy_shaman_magic"}
+    tt.aura.cycle_time = 1
+    tt.aura.duration = -1
+    tt.aura.mod = "mod_shaman_rage"
+    tt.aura.radius = 115.2
+    tt.aura.requires_magic = true
+    tt.aura.targets_per_cycle = 10
+    tt.aura.track_source = true
+    tt.aura.vis_bans = bor(F_FRIEND, F_HERO, F_BOSS)
+    tt.aura.vis_flags = F_MOD
+    tt.main_script.insert = scripts.aura_apply_mod.insert
+    tt.main_script.update = scripts.aura_apply_mod.update
+    tt.render.sprites[1].loop = true
+    tt.render.sprites[1].name = "shaman_magic_aura"
+    tt.render.sprites[1].color = {255, 0, 255}
+
+    tt = E:register_t("mod_shaman_rage", "modifier")
+    E:add_comps(tt, "render")
+    tt.extra_armor = 0
+    tt.extra_damage_max = 40
+    tt.extra_damage_min = 20
+    tt.extra_speed = 30
+    tt.main_script.insert = scripts.mod_troll_rage.insert
+    tt.main_script.remove = scripts.mod_troll_rage.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.modifier.duration = 1
+    tt.modifier.type = MOD_TYPE_RAGE
+    tt.modifier.vis_flags = bor(F_MOD)
+    tt.modifier.use_mod_offset = false
+    tt.render.sprites[1].name = "shaman_magic_mod"
+    tt.render.sprites[1].color = {255, 0, 255}
 
     tt = E:register_t("enemy_shaman_shield", "enemy")
     E:add_comps(tt, "melee", "auras")
@@ -3416,7 +3479,7 @@ local function enemies()
     tt.aura.vis_bans = bor(F_FRIEND, F_HERO, F_BOSS)
     tt.aura.vis_flags = F_MOD
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_magic",
-                                 "enemy_shaman_necro"}
+                                 "enemy_shaman_necro","enemy_shaman_rage"}
     tt.aura.requires_magic = true
     tt.main_script.insert = scripts.aura_apply_mod.insert
     tt.main_script.update = scripts.aura_apply_mod.update
@@ -3469,7 +3532,7 @@ local function enemies()
     tt.render.sprites[1].prefix = "enemy_shaman_necro"
     tt.timed_attacks.list[1] = E:clone_c("custom_attack")
     tt.timed_attacks.list[1].allowed_templates = {"enemy_cannibal", "enemy_hunter", "enemy_shaman_shield",
-                                                  "enemy_shaman_magic", "enemy_shaman_priest"}
+                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage"}
     tt.timed_attacks.list[1].animation = "necromancer"
     tt.timed_attacks.list[1].cast_time = fts(16)
     tt.timed_attacks.list[1].cooldown = 1

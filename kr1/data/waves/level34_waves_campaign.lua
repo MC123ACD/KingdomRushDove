@@ -29,7 +29,16 @@ return {
 							max_same = 0,
 							interval_next = 200,
 							max = 3
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				},
 				{
@@ -91,7 +100,16 @@ return {
 							max_same = 0,
 							interval_next = 200,
 							max = 5
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				},
 				{
@@ -115,7 +133,16 @@ return {
 							max_same = 0,
 							interval_next = 200,
 							max = 3
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				}
 			}
@@ -248,7 +275,16 @@ return {
 							max_same = 0,
 							interval_next = 250,
 							max = 2
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				},
 				{
@@ -290,7 +326,16 @@ return {
 							max_same = 0,
 							interval_next = 250,
 							max = 2
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				},
 				{
@@ -453,6 +498,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -910,6 +964,15 @@ return {
 							interval_next = 200,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -1083,6 +1146,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -1182,6 +1254,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -1472,6 +1553,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -1921,6 +2011,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -2261,7 +2360,16 @@ return {
 							max_same = 0,
 							interval_next = 100,
 							max = 2
-						}
+						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 					}
 				},
 				{
@@ -2448,6 +2556,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -2681,6 +2798,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,
@@ -2780,6 +2906,15 @@ return {
 							interval_next = 30,
 							max = 1
 						},
+                        {
+                            interval = 0,
+                            path = 1,
+                            fixed_sub_path = 0,
+                            creep = "enemy_shaman_rage",
+                            max_same = 0,
+                            interval_next = 0,
+                            max = 1
+                        },
 						{
 							interval = 0,
 							path = 2,

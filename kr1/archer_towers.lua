@@ -267,7 +267,7 @@ local function archer_towers()
     local mod_silence_totem = E:register_t("mod_silence_totem", "modifier")
     E:add_comps(mod_silence_totem, "render")
     mod_silence_totem.modifier.duration = 3
-    mod_silence_totem.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal"}
+    mod_silence_totem.modifier.bans = {"mod_shaman_armor", "mod_shaman_magic_armor", "mod_shaman_priest_heal", "mod_shaman_rage"}
     mod_silence_totem.modifier.remove_banned = true
     mod_silence_totem.main_script.insert = scripts.mod_silence.insert
     mod_silence_totem.main_script.remove = scripts.mod_silence.remove
