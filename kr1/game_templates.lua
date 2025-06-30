@@ -4163,10 +4163,9 @@ tt.render.sprites[1].scale = vec_1(0.6)
 tt.render.sprites[1].z = Z_DECALS
 tt.tween.remove = true
 tt.tween.props[1].keys = {{0, 130}, {2.5, 130}, {3.25, 0}}
+
 tt = RT("decal_lilith_soul_eater_ball", "decal_scripted")
-
 AC(tt, "force_motion", "sound_events")
-
 tt.render.sprites[1].name = "lilith_soul_eater_ball_loop"
 tt.render.sprites[1].offset.y = 10
 tt.render.sprites[1].z = Z_EFFECTS
@@ -4183,6 +4182,7 @@ tt.hit_fx = "fx_lilith_soul_eater_ball_hit"
 tt.hit_mod = "mod_lilith_soul_eater_damage_factor"
 tt.stolen_damage = nil
 tt.sound_events.insert = "ElvesHeroLilithSoulEater"
+
 tt = RT("decal_lilith_reapers_harvest", "decal_timed")
 tt.render.sprites[1].name = "lilith_reapers_harvest_decal_anim"
 tt.render.sprites[1].z = Z_DECALS
@@ -5852,14 +5852,13 @@ tt.main_script.update = scripts.aura_apply_mod.update
 tt.roots_count = 9
 tt.roots_count_inc = 3
 tt.sound_events.insert = "TowerForestKeeperEerieGarden"
+
 tt = E:register_t("aura_liquid_fire_flame_faustus", "aura")
-
 E:add_comps(tt, "render", "tween")
-
 tt.main_script.insert = scripts.aura_apply_mod.insert
 tt.main_script.update = scripts.aura_apply_mod.update
 tt.aura.mod = "mod_liquid_fire_faustus"
-tt.aura.duration = 6
+tt.aura.duration = 8
 tt.aura.cycle_time = fts(10)
 tt.aura.radius = 35
 tt.aura.vis_flags = bor(F_RANGED)
@@ -5872,6 +5871,7 @@ tt.tween.props[1].keys = {{0, 0}, {0.25, 255}, {"this.aura.duration-1", 255}, {"
 tt.tween.props[2] = E:clone_c("tween_prop")
 tt.tween.props[2].name = "scale"
 tt.tween.props[2].keys = {{0, vec_1(0.5)}, {0.5, vec_1(1)}}
+
 tt = E:register_t("aura_minidragon_faustus", "aura_liquid_fire_flame_faustus")
 tt.aura.mod = "mod_minidragon_faustus"
 tt.tween.props[1].keys = {{0, 0}, {0.05, 255}, {"this.aura.duration-1", 255}, {"this.aura.duration", 0}}
@@ -5968,7 +5968,7 @@ tt.tween.remove = false
 tt.tween.props[1].keys = {{0, 0}, {fts(5), 255}, {"this.aura.duration-0.5", 255}, {"this.aura.duration", 0}}
 tt = RT("aura_lilith_soul_eater", "aura")
 tt.aura.duration = -1
-tt.aura.cooldown = 30
+tt.aura.cooldown = 15
 tt.aura.cycle_time = fts(5)
 tt.aura.radius = 200
 tt.aura.vis_bans = bor(F_BOSS, F_FLYING)
@@ -5976,10 +5976,9 @@ tt.aura.vis_flags = bor(F_MOD, F_RANGED)
 tt.aura.excluded_templates = {"enemy_hyena"}
 tt.aura.mod = "mod_lilith_soul_eater_track"
 tt.main_script.update = scripts.aura_lilith_soul_eater.update
+
 tt = RT("aura_bruce_hps", "aura")
-
 AC(tt, "hps")
-
 tt.aura.duration = -1
 tt.main_script.update = scripts.aura_bruce_hps.update
 tt.hps.heal_max = 1
@@ -6590,14 +6589,14 @@ tt.modifier.duration = fts(34)
 tt = RT("mod_lilith_soul_eater_track", "modifier")
 tt.main_script.update = scripts.mod_lilith_soul_eater_track.update
 tt.modifier.duration = fts(11)
+
 tt = RT("mod_lilith_soul_eater_damage_factor", "modifier")
-
 AC(tt, "render", "tween")
-
 tt.inflicted_damage_factor = nil
 tt.soul_eater_factor = nil
 tt.modifier.duration = 12
 tt.modifier.use_mod_offset = false
+tt.modifier.allows_duplicates = true
 tt.main_script.insert = scripts.mod_damage_factors.insert
 tt.main_script.remove = scripts.mod_damage_factors.remove
 tt.main_script.update = scripts.mod_track_target.update
@@ -6631,6 +6630,7 @@ tt.tween.props[6] = table.deepclone(tt.tween.props[5])
 tt.tween.props[6].sprite_id = 3
 tt.tween.props[7] = table.deepclone(tt.tween.props[5])
 tt.tween.props[7].sprite_id = 4
+
 tt = RT("mod_lilith_infernal_wheel", "mod_lava")
 tt.modifier.duration = fts(31)
 tt.dps.damage_type = DAMAGE_TRUE
