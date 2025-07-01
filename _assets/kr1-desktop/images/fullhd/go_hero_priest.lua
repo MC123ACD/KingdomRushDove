@@ -847,41 +847,41 @@ return {
         trim = {28, 111, 37, 29},
         a_size = {1024, 1024},
         f_quad = {737, 736, 45, 48},
-        alias = {"hero_priest_0123"}
+        alias = {}
     },
-    hero_priest_0124 = {
+    hero_priest_0123 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {28, 111, 31, 29},
         a_size = {1024, 1024},
         f_quad = {407, 975, 51, 48},
-        alias = {"hero_priest_0125"}
+        alias = {}
     },
-    hero_priest_0126 = {
+    hero_priest_0124 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {27, 79, 31, 24},
         a_size = {1024, 1024},
         f_quad = {407, 696, 52, 85},
-        alias = {"hero_priest_0127"}
+        alias = {}
     },
-    hero_priest_0128 = {
+    hero_priest_0125 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {27, 79, 36, 24},
         a_size = {1024, 1024},
         f_quad = {580, 805, 47, 85},
-        alias = {"hero_priest_0129"}
+        alias = {}
     },
-    hero_priest_0130 = {
+    hero_priest_0126 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {29, 79, 36, 24},
         a_size = {1024, 1024},
         f_quad = {111, 931, 45, 85},
-        alias = {"hero_priest_0131"}
+        alias = {}
     },
-    hero_priest_0132 = {
+    hero_priest_0127 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {30, 79, 35, 25},
@@ -889,7 +889,7 @@ return {
         f_quad = {686, 736, 45, 84},
         alias = {}
     },
-    hero_priest_0133 = {
+    hero_priest_0128 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {30, 79, 35, 25},
@@ -897,23 +897,23 @@ return {
         f_quad = {686, 826, 45, 84},
         alias = {}
     },
-    hero_priest_0134 = {
+    hero_priest_0129 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {30, 78, 33, 24},
         a_size = {1024, 1024},
         f_quad = {580, 713, 47, 86},
-        alias = {"hero_priest_0135"}
+        alias = {}
     },
-    hero_priest_0136 = {
+    hero_priest_0130 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {18, 76, 21, 24},
         a_size = {1024, 1024},
         f_quad = {262, 607, 71, 88},
-        alias = {"hero_priest_0137"}
+        alias = {}
     },
-    hero_priest_0138 = {
+    hero_priest_0131 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {7, 72, 12, 24},
@@ -921,31 +921,31 @@ return {
         f_quad = {162, 459, 91, 92},
         alias = {}
     },
-    hero_priest_0139 = {
+    hero_priest_0132 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {12, 69, 19, 24},
         a_size = {1024, 1024},
         f_quad = {942, 6, 79, 95},
-        alias = {"hero_priest_0140"}
+        alias = {}
     },
-    hero_priest_0141 = {
+    hero_priest_0133 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {28, 53, 33, 23},
         a_size = {1024, 1024},
         f_quad = {469, 909, 49, 112},
-        alias = {"hero_priest_0142"}
+        alias = {}
     },
-    hero_priest_0143 = {
+    hero_priest_0134 = {
         a_name = "go_hero_priest-2.png",
         size = {110, 188},
         trim = {38, 34, 44, 53},
         a_size = {1024, 1024},
         f_quad = {53, 119, 28, 101},
-        alias = {"hero_priest_0144"}
+        alias = {}
     },
-    hero_priest_0145 = {
+    hero_priest_0135 = {
         a_name = "go_hero_priest-2.png",
         size = {110, 188},
         trim = {43, 27, 50, 80},
@@ -953,7 +953,7 @@ return {
         f_quad = {53, 498, 17, 81},
         alias = {}
     },
-    hero_priest_0146 = {
+    hero_priest_0136 = {
         a_name = "go_hero_priest-2.png",
         size = {110, 188},
         trim = {43, 27, 50, 121},
@@ -983,25 +983,25 @@ return {
         trim = {28, 12, 39, 35},
         a_size = {1024, 1024},
         f_quad = {788, 790, 43, 141},
-        alias = {"hero_priest_0150"}
+        alias = {}
     },
-    hero_priest_0151 = {
+    hero_priest_0150 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {21, 61, 28, 18},
         a_size = {1024, 1024},
         f_quad = {340, 379, 61, 109},
-        alias = {"hero_priest_0152"}
+        alias = {}
     },
-    hero_priest_0153 = {
+    hero_priest_0151 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {21, 72, 23, 19},
         a_size = {1024, 1024},
         f_quad = {262, 784, 66, 97},
-        alias = {"hero_priest_0154"}
+        alias = {}
     },
-    hero_priest_0155 = {
+    hero_priest_0152 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {21, 93, 23, 18},
@@ -1009,7 +1009,7 @@ return {
         f_quad = {262, 887, 66, 77},
         alias = {}
     },
-    hero_priest_0156 = {
+    hero_priest_0153 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {17, 93, 23, 18},
@@ -1017,7 +1017,7 @@ return {
         f_quad = {262, 701, 70, 77},
         alias = {}
     },
-    hero_priest_0157 = {
+    hero_priest_0154 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {13, 104, 19, 16},
@@ -1025,7 +1025,7 @@ return {
         f_quad = {162, 787, 78, 68},
         alias = {}
     },
-    hero_priest_0158 = {
+    hero_priest_0155 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {10, 104, 16, 15},
@@ -1033,7 +1033,7 @@ return {
         f_quad = {162, 712, 84, 69},
         alias = {}
     },
-    hero_priest_0159 = {
+    hero_priest_0156 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {8, 102, 14, 15},
@@ -1041,7 +1041,7 @@ return {
         f_quad = {162, 635, 88, 71},
         alias = {}
     },
-    hero_priest_0160 = {
+    hero_priest_0157 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {7, 102, 13, 14},
@@ -1049,7 +1049,7 @@ return {
         f_quad = {162, 557, 90, 72},
         alias = {}
     },
-    hero_priest_0161 = {
+    hero_priest_0158 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {6, 99, 12, 14},
@@ -1057,7 +1057,7 @@ return {
         f_quad = {162, 297, 92, 75},
         alias = {}
     },
-    hero_priest_0162 = {
+    hero_priest_0159 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {6, 99, 12, 14},
@@ -1065,7 +1065,7 @@ return {
         f_quad = {162, 378, 92, 75},
         alias = {}
     },
-    hero_priest_0163 = {
+    hero_priest_0160 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {5, 97, 11, 13},
@@ -1073,7 +1073,7 @@ return {
         f_quad = {162, 213, 94, 78},
         alias = {}
     },
-    hero_priest_0164 = {
+    hero_priest_0161 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {4, 97, 10, 13},
@@ -1081,7 +1081,7 @@ return {
         f_quad = {890, 111, 96, 78},
         alias = {}
     },
-    hero_priest_0165 = {
+    hero_priest_0162 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {3, 97, 9, 13},
@@ -1089,7 +1089,7 @@ return {
         f_quad = {786, 111, 98, 78},
         alias = {}
     },
-    hero_priest_0166 = {
+    hero_priest_0163 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {2, 97, 9, 13},
@@ -1097,7 +1097,7 @@ return {
         f_quad = {6, 931, 99, 78},
         alias = {}
     },
-    hero_priest_0167 = {
+    hero_priest_0164 = {
         a_name = "go_hero_priest-1.png",
         size = {110, 188},
         trim = {28, 111, 39, 29},

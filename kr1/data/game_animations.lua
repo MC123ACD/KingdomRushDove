@@ -10320,17 +10320,17 @@ local kr2_a = {
     },
     hero_priest_teleport_out = {
         prefix = "hero_priest",
-        to = 146,
+        to = 136,
         from = 122
     },
     hero_priest_teleport_in = {
         prefix = "hero_priest",
-        to = 167,
+        to = 164,
         from = 147
     },
     hero_priest_respawn = {
         prefix = "hero_priest",
-        to = 167,
+        to = 164,
         from = 147
     },
     hero_priest_shoot = {
