@@ -541,7 +541,7 @@ return {
 							interval = 0,
 							path = 1,
 							fixed_sub_path = 1,
-							creep = "enemy_shaman_priest",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 30,
 							max = 1
@@ -1090,7 +1090,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_shaman_priest",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 30,
 							max = 1
@@ -1225,7 +1225,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_shaman_priest",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 700,
 							max = 1
@@ -1252,7 +1252,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_shaman_priest",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 600,
 							max = 1
@@ -1530,7 +1530,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_shaman_priest",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 30,
 							max = 1
@@ -1726,7 +1726,7 @@ return {
 							path = 1,
 							fixed_sub_path = 0,
 							creep = "enemy_cannibal",
-							creep_aux = "enemy_shaman_priest",
+							creep_aux = "enemy_shaman_rage",
 							max_same = 5,
 							interval_next = 25,
 							max = 7

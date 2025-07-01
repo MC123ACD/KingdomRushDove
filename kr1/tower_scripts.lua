@@ -3201,7 +3201,6 @@ local function register_engineer(scripts)
 
             local function do_attack(at)
                 SU.delay_attack(store, at, 0.25)
-                -- local target, pred_pos = U.find_random_enemy_with_pos(store.entities, tpos(this), 0, a.range, at.node_prediction,at.vis_flags,at.vis_bans,filter_faerie)
                 local target, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
                     at.node_prediction, at.vis_flags, at.vis_bans, filter_faerie)
 
@@ -3212,11 +3211,6 @@ local function register_engineer(scripts)
 
                     U.animation_start_group(this, at.animation, nil, store.tick_ts, false, "layers")
                     U.y_wait(store, at.shoot_time)
-
-                    -- local nt, _, nt_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
-                    --     at.node_prediction, at.vis_flags, at.vis_bans, filter_faerie)
-                    -- local nt, nt_pos = U.find_random_enemy_with_pos(store.entities, tpos(this), 0, a.range, at.node_prediction,
-                    --     at.vis_flags, at.vis_bans, filter_faerie)
 
                     local bo = at.bullet_start_offset
                     local b = E:create_entity(at.bullet)

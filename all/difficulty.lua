@@ -103,9 +103,11 @@ function difficulty:patch_templates()
                 if a.min_cooldown and not PT(a, "min_cooldown") and timed_attack_cooldown_factor_enemy ~= 1 then
                     a.min_cooldown = math.ceil(a.min_cooldown * timed_attack_cooldown_factor_enemy)
                 end
+                PT(a, "max_count")
                 PT(a, "damage_max")
                 PT(a, "damage_min")
                 PT(a, "max_clones")
+                PT(a, "max_per_cast")
             end
         end
 

@@ -27159,25 +27159,52 @@ function scripts.bullet_liquid_fire_faustus.update(this, store)
     fx.render.sprites[1].ts = store.tick_ts
 
     queue_insert(store, fx)
-
+    local nn, a
     for i = 1, this.flames_count do
-        local nn = {
+        nn = {
             pi = node.pi,
             spi = km.zmod(node.spi + 2 * (i - 1), 3),
             ni = node.ni + (i - 1) * 2
         }
 
         if not P:is_node_valid(nn.pi, nn.ni) then
-            break
+            goto flame_mid
         end
 
-        local a = E:create_entity("aura_liquid_fire_flame_faustus")
+        a = E:create_entity("aura_liquid_fire_flame_faustus")
 
         a.pos = P:node_pos(nn)
         a.pos.x = a.pos.x + math.random(-8, 8)
         a.aura.ts = store.tick_ts
 
         queue_insert(store, a)
+
+        ::flame_mid::
+
+        if i == 1 then
+            goto flame_end
+        end
+
+        nn = {
+            pi = node.pi,
+            spi = km.zmod(node.spi + 2 * (i - 1), 3),
+            ni = node.ni - (i - 1) * 2
+        }
+
+        if not P:is_node_valid(nn.pi, nn.ni) then
+            break
+        end
+
+        a = E:create_entity("aura_liquid_fire_flame_faustus")
+
+        a.pos = P:node_pos(nn)
+        a.pos.x = a.pos.x + math.random(-8, 8)
+        a.aura.ts = store.tick_ts
+
+        queue_insert(store, a)
+
+        ::flame_end::
+
         U.y_wait(store, 0.25)
     end
 

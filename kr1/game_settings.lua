@@ -46,7 +46,7 @@ GS.difficulty_enemy_timed_attack_cooldown_factor = {
     1.0,
     0.9,
     0.9,
-    0.8
+    0.7
 }
 GS.difficulty_enemy_armor_factor = {
     0,

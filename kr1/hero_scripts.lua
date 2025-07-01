@@ -7576,13 +7576,13 @@ return function(scripts)
         this.tween.ts = store.tick_ts
         this.pos = target.pos
 
-        local mods = U.get_modifiers(store, target, {"mod_lynn_despair", "mod_lynn_weakening", "mod_lynn_ultimate"})
+        -- local mods = U.get_modifiers(store, target, {"mod_lynn_despair", "mod_lynn_weakening", "mod_lynn_ultimate"})
 
-        for _, m in pairs(mods) do
-            if m ~= this then
-                U.sprites_hide(m, nil, nil, true)
-            end
-        end
+        -- for _, m in pairs(mods) do
+        --     if m ~= this then
+        --         U.sprites_hide(m, nil, nil, true)
+        --     end
+        -- end
 
         signal.emit("mod-applied", this, target)
 
@@ -7674,13 +7674,13 @@ return function(scripts)
         SU.armor_dec(target, this.armor_reduction)
         SU.magic_armor_dec(target, this.magic_armor_reduction)
 
-        local mods = U.get_modifiers(store, target, {"mod_lynn_despair", "mod_lynn_ultimate"})
+        -- local mods = U.get_modifiers(store, target, {"mod_lynn_despair", "mod_lynn_ultimate"})
 
-        for _, m in pairs(mods) do
-            if m ~= this then
-                U.sprites_hide(m, nil, nil, true)
-            end
-        end
+        -- for _, m in pairs(mods) do
+        --     if m ~= this then
+        --         U.sprites_hide(m, nil, nil, true)
+        --     end
+        -- end
 
         signal.emit("mod-applied", this, target)
 
@@ -7716,13 +7716,13 @@ return function(scripts)
         this.modifier.ts = store.tick_ts
         this.render.sprites[1].ts = store.tick_ts
 
-        local mods = U.get_modifiers(store, target, {"mod_lynn_ultimate", "mod_lynn_weakening"})
+        -- local mods = U.get_modifiers(store, target, {"mod_lynn_ultimate", "mod_lynn_weakening"})
 
-        for _, m in pairs(mods) do
-            if m ~= this then
-                U.sprites_hide(m, nil, nil, true)
-            end
-        end
+        -- for _, m in pairs(mods) do
+        --     if m ~= this then
+        --         U.sprites_hide(m, nil, nil, true)
+        --     end
+        -- end
 
         signal.emit("mod-applied", this, target)
 

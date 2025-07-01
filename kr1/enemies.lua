@@ -461,7 +461,7 @@ local function enemies()
     tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
     tt.timed_attacks.list[1].bullet = "enemy_spider_egg"
     tt.timed_attacks.list[1].max_cooldown = 10
-    tt.timed_attacks.list[1].max_count = 3
+    tt.timed_attacks.list[1].max_count = {3, 3, 3, 4}
     tt.timed_attacks.list[1].min_cooldown = 5
     tt.ui.click_rect = r(-20, -5, 40, 30)
     tt.unit.blood_color = BLOOD_GREEN
@@ -775,10 +775,9 @@ local function enemies()
     tt.unit.hit_offset = vec_2(0, 24)
     tt.unit.mod_offset = vec_2(adx(47), ady(35))
     tt.unit.size = UNIT_SIZE_LARGE
+
     tt = RT("enemy_forest_troll", "enemy")
-
     AC(tt, "melee", "auras")
-
     anchor_y = 0.21
     anchor_x = 0.5
     image_y = 100
@@ -822,10 +821,9 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(78), ady(45))
     tt.unit.size = UNIT_SIZE_LARGE
     tt.vis.bans = bor(F_THORN, F_POISON, F_STUN, F_FREEZE)
+
     tt = RT("enemy_orc_armored", "enemy")
-
     AC(tt, "melee")
-
     anchor_y = 0.14
     anchor_x = 0.5
     image_y = 48
@@ -1104,7 +1102,7 @@ local function enemies()
     tt.timed_attacks.list[1].cast_sound = "EnemyChieftain"
     tt.timed_attacks.list[1].cast_time = fts(8)
     tt.timed_attacks.list[1].loops = 3
-    tt.timed_attacks.list[1].max_count = 3
+    tt.timed_attacks.list[1].max_count = {3, 3, 3, 4}
     tt.timed_attacks.list[1].max_range = 180
     tt.timed_attacks.list[1].mods = {"mod_troll_rage", "mod_troll_heal"}
     tt.timed_attacks.list[1].exclude_with_mods = {"mod_troll_rage"}
@@ -1231,7 +1229,7 @@ local function enemies()
     tt.timed_attacks.list[1].animation = "special"
     tt.timed_attacks.list[1].cast_time = fts(15)
     tt.timed_attacks.list[1].cooldown = 6
-    tt.timed_attacks.list[1].max_count = 4
+    tt.timed_attacks.list[1].max_count = {4, 4, 4, 5}
     tt.timed_attacks.list[1].max_range = 180
     tt.timed_attacks.list[1].mod = "mod_demon_shield"
     tt.timed_attacks.list[1].sound = "EnemyHealing"
@@ -3077,7 +3075,7 @@ local function enemies()
     tt.timed_attacks.list[2] = E:clone_c("mod_attack")
     tt.timed_attacks.list[2].animation = "heal"
     tt.timed_attacks.list[2].cooldown = 8
-    tt.timed_attacks.list[2].max_per_cast = 3
+    tt.timed_attacks.list[2].max_per_cast = {3, 3, 3, 4}
     tt.timed_attacks.list[2].mod = "mod_munra_heal"
     tt.timed_attacks.list[2].range = 96
     tt.timed_attacks.list[2].shoot_time = fts(13)
@@ -3348,7 +3346,7 @@ local function enemies()
     tt = E:register_t("shaman_magic_aura", "aura")
     E:add_comps(tt, "render")
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
-                                "enemy_shaman_necro","enemy_shaman_rage"}
+                                "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla"}
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
     tt.aura.mod = "mod_shaman_magic_armor"
@@ -3407,7 +3405,7 @@ local function enemies()
     tt = E:register_t("shaman_rage_aura", "aura")
     E:add_comps(tt, "render")
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
-                                "enemy_shaman_necro","enemy_shaman_rage","enemy_shaman_magic"}
+                                "enemy_shaman_necro","enemy_shaman_rage","enemy_shaman_magic","enemy_gorilla"}
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
     tt.aura.mod = "mod_shaman_rage"
@@ -3479,7 +3477,7 @@ local function enemies()
     tt.aura.vis_bans = bor(F_FRIEND, F_HERO, F_BOSS)
     tt.aura.vis_flags = F_MOD
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_magic",
-                                 "enemy_shaman_necro","enemy_shaman_rage"}
+                                 "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla"}
     tt.aura.requires_magic = true
     tt.main_script.insert = scripts.aura_apply_mod.insert
     tt.main_script.update = scripts.aura_apply_mod.update
@@ -3532,7 +3530,7 @@ local function enemies()
     tt.render.sprites[1].prefix = "enemy_shaman_necro"
     tt.timed_attacks.list[1] = E:clone_c("custom_attack")
     tt.timed_attacks.list[1].allowed_templates = {"enemy_cannibal", "enemy_hunter", "enemy_shaman_shield",
-                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage"}
+                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage","enemy_gorilla"}
     tt.timed_attacks.list[1].animation = "necromancer"
     tt.timed_attacks.list[1].cast_time = fts(16)
     tt.timed_attacks.list[1].cooldown = 1
@@ -3680,7 +3678,7 @@ local function enemies()
     tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
     tt.timed_attacks.list[1].bullet = "jungle_spider_egg"
     tt.timed_attacks.list[1].max_cooldown = 6
-    tt.timed_attacks.list[1].max_count = 3
+    tt.timed_attacks.list[1].max_count = {3,3,3,4}
     tt.timed_attacks.list[1].min_cooldown = 2
     tt.unit.blood_color = BLOOD_GREEN
     tt.unit.explode_fx = "fx_spider_explode"
