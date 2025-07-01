@@ -3173,7 +3173,7 @@ local function enemies()
     anchor_y = 0.21428571428571427
     image_y = 42
     tt.cannibalize = {}
-    tt.cannibalize.extra_hp = 50
+    tt.cannibalize.extra_hp = 60
     tt.cannibalize.hps = 3 * FPS
     tt.cannibalize.max_hp = 600
     tt.enemy.gold = 15

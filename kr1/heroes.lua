@@ -7715,7 +7715,7 @@ local function heroes()
     tt = RT("hero_phoenix", "hero")
     E:add_comps(tt, "ranged", "timed_attacks", "selfdestruct")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    tt.hero.level_stats.hp_max = {530,510,490,470,450,410,390,370,350}
+    tt.hero.level_stats.hp_max = {530,510,490,470,450,430,410,390,370,350}
     tt.hero.level_stats.melee_damage_max = {1, 2, 4, 4, 5, 6, 7, 8, 9, 10}
     tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
     tt.hero.level_stats.ranged_damage_min = {16, 19, 22, 24, 27, 30, 33, 35, 38, 41}
