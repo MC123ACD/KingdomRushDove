@@ -3530,7 +3530,7 @@ local function enemies()
     tt.render.sprites[1].prefix = "enemy_shaman_necro"
     tt.timed_attacks.list[1] = E:clone_c("custom_attack")
     tt.timed_attacks.list[1].allowed_templates = {"enemy_cannibal", "enemy_hunter", "enemy_shaman_shield",
-                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage","enemy_gorilla"}
+                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage","enemy_gorilla","enemy_savage_bird_rider"}
     tt.timed_attacks.list[1].animation = "necromancer"
     tt.timed_attacks.list[1].cast_time = fts(16)
     tt.timed_attacks.list[1].cooldown = 1
