@@ -386,7 +386,7 @@ local function register_archer(scripts)
                             local spread_factor = 1
                             if distance > ash.range then
                                 distance_factor = 0.6
-                                spread_factor = 1.4
+                                spread_factor = 1.5
                                 ash.ts = ash.ts - 0.4 * ash.cooldown
                             end
 
