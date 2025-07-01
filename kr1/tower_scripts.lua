@@ -365,20 +365,31 @@ local function register_archer(scripts)
                                 if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= ax.range then
                                     shot_bullet(ax, shooter_idx, ai, enemy, pow_sn.level)
                                 end
-                                queue_remove(store, m)
                                 U.y_animation_wait(this, shooter_sids[shooter_idx])
+                                queue_remove(store, m)
                             end
                             ::continue_ax::
                         end
                     end
 
                     if ready_to_use_power(pow_sh, ash, store) then
-                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, ash.range, false, ash.vis_flags, ash.vis_bans, nil, nil, ash.min_spread + 48)
+                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, ash.range * 1.5, false, ash.vis_flags, ash.vis_bans, nil, nil, ash.min_spread + 48)
                         if not enemy then
                             -- block empty
                         else
+                            local distance = V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y)
+
                             ash.ts = store.tick_ts
                             aa.ts = store.tick_ts
+
+                            local distance_factor = 1
+                            local spread_factor = 1
+                            if distance > ash.range then
+                                distance_factor = 0.6
+                                spread_factor = 1.4
+                                ash.ts = ash.ts - 0.4 * ash.cooldown
+                            end
+
                             shooter_idx = km.zmod(shooter_idx + 1, #shooter_sids)
 
                             local fuse_idx = km.zmod(shooter_idx + 1, #shooter_sids)
@@ -409,10 +420,10 @@ local function register_archer(scripts)
                                 b.bullet.flight_time = U.frandom(b.bullet.flight_time_min, b.bullet.flight_time_max)
                                 b.pos = V.vclone(src_pos)
                                 b.bullet.from = V.vclone(src_pos)
-                                b.bullet.to = U.point_on_ellipse(dest_pos, U.frandom(ash.min_spread, ash.max_spread),
+                                b.bullet.to = U.point_on_ellipse(dest_pos, U.frandom(ash.min_spread * spread_factor, ash.max_spread * spread_factor),
                                     (i - 1) * 2 * math.pi / ash.loops)
                                 b.bullet.level = pow_sh.level
-
+                                b.bullet.damage_factor = this.tower.damage_factor * distance_factor
                                 queue_insert(store, b)
                             end
 

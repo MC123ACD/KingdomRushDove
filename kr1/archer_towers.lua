@@ -416,7 +416,7 @@ local function archer_towers()
     tt.attacks.list[4].bullet_start_offset = tt.attacks.list[1].bullet_start_offset
     tt.attacks.list[4].cooldown = 9
     tt.attacks.list[4].power_name = "shrapnel"
-    tt.attacks.list[4].range = tt.attacks.range * 0.5
+    tt.attacks.list[4].range = tt.attacks.range * 0.4
     tt.attacks.list[4].shoot_time = fts(16)
     tt.attacks.list[4].node_prediction = fts(6)
     tt.attacks.list[4].min_spread = 12.5
