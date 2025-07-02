@@ -2791,6 +2791,7 @@ return {
 			49
 		},
 		alias = {
+            "veznan_hero_0258",
 			"veznan_hero_0259",
 			"veznan_hero_0260",
 			"veznan_hero_0261"
