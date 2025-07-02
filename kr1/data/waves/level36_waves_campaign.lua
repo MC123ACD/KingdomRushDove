@@ -1981,7 +1981,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_rage",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 0,
 							max = 1
@@ -1990,7 +1990,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_rage",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 30,
 							max = 1
@@ -4228,7 +4228,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_rage",
+							creep = "enemy_shaman_rage",
 							max_same = 0,
 							interval_next = 0,
 							max = 1
