@@ -42,8 +42,8 @@ return {
 			"veznan_hero_0185",
 			"veznan_hero_0218",
 			"veznan_hero_0219",
-			"veznan_hero_0254",
-			"veznan_hero_0255",
+            "veznan_hero_0239",
+            "veznan_hero_0240",
 			"veznan_hero_0256",
 			"veznan_hero_0257",
 			"veznan_hero_0273",
@@ -2066,8 +2066,8 @@ return {
 			"veznan_hero_0189",
 			"veznan_hero_0216",
 			"veznan_hero_0217",
-			"veznan_hero_0252",
-			"veznan_hero_0253"
+			"veznan_hero_0237",
+            "veznan_hero_0238",
 		}
 	},
 	veznan_hero_0190 = {
@@ -2406,11 +2406,9 @@ return {
 			38,
 			61
 		},
-		alias = {
-			"veznan_hero_0221"
-		}
+		alias = {}
 	},
-	veznan_hero_0222 = {
+	veznan_hero_0221 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2432,11 +2430,9 @@ return {
 			38,
 			78
 		},
-		alias = {
-			"veznan_hero_0223"
-		}
+		alias = {}
 	},
-	veznan_hero_0224 = {
+	veznan_hero_0222 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2458,11 +2454,9 @@ return {
 			38,
 			72
 		},
-		alias = {
-			"veznan_hero_0225"
-		}
+		alias = {}
 	},
-	veznan_hero_0226 = {
+	veznan_hero_0223 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2484,11 +2478,9 @@ return {
 			38,
 			72
 		},
-		alias = {
-			"veznan_hero_0227"
-		}
+		alias = {}
 	},
-	veznan_hero_0228 = {
+	veznan_hero_0224 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2510,11 +2502,9 @@ return {
 			38,
 			72
 		},
-		alias = {
-			"veznan_hero_0229"
-		}
+		alias = {}
 	},
-	veznan_hero_0230 = {
+	veznan_hero_0225 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2536,11 +2526,9 @@ return {
 			36,
 			77
 		},
-		alias = {
-			"veznan_hero_0231"
-		}
+		alias = {}
 	},
-	veznan_hero_0232 = {
+	veznan_hero_0226 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2562,11 +2550,9 @@ return {
 			48,
 			78
 		},
-		alias = {
-			"veznan_hero_0233"
-		}
+		alias = {}
 	},
-	veznan_hero_0234 = {
+	veznan_hero_0227 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2588,11 +2574,9 @@ return {
 			52,
 			70
 		},
-		alias = {
-			"veznan_hero_0235"
-		}
+		alias = {}
 	},
-	veznan_hero_0236 = {
+	veznan_hero_0228 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2614,11 +2598,9 @@ return {
 			54,
 			63
 		},
-		alias = {
-			"veznan_hero_0237"
-		}
+		alias = {}
 	},
-	veznan_hero_0238 = {
+	veznan_hero_0229 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2640,11 +2622,9 @@ return {
 			59,
 			85
 		},
-		alias = {
-			"veznan_hero_0239"
-		}
+		alias = {}
 	},
-	veznan_hero_0240 = {
+	veznan_hero_0230 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2666,11 +2646,9 @@ return {
 			50,
 			86
 		},
-		alias = {
-			"veznan_hero_0241"
-		}
+		alias = {}
 	},
-	veznan_hero_0242 = {
+	veznan_hero_0231 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2692,11 +2670,9 @@ return {
 			51,
 			81
 		},
-		alias = {
-			"veznan_hero_0243"
-		}
+		alias = {}
 	},
-	veznan_hero_0244 = {
+	veznan_hero_0232 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2718,11 +2694,9 @@ return {
 			46,
 			78
 		},
-		alias = {
-			"veznan_hero_0245"
-		}
+		alias = {}
 	},
-	veznan_hero_0246 = {
+	veznan_hero_0233 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2744,11 +2718,9 @@ return {
 			39,
 			78
 		},
-		alias = {
-			"veznan_hero_0247"
-		}
+		alias = {}
 	},
-	veznan_hero_0248 = {
+	veznan_hero_0234 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2770,11 +2742,9 @@ return {
 			40,
 			70
 		},
-		alias = {
-			"veznan_hero_0249"
-		}
+		alias = {}
 	},
-	veznan_hero_0250 = {
+	veznan_hero_0235 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,
@@ -2796,11 +2766,9 @@ return {
 			40,
 			39
 		},
-		alias = {
-			"veznan_hero_0251"
-		}
+		alias = {}
 	},
-	veznan_hero_0258 = {
+	veznan_hero_0236 = {
 		a_name = "go_hero_veznan-1.png",
 		size = {
 			135,

@@ -11290,8 +11290,8 @@ local kr2_a = {
     },
     hero_monkey_god_cloud_start = {
         prefix = "hero_monkeyGod",
-        to = 265,
-        from = 246
+        to = 255,
+        from = 247
     },
     hero_monkey_god_cloud_loop = {
         prefix = "hero_monkeyGod",
@@ -11300,8 +11300,8 @@ local kr2_a = {
     },
     hero_monkey_god_cloud_end = {
         prefix = "hero_monkeyGod",
-        to = 285,
-        from = 266
+        to = 265,
+        from = 256
     },
     fx_monkey_god_angry = {
         prefix = "hero_monkeyGod_angryGodEffect",
@@ -18406,13 +18406,13 @@ local kr3_a = {
     },
     veznan_hero_teleport_out = {
         prefix = "veznan_hero",
-        to = 237,
+        to = 228,
         from = 220
     },
     veznan_hero_teleport_in = {
         prefix = "veznan_hero",
-        to = 255,
-        from = 238
+        to = 240,
+        from = 221
     },
     veznan_hero_attack = {
         prefix = "veznan_hero",

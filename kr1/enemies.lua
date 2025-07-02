@@ -280,10 +280,9 @@ local function enemies()
     tt.unit.show_blood_pool = false
     tt.vis.bans = bor(F_BLOCK, F_THORN, F_SKELETON)
     tt.vis.flags = bor(F_ENEMY, F_FLYING)
+
     tt = RT("enemy_ogre", "enemy")
-
     AC(tt, "melee")
-
     anchor_y = 0.2
     anchor_x = 0.5
     image_y = 80

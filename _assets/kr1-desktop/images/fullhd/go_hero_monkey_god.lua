@@ -12,7 +12,7 @@ return {
                  "hero_monkeyGod_0159", "hero_monkeyGod_0160", "hero_monkeyGod_0161", "hero_monkeyGod_0180",
                  "hero_monkeyGod_0181", "hero_monkeyGod_0182", "hero_monkeyGod_0183", "hero_monkeyGod_0218",
                  "hero_monkeyGod_0219", "hero_monkeyGod_0220", "hero_monkeyGod_0221", "hero_monkeyGod_0244",
-                 "hero_monkeyGod_0246", "hero_monkeyGod_0247", "hero_monkeyGod_0284", "hero_monkeyGod_0285"}
+                 "hero_monkeyGod_0246", "hero_monkeyGod_0247", "hero_monkeyGod_0265"}
     },
     hero_monkeyGod_0002 = {
         a_name = "go_hero_monkey_god-1.png",
@@ -847,77 +847,77 @@ return {
         f_quad = {416, 328, 98, 68},
         alias = {}
     },
-    hero_monkeyGod_0248 = {
+    hero_monkeyGod_0247 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {63, 113, 71, 37},
         a_size = {1024, 1024},
         f_quad = {911, 402, 91, 58},
-        alias = {"hero_monkeyGod_0249", "hero_monkeyGod_0282", "hero_monkeyGod_0283"}
+        alias = {"hero_monkeyGod_0264"}
     },
-    hero_monkeyGod_0250 = {
+    hero_monkeyGod_0248 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {63, 115, 70, 37},
         a_size = {1024, 1024},
         f_quad = {932, 328, 92, 56},
-        alias = {"hero_monkeyGod_0251", "hero_monkeyGod_0280", "hero_monkeyGod_0281"}
+        alias = {"hero_monkeyGod_0263"}
     },
-    hero_monkeyGod_0252 = {
+    hero_monkeyGod_0249 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {57, 51, 79, 71},
         a_size = {1024, 1024},
         f_quad = {514, 801, 89, 86},
-        alias = {"hero_monkeyGod_0253", "hero_monkeyGod_0278", "hero_monkeyGod_0279"}
+        alias = {"hero_monkeyGod_0262"}
     },
-    hero_monkeyGod_0254 = {
+    hero_monkeyGod_0250 = {
         a_name = "go_hero_monkey_god-2.png",
         size = {225, 208},
         trim = {60, 11, 81, 92},
         a_size = {1024, 1024},
         f_quad = {6, 70, 84, 105},
-        alias = {"hero_monkeyGod_0255", "hero_monkeyGod_0276", "hero_monkeyGod_0277"}
+        alias = {"hero_monkeyGod_0261"}
     },
-    hero_monkeyGod_0256 = {
+    hero_monkeyGod_0251 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {56, 5, 79, 91},
         a_size = {1024, 1024},
         f_quad = {514, 573, 90, 112},
-        alias = {"hero_monkeyGod_0257", "hero_monkeyGod_0274", "hero_monkeyGod_0275"}
+        alias = {"hero_monkeyGod_0260"}
     },
-    hero_monkeyGod_0258 = {
+    hero_monkeyGod_0252 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {56, 14, 79, 90},
         a_size = {1024, 1024},
         f_quad = {514, 691, 90, 104},
-        alias = {"hero_monkeyGod_0259", "hero_monkeyGod_0272", "hero_monkeyGod_0273"}
+        alias = {"hero_monkeyGod_0259"}
     },
-    hero_monkeyGod_0260 = {
+    hero_monkeyGod_0253 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {44, 58, 77, 85},
         a_size = {1024, 1024},
         f_quad = {644, 240, 104, 65},
-        alias = {"hero_monkeyGod_0261", "hero_monkeyGod_0270", "hero_monkeyGod_0271"}
+        alias = {"hero_monkeyGod_0258"}
     },
-    hero_monkeyGod_0262 = {
+    hero_monkeyGod_0254 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {47, 49, 80, 91},
         a_size = {1024, 1024},
         f_quad = {520, 328, 98, 68},
-        alias = {"hero_monkeyGod_0263", "hero_monkeyGod_0268", "hero_monkeyGod_0269"}
+        alias = {"hero_monkeyGod_0257"}
     },
-    hero_monkeyGod_0264 = {
+    hero_monkeyGod_0255 = {
         a_name = "go_hero_monkey_god-1.png",
         size = {225, 208},
         trim = {47, 49, 80, 90},
         a_size = {1024, 1024},
         f_quad = {305, 942, 98, 69},
-        alias = {"hero_monkeyGod_0265", "hero_monkeyGod_0266", "hero_monkeyGod_0267"}
+        alias = {"hero_monkeyGod_0256"}
     },
     hero_monkeyGod_angryGodEffect_0001 = {
         a_name = "go_hero_monkey_god-2.png",
