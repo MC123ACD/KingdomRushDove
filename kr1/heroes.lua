@@ -4662,6 +4662,7 @@ local function heroes()
     tt.hero.skills.cranestyle = E:clone_c("hero_skill")
     tt.hero.skills.cranestyle.damage = {20, 40, 60}
     tt.hero.skills.cranestyle.chance = {0.4, 0.5, 0.6}
+    tt.hero.skills.cranestyle.cooldown = {3, 2, 1}
     tt.hero.skills.cranestyle.xp_gain_factor = 18
     tt.hero.skills.cranestyle.xp_level_steps = {
         [1] = 1,
@@ -4716,7 +4717,7 @@ local function heroes()
     tt.melee.attacks[1].damage_type = DAMAGE_PHYSICAL
     tt.melee.attacks[1].xp_gain_factor = 3
     tt.melee.attacks[1].side_effect = function(this, store, attack, target)
-        SU.armor_dec(target, 0.15)
+        SU.armor_dec(target, 0.1)
     end
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])

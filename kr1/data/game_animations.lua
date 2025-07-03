@@ -10660,58 +10660,60 @@ local kr2_a = {
     hero_monk_snake = {
         prefix = "hero_kungFu",
         -- to = 263,
-        to = 261,
-        -- from = 223
-        from = 224
+        to = 243,
+        from = 223,
     },
     hero_monk_dragon = {
         prefix = "hero_kungFu",
         -- to = 325,
-        to = 315,
+        to = 291,
         -- from = 264
-        from = 266,
+        from = 265,
     },
     hero_monk_tiger = {
         prefix = "hero_kungFu",
         to = 118,
-        from = 98
+        -- from = 98
+        from = 105
     },
     hero_monk_crane = {
         prefix = "hero_kungFu",
-        to = 152,
+        -- to = 152,
+        to = 135,
         from = 119
     },
     hero_monk_leopard_start = {
         prefix = "hero_kungFu",
         -- to = 177,
-        to = 175,
+        to = 171,
         -- from = 165
         from = 166
     },
     hero_monk_leopard_hit1 = {
         prefix = "hero_kungFu",
-        to = 184,
+        to = 181,
         from = 178
     },
     hero_monk_leopard_hit2 = {
         prefix = "hero_kungFu",
-        to = 192,
-        from = 185
+        to = 186,
+        -- from = 185
+        from = 182
     },
     hero_monk_leopard_hit3 = {
         prefix = "hero_kungFu",
-        to = 200,
-        from = 193
+        to = 191,
+        from = 187
     },
     hero_monk_leopard_hit4 = {
         prefix = "hero_kungFu",
-        to = 209,
-        from = 201
+        to = 196,
+        from = 192
     },
     hero_monk_leopard_end = {
         prefix = "hero_kungFu",
         -- to = 222,
-        to = 221,
+        to = 218,
         from = 214
     },
     fx_hero_monk_particle = {

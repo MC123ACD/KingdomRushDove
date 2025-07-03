@@ -578,6 +578,16 @@ return function(scripts)
                     smoke.render.sprites[1].ts = store.tick_ts
 
                     queue_insert(store, smoke)
+
+                    local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, 20, F_AREA, 0)
+                    if enemies then
+                        for _, e in pairs(enemies) do
+                            if e.health and not e.health.dead then
+                                local d = SU.create_attack_damage(this.melee.attacks[1], e.id, this)
+                                queue_damage(store, d)
+                            end
+                        end
+                    end
                     U.y_wait(store, fts(4))
                     queue_remove(store, this)
 
@@ -5387,6 +5397,7 @@ return function(scripts)
                 this.dodge.disabled = nil
                 this.dodge.chance = s.chance[s.level]
                 this.dodge.damage = s.damage[s.level]
+                this.dodge.cooldown = s.cooldown[s.level]
             end)
 
             this.health.hp = this.health.hp_max
