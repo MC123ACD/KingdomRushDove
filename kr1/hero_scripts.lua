@@ -766,6 +766,7 @@ return function(scripts)
                             U.y_animation_play(this, "lethal_out", nil, store.tick_ts)
                             local initial_pos = V.vclone(this.pos)
                             local lpos, lflip = U.melee_slot_position(this, target, 1, true)
+
                             this.pos.x, this.pos.y = lpos.x, lpos.y
                             S:queue(a_l.sound)
                             U.animation_start(this, "lethal_attack", not lflip, store.tick_ts)

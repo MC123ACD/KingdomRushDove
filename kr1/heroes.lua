@@ -1907,7 +1907,7 @@ local function heroes()
     tt.timed_attacks.list[1].min_range = 0
     tt.timed_attacks.list[1].shoot_time = fts(7)
     tt.timed_attacks.list[1].sound = "HeroMirageShadowDanceCast"
-    tt.timed_attacks.list[1].vis_bans = bor(F_FLYING, F_CLIFF)
+    tt.timed_attacks.list[1].vis_bans = bor(F_CLIFF)
     tt.timed_attacks.list[1].vis_flags = bor(F_RANGED)
     tt.timed_attacks.list[2] = E:clone_c("custom_attack")
     tt.timed_attacks.list[2].cooldown = 15
@@ -1920,7 +1920,7 @@ local function heroes()
     tt.timed_attacks.list[2].instakill_chance = nil
     tt.timed_attacks.list[2].range = 130
     tt.timed_attacks.list[2].sound = "HeroMirageLethalStrikeCastHit"
-    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING, F_CLIFF, F_WATER)
+    tt.timed_attacks.list[2].vis_bans = bor(F_CLIFF, F_WATER)
     tt.timed_attacks.list[2].vis_flags = bor(F_LETHAL, F_RANGED)
     tt.unit.hit_offset = vec_2(0, 12)
     tt.unit.marker_offset = vec_2(0, -1)
