@@ -351,9 +351,9 @@ return {
         trim = {122, 53, 115, 8},
         a_size = {1024, 1024},
         f_quad = {171, 832, 33, 40},
-        alias = {"hero_mirage_0082", "hero_mirage_0083", "hero_mirage_0084", "hero_mirage_0085", "hero_mirage_0086"}
+        alias = {"hero_mirage_0082"}
     },
-    hero_mirage_0087 = {
+    hero_mirage_0083 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {119, 55, 115, 9},
@@ -361,7 +361,7 @@ return {
         f_quad = {964, 109, 36, 37},
         alias = {}
     },
-    hero_mirage_0088 = {
+    hero_mirage_0084 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {119, 55, 115, 9},
@@ -369,7 +369,7 @@ return {
         f_quad = {171, 174, 36, 37},
         alias = {}
     },
-    hero_mirage_0089 = {
+    hero_mirage_0085 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {121, 55, 110, 9},
@@ -377,7 +377,7 @@ return {
         f_quad = {984, 62, 39, 37},
         alias = {}
     },
-    hero_mirage_0090 = {
+    hero_mirage_0087 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {121, 55, 110, 9},
@@ -385,7 +385,7 @@ return {
         f_quad = {488, 109, 39, 37},
         alias = {}
     },
-    hero_mirage_0091 = {
+    hero_mirage_0088 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {116, 55, 111, 9},
@@ -393,7 +393,7 @@ return {
         f_quad = {319, 62, 43, 37},
         alias = {}
     },
-    hero_mirage_0092 = {
+    hero_mirage_0089 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {116, 55, 111, 10},
@@ -401,7 +401,7 @@ return {
         f_quad = {69, 988, 43, 36},
         alias = {}
     },
-    hero_mirage_0093 = {
+    hero_mirage_0090 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {115, 55, 107, 11},
@@ -409,7 +409,7 @@ return {
         f_quad = {314, 6, 48, 35},
         alias = {}
     },
-    hero_mirage_0094 = {
+    hero_mirage_0091 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {110, 49, 117, 11},
@@ -463,9 +463,10 @@ return {
         trim = {118, 49, 120, 9},
         a_size = {1024, 1024},
         f_quad = {403, 174, 32, 43},
-        alias = {"hero_mirage_0101"}
+        -- alias = {"hero_mirage_0101"
+        alias={}
     },
-    hero_mirage_0102 = {
+    hero_mirage_0101 = {
         a_name = "go_hero_mirage-1.png",
         size = {270, 101},
         trim = {118, 48, 120, 9},

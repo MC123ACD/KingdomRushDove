@@ -9786,12 +9786,13 @@ local kr2_a = {
     },
     hero_mirage_lethal_attack = {
         prefix = "hero_mirage",
-        to = 94,
+        -- to = 94,
+        to = 91,
         from = 70
     },
     hero_mirage_lethal_in = {
         prefix = "hero_mirage",
-        to = 102,
+        to = 101,
         from = 95
     },
     hero_mirage_lethal_out = {
