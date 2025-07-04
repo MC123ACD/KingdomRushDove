@@ -84,24 +84,25 @@ function simulation:update(dt)
 		return
 	end
 
-	d.dt = dt
-	d.ts = d.ts + dt
-	d.to = d.to + dt
-    local time_gap = TICK_LENGTH * d.speed_factor
-    if d.speed_factor == 0.5 then
-        if d.to > TICK_LENGTH then
-            d.to = km.clamp(0, TICK_LENGTH, d.to - TICK_LENGTH)
-            self:do_tick()
-            self:do_tick()
-            d.step = false
-        end
-    else
-        if d.to > time_gap then
-            d.to = km.clamp(0, time_gap, d.to - time_gap)
-            self:do_tick()
-            d.step = false
-        end
-    end
+	-- d.dt = dt
+	-- d.ts = d.ts + dt
+	-- d.to = d.to + dt
+    -- local time_gap = TICK_LENGTH * d.speed_factor
+    -- if d.speed_factor == 0.5 then
+    --     if d.to > TICK_LENGTH then
+    --         d.to = km.clamp(0, TICK_LENGTH, d.to - TICK_LENGTH)
+    --         self:do_tick()
+    --         self:do_tick()
+    --         d.step = false
+    --     end
+    -- else
+    --     if d.to > time_gap then
+    --         d.to = km.clamp(0, time_gap, d.to - time_gap)
+    --         self:do_tick()
+    --         d.step = false
+    --     end
+    -- end
+    simulation:do_tick()
 end
 
 function simulation:do_tick()

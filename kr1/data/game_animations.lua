@@ -12081,76 +12081,76 @@ local kr2_a = {
         to = 35,
         from = 1
     },
-    towerengineerlvl3_layer1_idle = {
-        prefix = "tower_artillery_lvl3_layer1",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer2_idle = {
-        prefix = "tower_artillery_lvl3_layer2",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer3_idle = {
-        prefix = "tower_artillery_lvl3_layer3",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer4_idle = {
-        prefix = "tower_artillery_lvl3_layer4",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer5_idle = {
-        prefix = "tower_artillery_lvl3_layer5",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer6_idle = {
-        prefix = "tower_artillery_lvl3_layer6",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer7_idle = {
-        prefix = "tower_artillery_lvl3_layer7",
-        to = 1,
-        from = 1
-    },
-    towerengineerlvl3_layer1_shoot = {
-        prefix = "tower_artillery_lvl3_layer1",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer2_shoot = {
-        prefix = "tower_artillery_lvl3_layer2",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer3_shoot = {
-        prefix = "tower_artillery_lvl3_layer3",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer4_shoot = {
-        prefix = "tower_artillery_lvl3_layer4",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer5_shoot = {
-        prefix = "tower_artillery_lvl3_layer5",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer6_shoot = {
-        prefix = "tower_artillery_lvl3_layer6",
-        to = 35,
-        from = 1
-    },
-    towerengineerlvl3_layer7_shoot = {
-        prefix = "tower_artillery_lvl3_layer7",
-        to = 35,
-        from = 1
-    },
+    -- towerengineerlvl3_layer1_idle = {
+    --     prefix = "tower_artillery_lvl3_layer1",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer2_idle = {
+    --     prefix = "tower_artillery_lvl3_layer2",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer3_idle = {
+    --     prefix = "tower_artillery_lvl3_layer3",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer4_idle = {
+    --     prefix = "tower_artillery_lvl3_layer4",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer5_idle = {
+    --     prefix = "tower_artillery_lvl3_layer5",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer6_idle = {
+    --     prefix = "tower_artillery_lvl3_layer6",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer7_idle = {
+    --     prefix = "tower_artillery_lvl3_layer7",
+    --     to = 1,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer1_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer1",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer2_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer2",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer3_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer3",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer4_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer4",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer5_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer5",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer6_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer6",
+    --     to = 35,
+    --     from = 1
+    -- },
+    -- towerengineerlvl3_layer7_shoot = {
+    --     prefix = "tower_artillery_lvl3_layer7",
+    --     to = 35,
+    --     from = 1
+    -- },
     towerdwaarp_idle = {
         prefix = "EarthquakeTower",
         to = 1,

@@ -282,15 +282,26 @@ function game:update(dt)
 		self:update_debug(dt)
 	end
 
-	if self.DBG_TIME_MULT then
-		for i = 1, self.DBG_TIME_MULT do
-			self.simulation:update(dt)
-		end
-	else
-		self.simulation:update(dt)
-	end
-
-	self.game_gui:update(dt)
+	-- if self.DBG_TIME_MULT then
+	-- 	for i = 1, self.DBG_TIME_MULT do
+	-- 		self.simulation:update(dt)
+	-- 	end
+	-- else
+	-- 	self.simulation:update(dt)
+	-- end
+    local d = self.simulation.store
+    d.dt = dt / d.speed_factor
+    d.ts = d.ts + d.dt
+    d.to = d.to + d.dt
+    while d.to > TICK_LENGTH do
+        d.to = d.to - TICK_LENGTH
+        if d.to < 0 then
+            d.to = 0
+        end
+        self.simulation:update(d.dt)
+        self.game_gui:update(d.dt)
+        d.step = false
+    end
 end
 
 function game:keypressed(key, isrepeat)
