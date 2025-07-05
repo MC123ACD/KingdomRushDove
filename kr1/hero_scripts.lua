@@ -2684,7 +2684,7 @@ return function(scripts)
                 end
 
                 local opi, ospi, oni = unpack(nodes[1])
-                local offset_options = {-4, -6, -8, 4, 6, 8}
+                local offset_options = {-2,-4, -6, -8, 2, 4, 6, 8}
                 local positions = {}
 
                 for i, offset in ipairs(offset_options) do

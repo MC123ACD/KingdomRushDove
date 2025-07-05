@@ -2388,26 +2388,28 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17}
     tt.hero.level_stats.melee_damage_max = {12, 14, 16, 18, 20, 22, 24, 26, 28, 30}
     tt.hero.skills.boarmaster = E:clone_c("hero_skill")
-    tt.hero.skills.boarmaster.boars = {1, 2, 3}
-    tt.hero.skills.boarmaster.boar_hp_max = {160, 200, 240}
-    tt.hero.skills.boarmaster.wolf_hp_max = {80, 100, 120}
+    tt.hero.skills.boarmaster.boars = {1, 2, 3, 4}
+    tt.hero.skills.boarmaster.boar_hp_max = {160, 200, 240, 280}
+    tt.hero.skills.boarmaster.wolf_hp_max = {80, 100, 120, 140}
     tt.hero.skills.boarmaster.xp_level_steps = {
         [2] = 1,
-        [5] = 2,
-        [8] = 3
+        [4] = 2,
+        [6] = 3,
+        [8] = 4
     }
-    tt.hero.skills.boarmaster.xp_gain = {40, 80, 120}
+    tt.hero.skills.boarmaster.xp_gain = {40, 80, 120, 160}
     tt.hero.skills.stampede = E:clone_c("hero_skill")
-    tt.hero.skills.stampede.rhinos = {2, 3, 4}
-    tt.hero.skills.stampede.duration = {3, 6, 9}
-    tt.hero.skills.stampede.stun_chance = {0.25, 0.375, 0.5}
-    tt.hero.skills.stampede.stun_duration = {1.5, 2.5, 3.5}
-    tt.hero.skills.stampede.damage = {20, 25, 30}
-    tt.hero.skills.stampede.xp_gain = {60, 120, 180}
+    tt.hero.skills.stampede.rhinos = {2, 3, 4, 5}
+    tt.hero.skills.stampede.duration = {3, 6, 9, 12}
+    tt.hero.skills.stampede.stun_chance = {0.25, 0.375, 0.5, 0.625}
+    tt.hero.skills.stampede.stun_duration = {1.5, 2.5, 3.5, 4.5}
+    tt.hero.skills.stampede.damage = {20, 25, 30, 35}
+    tt.hero.skills.stampede.xp_gain = {60, 120, 180, 240}
     tt.hero.skills.stampede.xp_level_steps = {
         [3] = 1,
-        [6] = 2,
-        [9] = 3
+        [5] = 2,
+        [7] = 3,
+        [9] = 4
     }
     tt.hero.skills.falconer = E:clone_c("hero_skill")
     tt.hero.skills.falconer.count = {1, 2, 3}
@@ -2417,14 +2419,15 @@ local function heroes()
         [10] = 3
     }
     tt.hero.skills.deeplashes = E:clone_c("hero_skill")
-    tt.hero.skills.deeplashes.damage = {20, 40, 60}
-    tt.hero.skills.deeplashes.blood_damage = {20, 40, 60}
-    tt.hero.skills.deeplashes.cooldown = {6.9, 6.15, 5.4}
-    tt.hero.skills.deeplashes.xp_gain = {50, 100, 150}
+    tt.hero.skills.deeplashes.damage = {20, 40, 60, 80}
+    tt.hero.skills.deeplashes.blood_damage = {20, 40, 60, 80}
+    tt.hero.skills.deeplashes.cooldown = {6.9, 6.2, 5.5, 4.8}
+    tt.hero.skills.deeplashes.xp_gain = {50, 100, 150, 200}
     tt.hero.skills.deeplashes.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.health.armor = nil
     tt.health.dead_lifetime = 15
@@ -2439,7 +2442,7 @@ local function heroes()
     tt.info.i18n_key = "HERO_BEASTMASTER"
     tt.main_script.insert = scripts.hero_beastmaster.insert
     tt.main_script.update = scripts.hero_beastmaster.update
-    tt.motion.max_speed = 90
+    tt.motion.max_speed = 100
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = anchor_y
     tt.render.sprites[1].prefix = "hero_beastmaster"
@@ -2566,7 +2569,7 @@ local function heroes()
     tt.regen.cooldown = 1
     tt.info.i18n_key = "ENEMY_WORG"
     tt.info.enc_icon = 14
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0020" or "kr2_info_portraits_sc_0020"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0020" or "info_portraits_sc_0020"
     tt.info.fn = scripts.beastmaster_pet.get_info
     tt.main_script.insert = scripts.beastmaster_pet.insert
     tt.main_script.update = scripts.beastmaster_pet.update
