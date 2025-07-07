@@ -93,8 +93,8 @@ local function mage_towers()
 
     tt = RT("mod_ray_arcane", "modifier")
     AC(tt, "render", "dps")
-    tt.dps.damage_min = 76
-    tt.dps.damage_max = 140
+    tt.dps.damage_min = 92
+    tt.dps.damage_max = 156
     tt.dps.damage_type = bor(DAMAGE_MAGICAL, DAMAGE_ONE_SHIELD_HIT)
     tt.dps.damage_every = fts(2)
     tt.dps.pop = {"pop_zap_arcane"}
@@ -139,10 +139,6 @@ local function mage_towers()
     tt.tween.props[1].name = "scale"
     tt.tween.props[1].loop = true
     tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(1, 1)}, {1, vec_2(1, 1)}}
-    -- tt.render.sprites[1].name = "CossbowHunter_towerBuff"
-    -- tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].anchor.y = 0.21
-    -- tt.render.sprites[1].z = Z_TOWER_BASES + 1
 
     for i, p in ipairs({vec_2(22, 45),vec_2(31,40), vec_2(40, 35),vec_2(49,32.5), vec_2(58, 30),vec_2(67.5,32.5), vec_2(77, 35),vec_2(86,40), vec_2(95, 45)}) do
         tt.render.sprites[i] = E:clone_c("sprite")
@@ -352,8 +348,8 @@ local function mage_towers()
     tt = E:register_t("bolt_archmage", "bolt")
     tt.render.sprites[1].prefix = "bolt_archmage"
     tt.bullet.mod = "mod_archmage_shatter"
-    tt.bullet.damage_min = 40
-    tt.bullet.damage_max = 80
+    tt.bullet.damage_min = 42
+    tt.bullet.damage_max = 84
     tt.bullet.hit_fx = "fx_bolt_archmage_hit"
     tt.bullet.pop = {"pop_zapow"}
     tt.bullet.store = nil
@@ -985,7 +981,7 @@ local function mage_towers()
     tt.main_script.update = scripts.tower_wild_magus.update
     tt.tower.type = "wild_magus"
     tt.tower.level = 1
-    tt.tower.price = 300
+    tt.tower.price = 325
     tt.tower.size = TOWER_SIZE_LARGE
     tt.attacks.range = 190
     tt.attacks.list[1] = E:clone_c("bullet_attack")
