@@ -7466,11 +7466,34 @@ local function heroes()
     tt.sound_events.hero_room_select = "ElvesHeroArivanTauntSelect"
     tt.unit.hit_offset = vec_2(0, 13)
     tt.unit.mod_offset = vec_2(0, 13)
+    local function generate_stone_effect(this, store, attack, target)
+        local a = this.timed_attacks.list[2]
+        if #a.aura.stones < a.aura.max_stones and math.random(0, 1) < 0.2 then
+            S:queue(a.sound)
+            local stone = E:create_entity("arivan_stone")
+            local i = #a.aura.stones + 1
+            local aura = a.aura
+            local angle = i * 2 * math.pi / aura.max_stones % (2 * math.pi)
+
+            stone.pos = U.point_on_ellipse(this.pos, aura.rot_radius, angle)
+            stone.render.sprites[1].name = string.format(stone.render.sprites[1].name, i)
+            stone.render.sprites[1].ts = store.tick_ts
+
+            queue_insert(store, stone)
+            table.insert(aura.stones, stone)
+            aura.aura.ts = store.tick_ts
+
+            this.stone_extra = #a.aura.stones * this.stone_extra_per_stone
+            this.melee.attacks[1].damage_min = this.melee_raw_min + this.stone_extra
+            this.melee.attacks[1].damage_max = this.melee_raw_max + this.stone_extra
+        end
+    end
     tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].hit_time = fts(15)
     tt.melee.attacks[1].xp_gain_factor = 2.1
     tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
     tt.melee.attacks[1].sound = "MeleeSword"
+    tt.melee.attacks[1].side_effect = generate_stone_effect
     tt.melee.range = 50
     tt.ranged.attacks[1] = E:clone_c("bullet_attack")
     tt.ranged.attacks[1].cooldown = 1.5
@@ -7480,6 +7503,7 @@ local function heroes()
     tt.ranged.attacks[1].bullet = "ray_arivan_simple"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 35)}
     tt.ranged.attacks[1].shoot_time = fts(11)
+    tt.ranged.attacks[1].side_effect = generate_stone_effect
     tt.ranged.attacks[2] = E:clone_c("bullet_attack")
     tt.ranged.attacks[2].animation = "rayShoot"
     tt.ranged.attacks[2].cooldown = 16.2

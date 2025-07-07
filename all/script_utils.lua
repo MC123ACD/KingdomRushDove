@@ -1277,6 +1277,9 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
 	if attack.max_track_distance and V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
 		log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id, target.pos.x, target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
 	else
+        if attack.side_effect then
+            attack.side_effect(this, store, attack, target)
+        end
 		S:queue(attack.sound_shoot)
 
 		bullet = E:create_entity(attack.bullet)

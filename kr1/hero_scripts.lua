@@ -9633,7 +9633,7 @@ return function(scripts)
                     U.y_wait(store, a.hit_time)
 
                     local aura = a.aura
-
+                    
                     for i = #a.aura.stones + 1, aura.max_stones do
                         local stone = E:create_entity("arivan_stone")
                         local angle = i * 2 * math.pi / aura.max_stones % (2 * math.pi)
