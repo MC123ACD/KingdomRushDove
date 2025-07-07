@@ -348,8 +348,8 @@ local function mage_towers()
     tt = E:register_t("bolt_archmage", "bolt")
     tt.render.sprites[1].prefix = "bolt_archmage"
     tt.bullet.mod = "mod_archmage_shatter"
-    tt.bullet.damage_min = 42
-    tt.bullet.damage_max = 84
+    tt.bullet.damage_min = 44
+    tt.bullet.damage_max = 88
     tt.bullet.hit_fx = "fx_bolt_archmage_hit"
     tt.bullet.pop = {"pop_zapow"}
     tt.bullet.store = nil
