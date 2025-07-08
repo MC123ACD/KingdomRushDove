@@ -7267,7 +7267,7 @@ local function heroes()
     tt.melee.attacks[2].chance = 0.5
     tt.melee.attacks[3] = E:clone_c("melee_attack")
     tt.melee.attacks[3].animation = "specialAttack"
-    tt.melee.attacks[3].cooldown = 18
+    tt.melee.attacks[3].cooldown = 16.2
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].damage_type = DAMAGE_TRUE
     tt.melee.attacks[3].hit_time = fts(25)
@@ -7281,7 +7281,7 @@ local function heroes()
     tt.ranged.attacks[1].disabled = true
     tt.ranged.attacks[1].bullet = "shield_elves_denas"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(22, 16)}
-    tt.ranged.attacks[1].cooldown = 15
+    tt.ranged.attacks[1].cooldown = 13.5
     tt.ranged.attacks[1].max_range = 150
     tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].rebound_range = 125
@@ -7290,7 +7290,7 @@ local function heroes()
     tt.ranged.attacks[1].xp_from_skill = "shield_strike"
     tt.timed_attacks.list[1] = E:clone_c("mod_attack")
     tt.timed_attacks.list[1].animation = "showOff"
-    tt.timed_attacks.list[1].cooldown = 25
+    tt.timed_attacks.list[1].cooldown = 22.5
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].hit_time = fts(9)
     tt.timed_attacks.list[1].mod = "mod_elves_denas_celebrity"
@@ -7301,7 +7301,7 @@ local function heroes()
     tt.timed_attacks.list[1].xp_from_skill = "celebrity"
     tt.timed_attacks.list[2] = E:clone_c("mod_attack")
     tt.timed_attacks.list[2].animation = "eat"
-    tt.timed_attacks.list[2].cooldown = 20
+    tt.timed_attacks.list[2].cooldown = 18
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].hit_time = fts(37)
     tt.timed_attacks.list[2].lost_health = 100

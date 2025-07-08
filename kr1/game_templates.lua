@@ -4543,11 +4543,8 @@ for i = 2, 4 do
     tt.tween.props[i].keys[1][2] = 0
 end
 
-
 tt = E:register_t("soldier_bravebark", "soldier_militia")
-
 E:add_comps(tt, "reinforcement")
-
 image_y = 58
 anchor_y = 12 / image_y
 tt.health.armor = 0
@@ -4580,10 +4577,9 @@ tt.sound_events.insert = nil
 tt.unit.level = 0
 tt.unit.mod_offset = vec_2(0, 15)
 tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_LYCAN, F_POISON)
+
 tt = E:register_t("soldier_xin_shadow", "soldier")
-
 E:add_comps(tt, "melee")
-
 image_y = 64
 anchor_y = 12 / image_y
 tt.health.armor = 0
@@ -4694,11 +4690,11 @@ tt.unit.hide_after_death = true
 tt = RT("soldier_veznan_demon", "soldier_militia")
 AC(tt, "reinforcement", "ranged", "nav_grid")
 tt.controable = true
+tt.ban_global_control = true
 tt.health.armor = 0
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 65)
 tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
--- tt.info.fn = scripts.soldier_reinforcement.get_info
 tt.info.portrait = "kr3_portraits_sc_0058"
 tt.info.random_name_count = 8
 tt.info.random_name_format = "ELVES_SOLDIER_VEZNAN_DEMON_%i_NAME"
