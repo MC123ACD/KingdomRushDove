@@ -12539,7 +12539,7 @@ return function(scripts)
                             end
                         end
 
-                        a.ts = store.tick_ts
+                        a.ts = store.tick_ts - (1 - (store.tick_ts - a.ts) / a.duration) * a.cooldown
 
                         S:stop(a.sound_loop)
                         U.y_animation_play(this, a.animations[3], nil, store.tick_ts)
