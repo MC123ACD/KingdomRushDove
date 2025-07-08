@@ -4626,13 +4626,14 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {11, 13, 14, 16, 18, 19, 21, 22, 24, 26}
     tt.hero.level_stats.melee_damage_max = {17, 19, 22, 24, 26, 29, 31, 34, 36, 38}
     tt.hero.skills.snakestyle = E:clone_c("hero_skill")
-    tt.hero.skills.snakestyle.damage = {40, 60, 80}
-    tt.hero.skills.snakestyle.damage_reduction_factor = {0.2, 0.4, 0.6}
+    tt.hero.skills.snakestyle.damage = {40, 60, 80, 100}
+    tt.hero.skills.snakestyle.damage_reduction_factor = {0.2, 0.4, 0.6, 0.7}
     tt.hero.skills.snakestyle.xp_gain_factor = 42
     tt.hero.skills.snakestyle.xp_level_steps = {
-        [4] = 1,
-        [7] = 2,
-        [10] = 3
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.dragonstyle = E:clone_c("hero_skill")
     tt.hero.skills.dragonstyle.damage_max = {75, 135, 195}
@@ -4664,14 +4665,15 @@ local function heroes()
         [10] = 5
     }
     tt.hero.skills.cranestyle = E:clone_c("hero_skill")
-    tt.hero.skills.cranestyle.damage = {20, 40, 60}
-    tt.hero.skills.cranestyle.chance = {0.4, 0.5, 0.6}
-    tt.hero.skills.cranestyle.cooldown = {3, 2, 1}
+    tt.hero.skills.cranestyle.damage = {20, 40, 60, 80}
+    tt.hero.skills.cranestyle.chance = {0.4, 0.5, 0.6, 0.7}
+    tt.hero.skills.cranestyle.cooldown = {2, 1.5, 1, 0.5}
     tt.hero.skills.cranestyle.xp_gain_factor = 18
     tt.hero.skills.cranestyle.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.health.armor = nil
     tt.health.dead_lifetime = 15
