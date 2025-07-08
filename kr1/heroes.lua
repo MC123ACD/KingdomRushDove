@@ -1502,7 +1502,7 @@ local function heroes()
     tt.hero.level_stats.melee_cooldown = {1, 0.98, 0.96, 0.94, 0.92, 0.9, 0.88, 0.86, 0.84, 0.82}
     tt.hero.level_stats.lightning_heal = {19, 20, 22, 23, 25, 26, 28, 29, 31, 32}
     tt.hero.skills.chainlightning = CC("hero_skill")
-    tt.hero.skills.chainlightning.count = {4, 6, 8}
+    tt.hero.skills.chainlightning.count = {5, 7, 9}
     tt.hero.skills.chainlightning.damage_max = {40, 50, 60}
     tt.hero.skills.chainlightning.xp_level_steps = {
         [2] = 1,
@@ -7417,7 +7417,7 @@ local function heroes()
     }
     tt.hero.skills.stone_dance = E:clone_c("hero_skill")
     tt.hero.skills.stone_dance.count = {1, 2, 3}
-    tt.hero.skills.stone_dance.stone_extra = {8, 10, 12}
+    tt.hero.skills.stone_dance.stone_extra = {10, 15, 20}
     tt.hero.skills.stone_dance.xp_level_steps = {
         [1] = 1,
         [4] = 2,
