@@ -5992,7 +5992,7 @@ local function heroes()
         [7] = 3
     }
     tt.hero.skills.porcupine = E:clone_c("hero_skill")
-    tt.hero.skills.porcupine.damage_inc = {1, 2, 3}
+    tt.hero.skills.porcupine.damage_inc = {2, 4, 6}
     tt.hero.skills.porcupine.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -6155,7 +6155,7 @@ local function heroes()
     tt = E:register_t("hero_regson", "hero")
     E:add_comps(tt, "melee")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    tt.hero.level_stats.hp_max = {300, 320, 340, 360, 380, 400, 420, 440, 460, 480}
+    tt.hero.level_stats.hp_max = {330, 352, 374, 396, 418, 440, 462, 484, 504, 528}
     tt.hero.level_stats.melee_damage_max = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18}
     tt.hero.level_stats.melee_damage_min = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
     tt.hero.skills.blade = E:clone_c("hero_skill")
@@ -6184,7 +6184,7 @@ local function heroes()
     tt.hero.skills.slash = E:clone_c("hero_skill")
     tt.hero.skills.slash.cooldown = {12}
     tt.hero.skills.slash.damage_max = {60, 130, 225}
-    tt.hero.skills.slash.damage_min = {20, 45, 75}
+    tt.hero.skills.slash.damage_min = {30, 70, 120}
     tt.hero.skills.slash.targets = {3, 4, 5}
     tt.hero.skills.slash.xp_gain = {28, 84, 168}
     tt.hero.skills.slash.xp_level_steps = {
@@ -7622,7 +7622,7 @@ local function heroes()
     tt.bullet.damage_flags = F_AREA
     tt.bullet.damage_max = 40
     tt.bullet.damage_min = 20
-    tt.bullet.damage_radius = 60
+    tt.bullet.damage_radius = 70
     tt.bullet.damage_type = bor(DAMAGE_MAGICAL_EXPLOSION, DAMAGE_FX_NOT_EXPLODE)
     tt.bullet.hit_fx = "fx_fireball_arivan_hit"
     tt.bullet.max_speed = 450
@@ -8567,6 +8567,9 @@ local function heroes()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(5, 40)}
     tt.ranged.attacks[1].shoot_time = fts(28)
     tt.ranged.attacks[1].node_prediction = fts(28)
+    tt.ranged.attacks[1].side_effect = function(this, store, attack, target)
+        this.revive.protect = this.revive.protect + 0.02
+    end
     tt.timed_attacks.list[1] = E:clone_c("aura_attack")
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].animation = "infernalWheel"

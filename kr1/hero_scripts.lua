@@ -9633,7 +9633,7 @@ return function(scripts)
                     U.y_wait(store, a.hit_time)
 
                     local aura = a.aura
-                    
+
                     for i = #a.aura.stones + 1, aura.max_stones do
                         local stone = E:create_entity("arivan_stone")
                         local angle = i * 2 * math.pi / aura.max_stones % (2 * math.pi)
@@ -11250,6 +11250,7 @@ return function(scripts)
                     SU.hero_gain_xp_from_skill(this, this.hero.skills.resurrection)
                     this.melee.attacks[3].ts = 0
                     this.melee.attacks[4].ts = 0
+                    this.timed_attacks.list[1].ts = 0
                 else
                     SU.y_hero_death_and_respawn(store, this)
                 end
