@@ -1437,6 +1437,7 @@ local function heroes()
     tt.melee.attacks[1].xp_gain_factor = 2.6
     tt.melee.attacks[1].side_effect = function(this, store, attack, target)
         SU.armor_dec(target, 0.05)
+        this.ranged.attacks[1].ts = this.ranged.attacks[1].ts - (target.health.armor) * 0.5
     end
     tt.melee.attacks[2] = CC("melee_attack")
     tt.melee.attacks[2].animation = "timber"
@@ -1459,7 +1460,7 @@ local function heroes()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(25, 21)}
     tt.ranged.attacks[1].disabled = true
     tt.ranged.attacks[1].max_range = 150
-    tt.ranged.attacks[1].min_range = 50
+    tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].shoot_time = fts(16)
     tt.ranged.attacks[1].sound_shoot = "HeroRobotShoot"
     tt.ranged.attacks[1].cooldown = 6.5 + fts(32)
