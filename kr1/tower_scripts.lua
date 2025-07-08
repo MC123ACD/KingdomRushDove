@@ -2966,7 +2966,9 @@ local function register_engineer(scripts)
                                 end
 
                                 local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true,
-                                    da.vis_flags, da.vis_bans)
+                                    da.vis_flags, da.vis_bans,function (e, origin)
+                                    return e.health and e.health.hp > 1000
+                                end)
 
                                 if enemy then
                                     local drill = E:create_entity(da.bullet)
