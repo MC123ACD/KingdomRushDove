@@ -17895,12 +17895,12 @@ local kr3_a = {
     },
     hero_bravebark_teleport_out = {
         prefix = "bravebark_hero",
-        to = 50,
+        to = 38,
         from = 27
     },
     hero_bravebark_teleport_in = {
         prefix = "bravebark_hero",
-        to = 83,
+        to = 67,
         from = 51
     },
     hero_bravebark_rootSpikes = {

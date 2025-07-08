@@ -397,10 +397,10 @@ return {
 			89
 		},
 		alias = {
-			"bravebark_hero_0028"
+
 		}
 	},
-	bravebark_hero_0029 = {
+	bravebark_hero_0028 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -423,10 +423,10 @@ return {
 			110
 		},
 		alias = {
-			"bravebark_hero_0030"
+
 		}
 	},
-	bravebark_hero_0031 = {
+	bravebark_hero_0029 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -449,10 +449,10 @@ return {
 			119
 		},
 		alias = {
-			"bravebark_hero_0032"
+
 		}
 	},
-	bravebark_hero_0033 = {
+	bravebark_hero_0030 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -475,10 +475,10 @@ return {
 			119
 		},
 		alias = {
-			"bravebark_hero_0034"
+
 		}
 	},
-	bravebark_hero_0035 = {
+	bravebark_hero_0031 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -501,10 +501,10 @@ return {
 			120
 		},
 		alias = {
-			"bravebark_hero_0036"
+
 		}
 	},
-	bravebark_hero_0037 = {
+	bravebark_hero_0032 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -527,10 +527,10 @@ return {
 			117
 		},
 		alias = {
-			"bravebark_hero_0038"
+
 		}
 	},
-	bravebark_hero_0039 = {
+	bravebark_hero_0033 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -553,10 +553,10 @@ return {
 			112
 		},
 		alias = {
-			"bravebark_hero_0040"
+
 		}
 	},
-	bravebark_hero_0041 = {
+	bravebark_hero_0034 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -579,10 +579,10 @@ return {
 			105
 		},
 		alias = {
-			"bravebark_hero_0042"
+
 		}
 	},
-	bravebark_hero_0043 = {
+	bravebark_hero_0035 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -605,10 +605,10 @@ return {
 			98
 		},
 		alias = {
-			"bravebark_hero_0044"
+
 		}
 	},
-	bravebark_hero_0045 = {
+	bravebark_hero_0036 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -631,10 +631,10 @@ return {
 			84
 		},
 		alias = {
-			"bravebark_hero_0046"
+
 		}
 	},
-	bravebark_hero_0047 = {
+	bravebark_hero_0037 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -657,10 +657,10 @@ return {
 			59
 		},
 		alias = {
-			"bravebark_hero_0048"
+
 		}
 	},
-	bravebark_hero_0049 = {
+	bravebark_hero_0038 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -683,7 +683,7 @@ return {
 			34
 		},
 		alias = {
-			"bravebark_hero_0050"
+			
 		}
 	},
 	bravebark_hero_0051 = {
@@ -709,10 +709,9 @@ return {
 			59
 		},
 		alias = {
-			"bravebark_hero_0052"
 		}
 	},
-	bravebark_hero_0053 = {
+	bravebark_hero_0052 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -735,10 +734,10 @@ return {
 			78
 		},
 		alias = {
-			"bravebark_hero_0054"
+
 		}
 	},
-	bravebark_hero_0055 = {
+	bravebark_hero_0053 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -761,10 +760,10 @@ return {
 			102
 		},
 		alias = {
-			"bravebark_hero_0056"
+
 		}
 	},
-	bravebark_hero_0057 = {
+	bravebark_hero_0054 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -787,10 +786,10 @@ return {
 			112
 		},
 		alias = {
-			"bravebark_hero_0058"
+
 		}
 	},
-	bravebark_hero_0059 = {
+	bravebark_hero_0055 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -813,10 +812,10 @@ return {
 			123
 		},
 		alias = {
-			"bravebark_hero_0060"
+
 		}
 	},
-	bravebark_hero_0061 = {
+	bravebark_hero_0056 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -839,10 +838,10 @@ return {
 			113
 		},
 		alias = {
-			"bravebark_hero_0062"
+
 		}
 	},
-	bravebark_hero_0063 = {
+	bravebark_hero_0057 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -865,10 +864,10 @@ return {
 			113
 		},
 		alias = {
-			"bravebark_hero_0064"
+
 		}
 	},
-	bravebark_hero_0065 = {
+	bravebark_hero_0058 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -891,10 +890,10 @@ return {
 			116
 		},
 		alias = {
-			"bravebark_hero_0066"
+
 		}
 	},
-	bravebark_hero_0067 = {
+	bravebark_hero_0059 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -917,10 +916,10 @@ return {
 			116
 		},
 		alias = {
-			"bravebark_hero_0068"
+
 		}
 	},
-	bravebark_hero_0069 = {
+	bravebark_hero_0060 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -943,10 +942,10 @@ return {
 			111
 		},
 		alias = {
-			"bravebark_hero_0070"
+
 		}
 	},
-	bravebark_hero_0071 = {
+	bravebark_hero_0061 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -969,10 +968,10 @@ return {
 			121
 		},
 		alias = {
-			"bravebark_hero_0072"
+
 		}
 	},
-	bravebark_hero_0073 = {
+	bravebark_hero_0062 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -995,10 +994,10 @@ return {
 			121
 		},
 		alias = {
-			"bravebark_hero_0074"
+
 		}
 	},
-	bravebark_hero_0075 = {
+	bravebark_hero_0063 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -1021,10 +1020,10 @@ return {
 			89
 		},
 		alias = {
-			"bravebark_hero_0076"
+
 		}
 	},
-	bravebark_hero_0077 = {
+	bravebark_hero_0064 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -1047,10 +1046,10 @@ return {
 			81
 		},
 		alias = {
-			"bravebark_hero_0078"
+
 		}
 	},
-	bravebark_hero_0079 = {
+	bravebark_hero_0065 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -1073,10 +1072,10 @@ return {
 			86
 		},
 		alias = {
-			"bravebark_hero_0080"
+
 		}
 	},
-	bravebark_hero_0081 = {
+	bravebark_hero_0066 = {
 		a_name = "go_hero_bravebark-1.png",
 		size = {
 			295,
@@ -1099,8 +1098,7 @@ return {
 			85
 		},
 		alias = {
-			"bravebark_hero_0082",
-			"bravebark_hero_0083"
+			"bravebark_hero_0067",
 		}
 	},
 	bravebark_hero_0085 = {
