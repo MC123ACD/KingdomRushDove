@@ -9028,7 +9028,7 @@ local function heroes()
     tt = RT("hero_rag", "hero")
     AC(tt, "melee", "ranged", "timed_attacks")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    tt.hero.level_stats.hp_max = {350, 375, 400, 425, 450, 475, 500, 525, 550, 575}
+    tt.hero.level_stats.hp_max = {380, 405, 440, 465, 490, 515, 550, 575, 600, 625}
     tt.hero.level_stats.melee_damage_max = {12, 14, 16, 17, 19, 21, 23, 25, 26, 28}
     tt.hero.level_stats.melee_damage_min = {8, 9, 10, 12, 13, 14, 15, 16, 18, 19}
     tt.hero.level_stats.ranged_damage_max = {12, 14, 16, 17, 19, 21, 23, 25, 26, 28}
