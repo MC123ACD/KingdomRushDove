@@ -42,7 +42,9 @@ end
 local function find_target_at_critical_moment(this, store, range, ignore_bigguy, require_foremost, vis_bans)
     local target = nil
     local _, targets = U.find_foremost_enemy(store.entities, this.pos, 0, range, 0, F_RANGED, vis_bans or 0)
+    local num = 0
     if targets then
+        num = #targets
         if not ignore_bigguy then
             for _, t in pairs(targets) do
                 if t.health and t.health.hp > 750 then
@@ -51,7 +53,6 @@ local function find_target_at_critical_moment(this, store, range, ignore_bigguy,
                 end
             end
         end
-
         if #targets > 6 then
             if require_foremost then
                 target = targets[1]
@@ -60,7 +61,7 @@ local function find_target_at_critical_moment(this, store, range, ignore_bigguy,
             end
         end
     end
-    return target, #targets
+    return target, num
 end
 
 local function valid_land_node_nearby(pos)

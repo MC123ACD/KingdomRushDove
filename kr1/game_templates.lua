@@ -4692,7 +4692,8 @@ tt.unit.mod_offset = vec_2(0, 22)
 tt.unit.hide_after_death = true
 
 tt = RT("soldier_veznan_demon", "soldier_militia")
-AC(tt, "reinforcement", "ranged")
+AC(tt, "reinforcement", "ranged", "nav_grid")
+tt.controable = true
 tt.health.armor = 0
 tt.health.hp_max = nil
 tt.health_bar.offset = vec_2(0, 65)
