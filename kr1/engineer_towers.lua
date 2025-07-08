@@ -267,7 +267,7 @@ local function engineer_towers()
     tower_dwaarp.tower.type = "dwaarp"
     tower_dwaarp.tower.price = 325
     tower_dwaarp.powers.drill = E:clone_c("power")
-    tower_dwaarp.powers.drill.price_base = 350
+    tower_dwaarp.powers.drill.price_base = 375
     tower_dwaarp.powers.drill.price_inc = 175
     tower_dwaarp.powers.drill.enc_icon = 36
     tower_dwaarp.powers.drill.attack_idx = 3

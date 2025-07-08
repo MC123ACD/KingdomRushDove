@@ -2948,7 +2948,9 @@ local function register_engineer(scripts)
                     else
                         if drill_ready then
                             local trigger_enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true,
-                                da.vis_flags, da.vis_bans)
+                                da.vis_flags, da.vis_bans, function (e, origin)
+                                    return e.health and e.health.hp > 1000
+                                end)
 
                             if not trigger_enemy then
                                 -- block empty
