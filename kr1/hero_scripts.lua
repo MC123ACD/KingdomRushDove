@@ -39,9 +39,9 @@ local function level_up_basic(this)
     return hl, ls
 end
 
-local function find_target_at_critical_moment(this, store, range, ignore_bigguy, require_foremost)
+local function find_target_at_critical_moment(this, store, range, ignore_bigguy, require_foremost, vis_bans)
     local target = nil
-    local _, targets = U.find_foremost_enemy(store.entities, this.pos, 0, range, 0, F_RANGED, 0)
+    local _, targets = U.find_foremost_enemy(store.entities, this.pos, 0, range, 0, F_RANGED, vis_bans or 0)
     if targets then
         if not ignore_bigguy then
             for _, t in pairs(targets) do
@@ -12549,7 +12549,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
+                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false, false, bor(F_FLYING, F_BOSS))
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
                         this.health.ignore_damage = true
