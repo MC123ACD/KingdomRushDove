@@ -18016,7 +18016,7 @@ function scripts.hero_monk.update(this, store, script)
                     SU.delay_attack(store, a, 0.13333333333333333)
                 else
                     local start_ts = store.tick_ts
-
+                    this.health.ignore_damage = true
                     S:queue(a.sound, {
                         delay = fts(5)
                     })
@@ -18027,6 +18027,7 @@ function scripts.hero_monk.update(this, store, script)
 
                     while store.tick_ts - start_ts < a.hit_time do
                         if SU.hero_interrupted(this) then
+                            this.health.ignore_damage = nil
                             goto label_393_2
                         end
 
@@ -18060,7 +18061,7 @@ function scripts.hero_monk.update(this, store, script)
 
                         coroutine.yield()
                     end
-
+                    this.health.ignore_damage = nil
                     goto label_393_2
                 end
             end

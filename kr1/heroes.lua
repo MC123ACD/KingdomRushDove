@@ -1460,7 +1460,7 @@ local function heroes()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(25, 21)}
     tt.ranged.attacks[1].disabled = true
     tt.ranged.attacks[1].max_range = 150
-    tt.ranged.attacks[1].min_range = 0
+    tt.ranged.attacks[1].min_range = 30
     tt.ranged.attacks[1].shoot_time = fts(16)
     tt.ranged.attacks[1].sound_shoot = "HeroRobotShoot"
     tt.ranged.attacks[1].cooldown = 6.5 + fts(32)
