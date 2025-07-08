@@ -613,7 +613,8 @@ return function(scripts)
             bt.bullet.damage_max = ls.ranged_damage_max[hl]
 
             upgrade_skill(this, "precision", function(this, s)
-                this.ranged.attacks[1].max_range = this.ranged.attacks[1].max_range + s.extra_range[s.level]
+                -- this.ranged.attacks[1].max_range = this.ranged.attacks[1].max_range + s.extra_range[s.level]
+                this.damage_buff = this.damage_buff + s.extra_buff[s.level]
             end)
 
             upgrade_skill(this, "shadowdodge", function(this, s)

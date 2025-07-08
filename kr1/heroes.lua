@@ -1799,7 +1799,7 @@ local function heroes()
     tt.hero.level_stats.ranged_damage_min = {7, 8, 10, 11, 12, 13, 14, 16, 18, 20}
     tt.hero.level_stats.ranged_damage_max = {11, 13, 14, 16, 18, 20, 22, 23, 25, 27}
     tt.hero.skills.precision = E:clone_c("hero_skill")
-    tt.hero.skills.precision.extra_range = {14, 14, 14}
+    tt.hero.skills.precision.extra_buff = {5, 5, 5}
     tt.hero.skills.precision.xp_level_steps = {
         [1] = 1,
         [4] = 2,
