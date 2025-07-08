@@ -60,7 +60,7 @@ local function find_target_at_critical_moment(this, store, range, ignore_bigguy,
             end
         end
     end
-    return target
+    return target, #targets
 end
 
 local function valid_land_node_nearby(pos)
@@ -11221,7 +11221,13 @@ return function(scripts)
         local a, skill, brk, sta
 
         this.health_bar.hidden = false
-
+        local function skill_come_into_cooldown(skill_attack, is_ultimate)
+            if is_ultimate then
+                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.25
+            else
+                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.5
+            end
+        end
         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
 
         while true do
@@ -11289,7 +11295,7 @@ return function(scripts)
 
                         SU.hero_gain_xp_from_skill(this, skill)
 
-                        a.ts = store.tick_ts
+                        skill_come_into_cooldown(a)
 
                         local pos
                         local nodes = P:nearest_nodes(target.pos.x, target.pos.y, nil, nil, true)
@@ -11313,7 +11319,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
+                    local target, target_num = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
                         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
@@ -11321,10 +11327,14 @@ return function(scripts)
                         local e = E:create_entity(this.hero.skills.ultimate.controller_name)
 
                         e.pos = V.vclone(target.pos)
-
+                        if target_num <= 2 then
+                            e.is_meteor = false
+                        else
+                            e.is_meteor = true
+                        end
                         queue_insert(store, e)
 
-                        this.ultimate.ts = store.tick_ts
+                        skill_come_into_cooldown(this.ultimate, true)
                         SU.hero_gain_xp_from_skill(this, this.ultimate)
                     else
                         this.ultimate.ts = this.ultimate.ts + 1
@@ -11383,7 +11393,7 @@ return function(scripts)
         else
             pi, spi, ni = unpack(nearest[1])
 
-            if this.meteor_chance < math.random() then
+            if this.is_meteor then
                 local seq = {}
 
                 for i = 1, this.meteor_node_spread do
