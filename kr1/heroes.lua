@@ -8158,7 +8158,7 @@ local function heroes()
     tt.sound_events.insert = "ElvesHeroForestElementalTauntIntro"
     tt.sound_events.hero_room_select = "ElvesHeroForestElementalTauntSelect"
     tt.teleport.min_distance = 120
-    tt.teleport.delay = fts(21)
+    tt.teleport.delay = fts(10)
     tt.teleport.fx_out = "fx_bravebark_teleport_out"
     tt.teleport.fx_in = "fx_bravebark_teleport_in"
     tt.ui.click_rect = IS_PHONE and r(-35, -15, 70, 80) or r(-20, -5, 40, 60)

@@ -2965,10 +2965,12 @@ local function register_engineer(scripts)
                                     coroutine.yield()
                                 end
 
-                                local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true,
-                                    da.vis_flags, da.vis_bans,function (e, origin)
-                                    return e.health and e.health.hp > 1000
-                                end)
+                                local enemy
+                                if trigger_enemy and trigger_enemy.health.hp > 0 then
+                                    enemy = trigger_enemy
+                                else
+                                    enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true, da.vis_flags, da.vis_bans)
+                                end
 
                                 if enemy then
                                     local drill = E:create_entity(da.bullet)
