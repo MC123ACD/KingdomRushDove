@@ -8557,6 +8557,7 @@ local function heroes()
     end
     tt.melee.attacks[4].instakill = true
     tt.melee.attacks[4].chance = nil
+    tt.melee.attacks[4].origin_chance = 0.1
     tt.melee.attacks[4].vis_bans = bor(F_BOSS)
     tt.melee.attacks[4].vis_flags = bor(F_INSTAKILL)
     tt.melee.cooldown = 1

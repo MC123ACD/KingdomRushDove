@@ -11160,6 +11160,7 @@ return function(scripts)
             a.damage_min = s.damage[s.level]
             a.damage_max = s.damage[s.level]
             a.chance = s.instakill_chance[s.level]
+            a.origin_chance = s.instakill_chance[s.level]
         end)
         upgrade_skill(this, "soul_eater", function(this, s)
             local m = E:get_template("mod_lilith_soul_eater_damage_factor")
@@ -11230,6 +11231,9 @@ return function(scripts)
                 skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.5
             end
         end
+        local function inc_instakill_chance()
+            this.melee.attacks[4].chance = this.melee.attacks[4].origin_chance + 0.2 * km.clamp(0, 1, this.revive.protect)
+        end
         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
 
         while true do
@@ -11266,6 +11270,7 @@ return function(scripts)
                 this.revive.ts = store.tick_ts
             end
             scripts.soldier_revive_resist(this, store)
+            inc_instakill_chance()
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else
