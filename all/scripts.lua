@@ -5274,11 +5274,11 @@ end
 scripts.cast_silence = function(target)
     if not target.silence_cast_count then
         target.silence_cast_count = 1
-        target.enemy.can_do_magic = false
-        target.enemy.can_accept_magic = false
     else
         target.silence_cast_count = target.silence_cast_count + 1
     end
+    target.enemy.can_do_magic = false
+    target.enemy.can_accept_magic = false
 end
 
 scripts.remove_silence = function(target)
