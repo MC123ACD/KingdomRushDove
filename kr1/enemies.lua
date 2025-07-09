@@ -5412,7 +5412,7 @@ local function enemies()
     tt.info.enc_icon = 6
     tt.info.portrait = "kr3_portraits_sc_0009"
     tt.enemy.gold = 18
-    tt.health.hp_max = {90, 120, 120, 150}
+    tt.health.hp_max = {90, 120, 120, 140}
     tt.health_bar.offset = vec_2(0, 90)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
     tt.main_script.insert = scripts.enemy_basic.insert

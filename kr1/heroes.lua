@@ -8554,7 +8554,7 @@ local function heroes()
     tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[4].side_effect = function(this, store, attack, target)
         this.revive.protect = this.revive.protect + 0.03
-        this.soul_eater.last_ts = store.tick_ts - E:get_template("aura_lilith_soul_eater").cooldown
+        this.soul_eater.last_ts = store.tick_ts - E:get_template("aura_lilith_soul_eater").aura.cooldown
         scripts.heal(this, this.health.hp_max * 0.2)
     end
     tt.melee.attacks[4].instakill = true
