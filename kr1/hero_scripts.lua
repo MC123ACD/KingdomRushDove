@@ -11151,7 +11151,6 @@ return function(scripts)
 
         upgrade_skill(this, "reapers_harvest", function(this, s)
             local a = this.melee.attacks[3]
-
             a.disabled = nil
             a.damage_min = s.damage[s.level]
             a.damage_max = s.damage[s.level]

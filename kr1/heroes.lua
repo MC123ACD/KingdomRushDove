@@ -8523,17 +8523,17 @@ local function heroes()
     tt.soul_eater = {}
     tt.soul_eater.last_ts = 0
     tt.soul_eater.active = true
-    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].cooldown = 0
     tt.melee.attacks[1].hit_time = fts(14)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[1].xp_gain_factor = 3.2
-    tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
-    tt.melee.attacks[2].animation = "attack2"
-    tt.melee.attacks[2].chance = 0.5
-    tt.melee.attacks[2].side_effect = function(this, store, attack, target)
+    tt.melee.attacks[1].side_effect = function(this, store, attack, target)
         this.revive.protect = this.revive.protect + 0.01
     end
+    tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
+    tt.melee.attacks[2].animation = "attack2"
+    tt.melee.attacks[2].chance = 1
     tt.melee.attacks[3] = CC("melee_attack")
     tt.melee.attacks[3].side_effect = function(this, store, attack, target)
         this.revive.protect = this.revive.protect + 0.02
@@ -8554,9 +8554,11 @@ local function heroes()
     tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[4].side_effect = function(this, store, attack, target)
         this.revive.protect = this.revive.protect + 0.03
+        this.soul_eater.last_ts = store.tick_ts - E:get_template("aura_lilith_soul_eater").cooldown
+        scripts.heal(this, this.health.hp_max * 0.2)
     end
     tt.melee.attacks[4].instakill = true
-    tt.melee.attacks[4].chance = nil
+    tt.melee.attacks[4].chance = 0.1
     tt.melee.attacks[4].origin_chance = 0.1
     tt.melee.attacks[4].vis_bans = bor(F_BOSS)
     tt.melee.attacks[4].vis_flags = bor(F_INSTAKILL)
