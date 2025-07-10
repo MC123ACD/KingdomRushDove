@@ -9293,7 +9293,7 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.lions_fur = E:clone_c("hero_skill")
-    tt.hero.skills.lions_fur.extra_hp = {30, 60, 90}
+    tt.hero.skills.lions_fur.extra_hp = {40, 80, 120}
     tt.hero.skills.lions_fur.xp_level_steps = {
         [1] = 1,
         [4] = 2,
