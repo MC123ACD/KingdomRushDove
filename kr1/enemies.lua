@@ -6,12 +6,16 @@ local image_x = 0
 local image_y = nil
 local tt = nil
 local scripts = require("game_scripts")
+
 require("templates")
 local function adx(v)
     return v - anchor_x * image_x
 end
 local function ady(v)
     return v - anchor_y * image_y
+end
+local function melee_slot_y_flying()
+    return (1-anchor_y) * image_y
 end
 require("game_templates_utils")
 

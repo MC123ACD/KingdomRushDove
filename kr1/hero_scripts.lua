@@ -5408,8 +5408,322 @@ return function(scripts)
             this.melee.attacks[5].ts = -this.melee.attacks[5].cooldown
             this.timed_attacks.list[1].ts = -this.timed_attacks.list[1].cooldown
             this.timed_attacks.list[2].ts = -this.timed_attacks.list[2].cooldown
+        end,
+        insert = function(this, store, script)
+            this.hero.fn_level_up(this, store)
+            this.melee.order = {
+                [1] = 4,
+                [2] = 5,
+                [3] = 2,
+                [4] = 3,
+                [5] = 1
+            }
+            return true
+        end,
+        update = function(this, store, script)
+            local h = this.health
+            local he = this.hero
+            local a, skill, brk, sta
+
+            U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
+
+            this.health_bar.hidden = false
+
+            while true do
+                if h.dead then
+                    SU.y_hero_death_and_respawn(store, this)
+                end
+
+                if this.unit.is_stunned then
+                    SU.soldier_idle(store, this)
+                else
+                    a = this.dodge
+                    skill = this.hero.skills.cranestyle
+
+                    if not a.disabled and a.active then
+                        a.active = false
+
+                        local target = store.entities[this.soldier.target_id]
+
+                        if not target or target.health.dead then
+                            -- block empty
+                        else
+                            local vis_bans = this.vis.bans
+
+                            this.vis.bans = F_ALL
+                            this.health_bar.hidden = true
+
+                            SU.hide_modifiers(store, this, true)
+
+                            a.ts = store.tick_ts
+
+                            SU.hero_gain_xp_from_skill(this, skill)
+                            S:queue(a.sound, {
+                                delay = fts(15)
+                            })
+                            U.animation_start(this, a.animation, nil, store.tick_ts)
+
+                            if SU.y_hero_wait(store, this, a.hit_time) then
+                                this.vis.bans = vis_bans
+                                this.health_bar.hidden = this.health.dead
+
+                                goto label_393_2
+                            end
+
+                            local d = E:create_entity("damage")
+
+                            d.source_id = this.id
+                            d.target_id = target.id
+                            d.value = (a.damage + this.damage_buff) * this.unit.damage_factor
+                            d.damage_type = a.damage_type
+
+                            queue_damage(store, d)
+
+                            this.vis.bans = vis_bans
+                            this.health_bar.hidden = false
+
+                            SU.show_modifiers(store, this, true)
+
+                            if SU.y_hero_animation_wait(this) then
+                                goto label_393_2
+                            end
+                        end
+                    end
+
+                    while this.nav_rally.new do
+                        if SU.y_hero_new_rally(store, this) then
+                            goto label_393_2
+                        end
+                    end
+
+                    if SU.hero_level_up(store, this) then
+                        U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                    end
+
+                    a = this.timed_attacks.list[1]
+                    skill = this.hero.skills.dragonstyle
+
+                    if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+                        local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                            a.vis_bans)
+
+                        if not targets then
+                            SU.delay_attack(store, a, 0.13333333333333333)
+                        else
+                            local start_ts = store.tick_ts
+                            this.health.ignore_damage = true
+                            S:queue(a.sound, {
+                                delay = fts(5)
+                            })
+
+                            local an, af = U.animation_name_facing_point(this, a.animation, targets[1].pos)
+
+                            U.animation_start(this, an, af, store.tick_ts, false)
+
+                            while store.tick_ts - start_ts < a.hit_time do
+                                if SU.hero_interrupted(this) then
+                                    this.health.ignore_damage = nil
+                                    goto label_393_2
+                                end
+
+                                coroutine.yield()
+                            end
+
+                            a.ts = start_ts
+
+                            SU.hero_gain_xp_from_skill(this, skill)
+
+                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius, a.damage_flags,
+                                a.damage_bans)
+
+                            if targets then
+                                for _, t in pairs(targets) do
+                                    local d = E:create_entity("damage")
+
+                                    d.source_id = this.id
+                                    d.target_id = t.id
+                                    d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
+                                    d.damage_type = a.damage_type
+
+                                    queue_damage(store, d)
+                                end
+                            end
+
+                            while not U.animation_finished(this) do
+                                if SU.hero_interrupted(this) then
+                                    break
+                                end
+
+                                coroutine.yield()
+                            end
+                            this.health.ignore_damage = nil
+                            goto label_393_2
+                        end
+                    end
+
+                    a = this.timed_attacks.list[2]
+                    skill = this.hero.skills.leopardstyle
+
+                    if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+
+                        if not targets then
+                            SU.delay_attack(store, a, 0.13333333333333333)
+
+                            goto label_393_1
+                        end
+
+                        U.unblock_target(store, this)
+
+                        this.health.ignore_damage = true
+                        this.health_bar.hidden = true
+
+                        local start_ts = store.tick_ts
+                        local start_pos = V.vclone(this.pos)
+                        local last_target
+                        local i = 1
+
+                        U.animation_start(this, "leopard_start", nil, store.tick_ts, false)
+
+                        while not U.animation_finished(this) do
+                            if SU.hero_interrupted(this) then
+                                goto label_393_0
+                            end
+                            coroutine.yield()
+                        end
+
+                        a.ts = start_ts
+
+                        SU.hero_gain_xp_from_skill(this, skill)
+
+                        while i <= a.loops do
+                            i = i + 1
+                            targets = U.find_enemies_in_range(store.entities, start_pos, 0, a.range, a.vis_flags, a.vis_bans)
+
+                            if not targets then
+                                break
+                            end
+
+                            if #targets > 1 then
+                                targets = table.filter(targets, function(k, v)
+                                    return v ~= last_target
+                                end)
+                            end
+
+                            local target = table.random(targets)
+
+                            last_target = target
+
+                            local animation, animation_idx = table.random(a.hit_animations)
+                            local hit_time = a.hit_times[animation_idx]
+                            local hit_pos = U.melee_slot_position(this, target, 1)
+                            local last_ts = store.tick_ts
+
+                            this.pos.x, this.pos.y = hit_pos.x, hit_pos.y
+
+                            if band(target.vis.bans, F_STUN) == 0 then
+                                SU.stun_inc(target)
+                            end
+
+                            local sound = (i - 1) % 3 == 0 and "HeroMonkMultihitScream" or "HeroMonkMultihitPunch"
+
+                            S:queue(sound)
+
+                            local an, af = U.animation_name_facing_point(this, animation, target.pos)
+
+                            U.animation_start(this, an, af, store.tick_ts)
+
+                            while hit_time > store.tick_ts - last_ts do
+                                if SU.hero_interrupted(this) then
+                                    SU.stun_dec(target)
+
+                                    goto label_393_0
+                                end
+
+                                coroutine.yield()
+                            end
+
+                            local d = E:create_entity("damage")
+
+                            d.source_id = this.id
+                            d.target_id = target.id
+                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
+
+                            queue_damage(store, d)
+
+                            local poff = a.particle_pos[animation_idx]
+                            local fx = E:create_entity("fx")
+
+                            fx.pos.x, fx.pos.y = (af and -1 or 1) * poff.x + this.pos.x, poff.y + this.pos.y
+                            fx.render.sprites[1].name = "fx_hero_monk_particle"
+                            fx.render.sprites[1].ts = store.tick_ts
+                            fx.render.sprites[1].sort_y_offset = -2
+
+                            queue_insert(store, fx)
+
+                            while not U.animation_finished(this) do
+                                if SU.hero_interrupted(this) then
+                                    SU.stun_dec(target)
+
+                                    goto label_393_0
+                                end
+
+                                coroutine.yield()
+                            end
+
+                            SU.stun_dec(target)
+                        end
+
+                        ::label_393_0::
+
+                        this.health.ignore_damage = nil
+                        this.health_bar.hidden = false
+                        this.pos.x, this.pos.y = start_pos.x, start_pos.y
+
+                        U.y_animation_play(this, "leopard_end", nil, store.tick_ts, 1)
+                    end
+
+                    ::label_393_1::
+
+                    brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                    if brk or sta ~= A_NO_TARGET then
+                        -- block empty
+                        if this.cooldown_factor_dec_count < 8 then
+                            this.cooldown_factor = this.cooldown_factor - 0.05
+                        end
+
+                        this.cooldown_factor_dec_count = this.cooldown_factor_dec_count + 1
+                    elseif SU.soldier_go_back_step(store, this) then
+                        -- block empty
+                    else
+                        if this.cooldown_factor_dec_count > 0 then
+                            if this.cooldown_factor_dec_count <= 8 then
+                                this.cooldown_factor = this.cooldown_factor + 0.05
+                            end
+                            this.cooldown_factor_dec_count = this.cooldown_factor_dec_count - 1
+                        end
+                        SU.soldier_idle(store, this)
+                        SU.soldier_regen(store, this)
+                    end
+                end
+
+                ::label_393_2::
+
+                coroutine.yield()
+            end
         end
     }
+    scripts.mod_monk_damage_reduction = {
+    insert = function(this, store)
+        local target = store.entities[this.modifier.target_id]
+        if target and target.unit then
+            target.unit.damage_factor = target.unit.damage_factor * (1 - this.reduction_factor)
+        end
+        return false
+    end
+}
+
     -- 女巫
     scripts.hero_voodoo_witch = {
         level_up = function(this, store)

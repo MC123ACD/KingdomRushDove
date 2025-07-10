@@ -10648,7 +10648,7 @@ local kr2_a = {
     hero_monk_levelup = {
         prefix = "hero_kungFu",
         -- to = 360,
-        to = 358,
+        to = 344,
         -- from = 326
         from = 328
     },

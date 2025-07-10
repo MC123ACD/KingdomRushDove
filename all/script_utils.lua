@@ -2149,10 +2149,15 @@ local function soldier_pick_melee_attack(store, this, target)
 		for _, i in pairs(this.melee.order) do
 			do
 				local a = this.melee.attacks[i]
-				local cooldown = a.cooldown
+				local cooldown = 0
+                if a.cooldown then
+                    cooldown = a.cooldown * this.cooldown_factor
+                end
+                -- local cooldown = a.cooldown
 
 				if this.melee.cooldown and a.shared_cooldown then
-					cooldown = this.melee.cooldown
+					cooldown = this.melee.cooldown * this.cooldown_factor
+                    -- cooldown = this.melee.cooldown
 				end
 
 				local forced_cooldown_ok = true

@@ -1464,7 +1464,7 @@ return {
         trim = {108, 197, 109, 52},
         a_size = {1024, 1024},
         f_quad = {830, 718, 36, 41},
-        alias = {"hero_kungFu_0317", "hero_kungFu_0351", "hero_kungFu_0352"}
+        alias = {"hero_kungFu_0317", "hero_kungFu_0340"}
     },
     hero_kungFu_0318 = {
         a_name = "go_hero_monk-1.png",
@@ -1472,7 +1472,7 @@ return {
         trim = {110, 196, 109, 52},
         a_size = {1024, 1024},
         f_quad = {867, 866, 34, 42},
-        alias = {"hero_kungFu_0319", "hero_kungFu_0353", "hero_kungFu_0354"}
+        alias = {"hero_kungFu_0319", "hero_kungFu_0341"}
     },
     hero_kungFu_0320 = {
         a_name = "go_hero_monk-1.png",
@@ -1480,7 +1480,7 @@ return {
         trim = {110, 195, 109, 52},
         a_size = {1024, 1024},
         f_quad = {949, 766, 34, 43},
-        alias = {"hero_kungFu_0321", "hero_kungFu_0355", "hero_kungFu_0356"}
+        alias = {"hero_kungFu_0321", "hero_kungFu_0343"}
     },
     hero_kungFu_0322 = {
         a_name = "go_hero_monk-1.png",
@@ -1488,7 +1488,7 @@ return {
         trim = {110, 194, 109, 52},
         a_size = {1024, 1024},
         f_quad = {987, 815, 34, 44},
-        alias = {"hero_kungFu_0323", "hero_kungFu_0357", "hero_kungFu_0358"}
+        alias = {"hero_kungFu_0323", "hero_kungFu_0344"}
     },
     -- hero_kungFu_0224 = {
     --     a_name = "go_hero_monk-1.png",
@@ -1896,87 +1896,87 @@ return {
         trim = {105, 160, 104, 49},
         a_size = {1024, 1024},
         f_quad = {458, 764, 44, 81},
-        alias = {"hero_kungFu_0330"}
+        alias = {}
     },
-    hero_kungFu_0331 = {
+    hero_kungFu_0330 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {107, 159, 105, 47},
         a_size = {1024, 1024},
         f_quad = {565, 777, 41, 84},
-        alias = {"hero_kungFu_0332"}
+        alias = {}
     },
-    hero_kungFu_0333 = {
+    hero_kungFu_0331 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {107, 159, 106, 48},
         a_size = {1024, 1024},
         f_quad = {660, 583, 40, 83},
-        alias = {"hero_kungFu_0334"}
+        alias = {}
     },
-    hero_kungFu_0335 = {
+    hero_kungFu_0332 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {107, 159, 105, 49},
         a_size = {1024, 1024},
         f_quad = {613, 583, 41, 82},
-        alias = {"hero_kungFu_0336"}
+        alias = {}
     },
-    hero_kungFu_0337 = {
+    hero_kungFu_0333 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {107, 159, 105, 48},
         a_size = {1024, 1024},
         f_quad = {565, 867, 41, 83},
-        alias = {"hero_kungFu_0338"}
+        alias = {}
     },
-    hero_kungFu_0339 = {
+    hero_kungFu_0334 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {104, 163, 104, 47},
         a_size = {1024, 1024},
         f_quad = {508, 882, 45, 80},
-        alias = {"hero_kungFu_0340"}
+        alias = {}
     },
-    hero_kungFu_0341 = {
+    hero_kungFu_0335 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {103, 182, 101, 46},
         a_size = {1024, 1024},
         f_quad = {508, 608, 49, 62},
-        alias = {"hero_kungFu_0342"}
+        alias = {}
     },
-    hero_kungFu_0343 = {
+    hero_kungFu_0336 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {110, 187, 109, 52},
         a_size = {1024, 1024},
         f_quad = {787, 880, 34, 51},
-        alias = {"hero_kungFu_0344"}
+        alias = {}
     },
-    hero_kungFu_0345 = {
+    hero_kungFu_0337 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {110, 194, 110, 52},
         a_size = {1024, 1024},
         f_quad = {867, 964, 33, 44},
-        alias = {"hero_kungFu_0346", "hero_kungFu_0392", "hero_kungFu_0393"}
+        alias = {"hero_kungFu_0392", "hero_kungFu_0393"}
     },
-    hero_kungFu_0347 = {
+    hero_kungFu_0338 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {110, 194, 109, 52},
         a_size = {1024, 1024},
         f_quad = {827, 866, 34, 44},
-        alias = {"hero_kungFu_0348", "hero_kungFu_0394", "hero_kungFu_0395"}
+        alias = {"hero_kungFu_0394", "hero_kungFu_0395"}
     },
-    hero_kungFu_0349 = {
+    hero_kungFu_0339 = {
         a_name = "go_hero_monk-1.png",
         size = {253, 290},
         trim = {108, 196, 109, 52},
         a_size = {1024, 1024},
         f_quad = {788, 718, 36, 42},
-        alias = {"hero_kungFu_0350", "hero_kungFu_0365", "hero_kungFu_0396"}
+        alias = {"hero_kungFu_0365", "hero_kungFu_0396"}
     },
     hero_kungFu_0363 = {
         a_name = "go_hero_monk-1.png",

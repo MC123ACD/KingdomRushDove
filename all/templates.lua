@@ -918,6 +918,8 @@ local unit = E:register_t("unit")
 E:add_comps(unit, "unit", "pos", "heading", "health", "health_bar", "render", "ui")
 
 unit.ui.click_rect = IS_PHONE_OR_TABLET and r(-20, -5, 40, 40) or r(-15, 0, 30, 30)
+unit.damage_buff = 0
+unit.cooldown_factor = 1
 
 local soldier = E:register_t("soldier", "unit")
 E:add_comps(soldier, "soldier", "motion", "nav_rally", "main_script", "vis", "regen", "idle_flip", "sound_events",
@@ -925,7 +927,6 @@ E:add_comps(soldier, "soldier", "motion", "nav_rally", "main_script", "vis", "re
 
 soldier.vis.flags = F_FRIEND
 soldier.sound_events.death_by_explosion = "DeathEplosion"
-soldier.damage_buff = 0
 
 tt = E:register_t("soldier_militia", "soldier")
 E:add_comps(tt, "melee")
@@ -1021,7 +1022,7 @@ enemy.main_script.update = scripts.enemy_mixed.update
 enemy.ui.click_rect = IS_PHONE_OR_TABLET and r(-25, -10, 50, 50) or r(-10, -5, 20, 30)
 enemy.sound_events.death = "DeathHuman"
 enemy.sound_events.death_by_explosion = "DeathEplosion"
-enemy.damage_buff = 0
+
 
 local boss = E:register_t("boss", "unit")
 
@@ -1031,7 +1032,7 @@ boss.vis.flags = bor(F_ENEMY, F_BOSS)
 boss.info.fn = scripts.enemy_basic.get_info
 boss.ui.click_rect = r(-20, -5, 40, 90)
 boss.health.armor_resilience = 0.5
-boss.damage_buff = 0
+
 
 tt = E:register_t("mega_spawner")
 E:add_comps(tt, "main_script", "editor", "editor_script")

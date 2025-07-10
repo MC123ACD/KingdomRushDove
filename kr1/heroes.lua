@@ -4645,12 +4645,13 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.tigerstyle = E:clone_c("hero_skill")
-    tt.hero.skills.tigerstyle.damage = {30, 60, 90}
+    tt.hero.skills.tigerstyle.damage = {30, 60, 90, 120}
     tt.hero.skills.tigerstyle.xp_gain_factor = 24
     tt.hero.skills.tigerstyle.xp_level_steps = {
-        [3] = 1,
-        [6] = 2,
-        [9] = 3
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.leopardstyle = E:clone_c("hero_skill")
     tt.hero.skills.leopardstyle.loops = {4, 5, 6, 7, 8}
@@ -4749,7 +4750,7 @@ local function heroes()
     tt.melee.attacks[4].cooldown = 11.2
     tt.melee.attacks[4].damage_max = nil
     tt.melee.attacks[4].damage_min = nil
-    tt.melee.attacks[4].hit_time = fts(18)
+    tt.melee.attacks[4].hit_time = fts(10)
     tt.melee.attacks[4].mod = "mod_monk_damage_reduction"
     tt.melee.attacks[4].sound = "HeroMonkSnakeAttack"
     tt.melee.attacks[4].vis_bans = bor(F_FLYING, F_CLIFF, F_BOSS)
@@ -4763,7 +4764,7 @@ local function heroes()
     tt.melee.attacks[5].damage_max = nil
     tt.melee.attacks[5].damage_min = nil
     tt.melee.attacks[5].damage_type = DAMAGE_TRUE
-    tt.melee.attacks[5].hit_time = fts(11)
+    tt.melee.attacks[5].hit_time = fts(6)
     tt.melee.attacks[5].sound = "HeroMonkHadoken"
     tt.melee.attacks[5].xp_from_skill = "tigerstyle"
     tt.melee.attacks[5].side_effect = function(this, store, attack, target)
@@ -4775,10 +4776,10 @@ local function heroes()
     tt.timed_attacks.list[1].damage_max = nil
     tt.timed_attacks.list[1].damage_min = nil
     tt.timed_attacks.list[1].damage_flags = bor(F_AREA)
-    tt.timed_attacks.list[1].damage_radius = 50
+    tt.timed_attacks.list[1].damage_radius = 55
     tt.timed_attacks.list[1].damage_type = DAMAGE_TRUE
     tt.timed_attacks.list[1].disabled = true
-    tt.timed_attacks.list[1].hit_time = fts(26)
+    tt.timed_attacks.list[1].hit_time = fts(14)
     tt.timed_attacks.list[1].sound = "HeroMonkFiredragon"
     tt.timed_attacks.list[1].xp_from_skill = "dragonstyle"
     tt.timed_attacks.list[1].max_range = 37.5
@@ -4787,13 +4788,14 @@ local function heroes()
     tt.timed_attacks.list[2].cooldown = 8
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].hit_animations = {"leopard_hit1", "leopard_hit2", "leopard_hit3", "leopard_hit4"}
-    tt.timed_attacks.list[2].hit_times = {fts(6), fts(6), fts(6), fts(6)}
+    tt.timed_attacks.list[2].hit_times = {fts(3), fts(3), fts(3), fts(3)}
     tt.timed_attacks.list[2].particle_pos = {vec_2(20, 14), vec_2(24, 22), vec_2(18, 14), vec_2(21, 18)}
-    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING, F_BOSS, F_WATER, F_CLIFF)
+    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING,F_BOSS, F_WATER, F_CLIFF)
     tt.timed_attacks.list[2].vis_flags = bor(F_STUN, F_RANGED)
     tt.timed_attacks.list[2].loops = nil
     tt.timed_attacks.list[2].range = 100
     tt.timed_attacks.list[2].xp_from_skill = "leopardstyle"
+    tt.cooldown_factor_dec_count = 0
 
     tt = E:register_t("mod_monk_damage_reduction", "modifier")
     tt.main_script.insert = scripts.mod_monk_damage_reduction.insert
