@@ -9277,7 +9277,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {18, 20, 23, 25, 28, 30, 32, 35, 37, 40}
     tt.hero.skills.sharp_claws = E:clone_c("hero_skill")
     tt.hero.skills.sharp_claws.damage = {3, 6, 9}
-    tt.hero.skills.sharp_claws.extra_damage = {15, 30, 45}
+    tt.hero.skills.sharp_claws.extra_damage = {12, 25, 40}
     tt.hero.skills.sharp_claws.xp_gain = {10, 20, 30}
     tt.hero.skills.sharp_claws.xp_level_steps = {
         [1] = 1,
@@ -9353,7 +9353,7 @@ local function heroes()
     tt.melee.attacks[2].chance = 0.5
     tt.melee.attacks[3] = table.deepclone(tt.melee.attacks[1])
     tt.melee.attacks[3].animation = "attack3"
-    tt.melee.attacks[3].chance = 0.1
+    tt.melee.attacks[3].chance = 0.2
     tt.melee.attacks[3].fn_chance = scripts.hero_bruce.fn_chance_sharp_claws
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].mod = "mod_bruce_sharp_claws"
@@ -9372,7 +9372,7 @@ local function heroes()
         delay = fts(3)
     }
     tt.melee.attacks[4].xp_from_skill = "grievous_bites"
-    tt.melee.attacks[4].xp_gain_factor = 7.5
+    tt.melee.attacks[4].xp_gain_factor = 5
     tt.melee.cooldown = 1
     tt.melee.range = 55
     tt.timed_attacks.list[1] = CC("mod_attack")
