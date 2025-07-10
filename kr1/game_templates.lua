@@ -5978,8 +5978,8 @@ tt = RT("aura_bruce_hps", "aura")
 AC(tt, "hps")
 tt.aura.duration = -1
 tt.main_script.update = scripts.aura_bruce_hps.update
-tt.hps.heal_max = 1
-tt.hps.heal_every = fts(20)
+tt.hps.heal_max = 3
+tt.hps.heal_every = 1
 
 
 tt = RT("aura_bomb_wilbur", "aura_rabbit_kamihare")
