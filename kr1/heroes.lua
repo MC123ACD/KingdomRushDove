@@ -8499,6 +8499,8 @@ local function heroes()
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = 0.1666
     tt.render.sprites[1].prefix = "hero_lilith"
+    tt.render.sprites[1].alpha = 128
+    tt.render.sprites[1].color = {255, 255, 155}
     tt.soldier.melee_slot_offset = vec_2(0, 0)
     tt.sound_events.change_rally_point = "ElvesHeroLilithTaunt"
     tt.sound_events.death = "ElvesHeroLilithDeath"
@@ -8516,7 +8518,7 @@ local function heroes()
     tt.revive.resist = {
         bans = bor(F_STUN, F_BLOOD, F_POISON, F_BURN),
         duration = 8,
-        cost = 0.05,
+        cost = 0.06,
         side_effect = function(this, store)
             this.melee.attacks[3].ts = 0
             this.melee.attacks[4].ts = 0
@@ -8525,7 +8527,7 @@ local function heroes()
     tt.soul_eater = {}
     tt.soul_eater.last_ts = 0
     tt.soul_eater.active = true
-    tt.melee.attacks[1].cooldown = 0
+    tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].hit_time = fts(14)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"
@@ -8538,7 +8540,7 @@ local function heroes()
     tt.melee.attacks[2].chance = 1
     tt.melee.attacks[3] = CC("melee_attack")
     tt.melee.attacks[3].side_effect = function(this, store, attack, target)
-        this.revive.protect = this.revive.protect + 0.02
+        this.revive.protect = this.revive.protect + 0.01
     end
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].cooldown = 20
@@ -8555,7 +8557,7 @@ local function heroes()
     tt.melee.attacks[3].hit_offset = vec_2(30, 0)
     tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[4].side_effect = function(this, store, attack, target)
-        this.revive.protect = this.revive.protect + 0.03
+        this.revive.protect = this.revive.protect + 0.02
         this.soul_eater.last_ts = store.tick_ts - E:get_template("aura_lilith_soul_eater").aura.cooldown
         scripts.heal(this, this.health.hp_max * 0.2)
     end
@@ -8568,7 +8570,7 @@ local function heroes()
     tt.melee.range = 57.5
     tt.ranged.attacks[1] = CC("bullet_attack")
     tt.ranged.attacks[1].animation = "throw"
-    tt.ranged.attacks[1].max_range = 165
+    tt.ranged.attacks[1].max_range = 170
     tt.ranged.attacks[1].min_range = 20
     tt.ranged.attacks[1].cooldown = 2
     tt.ranged.attacks[1].bullet = "bullet_lilith"
@@ -8576,7 +8578,7 @@ local function heroes()
     tt.ranged.attacks[1].shoot_time = fts(28)
     tt.ranged.attacks[1].node_prediction = fts(28)
     tt.ranged.attacks[1].side_effect = function(this, store, attack, target)
-        this.revive.protect = this.revive.protect + 0.02
+        this.revive.protect = this.revive.protect + 0.015
     end
     tt.timed_attacks.list[1] = E:clone_c("aura_attack")
     tt.timed_attacks.list[1].disabled = true

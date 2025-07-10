@@ -11547,6 +11547,11 @@ return function(scripts)
         local function inc_instakill_chance()
             this.melee.attacks[4].chance = this.melee.attacks[4].origin_chance + 0.2 * km.clamp(0, 1, this.revive.protect)
         end
+        local function update_color()
+            local revive_rate = km.clamp(0, 1, this.revive.protect) * 100
+            this.render.sprites[1].alpha = 155 + revive_rate
+            this.render.sprites[1].color[3] = 255 - revive_rate
+        end
         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
 
         while true do
@@ -11584,6 +11589,7 @@ return function(scripts)
             end
             scripts.soldier_revive_resist(this, store)
             inc_instakill_chance()
+            update_color()
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else
@@ -11647,7 +11653,7 @@ return function(scripts)
                         local e = E:create_entity(this.hero.skills.ultimate.controller_name)
 
                         e.pos = V.vclone(target.pos)
-                        if target_num <= 2 then
+                        if target_num <= 1 then
                             e.is_meteor = false
                         else
                             e.is_meteor = true
