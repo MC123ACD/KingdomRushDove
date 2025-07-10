@@ -9183,7 +9183,7 @@ local function heroes()
     tt.timed_attacks.list[3].sound_hit = "ElvesHeroRagHammer"
     tt.timed_attacks.list[3].sound_loop = "ElvesHeroRagHammerTime"
     tt.timed_attacks.list[3].speed_factor = 1.25
-    tt.timed_attacks.list[3].trigger_hp = 100
+    tt.timed_attacks.list[3].trigger_hp = 600
     tt.timed_attacks.list[3].vis_bans = bor(F_FLYING)
     tt.timed_attacks.list[3].vis_flags = bor(F_RANGED)
     tt.timed_attacks.list[3].xp_from_skill = "hammer_time"
