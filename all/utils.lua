@@ -77,11 +77,16 @@ end
 
 function U.sort_foremost_enemies(enemies)
     table.sort(enemies, function(e1, e2)
-        if bor(e1.vis.flags, F_MOCKING) ~= 0 then
-            return true
-        elseif bor(e2.vis.flags, F_MOCKING) ~= 0 then
-            return false
+        local e1_mocking = band(e1.vis.flags, F_MOCKING) ~= 0
+        local e2_mocking = band(e2.vis.flags, F_MOCKING) ~= 0
+
+        -- 优先处理嘲讽标志
+        if e1_mocking and not e2_mocking then
+            return true -- e1 有嘲讽，e2 没有，e1 优先
+        elseif not e1_mocking and e2_mocking then
+            return false -- e2 有嘲讽，e1 没有，e2 优先
         end
+
         local p1 = e1.nav_path
         local p2 = e2.nav_path
 

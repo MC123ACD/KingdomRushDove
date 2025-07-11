@@ -7473,7 +7473,11 @@ local function heroes()
     tt.unit.mod_offset = vec_2(0, 13)
     local function generate_stone_effect(this, store, attack, target)
         local a = this.timed_attacks.list[2]
-        if #a.aura.stones < a.aura.max_stones and math.random(0, 1) < 0.2 then
+        local stone_chance = 0.2
+        if target and target.vis and band(target.vis.flags, F_BOSS) ~= 0 then
+            stone_chance = 0.1
+        end
+        if #a.aura.stones < a.aura.max_stones and math.random(0, 1) < stone_chance then
             S:queue(a.sound)
             local stone = E:create_entity("arivan_stone")
             local i = #a.aura.stones + 1

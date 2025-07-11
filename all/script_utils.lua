@@ -1350,14 +1350,14 @@ local function soldier_pick_ranged_target_and_attack(store, this)
 			local target, targets, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
 			if target then
-                if a.mod then
-                    local modable = table.filter(targets, function(_,e)
-                        return not U.has_modifiers(store, e, a.mod)
-                    end)
-                    if #modable > 0 then
-                        target = modable[1]
-                    end
-                end
+                -- if a.mod then
+                --     local modable = table.filter(targets, function(_,e)
+                --         return not U.has_modifiers(store, e, a.mod)
+                --     end)
+                --     if #modable > 0 then
+                --         target = modable[1]
+                --     end
+                -- end
 				if pred_pos then
 					log.paranoid(" target.pos:%s,%s  pred_pos:%s,%s", target.pos.x, target.pos.y, pred_pos.x, pred_pos.y)
 				end
