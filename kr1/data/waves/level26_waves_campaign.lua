@@ -2824,7 +2824,8 @@ return {
 							fixed_sub_path = 1,
 							creep = "enemy_fallen_knight",
 							path = 2,
-							interval_next = 1400,
+							-- interval_next = 1400,
+                            interval_next = 141,
 							max = 0
 						},
 						{

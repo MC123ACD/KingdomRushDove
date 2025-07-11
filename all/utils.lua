@@ -75,6 +75,20 @@ function U.ease_value(from, to, phase, easing)
     return from + (to - from) * U.ease_phase(phase, easing)
 end
 
+function U.sort_foremost_enemies(enemies)
+    table.sort(enemies, function(e1, e2)
+        if bor(e1.vis.flags, F_MOCKING) ~= 0 then
+            return true
+        elseif bor(e2.vis.flags, F_MOCKING) ~= 0 then
+            return false
+        end
+        local p1 = e1.nav_path
+        local p2 = e2.nav_path
+
+        return P:nodes_to_goal(p1.pi, p1.spi, p1.ni) < P:nodes_to_goal(p2.pi, p2.spi, p2.ni)
+    end)
+end
+
 function U.ease_phase(phase, easing)
     phase = km.clamp(0, 1, phase)
     easing = easing or ""
@@ -916,12 +930,7 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     if not enemies or #enemies == 0 then
         return nil, nil
     else
-        table.sort(enemies, function(e1, e2)
-            local p1 = e1.nav_path
-            local p2 = e2.nav_path
-
-            return P:nodes_to_goal(p1.pi, p1.spi, p1.ni) < P:nodes_to_goal(p2.pi, p2.spi, p2.ni)
-        end)
+        U.sort_foremost_enemies(enemies)
         local foremost_enemy = enemies[1]
         local max_cover_enemy_idx = 1
         for i = 2, #enemies do
@@ -988,12 +997,7 @@ function U.find_foremost_enemy(entities, origin, min_range, max_range, predictio
     if not enemies or #enemies == 0 then
         return nil, nil
     else
-        table.sort(enemies, function(e1, e2)
-            local p1 = e1.nav_path
-            local p2 = e2.nav_path
-
-            return P:nodes_to_goal(p1.pi, p1.spi, p1.ni) < P:nodes_to_goal(p2.pi, p2.spi, p2.ni)
-        end)
+        U.sort_foremost_enemies(enemies)
 
         return enemies[1], enemies, enemies[1].__ffe_pos
     end

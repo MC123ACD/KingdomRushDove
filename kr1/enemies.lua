@@ -2391,6 +2391,7 @@ local function enemies()
     tt.unit.hide_after_death = true
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = F_POISON
+    tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
 
     tt = E:register_t("aura_abomination", "aura")
     E:add_comps(tt, "render", "tween")
