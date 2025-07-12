@@ -12997,6 +12997,11 @@ local kr2_a = {
         to = 46,
         from = 24
     },
+    enemy_cannibal_volcano_walkingUp = {
+        prefix = "Stage9_Beast",
+        to = 23,
+        from = 2
+    },
     enemy_cannibal_volcano_attack = {
         prefix = "Stage9_Beast",
         to = 152,

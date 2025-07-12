@@ -2953,7 +2953,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_cannibal",
+							creep = "enemy_cannibal_volcano_normal",
 							max_same = 0,
 							interval_next = 450,
 							max = 1
@@ -3025,7 +3025,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_cannibal",
+							creep = "enemy_cannibal_volcano_normal",
 							max_same = 0,
 							interval_next = 0,
 							max = 1
@@ -3266,7 +3266,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_cannibal",
+							creep = "enemy_cannibal_volcano_normal",
 							max_same = 0,
 							interval_next = 0,
 							max = 1
@@ -3967,7 +3967,7 @@ return {
 							interval = 0,
 							path = 3,
 							fixed_sub_path = 1,
-							creep = "enemy_cannibal",
+							creep = "enemy_cannibal_volcano_normal",
 							max_same = 0,
 							interval_next = 25,
 							max = 1
@@ -4003,7 +4003,7 @@ return {
 							interval = 0,
 							path = 2,
 							fixed_sub_path = 1,
-							creep = "enemy_cannibal",
+							creep = "enemy_cannibal_volcano_normal",
 							max_same = 0,
 							interval_next = 0,
 							max = 1

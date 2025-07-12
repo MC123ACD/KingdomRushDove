@@ -1312,7 +1312,7 @@ tt.graveyard.spawns_by_health = {{"enemy_zombie", 400}, {"enemy_swamp_thing", 9e
 tt.graveyard.excluded_templates = {"soldier_alleria_wildcat", "soldier_magnus_illusion"}
 tt.graveyard.keep_gold = false
 tt.graveyard.vis_has = F_FRIEND
-tt.graveyard.vis_flags = 0
+tt.graveyard.vis_flags = F_SKELETON
 tt.graveyard.vis_bans = F_HERO
 tt = RT("s15_rotten_spawner")
 
@@ -2565,7 +2565,7 @@ tt.unit.can_explode = false
 tt.unit.hit_offset = vec_2(0, 18)
 tt.unit.marker_offset = vec_2(0, ady(16))
 tt.unit.mod_offset = vec_2(0, ady(36))
-tt.vis.flags = bor(F_ENEMY, F_BOSS)
+tt.vis.flags = bor(F_ENEMY, F_BOSS, F_MOCKING)
 tt.vis.bans = bor(F_SKELETON, F_UNDEAD)
 
 tt = E:register_t("decal_volcano_virgin", "decal_scripted")

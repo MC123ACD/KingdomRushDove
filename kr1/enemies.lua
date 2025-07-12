@@ -3206,6 +3206,40 @@ local function enemies()
     tt.water.mod_offset = vec_2(0, 5)
     tt.water.health_bar_hidden = true
 
+    tt = E:register_t("enemy_cannibal_volcano_normal", "enemy")
+    E:add_comps(tt, "melee", "tween")
+    anchor_y = 0.15
+    image_y = 100
+    tt.info.portrait = IS_PHONE and "portraits_sc_0044" or "kr2_info_portraits_enemies_0027"
+    tt.enemy.gold = 25
+    tt.enemy.lives_cost = 1
+    tt.enemy.melee_slot = vec_2(24, 0)
+    tt.info.i18n_key = "ENEMY_CANNIBAL_VOLCANO"
+    tt.health.armor = 0
+    tt.health.hp_max = 900
+    tt.health.magic_armor = 0
+    tt.health_bar.offset = vec_2(0, ady(70))
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].damage_max = 20
+    tt.melee.attacks[1].damage_min = 10
+    tt.melee.attacks[1].hit_time = fts(12)
+    tt.motion.max_speed = 1.067 * FPS
+    tt.render.sprites[1].anchor.y = anchor_y
+    tt.render.sprites[1].prefix = "enemy_cannibal_volcano"
+    tt.sound_events.scream = "SpecialVolcanoVirginScream"
+    tt.sound_events.throw = "SpecialVolcanoThrowSplash"
+    tt.tween.props[1].keys = {{0, vec_2(0.65, 0.65)}, {0.2, vec_2(1, 1)}}
+    tt.tween.props[1].name = "scale"
+    tt.tween.remove = false
+    tt.tween.run_once = true
+    tt.unit.can_explode = true
+    tt.unit.hit_offset = vec_2(0, 18)
+    tt.unit.marker_offset = vec_2(0, ady(16))
+    tt.unit.mod_offset = vec_2(0, ady(36))
+    tt.vis.flags = bor(F_ENEMY, F_BOSS, F_MOCKING)
+    tt.vis.bans = bor(F_SKELETON, F_UNDEAD)
+
     tt = E:register_t("enemy_hunter", "enemy")
     E:add_comps(tt, "melee", "ranged", "water")
     anchor_y = 0.25
@@ -3350,7 +3384,7 @@ local function enemies()
     tt = E:register_t("shaman_magic_aura", "aura")
     E:add_comps(tt, "render")
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
-                                "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla"}
+                                "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla","enemy_cannibal_volcano_normal"}
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
     tt.aura.mod = "mod_shaman_magic_armor"
@@ -3409,7 +3443,7 @@ local function enemies()
     tt = E:register_t("shaman_rage_aura", "aura")
     E:add_comps(tt, "render")
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_shield",
-                                "enemy_shaman_necro","enemy_shaman_rage","enemy_shaman_magic","enemy_gorilla"}
+                                "enemy_shaman_necro","enemy_shaman_rage","enemy_shaman_magic","enemy_gorilla","enemy_cannibal_volcano_normal"}
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
     tt.aura.mod = "mod_shaman_rage"
@@ -3481,7 +3515,7 @@ local function enemies()
     tt.aura.vis_bans = bor(F_FRIEND, F_HERO, F_BOSS)
     tt.aura.vis_flags = F_MOD
     tt.aura.allowed_templates = {"enemy_hunter", "enemy_cannibal", "enemy_shaman_priest", "enemy_shaman_magic",
-                                 "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla"}
+                                 "enemy_shaman_necro","enemy_shaman_rage","enemy_gorilla","enemy_cannibal_volcano_normal"}
     tt.aura.requires_magic = true
     tt.main_script.insert = scripts.aura_apply_mod.insert
     tt.main_script.update = scripts.aura_apply_mod.update
@@ -3534,7 +3568,7 @@ local function enemies()
     tt.render.sprites[1].prefix = "enemy_shaman_necro"
     tt.timed_attacks.list[1] = E:clone_c("custom_attack")
     tt.timed_attacks.list[1].allowed_templates = {"enemy_cannibal", "enemy_hunter", "enemy_shaman_shield",
-                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage","enemy_gorilla","enemy_savage_bird_rider"}
+                                                  "enemy_shaman_magic", "enemy_shaman_priest","enemy_shaman_rage","enemy_gorilla","enemy_savage_bird_rider","enemy_cannibal_volcano_normal"}
     tt.timed_attacks.list[1].animation = "necromancer"
     tt.timed_attacks.list[1].cast_time = fts(16)
     tt.timed_attacks.list[1].cooldown = 1
@@ -3748,6 +3782,7 @@ local function enemies()
     tt.unit.mod_offset = vec_2(0, ady(36))
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = bor(F_EAT)
+    tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
 
     tt = E:register_t("alien_egg", "decal_scripted")
     E:add_comps(tt, "spawner", "sound_events")
