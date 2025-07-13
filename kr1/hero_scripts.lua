@@ -7937,19 +7937,18 @@ return function(scripts)
 
                 if targets then
                     for _, t in pairs(targets) do
-                        local d = E:create_entity("damage")
-
-                        d.damage_type = this.explode_damage_type
-                        d.value = this.explode_damage * this.modifier.damage_factor
-                        d.target_id = t.id
-                        d.source_id = this.id
-
-                        queue_damage(store, d)
                         local new_mod = E:create_entity("mod_lynn_ultimate")
                         new_mod.modifier.source_id = this.id
                         new_mod.modifier.target_id = t.id
                         new_mod.modifier.damage_factor = this.modifier.damage_factor * 0.5
                         queue_insert(store, new_mod)
+
+                        local d = E:create_entity("damage")
+                        d.damage_type = this.explode_damage_type
+                        d.value = this.explode_damage * this.modifier.damage_factor
+                        d.target_id = t.id
+                        d.source_id = this.id
+                        queue_damage(store, d)
                     end
                 end
 

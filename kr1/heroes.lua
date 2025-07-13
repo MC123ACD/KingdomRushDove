@@ -6536,7 +6536,7 @@ local function heroes()
     tt.dps.damage_every = fts(15)
     tt.dps.damage_type = DAMAGE_TRUE
     tt.explode_fx = "fx_lynn_explosion"
-    tt.explode_range = 75
+    tt.explode_range = 80
     tt.explode_damage = nil
     tt.explode_damage_type = DAMAGE_TRUE
     tt.explode_vis_flags = F_RANGED

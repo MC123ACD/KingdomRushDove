@@ -27188,11 +27188,6 @@ scripts.aura_arcane_burst = {}
 
 function scripts.aura_arcane_burst.update(this, store)
     local a = this.aura
-    -- local source = store.entities[this.source_id]
-
-    -- if source and source.bullet then
-    --     a.level = source.bullet.level
-    -- end
 
     local target = this.target_id and store.entities[this.target_id]
     local hit_pos = V.vclone(this.pos)
@@ -27214,7 +27209,7 @@ function scripts.aura_arcane_burst.update(this, store)
 
             queue_damage(store, d)
 
-            if math.random() < this.sleep_chance then
+            if math.random() < this.sleep_chance and band(target.vis.bans, F_STUN) == 0 then
                 local m = E:create_entity("mod_arrow_arcane_slumber")
                 m.modifier.target_id = target.id
                 m.modifier.source_id = this.id

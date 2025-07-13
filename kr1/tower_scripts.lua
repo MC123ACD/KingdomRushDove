@@ -1148,7 +1148,7 @@ local function register_archer(scripts)
                                     if enemy.health and enemy.health.magic_armor > 0 then
                                         sa.ts = sa.ts - 0.3
                                     end
-                                    if math.random() < this.attacks.list[3].chance then
+                                    if math.random() < this.attacks.list[3].chance and band(enemy.vis.bans, F_STUN) == 0 then
                                         shot_bullet(this.attacks.list[3], shooter_idx, enemy, this.powers.slumber.level)
                                     else
                                         shot_bullet(aa, shooter_idx, enemy, 0)
