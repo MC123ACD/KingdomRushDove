@@ -745,6 +745,10 @@ local function archer_towers()
     tt.bullet.mod = {"mod_arrow_arcane"}
     tt.bullet.particles_name = "ps_arrow_arcane_special"
     tt.bullet.payload = "aura_arcane_burst"
+    tt.bullet.payload_props = {
+        ["sleep_chance"] = 0
+    }
+    tt.sleep_chance = 0
     tt.render.sprites[1].name = "archer_arcane_proy_0001-f"
     tt.sound_events.insert = "TowerArcanePreloadAndTravel"
 
@@ -754,7 +758,6 @@ local function archer_towers()
     tt.aura.damage_type = DAMAGE_MAGICAL_EXPLOSION
     tt.aura.radius = 57.5
     tt.main_script.update = scripts.aura_arcane_burst.update
-    tt.sleep_chance = 0
     tt.render.sprites[1].anchor.y = 0.2916666666666667
     tt.render.sprites[1].name = "arcane_burst_explosion"
     tt.render.sprites[1].sort_y_offset = -7

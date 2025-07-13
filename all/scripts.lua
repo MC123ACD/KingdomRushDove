@@ -2294,6 +2294,13 @@ function scripts.arrow.update(this, store, script)
 
         if p.aura then
             p.aura.level = b.level
+            p.aura.damage_factor = b.damage_factor
+        end
+
+        if b.payload_props then
+            for k, v in pairs(b.payload_props) do
+                p[k] = v
+            end
         end
 
         queue_insert(store, p)

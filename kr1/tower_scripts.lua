@@ -1050,8 +1050,8 @@ local function register_archer(scripts)
                 b.bullet.target_id = enemy.id
                 b.bullet.level = level
                 b.bullet.damage_factor = this.tower.damage_factor
-                if b.template_name == "arrow_arcane_burst" then
-                    b.sleep_chance = this.attacks.list[3].chance * 5
+                if attack.bullet == "arrow_arcane_burst" then
+                    b.bullet.payload_props["sleep_chance"] = this.attacks.list[3].chance * 5
                 end
                 apply_precision(b)
 
