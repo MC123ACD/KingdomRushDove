@@ -5983,7 +5983,7 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.multishot = E:clone_c("hero_skill")
-    tt.hero.skills.multishot.loops = {5, 7, 9}
+    tt.hero.skills.multishot.loops = {5, 7, 10}
     tt.hero.skills.multishot.xp_gain_factor = 30
     tt.hero.skills.multishot.xp_level_steps = {
         [2] = 1,
@@ -5996,14 +5996,15 @@ local function heroes()
     tt.hero.skills.nimble_fencer.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
     }
     tt.hero.skills.porcupine = E:clone_c("hero_skill")
-    tt.hero.skills.porcupine.damage_inc = {2, 4, 6}
+    tt.hero.skills.porcupine.damage_inc = {2, 4, 6, 8}
     tt.hero.skills.porcupine.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.ultimate = E:clone_c("hero_skill")
     tt.hero.skills.ultimate.controller_name = "hero_elves_archer_ultimate"
