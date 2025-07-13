@@ -8936,7 +8936,7 @@ local function heroes()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(26, 80)}
     tt.ranged.attacks[1].cooldown = 1
     tt.ranged.attacks[1].bullet_count = 3
-    tt.ranged.attacks[1].min_range = 40
+    tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].max_range = 150
     tt.ranged.attacks[1].extra_range = 80
     tt.ranged.attacks[1].shoot_time = fts(12)
@@ -8949,7 +8949,7 @@ local function heroes()
     tt.ranged.attacks[2].bullet = "bolt_lance_faustus"
     tt.ranged.attacks[2].bullet_start_offset = {vec_2(22, 110)}
     tt.ranged.attacks[2].cooldown = 24
-    tt.ranged.attacks[2].min_range = 20
+    tt.ranged.attacks[2].min_range = 0
     tt.ranged.attacks[2].max_range = 150
     tt.ranged.attacks[2].shoot_time = fts(22)
     tt.ranged.attacks[2].sync_animation = true
