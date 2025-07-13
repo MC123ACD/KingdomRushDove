@@ -1277,12 +1277,13 @@ local function heroes()
     tt.hero.level_stats.melee_damage_max = {41, 45, 49, 53, 56, 60, 64, 68, 71, 75}
     tt.hero.level_stats.melee_damage_min = {18, 19, 20, 21, 23, 24, 25, 26, 27, 28}
     tt.hero.skills.rage = CC("hero_skill")
-    tt.hero.skills.rage.rage_max = {30, 37, 45}
-    tt.hero.skills.rage.unyield_max = {0.2, 0.25, 0.3}
+    tt.hero.skills.rage.rage_max = {45, 56, 67, 78}
+    tt.hero.skills.rage.unyield_max = {0.2, 0.25, 0.3, 0.35}
     tt.hero.skills.rage.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.death_strike = CC("hero_skill")
     tt.hero.skills.death_strike.chance = {0.1, 0.15, 0.2}
@@ -1329,7 +1330,7 @@ local function heroes()
     tt.unit.pop_offset = vec_2(0, 10)
     tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].hit_time = fts(15)
-    tt.melee.attacks[1].xp_gain_factor = 2.5
+    tt.melee.attacks[1].xp_gain_factor = 2.4
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[2] = CC("melee_attack")
     tt.melee.attacks[2].animation = "deathStrike"
@@ -1371,6 +1372,7 @@ local function heroes()
     tt.timed_attacks.list[1].torment_swords = {{0.01, 20, 8}, {0.2, 37.5, 8}, {0.3, 55, 8}}
     tt.rage = 0
     tt.rage_max = 0
+    tt.unyield = 0
     tt.unyield_max = 0
 
     tt = RT("hero_hacksaw", "hero")
@@ -6361,13 +6363,13 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {10, 11, 13, 14, 16, 18, 19, 21, 22, 24}
     tt.hero.skills.hexfury = E:clone_c("hero_skill")
     tt.hero.skills.hexfury.extra_damage = 20
-    tt.hero.skills.hexfury.loops = {1, 2, 3}
-    tt.hero.skills.hexfury.xp_gain = {30, 60, 90}
-    tt.hero.skills.hexfury.xp_gain_factor = 5
+    tt.hero.skills.hexfury.loops = {1, 2, 3, 4}
+    tt.hero.skills.hexfury.xp_gain = {30, 60, 90, 120}
     tt.hero.skills.hexfury.xp_level_steps = {
         [2] = 1,
         [5] = 2,
-        [8] = 3
+        [8] = 3,
+        [10] = 4
     }
     tt.hero.skills.despair = E:clone_c("hero_skill")
     tt.hero.skills.despair.duration = {4, 6, 8}
@@ -7187,7 +7189,7 @@ local function heroes()
     tt = E:register_t("hero_elves_denas", "hero")
     E:add_comps(tt, "melee", "ranged", "timed_attacks")
     tt.hero.level_stats.armor = {0.38, 0.41, 0.44, 0.47, 0.5, 0.53, 0.56, 0.59, 0.62, 0.65}
-    tt.hero.level_stats.hp_max = {280, 295, 310, 325, 340, 355, 370, 385, 400, 415}
+    tt.hero.level_stats.hp_max = {308, 324, 343, 357, 374, 390, 407, 423, 440, 456}
     tt.hero.level_stats.melee_damage_max = {14, 17, 19, 21, 23, 25, 27, 30, 32, 34}
     tt.hero.level_stats.melee_damage_min = {10, 11, 12, 14, 15, 17, 18, 20, 21, 23}
     tt.hero.skills.celebrity = E:clone_c("hero_skill")
@@ -7202,7 +7204,7 @@ local function heroes()
     tt.hero.skills.mighty = E:clone_c("hero_skill")
     tt.hero.skills.mighty.damage_max = {134, 226, 320}
     tt.hero.skills.mighty.damage_min = {70, 122, 171}
-    tt.hero.skills.mighty.xp_gain = {63, 126, 189}
+    tt.hero.skills.mighty.xp_gain = {70, 140, 210}
     tt.hero.skills.mighty.xp_level_steps = {
         [3] = 1,
         [6] = 2,
@@ -7212,7 +7214,7 @@ local function heroes()
     tt.hero.skills.shield_strike.damage_max = {36, 46, 52}
     tt.hero.skills.shield_strike.damage_min = {20, 26, 30}
     tt.hero.skills.shield_strike.rebounds = {3, 4, 5}
-    tt.hero.skills.shield_strike.xp_gain = {50, 75, 100}
+    tt.hero.skills.shield_strike.xp_gain = {50, 100, 150}
     tt.hero.skills.shield_strike.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -7220,7 +7222,7 @@ local function heroes()
     }
     tt.hero.skills.sybarite = E:clone_c("hero_skill")
     tt.hero.skills.sybarite.heal_hp = {80, 160, 240}
-    tt.hero.skills.sybarite.xp_gain = {50, 100, 150}
+    tt.hero.skills.sybarite.xp_gain = {75, 150, 225}
     tt.hero.skills.sybarite.xp_level_steps = {
         [2] = 1,
         [5] = 2,
@@ -7234,6 +7236,12 @@ local function heroes()
         [4] = 2,
         [7] = 3,
         [10] = 4
+    }
+    tt.hero.skills.ultimate.cooldown = {
+        48,
+        43.2,
+        38.88,
+        34.992
     }
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 46)
@@ -7313,7 +7321,7 @@ local function heroes()
     tt.timed_attacks.list[2].sound = "ElvesHeroDenasSybarite"
     tt.wealthy = {}
     tt.wealthy.animation = "coinThrow"
-    tt.wealthy.gold = 25
+    tt.wealthy.gold = 30
     tt.wealthy.sound = "ElvesHeroDenasWealthy"
     tt.wealthy.last_wave = 1
     tt.wealthy.hit_time = fts(9)
