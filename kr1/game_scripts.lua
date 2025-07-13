@@ -27208,11 +27208,18 @@ function scripts.aura_arcane_burst.update(this, store)
             local d = E:create_entity("damage")
 
             d.damage_type = a.damage_type
-            d.value = a.level * a.damage_inc
+            d.value = a.level * a.damage_inc * source.bullet.damage_factor
             d.target_id = target.id
             d.source_id = this.id
 
             queue_damage(store, d)
+
+            if math.random() < source.sleep_chance then
+                local m = E:create_entity("mod_arrow_arcane_slumber")
+                m.modifier.target_id = target.id
+                m.modifier.source_id = this.id
+                queue_insert(store, m)
+            end
         end
     end
 

@@ -673,8 +673,8 @@ local function archer_towers()
     tt.powers.burst.attack_idx = 2
     tt.powers.burst.enc_icon = 2
     tt.powers.slumber = E:clone_c("power")
-    tt.powers.slumber.price_base = 150
-    tt.powers.slumber.price_inc = 50
+    tt.powers.slumber.price_base = 225
+    tt.powers.slumber.price_inc = 75
     tt.powers.slumber.enc_icon = 1
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrains_%04i"
@@ -754,6 +754,7 @@ local function archer_towers()
     tt.aura.damage_type = DAMAGE_MAGICAL_EXPLOSION
     tt.aura.radius = 57.5
     tt.main_script.update = scripts.aura_arcane_burst.update
+    tt.sleep_chance = 0
     tt.render.sprites[1].anchor.y = 0.2916666666666667
     tt.render.sprites[1].name = "arcane_burst_explosion"
     tt.render.sprites[1].sort_y_offset = -7
@@ -761,8 +762,8 @@ local function archer_towers()
     tt.sound_events.insert = "TowerArcaneExplotion"
 
     tt = E:register_t("arrow_arcane_slumber", "arrow_arcane")
-    tt.bullet.damage_max = 27
-    tt.bullet.damage_min = 16
+    tt.bullet.damage_max = 36
+    tt.bullet.damage_min = 22
     tt.bullet.flight_time_min = fts(15)
     tt.bullet.miss_decal = "archer_arcane_proy2_decal-f"
     tt.bullet.hit_fx = "fx_arcane_slumber_explosion"
