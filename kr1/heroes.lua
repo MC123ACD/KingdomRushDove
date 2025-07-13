@@ -6401,7 +6401,7 @@ local function heroes()
     tt.hero.skills.ultimate = E:clone_c("hero_skill")
     tt.hero.skills.ultimate.controller_name = "hero_lynn_ultimate"
     tt.hero.skills.ultimate.damage = {24, 34, 52, 70}
-    tt.hero.skills.ultimate.explode_damage = {100, 200, 250, 300}
+    tt.hero.skills.ultimate.explode_damage = {80, 160, 200, 225}
     tt.hero.skills.ultimate.xp_level_steps = {
         [1] = 1,
         [4] = 2,

@@ -7876,7 +7876,6 @@ return function(scripts)
 
         if target then
             local m = E:create_entity(this.mod)
-
             m.modifier.source_id = this.id
             m.modifier.target_id = target.id
             m.modifier.damage_factor = this.damage_factor
@@ -7903,14 +7902,6 @@ return function(scripts)
         this.modifier.ts = store.tick_ts
         this.tween.ts = store.tick_ts
         this.pos = target.pos
-
-        -- local mods = U.get_modifiers(store, target, {"mod_lynn_despair", "mod_lynn_weakening", "mod_lynn_ultimate"})
-
-        -- for _, m in pairs(mods) do
-        --     if m ~= this then
-        --         U.sprites_hide(m, nil, nil, true)
-        --     end
-        -- end
 
         signal.emit("mod-applied", this, target)
 
@@ -7954,6 +7945,11 @@ return function(scripts)
                         d.source_id = this.id
 
                         queue_damage(store, d)
+                        local new_mod = E:create_entity("mod_lynn_ultimate")
+                        new_mod.modifier.source_id = this.id
+                        new_mod.modifier.target_id = t.id
+                        new_mod.modifier.damage_factor = this.modifier.damage_factor * 0.5
+                        queue_insert(store, new_mod)
                     end
                 end
 
