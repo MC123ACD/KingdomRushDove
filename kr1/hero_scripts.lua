@@ -7765,21 +7765,25 @@ return function(scripts)
     end
 
     function scripts.hero_lynn.on_damage(this, store, damage)
-        local s = this.hero.skills.charm_of_unluck
-        local dodge = this.dodge
+        -- local s = this.hero.skills.charm_of_unluck
+        -- local dodge = this.dodge
 
-        if dodge.last_check_ts == store.tick_ts then
-            log.debug(" LYNN DAMAGE NOT dodged, already checked for dodge and passed", damage.value)
+        -- if dodge.last_check_ts == store.tick_ts then
+        --     log.debug(" LYNN DAMAGE NOT dodged, already checked for dodge and passed", damage.value)
 
-            return true
-        elseif s.level > 0 and math.random() < s.chance[s.level] then
-            log.debug(" LYNN DAMAGE dodged", damage.value)
-            SU.hero_gain_xp_from_skill(this, s)
+        --     return true
+        -- elseif s.level > 0 and math.random() < s.chance[s.level] then
+        --     log.debug(" LYNN DAMAGE dodged", damage.value)
+        --     SU.hero_gain_xp_from_skill(this, s)
 
+        --     return false
+        -- else
+        --     return true
+        -- end
+        if math.random() < this.charm_of_unluck then
             return false
-        else
-            return true
         end
+        return true
     end
 
     function scripts.hero_lynn.level_up(this, store)
@@ -7814,7 +7818,7 @@ return function(scripts)
             local a = this.timed_attacks.list[2]
 
             a.disabled = nil
-
+            a.max_count = s.max_count[s.level]
             local m = E:get_template(a.mod)
 
             m.modifier.duration = s.duration[s.level]
@@ -7823,7 +7827,8 @@ return function(scripts)
         end)
 
         upgrade_skill(this, "charm_of_unluck", function(this, s)
-            this.dodge.chance = s.chance[s.level]
+            -- this.dodge.chance = s.chance[s.level]
+            this.charm_of_unluck = s.chance[s.level]
         end)
 
         upgrade_skill(this, "ultimate", function(this, s)
@@ -7855,9 +7860,9 @@ return function(scripts)
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else
-                if this.dodge and this.dodge.active and this.dodge.last_check_ts ~= store.tick_ts then
-                    this.dodge.active = nil
-                end
+                -- if this.dodge and this.dodge.active and this.dodge.last_check_ts ~= store.tick_ts then
+                --     this.dodge.active = nil
+                -- end
 
                 while this.nav_rally.new do
                     if SU.y_hero_new_rally(store, this) then
@@ -8081,7 +8086,7 @@ return function(scripts)
                         local new_mod = E:create_entity("mod_lynn_ultimate")
                         new_mod.modifier.source_id = this.id
                         new_mod.modifier.target_id = t.id
-                        new_mod.modifier.damage_factor = this.modifier.damage_factor * 0.5
+                        new_mod.modifier.damage_factor = this.modifier.damage_factor * 0.6
                         queue_insert(store, new_mod)
 
                         local d = E:create_entity("damage")

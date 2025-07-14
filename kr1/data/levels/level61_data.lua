@@ -892,6 +892,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_baby_ashbite"},
 	nav_mesh = {
 		{
 			5,

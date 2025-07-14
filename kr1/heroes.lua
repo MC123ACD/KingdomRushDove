@@ -6377,7 +6377,7 @@ local function heroes()
     tt.hero.skills.despair.duration = {4, 6, 8}
     tt.hero.skills.despair.damage_factor = {0.9, 0.8, 0.7}
     tt.hero.skills.despair.speed_factor = {0.7, 0.6, 0.5}
-    tt.hero.skills.despair.max_count = {5, 6, 7}
+    tt.hero.skills.despair.max_count = {5, 7, 9}
     tt.hero.skills.despair.xp_gain = {25, 50, 100}
     tt.hero.skills.despair.xp_level_steps = {
         [3] = 1,
@@ -6388,6 +6388,7 @@ local function heroes()
     tt.hero.skills.weakening.duration = {4, 6, 8}
     tt.hero.skills.weakening.armor_reduction = {0.1, 0.2, 0.3}
     tt.hero.skills.weakening.magic_armor_reduction = {0.5, 0.7, 0.9}
+    tt.hero.skills.weakening.max_count = {5, 7, 9}
     tt.hero.skills.weakening.xp_gain = {25, 50, 100}
     tt.hero.skills.weakening.xp_level_steps = {
         [4] = 1,
@@ -6417,6 +6418,7 @@ local function heroes()
     tt.dodge.silent = true
     tt.dodge.ranged = true
     tt.dodge.time_before_hit = 0
+    tt.charm_of_unluck = 0.15
     tt.health.dead_lifetime = 15
     tt.health.on_damage = scripts.hero_lynn.on_damage
     tt.health_bar.offset = vec_2(0, 43)
@@ -6530,7 +6532,6 @@ local function heroes()
     tt.tween.remove = false
     tt.main_script.insert = scripts.mod_lynn_ultimate.insert
     tt.main_script.update = scripts.mod_lynn_ultimate.update
-    tt.modifier.allows_duplicates = true
     tt.modifier.vis_flags = bor(F_MOD, F_RANGED)
     tt.modifier.vis_bans = 0
     tt.modifier.duration = 5

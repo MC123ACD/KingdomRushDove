@@ -110,6 +110,7 @@ return {
         "tower_mech",
         "tower_frankenstein",
         "tower_druid",
-        "tower_entwood"
+        "tower_entwood",
+        "tower_baby_ashbite"
     }
 }
