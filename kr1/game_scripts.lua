@@ -32605,7 +32605,7 @@ scripts.tower_baby_ashbite = {}
 function scripts.tower_baby_ashbite.get_info(this)
     local e = E:get_template("soldier_baby_ashbite")
     local b = E:get_template(e.ranged.attacks[1].bullet)
-    local min, max = b.bullet.damage_min, b.bullet.damage_max
+    local min, max = b.bullet.damage_min * this.tower.damage_factor, b.bullet.damage_max*this.tower.damage_factor
 
     return {
         type = STATS_TYPE_TOWER_BARRACK,
@@ -32625,22 +32625,24 @@ function scripts.tower_baby_ashbite.update(this, store)
 
     this.barrack.rally_pos = V.v(this.pos.x + b.respawn_offset.x, this.pos.y + b.respawn_offset.y)
 
-    local s = E:create_entity(b.soldier_type)
+    if #b.soldiers == 0 then
+        local s = E:create_entity(b.soldier_type)
 
-    s.soldier.tower_id = this.id
-    s.pos = V.v(V.add(this.pos.x, this.pos.y, b.respawn_offset.x, b.respawn_offset.y))
-    s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(1, b, b.max_soldiers)
-    s.nav_rally.new = true
+        s.soldier.tower_id = this.id
+        s.pos = V.v(V.add(this.pos.x, this.pos.y, b.respawn_offset.x, b.respawn_offset.y))
+        s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(1, b, b.max_soldiers)
+        s.nav_rally.new = true
 
-    if this.powers then
-        for pn, p in pairs(this.powers) do
-            s.powers[pn].level = p.level
+        if this.powers then
+            for pn, p in pairs(this.powers) do
+                s.powers[pn].level = p.level
+            end
         end
-    end
 
-    queue_insert(store, s)
-    table.insert(b.soldiers, s)
-    signal.emit("tower-spawn", this, s)
+        queue_insert(store, s)
+        table.insert(b.soldiers, s)
+        signal.emit("tower-spawn", this, s)
+    end
 
     while true do
         if this.powers then
@@ -32652,6 +32654,32 @@ function scripts.tower_baby_ashbite.update(this, store)
                         s.powers[pn].level = p.level
                         s.powers[pn].changed = true
                     end
+                end
+            end
+        end
+
+        if not this.tower.blocked then
+            for i = 1, b.max_soldiers do
+                local s = b.soldiers[i]
+
+                if not s or s.health.dead and not store.entities[s.id] then
+                    s = E:create_entity(b.soldier_type)
+                    s.soldier.tower_id = this.id
+                    s.pos = V.v(V.add(this.pos.x, this.pos.y, b.respawn_offset.x, b.respawn_offset.y))
+                    s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(i, b, b.max_soldiers)
+                    s.nav_rally.new = true
+
+                    if this.powers then
+                        for pn, p in pairs(this.powers) do
+                            s.powers[pn].level = p.level
+                        end
+                    end
+                    s.unit.damage_factor = this.tower.damage_factor
+                    queue_insert(store, s)
+
+                    b.soldiers[i] = s
+
+                    signal.emit("tower-spawn", this, s)
                 end
             end
         end

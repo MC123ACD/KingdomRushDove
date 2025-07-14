@@ -344,7 +344,8 @@ function upgrades:barrack_soldiers()
         "soldier_forest",
         "soldier_druid_bear",
         "soldier_drow",
-        "soldier_ewok"
+        "soldier_ewok",
+        "soldier_baby_ashbite"
 	}
 end
 
@@ -370,7 +371,8 @@ function upgrades:towers_with_barrack()
         "tower_forest",
         "tower_druid",
         "tower_drow",
-        "tower_ewok"
+        "tower_ewok",
+        "tower_baby_ashbite"
 	}
 end
 

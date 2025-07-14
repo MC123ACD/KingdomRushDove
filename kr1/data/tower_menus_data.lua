@@ -549,6 +549,16 @@ return {
         tt_title = _("ELVES_EWOK_NAME"),
         tt_desc = _("ELVES_EWOK_DESCRIPTION"),
         is_kr3 = true
+    },{
+        check = "main_icons_0019",
+        action_arg = "tower_baby_ashbite",
+        action = "tw_upgrade",
+        halo = "glow_ico_main",
+        image = "kr3_main_icons_0113",
+        place = 20,
+        tt_title = _("ELVES_BABY_ASHBITE_TOWER_BROKEN_NAME"),
+        tt_desc = _("ELVES_BABY_ASHBITE_TOWER_BROKEN_DESCRIPTION"),
+        is_kr3 = true
     }, {
         check = "sub_icons_0003",
         action = "tw_rally",
@@ -2607,7 +2617,6 @@ return {
             tt_desc = _("ELVES_BABY_ASHBITE_FIREBREATH_SMALL_DESCRIPTION_3")
         }},
         is_kr3 = true
-
     }, {
         check = "special_icons_0020",
         action_arg = "fiery_mist",
@@ -2622,12 +2631,17 @@ return {
             tt_desc = _("ELVES_BABY_ASHBITE_SMOKEBREATH_SMALL_DESCRIPTION_1")
         }},
         is_kr3 = true
-
     }, {
         halo = "glow_ico_sub",
         image = "sub_icons_0001",
         action = "tw_rally",
         place = 8
+    },{
+        check = "ico_sell_0002",
+        action = "tw_sell",
+        halo = "glow_ico_sell",
+        image = "ico_sell_0001",
+        place = 9
     }}},
     drow = {{{
         check = "special_icons_0020",

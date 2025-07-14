@@ -1178,12 +1178,12 @@ function scripts.soldier_barrack.get_info(this)
         no_ranged = false
     end
 
-    local melee_count
+    local melee_count = 0
     if this.melee and this.melee.attacks then
         melee_count = #this.melee.attacks
     end
 
-    if not ranged_damage_type and melee_count and melee_count > 1 then
+    if no_ranged and melee_count > 1 then
         while melee_count > 1 do
             local a = this.melee.attacks[melee_count]
             if a.damage_min and not a.disabled then

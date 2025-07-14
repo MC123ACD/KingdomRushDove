@@ -125312,9 +125312,6 @@ AmazonGirl_healFx_0001 = {
 }
 
 local kr3_data = {
-
-
-
 	DefenseFlag = {
 		a_name = "go_towers-6.png",
 		size = {
@@ -200761,6 +200758,4068 @@ local kr3_data = {
 			458,
 			20,
 			20
+		},
+		alias = {}
+	},
+    babyAshbite_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			29,
+			12,
+			32,
+			111
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1068,
+			94,
+			80
+		},
+		alias = {
+			"babyAshbite_0002"
+		}
+	},
+	babyAshbite_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			34,
+			11,
+			32,
+			104
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			589,
+			424,
+			89,
+			88
+		},
+		alias = {
+			"babyAshbite_0004"
+		}
+	},
+	babyAshbite_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			4,
+			32,
+			105
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			779,
+			424,
+			88,
+			94
+		},
+		alias = {
+			"babyAshbite_0006"
+		}
+	},
+	babyAshbite_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			15,
+			32,
+			106
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			967,
+			424,
+			88,
+			82
+		},
+		alias = {
+			"babyAshbite_0008"
+		}
+	},
+	babyAshbite_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			49,
+			32,
+			75
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1061,
+			424,
+			88,
+			79
+		},
+		alias = {
+			"babyAshbite_0010"
+		}
+	},
+	babyAshbite_0011 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			46,
+			32,
+			84
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1803,
+			424,
+			86,
+			73
+		},
+		alias = {
+			"babyAshbite_0012"
+		}
+	},
+	babyAshbite_0013 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			44,
+			42,
+			32,
+			95
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			767,
+			602,
+			79,
+			66
+		},
+		alias = {
+			"babyAshbite_0014"
+		}
+	},
+	babyAshbite_0015 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			31,
+			32,
+			103
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1625,
+			85,
+			69
+		},
+		alias = {
+			"babyAshbite_0016"
+		}
+	},
+	babyAshbite_0017 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			29,
+			32,
+			108
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1248,
+			424,
+			87,
+			66
+		},
+		alias = {
+			"babyAshbite_0018"
+		}
+	},
+	babyAshbite_0019 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			43,
+			48,
+			17,
+			80
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1779,
+			317,
+			95,
+			75
+		},
+		alias = {
+			"babyAshbite_0020"
+		}
+	},
+	babyAshbite_0021 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			57,
+			47,
+			30,
+			84
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1013,
+			564,
+			68,
+			72
+		},
+		alias = {
+			"babyAshbite_0022"
+		}
+	},
+	babyAshbite_0023 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			64,
+			42,
+			35,
+			85
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1778,
+			564,
+			56,
+			76
+		},
+		alias = {
+			"babyAshbite_0024"
+		}
+	},
+	babyAshbite_0025 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			51,
+			29,
+			38,
+			82
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			164,
+			719,
+			66,
+			92
+		},
+		alias = {
+			"babyAshbite_0026"
+		}
+	},
+	babyAshbite_0027 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			34,
+			18,
+			98
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1359,
+			317,
+			101,
+			71
+		},
+		alias = {
+			"babyAshbite_0028"
+		}
+	},
+	babyAshbite_0029 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			28,
+			16,
+			15,
+			92
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			740,
+			211,
+			112,
+			95
+		},
+		alias = {
+			"babyAshbite_0030"
+		}
+	},
+	babyAshbite_0031 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			1,
+			13,
+			91
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			537,
+			107,
+			111
+		},
+		alias = {
+			"babyAshbite_0032"
+		}
+	},
+	babyAshbite_0033 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			7,
+			7,
+			89
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			424,
+			111,
+			107
+		},
+		alias = {
+			"babyAshbite_0034"
+		}
+	},
+	babyAshbite_0035 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			12,
+			5,
+			90
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			317,
+			113,
+			101
+		},
+		alias = {
+			"babyAshbite_0036"
+		}
+	},
+	babyAshbite_0037 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			49,
+			4,
+			75
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			236,
+			1885,
+			116,
+			79
+		},
+		alias = {
+			"babyAshbite_0038"
+		}
+	},
+	babyAshbite_0039 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			46,
+			32,
+			84
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1895,
+			424,
+			86,
+			73
+		},
+		alias = {
+			"babyAshbite_0040",
+			"babyAshbite_0139",
+			"babyAshbite_0140"
+		}
+	},
+	babyAshbite_0041 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			44,
+			42,
+			32,
+			95
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			853,
+			564,
+			79,
+			66
+		},
+		alias = {
+			"babyAshbite_0042",
+			"babyAshbite_0141",
+			"babyAshbite_0142"
+		}
+	},
+	babyAshbite_0043 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			31,
+			32,
+			103
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1700,
+			85,
+			69
+		},
+		alias = {
+			"babyAshbite_0044",
+			"babyAshbite_0143",
+			"babyAshbite_0144"
+		}
+	},
+	babyAshbite_0045 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			29,
+			32,
+			108
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1341,
+			424,
+			87,
+			66
+		},
+		alias = {
+			"babyAshbite_0046",
+			"babyAshbite_0145"
+		}
+	},
+	babyAshbite_0047 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			34,
+			37,
+			93
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1534,
+			91,
+			76
+		},
+		alias = {
+			"babyAshbite_0048"
+		}
+	},
+	babyAshbite_0049 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			33,
+			32,
+			85
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1950,
+			211,
+			96,
+			85
+		},
+		alias = {
+			"babyAshbite_0050"
+		}
+	},
+	babyAshbite_0051 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			33,
+			27,
+			68
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			767,
+			101,
+			102
+		},
+		alias = {
+			"babyAshbite_0052"
+		}
+	},
+	babyAshbite_0053 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			47,
+			33,
+			64
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1678,
+			317,
+			95,
+			92
+		},
+		alias = {
+			"babyAshbite_0054"
+		}
+	},
+	babyAshbite_0055 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			68,
+			37,
+			10
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1403,
+			91,
+			125
+		},
+		alias = {
+			"babyAshbite_0056"
+		}
+	},
+	babyAshbite_0057 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			30,
+			77,
+			42,
+			10
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			676,
+			83,
+			116
+		},
+		alias = {
+			"babyAshbite_0058"
+		}
+	},
+	babyAshbite_0059 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			30,
+			88,
+			39,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1527,
+			424,
+			86,
+			106
+		},
+		alias = {
+			"babyAshbite_0060"
+		}
+	},
+	babyAshbite_0061 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			30,
+			92,
+			38,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1155,
+			424,
+			87,
+			103
+		},
+		alias = {
+			"babyAshbite_0062"
+		}
+	},
+	babyAshbite_0063 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			64,
+			179,
+			63,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			720,
+			539,
+			28,
+			17
+		},
+		alias = {}
+	},
+	babyAshbite_0064 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			82,
+			190,
+			70,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			734,
+			67,
+			3,
+			2
+		},
+		alias = {
+			"babyAshbite_0146",
+			"babyAshbite_0147",
+			"babyAshbite_0148",
+			"babyAshbite_0149",
+			"babyAshbite_0150",
+			"babyAshbite_0151",
+			"babyAshbite_0152",
+			"babyAshbite_0153",
+			"babyAshbite_0154",
+			"babyAshbite_0155",
+			"babyAshbite_0156",
+			"babyAshbite_0157",
+			"babyAshbite_0181",
+			"babyAshbite_0182",
+			"babyAshbite_0183",
+			"babyAshbite_0184",
+			"babyAshbite_0185",
+			"babyAshbite_0186",
+			"babyAshbite_0187",
+			"babyAshbite_0188",
+			"babyAshbite_0189",
+			"babyAshbite_0190",
+			"babyAshbite_0191"
+		}
+	},
+	babyAshbite_0065 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			61,
+			178,
+			60,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1483,
+			536,
+			34,
+			21
+		},
+		alias = {
+			"babyAshbite_0066"
+		}
+	},
+	babyAshbite_0067 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			52,
+			130,
+			51,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1674,
+			52,
+			67
+		},
+		alias = {
+			"babyAshbite_0068"
+		}
+	},
+	babyAshbite_0069 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			42,
+			98,
+			51,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1514,
+			564,
+			62,
+			99
+		},
+		alias = {
+			"babyAshbite_0070"
+		}
+	},
+	babyAshbite_0071 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			35,
+			90,
+			44,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			153,
+			1406,
+			76,
+			107
+		},
+		alias = {
+			"babyAshbite_0072"
+		}
+	},
+	babyAshbite_0073 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			59,
+			43,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			155,
+			1135,
+			75,
+			138
+		},
+		alias = {
+			"babyAshbite_0074"
+		}
+	},
+	babyAshbite_0075 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			43,
+			70,
+			32,
+			14
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			798,
+			80,
+			119
+		},
+		alias = {}
+	},
+	babyAshbite_0076 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			62,
+			28,
+			14
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1834,
+			90,
+			127
+		},
+		alias = {}
+	},
+	babyAshbite_0077 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			54,
+			28,
+			18
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1697,
+			90,
+			131
+		},
+		alias = {}
+	},
+	babyAshbite_0078 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			46,
+			32,
+			18
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1402,
+			85,
+			139
+		},
+		alias = {}
+	},
+	babyAshbite_0079 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			44,
+			43,
+			32,
+			12
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1042,
+			79,
+			148
+		},
+		alias = {
+			"babyAshbite_0080"
+		}
+	},
+	babyAshbite_0081 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			31,
+			32,
+			29
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1253,
+			85,
+			143
+		},
+		alias = {
+			"babyAshbite_0082"
+		}
+	},
+	babyAshbite_0083 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			30,
+			32,
+			108
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1434,
+			424,
+			87,
+			65
+		},
+		alias = {
+			"babyAshbite_0084"
+		}
+	},
+	babyAshbite_0085 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			46,
+			126,
+			37,
+			12
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			158,
+			994,
+			72,
+			65
+		},
+		alias = {
+			"babyAshbite_0086"
+		}
+	},
+	babyAshbite_0087 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			44,
+			85,
+			40,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			152,
+			1680,
+			71,
+			107
+		},
+		alias = {
+			"babyAshbite_0088"
+		}
+	},
+	babyAshbite_0089 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			41,
+			84,
+			34,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			923,
+			80,
+			113
+		},
+		alias = {
+			"babyAshbite_0090"
+		}
+	},
+	babyAshbite_0091 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			66,
+			30,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			424,
+			89,
+			134
+		},
+		alias = {
+			"babyAshbite_0092"
+		}
+	},
+	babyAshbite_0093 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			46,
+			32,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1094,
+			85,
+			153
+		},
+		alias = {}
+	},
+	babyAshbite_0094 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			45,
+			43,
+			32,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1196,
+			78,
+			156
+		},
+		alias = {}
+	},
+	babyAshbite_0095 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			45,
+			43,
+			32,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1358,
+			78,
+			156
+		},
+		alias = {}
+	},
+	babyAshbite_0096 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			31,
+			32,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			920,
+			85,
+			168
+		},
+		alias = {}
+	},
+	babyAshbite_0097 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			38,
+			31,
+			32,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			743,
+			85,
+			171
+		},
+		alias = {}
+	},
+	babyAshbite_0098 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			36,
+			29,
+			32,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			564,
+			87,
+			173
+		},
+		alias = {}
+	},
+	babyAshbite_0099 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			64,
+			185,
+			63,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			167,
+			559,
+			28,
+			10
+		},
+		alias = {}
+	},
+	babyAshbite_0100 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			40,
+			48,
+			20,
+			80
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1880,
+			317,
+			95,
+			75
+		},
+		alias = {
+			"babyAshbite_0101"
+		}
+	},
+	babyAshbite_0102 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			54,
+			48,
+			32,
+			83
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			938,
+			564,
+			69,
+			72
+		},
+		alias = {
+			"babyAshbite_0103"
+		}
+	},
+	babyAshbite_0104 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			63,
+			42,
+			36,
+			85
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1840,
+			564,
+			56,
+			76
+		},
+		alias = {
+			"babyAshbite_0105"
+		}
+	},
+	babyAshbite_0106 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			50,
+			29,
+			38,
+			83
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1981,
+			317,
+			67,
+			91
+		},
+		alias = {
+			"babyAshbite_0107"
+		}
+	},
+	babyAshbite_0108 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			34,
+			34,
+			32,
+			105
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			684,
+			424,
+			89,
+			64
+		},
+		alias = {
+			"babyAshbite_0109"
+		}
+	},
+	babyAshbite_0110 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			27,
+			14,
+			35,
+			101
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1230,
+			93,
+			88
+		},
+		alias = {
+			"babyAshbite_0111"
+		}
+	},
+	babyAshbite_0112 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			0,
+			34,
+			97
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1846,
+			84,
+			106
+		},
+		alias = {
+			"babyAshbite_0113",
+			"babyAshbite_0116",
+			"babyAshbite_0117",
+			"babyAshbite_0120",
+			"babyAshbite_0121",
+			"babyAshbite_0124",
+			"babyAshbite_0125",
+			"babyAshbite_0128",
+			"babyAshbite_0129",
+			"babyAshbite_0132",
+			"babyAshbite_0133"
+		}
+	},
+	babyAshbite_0114 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			0,
+			34,
+			97
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			564,
+			84,
+			106
+		},
+		alias = {
+			"babyAshbite_0115"
+		}
+	},
+	babyAshbite_0118 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			0,
+			34,
+			97
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			677,
+			564,
+			84,
+			106
+		},
+		alias = {
+			"babyAshbite_0119",
+			"babyAshbite_0122",
+			"babyAshbite_0123",
+			"babyAshbite_0126",
+			"babyAshbite_0127",
+			"babyAshbite_0130",
+			"babyAshbite_0131",
+			"babyAshbite_0134"
+		}
+	},
+	babyAshbite_0135 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			7,
+			32,
+			109
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1619,
+			424,
+			86,
+			87
+		},
+		alias = {
+			"babyAshbite_0136"
+		}
+	},
+	babyAshbite_0137 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			37,
+			12,
+			32,
+			108
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1711,
+			424,
+			86,
+			83
+		},
+		alias = {
+			"babyAshbite_0138"
+		}
+	},
+	babyAshbite_0158 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			155,
+			203
+		},
+		trim = {
+			96,
+			81,
+			37,
+			99
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1744,
+			175,
+			22,
+			23
+		},
+		alias = {
+			"babyAshbite_0159",
+			"babyAshbite_0160",
+			"babyAshbite_0161",
+			"babyAshbite_0162",
+			"babyAshbite_0163",
+			"babyAshbite_0164",
+			"babyAshbite_0165",
+			"babyAshbite_0166",
+			"babyAshbite_0167",
+			"babyAshbite_0168",
+			"babyAshbite_0169",
+			"babyAshbite_0170",
+			"babyAshbite_0171",
+			"babyAshbite_0172",
+			"babyAshbite_0173",
+			"babyAshbite_0174",
+			"babyAshbite_0175",
+			"babyAshbite_0176",
+			"babyAshbite_0177",
+			"babyAshbite_0178",
+			"babyAshbite_0179",
+			"babyAshbite_0180"
+		}
+	},
+	babyAshbite_fireDecal_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			14,
+			20,
+			16,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			167,
+			517,
+			63,
+			36
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			20,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			967,
+			512,
+			80,
+			36
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			16,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			684,
+			494,
+			80,
+			39
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0004 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			16,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1962,
+			6,
+			80,
+			40
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			18,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1772,
+			168,
+			80,
+			37
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0006 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			18,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1908,
+			167,
+			80,
+			37
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			4,
+			3,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			826,
+			6,
+			86,
+			51
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0008 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			4,
+			3,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			918,
+			6,
+			86,
+			51
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			3,
+			8,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1185,
+			6,
+			81,
+			53
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0010 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			3,
+			8,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1272,
+			6,
+			81,
+			53
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0011 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			2,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1446,
+			6,
+			80,
+			54
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0012 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			2,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1532,
+			6,
+			80,
+			54
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0013 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			2,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1704,
+			6,
+			80,
+			53
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0014 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			2,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1618,
+			6,
+			80,
+			54
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0015 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			7,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1790,
+			6,
+			80,
+			48
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0016 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			7,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1876,
+			6,
+			80,
+			48
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0017 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			15,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			381,
+			164,
+			80,
+			40
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0018 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			15,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			589,
+			518,
+			80,
+			40
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0019 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			19,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			873,
+			513,
+			80,
+			37
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0020 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			20,
+			9,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1061,
+			509,
+			80,
+			36
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0021 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			21,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			779,
+			524,
+			80,
+			34
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0022 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			21,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1619,
+			517,
+			80,
+			34
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0023 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			19,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1248,
+			496,
+			80,
+			36
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0024 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			19,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1341,
+			496,
+			80,
+			36
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0025 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			21,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1711,
+			513,
+			80,
+			34
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0026 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			21,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1803,
+			503,
+			80,
+			34
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0027 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			20,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1227,
+			170,
+			80,
+			35
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0028 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			20,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1434,
+			495,
+			80,
+			35
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0029 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			23,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1895,
+			503,
+			80,
+			32
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0030 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			23,
+			9,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			767,
+			564,
+			80,
+			32
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0031 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			4,
+			23,
+			10,
+			5
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			853,
+			636,
+			79,
+			31
+		},
+		alias = {}
+	},
+	babyAshbite_fireDecal_0032 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			93,
+			59
+		},
+		trim = {
+			23,
+			25,
+			21,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			467,
+			164,
+			49,
+			28
+		},
+		alias = {}
+	},
+	babyAshbite_proyHitAir_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			23,
+			22,
+			20,
+			18
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1954,
+			398,
+			19,
+			16
+		},
+		alias = {}
+	},
+	babyAshbite_proyHitAir_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			13,
+			15,
+			12,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1315,
+			676,
+			37,
+			28
+		},
+		alias = {}
+	},
+	babyAshbite_proyHitAir_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			7,
+			9,
+			7,
+			5
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			2006,
+			48,
+			42
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0004"
+		}
+	},
+	babyAshbite_proyHitAir_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			4,
+			6,
+			4,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1520,
+			54,
+			44
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0006"
+		}
+	},
+	babyAshbite_proyHitAir_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			3,
+			3,
+			1,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1582,
+			618,
+			58,
+			47
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0008"
+		}
+	},
+	babyAshbite_proyHitAir_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			1,
+			2,
+			0,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1087,
+			628,
+			61,
+			41
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0010"
+		}
+	},
+	babyAshbite_proyHitAir_0011 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			1,
+			1,
+			0,
+			14
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1304,
+			624,
+			61,
+			41
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0012"
+		}
+	},
+	babyAshbite_proyHitAir_0013 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			10,
+			2,
+			11,
+			20
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			676,
+			1997,
+			41,
+			34
+		},
+		alias = {
+			"babyAshbite_proyHitAir_0014"
+		}
+	},
+	babyAshbite_proyHit_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			14,
+			18,
+			15,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1837,
+			676,
+			33,
+			29
+		},
+		alias = {}
+	},
+	babyAshbite_proyHit_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			12,
+			10,
+			13,
+			5
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1229,
+			676,
+			37,
+			41
+		},
+		alias = {
+			"babyAshbite_proyHit_0003"
+		}
+	},
+	babyAshbite_proyHit_0004 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			11,
+			4,
+			11,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			825,
+			676,
+			40,
+			50
+		},
+		alias = {
+			"babyAshbite_proyHit_0005"
+		}
+	},
+	babyAshbite_proyHit_0006 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			9,
+			3,
+			9,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			676,
+			1400,
+			44,
+			52
+		},
+		alias = {
+			"babyAshbite_proyHit_0007"
+		}
+	},
+	babyAshbite_proyHit_0008 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			6,
+			3,
+			6,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1948,
+			50,
+			52
+		},
+		alias = {
+			"babyAshbite_proyHit_0009"
+		}
+	},
+	babyAshbite_proyHit_0010 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			5,
+			1,
+			5,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			587,
+			1816,
+			52,
+			55
+		},
+		alias = {
+			"babyAshbite_proyHit_0011"
+		}
+	},
+	babyAshbite_proyHit_0012 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			4,
+			1,
+			4,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1715,
+			619,
+			54,
+			47
+		},
+		alias = {
+			"babyAshbite_proyHit_0013"
+		}
+	},
+	babyAshbite_proyHit_0014 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			62,
+			56
+		},
+		trim = {
+			11,
+			3,
+			11,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			871,
+			676,
+			40,
+			44
+		},
+		alias = {
+			"babyAshbite_proyHit_0015"
+		}
+	},
+	babyAshbite_proy_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			31
+		},
+		trim = {
+			11,
+			6,
+			51,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			165,
+			686,
+			56,
+			17
+		},
+		alias = {
+			"babyAshbite_proy_0002"
+		}
+	},
+	babyAshbite_proy_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			31
+		},
+		trim = {
+			5,
+			8,
+			51,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1962,
+			52,
+			62,
+			17
+		},
+		alias = {
+			"babyAshbite_proy_0004"
+		}
+	},
+	babyAshbite_proy_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			31
+		},
+		trim = {
+			9,
+			7,
+			49,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			170,
+			321,
+			60,
+			18
+		},
+		alias = {
+			"babyAshbite_proy_0006"
+		}
+	},
+	babyAshbite_proy_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			31
+		},
+		trim = {
+			1,
+			6,
+			50,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			153,
+			1366,
+			67,
+			18
+		},
+		alias = {
+			"babyAshbite_proy_0008"
+		}
+	},
+	babyAshbite_proy_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			31
+		},
+		trim = {
+			3,
+			6,
+			49,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			152,
+			1921,
+			66,
+			18
+		},
+		alias = {
+			"babyAshbite_proy_0010"
+		}
+	},
+	babyAshbite_smokeDecal_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			4,
+			2,
+			3,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1987,
+			424,
+			61,
+			48
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0002",
+			"babyAshbite_smokeDecal_0003"
+		}
+	},
+	babyAshbite_smokeDecal_0004 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			1,
+			1,
+			2,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			165,
+			631,
+			65,
+			49
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0005",
+			"babyAshbite_smokeDecal_0006"
+		}
+	},
+	babyAshbite_smokeDecal_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			1,
+			0,
+			2,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			165,
+			575,
+			65,
+			50
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0008",
+			"babyAshbite_smokeDecal_0009"
+		}
+	},
+	babyAshbite_smokeDecal_0010 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			0,
+			1,
+			2,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			164,
+			817,
+			66,
+			49
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0011",
+			"babyAshbite_smokeDecal_0012"
+		}
+	},
+	babyAshbite_smokeDecal_0013 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			1,
+			2,
+			4,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			167,
+			463,
+			63,
+			48
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0014",
+			"babyAshbite_smokeDecal_0015"
+		}
+	},
+	babyAshbite_smokeDecal_0016 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			1,
+			2,
+			5,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1582,
+			564,
+			62,
+			48
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0017",
+			"babyAshbite_smokeDecal_0018"
+		}
+	},
+	babyAshbite_smokeDecal_0019 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			1,
+			1,
+			4,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			167,
+			408,
+			63,
+			49
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0020",
+			"babyAshbite_smokeDecal_0021"
+		}
+	},
+	babyAshbite_smokeDecal_0022 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			4,
+			0,
+			5,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			170,
+			345,
+			59,
+			50
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0023",
+			"babyAshbite_smokeDecal_0024"
+		}
+	},
+	babyAshbite_smokeDecal_0025 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			4,
+			1,
+			4,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			170,
+			266,
+			60,
+			49
+		},
+		alias = {
+			"babyAshbite_smokeDecal_0026",
+			"babyAshbite_smokeDecal_0027"
+		}
+	},
+	babyAshbite_smokeParticle_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			25,
+			16,
+			26,
+			18
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			2030,
+			52,
+			17,
+			17
+		},
+		alias = {}
+	},
+	babyAshbite_smokeParticle_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			23,
+			15,
+			24,
+			15
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			349,
+			1970,
+			21,
+			21
+		},
+		alias = {}
+	},
+	babyAshbite_smokeParticle_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			21,
+			14,
+			23,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1196,
+			181,
+			24,
+			24
+		},
+		alias = {
+			"babyAshbite_smokeParticle_0004"
+		}
+	},
+	babyAshbite_smokeParticle_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			21,
+			13,
+			18,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			988,
+			741,
+			29,
+			27
+		},
+		alias = {
+			"babyAshbite_smokeParticle_0006"
+		}
+	},
+	babyAshbite_smokeParticle_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			13,
+			8,
+			13,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			676,
+			1802,
+			42,
+			37
+		},
+		alias = {
+			"babyAshbite_smokeParticle_0008"
+		}
+	},
+	babyAshbite_smokeParticle_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			68,
+			51
+		},
+		trim = {
+			6,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1444,
+			617,
+			62,
+			51
+		},
+		alias = {
+			"babyAshbite_smokeParticle_0010"
+		}
+	},
+	babyAshbite_specialFire_decal = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			76
+		},
+		trim = {
+			5,
+			6,
+			6,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			236,
+			1970,
+			107,
+			64
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_fire_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			18,
+			8,
+			15,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			494,
+			1775,
+			85,
+			65
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0002"
+		}
+	},
+	babyAshbite_specialFire_fire_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			16,
+			8,
+			10,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			542,
+			6,
+			92,
+			63
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0004"
+		}
+	},
+	babyAshbite_specialFire_fire_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			15,
+			6,
+			7,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			133,
+			1968,
+			96,
+			64
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0006"
+		}
+	},
+	babyAshbite_specialFire_fire_0007 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			15,
+			3,
+			10,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1324,
+			93,
+			73
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0008"
+		}
+	},
+	babyAshbite_specialFire_fire_0009 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			14,
+			1,
+			13,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			377,
+			1616,
+			91,
+			75
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0010"
+		}
+	},
+	babyAshbite_specialFire_fire_0011 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			18,
+			15,
+			18,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1010,
+			6,
+			82,
+			56
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0012"
+		}
+	},
+	babyAshbite_specialFire_fire_0013 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			19,
+			15,
+			18,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1359,
+			6,
+			81,
+			53
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0014"
+		}
+	},
+	babyAshbite_specialFire_fire_0015 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			21,
+			13,
+			20,
+			20
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			153,
+			1284,
+			77,
+			46
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0016"
+		}
+	},
+	babyAshbite_specialFire_fire_0017 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			118,
+			79
+		},
+		trim = {
+			27,
+			12,
+			22,
+			21
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			158,
+			1065,
+			69,
+			46
+		},
+		alias = {
+			"babyAshbite_specialFire_fire_0018"
+		}
+	},
+	babyAshbite_specialFire_particle_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			14,
+			15,
+			15,
+			16
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			158,
+			1117,
+			13,
+			11
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_particle_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			13,
+			14,
+			13,
+			15
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1318,
+			538,
+			16,
+			13
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_particle_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			11,
+			11,
+			11,
+			12
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			349,
+			2022,
+			20,
+			19
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_particle_0004 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			11,
+			10,
+			7,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			646,
+			1570,
+			24,
+			23
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_particle_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			8,
+			4,
+			5,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			813,
+			741,
+			29,
+			32
+		},
+		alias = {}
+	},
+	babyAshbite_specialFire_particle_0006 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			42,
+			42
+		},
+		trim = {
+			4,
+			2,
+			0,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1142,
+			676,
+			38,
+			37
+		},
+		alias = {}
+	},
+	babyAshbite_tower_layer1_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			127,
+			155
+		},
+		trim = {
+			11,
+			58,
+			16,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1466,
+			317,
+			100,
+			86
+		},
+		alias = {}
+	},
+	babyAshbite_tower_layer1_0001_over = {
+		a_name = "go_stage61-1.png",
+		size = {
+			173,
+			211
+		},
+		trim = {
+			26,
+			75,
+			28,
+			30
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			236,
+			925,
+			119,
+			106
+		},
+		alias = {}
+	},
+	babyAshbite_tower_layer2_0001 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			127,
+			155
+		},
+		trim = {
+			48,
+			48,
+			52,
+			77
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			643,
+			1877,
+			27,
+			30
+		},
+		alias = {}
+	},
+	babyAshbite_tower_layer2_0002 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			127,
+			155
+		},
+		trim = {
+			46,
+			47,
+			50,
+			77
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			731,
+			1886,
+			31,
+			31
+		},
+		alias = {}
+	},
+	babyAshbite_tower_layer2_0003 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			127,
+			155
+		},
+		trim = {
+			46,
+			47,
+			50,
+			77
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			731,
+			1923,
+			31,
+			31
+		},
+		alias = {
+			"babyAshbite_tower_layer2_0004"
+		}
+	},
+	babyAshbite_tower_layer2_0005 = {
+		a_name = "go_stage61-1.png",
+		size = {
+			127,
+			155
+		},
+		trim = {
+			48,
+			61,
+			52,
+			77
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1603,
+			176,
+			27,
+			17
 		},
 		alias = {}
 	},

@@ -808,13 +808,15 @@ function sys.tower_upgrade:on_update(dt, ts, store)
 
                             end
 
-                            for i, a in ipairs(ns.melee.attacks) do
-                                if s.melee.attacks[i] then
-                                    a.ts = s.melee.attacks[i].ts
+                            if ns.melee then
+                                for i, a in ipairs(ns.melee.attacks) do
+                                    if s.melee.attacks[i] then
+                                        a.ts = s.melee.attacks[i].ts
+                                    end
                                 end
-                            end
 
-                            U.replace_blocker(store, s, ns)
+                                U.replace_blocker(store, s, ns)
+                            end
 
                             ne.barrack.soldiers[i] = ns
 

@@ -3206,6 +3206,7 @@ local function heroes()
     tt.health_bar.offset = vec_2(0, 36)
     tt.reinforcement.duration = nil
     tt.reinforcement.fade = false
+    tt.info.fn = scripts.soldier_barrack.get_info
     tt.main_script.insert = scripts.soldier_reinforcement.insert
     tt.main_script.update = scripts.soldier_reinforcement.update
     tt.melee.attacks[1].cooldown = 2
@@ -4295,7 +4296,7 @@ local function heroes()
     tt.melee.attacks[1].cooldown = 0.9
     tt.melee.attacks[1].hit_time = fts(9)
     tt.melee.attacks[1].sound = "MeleeSword"
-    tt.melee.attacks[1].damage_type = DAMAGE_RUDE
+    tt.melee.attacks[1].damage_type = DAMAGE_TRUE
     tt.melee.attacks[1].xp_gain_factor = 2.5
     tt.melee.attacks[1].side_effect = function(this, store, attack, target)
         scripts.heal(this, 3)
@@ -4303,7 +4304,7 @@ local function heroes()
     tt.melee.attacks[2] = E:clone_c("melee_attack")
     tt.melee.attacks[2].animation = "vampirism"
     tt.melee.attacks[2].cooldown = 15
-    tt.melee.attacks[2].damage_type = DAMAGE_RUDE
+    tt.melee.attacks[2].damage_type = DAMAGE_TRUE
     tt.melee.attacks[2].mod = "mod_vampiress_lifesteal"
     tt.melee.attacks[2].sound = "HWVampiressLifesteal"
     tt.melee.attacks[2].hit_time = fts(9)

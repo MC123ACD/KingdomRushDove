@@ -849,7 +849,7 @@ local kr3 = {
                  "kro_sfx_faerydragon_sfx_attack[op2][soloattack]_B.ogg",
                  "Drow_01c.ogg", "Drow_02c.ogg", "Drow_03b.ogg","Awok_01b.ogg", "Awok_02c.ogg",    "VarlBerserker_confirm-01a.ogg", "VarlBerserker_confirm-02a.ogg", "VarlBerserker_confirm-03c.ogg",
                  "VarlBerserker_confirm-04a.ogg", "VarlBerserker_death-01c.ogg", "kro_sfx_bolverk_bearcry[op1].ogg",
-                 "kro_sfx_bolverk_doubleslash[gore].ogg"
+                 "kro_sfx_bolverk_doubleslash[gore].ogg","kro_sfx_ashbite_confirm_v1[op1].ogg", "kro_sfx_ashbite_confirm_v1[op2].ogg","hero_dragon_death.ogg","hero_dragon_fireball_explode.ogg","hero_dragon_flamethrower.ogg","hero_dragon_smoke.ogg","hero_dragon_spit.ogg"
     },
         ids = {}
     }
