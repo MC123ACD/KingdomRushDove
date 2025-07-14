@@ -7765,21 +7765,6 @@ return function(scripts)
     end
 
     function scripts.hero_lynn.on_damage(this, store, damage)
-        -- local s = this.hero.skills.charm_of_unluck
-        -- local dodge = this.dodge
-
-        -- if dodge.last_check_ts == store.tick_ts then
-        --     log.debug(" LYNN DAMAGE NOT dodged, already checked for dodge and passed", damage.value)
-
-        --     return true
-        -- elseif s.level > 0 and math.random() < s.chance[s.level] then
-        --     log.debug(" LYNN DAMAGE dodged", damage.value)
-        --     SU.hero_gain_xp_from_skill(this, s)
-
-        --     return false
-        -- else
-        --     return true
-        -- end
         if math.random() < this.charm_of_unluck then
             return false
         end
@@ -7827,7 +7812,6 @@ return function(scripts)
         end)
 
         upgrade_skill(this, "charm_of_unluck", function(this, s)
-            -- this.dodge.chance = s.chance[s.level]
             this.charm_of_unluck = s.chance[s.level]
         end)
 
@@ -7860,10 +7844,6 @@ return function(scripts)
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else
-                -- if this.dodge and this.dodge.active and this.dodge.last_check_ts ~= store.tick_ts then
-                --     this.dodge.active = nil
-                -- end
-
                 while this.nav_rally.new do
                     if SU.y_hero_new_rally(store, this) then
                         goto label_183_0

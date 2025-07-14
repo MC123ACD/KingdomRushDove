@@ -6357,7 +6357,7 @@ local function heroes()
     tt.hit_time = fts(20)
 
     tt = RT("hero_lynn", "hero")
-    AC(tt, "dodge", "melee", "timed_attacks")
+    AC(tt, "melee", "timed_attacks")
     tt.hero.level_stats.armor = {0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4}
     tt.hero.level_stats.magic_armor = {0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4}
     tt.hero.level_stats.hp_max = {350, 370, 390, 410, 430, 450, 470, 490, 510, 530}
@@ -6414,10 +6414,6 @@ local function heroes()
         [10] = 4
     }
     tt.hero.skills.ultimate.xp_gain_factor = 24
-    tt.dodge.chance = 0
-    tt.dodge.silent = true
-    tt.dodge.ranged = true
-    tt.dodge.time_before_hit = 0
     tt.charm_of_unluck = 0.15
     tt.health.dead_lifetime = 15
     tt.health.on_damage = scripts.hero_lynn.on_damage
