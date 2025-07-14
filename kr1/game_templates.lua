@@ -411,54 +411,7 @@ tt.tower.type = "sasquash"
 tt.ui.click_rect = r(-40, -30, 80, 90)
 tt.ui.has_nav_mesh = true
 
-tt = RT("soldier_elemental", "soldier_militia")
-AC(tt, "melee")
-image_y = 64
-anchor_y = 0.15384615384615385
-tt.health.armor = 0.3
-tt.health.armor_inc = 0.1
-tt.health.dead_lifetime = 10
-tt.health.hp_max = 550
-tt.health.hp_inc = 100
-tt.health_bar.offset = vec_2(0, 55)
-tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
-tt.health.instakill_resistance = 0.3
-tt.info.i18n_key = "SOLDIER_ELEMENTAL"
-tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0017" or "info_portraits_sc_0017"
-tt.info.random_name_count = nil
-tt.info.random_name_format = nil
-tt.melee.attacks[1] = CC("area_attack")
-tt.melee.attacks[1].cooldown = 2
-tt.melee.attacks[1].count = 4
-tt.melee.attacks[1].damage_inc = 10
-tt.melee.attacks[1].damage_max = 40
-tt.melee.attacks[1].damage_min = 20
-tt.melee.attacks[1].damage_radius = 37.5
-tt.melee.attacks[1].damage_type = DAMAGE_PHYSICAL
-tt.melee.attacks[1].hit_decal = "decal_ground_hit"
-tt.melee.attacks[1].hit_fx = "fx_ground_hit"
-tt.melee.attacks[1].hit_offset = vec_2(35, 0)
-tt.melee.attacks[1].hit_time = fts(14)
-tt.melee.attacks[1].pop = {"pop_whaam", "pop_kapow"}
-tt.melee.attacks[1].pop_chance = 0.3
-tt.melee.attacks[1].sound_hit = "AreaAttack"
-tt.melee.range = 75
-tt.motion.max_speed = 39
-tt.render.sprites[1].anchor.y = anchor_y
-tt.render.sprites[1].angles = {
-    walk = {"running"}
-}
-tt.render.sprites[1].name = "raise"
-tt.render.sprites[1].prefix = "soldier_elemental"
-tt.soldier.melee_slot_offset = vec_2(15, 0)
-tt.sound_events.insert = "RockElementalDeath"
-tt.sound_events.death = "RockElementalDeath"
-tt.ui.click_rect = r(-25, -2, 50, 52)
-tt.unit.blood_color = BLOOD_GRAY
-tt.unit.hit_offset = vec_2(0, 15)
-tt.unit.marker_offset = vec_2(0, -2)
-tt.unit.mod_offset = vec_2(0, 16)
-tt.vis.bans = bor(F_LYCAN, F_BLOOD, F_POISON)
+
 
 tt = RT("soldier_sasquash", "soldier_militia")
 image_y = 80

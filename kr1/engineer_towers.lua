@@ -829,7 +829,7 @@ local function engineer_towers()
     tt.attacks.list[1].spawn_time = fts(10)
     tt.main_script.update = scripts.druid_shooter_nature.update
 
-    tt = E:register_t("soldier_druid_bear", "soldier")
+    tt = E:register_t("soldier_druid_bear", "soldier_militia")
     E:add_comps(tt, "melee", "count_group")
     tt.count_group.name = "soldier_druid_bear"
     tt.count_group.type = COUNT_GROUP_CONCURRENT

@@ -11659,7 +11659,7 @@ return function(scripts)
         this.health_bar.hidden = false
         local function skill_come_into_cooldown(skill_attack, is_ultimate)
             if is_ultimate then
-                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.2
+                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.15
             else
                 skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.4
             end

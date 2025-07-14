@@ -7347,13 +7347,14 @@ local function heroes()
     tt.can_fire_fn = scripts.hero_elves_denas_ultimate.can_fire_fn
 
     tt = E:register_t("soldier_elves_denas_guard", "soldier_militia")
-    E:add_comps(tt, "reinforcement", "tween")
+    E:add_comps(tt, "reinforcement", "tween", "nav_grid")
     image_y = 80
     anchor_y = 12 / image_y
     tt.health.armor = 0.4
     tt.health.hp_max = 200
     tt.health_bar.offset = vec_2(0, 40)
-    -- tt.info.fn = scripts.soldier_reinforcement.get_info
+    tt.controable = true
+    tt.ban_global_control = true
     tt.info.portrait = "kr3_portraits_sc_0059"
     tt.info.random_name_count = 15
     tt.info.random_name_format = "ELVES_SOLDIER_IMPERIAL_%i_NAME"
@@ -7371,7 +7372,6 @@ local function heroes()
     tt.melee.range = 72.5
     tt.motion.max_speed = 75
     tt.regen.cooldown = 1
-    tt.regen.health = 20
     tt.reinforcement.duration = 25
     tt.reinforcement.fade = nil
     tt.reinforcement.fade_out = true
@@ -7396,7 +7396,6 @@ local function heroes()
     tt.main_script.remove = scripts.mod_elves_denas_sybarite.remove
     tt.main_script.update = scripts.mod_track_target.update
     tt.modifier.bans = {"mod_son_of_mactans_poison", "mod_drider_poison", "mod_dark_spitters", "mod_balrog"}
-    -- tt.modifier.duration = fts(22)
     tt.modifier.duration = 8
     tt.render.sprites[1].name = "fx_elves_denas_heal"
 

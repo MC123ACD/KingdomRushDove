@@ -19333,7 +19333,7 @@ function scripts.druid_shooter_nature.update(this, store)
                     U.y_wait(store, a.spawn_time)
 
                     s = E:create_entity(b.soldier_type)
-                    s.soldier.tower_id = this.owner
+                    s.soldier.tower_id = this.owner.id
                     s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(i, b, b.max_soldiers,
                         formation_offset)
                     s.pos = V.vclone(s.nav_rally.pos)
