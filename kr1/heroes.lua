@@ -4828,7 +4828,7 @@ local function heroes()
         [7] = 3
     }
     tt.hero.skills.deathskull = E:clone_c("hero_skill")
-    tt.hero.skills.deathskull.damage = {20, 40, 60}
+    tt.hero.skills.deathskull.damage = {25, 50, 75}
     tt.hero.skills.deathskull.xp_gain_factor = 24
     tt.hero.skills.deathskull.xp_level_steps = {
         [2] = 1,
