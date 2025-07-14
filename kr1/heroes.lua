@@ -4851,6 +4851,7 @@ local function heroes()
     }
     tt.hero.skills.voodoomagic = E:clone_c("hero_skill")
     tt.hero.skills.voodoomagic.damage = {60, 120, 180}
+    tt.hero.skills.voodoomagic.count = {5, 7, 9}
     tt.hero.skills.voodoomagic.xp_gain_factor = 168
     tt.hero.skills.voodoomagic.xp_level_steps = {
         [3] = 1,
@@ -4906,7 +4907,7 @@ local function heroes()
     tt.timed_attacks.list[1].cooldown = 18
     tt.timed_attacks.list[1].min_range = 0
     tt.timed_attacks.list[1].max_range = 100
-    tt.timed_attacks.list[1].min_count = 5
+    tt.timed_attacks.list[1].min_count = 3
     tt.timed_attacks.list[1].count = 5
     tt.timed_attacks.list[1].sound = "HeroVoodooWitchVoodooMagic"
     tt.timed_attacks.list[1].damage_type = DAMAGE_TRUE

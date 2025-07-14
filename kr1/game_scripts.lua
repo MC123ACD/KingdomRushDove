@@ -17971,7 +17971,7 @@ function scripts.voodoo_witch_skull_aura.update(this, store)
         if not source.health.dead and store.tick_ts - last_ts >= a.cycle_time then
             last_ts = store.tick_ts
 
-            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+            local targets = U.find_targets_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
 
             if targets then
                 for _, target in pairs(targets) do

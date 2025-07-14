@@ -5907,6 +5907,7 @@ return function(scripts)
                 local a = this.timed_attacks.list[1]
                 a.disabled = nil
                 a.damage = s.damage[s.level]
+                a.count = s.count[s.level]
             end)
 
             this.health.hp = this.health.hp_max
