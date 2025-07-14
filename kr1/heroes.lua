@@ -4850,7 +4850,7 @@ local function heroes()
         [7] = 3
     }
     tt.hero.skills.voodoomagic = E:clone_c("hero_skill")
-    tt.hero.skills.voodoomagic.damage = {40, 80, 120}
+    tt.hero.skills.voodoomagic.damage = {60, 120, 180}
     tt.hero.skills.voodoomagic.xp_gain_factor = 168
     tt.hero.skills.voodoomagic.xp_level_steps = {
         [3] = 1,
