@@ -6176,7 +6176,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
     tt.hero.skills.blade = E:clone_c("hero_skill")
     tt.hero.skills.blade.damage = {60, 100, 140}
-    tt.hero.skills.blade.instakill_chance = {0.01, 0.02, 0.03}
+    tt.hero.skills.blade.instakill_chance = {0.015, 0.03, 0.045}
     tt.hero.skills.blade.xp_level_steps = {
         [1] = 1,
         [4] = 2,
