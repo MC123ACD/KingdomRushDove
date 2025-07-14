@@ -1994,6 +1994,19 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 			queue_insert(store, mod)
 		end
 
+        if attack.mods then
+            for _, m in pairs(attack.mods) do
+                local mod = E:create_entity(m)
+
+                mod.modifier.ts = store.tick_ts
+                mod.modifier.target_id = target.id
+                mod.modifier.source_id = this.id
+                mod.modifier.level = attack.level
+
+                queue_insert(store, mod)
+            end
+        end
+
 		local hit_pos = V.vclone(this.pos)
 
 		if attack.hit_offset then

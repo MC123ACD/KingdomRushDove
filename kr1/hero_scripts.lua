@@ -7893,7 +7893,7 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             a.ts = store.tick_ts
-                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range * 1.2, a.vis_flags,
                                 a.vis_bans)
 
                             if targets then
@@ -7939,7 +7939,7 @@ return function(scripts)
 
                             if blocked and U.is_blocked_valid(store, this) then
                                 SU.hero_gain_xp_from_skill(this, skill)
-                                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range,
+                                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range * 1.2,
                                     a.vis_flags, a.vis_bans)
                                 for i, target in ipairs(targets) do
                                     if i > a.max_count then

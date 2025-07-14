@@ -4231,8 +4231,8 @@ local function heroes()
     image_y = 74
     anchor_y = 24 / image_y
     tt.hero.level_stats.hp_max = {270, 280, 290, 300, 310, 320, 330, 340, 350, 360}
-    tt.hero.level_stats.armor = {0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7}
-    tt.hero.level_stats.magic_armor = {0.12, 0.15, 0.17, 0.2, 0.22, 0.25, 0.27, 0.3, 0.32, 0.35}
+    tt.hero.level_stats.armor = {0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7}
+    tt.hero.level_stats.magic_armor = {0.17, 0.19, 0.21, 0.23, 0.25, 0.27, 0.29, 0.31, 0.33, 0.35}
     tt.hero.level_stats.melee_damage_min = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
     tt.hero.level_stats.melee_damage_max = {20, 22, 24, 26, 28, 30, 32, 34, 36, 38}
     tt.hero.skills.vampirism = E:clone_c("hero_skill")
@@ -4305,12 +4305,12 @@ local function heroes()
     tt.melee.attacks[2].animation = "vampirism"
     tt.melee.attacks[2].cooldown = 15
     tt.melee.attacks[2].damage_type = DAMAGE_TRUE
-    tt.melee.attacks[2].mod = "mod_vampiress_lifesteal"
+    tt.melee.attacks[2].mods = {"mod_vampiress_lifesteal", "mod_vampiress_blood"}
     tt.melee.attacks[2].sound = "HWVampiressLifesteal"
     tt.melee.attacks[2].hit_time = fts(9)
     tt.melee.attacks[2].xp_gain_factor = 2
     tt.melee.attacks[2].disabled = true
-    tt.melee.range = 83.2
+    tt.melee.range = 80
     tt.nav_grid.ignore_waypoints = true
     tt.timed_attacks.list[1] = E:clone_c("area_attack")
     tt.timed_attacks.list[1].animation = "slayer"
@@ -4333,6 +4333,12 @@ local function heroes()
     tt = E:register_t("mod_vampiress_lifesteal", "modifier")
     tt.heal_hp = 100
     tt.main_script.insert = scripts.mod_simple_lifesteal.insert
+
+    tt = E:register_t("mod_vampiress_blood", "mod_blood")
+    tt.modifier.duration = 6
+    tt.dps.damage_min = 5
+    tt.dps.damage_max = 5
+    tt.dps.damage_inc = 5
 
     tt = E:register_t("mod_vampiress_gain", "modifier")
     tt.gain = {
