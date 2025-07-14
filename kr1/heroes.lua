@@ -4917,9 +4917,9 @@ local function heroes()
     tt = E:register_t("voodoo_witch_skull_aura", "aura")
     tt.aura.cycle_time = 0.267
     tt.aura.duration = -1
-    tt.aura.radius = 140
-    tt.aura.vis_bans = bor(F_BOSS, F_FRIEND)
-    tt.aura.vis_flags = F_MOD
+    tt.aura.radius = 150
+    tt.aura.vis_bans = 0
+    tt.aura.vis_flags = F_SKELETON
     tt.main_script.update = scripts.voodoo_witch_skull_aura.update
     tt.skull_count = 2
     tt.skulls = {}
@@ -4993,7 +4993,7 @@ local function heroes()
     E:add_comps(tt, "render")
     tt.aura.cycle_time = 1
     tt.aura.duration = -1
-    tt.aura.radius = 117.5
+    tt.aura.radius = 120
     tt.aura.vis_bans = bor(F_FRIEND)
     tt.aura.vis_flags = F_MOD
     tt.aura.damage_type = DAMAGE_TRUE
