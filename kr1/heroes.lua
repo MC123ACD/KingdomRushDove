@@ -7396,7 +7396,8 @@ local function heroes()
     tt.main_script.remove = scripts.mod_elves_denas_sybarite.remove
     tt.main_script.update = scripts.mod_track_target.update
     tt.modifier.bans = {"mod_son_of_mactans_poison", "mod_drider_poison", "mod_dark_spitters", "mod_balrog"}
-    tt.modifier.duration = fts(22)
+    -- tt.modifier.duration = fts(22)
+    tt.modifier.duration = 8
     tt.render.sprites[1].name = "fx_elves_denas_heal"
 
     tt = E:register_t("hero_arivan", "hero")

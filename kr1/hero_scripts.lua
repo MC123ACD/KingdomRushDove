@@ -9600,10 +9600,10 @@ return function(scripts)
 
                         local total_time = fts(52)
                         local flash_every = 1
-                        local stun_every = 9 / a.max_targets
 
                         for i = 1, 9 do
-                            if this.health.dead then
+                            if SU.hero_interrupted(this) then
+                                a.ts = a.ts - 0.1 * (9 - i) * a.cooldown
                                 goto label_66_0
                             end
 
@@ -9618,7 +9618,7 @@ return function(scripts)
                                 queue_insert(store, sfx)
                             end
 
-                            if i % stun_every == 0 then
+                            if i <= a.max_targets then
                                 target = U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags,
                                     a.vis_bans, function(e)
                                         return e.unit and not e.unit.is_stunned
@@ -9669,9 +9669,7 @@ return function(scripts)
                 if ready_to_use_skill(a, store) and this.health.hp <= this.health.hp_max - a.lost_health then
                     U.animation_start(this, a.animation, nil, store.tick_ts)
 
-                    if U.y_wait(store, a.hit_time, function()
-                        return this.health.dead or this.unit.is_stunned
-                    end) then
+                    if SU.y_hero_wait(store, this, a.hit_time) then
                         goto label_66_0
                     end
 
