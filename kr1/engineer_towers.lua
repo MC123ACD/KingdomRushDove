@@ -743,7 +743,7 @@ local function engineer_towers()
     E:add_comps(tt, "attacks", "powers", "barrack")
     tt.tower.type = "druid"
     tt.tower.level = 1
-    tt.tower.price = 350
+    tt.tower.price = 325
     tt.tower.range_offset = vec_2(0, 10)
     tt.info.enc_icon = 13
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0012"
