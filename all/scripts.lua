@@ -2206,16 +2206,17 @@ function scripts.arrow.update(this, store, script)
             elseif b.mods then
                 mods = b.mods
             end
+            if mods then
+                for _, mod_name in pairs(mods) do
+                    local mod = E:create_entity(mod_name)
 
-            for _, mod_name in pairs(mods) do
-                local mod = E:create_entity(mod_name)
+                    mod.modifier.source_id = this.id
+                    mod.modifier.target_id = target.id
+                    mod.modifier.level = b.level
+                    mod.modifier.source_damage = d
 
-                mod.modifier.source_id = this.id
-                mod.modifier.target_id = target.id
-                mod.modifier.level = b.level
-                mod.modifier.source_damage = d
-
-                queue_insert(store, mod)
+                    queue_insert(store, mod)
+                end
             end
 
             if b.hit_fx then

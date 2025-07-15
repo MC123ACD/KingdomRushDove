@@ -822,8 +822,8 @@ local function register_archer(scripts)
                                 enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
                                     ta.vis_flags, ta.vis_bans, enemy_is_silent_target)
                             else
-                                enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
-                                    ta.vis_flags, ta.vis_bans)
+                                enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range, false,
+                                    ta.vis_flags, ta.vis_bans, nil, nil, 80)
                             end
 
                             if not enemy then

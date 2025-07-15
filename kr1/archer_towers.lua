@@ -279,9 +279,7 @@ local function archer_towers()
     mod_silence_totem.render.sprites[1].draw_order = 2
 
     local mod_weakness_totem = E:register_t("mod_weakness_totem", "modifier")
-
     E:add_comps(mod_weakness_totem, "render")
-
     mod_weakness_totem.inflicted_damage_factor = 0.5
     mod_weakness_totem.received_damage_factor = 1.4
     mod_weakness_totem.modifier.duration = 3
@@ -330,7 +328,6 @@ local function archer_towers()
     totem_silence.tween.props[2].loop = true
 
     local totem_weakness = E:register_t("totem_weakness", "totem_silence")
-
     totem_weakness.aura.mod = "mod_weakness_totem"
     totem_weakness.aura.duration = 0
     totem_weakness.aura.duration_inc = 3
