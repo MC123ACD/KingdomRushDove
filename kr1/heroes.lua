@@ -6198,7 +6198,6 @@ local function heroes()
         [7] = 3
     }
     tt.hero.skills.slash = E:clone_c("hero_skill")
-    tt.hero.skills.slash.cooldown = {12}
     tt.hero.skills.slash.damage_max = {60, 130, 225}
     tt.hero.skills.slash.damage_min = {30, 70, 120}
     tt.hero.skills.slash.targets = {3, 4, 5}
