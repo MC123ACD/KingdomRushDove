@@ -5303,12 +5303,13 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.bastion = E:clone_c("hero_skill")
-    tt.hero.skills.bastion.damage_per_tick = {1, 2, 3}
-    tt.hero.skills.bastion.max_damage = {8, 16, 24}
+    tt.hero.skills.bastion.damage_per_tick = {1.5, 2, 2.5, 3}
+    tt.hero.skills.bastion.max_damage = {15, 20, 25, 30}
     tt.hero.skills.bastion.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.massivedamage = E:clone_c("hero_skill")
     tt.hero.skills.massivedamage.chance = {0.2, 0.35, 0.5}
@@ -5348,7 +5349,7 @@ local function heroes()
     tt.info.i18n_key = "HERO_GIANT"
     tt.main_script.insert = scripts.hero_giant.insert
     tt.main_script.update = scripts.hero_giant.update
-    tt.motion.max_speed = 48
+    tt.motion.max_speed = 55
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = anchor_y
     tt.render.sprites[1].prefix = "hero_giant"
@@ -5445,7 +5446,7 @@ local function heroes()
     tt.render.sprites[1].draw_order = 2
     tt.render.sprites[1].scale = vec_2(0, 0)
     tt.render.sprites[1].anchor.y = 0.19117647058823528
-    tt.max_distance = 100
+    tt.max_distance = 80
     tt.tick_time = 3
     tt.damage_per_tick = nil
     tt.max_damage = nil
