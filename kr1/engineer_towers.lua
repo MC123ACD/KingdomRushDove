@@ -806,7 +806,7 @@ local function engineer_towers()
     tt.render.sprites[2].size_names = {"small", "big", "big"}
     tt.render.sprites[2].name = "small"
     tt.render.sprites[2].draw_order = 2
-    tt.modifier.duration = 5
+    tt.modifier.duration = 6
     tt.attack = E:clone_c("bullet_attack")
     tt.attack.max_range = 100
     tt.attack.bullet = "ray_druid_sylvan"
@@ -828,7 +828,7 @@ local function engineer_towers()
     tt.render.sprites[1].draw_order = 2
     tt.attacks.list[1] = E:clone_c("spell_attack")
     tt.attacks.list[1].spell = "mod_druid_sylvan"
-    tt.attacks.list[1].cooldown = 10
+    tt.attacks.list[1].cooldown = 12
     tt.attacks.list[1].range = 175
     tt.attacks.list[1].excluded_templates = {"enemy_ogre_magi"}
     tt.attacks.list[1].cast_time = fts(20)

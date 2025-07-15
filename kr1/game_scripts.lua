@@ -19278,22 +19278,31 @@ function scripts.druid_shooter_sylvan.update(this, store)
             -- block empty
         elseif store.tick_ts - a.ts > a.cooldown then
             SU.delay_attack(store, a, 1)
-
-            local target = U.find_foremost_enemy_with_max_coverage(store.entities, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function (v)
-                return not table.contains(a.excluded_templates, v.template_name) and not SU.has_modifiers(store, v, "mod_druid_sylvan"), nil, 100
+            local target
+            local _, enemies = U.find_foremost_enemy(store.entities, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function (v)
+                return not table.contains(a.excluded_templates, v.template_name) and not SU.has_modifiers(store, v, "mod_druid_sylvan")
             end)
 
-            -- local target = U.find_biggest_enemy(store.entities, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function(v)
-            --     return not table.contains(a.excluded_templates, v.template_name) and
-            --                not SU.has_modifiers(store, v, "mod_druid_sylvan")
-            -- end)
-            -- local targets = U.find_enemies_in_range(store.entities, this.owner.pos, 0, a.range, a.vis_flags, a.vis_bans,
-            --     function(v)
-            --         return not table.contains(a.excluded_templates, v.template_name) and
-            --                    not SU.has_modifiers(store, v, "mod_druid_sylvan")
-            --     end)
+            if enemies then
+                local foremost_enemy = enemies[1]
+                local max_hp_enemy_idx = 1
+                local max_hp = foremost_enemy.health.hp
+                for i = 2, #enemies do
+                    local e = enemies[i]
 
-            if target and target.health.hp > 750 then
+                    if V.dist(e.__ffe_pos.x, e.__ffe_pos.y, foremost_enemy.__ffe_pos.x, foremost_enemy.__ffe_pos.y) <= 50 then
+                        if e.health.hp > max_hp then
+                            max_hp = e.health.hp
+                            max_hp_enemy_idx = i
+                        end
+                    else
+                        break
+                    end
+                end
+                target = enemies[max_hp_enemy_idx]
+            end
+
+            if target and #enemies > 1 then
                 S:queue(a.sound)
                 U.animation_start(this, a.animation, nil, store.tick_ts)
                 U.y_wait(store, a.cast_time)
