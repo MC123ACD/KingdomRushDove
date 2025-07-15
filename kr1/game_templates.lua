@@ -5772,23 +5772,8 @@ tt.render.sprites[1].anchor = vec_2(0, 0.5)
 tt.render.sprites[1].loop = false
 tt.render.sprites[1].name = "ray_crystal_arcane"
 
-tt = E:register_t("aura_fiery_nut", "aura")
 
-E:add_comps(tt, "render", "tween")
 
-tt.aura.cycle_time = 0.3
-tt.aura.duration = 5
-tt.aura.mod = "mod_fiery_nut"
-tt.aura.radius = 65
-tt.aura.vis_bans = bor(F_FRIEND, F_FLYING)
-tt.aura.vis_flags = bor(F_MOD)
-tt.main_script.insert = scripts.aura_apply_mod.insert
-tt.main_script.update = scripts.aura_apply_mod.update
-tt.render.sprites[1].name = "decal_fiery_nut_scorched"
-tt.render.sprites[1].loop = true
-tt.render.sprites[1].z = Z_DECALS
-tt.tween.remove = false
-tt.tween.props[1].keys = {{0, 255}, {"this.aura.duration-1", 255}, {"this.aura.duration", 0}}
 tt = E:register_t("aura_forest_eerie", "aura")
 tt.aura.mods = {"mod_forest_eerie_slow", "mod_forest_eerie_dps"}
 tt.aura.radius = 60
@@ -6331,27 +6316,11 @@ tt.render.sprites[1].draw_order = 2
 tt.render.sprites[1].loop = false
 tt.main_script.insert = scripts.mod_track_target.insert
 tt.main_script.update = scripts.mod_track_target.update
-tt = E:register_t("mod_fiery_nut", "modifier")
 
-E:add_comps(tt, "dps", "render")
 
-tt.dps.damage_min = 0
-tt.dps.damage_max = 0
-tt.dps.damage_inc = 1
-tt.dps.damage_type = DAMAGE_TRUE
-tt.dps.damage_every = fts(3)
-tt.dps.kill = true
-tt.main_script.insert = scripts.mod_dps.insert
-tt.main_script.update = scripts.mod_dps.update
-tt.modifier.duration = 6
-tt.render.sprites[1].prefix = "fire"
-tt.render.sprites[1].name = "small"
-tt.render.sprites[1].size_names = {"small", "medium", "large"}
-tt.render.sprites[1].draw_order = 10
+
 tt = E:register_t("mod_clobber", "modifier")
-
 E:add_comps(tt, "render")
-
 tt.main_script.insert = scripts.mod_stun.insert
 tt.main_script.update = scripts.mod_stun.update
 tt.main_script.remove = scripts.mod_stun.remove

@@ -1322,10 +1322,9 @@ local function enemies()
     tt.vis.bans = bor(F_BLOCK, F_THORN, F_SKELETON)
     tt.vis.flags = bor(F_ENEMY, F_FLYING)
     tt.is_demon = true
+
     tt = RT("enemy_lava_elemental", "enemy")
-
     AC(tt, "melee")
-
     anchor_y = 0.19
     anchor_x = 0.5
     image_y = 84
