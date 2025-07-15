@@ -796,6 +796,28 @@ local function engineer_towers()
     tt.sound_events.insert = "ElvesRockHengeTaunt"
     tt.sound_events.change_rally_point = "SoldierDruidBearRallyChange"
 
+    tt = E:register_t("mod_druid_sylvan", "modifier")
+    E:add_comps(tt, "render", "tween")
+    tt.render.sprites[1].name = "artillery_henge_curse_decal"
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[1].animated = false
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].prefix = "mod_druid_sylvan"
+    tt.render.sprites[2].size_names = {"small", "big", "big"}
+    tt.render.sprites[2].name = "small"
+    tt.render.sprites[2].draw_order = 2
+    tt.modifier.duration = 5
+    tt.attack = E:clone_c("bullet_attack")
+    tt.attack.max_range = 100
+    tt.attack.bullet = "ray_druid_sylvan"
+    tt.attack.damage_factor = {0.23, 0.46, 0.66}
+    tt.ray_cooldown = fts(15)
+    tt.main_script.update = scripts.mod_druid_sylvan.update
+    tt.tween.remove = false
+    tt.tween.props[1].name = "scale"
+    tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(0.9, 0.9)}, {1, vec_2(1, 1)}}
+    tt.tween.props[1].loop = true
+
     tt = E:register_t("druid_shooter_sylvan", "decal_scripted")
     E:add_comps(tt, "attacks")
     tt.render.sprites[1].prefix = "tower_druid_shooter_sylvan"
