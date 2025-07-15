@@ -6170,7 +6170,7 @@ local function heroes()
     tt.render.sprites[2].z = Z_OBJECTS
 
     tt = E:register_t("hero_regson", "hero")
-    E:add_comps(tt, "melee")
+    E:add_comps(tt, "melee", "timed_attacks")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     tt.hero.level_stats.hp_max = {330, 352, 374, 396, 418, 440, 462, 484, 504, 528}
     tt.hero.level_stats.melee_damage_max = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18}
@@ -6247,7 +6247,7 @@ local function heroes()
     tt.unit.hit_offset = vec_2(0, 16)
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(0, 14)
-    tt.melee.attacks[1].animation = "attack1"
+    tt.melee.attacks[1].animation = "attack3"
     tt.melee.attacks[1].damage_type = DAMAGE_TRUE
     tt.melee.attacks[1].hit_time = fts(10)
     tt.melee.attacks[1].shared_cooldown = true
@@ -6257,8 +6257,8 @@ local function heroes()
     tt.melee.attacks[2].animation = "attack2"
     tt.melee.attacks[2].chance = 0.5
     tt.melee.attacks[3] = table.deepclone(tt.melee.attacks[1])
-    tt.melee.attacks[3].animation = "attack3"
-    tt.melee.attacks[3].chance = 0.3333333333333333
+    tt.melee.attacks[3].animation = "attack1"
+    tt.melee.attacks[3].chance = 0
     tt.melee.attacks[4] = E:clone_c("melee_attack")
     tt.melee.attacks[4].animations = {nil, "berserk_attack"}
     tt.melee.attacks[4].damage_type = DAMAGE_TRUE
@@ -6288,6 +6288,20 @@ local function heroes()
     tt.melee.attacks[6].xp_from_skill = "slash"
     tt.melee.cooldown = 0.6
     tt.melee.range = 65
+    tt.timed_attacks.list[1] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[1].animation = "whirlwind_mirage"
+    tt.timed_attacks.list[1].cooldown = 40
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].fade_time = fts(4)
+    tt.timed_attacks.list[1].fade_start_end_time = fts(7)
+    tt.timed_attacks.list[1].sound = "ElvesHeroEldritchSlash"
+    tt.timed_attacks.list[1].loops = 3
+    tt.timed_attacks.list[1].min_count = 3
+    tt.timed_attacks.list[1].range = 160
+    tt.timed_attacks.list[1].damage_radius = 100
+    tt.timed_attacks.list[1].vis_flags = bor(F_RANGED, F_AREA)
+    tt.timed_attacks.list[1].vis_bans = F_FLYING
+    tt.timed_attacks.list[1].mod = "mod_regson_slash"
     tt.ultimate = {
         ts = 0,
         cooldown = 200,
@@ -6349,6 +6363,7 @@ local function heroes()
     tt.render.sprites[1].name = "fx_regson_slash"
     tt.render.sprites[1].sort_y_offset = -2
     tt.render.sprites[1].loop = false
+    tt.modifier.allows_duplicates = true
 
     tt = E:register_t("hero_regson_ultimate")
     E:add_comps(tt, "pos", "main_script", "sound_events", "render")

@@ -17673,6 +17673,21 @@ local kr3_a = {
         to = 78,
         from = 61
     },
+    hero_regson_whirlwind_mirage = {
+        prefix = "regson_hero",
+        to = 184,
+        from = 176
+    },
+    hero_regson_whirlwind_mirage_start = {
+        prefix = "regson_hero",
+        to = 191,
+        from = 185
+    },
+    hero_regson_whirlwind_mirage_end = {
+        prefix = "regson_hero",
+        to = 199,
+        from = 193
+    },
     hero_regson_respawn = {
         prefix = "regson_hero",
         to = 94,

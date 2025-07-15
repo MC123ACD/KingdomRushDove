@@ -7330,6 +7330,9 @@ return function(scripts)
 
                 m.damage_max = s.damage_max[s.level]
                 m.damage_min = s.damage_min[s.level]
+
+                a = this.timed_attacks.list[1]
+                a.disabled = nil
             end)
             upgrade_skill(this, "ultimate", function(this, s)
                 this.ultimate.disabled = nil
@@ -7374,7 +7377,22 @@ return function(scripts)
             U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
 
             this.health_bar.hidden = false
-
+            local fade_start_time
+            local origin_pos
+            local function exit_whirlwind_mirage()
+                this.pos.x = origin_pos.x
+                this.pos.y = origin_pos.y
+                fade_start_time = store.tick_ts
+                U.animation_start(this, this.timed_attacks.list[1].animation .. "_end", nil, store.tick_ts, false)
+                while not U.animation_finished(this) do
+                    if store.tick_ts - fade_start_time < this.timed_attacks.list[1].fade_start_end_time then
+                        this.render.sprites[1].alpha = 255 * (store.tick_ts - fade_start_time) / this.timed_attacks.list[1].fade_start_end_time
+                    end
+                    coroutine.yield()
+                end
+                this.render.sprites[1].alpha = 255
+                this.health_bar.hidden = false
+            end
             while true do
                 if h.dead then
                     SU.y_hero_death_and_respawn(store, this)
@@ -7391,6 +7409,83 @@ return function(scripts)
 
                     if SU.hero_level_up(store, this) then
                         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                    end
+                    local a = this.timed_attacks.list[1]
+
+                    if ready_to_use_skill(a, store) then
+                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, 200,
+                            a.vis_flags, a.vis_bans)
+                        if targets and #targets > a.min_count then
+                            this.health_bar.hidden = true
+                            fade_start_time = store.tick_ts
+                            -- 隐形
+                            U.animation_start(this, a.animation .. "_start", nil, store.tick_ts, false)
+                            while not U.animation_finished(this) do
+                                if store.tick_ts - fade_start_time < a.fade_start_end_time then
+                                    this.render.sprites[1].alpha = 255 * (1 - (store.tick_ts - fade_start_time) / a.fade_start_end_time)
+                                end
+                                if SU.hero_interrupted(this) then
+                                    this.render.sprites[1].alpha = 255
+                                    this.health_bar.hidden = false
+                                    goto label_98_0
+                                end
+                                coroutine.yield()
+                            end
+                            a.ts = store.tick_ts
+                            origin_pos = V.vclone(this.pos)
+                            for i = 1, a.loops do
+                                if not targets[i] or targets[i].health.dead then
+                                    break
+                                end
+                                S:queue(a.sound)
+                                local target = targets[i]
+                                this.pos.x = target.pos.x
+                                this.pos.y = target.pos.y
+                                U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                                fade_start_time = store.tick_ts
+                                local damage_applied = false
+                                local fade_out_start_time
+                                while not U.animation_finished(this) do
+                                    -- 显形
+                                    if store.tick_ts - fade_start_time < a.fade_time then
+                                        this.render.sprites[1].alpha = 255 * (store.tick_ts - fade_start_time) /
+                                            a.fade_time
+                                    else
+                                        if not damage_applied then
+                                            this.render.sprites[1].alpha = 255
+                                            damage_applied = true
+                                            local whirlwind_targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                                            if whirlwind_targets then
+                                                for _, target in pairs(whirlwind_targets) do
+                                                    local m = E:create_entity(a.mod)
+                                                    m.modifier.target_id = target.id
+                                                    m.modifier.source_id = this.id
+                                                    m.render.sprites[1].ts = store.tick_ts
+                                                    m.modifier.damage_factor = this.unit.damage_factor
+                                                    queue_insert(store, m)
+                                                end
+                                            end
+                                            fade_out_start_time = store.tick_ts
+                                        end
+                                        -- 隐形
+                                        if store.tick_ts - fade_out_start_time < a.fade_time then
+                                            this.render.sprites[1].alpha = 255 * (1 - (store.tick_ts - fade_out_start_time) / a.fade_time)
+                                        else
+                                            this.render.sprites[1].alpha = 0
+                                        end
+                                    end
+                                    if SU.hero_interrupted(this) then
+                                        exit_whirlwind_mirage()
+                                        a.ts = a.ts - a.cooldown * (a.loops - i) / a.loops
+                                        goto label_98_0
+                                    end
+                                    coroutine.yield()
+                                end
+                            end
+                            exit_whirlwind_mirage()
+                        else
+                            a.ts = a.ts + 1
+                        end
                     end
 
                     if ready_to_use_skill(this.ultimate, store) then

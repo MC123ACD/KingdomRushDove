@@ -27,7 +27,9 @@ return {
 			"regson_hero_0026",
 			"regson_hero_0060",
 			"regson_hero_0094",
-			"regson_hero_0095"
+			"regson_hero_0095",
+            "regson_hero_0185",
+            "regson_hero_0199"
 		}
 	},
 	regson_hero_0002 = {
@@ -177,7 +179,7 @@ return {
 			79
 		},
 		alias = {
-			"regson_hero_0010"
+			"regson_hero_0010", "regson_hero_0186","regson_hero_0198"
 		}
 	},
 	regson_hero_0011 = {
@@ -203,7 +205,7 @@ return {
 			85
 		},
 		alias = {
-			"regson_hero_0012"
+			"regson_hero_0012","regson_hero_0187","regson_hero_0197"
 		}
 	},
 	regson_hero_0013 = {
@@ -230,7 +232,7 @@ return {
 		},
 		alias = {
 			"regson_hero_0014",
-			"regson_hero_0015"
+			"regson_hero_0015","regson_hero_0188","regson_hero_0196"
 		}
 	},
 	regson_hero_0016 = {
@@ -256,7 +258,7 @@ return {
 			92
 		},
 		alias = {
-			"regson_hero_0017"
+			"regson_hero_0017","regson_hero_0189","regson_hero_0195"
 		}
 	},
 	regson_hero_0018 = {
@@ -282,7 +284,7 @@ return {
 			66
 		},
 		alias = {
-			"regson_hero_0019"
+			"regson_hero_0019","regson_hero_0190","regson_hero_0194"
 		}
 	},
 	regson_hero_0020 = {
@@ -308,7 +310,7 @@ return {
 			66
 		},
 		alias = {
-			"regson_hero_0021"
+			"regson_hero_0021","regson_hero_0191","regson_hero_0193"
 		}
 	},
 	regson_hero_0022 = {
@@ -826,7 +828,7 @@ return {
 			59
 		},
 		alias = {
-			"regson_hero_0062"
+			"regson_hero_0062","regson_hero_0176"
 		}
 	},
 	regson_hero_0063 = {
@@ -852,7 +854,7 @@ return {
 			96
 		},
 		alias = {
-			"regson_hero_0064"
+			"regson_hero_0064","regson_hero_0177"
 		}
 	},
 	regson_hero_0065 = {
@@ -878,7 +880,7 @@ return {
 			101
 		},
 		alias = {
-			"regson_hero_0066"
+			"regson_hero_0066","regson_hero_0178"
 		}
 	},
 	regson_hero_0067 = {
@@ -904,7 +906,7 @@ return {
 			101
 		},
 		alias = {
-			"regson_hero_0068"
+			"regson_hero_0068","regson_hero_0179"
 		}
 	},
 	regson_hero_0069 = {
@@ -930,7 +932,7 @@ return {
 			96
 		},
 		alias = {
-			"regson_hero_0070"
+			"regson_hero_0070","regson_hero_0180"
 		}
 	},
 	regson_hero_0071 = {
@@ -956,7 +958,7 @@ return {
 			91
 		},
 		alias = {
-			"regson_hero_0072"
+			"regson_hero_0072","regson_hero_0181"
 		}
 	},
 	regson_hero_0073 = {
@@ -982,7 +984,7 @@ return {
 			80
 		},
 		alias = {
-			"regson_hero_0074"
+			"regson_hero_0074","regson_hero_0182"
 		}
 	},
 	regson_hero_0075 = {
@@ -1008,7 +1010,7 @@ return {
 			57
 		},
 		alias = {
-			"regson_hero_0076"
+			"regson_hero_0076", "regson_hero_0183"
 		}
 	},
 	regson_hero_0077 = {
@@ -1034,7 +1036,7 @@ return {
 			52
 		},
 		alias = {
-			"regson_hero_0078"
+			"regson_hero_0078", "regson_hero_0184"
 		}
 	},
 	regson_hero_0079 = {
