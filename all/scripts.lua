@@ -2200,19 +2200,22 @@ function scripts.arrow.update(this, store, script)
 
             queue_damage(store, d)
 
+            local mods
             if b.mod then
-                local mods = type(b.mod) == "table" and b.mod or {b.mod}
+                mods = type(b.mod) == "table" and b.mod or {b.mod}
+            elseif b.mods then
+                mods = b.mods
+            end
 
-                for _, mod_name in pairs(mods) do
-                    local mod = E:create_entity(mod_name)
+            for _, mod_name in pairs(mods) do
+                local mod = E:create_entity(mod_name)
 
-                    mod.modifier.source_id = this.id
-                    mod.modifier.target_id = target.id
-                    mod.modifier.level = b.level
-                    mod.modifier.source_damage = d
+                mod.modifier.source_id = this.id
+                mod.modifier.target_id = target.id
+                mod.modifier.level = b.level
+                mod.modifier.source_damage = d
 
-                    queue_insert(store, mod)
-                end
+                queue_insert(store, mod)
             end
 
             if b.hit_fx then

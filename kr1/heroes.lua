@@ -5189,11 +5189,10 @@ local function heroes()
     tt.ranged.attacks[1].bullet = "crab_water_bomb"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(9, 50)}
     tt.ranged.attacks[1].cooldown = 9
-    tt.ranged.attacks[1].ignore_hit_offset = true
     tt.ranged.attacks[1].max_range = 256
     tt.ranged.attacks[1].min_range = 19.2
     tt.ranged.attacks[1].shoot_time = fts(30)
-    tt.ranged.attacks[1].vis_bans = bor(F_FLYING)
+    tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].xp_from_skill = "shouldercannon"
     tt.ranged.attacks[1].node_prediction = fts(61)
     tt.timed_attacks.list[1] = E:clone_c("area_attack")
@@ -5394,12 +5393,9 @@ local function heroes()
     tt.ranged.attacks[1].bullet = "giant_boulder"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 77)}
     tt.ranged.attacks[1].cooldown = 10.4
-    -- tt.ranged.attacks[1].ignore_hit_offset = true
-    tt.ranged.attacks[1].ignore_hit_offset = false
     tt.ranged.attacks[1].max_range = 300
     tt.ranged.attacks[1].min_range = 50
     tt.ranged.attacks[1].shoot_time = fts(20)
-    -- tt.ranged.attacks[1].vis_bans = bor(F_FLYING)
     tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].sound = "HeroGiantBoulder"
     tt.ranged.attacks[1].node_prediction = fts(40)

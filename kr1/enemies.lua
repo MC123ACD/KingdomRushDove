@@ -1149,7 +1149,6 @@ local function enemies()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(4, 12.5)}
     tt.ranged.attacks[1].cooldown = 1 + fts(12)
     tt.ranged.attacks[1].hold_advance = true
-    tt.ranged.attacks[1].ignore_hit_offset = true
     tt.ranged.attacks[1].max_range = 165
     tt.ranged.attacks[1].min_range = 60
     tt.ranged.attacks[1].shoot_time = fts(7)
@@ -1469,7 +1468,6 @@ local function enemies()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(adx(66), ady(86))}
     tt.ranged.attacks[1].cooldown = 1 + fts(32)
     tt.ranged.attacks[1].hold_advance = true
-    tt.ranged.attacks[1].ignore_hit_offset = true
     tt.ranged.attacks[1].max_range = 165
     tt.ranged.attacks[1].min_range = 110
     tt.ranged.attacks[1].shoot_time = fts(13)
