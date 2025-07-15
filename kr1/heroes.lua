@@ -5076,11 +5076,12 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {8, 9, 10, 11, 11, 12, 13, 14, 15, 16}
     tt.hero.level_stats.melee_damage_max = {23, 26, 29, 32, 34, 37, 40, 42, 44, 46}
     tt.hero.skills.hookedclaw = E:clone_c("hero_skill")
-    tt.hero.skills.hookedclaw.extra_damage = {7, 14, 21}
+    tt.hero.skills.hookedclaw.extra_damage = {7, 14, 21, 28}
     tt.hero.skills.hookedclaw.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.battlehardened = E:clone_c("hero_skill")
     tt.hero.skills.battlehardened.chance = {0.35, 0.5, 0.65}
@@ -5110,11 +5111,12 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.burrow = E:clone_c("hero_skill")
-    tt.hero.skills.burrow.extra_speed = {50, 70, 90}
+    tt.hero.skills.burrow.extra_speed = {50, 70, 90, 110}
     tt.hero.skills.burrow.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.health.armor = nil
     tt.health.dead_lifetime = 20
@@ -5206,7 +5208,7 @@ local function heroes()
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].hit_time = fts(12)
     tt.timed_attacks.list[1].max_range = 110
-    tt.timed_attacks.list[1].min_count = 2
+    tt.timed_attacks.list[1].min_count = 1
     tt.timed_attacks.list[1].sound = "HeroCrabPrincer"
     tt.timed_attacks.list[1].xp_from_skill = "pincerattack"
 
