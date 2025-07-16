@@ -7334,6 +7334,7 @@ return function(scripts)
 
                 a = this.timed_attacks.list[1]
                 a.disabled = nil
+                a.loops = s.loops[s.level]
             end)
             upgrade_skill(this, "ultimate", function(this, s)
                 this.ultimate.disabled = nil
@@ -7433,6 +7434,7 @@ return function(scripts)
                                 coroutine.yield()
                             end
                             a.ts = store.tick_ts
+                            SU.hero_gain_xp_from_skill(this, this.hero.skills.slash)
                             origin_pos = V.vclone(this.pos)
                             for i = 1, a.loops do
                                 if not targets[i] or targets[i].health.dead then
@@ -7462,7 +7464,7 @@ return function(scripts)
                                                     m.modifier.target_id = target.id
                                                     m.modifier.source_id = this.id
                                                     m.render.sprites[1].ts = store.tick_ts
-                                                    m.modifier.damage_factor = this.unit.damage_factor
+                                                    m.modifier.damage_factor = this.unit.damage_factor * 0.5
                                                     queue_insert(store, m)
                                                 end
                                             end
@@ -7492,7 +7494,7 @@ return function(scripts)
                     if ready_to_use_skill(this.ultimate, store) then
                         local enemy = find_target_at_critical_moment(this, store, 200)
 
-                        if enemy and enemy.pos then
+                        if enemy and enemy.pos and enemy.health.hp > 750 then
                             U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
                             S:queue(this.sound_events.change_rally_point)
                             local ultimate_entity = E:create_entity(this.hero.skills.ultimate.controller_name)
@@ -7776,7 +7778,7 @@ return function(scripts)
         d.source_id = this.id
         d.target_id = target.id
         d.damage_type = this.damage_type
-        d.value = math.random(this.damage_min, this.damage_max)
+        d.value = math.random(this.damage_min, this.damage_max) * m.damage_factor
 
         queue_damage(store, d)
         U.y_animation_wait(this)

@@ -6207,6 +6207,7 @@ local function heroes()
     tt.hero.skills.slash.damage_min = {30, 70, 120}
     tt.hero.skills.slash.targets = {3, 4, 5}
     tt.hero.skills.slash.xp_gain = {28, 84, 168}
+    tt.hero.skills.slash.loops = {3, 4, 5}
     tt.hero.skills.slash.xp_level_steps = {
         [2] = 1,
         [5] = 2,

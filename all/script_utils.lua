@@ -1643,6 +1643,7 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
                 mod.modifier.source_id = this.id
                 mod.modifier.level = attack.level
                 mod.modifier.target_idx = i
+                mod.modifier.damage_factor = this.unit.damage_factor
                 queue_insert(store, mod)
             end
 		end
@@ -1810,7 +1811,7 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
 						mod.modifier.target_id = e.id
 						mod.modifier.source_id = this.id
 						mod.modifier.level = attack.level
-
+                        mod.modifier.damage_factor = this.unit.damage_factor
 						queue_insert(store, mod)
 					end
 				end
@@ -1989,7 +1990,7 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 			mod.modifier.target_id = target.id
 			mod.modifier.source_id = this.id
 			mod.modifier.level = attack.level
-
+            mod.modifier.damage_factor = this.unit.damage_factor
 			queue_insert(store, mod)
 		end
 
@@ -2001,7 +2002,7 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
                 mod.modifier.target_id = target.id
                 mod.modifier.source_id = this.id
                 mod.modifier.level = attack.level
-
+                mod.modifier.damage_factor = this.unit.damage_factor
                 queue_insert(store, mod)
             end
         end
