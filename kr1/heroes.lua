@@ -4823,11 +4823,12 @@ local function heroes()
     tt.hero.level_stats.ranged_damage_min = {4, 5, 7, 8, 10, 11, 13, 14, 16, 17}
     tt.hero.level_stats.ranged_damage_max = {11, 16, 20, 25, 29, 34, 38, 43, 47, 52}
     tt.hero.skills.laughingskulls = E:clone_c("hero_skill")
-    tt.hero.skills.laughingskulls.extra_damage = {2, 4, 6}
+    tt.hero.skills.laughingskulls.extra_damage = {2, 4, 6, 8}
     tt.hero.skills.laughingskulls.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.deathskull = E:clone_c("hero_skill")
     tt.hero.skills.deathskull.damage = {25, 50, 75}
@@ -4845,11 +4846,12 @@ local function heroes()
         [7] = 3
     }
     tt.hero.skills.deathaura = E:clone_c("hero_skill")
-    tt.hero.skills.deathaura.slow_factor = {0.88, 0.78, 0.68}
+    tt.hero.skills.deathaura.slow_factor = {0.9, 0.8, 0.7, 0.6}
     tt.hero.skills.deathaura.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3
+        [7] = 3,
+        [10] = 4
     }
     tt.hero.skills.voodoomagic = E:clone_c("hero_skill")
     tt.hero.skills.voodoomagic.damage = {60, 120, 180}
