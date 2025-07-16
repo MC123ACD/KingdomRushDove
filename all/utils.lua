@@ -548,14 +548,14 @@ function U.walk(e, dt, accel, unsnapped)
     local v_len = V.len(vx, vy)
 
     if accel then
-        m.max_speed = m.max_speed + accel * dt
+        m.buff = m.buff + accel * dt
     end
 
-    if m.accel and m.speed_limit and m.max_speed < m.speed_limit then
-        m.max_speed = km.clamp(0, m.speed_limit, m.max_speed + m.accel * dt)
+    if m.accel and m.speed_limit and m.max_speed + m.buff < m.speed_limit then
+        m.buff = km.clamp(0, m.speed_limit - m.max_speed, m.buff + m.accel * dt)
     end
 
-    local step = m.max_speed * dt
+    local step = U.real_max_speed(e) * dt
     local nx, ny = V.normalize(V.rotate(v_angle, 1, 0))
 
     if v_len <= step then
@@ -1558,6 +1558,43 @@ function U.has_modifier_types(store, entity, ...)
     end)
 
     return #mods > 0, mods
+end
+
+-- for sure the entity has motion component
+function U.real_max_speed(entity)
+    return km.clamp(1, 10000, (entity.motion.max_speed + entity.motion.buff) * entity.motion.factor)
+end
+
+function U.speed_mul(entity, factor)
+    entity.motion.factor = entity.motion.factor * factor
+end
+
+function U.speed_div(entity, factor)
+    entity.motion.factor = entity.motion.factor / factor
+end
+
+function U.speed_inc(entity, amount)
+    entity.motion.buff = entity.motion.buff + amount
+end
+
+function U.speed_dec(entity, amount)
+    entity.motion.buff = entity.motion.buff - amount
+end
+
+function U.speed_mul_self(entity, factor)
+    entity.motion.max_speed = entity.motion.max_speed * factor
+end
+
+function U.speed_div_self(entity, factor)
+    entity.motion.max_speed = entity.motion.max_speed / factor
+end
+
+function U.speed_inc_self(entity, amount)
+    entity.motion.max_speed = entity.motion.max_speed + amount
+end
+
+function U.speed_dec_self(entity, amount)
+    entity.motion.max_speed = entity.motion.max_speed - amount
 end
 
 return U

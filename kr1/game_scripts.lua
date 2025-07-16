@@ -1970,7 +1970,7 @@ function scripts.dracolich_plague_carrier.update(this, store)
     a.duration = a.duration + U.frandom(-a.duration_var, 0)
     m.max_speed = m.max_speed + math.random(0, m.max_speed_var)
 
-    local step = m.max_speed * dt
+    local step = U.real_max_speed(this) * dt
     local next_pos = P:node_pos(nav)
 
     next_pos.y = next_pos.y + y_off
@@ -2980,7 +2980,7 @@ function scripts.hero_ignus.update(this, store)
 
 						this.vis.bans = F_ALL
 						this.health.ignore_damage = true
-						this.motion.max_speed = this.motion.max_speed * a.speed_factor
+                        this.motion.factor = this.motion.factor * a.speed_factor
 
 						U.set_destination(this, slot_pos)
 						S:queue(a.sound)
@@ -3006,7 +3006,7 @@ function scripts.hero_ignus.update(this, store)
 						a.ts = store.tick_ts
 						this.vis.bans = vis_bans
 						this.health.ignore_damage = nil
-						this.motion.max_speed = this.motion.max_speed / a.speed_factor
+                        this.motion.factor = this.motion.factor / a.speed_factor
 
 						goto label_71_0
 					end
@@ -7542,8 +7542,7 @@ function scripts.mod_rocketeer_speed_buff.insert(this, store)
 	target._angles_walk = target.render.sprites[1].angles.walk
 	target.already_speed_up = true
 	target.render.sprites[1].angles.walk = this.walk_angles
-	target.motion.max_speed = target.motion.max_speed * this.fast.factor
-
+    U.speed_mul(this, this.fast.factor)
 	return true
 end
 
@@ -7553,7 +7552,7 @@ function scripts.mod_rocketeer_speed_buff.remove(this, store)
 
 	if target then
 		target.render.sprites[1].angles.walk = target._angles_walk
-		target.motion.max_speed = target.motion.max_speed / this.fast.factor
+		U.speed_div(this, this.fast.factor)
 
 		return true
 	end
@@ -7572,8 +7571,7 @@ function scripts.mod_troll_rage.insert(this, store)
 	end
 
 	m.ts = store.tick_ts
-
-    target.motion.max_speed = target.motion.max_speed + this.extra_speed
+    U.speed_inc(target, this.extra_speed)
 
     if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
         SU.armor_inc(target, this.extra_armor)
@@ -7594,7 +7592,7 @@ function scripts.mod_troll_rage.remove(this, store)
 	local target = store.entities[m.target_id]
 
 	if target then
-		target.motion.max_speed = target.motion.max_speed - this.extra_speed
+        U.speed_dec(target, this.extra_speed)
 
         if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
             SU.armor_dec(target, this.extra_armor)
@@ -8077,11 +8075,10 @@ function scripts.mod_gulaemon_fly.queue(this, store, insertion)
 	if insertion then
 		log.debug("%s (%s) queue/insertion", this.template_name, this.id)
 
-		target.motion.max_speed = target.motion.max_speed * this.speed_factor
+        U.speed_mul(target, this.speed_factor)
 	else
 		log.debug("%s (%s) queue/removal", this.template_name, this.id)
-
-		target.motion.max_speed = target.motion.max_speed / this.speed_factor
+        U.speed_div(target, this.speed_factor)
 	end
 end
 
@@ -8094,8 +8091,7 @@ function scripts.mod_gulaemon_fly.dequeue(this, store, insertion)
 
 	if insertion then
 		log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
-
-		target.motion.max_speed = target.motion.max_speed / this.speed_factor
+        U.speed_div(target, this.speed_factor)
 	end
 end
 
@@ -10867,8 +10863,7 @@ function scripts.aura_damage_sprint.remove(this, store, script)
     if target and target.health and target.motion then
         log.paranoid("aura_damage_sprint.remove: current max_speed: %s / prev: %s", target.motion.max_speed,
             this.last_sprint_factor)
-
-        target.motion.max_speed = target.motion.max_speed / this.last_sprint_factor
+        U.speed_div(target, this.last_sprint_factor)
     end
 
     return true
@@ -10890,8 +10885,7 @@ function scripts.aura_damage_sprint.update(this, store, script)
 
             log.paranoid("aura_damage_sprint.update: current max_speed: %s / %s * %s", target.motion.max_speed,
                 this.last_sprint_factor, sprint_factor)
-
-            target.motion.max_speed = target.motion.max_speed / this.last_sprint_factor * sprint_factor
+            U.speed_mul(target, sprint_factor / this.last_sprint_factor )
             this.last_sprint_hp = target.health.hp
             this.last_sprint_factor = sprint_factor
         end
@@ -11872,8 +11866,7 @@ function scripts.mod_alien_screech.insert(this, store)
 
         return false
     end
-
-    target.motion.max_speed = target.motion.max_speed * this.speed_factor
+    U.speed_mul(target, this.speed_factor)
     target.unit.damage_factor = target.unit.damage_factor * this.damage_factor
     this.modifier.ts = store.tick_ts
 
@@ -11895,8 +11888,7 @@ function scripts.mod_alien_screech.remove(this, store)
     if not target or target.health.dead or not target.motion or not target.unit then
         return true
     end
-
-    target.motion.max_speed = target.motion.max_speed / this.speed_factor
+    U.speed_div(target, this.speed_factor)
     target.unit.damage_factor = target.unit.damage_factor / this.damage_factor
 
     return true
@@ -16997,7 +16989,7 @@ function scripts.moon_enemy_aura.update(this, store)
             source.moon.active = true
 
             if source.moon.speed_factor and source.motion then
-                source.motion.max_speed = source.motion.max_speed * source.moon.speed_factor
+                U.speed_mul(source, source.moon.speed_factor)
             end
 
             if source.moon.damage_factor and source.melee then
@@ -17023,7 +17015,7 @@ function scripts.moon_enemy_aura.update(this, store)
             source.moon.active = nil
 
             if source.moon.speed_factor and source.motion then
-                source.motion.max_speed = source.motion.max_speed / source.moon.speed_factor
+                U.speed_div(source, source.moon.speed_factor)
             end
 
             if source.moon.damage_factor and source.melee then
@@ -20903,7 +20895,7 @@ function scripts.enemy_hyena.update(this, store)
                     coward_ts = store.tick_ts
                     coward = true
                     this.vis.bans = F_BLOCK
-                    this.motion.max_speed = this.motion.max_speed * this.coward_speed_factor
+                    U.speed_mul(this, this.coward_speed_factor)
 
                     -- AC:inc("SHEZI_BANZAI_ED")
 
@@ -20912,7 +20904,7 @@ function scripts.enemy_hyena.update(this, store)
             elseif store.tick_ts - coward_ts > this.coward_duration then
                 coward = false
                 this.vis.bans = 0
-                this.motion.max_speed = this.motion.max_speed / this.coward_speed_factor
+                U.speed_div(this, this.coward_speed_factor)
 
                 goto label_228_0
             end
@@ -28616,7 +28608,7 @@ function scripts.mod_twilight_scourger_lash.insert(this, store)
     end
 
     m.ts = store.tick_ts
-    target.motion.max_speed = target.motion.max_speed * this.speed_factor
+    U.speed_mul(target, this.speed_factor)
     target.unit.damage_factor = target.unit.damage_factor * this.damage_factor
 
     local s1, s2 = this.render.sprites[1], this.render.sprites[2]
@@ -28634,7 +28626,7 @@ function scripts.mod_twilight_scourger_lash.remove(this, store)
     local target = store.entities[m.target_id]
 
     if target then
-        target.motion.max_speed = target.motion.max_speed / this.speed_factor
+        U.speed_div(target, this.speed_factor)
         target.unit.damage_factor = target.unit.damage_factor / this.damage_factor
     end
 
@@ -28708,7 +28700,7 @@ function scripts.mod_twilight_heretic_consume.insert(this, store)
     this._angles_walk = target.render.sprites[1].angles.walk
     this._health_bar_offset_y = target.health_bar.offset.y
     target.render.sprites[1].angles.walk = this.angles_walk
-    target.motion.max_speed = target.motion.max_speed * this.speed_factor
+    U.speed_mul(target, this.speed_factor)
     target.ranged.attacks[1].disabled = true
 
     return true
@@ -28721,7 +28713,7 @@ function scripts.mod_twilight_heretic_consume.remove(this, store)
     if target then
         target.render.sprites[1].angles.walk = this._angles_walk
         target.health_bar.offset.y = this._health_bar_offset_y
-        target.motion.max_speed = target.motion.max_speed / this.speed_factor
+        U.speed_div(target, this.speed_factor)
         target.ranged.attacks[1].disabled = false
     end
 
@@ -28938,7 +28930,7 @@ function scripts.mod_razorboar_rampage_speed.insert(this, store)
     end
 
     this._initial_max_speed = target.motion.max_speed
-    target.motion.max_speed = target.motion.max_speed * this.speed_factor
+    U.speed_mul(target, this.speed_factor)
 
     return true
 end
@@ -28948,7 +28940,7 @@ function scripts.mod_razorboar_rampage_speed.remove(this, store)
     local target = store.entities[m.target_id]
 
     if target then
-        target.motion.max_speed = target.motion.max_speed / this.speed_factor
+        U.speed_div(target, this.speed_factor)
     end
 
     return true

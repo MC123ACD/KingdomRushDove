@@ -1114,14 +1114,14 @@ function sys.health:on_update(dt, ts, store)
                 local score = (1 + math.max(h.armor, h.magic_armor)) * h.hp_max * conf.scoreEnemyMultiplier
 
                 if e.motion then
-                    score = score * e.motion.max_speed / FPS
+                    score = score * U.real_max_speed(e) / FPS
                 end
 
                 score = km.round(score)
                 store.player_score = store.player_score + score
 
                 log.debug("ENDLESS: kill score %s (%s)%s - armor:%s magic_armor:%s hp_max:%s speed:%s", score, e.id,
-                    e.template_name, h.armor, h.magic_armor, h.hp_max, e.motion and e.motion.max_speed or 0)
+                    e.template_name, h.armor, h.magic_armor, h.hp_max, e.motion and U.real_max_speed(e) or 0)
             end
         end
 

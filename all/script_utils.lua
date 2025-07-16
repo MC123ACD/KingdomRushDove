@@ -659,7 +659,7 @@ local function y_hero_new_rally(store, this)
 			S:queue(tr.sound_loop)
 			U.y_animation_play(this, tr.animations[1], nil, store.tick_ts)
 
-			this.motion.max_speed = this.motion.max_speed + tr.extra_speed
+            this.motion.max_speed = this.motion.max_speed + tr.extra_speed
 
 			if tr.particles_name then
 				ps = E:create_entity(tr.particles_name)
@@ -682,8 +682,7 @@ local function y_hero_new_rally(store, this)
 				ps.particle_system.emit = false
 				ps.particle_system.source_lifetime = 1
 			end
-
-			this.motion.max_speed = this.motion.max_speed - tr.extra_speed
+            this.motion.max_speed = this.motion.max_speed - tr.extra_speed
 
 			S:stop(tr.sound_loop)
 			U.y_animation_play(this, tr.animations[3], nil, store.tick_ts)
@@ -2547,8 +2546,7 @@ local function enemy_water_change(store, this)
 			this.vis.flags = bor(this.vis.flags, F_WATER)
 			w._orig_vis_bans = this.vis.bans
 			this.vis.bans = bor(this.vis.bans, this.water.vis_bans)
-			this.motion.max_speed = this.motion.max_speed * this.water.speed_factor
-
+            U.speed_mul_self(this, this.water.speed_factor)
 			if this.health_bar then
 				if this.water.health_bar_offset then
 					this.health_bar._orig_offset = this.health_bar.offset
@@ -2588,7 +2586,7 @@ local function enemy_water_change(store, this)
 		elseif w.last_terrain_type == TERRAIN_WATER and terrain_type == TERRAIN_LAND then
 			this.vis.flags = band(this.vis.flags, bnot(F_WATER))
 			this.vis.bans = w._orig_vis_bans
-			this.motion.max_speed = this.motion.max_speed / this.water.speed_factor
+            U.speed_div_self(this, this.water.speed_factor)
 
 			if this.water.health_bar_offset then
 				this.health_bar.offset = this.health_bar._orig_offset
@@ -2649,7 +2647,8 @@ local function enemy_cliff_change(store, this)
 			this.vis.flags = bor(this.vis.flags, F_CLIFF)
 			c._orig_vis_bans = this.vis.bans
 			this.vis.bans = bor(this.vis.bans, c.vis_bans)
-			this.motion.max_speed = this.motion.max_speed * c.speed_factor
+            U.speed_mul_self(this, c.speed_factor)
+
 			this.health.dead_lifetime = 3
 
 			for i = 1, #this.render.sprites do
@@ -2670,7 +2669,7 @@ local function enemy_cliff_change(store, this)
 		elseif c.last_terrain_type == TERRAIN_CLIFF and terrain_type == TERRAIN_LAND then
 			this.vis.flags = band(this.vis.flags, bnot(F_CLIFF))
 			this.vis.bans = c._orig_vis_bans
-			this.motion.max_speed = this.motion.max_speed / c.speed_factor
+            U.speed_div_self(this, c.speed_factor)
 			this.health.dead_lifetime = 2
 
 			for i = 1, #this.render.sprites do
@@ -2821,7 +2820,7 @@ local function y_enemy_walk_step(store, this, animation_name, sprite_id)
 
 		next = w
 
-		if V.dist(w.x, w.y, this.pos.x, this.pos.y) < 2 * this.motion.max_speed * store.tick_length then
+		if V.dist(w.x, w.y, this.pos.x, this.pos.y) < 2 * U.real_max_speed(this) * store.tick_length then
 			this.pos.x, this.pos.y = w.x, w.y
 			this.motion.forced_waypoint = nil
 

@@ -4307,7 +4307,7 @@ function scripts.tunnel.update(this, store, script)
                 queue_insert(store, fx)
             end
 
-            local release_ts = store.tick_ts + length / (tu.speed_factor * enemy.motion.max_speed)
+            local release_ts = store.tick_ts + length / (tu.speed_factor * U.real_max_speed(enemy))
 
             log.debug("tunnel %s picked %s", this.id, enemy.id)
             table.insert(picked_enemies, {
@@ -5419,8 +5419,7 @@ function scripts.mod_slow.insert(this, store, script)
     end
 
     log.paranoid("mod_slow.insert (%s)-%s for (%s)-%s", this.id, this.template_name, target.id, target.template_name)
-
-    target.motion.max_speed = target.motion.max_speed * this.slow.factor
+    target.motion.factor = target.motion.factor * this.slow.factor
     this.modifier.ts = store.tick_ts
 
     signal.emit("mod-applied", this, target)
@@ -5432,7 +5431,7 @@ function scripts.mod_slow.remove(this, store, script)
     local target = store.entities[this.modifier.target_id]
 
     if target and target.health and target.motion then
-        target.motion.max_speed = target.motion.max_speed / this.slow.factor
+        target.motion.factor = target.motion.factor / this.slow.factor
 
         log.paranoid("mod_slow.remove (%s)-%s for (%s)-%s", this.id, this.template_name, target.id, target.template_name)
     else
@@ -6215,16 +6214,16 @@ function scripts.mod_polymorph.insert(this, store, script)
     end
 
     if pm.transfer_speed_factor then
-        e.motion.max_speed = target.motion.max_speed * pm.transfer_speed_factor
+        e.motion.factor = target.motion.factor * pm.transfer_speed_factor
 
         local has, mods = U.has_modifier_types(store, target, MOD_TYPE_FAST, MOD_TYPE_SLOW)
 
         if has then
             for _, m in pairs(mods) do
                 if m.fast then
-                    e.motion.max_speed = e.motion.max_speed / m.fast.factor
+                    e.motion.factor = e.motion.factor / m.fast.factor
                 elseif m.slow then
-                    e.motion.max_speed = e.motion.max_speed / m.slow.factor
+                    e.motion.factor = e.motion.factor / m.slow.factor
                 end
             end
         end

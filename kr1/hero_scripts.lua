@@ -6333,6 +6333,7 @@ return function(scripts)
                         local vis_bans = this.vis.bans
 
                         this.vis.bans = F_ALL
+                        
                         this.motion.max_speed = this.motion.max_speed * a.speed_factor
 
                         local an, af = U.animation_name_facing_point(this, a.animations[1], target.pos)
@@ -8260,7 +8261,7 @@ return function(scripts)
         target.unit.damage_factor = target.unit.damage_factor * this.inflicted_damage_factor
 
         if not target.motion.invulnerable then
-            target.motion.max_speed = target.motion.max_speed * this.speed_factor
+            U.speed_mul(target, this.speed_factor)
         end
 
         this.modifier.ts = store.tick_ts
@@ -8286,7 +8287,7 @@ return function(scripts)
             target.unit.damage_factor = target.unit.damage_factor / this.inflicted_damage_factor
 
             if not target.motion.invulnerable then
-                target.motion.max_speed = target.motion.max_speed / this.speed_factor
+                U.speed_div(target, this.speed_factor)
             end
         end
 

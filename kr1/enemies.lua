@@ -855,7 +855,7 @@ local function enemies()
     tt.accelerated = false
     tt.health.on_damage = function(this, store, damage)
         if this.health.hp <= this.health.hp_max * 0.5 and not this.accelerated then
-            this.motion.max_speed = 1.0 * FPS
+            this.motion.buff = this.motion.buff + 0.2 * FPS
             this.melee.attacks[1].mod = "mod_orc_blood"
             this.accelerated = true
         end
@@ -871,7 +871,7 @@ local function enemies()
     tt.strengthened = false
     tt.health.on_damage = function(this, store, damage)
         if this.health.hp <= this.health.hp_max * 0.5 and not this.strengthened then
-            this.motion.max_speed = 0.6 * FPS
+            this.motion.buff = this.motion.buff - 0.5 * FPS
             this.health.damage_factor = 0.3
             this.strengthened = true
         end
@@ -2453,7 +2453,7 @@ local function enemies()
     tt.melee.attacks[1].damage_min = 40
     tt.melee.attacks[1].hit_time = fts(12)
     tt.moon.regen_hp = 4
-    tt.motion.max_speed = (IS_KR1 and 1 or 1.28) * 1.3 * FPS
+    tt.motion.max_speed = 1.3 * FPS
     tt.render.sprites[1].prefix = "enemy_werewolf"
     tt.render.sprites[1].anchor.y = anchor_y
     tt.regen.cooldown = 0.25
