@@ -161,14 +161,16 @@ local function heroes()
     tt.hero.level_stats.ranged_damage_max = {16, 19, 24, 27, 30, 36, 41, 47, 50, 55}
     tt.hero.level_stats.ranged_damage_min = {4, 4, 5, 5, 6, 6, 7, 8, 9, 10}
     tt.hero.skills.multishot = CC("hero_skill")
-    tt.hero.skills.multishot.count_base = -2
-    tt.hero.skills.multishot.count_inc = 4
+    tt.hero.skills.multishot.count_base = 0
+    tt.hero.skills.multishot.count_inc = 2
     tt.hero.skills.multishot.xp_level_steps = {
         [2] = 1,
-        [5] = 2,
-        [8] = 3
+        [4] = 2,
+        [6] = 3,
+        [8] = 4,
+        [10] = 5
     }
-    tt.hero.skills.multishot.xp_gain = {20, 40, 60}
+    tt.hero.skills.multishot.xp_gain = {20, 30, 40, 50, 60}
     tt.hero.skills.callofwild = CC("hero_skill")
     tt.hero.skills.callofwild.damage_max_base = 4
     tt.hero.skills.callofwild.damage_min_base = 2
@@ -180,7 +182,6 @@ local function heroes()
         [4] = 1,
         [7] = 2,
         [10] = 3
-
     }
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 33)
