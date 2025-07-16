@@ -1819,7 +1819,7 @@ return {
     heroroom_thumbs_0050 = {
         a_name = "gui_portraits-5.png",
         size = {84, 84},
-        trim = {18, 16, 18, 14},
+        trim = {12, 10, 12, 9},
         a_size = {1024, 1024},
         f_quad = {2, 625, 87, 87},
         alias = {}
@@ -1830,7 +1830,7 @@ return {
 			84,
 			84
 		},
-		trim = {18, 16, 18, 14},
+		trim = {12, 10, 12, 9},
 		a_size = {
 			1024,
 			1024
