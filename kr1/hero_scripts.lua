@@ -7421,6 +7421,7 @@ return function(scripts)
                             this.health_bar.hidden = true
                             fade_start_time = store.tick_ts
                             -- 隐形
+                            S:queue(this.sound_events.change_rally_point)
                             U.animation_start(this, a.animation .. "_start", nil, store.tick_ts, false)
                             while not U.animation_finished(this) do
                                 if store.tick_ts - fade_start_time < a.fade_start_end_time then
@@ -13728,6 +13729,7 @@ return function(scripts)
                             end
                             a.ts = store.tick_ts
                             this.health.ignore_damage = true
+                            this.health_bar.hidden = true
                             U.animation_start(this, a.animations[1], nil, store.tick_ts, true)
                             scripts.heal(this, this.health.hp_max * a.scale * 0.1)
                             while store.tick_ts - bigger_begin_time < a.scale_time do
@@ -13793,6 +13795,7 @@ return function(scripts)
                             this.render.sprites[1].scale.y = 1
                             this.render.sprites[1].alpha = 255
                             this.health.ignore_damage = false
+                            this.health_bar.hidden = false
                         else
                             a.ts = a.ts + 1
                         end
