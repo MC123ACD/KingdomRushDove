@@ -1405,7 +1405,7 @@ return {
         available_level = 40,
         starting_level = 1,
         icon = 4,
-        stats = {7, 3, 0, 4}
+        stats = {7, 5, 0, 4}
     },
 },
     level_data = {{

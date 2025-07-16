@@ -13721,6 +13721,7 @@ return function(scripts)
                             a.ts = store.tick_ts
                             this.health.ignore_damage = true
                             U.animation_start(this, a.animations[1], nil, store.tick_ts, true)
+                            scripts.heal(this, this.health.hp_max * a.scale * 0.1)
                             while store.tick_ts - bigger_begin_time < a.scale_time do
                                 local rate = (store.tick_ts - bigger_begin_time) / a.scale_time
                                 local current_scale = 1 + (a.scale - 1) * rate
