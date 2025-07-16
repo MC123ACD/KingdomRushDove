@@ -6333,7 +6333,7 @@ return function(scripts)
                         local vis_bans = this.vis.bans
 
                         this.vis.bans = F_ALL
-                        
+
                         this.motion.max_speed = this.motion.max_speed * a.speed_factor
 
                         local an, af = U.animation_name_facing_point(this, a.animations[1], target.pos)
@@ -13719,6 +13719,11 @@ return function(scripts)
                         local targets = U.find_enemies_in_range(store.entities, this.pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
                         local bigger_begin_time = store.tick_ts
                         if targets and #targets >= a.min_count then
+                            if targets[1].pos.x < this.pos.x then
+                                this.render.sprites[1].flip_x = true
+                            else
+                                this.render.sprites[1].flip_x = false
+                            end
                             a.ts = store.tick_ts
                             this.health.ignore_damage = true
                             U.animation_start(this, a.animations[1], nil, store.tick_ts, true)
@@ -13735,10 +13740,10 @@ return function(scripts)
                             this.render.sprites[1].scale.y = a.scale
                             this.render.sprites[1].alpha = 128
                             U.animation_start(this, a.animations[2], nil, store.tick_ts, false)
+                            S:queue(a.sound)
                             U.y_animation_wait(this)
                             SU.hero_gain_xp_from_skill(this, this.hero.skills.giant)
                             local hit_pos = V.vclone(this.pos)
-                            S:queue(a.sound)
                             if this.render.sprites[1].flip_x then
                                 hit_pos.x = hit_pos.x - ring.hit_offset.x * a.scale
                             else
