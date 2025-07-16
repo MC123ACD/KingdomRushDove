@@ -569,11 +569,7 @@ function upgrades:patch_templates(max_level)
 	if u then
         for _, t in pairs(E:filter_templates("soldier")) do
             if t.health then
-                if not t.health.spiked_armor then
-                    t.health.spiked_armor = u.spiked_armor_factor
-                else
-                    t.health.spiked_armor = t.health.spiked_armor + u.spiked_armor_factor
-                end
+                t.health.spiked_armor = t.health.spiked_armor + u.spiked_armor_factor
             end
         end
 	end
