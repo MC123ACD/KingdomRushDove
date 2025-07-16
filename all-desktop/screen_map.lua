@@ -4682,12 +4682,8 @@ function HeroRoomViewKR1:initialize(size)
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
 
         local v2
-        if d.thumb == 26 then
-            v2 = KImageView:new("heroroom_thumbs_0026", nil, 0.385)
-            v2.size.x = v2.size.x / 0.385 * 0.5
-            v2.size.y = v2.size.y / 0.385 * 0.5
-        elseif d.thumb == 50 then
-            v2 = KImageView:new("heroroom_thumbs_0050", nil, 0.385)
+        if d.thumb == 26 or d.thumb == 50 or d.thumb == 51 then
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.385)
             v2.size.x = v2.size.x / 0.385 * 0.5
             v2.size.y = v2.size.y / 0.385 * 0.5
         elseif d.thumb >= 17 then

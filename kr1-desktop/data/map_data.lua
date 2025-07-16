@@ -1397,7 +1397,17 @@ return {
         starting_level = 5,
         icon = 46,
         stats = {5, 5, 0, 6}
-    }},
+    },
+    {
+        portrait = 4,
+        thumb = 51,
+        name = "hero_dwarf",
+        available_level = 40,
+        starting_level = 1,
+        icon = 4,
+        stats = {7, 3, 0, 4}
+    },
+},
     level_data = {{
         upgrades = {
             heroe = false,

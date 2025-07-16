@@ -291,6 +291,9 @@ local kr2 = {
                  "hero_nivus_magicmissile_summon.ogg", "hero_nivus_teleport.ogg", "wizzard_taunt_confirm_2.ogg",
                  "wizzard_taunt_confirm_3.ogg", "wizzard_taunt_confirm_4.ogg", "wizzard_taunt_death.ogg"}
     },
+    HeroDwarf = {
+        files = {"dwarfHero_taunt_confirm_1.ogg", "dwarfHero_taunt_confirm_2.ogg", "dwarfHero_taunt_confirm_3.ogg","dwarfHero_taunt_death.ogg","Motumbo_jump_special.ogg"}
+    },
     LegionnaireSounds = {
         files = {"legionnaire_taunt_1.ogg", "legionnaire_taunt_2.ogg"}
     },

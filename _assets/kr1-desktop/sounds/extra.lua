@@ -935,6 +935,9 @@ local kr2_groups = {
     hero_pirate = {
         alias = "HeroPirate"
     },
+    hero_dwarf = {
+        alias = "HeroDwarf"
+    },
     hero_priest = {
         alias = "HeroPriest"
     },

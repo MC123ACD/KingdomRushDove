@@ -321,7 +321,7 @@ end
 
 function level:update(store)
 	LU.insert_hero(store)
-	-- LU.insert_hero(store, "hero_dwarf", store.level.locations.exits[2].pos)
+	LU.insert_hero(store, "hero_dwarf", store.level.locations.exits[2].pos)
 
 	while store.wave_group_number < 1 do
 		coroutine.yield()

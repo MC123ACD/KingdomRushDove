@@ -13664,5 +13664,151 @@ return function(scripts)
             coroutine.yield()
         end
     end
+    scripts.hero_dwarf = {
+        level_up = function(this, store)
+            local hl, ls = level_up_basic(this, store)
 
+            this.melee.attacks[1].damage_min = ls.melee_damage_min[hl]
+            this.melee.attacks[1].damage_max = ls.melee_damage_max[hl]
+
+            upgrade_skill(this, "ring", function(this, s)
+                local a = this.melee.attacks[2]
+                a.disabled = nil
+                a.damage_min = s.damage_min[s.level]
+                a.damage_max = s.damage_max[s.level]
+            end)
+
+            upgrade_skill(this, "giant", function(this, s)
+                local a = this.timed_attacks.list[1]
+                a.disabled = nil
+                a.scale = s.scale[s.level]
+            end)
+
+            this.health.hp = this.health.hp_max
+        end,
+        update = function(this, store)
+            local h = this.health
+            local he = this.hero
+            local brk, sta
+            local ring = this.melee.attacks[2]
+            U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+
+            this.health_bar.hidden = false
+
+            while true do
+                if h.dead then
+                    SU.y_hero_death_and_respawn(store, this)
+                end
+
+                if this.unit.is_stunned then
+                    SU.soldier_idle(store, this)
+                else
+                    while this.nav_rally.new do
+                        if SU.y_hero_new_rally(store, this) then
+                            goto label_467_0
+                        end
+                    end
+
+                    if SU.hero_level_up(store, this) then
+                        U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                    end
+
+                    local a = this.timed_attacks.list[1]
+                    if ready_to_use_skill(a, store) then
+                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                        local bigger_begin_time = store.tick_ts
+                        if targets and #targets >= a.min_count then
+                            a.ts = store.tick_ts
+                            this.health.ignore_damage = true
+                            U.animation_start(this, a.animations[1], nil, store.tick_ts, true)
+                            while store.tick_ts - bigger_begin_time < a.scale_time do
+                                local rate = (store.tick_ts - bigger_begin_time) / a.scale_time
+                                local current_scale = 1 + (a.scale - 1) * rate
+                                this.render.sprites[1].scale.x = current_scale
+                                this.render.sprites[1].scale.y = current_scale
+                                this.render.sprites[1].alpha = 255 - 127 * rate
+                                coroutine.yield()
+                            end
+                            this.render.sprites[1].scale.x = a.scale
+                            this.render.sprites[1].scale.y = a.scale
+                            this.render.sprites[1].alpha = 128
+                            U.animation_start(this, a.animations[2], nil, store.tick_ts, false)
+                            U.y_animation_wait(this)
+                            SU.hero_gain_xp_from_skill(this, this.hero.skills.giant)
+                            local hit_pos = V.vclone(this.pos)
+                            S:queue(a.sound)
+                            if this.render.sprites[1].flip_x then
+                                hit_pos.x = hit_pos.x - ring.hit_offset.x * a.scale
+                            else
+                                hit_pos.x = hit_pos.x + ring.hit_offset.x * a.scale
+                            end
+                            targets = U.find_enemies_in_range(store.entities, hit_pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                            if targets then
+                                for _, target in pairs(targets) do
+                                    local d = SU.create_attack_damage(ring, target.id, this)
+                                    d.value = d.value * a.scale
+                                    queue_damage(store, d)
+                                    local fx = E:create_entity(ring.hit_fx)
+                                    fx.pos = V.vclone(hit_pos)
+                                    fx.render.sprites[1].ts = store.tick_ts
+                                    fx.render.sprites[1].scale.x = a.scale
+                                    fx.render.sprites[1].scale.y = a.scale
+                                    queue_insert(store, fx)
+                                    local decal = E:create_entity(ring.hit_decal)
+                                    decal.pos = V.vclone(hit_pos)
+                                    decal.render.sprites[1].ts = store.tick_ts
+                                    decal.render.sprites[1].scale.x = a.scale * decal.render.sprites[1].scale.x
+                                    decal.render.sprites[1].scale.y = a.scale * decal.render.sprites[1].scale.y
+                                    queue_insert(store, decal)
+                                    local mod = E:create_entity(a.mod)
+                                    if band(target.vis.flags, mod.modifier.vis_bans) == 0 and band(target.vis.bans, mod.modifier.vis_flags) == 0 then
+                                        mod.modifier.source_id = this.id
+                                        mod.modifier.target_id = target.id
+                                        mod.modifier.duration = mod.modifier.duration * a.scale
+                                        queue_insert(store, mod)
+                                    end
+                                end
+                            end
+                            SU.y_hero_animation_wait(this)
+                            U.animation_start(this, a.animations[3], nil, store.tick_ts, true)
+                            local smaller_begin_time = store.tick_ts
+                            while store.tick_ts - smaller_begin_time < a.scale_time do
+                                local rate = (store.tick_ts - smaller_begin_time) / a.scale_time
+                                local current_scale = a.scale - (a.scale - 1) * rate
+                                this.render.sprites[1].scale.x = current_scale
+                                this.render.sprites[1].scale.y = current_scale
+                                this.render.sprites[1].alpha = 128 + 127 * rate
+                                coroutine.yield()
+                            end
+                            this.render.sprites[1].scale.x = 1
+                            this.render.sprites[1].scale.y = 1
+                            this.render.sprites[1].alpha = 255
+                            this.health.ignore_damage = false
+                        else
+                            a.ts = a.ts + 1
+                        end
+                    end
+
+                    if this.melee then
+                        brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                        if brk or sta ~= A_NO_TARGET then
+                            goto label_467_0
+                        end
+                    end
+
+                    if SU.soldier_go_back_step(store, this) then
+                        -- block empty
+                    else
+                        SU.soldier_idle(store, this)
+                        SU.soldier_regen(store, this)
+                    end
+                end
+
+                ::label_467_0::
+
+                coroutine.yield()
+            end
+        end
+    }
 end

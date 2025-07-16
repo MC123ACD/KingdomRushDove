@@ -9596,6 +9596,109 @@ local function heroes()
     tt.dps.damage_max = 5
     tt.dps.damage_min = 5
     tt.dps.damage_type = DAMAGE_POISON
+
+    tt = E:register_t("hero_dwarf", "hero")
+    E:add_comps(tt, "melee","timed_attacks")
+    image_y = 94
+    anchor_y = 0.13
+    tt.hero.level_stats.armor = {0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7}
+    tt.hero.level_stats.hp_max = {285, 300, 315, 330, 345, 360, 375, 390, 405, 420}
+    tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8 , 9, 10}
+    tt.hero.level_stats.melee_damage_max = {12, 14, 16, 18, 20, 22, 24, 26, 28, 30}
+    tt.hero.skills.ring = E:clone_c("hero_skill")
+    tt.hero.skills.ring.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.hero.skills.ring.damage_min = {60, 80, 100, 120}
+    tt.hero.skills.ring.damage_max = {80, 100, 120, 140}
+    tt.hero.skills.giant = E:clone_c("hero_skill")
+    tt.hero.skills.giant.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.giant.scale = {1.5, 2, 2.5}
+    tt.hero.skills.giant.xp_gain_factor = 150
+    tt.health.armor = 0.43
+    tt.health.dead_lifetime = 15
+    tt.health.hp_max = 420
+    tt.health_bar.offset = vec_2(0, ady(50))
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.hero.tombstone_show_time = fts(60)
+    tt.hero.fn_level_up = scripts.hero_dwarf.level_up
+    tt.idle_flip.cooldown = 1
+    tt.info.hero_portrait = "kr2_hero_portraits_0010"
+    tt.info.portrait = IS_PHONE and "portraits_hero_0013" or "kr2_info_portraits_heroes_0013"
+    tt.info.i18n_key = "HERO_DWARF"
+    tt.main_script.update = scripts.hero_dwarf.update
+    tt.melee.attacks[1].cooldown = 1
+    tt.melee.attacks[1].damage_max = 30
+    tt.melee.attacks[1].damage_min = 10
+    tt.melee.attacks[1].hit_time = fts(9)
+    tt.melee.attacks[1].sound = "MeleeSword"
+    tt.melee.attacks[1].xp_gain_factor = 6
+    tt.melee.attacks[2] = E:clone_c("area_attack")
+    tt.melee.attacks[2].animation = "attack2"
+    tt.melee.attacks[2].cooldown = 8
+    tt.melee.attacks[2].damage_max = 120
+    tt.melee.attacks[2].damage_min = 60
+    tt.melee.attacks[2].damage_radius = 60
+    tt.melee.attacks[2].damage_type = DAMAGE_TRUE
+    tt.melee.attacks[2].xp_gain_factor = 1.5
+    tt.melee.attacks[2].disabled = true
+    tt.melee.attacks[2].hit_decal = "fx_dwarf_area_quake"
+    tt.melee.attacks[2].hit_fx = "fx_dwarf_area_ring"
+    tt.melee.attacks[2].hit_offset = vec_2(29, 0)
+    tt.melee.attacks[2].hit_time = fts(29)
+    tt.melee.range = 80
+    tt.timed_attacks.list[1] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[1].animations = {"giant_start", "attack2", "giant_end"}
+    tt.timed_attacks.list[1].scale_time = fts(10)
+    tt.timed_attacks.list[1].cooldown = 25
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].scale = 1.5
+    tt.timed_attacks.list[1].min_count = 3
+    tt.timed_attacks.list[1].vis_flags = F_AREA
+    tt.timed_attacks.list[1].vis_bans = F_FLYING
+    tt.timed_attacks.list[1].sound = "HeroReinforcementJump"
+    tt.timed_attacks.list[1].mod = "mod_dwarf_champion_stun"
+    tt.motion.max_speed = 2.7 * FPS
+    tt.regen.cooldown = 1
+    tt.render.sprites[1].anchor.y = anchor_y
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].prefix = "hero_dwarf"
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"running"}
+    tt.render.sprites[1].scale = vec_1(1)
+    tt.soldier.melee_slot_offset.x = 10
+    tt.sound_events.change_rally_point = "DwarfHeroTaunt"
+    tt.sound_events.death = "DwarfHeroTauntDeath"
+    tt.sound_events.respawn = "DwarfHeroTauntIntro"
+    tt.unit.hit_offset = vec_2(0, 12)
+    tt.unit.marker_offset = vec_2(0, -2)
+    tt.unit.mod_offset = vec_2(0, ady(22))
+
+    tt = E:register_t("fx_dwarf_area_quake", "decal_timed")
+    tt.render.sprites[1].name = "fx_dwarf_area_quake"
+    tt.render.sprites[1].anchor.y = 0.24
+    tt.render.sprites[1].offset.y = 2
+    tt.render.sprites[1].scale = vec_2(0.8, 0.8)
+    tt.render.sprites[1].alpha = 166
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[2] = table.deepclone(tt.render.sprites[1])
+    tt.render.sprites[2].offset.y = -22
+
+    tt = E:register_t("fx_dwarf_area_ring", "decal_timed")
+    tt.render.sprites[1].name = "fx_dwarf_area_ring"
+    tt.render.sprites[1].z = Z_DECALS - 1
+    tt.render.sprites[1].scale = vec_1(1)
+
+    tt = RT("mod_dwarf_champion_stun", "mod_stun")
+    tt.modifier.vis_flags = bor(F_MOD, F_STUN)
+    tt.modifier.vis_bans = bor(F_FLYING, F_BOSS)
 end
 
 return heroes

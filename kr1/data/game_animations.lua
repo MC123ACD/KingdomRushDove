@@ -13522,6 +13522,16 @@ local kr2_a = {
         to = 71,
         from = 25
     },
+    hero_dwarf_giant_start = {
+        prefix = "DwarfChampion",
+        to = 25,
+        from = 25
+    },
+    hero_dwarf_giant_end = {
+        prefix = "DwarfChampion",
+        to = 71,
+        from = 71
+    },
     hero_dwarf_death = {
         prefix = "DwarfChampion",
         to = 96,

@@ -1819,10 +1819,29 @@ return {
     heroroom_thumbs_0050 = {
         a_name = "gui_portraits-5.png",
         size = {84, 84},
-        trim = {12, 10, 12, 9},
+        trim = {18, 16, 18, 14},
         a_size = {1024, 1024},
         f_quad = {2, 625, 87, 87},
         alias = {}
+    },
+    heroroom_thumbs_0051 = {
+        a_name = "gui_portraits-3.png",
+		size = {
+			84,
+			84
+		},
+		trim = {18, 16, 18, 14},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			6,
+			852,
+			87,
+			88
+		},
+		alias = {}
     },
     heroroom_tooltip_coin = {
         a_name = "screen_map-1.png",
