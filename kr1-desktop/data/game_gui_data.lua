@@ -1308,6 +1308,7 @@ return {
         [DAMAGE_ELECTRICAL] = "base_info_icons_0012",
         [DAMAGE_SHOT] = "base_info_icons_0011",
         [DAMAGE_RUDE] = "damage_rude_icon",
-        [DAMAGE_STAB] = "base_info_icons_0010"
+        [DAMAGE_STAB] = "base_info_icons_0010",
+        [DAMAGE_MIXED] = "base_info_icons_0001",
 	}
 }
