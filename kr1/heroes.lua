@@ -527,6 +527,7 @@ local function heroes()
     tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].hit_time = fts(12)
     tt.melee.attacks[1].xp_gain_factor = 2.5
+    tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
     tt.ranged.attacks[1] = CC("bullet_attack")
     tt.ranged.attacks[1].bullet = "bolt_magnus"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(0, 23)}
@@ -1177,9 +1178,9 @@ local function heroes()
     tt.hero.skills.ice_storm.damage_min = {20, 20, 30}
     tt.hero.skills.ice_storm.max_range = {153.6, 166.4, 179.2}
     tt.hero.skills.ice_storm.xp_level_steps = {
-        [10.0] = 3,
-        [4.0] = 1,
-        [7.0] = 2
+        [10] = 3,
+        [4] = 1,
+        [7] = 2
     }
     tt.hero.skills.ice_storm.xp_gain = {100, 200, 300}
     tt.health.dead_lifetime = 15
@@ -1215,7 +1216,7 @@ local function heroes()
     tt.melee.attacks[1].hit_time = fts(14)
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.melee.attacks[1].xp_gain_factor = 2
-    tt.melee.attacks[1].damage_type = DAMAGE_MAGICAL
+    tt.melee.attacks[1].damage_type = DAMAGE_PHYSICAL
     tt.melee.range = 45
     tt.ranged.attacks[1] = E:clone_c("bullet_attack")
     tt.ranged.attacks[1].cooldown = fts(40)
