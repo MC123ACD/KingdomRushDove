@@ -28,7 +28,7 @@ local function archer_towers()
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_towers_0010" or "info_portraits_towers_0006"
     tt.powers.poison = CC("power")
     tt.powers.poison.price_base = 225
-    tt.powers.poison.price_inc = 225
+    tt.powers.poison.price_inc = 175
     tt.powers.poison.mod = "mod_ranger_poison"
     tt.powers.poison.enc_icon = 8
     tt.powers.thorn = CC("power")
@@ -494,7 +494,7 @@ local function archer_towers()
     tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0017"
     tt.main_script.update = scripts.tower_archer_dwarf.update
     tt.powers.barrel = E:clone_c("power")
-    tt.powers.barrel.price_base = 250
+    tt.powers.barrel.price_base = 225
     tt.powers.barrel.price_inc = 125
     tt.powers.barrel.attack_idx = 2
     tt.powers.extra_damage = E:clone_c("power")
