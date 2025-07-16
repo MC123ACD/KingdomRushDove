@@ -10082,7 +10082,7 @@ return function(scripts)
         local at = this.timed_attacks.list[2]
         local a = at.aura
 
-        if not a or #a.stones < 1 or band(damage.damage_type, DAMAGE_MODIFIER) ~= 0 then
+        if not a or #a.stones < 1 then
             return true
         end
 

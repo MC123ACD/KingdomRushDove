@@ -1143,7 +1143,7 @@ local function heroes()
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].duration = nil
     tt.timed_attacks.list[2].transform_health_factor = 0.5
-    tt.timed_attacks.list[2].immune_to = bor(DAMAGE_BASE_TYPES, DAMAGE_MODIFIER)
+    tt.timed_attacks.list[2].immune_to = DAMAGE_BASE_TYPES
     tt.timed_attacks.list[2].sound = "HeroVikingBearTransform"
 
     tt = RT("hero_elora", "hero")
@@ -1701,7 +1701,7 @@ local function heroes()
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].duration = nil
     tt.timed_attacks.list[2].transform_health_factor = 0.6
-    tt.timed_attacks.list[2].immune_to = bor(DAMAGE_BASE_TYPES, DAMAGE_MODIFIER)
+    tt.timed_attacks.list[2].immune_to = DAMAGE_BASE_TYPES
     tt.timed_attacks.list[2].vis_bans = bor(F_FLYING)
     tt.timed_attacks.list[2].sounds_buffed = {"TenShiTransformToBuffed", "TenShiTransformToBuffedSfx"}
     tt.timed_attacks.list[2].sounds_normal = {"TenShiTransformToNormalSfx"}
@@ -8577,7 +8577,7 @@ local function heroes()
     end
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].cooldown = 20
-    tt.melee.attacks[3].damage_type = DAMAGE_TRUE
+    tt.melee.attacks[3].damage_type = bor(DAMAGE_TRUE, DAMAGE_NO_DODGE)
     tt.melee.attacks[3].animation = "reapersHarvest"
     tt.melee.attacks[3].hit_time = fts(30)
     tt.melee.attacks[3].sound = "ElvesHeroLilithReapersHarvest"
@@ -8625,7 +8625,7 @@ local function heroes()
     tt.timed_attacks.list[1].vis_flags = bor(F_RANGED)
     tt.ultimate = {
         ts = 0,
-        cooldown = 40,
+        cooldown = 44,
         disabled = true
     }
 
@@ -9646,7 +9646,7 @@ local function heroes()
     tt.melee.attacks[2].damage_max = 120
     tt.melee.attacks[2].damage_min = 60
     tt.melee.attacks[2].damage_radius = 60
-    tt.melee.attacks[2].damage_type = DAMAGE_TRUE
+    tt.melee.attacks[2].damage_type = bor(DAMAGE_TRUE, DAMAGE_FX_EXPLODE)
     tt.melee.attacks[2].xp_gain_factor = 1.5
     tt.melee.attacks[2].disabled = true
     tt.melee.attacks[2].hit_decal = "fx_dwarf_area_quake"

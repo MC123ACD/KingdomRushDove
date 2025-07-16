@@ -728,6 +728,7 @@ local function archer_towers()
     tt = E:register_t("arrow_arcane", "arrow_1")
     tt.bullet.damage_max = 18
     tt.bullet.damage_min = 11
+    tt.bullet.damage_type = DAMAGE_MIXED
     tt.bullet.miss_decal = "archer_arcane_proy2_decal-f"
     tt.bullet.mod = {"mod_arrow_arcane"}
     tt.bullet.hit_fx = "fx_arrow_arcane_hit"

@@ -6317,7 +6317,7 @@ tt.dps.damage_min = 2
 tt.dps.damage_max = 2
 tt.dps.kill = true
 tt.dps.damage_every = fts(3)
-tt.dps.damage_type = bor(DAMAGE_POISON, DAMAGE_MODIFIER)
+tt.dps.damage_type = DAMAGE_POISON
 
 tt = E:register_t("mod_teleport_faustus", "mod_teleport")
 tt.modifier.vis_flags = bor(F_MOD, F_TELEPORT)
@@ -6348,7 +6348,7 @@ E:add_comps(tt, "dps", "render")
 
 tt.dps.damage_max = nil
 tt.dps.damage_min = nil
-tt.dps.damage_type = bor(DAMAGE_TRUE, DAMAGE_MODIFIER)
+tt.dps.damage_type = DAMAGE_TRUE
 tt.dps.damage_every = fts(6)
 tt.dps.kill = true
 tt.main_script.insert = scripts.mod_dps.insert
@@ -6590,7 +6590,7 @@ E:add_comps(tt, "dps", "render", "mark_flags")
 
 tt.dps.damage_min = 4
 tt.dps.damage_max = 4
-tt.dps.damage_type = bor(DAMAGE_TRUE, DAMAGE_MODIFIER)
+tt.dps.damage_type = DAMAGE_TRUE
 tt.dps.damage_every = fts(12)
 tt.dps.kill = true
 tt.mark_flags.vis_bans = F_CUSTOM
@@ -7071,7 +7071,7 @@ tt.modifier.duration = fts(16)
 tt.dps.damage_every = fts(4)
 tt.dps.damage_min = 150 / (tt.modifier.duration / tt.dps.damage_every)
 tt.dps.damage_max = 200 / (tt.modifier.duration / tt.dps.damage_every)
-tt.dps.damage_type = bor(DAMAGE_TRUE, DAMAGE_MODIFIER)
+tt.dps.damage_type = DAMAGE_TRUE
 tt.dps.kill = false
 tt.main_script.insert = scripts.mod_dps.insert
 tt.main_script.update = scripts.mod_dps.update

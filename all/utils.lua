@@ -1334,6 +1334,8 @@ function U.predict_damage(entity, damage)
         protection = (e.health.armor - d.reduce_armor) * 0.7
     elseif band(d.damage_type, DAMAGE_STAB) ~= 0 then
         protection = calc_stab_protection(e.health.armor - d.reduce_armor)
+    elseif band(d.damage_type, DAMAGE_MIXED) ~= 0 then
+        protection = (e.health.armor - d.reduce_armor + e.health.magic_armor - d.reduce_magic_armor) * 0.5
     elseif d.damage_type == DAMAGE_NONE then
         protection = 1
     end
