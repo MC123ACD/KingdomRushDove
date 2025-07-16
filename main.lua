@@ -1,5 +1,7 @@
 ﻿-- chunkname: @./main.lua
-
+if arg[2] == "debug" then
+    require("lldebugger").start()
+end
 require("main_globals")
 
 if KR_TARGET == "universal" then
@@ -109,7 +111,9 @@ require("klua.table")
 require("klua.dump")
 require("version")
 require("constants")
-
+if arg[2] == "debug" then
+    version.build = true
+end
 if version.build == "RELEASE" then
 	DEBUG = nil
 	log.level = log.ERROR_LEVEL

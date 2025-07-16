@@ -1093,8 +1093,8 @@ local function register_archer(scripts)
                     local sa = this.attacks.list[2]
                     local pow = this.powers.burst
                     if ready_to_use_power(pow, sa, store) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, sa.vis_flags,
-                            sa.vis_bans)
+                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range, false, sa.vis_flags,
+                            sa.vis_bans, nil, nil, 57.5)
 
                         if not enemy then
                             -- block empty
