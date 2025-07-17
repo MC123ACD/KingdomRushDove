@@ -7542,7 +7542,7 @@ function scripts.mod_rocketeer_speed_buff.insert(this, store)
 	target._angles_walk = target.render.sprites[1].angles.walk
 	target.already_speed_up = true
 	target.render.sprites[1].angles.walk = this.walk_angles
-    U.speed_mul(this, this.fast.factor)
+    U.speed_mul(target, this.fast.factor)
 	return true
 end
 
@@ -7552,7 +7552,7 @@ function scripts.mod_rocketeer_speed_buff.remove(this, store)
 
 	if target then
 		target.render.sprites[1].angles.walk = target._angles_walk
-		U.speed_div(this, this.fast.factor)
+		U.speed_div(target, this.fast.factor)
 
 		return true
 	end

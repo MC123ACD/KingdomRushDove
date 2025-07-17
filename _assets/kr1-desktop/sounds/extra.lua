@@ -1435,6 +1435,12 @@ local kr2_sounds = {
         loop = false,
         files = {"Vampiress-01c.ogg", "Vampiress-02c.ogg", "Vampiress-03c.ogg"}
     },
+    HWVampiressTauntSelect = {
+        loop = false,
+        gain = 1,
+        source_group = "TAUNTS",
+        files = {"Vampiress-01c.ogg"}
+    },
     HWFrankensteinTaunt = {
         source_group = "TAUNTS",
         mode = "random",

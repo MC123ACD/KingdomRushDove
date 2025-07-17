@@ -190,7 +190,6 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(90)
     tt.info.damage_icon = "arrow"
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0004" or "heroPortrait_portraits_0004"
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.i18n_key = "HERO_ARCHER"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0004" or "info_portraits_hero_0001"
     tt.main_script.update = scripts.hero_alleria.update
@@ -311,7 +310,7 @@ local function heroes()
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0003" or "heroPortrait_portraits_0003"
     tt.info.i18n_key = "HERO_RIFLEMAN"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0003" or "info_portraits_hero_0002"
-    tt.melee.range = 50
+    tt.melee.range = 40
     tt.main_script.update = scripts.hero_bolin.update
     tt.motion.max_speed = 2.6 * FPS
     tt.regen.cooldown = 1
@@ -4288,7 +4287,7 @@ local function heroes()
     tt.sound_events.death = "HWVampiressDeath"
     tt.sound_events.respawn = "HWVampiressTauntIntro"
     tt.sound_events.insert = "HWVampiressTauntIntro"
-    tt.sound_events.hero_room_select = "HWVampiressTaunt"
+    tt.sound_events.hero_room_select = "HWVampiressTauntSelect"
     tt.unit.hit_offset = vec_2(0, 12)
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(0, 12)
@@ -9531,6 +9530,7 @@ local function heroes()
     tt.sound_events.death = "ElvesHeroBolverkDeath"
     tt.sound_events.insert = "ElvesHeroBolverkTauntIntro"
     tt.sound_events.respawn = "ElvesHeroBolverkTauntIntro"
+    tt.sound_events.hero_room_select = "ElvesHeroBolverkTauntSelect"
     tt.unit.hit_offset = vec_2(0, 20)
     tt.unit.mod_offset = vec_2(0, 20)
     tt.melee.attacks[1].damage_max = 41
@@ -9681,6 +9681,7 @@ local function heroes()
     tt.sound_events.change_rally_point = "DwarfHeroTaunt"
     tt.sound_events.death = "DwarfHeroTauntDeath"
     tt.sound_events.respawn = "DwarfHeroTauntIntro"
+    tt.sound_events.hero_room_select = "DwarfHeroTauntSelect"
     tt.unit.hit_offset = vec_2(0, 12)
     tt.unit.marker_offset = vec_2(0, -2)
     tt.unit.mod_offset = vec_2(0, ady(22))

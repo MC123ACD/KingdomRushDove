@@ -1776,6 +1776,12 @@ local kr2 = {
         source_group = "TAUNTS",
         files = {"dwarfHero_taunt_confirm_1.ogg", "dwarfHero_taunt_confirm_2.ogg", "dwarfHero_taunt_confirm_3.ogg"}
     },
+    DwarfHeroTauntSelect = {
+        loop = false,
+        gain = 1,
+        source_group = "TAUNTS",
+        files = {"dwarfHero_taunt_confirm_1.ogg"}
+    },
     DwarfHeroTauntDeath = {
         loop = false,
         gain = 1,
@@ -5317,6 +5323,12 @@ local kr3 = {
         source_group = "TAUNTS",
         files = {"VarlBerserker_confirm-01a.ogg", "VarlBerserker_confirm-02a.ogg", "VarlBerserker_confirm-03c.ogg",
                  "VarlBerserker_confirm-04a.ogg"}
+    },
+    ElvesHeroBolverkTauntSelect = {
+        loop = false,
+        gain = 1,
+        source_group = "TAUNTS",
+        files = {"VarlBerserker_confirm-01a.ogg"}
     },
     ElvesHeroBolverkTauntIntro = {
         loop = false,
