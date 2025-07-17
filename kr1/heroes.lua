@@ -6073,6 +6073,7 @@ local function heroes()
     tt.melee.attacks[1] = E:clone_c("melee_attack")
     tt.melee.attacks[1].damage_max = nil
     tt.melee.attacks[1].damage_min = nil
+    tt.melee.attacks[1].damage_type = bor(DAMAGE_PHYSICAL, DAMAGE_NO_DODGE)
     tt.melee.attacks[1].hit_time = fts(7)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"
@@ -6084,7 +6085,8 @@ local function heroes()
     tt.melee.attacks[2].cooldown = 11
     tt.melee.attacks[2].damage_max = nil
     tt.melee.attacks[2].damage_min = nil
-    tt.melee.attacks[2].damage_type = bor(DAMAGE_RUDE, DAMAGE_FX_EXPLODE)
+    tt.melee.attacks[2].damage_type = bor(DAMAGE_RUDE, DAMAGE_FX_EXPLODE, DAMAGE_NO_DODGE)
+    tt.melee.attacks[2].never_interrupt = true
     tt.melee.attacks[2].disabled = true
     tt.melee.attacks[2].hit_time = fts(14)
     tt.melee.attacks[2].vis_bans = bor(F_CLIFF)
