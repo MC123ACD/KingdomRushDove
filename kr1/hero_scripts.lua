@@ -2161,7 +2161,8 @@ return function(scripts)
                 bullet.bullet.xp_dest_id = this.id
                 bullet.bullet.level = attack.level
                 bullet.bullet.damage_factor = this.unit.damage_factor
-
+                bullet.bullet.damage_min = bullet.bullet.damage_min + this.damage_buff
+                bullet.bullet.damage_max = bullet.bullet.damage_max + this.damage_buff
                 queue_insert(store, bullet)
 
                 if U.y_animation_wait(this) then

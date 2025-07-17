@@ -6036,7 +6036,6 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(60)
     tt.idle_flip.chance = 0.4
     tt.idle_flip.cooldown = 1
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.hero_portrait = "kr3_hero_portraits_0001"
     tt.info.portrait = (IS_PHONE and "portraits_hero" or "kr3_info_portraits_heroes") .. "_0001"
     tt.info.ultimate_icon = "0001"
@@ -6073,7 +6072,6 @@ local function heroes()
     tt.melee.attacks[1] = E:clone_c("melee_attack")
     tt.melee.attacks[1].damage_max = nil
     tt.melee.attacks[1].damage_min = nil
-    tt.melee.attacks[1].damage_type = bor(DAMAGE_PHYSICAL, DAMAGE_NO_DODGE)
     tt.melee.attacks[1].hit_time = fts(7)
     tt.melee.attacks[1].shared_cooldown = true
     tt.melee.attacks[1].sound = "MeleeSword"

@@ -30,8 +30,8 @@ function enemy_ready_to_magic_attack(this, store, attack)
     return this.enemy.can_do_magic and store.tick_ts - attack.ts > attack.cooldown
 end
 
-function ready_to_attack(attack, store)
-    return store.tick_ts - attack.ts > attack.cooldown
+function ready_to_attack(attack, store, factor)
+    return store.tick_ts - attack.ts > attack.cooldown * (factor or 1)
 end
 
 function get_attack_ready(attack, store)

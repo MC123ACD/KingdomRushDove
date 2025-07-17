@@ -465,6 +465,7 @@ tower.can_be_mod = true
 tower.can_be_sold = true
 tower.can_do_magic = true
 tower.damage_factor = 1
+tower.cooldown_factor = 1
 tower.default_rally_pos = v(0, 0)
 tower.flip_x = nil
 tower.hide_dust = nil

@@ -1528,7 +1528,7 @@ function scripts.tower_archer.update(this, store, script)
 
         if this.tower.blocked then
             -- block empty
-        elseif store.tick_ts - a.ts < a.cooldown then
+        elseif store.tick_ts - a.ts < a.cooldown * this.tower.cooldown_factor then
             -- block empty
         else
             enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, at.range, false, a.vis_flags, a.vis_bans)
@@ -1664,7 +1664,7 @@ function scripts.tower_mage.update(this, store, script)
 
         if this.tower.blocked then
             -- block empty
-        elseif store.tick_ts - aa.ts <= aa.cooldown then
+        elseif store.tick_ts - aa.ts <= aa.cooldown * this.tower.cooldown_factor then
             -- block empty
         else
             enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, aa.vis_flags,
@@ -1752,7 +1752,7 @@ function scripts.tower_engineer.update(this, store, script)
     while true do
         if this.tower.blocked then
             coroutine.yield()
-        elseif store.tick_ts - ba.ts < ba.cooldown then
+        elseif store.tick_ts - ba.ts < ba.cooldown * this.tower.cooldown_factor then
             coroutine.yield()
         else
             local enemy, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, ba.node_prediction,
@@ -1914,6 +1914,7 @@ function scripts.tower_barrack.update(this, store, script)
                         end
                     end
                     s.unit.damage_factor = this.tower.damage_factor
+                    s.cooldown_factor = this.tower.cooldown_factor
                     queue_insert(store, s)
 
                     b.soldiers[i] = s
@@ -1999,6 +2000,7 @@ function scripts.tower_barrack_mercenaries.update(this, store, script)
                 s.nav_rally.pos, s.nav_rally.center = U.rally_formation_position(i, b)
                 s.nav_rally.new = true
                 s.unit.damage_factor = this.tower.damage_factor
+                s.cooldown_factor = this.tower.cooldown_factor
                 if this.powers then
                     for pn, p in pairs(this.powers) do
                         -- 技能更新逻辑在 soldier_barrack.insert 中处理
@@ -2045,6 +2047,7 @@ function scripts.tower_barrack_mercenaries.update(this, store, script)
                 end
             end
             s.unit.damage_factor = this.tower.damage_factor
+            s.cooldown_factor = this.tower.cooldown_factor
             queue_insert(store, s)
 
             for i, ss in ipairs(b.soldiers) do
