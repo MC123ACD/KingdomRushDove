@@ -1387,6 +1387,15 @@ function scripts.tower_sunray.update(this, store)
                         kill_extra_gold = max_kill_extra_gold
                     end
                     total_extra_gold = total_extra_gold + kill_extra_gold
+                    if enemy.enemy.gold ~= 0 then
+                        local fx = E:create_entity("fx_coin_jump")
+                        fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
+                        fx.render.sprites[1].ts = store.tick_ts
+                        if target.health_bar then
+                            fx.render.sprites[1].offset.y = target.health_bar.offset.y
+                        end
+                        queue_insert(store, fx)
+                    end
                 elseif enemy.enemy.gold ~= 0 then
                     local not_kill_extra_gold = enemy.enemy.gold * not_kill_extra_gold_factor
                     if not_kill_extra_gold > max_not_kill_extra_gold then

@@ -8984,6 +8984,7 @@ local function heroes()
     tt.ranged.attacks[2].cooldown = 24
     tt.ranged.attacks[2].min_range = 0
     tt.ranged.attacks[2].max_range = 150
+    tt.ranged.attacks[2].extra_range = 80
     tt.ranged.attacks[2].shoot_time = fts(22)
     tt.ranged.attacks[2].sync_animation = true
     tt.ranged.attacks[2].animation = "altAttackBase"
