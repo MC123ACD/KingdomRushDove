@@ -691,6 +691,7 @@ local function barrack_towers()
     tt.melee.attacks[2].sound_hit = "AssassinSneakAttack"
     tt.melee.attacks[2].vis_bans = bor(F_FLYING, F_CLIFF)
     tt.melee.attacks[2].vis_flags = F_BLOCK
+    tt.melee.attacks[2].never_interrupt = true
     tt.melee.attacks[3] = E:clone_c("melee_attack")
     tt.melee.attacks[3].animation = "sneak"
     tt.melee.attacks[3].chance = 0.02
@@ -705,6 +706,7 @@ local function barrack_towers()
     tt.melee.attacks[3].sound_hit = "AssassinSneakAttack"
     tt.melee.attacks[3].vis_bans = bor(F_FLYING, F_CLIFF, F_BOSS)
     tt.melee.attacks[3].vis_flags = F_BLOCK
+    tt.melee.attacks[3].never_interrupt = true
     tt.melee.forced_cooldown = tt.melee.attacks[1].cooldown
     tt.melee.range = 64
     tt.motion.max_speed = 90
@@ -1611,7 +1613,6 @@ local function barrack_towers()
     tt.ranged.attacks[1].cooldown = 1.3 + fts(28)
     tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].max_range = 100
-    -- tt.ranged.attacks[1].filter_fn = scripts.soldier_baby_ashbite.ranged_filter_fn
     tt.ranged.attacks[1].shoot_time = fts(12)
     tt.ranged.attacks[1].sync_animation = true
     tt.ranged.attacks[1].ignore_hit_offset = true
@@ -1627,7 +1628,6 @@ local function barrack_towers()
     tt.ranged.attacks[2].cooldown = 8
     tt.ranged.attacks[2].min_range = 0
     tt.ranged.attacks[2].max_range = 150
-    -- tt.ranged.attacks[2].filter_fn = scripts.soldier_baby_ashbite.blazing_breath_filter_fn
     tt.ranged.attacks[2].shoot_time = fts(9)
     tt.ranged.attacks[2].sync_animation = true
     tt.ranged.attacks[2].animation = "special"

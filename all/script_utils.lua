@@ -127,14 +127,20 @@ local function show_auras(store, entity, restore)
 		U.sprites_show(a, nil, nil, restore)
 	end
 end
-
+-- 眩晕
+-- 沉默
+-- 远程攻击
+-- 无法闪避的攻击类型
+-- 如果可以闪避远程攻击，有 0.4 的闪避惩罚
+-- 必须通过 can_dodge 函数检验
+-- 结果：dodge.active = true
 local function unit_dodges(store, this, ranged_attack, attack, source)
 	if not this.dodge then
 		return false
 	end
 
 	this.dodge.last_check_ts = store.tick_ts
-    -- (not this.dodge.requires_magic or this.enemy and this.enemy.can_do_magic)
+
 	if not this.unit.is_stunned and (not this.enemy or this.enemy.can_do_magic) and (not ranged_attack or this.dodge.ranged) and (not this.dodge.cooldown or store.tick_ts - this.dodge.ts > this.dodge.cooldown) and (not attack or not attack.damage_type or band(attack.damage_type, DAMAGE_NO_DODGE) == 0) and ((not ranged_attack and math.random() <= this.dodge.chance) or (ranged_attack and math.random() <= 0.6 * this.dodge.chance)) and (not this.dodge.can_dodge or this.dodge.can_dodge(store, this, ranged_attack, attack, source)) then
 		this.dodge.last_doge_ts = store.tick_ts
 		this.dodge.last_attack = attack
@@ -1555,6 +1561,10 @@ local function y_soldier_timed_attacks(store, this)
 	return false, A_IN_COOLDOWN
 end
 
+local function attack_interrupted(this, attack)
+    return this.health.dead or this.unit.is_stunned or (this.dodge and this.dodge.active and not (this.dodge.silent or attack.never_interrupt))
+end
+
 local function y_soldier_do_single_area_attack(store, this, target, attack)
 	local attack_done = false
 	local start_ts = store.tick_ts
@@ -1565,7 +1575,7 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
 	S:queue(attack.sound, attack.sound_args)
 
 	while store.tick_ts - start_ts < attack.hit_time do
-		if this.health.dead or this.unit.is_stunned or this.dodge and this.dodge.active and not this.dodge.silent or this.nav_rally and this.nav_rally.new then
+		if attack_interrupted(this, attack) or this.nav_rally and this.nav_rally.new then
 			goto label_67_0
 		end
 
@@ -1686,7 +1696,7 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
 	attack_done = true
 
 	while not U.animation_finished(this) do
-		if this.health.dead or this.unit.is_stunned or this.dodge and this.dodge.active and not this.dodge.silent or this.nav_rally and this.nav_rally.new then
+		if attack_interrupted(this, attack) or this.nav_rally and this.nav_rally.new then
 			break
 		end
 
@@ -1908,6 +1918,10 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
 	return attack_done
 end
 
+local function dodge_active(this)
+    return this.dodge and this.dodge.active
+end
+
 local function y_soldier_do_single_melee_attack(store, this, target, attack)
 	local attack_done = false
 	local start_ts = store.tick_ts
@@ -1917,8 +1931,10 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 	S:queue(attack.sound, attack.sound_args)
 
 	while store.tick_ts - start_ts < attack.hit_time do
-		if this.health.dead or this.unit.is_stunned or this.dodge and this.dodge.active and not this.dodge.silent or not attack.ignore_rally_change and this.nav_rally and this.nav_rally.new then
+		if attack_interrupted(this, attack) or (not attack.ignore_rally_change and this.nav_rally and this.nav_rally.new) then
 			goto label_72_0
+        elseif dodge_active(this) then
+            this.render.sprites[1].alpha = 128
 		end
 
 		coroutine.yield()
@@ -2067,8 +2083,10 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 	attack_done = true
 
 	while not U.animation_finished(this) do
-		if this.health.dead or this.unit.is_stunned or this.dodge and this.dodge.active and not this.dodge.silent or not attack.ignore_rally_change and this.nav_rally and this.nav_rally.new then
+		if attack_interrupted(this, attack) or (not attack.ignore_rally_change and this.nav_rally and this.nav_rally.new) then
 			break
+        elseif dodge_active(this) then
+            this.render.sprites[1].alpha = 128
 		end
 
 		coroutine.yield()
@@ -2078,6 +2096,10 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 
 	S:stop(attack.sound)
 
+    if dodge_active(this) then
+        this.render.sprites[1].alpha = 255
+        this.dodge.active = false
+    end
 	return attack_done
 end
 
@@ -2163,14 +2185,13 @@ local function soldier_pick_melee_attack(store, this, target)
 			do
 				local a = this.melee.attacks[i]
 				local cooldown = 0
+                -- cooldown_factor: 全部近战攻击的冷却因子
                 if a.cooldown then
                     cooldown = a.cooldown * this.cooldown_factor
                 end
-                -- local cooldown = a.cooldown
 
 				if this.melee.cooldown and a.shared_cooldown then
 					cooldown = this.melee.cooldown * this.cooldown_factor
-                    -- cooldown = this.melee.cooldown
 				end
 
 				local forced_cooldown_ok = true
@@ -2207,7 +2228,7 @@ local function soldier_pick_melee_attack(store, this, target)
 
 	return nil
 end
-
+-- 所有攻击还在冷却中、
 local function y_soldier_melee_block_and_attacks(store, this)
 	local target = soldier_pick_melee_target(store, this)
 

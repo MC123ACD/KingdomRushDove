@@ -1389,10 +1389,10 @@ function scripts.tower_sunray.update(this, store)
                     total_extra_gold = total_extra_gold + kill_extra_gold
                     if enemy.enemy.gold ~= 0 then
                         local fx = E:create_entity("fx_coin_jump")
-                        fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
+                        fx.pos.x, fx.pos.y = enemy.pos.x, enemy.pos.y
                         fx.render.sprites[1].ts = store.tick_ts
-                        if target.health_bar then
-                            fx.render.sprites[1].offset.y = target.health_bar.offset.y
+                        if enemy.health_bar then
+                            fx.render.sprites[1].offset.y = enemy.health_bar.offset.y
                         end
                         queue_insert(store, fx)
                     end
