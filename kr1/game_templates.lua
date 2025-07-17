@@ -5842,8 +5842,7 @@ E:add_comps(tt, "render", "tween")
 tt.aura.cycle_time = fts(3)
 tt.aura.mod = "mod_bravebark_springsap"
 tt.aura.vis_bans = bor(F_ENEMY)
-tt.aura.excluded_templates = {"hero_alleria", "soldier_bravebark", "soldier_xin_shadow", "soldier_druid_bear",
-                              "soldier_veznan_demon"}
+tt.aura.excluded_templates = {"soldier_xin_shadow"}
 tt.aura.radius = 100
 tt.main_script.insert = scripts.aura_apply_mod.insert
 tt.main_script.update = scripts.aura_apply_mod.update

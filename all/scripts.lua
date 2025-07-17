@@ -5943,7 +5943,7 @@ function scripts.mod_teleport.queue(this, store, insertion)
 
         if U.flags_pass(target.vis, this.modifier) then
             this._target_prev_bans = target.vis.bans
-            target.vis.bans = F_ALL
+            -- target.vis.bans = F_ALL
         end
     else
         log.debug("%s (%s) queue/removal", this.template_name, this.id)
@@ -5976,7 +5976,7 @@ function scripts.mod_teleport.insert(this, store)
     if target and target.health and not target.health.dead and this._target_prev_bans ~= nil and
         (not this.max_times_applied or not target.enemy.counts.mod_teleport or target.enemy.counts.mod_teleport <
             this.max_times_applied) and (not this.jump_connection or P:get_next_pi(target.nav_path.pi)) then
-        target.health.ignore_damage = true
+        -- target.health.ignore_damage = true
 
         SU.stun_inc(target)
 
@@ -5990,7 +5990,7 @@ function scripts.mod_teleport.remove(this, store)
     local target = store.entities[this.modifier.target_id]
 
     if target then
-        target.health.ignore_damage = false
+        -- target.health.ignore_damage = false
 
         SU.stun_dec(target)
     end
