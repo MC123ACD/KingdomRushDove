@@ -8875,8 +8875,8 @@ local function heroes()
     tt.hero.level_stats.ranged_damage_min = {9, 11, 13, 15, 16, 18, 20, 22, 24, 25}
     tt.hero.level_stats.ranged_damage_max = {14, 16, 19, 22, 24, 27, 30, 33, 35, 38}
     tt.hero.skills.dragon_lance = E:clone_c("hero_skill")
-    tt.hero.skills.dragon_lance.damage_min = {105, 185, 270}
-    tt.hero.skills.dragon_lance.damage_max = {195, 345, 500}
+    tt.hero.skills.dragon_lance.damage_min = {53, 93, 135}
+    tt.hero.skills.dragon_lance.damage_max = {98, 173, 250}
     tt.hero.skills.dragon_lance.xp_gain = {50, 100, 150}
     tt.hero.skills.dragon_lance.xp_level_steps = {
         [2] = 1,
@@ -8979,6 +8979,7 @@ local function heroes()
     tt.ranged.attacks[2] = E:clone_c("bullet_attack")
     tt.ranged.attacks[2].disabled = true
     tt.ranged.attacks[2].bullet = "bolt_lance_faustus"
+    tt.ranged.attacks[2].bullet_count = 3
     tt.ranged.attacks[2].bullet_start_offset = {vec_2(22, 110)}
     tt.ranged.attacks[2].cooldown = 24
     tt.ranged.attacks[2].min_range = 0
