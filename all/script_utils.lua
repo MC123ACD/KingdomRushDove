@@ -3559,28 +3559,12 @@ local function insert_tower_range_buff(target, range_factor, allow_barrack)
 end
 
 local function insert_tower_cooldown_buff(target, cooldown_factor)
-    -- if target.attacks then
-    --     if target.attacks.list and target.attacks.list[1] then
-    --         target.attacks.list[1].cooldown = target.attacks.list[1].cooldown * cooldown_factor
-    --         if target.attacks.list[1].cooldowns then
-    --             for _, cd in pairs(target.attacks.list[1].cooldowns) do
-    --                 cd = cd * cooldown_factor
-    --             end
-    --         end
-    --     end
-    --     if target.attacks.min_cooldown then
-    --         target.attacks.min_cooldown = target.attacks.min_cooldown * cooldown_factor
-    --     end
-    -- end
-    -- if target.template_name == "tower_mech" then
-    --     for _, s in pairs(target.barrack.soldiers) do
-    --         s.attacks.list[1].cooldown = s.attacks.list[1].cooldown * cooldown_factor
-    --     end
-    -- end
     target.tower.cooldown_factor = target.tower.cooldown_factor * cooldown_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
-            s.cooldown_factor = s.cooldown_factor * cooldown_factor
+            if s.unit then
+                s.cooldown_factor = s.cooldown_factor * cooldown_factor
+            end
         end
     end
 end
@@ -3601,28 +3585,12 @@ local function remove_tower_range_buff(target, range_factor, allow_barrack)
 end
 
 local function remove_tower_cooldown_buff(target, cooldown_factor)
-    -- if target.attacks then
-    --     if target.attacks.list and target.attacks.list[1] then
-    --         target.attacks.list[1].cooldown = target.attacks.list[1].cooldown / cooldown_factor
-    --         if target.attacks.list[1].cooldowns then
-    --             for _, cd in pairs(target.attacks.list[1].cooldowns) do
-    --                 cd = cd / cooldown_factor
-    --             end
-    --         end
-    --     end
-    --     if target.attacks.min_cooldown then
-    --         target.attacks.min_cooldown = target.attacks.min_cooldown / cooldown_factor
-    --     end
-    -- end
-    -- if target.template_name == "tower_mech" then
-    --     for _, s in pairs(target.barrack.soldiers) do
-    --         s.attacks.list[1].cooldown = s.attacks.list[1].cooldown / cooldown_factor
-    --     end
-    -- end
     target.tower.cooldown_factor = target.tower.cooldown_factor / cooldown_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
-            s.cooldown_factor = s.cooldown_factor / cooldown_factor
+            if s.unit then
+                s.cooldown_factor = s.cooldown_factor / cooldown_factor
+            end
         end
     end
 

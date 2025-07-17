@@ -2039,7 +2039,7 @@ return function(scripts)
             end
 
             SU.insert_tower_cooldown_buff(target, this.cooldown_factor)
-            SU.insert_tower_range_buff(target, this.range_factor, false)
+            SU.insert_tower_range_buff(target, this.range_factor, true)
 
             for i = 1, #this.render.sprites do
                 local s = this.render.sprites[i]
@@ -2079,7 +2079,7 @@ return function(scripts)
                 return false
             end
             SU.remove_tower_cooldown_buff(target, this.cooldown_factor)
-            SU.remove_tower_range_buff(target, this.range_factor, false)
+            SU.remove_tower_range_buff(target, this.range_factor, true)
             return true
         end
 
@@ -2195,10 +2195,7 @@ return function(scripts)
 
                     if ready_to_use_skill(a, store) then
                         local towers = U.find_towers_in_range(store.entities, this.pos, a, function(t)
-                            return t.tower.can_be_mod and
-                                       (not t.barrack or t.template_name == "tower_sorcerer" or t.template_name ==
-                                           "tower_necromancer" or t.template_name == "tower_mech" or t.template_name ==
-                                           "tower_frankenstein" or t.template_name == "tower_druid")
+                            return t.tower.can_be_mod
                         end)
 
                         if not towers or #towers <= 0 then
