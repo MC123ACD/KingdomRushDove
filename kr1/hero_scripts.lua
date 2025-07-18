@@ -12133,6 +12133,7 @@ return function(scripts)
                     -- if SU.y_hero_new_rally(store, this) then
                     --     goto label_126_1
                     -- end
+                    this.motion.arrived = false
                     a = this.timed_attacks.list[1]
                     local initial_flip = this.render.sprites[1].flip_x
                     local shadow
@@ -12168,6 +12169,7 @@ return function(scripts)
                         shadow.health.dead = true
                     end
                     this.nav_rally.new = false
+                    this.motion.arrived = true
                 end
 
                 if SU.hero_level_up(store, this) then

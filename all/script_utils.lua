@@ -598,7 +598,8 @@ local function y_hero_new_rally(store, this)
 		if hero_will_teleport(this, r.pos) then
 			local tp = this.teleport
 			local vis_bans = this.vis.bans
-
+            tp.pending = true
+            U.set_destination(this, r.pos)
 			this.vis.bans = F_ALL
 			this.health.ignore_damage = true
 			this.health_bar.hidden = true
@@ -628,8 +629,7 @@ local function y_hero_new_rally(store, this)
 
 			this.pos.x, this.pos.y = r.pos.x, r.pos.y
 
-			U.set_destination(this, this.pos)
-
+			-- U.set_destination(this, this.pos)
 			this.motion.speed.x, this.motion.speed.y = 0, 0
 
 			if tp.fx_in then
@@ -646,7 +646,7 @@ local function y_hero_new_rally(store, this)
 			end
 
 			U.y_animation_play(this, tp.animations[2], nil, store.tick_ts)
-
+            tp.pending = false
 			this.health_bar.hidden = false
 			this.vis.bans = vis_bans
 			this.health.ignore_damage = false
@@ -2148,7 +2148,7 @@ local function soldier_move_to_slot_step(store, this, target)
 		return true
 	end
 
-	if V.veq(slot_pos, this.pos) then
+	if not (this.teleport and this.teleport.pending ) and V.veq(slot_pos, this.pos) then
 		this.motion.arrived = true
 
 		return false
@@ -2270,7 +2270,7 @@ end
 local function soldier_go_back_step(store, this)
 	local dest = this.nav_rally.pos
 
-	if V.veq(this.pos, dest) then
+	if not (this.teleport and this.teleport.pending ) and V.veq(this.pos, dest) then
 		this.motion.arrived = true
 
 		return false

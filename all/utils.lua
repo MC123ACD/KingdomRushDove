@@ -558,7 +558,7 @@ function U.walk(e, dt, accel, unsnapped)
     local step = U.real_max_speed(e) * dt
     local nx, ny = V.normalize(V.rotate(v_angle, 1, 0))
 
-    if v_len <= step then
+    if v_len <= step and not (e.teleport and e.teleport.pending) then
         if unsnapped then
             local sx, sy = V.mul(step, nx, ny)
 

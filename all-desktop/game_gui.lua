@@ -458,6 +458,14 @@ function game_gui:init(w, h, game)
 
     tower_range.hidden = true
 
+    local meleerange = RangeCircle:new("rally_circle")
+
+    meleerange.hidden = true
+
+    local rangedrange = RangeCircle:new("range_circle")
+
+    rangedrange.hidden = true
+
     local tower_range_upgrade = RangeCircle:new("range_circle")
 
     tower_range_upgrade.hidden = true
@@ -706,6 +714,8 @@ function game_gui:init(w, h, game)
     layer_gui_game:add_child(rallyrange)
     layer_gui_game:add_child(tower_range)
     layer_gui_game:add_child(tower_range_upgrade)
+    layer_gui_game:add_child(meleerange)
+    layer_gui_game:add_child(rangedrange)
     layer_gui_game:add_child(towertooltip)
     layer_gui_game:add_child(towermenu)
     layer_gui_game:add_child(incoming_tooltip)
@@ -742,6 +752,8 @@ function game_gui:init(w, h, game)
     self.rallyrange = rallyrange
     self.tower_range = tower_range
     self.tower_range_upgrade = tower_range_upgrade
+    self.melee_range = meleerange
+    self.ranged_range = rangedrange
     self.point_confirm = point_confirm
     self.rallyflag = rallyflag
     self.hud_bottom = hud_bottom
@@ -1191,6 +1203,26 @@ function game_gui:show_tower_range_upgrade(x, y, range)
     r.hidden = false
 end
 
+function game_gui:show_melee_range(x, y, range)
+    local r = self.melee_range
+
+    r.range_shown = range
+    r.pos.x, r.pos.y = x, y
+    r.scale = v(range * self.game.game_scale / (r.actual_radius.x * self.gui_scale),
+        range * self.game.game_scale * ASPECT / (r.actual_radius.y * self.gui_scale))
+    r.hidden = false
+end
+
+function game_gui:show_ranged_range(x, y, range)
+    local r = self.ranged_range
+
+    r.range_shown = range
+    r.pos.x, r.pos.y = x, y
+    r.scale = v(range * self.game.game_scale / (r.actual_radius.x * self.gui_scale),
+        range * self.game.game_scale * ASPECT / (r.actual_radius.y * self.gui_scale))
+    r.hidden = false
+end
+
 function game_gui:hide_tower_range_upgrade()
     self.tower_range_upgrade.hidden = true
     self.tower_range_upgrade.range_shown = nil
@@ -1201,6 +1233,16 @@ function game_gui:hide_tower_ranges()
     self.tower_range.range_shown = nil
     self.tower_range_upgrade.hidden = true
     self.tower_range_upgrade.range_shown = nil
+end
+
+function game_gui:hide_melee_range()
+    self.melee_range.hidden = true
+    self.melee_range.range_shown = nil
+end
+
+function game_gui:hide_ranged_range()
+    self.ranged_range.hidden = true
+    self.ranged_range.range_shown = nil
 end
 
 function game_gui:show_invalid_point_cross(x, y)
@@ -1341,11 +1383,6 @@ function game_gui:select_entity(e)
     end
 
     game_gui.hud_bottom.infobar:show()
--- game_gui:set_mode(GUI_MODE_RALLY_TOWER)
-
--- local ux, uy = game_gui:g2u(V.v(V.add(e.pos.x, e.pos.y, e.tower.range_offset.x, e.tower.range_offset.y)))
-
--- game_gui:show_rally_range(ux, uy, e.barrack.rally_range)
 
     if e.enemy or e.soldier or e.barrack then
         if e.soldier and e.soldier.tower_id and
@@ -1357,13 +1394,24 @@ function game_gui:select_entity(e)
                 tower.tower.range_offset.x, tower.tower.range_offset.y)))
 
             game_gui:show_rally_range(ux, uy, tower.barrack.rally_range)
-
-            -- self.selected_entity = tower
         else
             local m = E:create_entity("entity_marker_controller")
             m.target = e
             self.game.simulation:insert_entity(m)
             self.selected_entity_marker = m
+        end
+        if not e.motion or e.motion.arrived then
+            if e.melee and e.melee.range then
+                local ux, uy = game_gui:g2u(e.pos)
+                game_gui:show_melee_range(ux, uy, e.melee.range)
+            end
+            if e.ranged and e.ranged.attacks[1].max_range then
+                local ux, uy = game_gui:g2u(e.pos)
+                game_gui:show_ranged_range(ux, uy, e.ranged.attacks[1].max_range)
+            elseif e.timed_attacks and e.timed_attacks.list[1].max_range then
+                local ux, uy = game_gui:g2u(e.pos)
+                game_gui:show_ranged_range(ux, uy, e.timed_attacks.list[1].max_range)
+            end
         end
     end
 end
@@ -1375,7 +1423,8 @@ function game_gui:deselect_entity()
 
     self.towermenu:hide()
     self.hud_bottom.infobar:hide()
-
+    self:hide_melee_range()
+    self:hide_ranged_range()
     if self.selected_entity_marker then
         self.selected_entity_marker.done = true
     end

@@ -485,7 +485,6 @@ local function engineer_towers()
     tt.attacks.list[3].max_range = 57.6
 
     local bomb_mecha = E:register_t("bomb_mecha", "bomb")
-
     bomb_mecha.render.sprites[1].name = "mech_bomb"
     bomb_mecha.bullet.flight_time = fts(26)
     bomb_mecha.bullet.hit_fx = "fx_explosion_fragment"
@@ -494,7 +493,6 @@ local function engineer_towers()
     bomb_mecha.bullet.damage_radius = 57.6
 
     local missile_mecha = E:register_t("missile_mecha", "bullet")
-
     missile_mecha.render.sprites[1].prefix = "missile_mecha"
     missile_mecha.render.sprites[1].loop = true
     missile_mecha.bullet.damage_type = DAMAGE_EXPLOSION
@@ -519,9 +517,7 @@ local function engineer_towers()
     missile_mecha.sound_events.hit_water = "RTWaterExplosion"
 
     local ps_missile_mecha = E:register_t("ps_missile_mecha")
-
     E:add_comps(ps_missile_mecha, "pos", "particle_system")
-
     ps_missile_mecha.particle_system.name = "particle_smokelet"
     ps_missile_mecha.particle_system.animated = false
     ps_missile_mecha.particle_system.particle_lifetime = {1.6, 1.8}
