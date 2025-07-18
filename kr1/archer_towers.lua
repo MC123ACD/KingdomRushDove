@@ -890,7 +890,7 @@ local function archer_towers()
     tt.bullet.hit_fx = "fx_arrow_silver_sentence_hit"
     tt.bullet.flight_time_min = fts(4)
     tt.bullet.flight_time_factor = fts(0.01)
-    tt.bullet.damage_type = bor(DAMAGE_FX_NOT_EXPLODE)
+    tt.bullet.damage_type = bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_PHYSICAL)
     tt.bullet.damage_max = 60
     tt.bullet.damage_min = 45
     tt.bullet.prediction_error = false
