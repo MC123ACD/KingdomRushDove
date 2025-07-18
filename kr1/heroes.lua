@@ -856,10 +856,9 @@ local function heroes()
     tt.hero.tombstone_show_time = fts(60)
     tt.info.hero_portrait = IS_PHONE_OR_TABLET and "hero_portraits_0007" or "heroPortrait_portraits_0007"
     tt.info.i18n_key = "HERO_DENAS"
-    tt.info.fn = scripts.hero_basic.get_info
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0008" or "info_portraits_hero_0008"
     tt.main_script.update = scripts.hero_denas.update
-    tt.motion.max_speed = 2.5 * FPS
+    tt.motion.max_speed = 2.6 * FPS
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
     tt.render.sprites[1].prefix = "hero_denas"
@@ -911,7 +910,7 @@ local function heroes()
     tt.timed_attacks.list[3].max_range = 165
     tt.timed_attacks.list[3].min_range = 50
     tt.timed_attacks.list[3].sound = "HeroDenasAttack"
-    tt.timed_attacks.list[3].vis_bans = bor(F_FRIEND, F_FLYING)
+    tt.timed_attacks.list[3].vis_bans = F_FRIEND
     tt.timed_attacks.list[3].vis_flags = F_RANGED
     tt.timed_attacks.list[3].xp_from_skill = "catapult"
 
