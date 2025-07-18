@@ -4445,7 +4445,7 @@ return function(scripts)
 
                 local new_scale
 
-                new_scale = added_damage == this.max_damage and 1 or added_damage > 0 and 0.5 or 0
+                new_scale = added_damage >= this.max_damage and 1 or added_damage > 0 and 0.5 or 0
 
                 if new_scale ~= s.scale.x then
                     s.ts = store.tick_ts

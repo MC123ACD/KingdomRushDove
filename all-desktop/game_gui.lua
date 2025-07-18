@@ -1405,10 +1405,10 @@ function game_gui:select_entity(e)
                 local ux, uy = game_gui:g2u(e.pos)
                 game_gui:show_melee_range(ux, uy, e.melee.range)
             end
-            if e.ranged and e.ranged.attacks[1].max_range then
+            if e.ranged and e.ranged.attacks[1].max_range and not e.ranged.attacks[1].disabled then
                 local ux, uy = game_gui:g2u(e.pos)
                 game_gui:show_ranged_range(ux, uy, e.ranged.attacks[1].max_range)
-            elseif e.timed_attacks and e.timed_attacks.list[1].max_range then
+            elseif e.timed_attacks and e.timed_attacks.list[1].max_range and not e.timed_attacks.list[1].disabled then
                 local ux, uy = game_gui:g2u(e.pos)
                 game_gui:show_ranged_range(ux, uy, e.timed_attacks.list[1].max_range)
             end
