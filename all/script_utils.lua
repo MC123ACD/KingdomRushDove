@@ -1968,6 +1968,7 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 		signal.emit("soldier-attack", this, attack, attack.signal)
 	end
 
+    -- 要求攻击的敌人被这个士兵拦截
 	if not unit_dodges(store, target, false, attack, this) and table.contains(target.enemy.blockers, this.id) then
         if attack.side_effect then
             attack.side_effect(this, store, attack, target)
