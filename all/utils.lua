@@ -15,10 +15,12 @@ require("constants")
 
 local U = {}
 
+-- 返回从 from 到 to 的随机数
 function U.frandom(from, to)
     return math.random() * (to - from) + from
 end
 
+-- 随机 +- 1
 function U.random_sign()
     if math.random() < 0.5 then
         return -1
@@ -27,6 +29,7 @@ function U.random_sign()
     end
 end
 
+-- 对于索引从 1 开始的连续的数组，返回一个随机索引
 function U.random_table_idx(list)
     local rn = math.random()
     local acc = 0
@@ -75,6 +78,9 @@ function U.ease_value(from, to, phase, easing)
     return from + (to - from) * U.ease_phase(phase, easing)
 end
 
+-- 排序 enemies，使得按照敌人到家的距离排序
+-- 如果敌人拥有 F_MOCKING，则将它放到前面
+-- 飞行敌人不受 F_MOCKING 的影响
 function U.sort_foremost_enemies(enemies)
     table.sort(enemies, function(e1, e2)
         local e1_mocking = band(e1.vis.flags, F_MOCKING) ~= 0
@@ -161,6 +167,7 @@ function U.hover_pulse_alpha(t)
     return min + (max - min) * 0.5 * (1 + math.sin(t * km.twopi / per))
 end
 
+-- 检测 p 这个位置是否在以 center 为中心、以 radius 为长轴的椭圆内
 function U.is_inside_ellipse(p, center, radius, aspect)
     aspect = aspect or 0.7
 
@@ -170,6 +177,7 @@ function U.is_inside_ellipse(p, center, radius, aspect)
     return math.pow((p.x - center.x) / a, 2) + math.pow((p.y - center.y) / b, 2) <= 1
 end
 
+-- 返回椭圆 angle 角度对应的点位
 function U.point_on_ellipse(center, radius, angle, aspect)
     aspect = aspect or 0.7
     angle = angle or 0
@@ -180,6 +188,7 @@ function U.point_on_ellipse(center, radius, angle, aspect)
     return V.v(center.x + a * math.cos(angle), center.y + b * math.sin(angle))
 end
 
+-- 返回 center 到 p 的长度与该向量辐角对应椭圆点的半径长度的比值
 function U.dist_factor_inside_ellipse(p, center, radius, min_radius, aspect)
     aspect = aspect or 0.7
 
@@ -200,6 +209,8 @@ function U.dist_factor_inside_ellipse(p, center, radius, min_radius, aspect)
     end
 end
 
+-- 等待 time 的时间
+-- 如果传入 break_func，在满足 break_func(store, time) 的时候，提前退出
 function U.y_wait(store, time, break_func)
     local start_ts = store.tick_ts
 
@@ -214,6 +225,8 @@ function U.y_wait(store, time, break_func)
     return false
 end
 
+-- 如果提供 idx, 只开始 render.sprites[idx] 的动画
+-- 如果不提供 idx，开始全部的 sprites 的动画
 function U.animation_start(entity, name, flip_x, ts, loop, idx, force_ts)
     loop = (loop == -1 or loop == true) and true or false
 
@@ -253,6 +266,7 @@ function U.animation_start(entity, name, flip_x, ts, loop, idx, force_ts)
     end
 end
 
+-- 当 render.sprites[idx] 的动画已经进行 times/1 次时，返回 true
 function U.animation_finished(entity, idx, times)
     idx = idx or 1
     times = times or 1
@@ -270,6 +284,7 @@ function U.animation_finished(entity, idx, times)
     end
 end
 
+-- 等待 render.sprites[idx] 的动画进行 times/1 次
 function U.y_animation_wait(entity, idx, times)
     idx = idx or 1
 
@@ -372,6 +387,7 @@ function U.animation_name_facing_point(e, group, point, idx, offset, use_path)
     return U.animation_name_for_angle(e, group, angle, idx)
 end
 
+-- 播放 sprites[idx] 的动画 name times 次，并且一直等待动画完成
 function U.y_animation_play(entity, name, flip_x, ts, times, idx)
     local loop = times and times > 1
 
@@ -474,6 +490,7 @@ function U.get_animation_ts(entity, group)
     end
 end
 
+-- 隐藏 from 到 to 的 sprite
 function U.sprites_hide(entity, from, to, keep)
     if not entity or not entity.render then
         return
@@ -501,6 +518,7 @@ function U.sprites_hide(entity, from, to, keep)
     end
 end
 
+-- 显示 from 到 to 的 sprite
 function U.sprites_show(entity, from, to, restore)
     if not entity or not entity.render then
         return
@@ -522,11 +540,13 @@ function U.sprites_show(entity, from, to, restore)
     end
 end
 
+-- 设置目标，并将 motion.arrived 为 false
 function U.set_destination(e, pos)
     e.motion.dest = V.vclone(pos)
     e.motion.arrived = false
 end
 
+-- 设置 e.heading 为朝向 dest
 function U.set_heading(e, dest)
     if e.heading then
         local vx, vy = V.sub(dest.x, dest.y, e.pos.x, e.pos.y)
@@ -536,6 +556,11 @@ function U.set_heading(e, dest)
     end
 end
 
+-- 如果 motion.arrived 为 true，直接返回 true
+-- 如果 unsnapped 为 true，依照朝向走位，不强制停在 destination
+-- 反之，如果位移足够，就直接强制停在 destination
+-- 位移足够时，返回 true
+-- 如果位移不足，则置 motion.arrived 为 false，并实现位移。
 function U.walk(e, dt, accel, unsnapped)
     if e.motion.arrived then
         return true
@@ -958,6 +983,7 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     end
 end
 
+-- 如果敌人满足了 bor(vis.flags, min_override_flags)，则无论是不是在 min_range 内，都可以索敌
 function U.find_foremost_enemy(entities, origin, min_range, max_range, prediction_time, flags, bans, filter_func,
     min_override_flags)
     flags = flags or 0
@@ -1025,6 +1051,7 @@ function U.find_towers_in_range(entities, origin, attack, filter_func)
     end
 end
 
+-- 找到在 pos 的实体
 function U.find_entity_at_pos(entities, x, y, filter_func)
     local found = {}
 
@@ -1058,6 +1085,7 @@ function U.find_entity_at_pos(entities, x, y, filter_func)
     end
 end
 
+-- 找到在 pos 的全部实体
 function U.find_entities_at_pos(entities, x, y, filter_func)
     local found = {}
 
@@ -1077,6 +1105,7 @@ function U.find_entities_at_pos(entities, x, y, filter_func)
     return found
 end
 
+-- 找到当前满足过滤条件的所有敌人的所在路径
 function U.find_paths_with_enemies(entities, flags, bans, filter_func)
     local pis = {}
 
@@ -1133,6 +1162,8 @@ function U.attack_order(attacks)
     return out
 end
 
+-- 返回计算了 melee_slot 后的士兵拦截敌人时的位置
+-- return soldier_pos, soldier_on_the_right
 function U.melee_slot_position(soldier, enemy, rank, back)
     if not rank then
         rank = table.keyforobject(enemy.enemy.blockers, soldier.id)
@@ -1166,6 +1197,7 @@ function U.melee_slot_position(soldier, enemy, rank, back)
     return soldier_pos, soldier_on_the_right
 end
 
+-- 依据 barrack.rally_pos, barrack.rally_radius，返回第 idx 个士兵依照椭圆应该在的位置
 function U.rally_formation_position(idx, barrack, count, angle_offset)
     local pos
 
@@ -1185,6 +1217,7 @@ function U.rally_formation_position(idx, barrack, count, angle_offset)
     return pos, center
 end
 
+-- 返回敌人的第一个 blocker
 function U.get_blocker(store, blocked)
     if blocked.enemy and #blocked.enemy.blockers > 0 then
         local blocker_id = blocked.enemy.blockers[1]
@@ -1196,6 +1229,7 @@ function U.get_blocker(store, blocked)
     return nil
 end
 
+-- 返回士兵拦截的敌人(目前为唯一的)
 function U.get_blocked(store, blocker)
     local blocked_id = blocker.soldier.target_id
     local blocked = store.entities[blocked_id]
@@ -1203,6 +1237,8 @@ function U.get_blocked(store, blocker)
     return blocked
 end
 
+-- 当士兵的目标的 .enemy.blockers 中并没有士兵的 id 时，返回 nil；
+-- 否则，返回士兵 id 在 blockers 中的索引。
 function U.blocker_rank(store, blocker)
     local blocked_id = blocker.soldier.target_id
     local blocked = store.entities[blocked_id]
@@ -1214,6 +1250,8 @@ function U.blocker_rank(store, blocker)
     return nil
 end
 
+-- 当士兵的目标(目前为唯一的) 不存在/已死亡/band(vis.bans, F_BLOCK)~= 0 时，返回 false
+-- 否则，说明这个被拦截对象有效，返回 true
 function U.is_blocked_valid(store, blocker)
     local blocked_id = blocker.soldier.target_id
     local blocked = store.entities[blocked_id]
@@ -1221,6 +1259,7 @@ function U.is_blocked_valid(store, blocker)
     return blocked and not blocked.health.dead and (not blocked.vis or bit.band(blocked.vis.bans, F_BLOCK) == 0)
 end
 
+-- 清空敌人的 blockers，并将所有拦截它的士兵的 target_id 置为 nil
 function U.unblock_all(store, blocked)
     for _, blocker_id in pairs(blocked.enemy.blockers) do
         local blocker = store.entities[blocker_id]
@@ -1233,35 +1272,61 @@ function U.unblock_all(store, blocked)
     blocked.enemy.blockers = {}
 end
 
+-- 安全地移除敌人的 blockers 中的一个 blocker_id
+-- 请保证传入的 blocked 有效
+function U.dec_blocker(store, blocked, blocker_id)
+    table.removeobject(blocked.enemy.blockers, blocker_id)
+    if #blocked.enemy.blockers > 1 then
+        local last = table.remove(blocked.enemy.blockers)
+        table.insert(blocked.enemy.blockers, 1, last)
+    end
+end
+
+-- 将士兵的 target_id 置为 nil, 并在对应敌人的 blockers 中移除士兵的 id
 function U.unblock_target(store, blocker)
     local blocked_id = blocker.soldier.target_id
     local blocked = store.entities[blocked_id]
 
     if blocked then
-        table.removeobject(blocked.enemy.blockers, blocker.id)
-
-        if #blocked.enemy.blockers > 1 then
-            local last = table.remove(blocked.enemy.blockers)
-
-            table.insert(blocked.enemy.blockers, 1, last)
-        end
+        U.dec_blocker(store, blocked, blocked_id)
     end
 
     blocker.soldier.target_id = nil
 end
 
+-- 士兵拦截敌人
+-- !!TO BE DONE!!
 function U.block_enemy(store, blocker, blocked)
-    if blocker.soldier.target_id ~= blocked.id then
-        U.unblock_target(store, blocker)
-    end
+    if blocker.max_targets then
+        -- 士兵还有空闲的拦截位
+        if blocker.max_targets > #blocker.target_ids then
+            -- 若敌人并没有被士兵拦截，就让它被士兵拦截
+            if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
+                table.insert(blocked.enemy.blockers, blocker.id)
+                table.insert(blocker.soldier.target_ids, blocked.id)
+                if not blocker.soldier.target_id then
+                    blocker.soldier.target_id = blocked.id
+                end
+            end
+        -- 士兵没有空闲的拦截位了
+        else
 
-    if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
-        table.insert(blocked.enemy.blockers, blocker.id)
+        end
+    else
+        if blocker.soldier.target_id ~= blocked.id then
+            U.unblock_target(store, blocker)
+        end
 
-        blocker.soldier.target_id = blocked.id
+        if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
+            table.insert(blocked.enemy.blockers, blocker.id)
+
+            blocker.soldier.target_id = blocked.id
+        end
     end
 end
 
+-- 将新的士兵的 target_id 置为老的士兵的 target_id
+-- 同时，更新这个目标中存着的 blocker_id
 function U.replace_blocker(store, old, new)
     local blocked_id = old.soldier.target_id
     local blocked = store.entities[blocked_id]
@@ -1277,6 +1342,7 @@ function U.replace_blocker(store, old, new)
     end
 end
 
+-- 清除敌人的 blockers 中无效的 blocker_id
 function U.cleanup_blockers(store, blocked)
     local blockers = blocked.enemy.blockers
 
@@ -1294,6 +1360,7 @@ function U.cleanup_blockers(store, blocked)
     end
 end
 
+-- 结算伤害的核心逻辑
 function U.predict_damage(entity, damage)
     local e = entity
     local d = damage
@@ -1488,22 +1555,28 @@ function U.unlock_next_levels_in_ranges(unlock_data, levels, game_settings, gene
     return dirty
 end
 
+-- vis 通过 vis_x 的 vis_bans 和 vis_flags 检测
 function U.flags_pass(vis, vis_x)
     return band(vis.flags, vis_x.vis_bans) == 0 and band(vis.bans, vis_x.vis_flags) == 0
 end
 
+-- 返回 value 添加了 flag 后的结果
 function U.flag_set(value, flag)
     return bor(value, flag)
 end
 
+-- 返回 value 清除了 flag 后的结果
 function U.flag_clear(value, flag)
     return band(value, bnot(flag))
 end
 
+-- value 与 flag 有共同位
 function U.flag_has(value, flag)
     return band(value, flag) ~= 0
 end
 
+-- 获取英雄的等级
+-- return level, phase(下一级进度) \in [0, 1]
 function U.get_hero_level(xp, thresholds)
     local level = 1
 
@@ -1527,6 +1600,8 @@ function U.get_hero_level(xp, thresholds)
     return level, phase
 end
 
+-- 获取所有目标为 entity 的 mod。
+-- 如果传入 list，排除模板名存在于 list 中的 mod。
 function U.get_modifiers(store, entity, list)
     local mods = table.filter(store.entities, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and (not list or table.contains(list, v.template_name))
@@ -1535,6 +1610,8 @@ function U.get_modifiers(store, entity, list)
     return mods
 end
 
+-- return #modes > 0, mods
+-- 忽略 模板名为 mod_name 的 mod
 function U.has_modifiers(store, entity, mod_name)
     local mods = table.filter(store.entities, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and (not mod_name or mod_name == v.template_name)
@@ -1543,6 +1620,7 @@ function U.has_modifiers(store, entity, mod_name)
     return #mods > 0, mods
 end
 
+-- 如果 list 中存在目标为 entity 的 mod 名，返回 true
 function U.has_modifier_in_list(store, entity, list)
     for _, e in pairs(store.entities) do
         if e.modifier and e.modifier.target_id == entity.id and table.contains(list, e.template_name) then
@@ -1553,6 +1631,8 @@ function U.has_modifier_in_list(store, entity, list)
     return false
 end
 
+-- return #mods > 0, mods
+-- mod.modifier.type 存在于 {...} 中
 function U.has_modifier_types(store, entity, ...)
     local types = {...}
     local mods = table.filter(store.entities, function(k, v)
@@ -1562,7 +1642,7 @@ function U.has_modifier_types(store, entity, ...)
     return #mods > 0, mods
 end
 
--- for sure the entity has motion component
+-- 计算实体的真实速度大小
 function U.real_max_speed(entity)
     return km.clamp(1, 10000, (entity.motion.max_speed + entity.motion.buff) * entity.motion.factor)
 end

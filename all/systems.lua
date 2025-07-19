@@ -1052,18 +1052,30 @@ function sys.health:on_update(dt, ts, store)
                             end
                         end
 
-                        if e and h.spiked_armor > 0 and e.soldier and e.soldier.target_id then
-                            local t = store.entities[e.soldier.target_id]
+                        if e and h.spiked_armor > 0 and e.soldier and d.source_id then
+                            local sad_target_id = nil
+                            if e.soldier.max_targets then
+                                if table.contains(e.soldier.target_ids , d.source_id) then
+                                    sad_target_id = d.source_id
+                                end
+                            else
+                                if e.soldier.target_id == d.source_id then
+                                    sad_target_id = d.source_id
+                                end
+                            end
 
-                            if t and t.health and not t.health.dead then
-                                local sad = E:create_entity("damage")
+                            if sad_target_id then
+                                local t = store.entities[sad_target_id]
+                                if t and t.health and not t.health.dead then
+                                    local sad = E:create_entity("damage")
 
-                                sad.damage_type = DAMAGE_TRUE
-                                sad.value = math.ceil(h.spiked_armor * d.value)
-                                sad.source_id = e.id
-                                sad.target_id = t.id
+                                    sad.damage_type = DAMAGE_TRUE
+                                    sad.value = math.ceil(h.spiked_armor * d.value)
+                                    sad.source_id = e.id
+                                    sad.target_id = t.id
 
-                                table.insert(store.damage_queue, sad)
+                                    table.insert(store.damage_queue, sad)
+                                end
                             end
                         end
                     end

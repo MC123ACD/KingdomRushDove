@@ -519,6 +519,9 @@ soldier.name = nil
 soldier.tower_id = nil
 soldier.melee_slot_offset = v(0, 0)
 soldier.target_id = nil
+-- max_targets 不为 nil 时，允许士兵拦截多个敌方单位
+soldier.max_targets = nil
+soldier.target_ids = nil
 soldier.courage_ts = 0
 
 local reinforcement = E:register_c("reinforcement")

@@ -58,6 +58,9 @@ local function ui_click_proxy_remove(proxy, dest)
 	end
 end
 
+-- 移除目标为 entity, 名称为 mod_name 的 mod
+-- 如果不提供 mod_name，移除所有目标为 entity 的 mod
+-- 如果提供 exclude_name，不移除名称为 exclude_name 的 mod
 local function remove_modifiers(store, entity, mod_name, exclude_name)
 	local mods = table.filter(store.entities, function(k, v)
 		return v.modifier and v.modifier.target_id == entity.id and (not mod_name or mod_name == v.template_name) and (not exclude_name or exclude_name ~= v.template_name)
@@ -68,6 +71,8 @@ local function remove_modifiers(store, entity, mod_name, exclude_name)
 	end
 end
 
+-- 移除所有 .modifier.type 为 mod_type，且目标为 entity 的 mod
+-- 如果提供 exclude_name，则不移除名称为 exclued_name 的 mod
 local function remove_modifiers_by_type(store, entity, mod_type, exclude_name)
 	local mods = table.filter(store.entities, function(k, v)
 		return v.modifier and v.modifier.target_id == entity.id and v.modifier.type == mod_type and (not exclude_name or exclude_name ~= v.template_name)
@@ -78,6 +83,7 @@ local function remove_modifiers_by_type(store, entity, mod_type, exclude_name)
 	end
 end
 
+-- 移除所有 .aura.track_source 且源为 entity 的 aura
 local function remove_auras(store, entity)
 	local auras = table.filter(store.entities, function(k, v)
 		return v.aura and v.aura.track_source and v.aura.source_id == entity.id
@@ -88,6 +94,7 @@ local function remove_auras(store, entity)
 	end
 end
 
+-- 隐藏目标为 entity 的 mod 的 sprites
 local function hide_modifiers(store, entity, keep, exclude_mod)
 	local mods = table.filter(store.entities, function(k, v)
 		return v.modifier and v.modifier.target_id == entity.id and v ~= exclude_mod
@@ -98,6 +105,7 @@ local function hide_modifiers(store, entity, keep, exclude_mod)
 	end
 end
 
+-- 重新显示目标为 entity 的 mod 的 sprites
 local function show_modifiers(store, entity, restore, exclude_mod)
 	local mods = table.filter(store.entities, function(k, v)
 		return v.modifier and v.modifier.target_id == entity.id and v ~= exclude_mod
@@ -108,6 +116,7 @@ local function show_modifiers(store, entity, restore, exclude_mod)
 	end
 end
 
+-- 隐藏所有源为 entity 的 aura 的 sprites
 local function hide_auras(store, entity, keep)
 	local auras = table.filter(store.entities, function(k, v)
 		return v.aura and v.aura.track_source and v.aura.source_id == entity.id
@@ -118,6 +127,7 @@ local function hide_auras(store, entity, keep)
 	end
 end
 
+-- 重新显示目标为 entity 的 aura 的 sprites
 local function show_auras(store, entity, restore)
 	local auras = table.filter(store.entities, function(k, v)
 		return v.aura and v.aura.track_source and v.aura.source_id == entity.id
@@ -127,6 +137,7 @@ local function show_auras(store, entity, restore)
 		U.sprites_show(a, nil, nil, restore)
 	end
 end
+
 -- 眩晕
 -- 沉默
 -- 远程攻击
@@ -156,6 +167,9 @@ local function unit_dodges(store, this, ranged_attack, attack, source)
 	return false
 end
 
+-- 使用 .unit.stun_count 管理
+-- ++this.unit.stun_count
+-- 使 this.unit.is_stunned = true
 local function stun_inc(this)
 	if this and this.unit and not this.unit.ignore_stun then
 		local u = this.unit
@@ -168,6 +182,9 @@ local function stun_inc(this)
 	end
 end
 
+-- 使用 .unit.stun_count 管理
+-- --this.unit.stun_count
+-- 如果 stun_count == 0，使 this.unit.is_stunned = true
 local function stun_dec(this, remove_all)
 	if this and this.unit and not this.unit.ignore_stun then
 		local u = this.unit
@@ -220,14 +237,17 @@ local function magic_armor_dec(this, value)
 	magic_armor_inc(this, -1 * value)
 end
 
+-- 提升 damage_buff
 local function damage_inc(this, value)
     this.damage_buff = this.damage_buff + value
 end
 
+-- 减少 damage_buff
 local function damage_dec(this, value)
     this.damage_buff = this.damage_buff - value
 end
 
+-- 提升 .tower.block_count，置 tower.blocked = true
 local function tower_block_inc(this)
 	if this and this.tower and not this.tower_holder then
 		local t = this.tower
@@ -244,6 +264,7 @@ local function tower_block_inc(this)
 	end
 end
 
+-- 减少 .tower.block_count，当 block_count < 1 时，置 tower.blocked = false
 local function tower_block_dec(this, remove_all)
 	if this and this.tower and not this.tower_holder then
 		local t = this.tower
@@ -261,6 +282,7 @@ local function tower_block_dec(this, remove_all)
 	end
 end
 
+-- 沉默塔。沉默期间，防御塔技能不会跑冷却
 local function tower_update_silenced_powers(store, this)
 	for k, pow in pairs(this.powers) do
         if pow.attack_idx then
@@ -277,6 +299,8 @@ local function tower_update_silenced_powers(store, this)
 	end
 end
 
+-- 召唤 death_spawns
+-- 接受沉默
 local function do_death_spawns(store, this)
 	if this.death_spawns.fx then
 		local fx = E:create_entity(this.death_spawns.fx)
@@ -334,6 +358,7 @@ local function do_death_spawns(store, this)
 	end
 end
 
+-- 延迟攻击 time 点时间
 local function delay_attack(store, attack, time)
 	attack.ts = store.tick_ts - attack.cooldown + time - 1e-06
 end
@@ -514,16 +539,20 @@ local function parabola_y(phase, from_y, to_y, max_y)
 	return y + offset
 end
 
+-- 士兵有新的集结点/士兵死亡/士兵被眩晕
 local function soldier_interrupted(this)
 	return this.nav_rally.new or this.health.dead or this.unit.is_stunned
 end
 
+-- 士兵等待 time 的时间，并在拥有新的集结点/死亡/被眩晕时提前结束等待，此时返回 true
 local function y_soldier_wait(store, this, time)
 	return U.y_wait(store, time, function(store, time)
 		return soldier_interrupted(this)
 	end)
 end
 
+-- 士兵等待当前动画结束，并返回 false。
+-- 如果拥有新的集结点/死亡/被眩晕，提前结束等待并返回 true。
 local function y_soldier_animation_wait(this)
 	while not U.animation_finished(this) do
 		if soldier_interrupted(this) then
@@ -536,6 +565,7 @@ local function y_soldier_animation_wait(this)
 	return false
 end
 
+-- 英雄可传送，且新的集结点到英雄的距离大于传送的最小距离
 local function hero_will_teleport(this, new_rally_pos)
 	local tp = this.teleport
 	local r = new_rally_pos
@@ -543,6 +573,7 @@ local function hero_will_teleport(this, new_rally_pos)
 	return tp and not tp.disabled and V.dist(r.x, r.y, this.pos.x, this.pos.y) > tp.min_distance
 end
 
+-- 英雄调集时可变形，且新的集结点到英雄的距离大于变形的最小距离
 local function hero_will_transfer(this, new_rally_pos)
 	local tr = this.transfer
 	local r = new_rally_pos
@@ -550,6 +581,11 @@ local function hero_will_transfer(this, new_rally_pos)
 	return tr and not tr.disabled and V.dist(r.x, r.y, this.pos.x, this.pos.y) > tr.min_distance
 end
 
+-- 按照 .nav_grid.waypoints 移动
+-- 开始移动时，内部会将 .motion.arrived 置为 false
+-- 到达目标时，将 .motion.arrived 置为 true
+-- 中途如果英雄死亡，返回 true
+-- 中途如果英雄的 rally_point 又发生改变，退出移动并返回 false，此时 .motion.arrived 为 false
 local function y_hero_walk_waypoints(store, this, animation)
 	local animation = animation or "walk"
 	local r = this.nav_rally
@@ -583,6 +619,7 @@ local function y_hero_walk_waypoints(store, this, animation)
 	end
 end
 
+-- 如果英雄死亡，返回 true
 local function y_hero_new_rally(store, this)
 	local r = this.nav_rally
 
@@ -628,8 +665,6 @@ local function y_hero_new_rally(store, this)
 			end
 
 			this.pos.x, this.pos.y = r.pos.x, r.pos.y
-
-			-- U.set_destination(this, this.pos)
 			this.motion.speed.x, this.motion.speed.y = 0, 0
 
 			if tp.fx_in then
@@ -679,7 +714,6 @@ local function y_hero_new_rally(store, this)
 
 				if y_hero_walk_waypoints(store, this, tr.animations[2]) then
 					interrupt = true
-
 					break
 				end
 			until this.motion.arrived
@@ -827,7 +861,7 @@ local function y_hero_death_and_respawn(store, this)
 			for _, t in pairs(targets) do
 				local d = E:create_entity("damage")
 				d.damage_type = sd.damage_type
-				d.value = sd.damage and sd.damage or math.random(sd.damage_min, sd.damage_max)
+				d.value = ((sd.damage and sd.damage or math.random(sd.damage_min, sd.damage_max)) + this.damage_buff ) * this.unit.damage_factor
 				d.source_id = this.id
 				d.target_id = t.id
 				queue_damage(store, d)
@@ -835,6 +869,7 @@ local function y_hero_death_and_respawn(store, this)
                     local m = E:create_entity(sd.mod)
                     m.modifier.target_id = t.id
                     m.modifier.source_id = this.id
+                    m.modifier.damage_factor = this.unit.damage_factor
                     queue_insert(store, m)
                 end
 			end
@@ -1014,6 +1049,7 @@ local function y_soldier_new_rally(store, this)
 	return out
 end
 
+-- 士兵成功复活时，返回 true
 local function y_soldier_revive(store, this)
 	if not this.revive or this.revive.disabled or this.unit.is_stunned or band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_EAT)) ~= 0 then
 		return false
@@ -1033,13 +1069,20 @@ local function y_soldier_revive(store, this)
 		this.health.dead = false
 		this.health_bar.hidden = false
 
-		if this.soldier.target_id then
-			local enemy = store.entities[this.soldier.target_id]
+        if this.soldier.max_targets then
+            for _, target_id in pairs(this.soldier.target_ids) do
+                local target = store.entities[target_id]
+                if target then
+                    U.block_enemy(store, this, target)
+                end
+            end
+        elseif this.soldier.target_id then
+            local enemy = store.entities[this.soldier.target_id]
 
-			if enemy then
-				U.block_enemy(store, this, enemy)
-			end
-		end
+            if enemy then
+                U.block_enemy(store, this, enemy)
+            end
+        end
 
 		if r.fx then
 			local fx = E:create_entity(r.fx)
@@ -1245,6 +1288,7 @@ local function y_soldier_do_loopable_ranged_attack(store, this, target, attack)
 	return attack_done
 end
 
+-- 士兵中途眩晕/死亡/有新的集结点时，如果攻击没有结束，返回 false
 local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
 	local attack_done = false
 	local start_ts = store.tick_ts
@@ -1277,8 +1321,6 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
         end
     end
 
-	-- if attack.check_target_before_shot and ((not target) or target.health.dead or (not store.entities[target.id])) then
-	-- 	log.debug("target (%s) is dead or removed from store", target.id)
 	if attack.max_track_distance and V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
 		log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id, target.pos.x, target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
 	else
@@ -1338,6 +1380,8 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
 	return attack_done
 end
 
+-- return target, attack, pred_pos
+-- 没有远程攻击冷却完成时，return target, nil, nil
 local function soldier_pick_ranged_target_and_attack(store, this)
 	local in_range = false
 	local awaiting_target
@@ -1355,14 +1399,6 @@ local function soldier_pick_ranged_target_and_attack(store, this)
 			local target, targets, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
 			if target then
-                -- if a.mod then
-                --     local modable = table.filter(targets, function(_,e)
-                --         return not U.has_modifiers(store, e, a.mod)
-                --     end)
-                --     if #modable > 0 then
-                --         target = modable[1]
-                --     end
-                -- end
 				if pred_pos then
 					log.paranoid(" target.pos:%s,%s  pred_pos:%s,%s", target.pos.x, target.pos.y, pred_pos.x, pred_pos.y)
 				end
@@ -1387,6 +1423,10 @@ local function soldier_pick_ranged_target_and_attack(store, this)
 	return awaiting_target, nil
 end
 
+-- 没有成功索敌时: return false, A_NO_TARGET
+-- 攻击还在冷却时: return false, A_IN_COOLDOWN
+-- 攻击成功进行时: return false, A_DONE
+-- 攻击完成时，若士兵眩晕/死亡/有新的集结点: return true
 local function y_soldier_ranged_attacks(store, this)
 	local target, attack, pred_pos = soldier_pick_ranged_target_and_attack(store, this)
 
@@ -1451,13 +1491,14 @@ local function y_soldier_do_timed_action(store, this, action)
 			e.modifier.target_id = this.id
 			e.modifier.source_id = this.id
 			e.modifier.level = action.level
-
+            e.modifier.damage_factor = this.unit.damage_factor
 			queue_insert(store, e)
 		elseif action.aura then
 			local e = E:create_entity(action.aura)
 
 			e.aura.source_id = this.id
 			e.aura.level = action.level
+            e.aura.damage_factor = this.unit.damage_factor
 			e.pos = V.vclone(this.pos)
 
 			queue_insert(store, e)
@@ -1856,7 +1897,7 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
 					d.damage_type = DAMAGE_INSTAKILL
 				elseif attack.fn_damage then
 					d.damage_type = attack.damage_type
-					d.value = attack.fn_damage(this, store, attack, target) + this.damage_buff
+					d.value = attack.fn_damage(this, store, attack, target)
 				else
 					d.damage_type = attack.damage_type
 					d.value = math.ceil(this.unit.damage_factor * (math.random(attack.damage_min, attack.damage_max)+this.damage_buff))
@@ -2140,6 +2181,7 @@ local function soldier_pick_melee_target(store, this)
 	return target
 end
 
+-- 士兵 block 目标，并移动到 melee_slot 对应位置
 local function soldier_move_to_slot_step(store, this, target)
 	U.block_enemy(store, this, target)
 
@@ -2229,7 +2271,7 @@ local function soldier_pick_melee_attack(store, this, target)
 
 	return nil
 end
--- 所有攻击还在冷却中、
+
 local function y_soldier_melee_block_and_attacks(store, this)
 	local target = soldier_pick_melee_target(store, this)
 
@@ -2881,7 +2923,10 @@ end
 local function y_enemy_walk_until_blocked(store, this, ignore_soldiers, func)
 	local ranged, blocker
 	local terrain_type = band(GR:cell_type(this.pos.x, this.pos.y), bor(TERRAIN_WATER, TERRAIN_LAND))
-
+    -- 无视士兵，或者没被拦截，且没有远程攻击属性时，敌人首先尝试远程索敌。如果远程攻击是 hold_advance 的，说明敌人会站桩攻击，于是停下，返回 true, nil, ranged
+    -- 接着，如果不无视士兵，且 blockers 不为空，清除其中已经被删除的 blocker。
+    -- 如果没有远程攻击，也没有 blocker，敌人继续走路。
+    -- 否则，敌人呆在原地不动。
 	while ignore_soldiers or not blocker and not ranged do
 		if this.unit.is_stunned then
 			return false
@@ -2928,6 +2973,7 @@ local function y_enemy_walk_until_blocked(store, this, ignore_soldiers, func)
 	return true, blocker, ranged
 end
 
+-- 士兵死亡，晕眩
 local function y_wait_for_blocker(store, this, blocker)
 	local pos = blocker.motion.arrived and blocker.pos or blocker.motion.dest
 	local an, af = U.animation_name_facing_point(this, "idle", pos)
@@ -2942,7 +2988,17 @@ local function y_wait_for_blocker(store, this, blocker)
 		end
 
 		if blocker.unit.is_stunned then
-			U.unblock_target(store, blocker)
+            if blocker.soldier.max_targets then
+                blocker.soldier.target_ids = {}
+            end
+            blocker.soldier.target_id = nil
+
+            table.removeobject(this.enemy.blockers, blocker.id)
+            if #this.enemy.blockers > 1 then
+                local last = table.remove(this.enemy.blockers)
+
+                table.insert(this.enemy.blockers, 1, last)
+            end
 
 			return false
 		end
