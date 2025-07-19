@@ -460,7 +460,6 @@ local function foundamental_towers()
     tt = E:register_t("mod_rock_slow", "mod_slow")
     tt.modifier.duration = 0.75
 
-
     tt = E:register_t("soldier_barrack_1", "soldier_militia")
     E:add_comps(tt, "revive")
     image_y = 46

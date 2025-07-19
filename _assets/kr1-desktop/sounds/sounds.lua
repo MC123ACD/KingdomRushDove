@@ -4529,14 +4529,14 @@ local kr3 = {
         source_group = "TAUNTS",
         files = {"GoldenBows_Ready[2]-01d.ogg"}
     },
-    ElvesArcherTaunt = {
-        loop = false,
-        gain = 0.6,
-        ignore = 1.5,
-        mode = "sequence",
-        source_group = "TAUNTS",
-        files = {"Archers_Taunt-01a.ogg", "Archers_Taunt-02a.ogg", "Archers_Taunt-03e.ogg"}
-    },
+    -- ElvesArcherTaunt = {
+    --     loop = false,
+    --     gain = 0.6,
+    --     ignore = 1.5,
+    --     mode = "sequence",
+    --     source_group = "TAUNTS",
+    --     files = {"Archers_Taunt-01a.ogg", "Archers_Taunt-02a.ogg", "Archers_Taunt-03e.ogg"}
+    -- },
     ElvesAshbiteConfirm = {
         loop = false,
         mode = "sequence",
@@ -4698,15 +4698,15 @@ local kr3 = {
         files = {"ForestProtector_Ready[2]-01c.ogg", "ForestProtector_Eerie[2]-01a.ogg",
                  "ForestProtector_Circle[2]-01g.ogg", "ForestProtector_Ancient[2]-01c.ogg"}
     },
-    ElvesBarrackTaunt = {
-        loop = false,
-        gain = 0.6,
-        ignore = 1.5,
-        mode = "sequence",
-        source_group = "TAUNTS",
-        files = {"Barrack_Taunt[2]-01c.ogg", "Barrack_Taunt[2]-02c.ogg", "Barrack_Taunt[2]-03c.ogg",
-                 "Barrack_Taunt[2]-04e.ogg"}
-    },
+    -- ElvesBarrackTaunt = {
+    --     loop = false,
+    --     gain = 0.6,
+    --     ignore = 1.5,
+    --     mode = "sequence",
+    --     source_group = "TAUNTS",
+    --     files = {"Barrack_Taunt[2]-01c.ogg", "Barrack_Taunt[2]-02c.ogg", "Barrack_Taunt[2]-03c.ogg",
+    --              "Barrack_Taunt[2]-04e.ogg"}
+    -- },
     ElvesBeanGrow = {
         loop = false,
         gain = 1,
@@ -6449,14 +6449,14 @@ local kr3 = {
         source_group = "TAUNTS",
         files = {"HighMage_Timelapse-01c.ogg"}
     },
-    ElvesMageTaunt = {
-        loop = false,
-        gain = 0.6,
-        ignore = 1.5,
-        mode = "sequence",
-        source_group = "TAUNTS",
-        files = {"Mage_Taunt-01e.ogg", "Mage_Taunt-03d.ogg", "Mage_Taunt[2]-02a.ogg"}
-    },
+    -- ElvesMageTaunt = {
+    --     loop = false,
+    --     gain = 0.6,
+    --     ignore = 1.5,
+    --     mode = "sequence",
+    --     source_group = "TAUNTS",
+    --     files = {"Mage_Taunt-01e.ogg", "Mage_Taunt-03d.ogg", "Mage_Taunt[2]-02a.ogg"}
+    -- },
     ElvesMageWildMagusDoomTaunt = {
         loop = false,
         gain = 0.6,
@@ -6584,14 +6584,14 @@ local kr3 = {
         source_group = "TAUNTS",
         files = {"DruidHenge_Ready-01a.ogg"}
     },
-    ElvesRockTaunt = {
-        loop = false,
-        gain = 0.6,
-        ignore = 1.5,
-        mode = "sequence",
-        source_group = "TAUNTS",
-        files = {"StoneDruid_Taunt-01b.ogg", "StoneDruid_Taunt-02b.ogg", "StoneDruid_Taunt-03a.ogg"}
-    },
+    -- ElvesRockTaunt = {
+    --     loop = false,
+    --     gain = 0.6,
+    --     ignore = 1.5,
+    --     mode = "sequence",
+    --     source_group = "TAUNTS",
+    --     files = {"StoneDruid_Taunt-01b.ogg", "StoneDruid_Taunt-02b.ogg", "StoneDruid_Taunt-03a.ogg"}
+    -- },
     ElvesScourgerDeath = {
         loop = false,
         gain = 0.3,

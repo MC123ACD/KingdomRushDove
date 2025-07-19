@@ -761,17 +761,17 @@ local kr3 = {
     },
     ElvesTowerTaunts = {
         files = {"ArcaneArcher_BurstArrow-01a.ogg", "ArcaneArcher_Ready-01a.ogg", "ArcaneArcher_SleepArrow-01c.ogg",
-                 "Archers_Taunt-01a.ogg", "Archers_Taunt-02a.ogg", "Archers_Taunt-03e.ogg", "Barrack_Taunt[2]-01c.ogg",
-                 "Barrack_Taunt[2]-02c.ogg", "Barrack_Taunt[2]-03c.ogg", "Barrack_Taunt[2]-04e.ogg",
+                --  "Archers_Taunt-01a.ogg", "Archers_Taunt-02a.ogg", "Archers_Taunt-03e.ogg", "Barrack_Taunt[2]-01c.ogg",
+                --  "Barrack_Taunt[2]-02c.ogg", "Barrack_Taunt[2]-03c.ogg", "Barrack_Taunt[2]-04e.ogg",
                  "Bladesinger_BladeDance[2]-01a.ogg", "Bladesinger_PerfectParry[2]-01d.ogg",
                  "Bladesinger_Ready[2]-01b.ogg", "Bladesinger_SwirlingEdge[2]-01a.ogg", "DruidHenge_Ready-01a.ogg",
                  "DruidHenge_Sylvan[2]-01b.ogg", "ForestProtector_Ancient[2]-01c.ogg",
                  "ForestProtector_Circle[2]-01g.ogg", "ForestProtector_Eerie[2]-01a.ogg",
                  "ForestProtector_Ready[2]-01c.ogg", "GoldenBows_Crimson-01b.ogg", "GoldenBows_Mark-01b.ogg",
                  "GoldenBows_Ready[2]-01d.ogg", "HighMage_ArcaneSentinel-01c.ogg", "HighMage_Ready-01a.ogg",
-                 "HighMage_Timelapse-01c.ogg", "Mage_Taunt-01e.ogg", "Mage_Taunt-03d.ogg", "Mage_Taunt[2]-02a.ogg",
+                --  "HighMage_Timelapse-01c.ogg", "Mage_Taunt-01e.ogg", "Mage_Taunt-03d.ogg", "Mage_Taunt[2]-02a.ogg",
                  "PapaTree_Clobberin[2]-01e.ogg", "PapaTree_Fiery[2]-01d.ogg", "PapaTree_Ready[2]-01d.ogg",
-                 "StoneDruid_Taunt-01b.ogg", "StoneDruid_Taunt-02b.ogg", "StoneDruid_Taunt-03a.ogg",
+                --  "StoneDruid_Taunt-01b.ogg", "StoneDruid_Taunt-02b.ogg", "StoneDruid_Taunt-03a.ogg",
                  "WildMagus_Doom[2]-01b.ogg", "WildMagus_Ready-01a.ogg", "WildMagus_Silence-01c.ogg"}
     },
     ElvesUnstableCrystalSounds = {
