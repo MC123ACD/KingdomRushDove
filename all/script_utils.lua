@@ -1069,14 +1069,22 @@ local function y_soldier_revive(store, this)
 		this.health.dead = false
 		this.health_bar.hidden = false
 
-        if this.soldier.max_targets then
-            for _, target_id in pairs(this.soldier.target_ids) do
-                local target = store.entities[target_id]
-                if target then
-                    U.block_enemy(store, this, target)
-                end
-            end
-        elseif this.soldier.target_id then
+        -- if this.soldier.max_targets then
+        --     for _, target_id in pairs(this.soldier.target_ids) do
+        --         local target = store.entities[target_id]
+        --         if target then
+        --             U.block_enemy(store, this, target)
+        --         end
+        --     end
+        -- elseif this.soldier.target_id then
+        --     local enemy = store.entities[this.soldier.target_id]
+
+        --     if enemy then
+        --         U.block_enemy(store, this, enemy)
+        --     end
+        -- end
+
+        if this.soldier.target_id then
             local enemy = store.entities[this.soldier.target_id]
 
             if enemy then
@@ -2148,6 +2156,7 @@ end
 local function soldier_pick_melee_target(store, this)
 	local target
 
+    -- 选择 soldier.target_id 作为目标 id
 	if U.blocker_rank(store, this) ~= nil then
 		if not U.is_blocked_valid(store, this) then
 			U.unblock_target(store, this)
@@ -2159,6 +2168,7 @@ local function soldier_pick_melee_target(store, this)
 	local center = this.nav_rally and this.nav_rally.center or this.pos
 
 	if not target then
+        -- 如果当前还没有 target_id，就索一下敌
 		if this.hero then
 			target = U.find_nearest_enemy(store.entities, center, 0, this.melee.range, F_BLOCK, bit.bor(F_CLIFF), function(e)
 				return (not e.enemy.max_blockers or #e.enemy.blockers == 0) and band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0 and (not this.melee.fn_can_pick or this.melee.fn_can_pick(this, e))
@@ -2169,6 +2179,7 @@ local function soldier_pick_melee_target(store, this)
 			end)
 		end
 	elseif U.blocker_rank(store, this) ~= 1 then
+        -- 如果当前拦截的敌人被多个士兵拦截，就尝试寻找别的尚未被拦截的敌人作为目标
 		local alt_target = U.find_foremost_enemy(store.entities, center, 0, this.melee.range, false, F_BLOCK, bit.bor(F_FLYING, F_CLIFF), function(e)
 			return #e.enemy.blockers == 0 and band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0
 		end)
@@ -2988,18 +2999,11 @@ local function y_wait_for_blocker(store, this, blocker)
 		end
 
 		if blocker.unit.is_stunned then
-            if blocker.soldier.max_targets then
-                blocker.soldier.target_ids = {}
-            end
+            -- if blocker.soldier.max_targets then
+            --     blocker.soldier.target_ids = {}
+            -- end
             blocker.soldier.target_id = nil
-
-            table.removeobject(this.enemy.blockers, blocker.id)
-            if #this.enemy.blockers > 1 then
-                local last = table.remove(this.enemy.blockers)
-
-                table.insert(this.enemy.blockers, 1, last)
-            end
-
+            U.dec_blocker(store, this, blocker.id)
 			return false
 		end
 	end

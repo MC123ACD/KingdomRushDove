@@ -1354,7 +1354,7 @@ function scripts.soldier_barrack.update(this, store, script)
         if this.unit.is_stunned then
             SU.soldier_idle(store, this)
         else
-            SU.soldier_courage_upgrade(store, this)
+            -- SU.soldier_courage_upgrade(store, this)
 
             if this.dodge and this.dodge.active then
                 this.dodge.active = false

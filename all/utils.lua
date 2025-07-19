@@ -1297,32 +1297,42 @@ end
 -- 士兵拦截敌人
 -- !!TO BE DONE!!
 function U.block_enemy(store, blocker, blocked)
-    if blocker.max_targets then
-        -- 士兵还有空闲的拦截位
-        if blocker.max_targets > #blocker.target_ids then
-            -- 若敌人并没有被士兵拦截，就让它被士兵拦截
-            if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
-                table.insert(blocked.enemy.blockers, blocker.id)
-                table.insert(blocker.soldier.target_ids, blocked.id)
-                if not blocker.soldier.target_id then
-                    blocker.soldier.target_id = blocked.id
-                end
-            end
-        -- 士兵没有空闲的拦截位了
-        else
+    -- if blocker.max_targets then
+    --     -- 士兵还有空闲的拦截位
+    --     if blocker.max_targets > #blocker.target_ids then
+    --         -- 若敌人并没有被士兵拦截，就让它被士兵拦截
+    --         if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
+    --             table.insert(blocked.enemy.blockers, blocker.id)
+    --             table.insert(blocker.soldier.target_ids, blocked.id)
+    --             if not blocker.soldier.target_id then
+    --                 blocker.soldier.target_id = blocked.id
+    --             end
+    --         end
+    --     -- 士兵没有空闲的拦截位了
+    --     else
 
-        end
-    else
-        if blocker.soldier.target_id ~= blocked.id then
-            U.unblock_target(store, blocker)
-        end
+    --     end
+    -- else
+    --     if blocker.soldier.target_id ~= blocked.id then
+    --         U.unblock_target(store, blocker)
+    --     end
 
-        if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
-            table.insert(blocked.enemy.blockers, blocker.id)
+    --     if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
+    --         table.insert(blocked.enemy.blockers, blocker.id)
 
-            blocker.soldier.target_id = blocked.id
-        end
+    --         blocker.soldier.target_id = blocked.id
+    --     end
+    -- end
+    if blocker.soldier.target_id ~= blocked.id then
+        U.unblock_target(store, blocker)
     end
+
+    if not table.keyforobject(blocked.enemy.blockers, blocker.id) then
+        table.insert(blocked.enemy.blockers, blocker.id)
+
+        blocker.soldier.target_id = blocked.id
+    end
+
 end
 
 -- 将新的士兵的 target_id 置为老的士兵的 target_id

@@ -1054,14 +1054,18 @@ function sys.health:on_update(dt, ts, store)
 
                         if e and h.spiked_armor > 0 and e.soldier and d.source_id then
                             local sad_target_id = nil
-                            if e.soldier.max_targets then
-                                if table.contains(e.soldier.target_ids , d.source_id) then
-                                    sad_target_id = d.source_id
-                                end
-                            else
-                                if e.soldier.target_id == d.source_id then
-                                    sad_target_id = d.source_id
-                                end
+                            -- if e.soldier.max_targets then
+                            --     if table.contains(e.soldier.target_ids , d.source_id) then
+                            --         sad_target_id = d.source_id
+                            --     end
+                            -- else
+                            --     if e.soldier.target_id == d.source_id then
+                            --         sad_target_id = d.source_id
+                            --     end
+                            -- end
+
+                            if e.soldier.target_id == d.source_id then
+                                sad_target_id = d.source_id
                             end
 
                             if sad_target_id then
