@@ -84,24 +84,6 @@ function simulation:update(dt)
 		return
 	end
 
-	-- d.dt = dt
-	-- d.ts = d.ts + dt
-	-- d.to = d.to + dt
-    -- local time_gap = TICK_LENGTH * d.speed_factor
-    -- if d.speed_factor == 0.5 then
-    --     if d.to > TICK_LENGTH then
-    --         d.to = km.clamp(0, TICK_LENGTH, d.to - TICK_LENGTH)
-    --         self:do_tick()
-    --         self:do_tick()
-    --         d.step = false
-    --     end
-    -- else
-    --     if d.to > time_gap then
-    --         d.to = km.clamp(0, time_gap, d.to - time_gap)
-    --         self:do_tick()
-    --         d.step = false
-    --     end
-    -- end
     simulation:do_tick()
 end
 
@@ -109,7 +91,7 @@ function simulation:do_tick()
 	local d = self.store
 
 	d.tick = d.tick + 1
-	d.tick_ts = d.tick * TICK_LENGTH
+	d.tick_ts = d.tick_ts + TICK_LENGTH
 
 	while #d.pending_inserts > 0 do
 		local e = table.remove(d.pending_inserts, 1)
@@ -124,7 +106,7 @@ function simulation:do_tick()
 	end
 
 	for _, sys in ipairs(self.systems_on_update) do
-		sys:on_update(TICK_LENGTH, TICK_LENGTH * d.tick, d)
+		sys:on_update(TICK_LENGTH, d.tick_ts, d)
 	end
 end
 

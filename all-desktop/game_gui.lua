@@ -1032,14 +1032,14 @@ function game_gui:keypressed(key, isrepeat)
             self:set_mode(GUI_MODE_RALLY_CONTROABLES)
         end
     elseif key == ks.slow then
-        if self.game.simulation.store.speed_factor ~= 2 then
-            self.game.simulation.store.speed_factor = 2
+        if self.game.simulation.store.speed_factor ~= 0.5 then
+            self.game.simulation.store.speed_factor = 0.5
         else
             self.game.simulation.store.speed_factor = 1
         end
     elseif key == ks.quick then
-        if self.game.simulation.store.speed_factor ~= 0.5 then
-            self.game.simulation.store.speed_factor = 0.5
+        if self.game.simulation.store.speed_factor ~= 2 then
+            self.game.simulation.store.speed_factor = 2
         else
             self.game.simulation.store.speed_factor = 1
         end
