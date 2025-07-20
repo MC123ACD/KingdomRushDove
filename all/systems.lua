@@ -347,7 +347,17 @@ local function spawner(store, wave, group_id)
         end
 
         if i < #spawns then
-            U.y_wait(store, fts(s.interval_next or 0))
+            local interval_next = s.interval_next or 0
+            if DI.level == DIFFICULTY_HARD then
+                if group_id > 12 then
+                    interval_next = interval_next * 0.64
+                elseif group_id > 9 then
+                    interval_next = interval_next * 0.76
+                elseif group_id > 6 then
+                    interval_next = interval_next * 0.88
+                end
+            end
+            U.y_wait(store, fts(interval_next))
         end
     end
 
