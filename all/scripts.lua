@@ -2434,8 +2434,9 @@ function scripts.bomb.update(this, store, script)
 
             mod.modifier.target_id = enemy.id
             mod.modifier.source_id = this.id
-
-            queue_insert(store, mod)
+            if U.flags_pass(enemy.vis, mod.modifier) then
+                queue_insert(store, mod)
+            end
         end
     end
 

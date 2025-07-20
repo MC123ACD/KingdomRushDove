@@ -603,6 +603,7 @@ mod_stun.main_script.remove = scripts.mod_stun.remove
 mod_stun.modifier.duration = 2
 mod_stun.modifier.type = MOD_TYPE_STUN
 mod_stun.modifier.vis_flags = F_STUN
+mod_stun.modifier.vis_bans = bor(mod_stun.modifier.vis_bans, F_BOSS)
 mod_stun.render.sprites[1].prefix = "stun"
 mod_stun.render.sprites[1].size_names = {"small", "big", "big"}
 mod_stun.render.sprites[1].name = "small"
