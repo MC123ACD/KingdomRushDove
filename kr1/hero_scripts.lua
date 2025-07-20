@@ -4426,7 +4426,7 @@ return function(scripts)
                         enabled = false
                         add_damage(-added_damage)
                         added_damage = 0
-                    elseif V.dist(rally_pos.x, rally_pos.y, hero.pos.x, hero.pos.y) > this.max_distance and
+                    elseif V.dist2(rally_pos.x, rally_pos.y, hero.pos.x, hero.pos.y) > this.max_distance * this.max_distance and
                         store.tick_ts - last_tick > this.tick_time then
                         add_damage(-this.damage_per_tick)
                         last_tick = store.tick_ts
@@ -5106,8 +5106,46 @@ return function(scripts)
             this.health.hp = this.health.hp_max
         end
     }
+    scripts.aura_oni_rage = {
+        update = function(this, store, script)
+            local hero = store.entities[this.aura.source_id]
+            this.pos = hero.pos
+            local s = this.render.sprites[1]
+            while true do
+                local scale = 0
+                local rate = hero.health.hp / hero.health.hp_max
+
+                if rate < 0.2 then
+                    scale = 1
+                elseif rate < 0.4 then
+                    scale = 0.7
+                elseif rate < 0.6 then
+                    scale = 0.4
+                elseif rate < 0.8 then
+                    scale = 0.1
+                end
+                if hero.health.dead then
+                    scale = 0
+                end
+                if scale ~= s.scale.x then
+                    s.ts = store.tick_ts
+                    s.scale.x, s.scale.y = scale, scale
+                end
+                s.hidden = scale == 0
+                coroutine.yield()
+            end
+        end
+    }
     -- 鬼侍
     scripts.hero_oni = {
+        insert = function(this, store, script)
+            this.hero.fn_level_up(this, store)
+            this.melee.order = U.attack_order(this.melee.attacks)
+            local e = E:create_entity("aura_oni_rage")
+            e.aura.source_id = this.id
+            queue_insert(store, e)
+            return true
+        end,
         level_up = function(this, store)
             local hl, ls = level_up_basic(this)
             this.melee.attacks[1].damage_min = ls.melee_damage_min[hl]

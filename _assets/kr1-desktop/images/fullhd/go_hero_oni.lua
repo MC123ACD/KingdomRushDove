@@ -4943,5 +4943,173 @@ return {
 			38
 		},
 		alias = {}
-	}
+	},
+        hero_giant_decal_0001 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {893, 655, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0002 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 707, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0003 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 757, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0004 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 807, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0005 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 857, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0006 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 907, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0007 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 957, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0008 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {749, 707, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0009 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 63, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {749, 655, 66, 45},
+        alias = {}
+    },
+    hero_giant_decal_0010 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 61, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {677, 602, 66, 47},
+        alias = {}
+    },
+    hero_giant_decal_0011 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {821, 707, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0012 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {893, 707, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0013 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {749, 757, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0014 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {821, 757, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0015 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {893, 757, 66, 44},
+        alias = {}
+    },
+    hero_giant_decal_0016 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {48, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {905, 523, 67, 44},
+        alias = {}
+    },
+    hero_giant_decal_0017 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {48, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {602, 779, 67, 44},
+        alias = {}
+    },
+    hero_giant_decal_0018 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {48, 63, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {900, 6, 67, 45},
+        alias = {}
+    },
+    hero_giant_decal_0019 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {48, 62, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {827, 6, 67, 46},
+        alias = {}
+    },
+    hero_giant_decal_0020 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {48, 61, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {754, 6, 67, 47},
+        alias = {}
+    },
+    hero_giant_decal_0021 = {
+        a_name = "go_hero_giant-1.png",
+        size = {163, 124},
+        trim = {49, 64, 48, 16},
+        a_size = {1024, 1024},
+        f_quad = {749, 807, 66, 44},
+        alias = {}
+    },
 }

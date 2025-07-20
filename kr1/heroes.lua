@@ -1314,6 +1314,7 @@ local function heroes()
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_hero_0013" or "info_portraits_hero_0013"
     tt.melee.range = 65
     tt.main_script.update = scripts.hero_oni.update
+    tt.main_script.insert = scripts.hero_oni.insert
     tt.motion.max_speed = 3.2 * FPS
     tt.regen.cooldown = 1
     tt.render.sprites[1].prefix = "hero_oni"
@@ -1374,6 +1375,22 @@ local function heroes()
     tt.rage_max = 0
     tt.unyield = 0
     tt.unyield_max = 0
+
+    tt = E:register_t("aura_oni_rage", "aura")
+    E:add_comps(tt, "render", "tween")
+    tt.aura.duration = -1
+    tt.aura.track_source = true
+    tt.main_script.update = scripts.aura_oni_rage.update
+    tt.render.sprites[1].name = "giant_bastion_decal"
+    tt.render.sprites[1].loop = true
+    tt.render.sprites[1].hidden = true
+    tt.render.sprites[1].draw_order = 2
+    tt.render.sprites[1].scale = vec_2(0, 0)
+    tt.render.sprites[1].anchor.y = 0.19117647058823528
+    tt.render.sprites[1].color = {255, 100, 100}
+    tt.tween.remove = false
+    tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
+
 
     tt = RT("hero_hacksaw", "hero")
     AC(tt, "melee", "ranged")
