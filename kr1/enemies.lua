@@ -700,10 +700,9 @@ local function enemies()
     tt.sound_events.death = "DeathTroll"
     tt.unit.hit_offset = vec_2(0, 13)
     tt.unit.mod_offset = vec_2(adx(28), ady(23))
+
     tt = RT("enemy_whitewolf", "enemy")
-
     AC(tt, "melee", "dodge")
-
     anchor_y = 0.3275862068965517
     anchor_x = 0.5
     image_y = 58
@@ -736,10 +735,9 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(32), ady(32))
     tt.unit.show_blood_pool = false
     tt.vis.bans = bor(F_SKELETON)
+
     tt = RT("enemy_yeti", "enemy")
-
     AC(tt, "melee")
-
     anchor_y = 0.19
     anchor_x = 0.5
     image_y = 80

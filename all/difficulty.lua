@@ -54,7 +54,7 @@ function difficulty:patch_templates()
             if self.level == DIFFICULTY_IMPOSSIBLE and t.health.hp_max > 2000 then
                 t.health.instakill_resistance = km.clamp(0,1,(t.health.hp_max - 2000)*0.0002)
             end
-            if bor(t.vis.flags, F_FLYING) ~= 0 then
+            if band(t.vis.flags, F_FLYING) ~= 0 then
                 -- 削弱飞行兵的生命加成
                 t.health.hp_max = math.floor(t.health.hp_max * (0.25 + 0.75 * hp_factor_enemy))
             else
