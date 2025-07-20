@@ -263,7 +263,7 @@ end
 sys.wave_spawn = {}
 sys.wave_spawn.name = "wave_spawn"
 
-local function spawner(store, wave, i)
+local function spawner(store, wave, group_id)
     log.debug("spawner thread(%s) for wave(%s) starting", coroutine.running(), tostring(wave))
 
     local spawns = wave.spawns
@@ -315,8 +315,8 @@ local function spawner(store, wave, i)
                 e.nav_path.spi = s.fixed_sub_path == 1 and s.path or math.random(#path)
                 e.nav_path.ni = P:get_start_node(pi)
                 e.spawn_data = s.spawn_data
-                if DI.level == DIFFICULTY_IMPOSSIBLE and i > 6 and e.enemy and e.health then
-                    e.health.hp_max = e.health.hp_max * (1 +  (i - 6) * 0.0167)
+                if DI.level == DIFFICULTY_IMPOSSIBLE and group_id > 6 and e.enemy and e.health then
+                    e.health.hp_max = e.health.hp_max * (1 + (group_id - 6) * 0.0167)
                     e.health.hp = e.health.hp_max
                 end
                 -- if e.enemy and gems_spawn_idx == i and gems_creep_idx == j then

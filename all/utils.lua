@@ -1289,7 +1289,7 @@ function U.unblock_target(store, blocker)
     local blocked = store.entities[blocked_id]
 
     if blocked then
-        U.dec_blocker(store, blocked, blocked_id)
+        U.dec_blocker(store, blocked, blocker.id)
     end
 
     blocker.soldier.target_id = nil

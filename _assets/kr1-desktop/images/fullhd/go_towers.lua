@@ -152998,6 +152998,78 @@ local kr3_data = {
 			"mage_teleport_violet_big_0010"
 		}
 	},
+    mage_towers_layer1_0097 = {
+		a_name = "go_towers-6.png",
+		size = {
+			132,
+			141
+		},
+		trim = {
+			27,
+			100,
+			29,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1886,
+			895,
+			76,
+			28
+		},
+		alias = {}
+	},
+    mage_towers_layer2_0097 = {
+		a_name = "go_towers-6.png",
+		size = {
+			132,
+			141
+		},
+		trim = {
+			12,
+			26,
+			11,
+			19
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			433,
+			982,
+			109,
+			96
+		},
+		alias = {}
+	},
+	mage_towers_layer1_0098 = {
+		a_name = "go_towers-6.png",
+		size = {
+			132,
+			141
+		},
+		trim = {
+			0,
+			2,
+			6,
+			10
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			289,
+			1057,
+			126,
+			129
+		},
+		alias = {}
+	},
 	mage_tower_shooter_0001 = {
 		a_name = "go_towers-8.png",
 		size = {
