@@ -2172,9 +2172,10 @@ end
 
 local function soldier_attract_enemies(store, this)
     if this.soldier.attractive then
-        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF, function(e)
-            return #e.enemy.blockers == 0 and e.enemy.attract_source_id == nil
-        end)
+        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF,
+            function(e)
+                return #e.enemy.blockers == 0 and e.enemy.attract_source_id == nil
+            end)
         for _, enemy in pairs(enemies) do
             enemy.enemy.attract_source_id = this.id
         end
@@ -2326,7 +2327,8 @@ end
 local function y_enemy_update_attract_source(store, this)
     if this.enemy.attract_source_id then
         local attract_source = store.entities[this.enemy.attract_source_id]
-        if not attract_source or attract_source.health.dead or not U.is_inside_ellipse(this.pos, attract_source.pos, attract_source.melee.range) then
+        if not attract_source or attract_source.health.dead or
+            not U.is_inside_ellipse(this.pos, attract_source.pos, attract_source.melee.range) then
             this.enemy.attract_source_id = nil
         end
     end
@@ -3678,6 +3680,10 @@ local function merge_conflict_tables(t1, t2)
 end
 
 local function insert_tower_range_buff(target, range_factor, allow_barrack)
+    if not target then
+        return
+    end
+
     if target.attacks and target.attacks.range then
         target.attacks.range = target.attacks.range * range_factor
     end
@@ -3690,9 +3696,14 @@ local function insert_tower_range_buff(target, range_factor, allow_barrack)
     if allow_barrack and target.barrack then
         target.barrack.rally_range = target.barrack.rally_range * range_factor
     end
+
 end
 
 local function insert_tower_cooldown_buff(target, cooldown_factor)
+    if not target then
+        return
+    end
+
     target.tower.cooldown_factor = target.tower.cooldown_factor * cooldown_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
@@ -3701,9 +3712,13 @@ local function insert_tower_cooldown_buff(target, cooldown_factor)
             end
         end
     end
+
 end
 
 local function remove_tower_range_buff(target, range_factor, allow_barrack)
+    if not target then
+        return
+    end
     if target.attacks and target.attacks.range then
         target.attacks.range = target.attacks.range / range_factor
     end
@@ -3719,6 +3734,9 @@ local function remove_tower_range_buff(target, range_factor, allow_barrack)
 end
 
 local function remove_tower_cooldown_buff(target, cooldown_factor)
+    if not target then
+        return
+    end
     target.tower.cooldown_factor = target.tower.cooldown_factor / cooldown_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
@@ -3731,6 +3749,9 @@ local function remove_tower_cooldown_buff(target, cooldown_factor)
 end
 
 local function insert_tower_damage_factor_buff(target, damage_factor)
+    if not target then
+        return
+    end
     target.tower.damage_factor = target.tower.damage_factor + damage_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
@@ -3742,6 +3763,9 @@ local function insert_tower_damage_factor_buff(target, damage_factor)
 end
 
 local function remove_tower_damage_factor_buff(target, damage_factor)
+    if not target then
+        return
+    end
     target.tower.damage_factor = target.tower.damage_factor - damage_factor
     if target.barrack then
         for _, s in pairs(target.barrack.soldiers) do
