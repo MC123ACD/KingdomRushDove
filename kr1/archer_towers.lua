@@ -560,9 +560,11 @@ local function archer_towers()
     tt.attacks.list[1].cooldown = 3.2
     tt.attacks.list[1].shoot_time = fts(14)
     tt.attacks.range = 220
+    tt.parrots = {}
     tt.info.fn = scripts.tower_pirate_watchtower.get_info
     tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0020"
     tt.main_script.update = scripts.tower_pirate_watchtower.update
+    tt.main_script.remove = scripts.tower_pirate_watchtower.remove
     tt.powers.reduce_cooldown = E:clone_c("power")
     tt.powers.reduce_cooldown.price_base = 50
     tt.powers.reduce_cooldown.price_inc = 50

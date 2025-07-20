@@ -831,8 +831,9 @@ local function mage_towers()
     tt.powers.sentinel.max_level = 3
     tt.powers.sentinel.price_base = 250
     tt.powers.sentinel.price_inc = 200
-    tt.powers.sentinel.range = 120
+    tt.powers.sentinel.range = 160
     tt.powers.sentinel.range_inc = 40
+    tt.powers.sentinel.range_base = 120
     tt.powers.sentinel.max_range = 240
     tt.powers.sentinel.enc_icon = 19
     tt.powers.sentinel.ts = 0

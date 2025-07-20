@@ -934,6 +934,13 @@ local function register_archer(scripts)
                 cooldown = a.cooldown
             }
         end,
+        remove = function(this, store)
+            for _, parrot in pairs(this.parrots) do
+                parrot.owner = nil
+                queue_remove(store, parrot)
+            end
+            return true
+        end,
         update = function(this, store)
             local at = this.attacks
             local a = this.attacks.list[1]
@@ -941,7 +948,6 @@ local function register_archer(scripts)
             local pow_p = this.powers.parrot
             local shooter_sid = 3
             local last_target_pos = V.v(0, 0)
-            local parrots = {}
 
             while true do
                 if this.tower.blocked then
@@ -954,16 +960,17 @@ local function register_archer(scripts)
 
                     if pow_p.changed then
                         pow_p.changed = nil
+                        for i = 1, (pow_p.level - #this.parrots) do
+                            local e = E:create_entity("pirate_watchtower_parrot")
 
-                        local e = E:create_entity("pirate_watchtower_parrot")
+                            e.bombs_pos = V.v(this.pos.x + 12, this.pos.y + 6)
+                            e.idle_pos = V.v(this.pos.x + (#this.parrots == 0 and -20 or 20), this.pos.y)
+                            e.pos = V.vclone(e.idle_pos)
+                            e.owner = this
 
-                        e.bombs_pos = V.v(this.pos.x + 12, this.pos.y + 6)
-                        e.idle_pos = V.v(this.pos.x + (#parrots == 0 and -20 or 20), this.pos.y)
-                        e.pos = V.vclone(e.idle_pos)
-                        e.owner = this
-
-                        queue_insert(store, e)
-                        table.insert(parrots, e)
+                            queue_insert(store, e)
+                            table.insert(this.parrots, e)
+                        end
                     end
 
                     if ready_to_attack(a, store, this.tower.cooldown_factor) then
@@ -1680,7 +1687,7 @@ local function register_mage(scripts)
                     end
 
                     if pow_s.changed then
-                        pow_s.range = pow_s.range + pow_s.range_inc
+                        pow_s.range = pow_s.range_base + pow_s.range_inc * pow_s.level
                         pow_s.changed = nil
                     end
 
