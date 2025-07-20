@@ -269,18 +269,18 @@ local function spawner(store, wave)
     local spawns = wave.spawns
     local pi = wave.path_index
     local last_spawn_ts = 0
-    local gems_creep_idx
-    local gems_keeper_random = store.level_mode == GAME_MODE_CAMPAIGN
-    local gems_spawn_idx = gems_keeper_random and math.random(1, #spawns) or #spawns
-    local max_creeps = spawns[gems_spawn_idx].max
+    -- local gems_creep_idx
+    -- local gems_keeper_random = store.level_mode == GAME_MODE_CAMPAIGN
+    -- local gems_spawn_idx = gems_keeper_random and math.random(1, #spawns) or #spawns
+    -- local max_creeps = spawns[gems_spawn_idx].max
 
-    if max_creeps > 0 then
-        gems_creep_idx = gems_keeper_random and math.random(1, max_creeps) or max_creeps
+    -- if max_creeps > 0 then
+    --     gems_creep_idx = gems_keeper_random and math.random(1, max_creeps) or max_creeps
 
-        log.debug("GEMS: gems_spawn_idx:%s gems_creep_idx:%s", gems_spawn_idx, gems_creep_idx)
-    else
-        log.debug("GEMS: assigned to spawner with max_creeps = 0, so not in play.")
-    end
+    --     log.debug("GEMS: gems_spawn_idx:%s gems_creep_idx:%s", gems_spawn_idx, gems_creep_idx)
+    -- else
+    --     log.debug("GEMS: assigned to spawner with max_creeps = 0, so not in play.")
+    -- end
 
     for i = 1, #spawns do
         local current_count = 0
@@ -316,12 +316,12 @@ local function spawner(store, wave)
                 e.nav_path.ni = P:get_start_node(pi)
                 e.spawn_data = s.spawn_data
 
-                if e.enemy and gems_spawn_idx == i and gems_creep_idx == j then
-                    e.enemy.gems = math.floor(store.gems_per_wave * (1 + km.rand_sign() * 0.2))
+                -- if e.enemy and gems_spawn_idx == i and gems_creep_idx == j then
+                --     e.enemy.gems = math.floor(store.gems_per_wave * (1 + km.rand_sign() * 0.2))
 
-                    log.debug("GEMS: %s gems to enemy: (%s)%s spawn:%s creep:%s", e.enemy.gems, e.id, e.template_name,
-                        i, j)
-                end
+                --     log.debug("GEMS: %s gems to enemy: (%s)%s spawn:%s creep:%s", e.enemy.gems, e.id, e.template_name,
+                --         i, j)
+                -- end
 
                 queue_insert(store, e)
 

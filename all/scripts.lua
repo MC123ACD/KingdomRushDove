@@ -2175,8 +2175,9 @@ function scripts.arrow.update(this, store, script)
         end
 
         if b.hide_radius then
-            s.hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or
-                           V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
+            local hide_radius_squared = b.hide_radius * b.hide_radius
+            s.hidden = V.dist2(this.pos.x, this.pos.y, b.from.x, b.from.y) < hide_radius_squared or
+                           V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) < hide_radius_squared
 
             if ps then
                 ps.particle_system.emit = not s.hidden
@@ -2195,7 +2196,7 @@ function scripts.arrow.update(this, store, script)
                 target_pos.y + target.unit.hit_offset.y
         end
 
-        if V.dist(this.pos.x, this.pos.y, target_pos.x, target_pos.y) < b.hit_distance and
+        if V.dist2(this.pos.x, this.pos.y, target_pos.x, target_pos.y) < b.hit_distance * b.hit_distance and
             not SU.unit_dodges(store, target, true) and (not b.hit_chance or math.random() < b.hit_chance) then
             hit = true
 

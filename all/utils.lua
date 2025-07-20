@@ -641,7 +641,7 @@ function U.find_nearest_soldier(entities, origin, min_range, max_range, flags, b
         return nil
     else
         table.sort(soldiers, function(e1, e2)
-            return V.dist(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist(e2.pos.x, e2.pos.y, origin.x, origin.y)
+            return band(e1.vis.flags, F_MOCKING) ~= 0 or (V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y))
         end)
 
         return soldiers[1]
@@ -671,7 +671,7 @@ function U.find_nearest_enemy(entities, origin, min_range, max_range, flags, ban
         return nil
     else
         table.sort(targets, function(e1, e2)
-            return V.dist(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist(e2.pos.x, e2.pos.y, origin.x, origin.y)
+            return V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y)
         end)
 
         return targets[1], targets
@@ -685,7 +685,7 @@ function U.find_nearest_target(entities, origin, min_range, max_range, flags, ba
         return nil
     else
         table.sort(targets, function(e1, e2)
-            return V.dist(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist(e2.pos.x, e2.pos.y, origin.x, origin.y)
+            return V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y)
         end)
 
         return targets[1], targets
@@ -968,8 +968,8 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
         for i = 2, #enemies do
             local e = enemies[i]
 
-            if V.dist(e.__ffe_pos.x, e.__ffe_pos.y, foremost_enemy.__ffe_pos.x, foremost_enemy.__ffe_pos.y) <=
-                cover_range then
+            if V.dist2(e.__ffe_pos.x, e.__ffe_pos.y, foremost_enemy.__ffe_pos.x, foremost_enemy.__ffe_pos.y) <=
+                cover_range * cover_range then
                 max_cover_enemy_idx = i
             else
                 break

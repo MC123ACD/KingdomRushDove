@@ -331,6 +331,7 @@ local function mage_towers()
     tt.unit.marker_offset = vec_2(0, -2)
     tt.unit.mod_offset = vec_2(0, 16)
     tt.vis.bans = bor(F_LYCAN, F_BLOOD, F_POISON)
+    tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
 
     local tower_archmage = E:register_t("tower_archmage", "tower")
     E:add_comps(tower_archmage, "attacks", "powers")

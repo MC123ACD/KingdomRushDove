@@ -5213,6 +5213,7 @@ local function heroes()
     tt.timed_attacks.list[1].min_count = 1
     tt.timed_attacks.list[1].sound = "HeroCrabPrincer"
     tt.timed_attacks.list[1].xp_from_skill = "pincerattack"
+    tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
 
     tt = E:register_t("crab_water_bomb", "bomb")
     tt.bullet.damage_radius = 65
@@ -5369,7 +5370,8 @@ local function heroes()
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.unit.blood_color = BLOOD_GRAY
     tt.vis.bans = bor(tt.vis.bans, F_POISON)
-    tt.melee.range = 70.4
+    tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
+    tt.melee.range = 70
     tt.melee.attacks[1] = E:clone_c("melee_attack")
     tt.melee.attacks[1].damage_max = nil
     tt.melee.attacks[1].damage_min = nil

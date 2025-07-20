@@ -1682,7 +1682,7 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
 
     if attack.count then
         table.sort(targets, function(e1, e2)
-            return V.dist(e1.pos.x, e1.pos.y, hit_pos.x, hit_pos.y) < V.dist(e2.pos.x, e2.pos.y, hit_pos.x, hit_pos.y)
+            return V.dist2(e1.pos.x, e1.pos.y, hit_pos.x, hit_pos.y) < V.dist2(e2.pos.x, e2.pos.y, hit_pos.x, hit_pos.y)
         end)
     end
 
@@ -3126,6 +3126,7 @@ local function y_enemy_do_ranged_attack(store, this, target, attack)
 
                 bullet.bullet.target_id = target.id
 
+                bullet.bullet.damage_factor = this.unit.damage_factor
                 if attack.damage_factor then
                     bullet.bullet.damage_factor = bullet.bullet.damage_factor * attack.damage_factor
                 end
