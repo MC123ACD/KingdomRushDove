@@ -564,7 +564,7 @@ local function hero_will_teleport(this, new_rally_pos)
     local tp = this.teleport
     local r = new_rally_pos
 
-    return tp and not tp.disabled and V.dist(r.x, r.y, this.pos.x, this.pos.y) > tp.min_distance
+    return tp and not tp.disabled and V.dist2(r.x, r.y, this.pos.x, this.pos.y) > tp.min_distance * tp.min_distance
 end
 
 -- 英雄调集时可变形，且新的集结点到英雄的距离大于变形的最小距离
@@ -572,7 +572,7 @@ local function hero_will_transfer(this, new_rally_pos)
     local tr = this.transfer
     local r = new_rally_pos
 
-    return tr and not tr.disabled and V.dist(r.x, r.y, this.pos.x, this.pos.y) > tr.min_distance
+    return tr and not tr.disabled and V.dist2(r.x, r.y, this.pos.x, this.pos.y) > tr.min_distance * tr.min_distance
 end
 
 -- 按照 .nav_grid.waypoints 移动
@@ -2170,6 +2170,17 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
     return attack_done
 end
 
+local function soldier_attract_enemies(store, this)
+    if this.soldier.attractive then
+        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF, function(e)
+            return #e.enemy.blockers == 0 and e.enemy.attract_source_id == nil
+        end)
+        for _, enemy in pairs(enemies) do
+            enemy.enemy.attract_source_id = this.id
+        end
+    end
+end
+
 local function soldier_pick_melee_target(store, this)
     local target
 
@@ -2310,6 +2321,15 @@ local function soldier_pick_melee_attack(store, this, target)
     end
 
     return nil
+end
+
+local function y_enemy_update_attract_source(store, this)
+    if this.enemy.attract_source_id then
+        local attract_source = store.entities[this.enemy.attract_source_id]
+        if not attract_source or attract_source.health.dead or not U.is_inside_ellipse(this.pos, attract_source.pos, attract_source.melee.range) then
+            this.enemy.attract_source_id = nil
+        end
+    end
 end
 
 local function y_soldier_melee_block_and_attacks(store, this)

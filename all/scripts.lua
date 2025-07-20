@@ -2878,7 +2878,7 @@ function scripts.enemy_missile.update(this, store, script)
         end
     end
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * mspeed * store.tick_length * store.tick_length do
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 

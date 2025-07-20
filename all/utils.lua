@@ -173,8 +173,9 @@ function U.is_inside_ellipse(p, center, radius, aspect)
 
     local a = radius
     local b = radius * aspect
-
-    return math.pow((p.x - center.x) / a, 2) + math.pow((p.y - center.y) / b, 2) <= 1
+    local x = (p.x - center.x) / a
+    local y = (p.y - center.y) / b
+    return x * x + y * y <= 1
 end
 
 -- 返回椭圆 angle 角度对应的点位
