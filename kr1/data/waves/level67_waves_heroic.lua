@@ -1,7 +1,7 @@
 ﻿-- chunkname: @./kr3/data/waves/level19_waves_heroic.lua
 
 return {
-	cash = 1700,
+	cash = 1800,
 	groups = {
 		{
 			interval = 800,
