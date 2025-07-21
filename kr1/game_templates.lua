@@ -6629,19 +6629,17 @@ tt.render.sprites[1].z = Z_OBJECTS
 tt.render.sprites[1].draw_order = 10
 tt.tween.props[1].keys = {{0, 0}, {0.3, 255}, {tt.modifier.duration - 0.3, 255}, {tt.modifier.duration, 0}}
 tt.tween.remove = false
+
 tt = E:register_t("mod_twilight_elf_harasser", "modifier")
-
 E:add_comps(tt, "mark_flags")
-
 tt.mark_flags.vis_bans = F_CUSTOM
 tt.main_script.queue = scripts.mod_mark_flags.queue
 tt.main_script.dequeue = scripts.mod_mark_flags.dequeue
 tt.main_script.update = scripts.mod_mark_flags.update
 tt.modifier.duration = fts(20)
+
 tt = E:register_t("mod_redcap_heal", "modifier")
-
 E:add_comps(tt, "hps")
-
 tt.main_script.insert = scripts.mod_redcap_heal.insert
 tt.main_script.update = scripts.mod_hps.update
 tt.hps.heal_min = 25

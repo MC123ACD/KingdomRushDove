@@ -5492,7 +5492,6 @@ local function enemies()
     tt.dodge.max_nodes = -15
     tt.dodge.min_nodes = -24
     tt.dodge.nodeslimit = 15
-    tt.dodge.requires_magic = true
     tt.enemy.gold = 25
     tt.enemy.melee_slot = vec_2(26, 0)
     tt.health.armor = {0.3, 0.45, 0.6}
