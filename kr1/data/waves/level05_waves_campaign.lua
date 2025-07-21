@@ -10,6 +10,7 @@ return {
 				{
 					delay = 0,
 					path_index = 1,
+                    notification = "TOWER_RANGER",
 					spawns = {
 						{
 							interval = 64,
@@ -156,7 +157,6 @@ return {
 				{
 					delay = 0,
 					path_index = 1,
-					notification = "TOWER_RANGER",
 					spawns = {
 						{
 							interval = 50,
