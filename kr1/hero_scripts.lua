@@ -13990,8 +13990,6 @@ return function(scripts)
                 elseif a.sync_animation and not this.render.sprites[1].sync_flag then
                     -- block empty
                 elseif ready_to_attack(a, store, this.cooldown_factor) then
-                    -- block empty
-                else
                     local origin = V.v(this.pos.x, this.pos.y + a.bullet_start_offset[1].y)
                     local bullet_t = E:get_template(a.bullet)
                     local bullet_speed = bullet_t.bullet.min_speed

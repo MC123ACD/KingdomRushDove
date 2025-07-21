@@ -3743,7 +3743,6 @@ local function heroes()
     tt.dps.damage_max = nil
     tt.dps.damage_type = DAMAGE_TRUE
     tt.dps.damage_every = fts(15)
-    tt.modifier.allows_duplicates = true
     tt.main_script.insert = scripts.mod_dps.insert
     tt.main_script.update = scripts.mod_dps.update
     tt.render.sprites[1].size_names = {"small", "medium", "large"}
