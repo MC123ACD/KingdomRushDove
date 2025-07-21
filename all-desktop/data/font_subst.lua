@@ -141,7 +141,8 @@ return {
 		},
 		{
 			"h_book",
-			"Sun Yun He Xuan Li Ti"
+			-- "Sun Yun He Xuan Li Ti"
+            "JIMOJW"
 		},
 		{
 			"h_map",
