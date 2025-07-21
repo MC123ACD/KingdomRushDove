@@ -13861,4 +13861,526 @@ return function(scripts)
             end
         end
     }
+    -- 红龙
+    function scripts.hero_dragon.insert(this, store)
+        this.hero.fn_level_up(this, store)
+        this.ranged.order = U.attack_order(this.ranged.attacks)
+        return true
+    end
+
+    function scripts.hero_dragon.update(this, store)
+        local h = this.health
+        local he = this.hero
+        local a, skill, force_idle_ts
+
+        U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
+
+        this.health_bar.hidden = false
+        force_idle_ts = true
+
+        while true do
+            if h.dead then
+                SU.y_hero_death_and_respawn(store, this)
+
+                force_idle_ts = true
+            end
+
+            while this.nav_rally.new do
+                SU.y_hero_new_rally(store, this)
+            end
+
+            if SU.hero_level_up(store, this) then
+                U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+            end
+
+            a = this.timed_attacks.list[1]
+            skill = this.hero.skills.feast
+
+            if ready_to_use_skill(a, store) then
+                local target = U.find_nearest_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    a.vis_bans)
+
+                if not target then
+                    SU.delay_attack(store, a, 0.13333333333333333)
+                else
+                    SU.hero_gain_xp_from_skill(this, skill)
+
+                    a.ts = store.tick_ts
+
+                    SU.stun_inc(target)
+                    S:queue(a.sound)
+                    U.animation_start(this, "feast", target.pos.x < this.pos.x, store.tick_ts)
+
+                    local steps = math.floor(fts(9) / store.tick_length)
+                    local step_x, step_y = V.mul(1 / steps, target.pos.x - this.pos.x, target.pos.y - this.pos.y - 1)
+
+                    for i = 1, steps do
+                        this.pos.x, this.pos.y = this.pos.x + step_x, this.pos.y + step_y
+
+                        coroutine.yield()
+                    end
+
+                    local fx = E:create_entity("fx_dragon_feast")
+
+                    fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                    fx.render.sprites[1].ts = store.tick_ts
+
+                    queue_insert(store, fx)
+
+                    local d = E:create_entity("damage")
+
+                    d.damage_type = DAMAGE_PHYSICAL
+                    d.value = (a.damage + this.damage_buff) * this.unit.damage_factor
+                    d.target_id = target.id
+                    d.source_id = this.id
+
+                    local actual_damage = U.predict_damage(target, d)
+
+                    if math.random() < a.devour_chance or actual_damage >= target.health.hp then
+                        if band(target.vis.bans, bor(F_INSTAKILL, F_EAT)) ~= 0 then
+                            d.value = d.value * 2
+                        else
+                            if target.unit.can_explode then
+                                d.damage_type = DAMAGE_EAT
+
+                                local fxn, default_fx
+
+                                if target.unit.explode_fx and target.unit.explode_fx ~= "fx_unit_explode" then
+                                    fxn = target.unit.explode_fx
+                                    default_fx = false
+                                else
+                                    fxn = "fx_dragon_feast_explode"
+                                    default_fx = true
+                                end
+
+                                local fx = E:create_entity(fxn)
+                                local fxs = fx.render.sprites[1]
+
+                                fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                                fxs.ts = store.tick_ts
+
+                                if default_fx then
+                                    fxs.scale = fxs.size_scales[target.unit.size]
+                                else
+                                    fxs.name = fxs.size_names[target.unit.size]
+                                end
+
+                                queue_insert(store, fx)
+                            else
+                                d.damage_type = DAMAGE_INSTAKILL
+                            end
+                        end
+                    end
+
+                    queue_damage(store, d)
+                    SU.stun_dec(target)
+                    U.y_animation_wait(this)
+
+                    force_idle_ts = true
+
+                    goto label_383_1
+                end
+            end
+
+            for _, i in pairs(this.ranged.order) do
+                local a = this.ranged.attacks[i]
+
+                if a.disabled then
+                    -- block empty
+                elseif a.sync_animation and not this.render.sprites[1].sync_flag then
+                    -- block empty
+                elseif ready_to_attack(a, store, this.cooldown_factor) then
+                    -- block empty
+                else
+                    local origin = V.v(this.pos.x, this.pos.y + a.bullet_start_offset[1].y)
+                    local bullet_t = E:get_template(a.bullet)
+                    local bullet_speed = bullet_t.bullet.min_speed
+                    local flight_time = bullet_t.bullet.flight_time
+                    local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                        a.vis_bans)
+
+                    if target then
+                        local start_ts = store.tick_ts
+                        local b, emit_fx, emit_ps, emit_ts, node_offset
+
+                        if flight_time then
+                            node_offset = P:predict_enemy_node_advance(target, flight_time + a.shoot_time)
+                        else
+                            local dist = V.dist(origin.x, origin.y, target.pos.x, target.pos.y)
+
+                            node_offset = P:predict_enemy_node_advance(target, dist / bullet_speed)
+                        end
+
+                        local t_pos
+
+                        if a.name == "fierymist" or a.name == "blazingbreath" then
+                            t_pos = P:node_pos(target.nav_path.pi, 1, target.nav_path.ni + node_offset)
+                        else
+                            t_pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + node_offset)
+                        end
+
+                        local an, af, ai = U.animation_name_facing_point(this, a.animation, t_pos)
+
+                        U.animation_start(this, an, af, store.tick_ts)
+
+                        while store.tick_ts - start_ts < a.shoot_time do
+                            if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
+                                goto label_383_0
+                            end
+
+                            coroutine.yield()
+                        end
+
+                        S:queue(a.sound)
+
+                        b = E:create_entity(a.bullet)
+                        b.bullet.target_id = target.id
+                        b.bullet.source_id = this.id
+                        b.bullet.damage_factor = this.unit.damage_factor
+                        b.bullet.damage_min = b.bullet.damage_min + this.damage_buff
+                        b.bullet.damage_max = b.bullet.damage_max + this.damage_buff
+                        b.pos = V.vclone(this.pos)
+                        b.pos.x = b.pos.x + (af and -1 or 1) * a.bullet_start_offset[ai].x
+                        b.pos.y = b.pos.y + a.bullet_start_offset[ai].y
+                        b.bullet.from = V.vclone(b.pos)
+                        b.bullet.to = V.v(t_pos.x, t_pos.y)
+
+                        queue_insert(store, b)
+
+                        if a.xp_from_skill then
+                            SU.hero_gain_xp_from_skill(this, this.hero.skills[a.xp_from_skill])
+                        end
+
+                        a.ts = start_ts
+
+                        if a.emit_ps and b.bullet.flight_time then
+                            local dest = V.vclone(b.bullet.to)
+
+                            if a.name == "fierymist" or a.name == "blazingbreath" then
+                                dest.y = dest.y + 15
+                            end
+
+                            emit_ts = store.tick_ts
+
+                            local ps = E:create_entity(a.emit_ps)
+                            local mspeed = V.dist(dest.x, dest.y, b.bullet.from.x, b.bullet.from.y) / b.bullet.flight_time
+
+                            ps.particle_system.emit_direction =
+                                V.angleTo(dest.x - b.bullet.from.x, dest.y - b.bullet.from.y)
+                            ps.particle_system.emit_speed = {mspeed, mspeed}
+                            ps.particle_system.flip_x = af
+                            ps.pos.x, ps.pos.y = b.bullet.from.x, b.bullet.from.y
+
+                            queue_insert(store, ps)
+
+                            emit_ps = ps
+                        end
+
+                        if a.emit_fx then
+                            local fx = E:create_entity(a.emit_fx)
+
+                            fx.pos.x, fx.pos.y = b.bullet.from.x, b.bullet.from.y
+                            fx.render.sprites[1].ts = store.tick_ts
+                            fx.render.sprites[1].flip_x = af
+
+                            if af and fx.render.sprites[1].offset.x then
+                                fx.render.sprites[1].offset.x = -1 * fx.render.sprites[1].offset.x
+                            end
+
+                            queue_insert(store, fx)
+
+                            emit_fx = fx
+                        end
+
+                        while not U.animation_finished(this) do
+                            if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
+                                goto label_383_0
+                            end
+
+                            coroutine.yield()
+                        end
+
+                        force_idle_ts = true
+
+                        ::label_383_0::
+
+                        if emit_ps then
+                            emit_ps.particle_system.emit = false
+                            emit_ps.particle_system.source_lifetime = 0
+                        end
+
+                        if emit_fx then
+                            emit_fx.render.sprites[1].hidden = true
+                        end
+
+                        goto label_383_1
+                    end
+                end
+            end
+
+            SU.soldier_idle(store, this, force_idle_ts)
+            SU.soldier_regen(store, this)
+
+            force_idle_ts = nil
+
+            ::label_383_1::
+
+            coroutine.yield()
+        end
+    end
+
+    scripts.breath_dragon = {}
+
+    function scripts.breath_dragon.update(this, store)
+        local b = this.bullet
+        local tl = store.tick_length
+        local insert_ts = store.tick_ts
+        local mspeed = V.dist(b.to.x, b.to.y, b.from.x, b.from.y) / b.flight_time
+
+        while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * tl do
+            b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
+            this.pos.x, this.pos.y = this.pos.x + b.speed.x * tl, this.pos.y + b.speed.y * tl
+
+            coroutine.yield()
+        end
+
+        this.pos.x, this.pos.y = b.to.x, b.to.y
+        this.render.sprites[1].hidden = false
+
+        local start_ts = store.tick_ts
+        local fx = E:create_entity("fx_breath_dragon_fire")
+
+        fx.pos.x, fx.pos.y = b.to.x, b.to.y
+        fx.render.sprites[1].ts = store.tick_ts
+
+        queue_insert(store, fx)
+
+        local fx = E:create_entity("fx_breath_dragon_fire_decal")
+
+        fx.pos.x, fx.pos.y = b.to.x, b.to.y
+        fx.render.sprites[1].ts = store.tick_ts + fts(11)
+
+        queue_insert(store, fx)
+
+        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+        local every = fts(2)
+        local steps = math.floor(this.duration / every)
+        local damage_per_step = math.random(b.damage_min, b.damage_max) / steps * b.damage_factor
+        local last_ts = 0
+
+        while store.tick_ts - start_ts < this.duration do
+            if targets and every < store.tick_ts - last_ts then
+                last_ts = store.tick_ts
+
+                for _, e in pairs(targets) do
+                    if e.health and not e.health.dead then
+                        local d = E:create_entity("damage")
+
+                        d.damage_type = b.damage_type
+                        d.value = damage_per_step
+                        d.target_id = e.id
+                        d.source_id = this.id
+                        d.xp_gain_factor = b.xp_gain_factor
+                        d.xp_dest_id = b.source_id
+
+                        queue_damage(store, d)
+
+                        if b.mod then
+                            local mod = E:create_entity(b.mod)
+
+                            mod.modifier.target_id = e.id
+
+                            queue_insert(store, mod)
+                        end
+                    end
+                end
+            end
+
+            coroutine.yield()
+        end
+
+        queue_remove(store, this)
+    end
+
+    scripts.fierymist_dragon = {}
+
+    function scripts.fierymist_dragon.update(this, store)
+        local b = this.bullet
+        local tl = store.tick_length
+        local insert_ts = store.tick_ts
+        local node
+        local target = store.entities[b.target_id]
+        local mspeed = V.dist(b.to.x, b.to.y, b.from.x, b.from.y) / b.flight_time
+        local dist2 = mspeed * mspeed * tl * tl
+        local nodes = P:nearest_nodes(b.to.x, b.to.y, nil, nil, true)
+
+        if #nodes > 0 then
+            node = {
+                pi = nodes[1][1],
+                spi = nodes[1][2],
+                ni = nodes[1][3]
+            }
+        end
+
+        if not node then
+            log.debug("cannot deploy fierymist_dragon: no destination node")
+            queue_remove(store, this)
+
+            return
+        end
+
+        node.spi = 1
+
+        while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
+            b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
+            this.pos.x, this.pos.y = this.pos.x + b.speed.x * tl, this.pos.y + b.speed.y * tl
+
+            coroutine.yield()
+        end
+
+        local aura = E:create_entity(b.hit_payload)
+
+        aura.pos = P:node_pos(node)
+
+        queue_insert(store, aura)
+
+        local spi = 1
+
+        for i = 1, 14 do
+            local ni = node.ni - 6 + i
+
+            if P:is_node_valid(node.pi, ni) then
+                local fx = E:create_entity("fx_aura_fierymist_dragon")
+
+                fx.pos = P:node_pos(node.pi, spi, ni)
+                fx.pos.x, fx.pos.y = fx.pos.x + math.random(0, 8), fx.pos.y + math.random(0, 8)
+
+                local scale = U.frandom(0.9, 1.1)
+
+                fx.render.sprites[1].scale = V.v(scale, scale)
+                fx.render.sprites[1].time_offset = fts(i * 2)
+                fx.duration = aura.aura.duration
+                fx.tween.ts = store.tick_ts
+
+                queue_insert(store, fx)
+            end
+
+            spi = km.zmod(spi + 2, 3)
+        end
+
+        queue_remove(store, this)
+    end
+
+    scripts.wildfirebarrage_dragon = {}
+
+    function scripts.wildfirebarrage_dragon.insert(this, store)
+        local b = this.bullet
+        local target = store.entities[b.target_id]
+
+        if not target then
+            log.debug("target removed before inserting wildfirebarrage")
+
+            return false
+        end
+
+        local node_offset = P:predict_enemy_node_advance(target, b.flight_time)
+
+        b.to = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + node_offset)
+        b.speed = SU.initial_parabola_speed(b.from, b.to, b.flight_time, b.g)
+        b.ts = store.tick_ts
+        b.last_pos = V.vclone(b.from)
+
+        return true
+    end
+
+    function scripts.wildfirebarrage_dragon.update(this, store)
+        local b = this.bullet
+        local dradius = b.damage_radius
+        local ps = E:create_entity(b.particles_name)
+
+        ps.particle_system.track_id = this.id
+
+        queue_insert(store, ps)
+
+        while store.tick_ts - b.ts < b.flight_time do
+            b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
+            this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
+            this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
+
+            coroutine.yield()
+        end
+
+        this.render.sprites[1].hidden = true
+        ps.particle_system.emit = false
+
+        local delays = {0, 0.1, 0, 0.1, 0, 0.1, 0, 0.1, 0, 0, 0, 0.2, 0, 0}
+        local node_offsets = {0, 2, 4, -4, 0, 0, 6, -6, 8, 8, -8, -8, 10, -10}
+        local node_subpaths = {1, 1, 1, 1, 2, 3, 1, 1, 2, 3, 2, 3, 1, 1}
+        local node
+        local nodes = P:nearest_nodes(b.to.x, b.to.y, nil, nil, true)
+
+        if #nodes < 1 then
+            -- block empty
+        else
+            node = {
+                pi = nodes[1][1],
+                spi = nodes[1][2],
+                ni = nodes[1][3]
+            }
+
+            for i = 1, this.explosions do
+                local fx, decal, pos, targets
+                local n = {
+                    pi = node.pi,
+                    spi = node_subpaths[i],
+                    ni = node.ni + node_offsets[i]
+                }
+                local pos = P:node_pos(n)
+
+                if not P:is_node_valid(n.pi, n.ni) then
+                    -- block empty
+                else
+                    fx = E:create_entity("fx_wildfirebarrage_explosion_" .. ((i == 1 or i == 5 or i == 6) and "2" or "1"))
+                    fx.pos = pos
+                    fx.render.sprites[1].ts = store.tick_ts
+
+                    queue_insert(store, fx)
+
+                    decal = E:create_entity("decal_wildfirebarrage_explosion")
+                    decal.pos = V.vclone(pos)
+                    decal.render.sprites[1].ts = store.tick_ts
+
+                    queue_insert(store, decal)
+
+                    targets =
+                        U.find_enemies_in_range(store.entities, pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+
+                    if targets then
+                        for _, target in pairs(targets) do
+                            local d = SU.create_bullet_damage(b, target.id, this.id)
+
+                            d.xp_dest_id = b.source_id
+
+                            queue_damage(store, d)
+
+                            if b.mod then
+                                local mod = E:create_entity(b.mod)
+
+                                mod.modifier.target_id = target.id
+                                mod.modifier.damage_factor = b.damage_factor
+                                queue_insert(store, mod)
+                            end
+                        end
+                    end
+                end
+
+                if delays[i] > 0 then
+                    U.y_wait(store, delays[i])
+                end
+            end
+        end
+
+        queue_remove(store, this)
+    end
+
 end
