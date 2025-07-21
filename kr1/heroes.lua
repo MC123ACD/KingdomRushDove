@@ -3652,7 +3652,7 @@ local function heroes()
     tt.ranged.attacks[3].disabled = true
     tt.ranged.attacks[3].bullet = "fierymist_dragon"
     tt.ranged.attacks[3].bullet_start_offset = {vec_2(43, 95)}
-    tt.ranged.attacks[3].cooldown = 12.6
+    tt.ranged.attacks[3].cooldown = 13
     tt.ranged.attacks[3].min_range = 0
     tt.ranged.attacks[3].max_range = 160
     tt.ranged.attacks[3].shoot_time = fts(13)
@@ -3669,7 +3669,7 @@ local function heroes()
     tt.ranged.attacks[4].disabled = true
     tt.ranged.attacks[4].bullet = "wildfirebarrage_dragon"
     tt.ranged.attacks[4].bullet_start_offset = {vec_2(30, ady(204))}
-    tt.ranged.attacks[4].cooldown = 16.2
+    tt.ranged.attacks[4].cooldown = 17
     tt.ranged.attacks[4].min_range = 0
     tt.ranged.attacks[4].max_range = 375
     tt.ranged.attacks[4].shoot_time = fts(7.8)
@@ -3825,9 +3825,12 @@ local function heroes()
     tt.aura.cycle_time = fts(5)
     tt.aura.duration = nil
     tt.aura.radius = 70
+    tt.aura.damage_type = DAMAGE_TRUE
+    tt.aura.damage_min = 2
+    tt.aura.damage_max = 2
     tt.aura.vis_flags = F_MOD
-    tt.main_script.insert = scripts.aura_apply_mod.insert
-    tt.main_script.update = scripts.aura_apply_mod.update
+    tt.aura.vis_bans = F_FRIEND
+    tt.main_script.update = scripts.aura_fiery_mist_ashbite.update
 
     tt = E:register_t("mod_slow_fierymist", "mod_slow")
     tt.modifier.duration = fts(5)

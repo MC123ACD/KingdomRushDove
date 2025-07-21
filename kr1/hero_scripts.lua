@@ -14269,6 +14269,50 @@ return function(scripts)
         queue_remove(store, this)
     end
 
+    scripts.aura_fiery_mist_ashbite = {}
+    function scripts.aura_fiery_mist_ashbite.update(this, store)
+        local a = this.aura
+        a.ts = store.tick_ts
+        local last_cycle_ts = store.tick_ts - a.cycle_time
+        while true do
+            if store.tick_ts - a.ts > a.duration then
+                break
+            end
+
+            if store.tick_ts - last_cycle_ts > a.cycle_time then
+                last_cycle_ts = store.tick_ts
+
+                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+
+                if targets then
+                    for _, target in pairs(targets) do
+                        local m = E:create_entity(a.mod)
+
+                        m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
+                        m.modifier.level = a.level
+
+                        queue_insert(store, m)
+
+                        local d = E:create_entity("damage")
+
+                        d.source_id = this.id
+                        d.target_id = target.id
+
+                        local dmin, dmax = a.damage_min, a.damage_max
+                        d.value = math.random(dmin, dmax)
+                        d.damage_type = a.damage_type
+
+                        queue_damage(store, d)
+                    end
+                end
+            end
+
+            coroutine.yield()
+        end
+        queue_remove(store, this)
+    end
+
     scripts.wildfirebarrage_dragon = {}
 
     function scripts.wildfirebarrage_dragon.insert(this, store)
