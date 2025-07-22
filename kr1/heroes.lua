@@ -5124,7 +5124,7 @@ local function heroes()
     }
     tt.hero.skills.shouldercannon = E:clone_c("hero_skill")
     tt.hero.skills.shouldercannon.damage = {40, 60, 80}
-    tt.hero.skills.shouldercannon.slow_factor = {0.6, 0.6, 0.6}
+    tt.hero.skills.shouldercannon.slow_factor = {0.6, 0.55, 0.5}
     tt.hero.skills.shouldercannon.slow_duration = {4, 5, 6}
     tt.hero.skills.shouldercannon.xp_gain_factor = 36
     tt.hero.skills.shouldercannon.xp_level_steps = {
