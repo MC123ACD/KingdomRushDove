@@ -957,8 +957,8 @@ local function barrack_towers()
     tt.powers.bigbomb.price_inc = 125
     tt.powers.bigbomb.enc_icon = 18
     tt.powers.quickup = E:clone_c("power")
-    tt.powers.quickup.price_base = 100
-    tt.powers.quickup.price_inc = 100
+    tt.powers.quickup.price_base = 125
+    tt.powers.quickup.price_inc = 125
     tt.powers.quickup.max_level = 2
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_barrack_%04i"
@@ -986,7 +986,7 @@ local function barrack_towers()
     tt.melee.attacks[1].damage_min = 15
     tt.melee.range = 64
     tt.motion.max_speed = 2.7 * FPS
-    tt.regen.cooldown = 0.5
+    tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = anchor_y
     tt.render.sprites[1].prefix = "soldier_pirate_flamer"
     tt.unit.marker_offset = vec_2(0, ady(5))
@@ -1007,7 +1007,7 @@ local function barrack_towers()
     tt.ranged.attacks[1].cooldown_inc = -0.1
     tt.ranged.attacks[2] = table.clone(tt.ranged.attacks[1])
     tt.ranged.attacks[2].bullet = "bomb_molotov_big"
-    tt.ranged.attacks[2].cooldown = 6 + fts(15)
+    tt.ranged.attacks[2].cooldown = 7
     tt.ranged.attacks[2].disabled = true
     tt.ranged.attacks[2].power_name = "bigbomb"
     tt.ranged.attacks[2].node_prediction = fts(28)
@@ -1049,7 +1049,7 @@ local function barrack_towers()
     tt.dps.damage_min = 5
     tt.dps.damage_max = 5
     tt.dps.damage_inc = 2
-    tt.dps.damage_type = DAMAGE_TRUE
+    tt.dps.damage_every = 0.5
     tt.modifier.vis_flags = bor(F_MOD, F_BURN)
     tt.render.sprites[1].prefix = "fx_burn"
     tt.render.sprites[1].name = "small"

@@ -915,6 +915,7 @@ function U.find_biggest_enemy(entities, origin, min_range, max_range, prediction
     end
 end
 
+-- return target, targets, target_predicted_pos
 function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, max_range, prediction_time, flags, bans,
     filter_func, min_override_flags, cover_range)
     flags = flags or 0

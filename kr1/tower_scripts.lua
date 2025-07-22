@@ -2299,12 +2299,12 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store, this.tower.cooldown_factor) then
-                        local target
+                        local target, targets
                         if pow_b.level > 0 then
-                            target = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
+                            target, targets = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
                                 nil, ba.vis_flags, ba.vis_bans, nil, nil, blast_range)
                         else
-                            target = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, nil, ba.vis_flags,
+                            target, targets = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, nil, ba.vis_flags,
                                 ba.vis_bans)
                         end
 
@@ -2334,10 +2334,16 @@ local function register_mage(scripts)
                             end
 
                             if target and #this._stored_bullets > 0 then
+                                local i = 1
                                 for _, b in pairs(this._stored_bullets) do
                                     b.bullet.target_id = target.id
                                     b.bullet.to = V.v(target.pos.x + target.unit.hit_offset.x,
                                         target.pos.y + target.unit.hit_offset.y)
+                                    local d = SU.create_bullet_damage(b, target.id, this.id)
+                                    if U.predict_damage(target, d) > target.health.hp then
+                                        target = targets[km.zmod(i, #targets)]
+                                        i = i + 1
+                                    end
                                 end
                                 this._stored_bullets = {}
                             else
