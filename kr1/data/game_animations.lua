@@ -10809,7 +10809,7 @@ local kr2_a = {
     hero_crab_small_cannon = {
         prefix = "hero_crabman",
         to = 334,
-        from = 310
+        from = 311
     },
     fx_hero_crab_quake = {
         prefix = "hero_reinforce_rocks",

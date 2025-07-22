@@ -957,8 +957,8 @@ local function barrack_towers()
     tt.powers.bigbomb.price_inc = 125
     tt.powers.bigbomb.enc_icon = 18
     tt.powers.quickup = E:clone_c("power")
-    tt.powers.quickup.price_base = 125
-    tt.powers.quickup.price_inc = 125
+    tt.powers.quickup.price_base = 110
+    tt.powers.quickup.price_inc = 110
     tt.powers.quickup.max_level = 2
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_barrack_%04i"

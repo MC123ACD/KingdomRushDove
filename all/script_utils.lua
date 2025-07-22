@@ -1320,8 +1320,16 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
     if attack.check_target_before_shot then
         if (not target) or target.health.dead or (not store.entities[target.id]) then
             local trash
+            local node_prediction
+            if attack.node_prediction == true then
+                node_prediction = 1 - attack.shoot_time
+            elseif attack.node_prediction then
+                node_prediction = attack.node_prediction - attack.shoot_time
+            else
+                node_prediction = nil
+            end
             target, trash, pred_pos = U.find_foremost_enemy(store.entities, this.pos, attack.min_range,
-                attack.max_range, attack.node_prediction, attack.vis_flags, attack.vis_bans, attack.filter_fn, F_FLYING)
+                attack.max_range, node_prediction , attack.vis_flags, attack.vis_bans, attack.filter_fn, F_FLYING)
             if target and not target.health.dead then
                 bullet_to = pred_pos or target.pos
                 bullet_to_start = V.vclone(bullet_to)
@@ -1331,8 +1339,8 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
         end
     end
 
-    if attack.max_track_distance and V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) >
-        attack.max_track_distance then
+    if attack.max_track_distance and V.dist2(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) >
+        attack.max_track_distance * attack.max_track_distance then
         log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id, target.pos.x,
             target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
     else

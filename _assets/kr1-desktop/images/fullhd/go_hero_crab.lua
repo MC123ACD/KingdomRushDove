@@ -74,7 +74,7 @@ return {
                  "hero_crabman_0068", "hero_crabman_0069", "hero_crabman_0070", "hero_crabman_0115",
                  "hero_crabman_0116", "hero_crabman_0117", "hero_crabman_0118", "hero_crabman_0201",
                  "hero_crabman_0202", "hero_crabman_0203", "hero_crabman_0204", "hero_crabman_0205",
-                 "hero_crabman_0206", "hero_crabman_0207", "hero_crabman_0208", "hero_crabman_0245", "hero_crabman_0310","hero_crabman_0334"}
+                 "hero_crabman_0206", "hero_crabman_0207", "hero_crabman_0208", "hero_crabman_0245", "hero_crabman_0311","hero_crabman_0334"}
     },
     hero_crabman_0020 = {
         a_name = "go_hero_crab-1.png",

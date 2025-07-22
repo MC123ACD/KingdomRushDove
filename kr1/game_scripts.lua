@@ -17233,7 +17233,7 @@ function scripts.hero_crab.update(this, store, script)
                             end
                         end
                     end
-                    if U.real_max_speed(this) >= b.stun_speed then
+                    if U.real_max_speed(this) >= b.stun_speed and store.tick_ts - b.ts >= b.cooldown then
                         local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, b.radius, F_STUN, F_BOSS)
                         if enemies then
                             local rate = (U.real_max_speed(this) - 60) / (b.stun_speed - 60)
@@ -17252,6 +17252,7 @@ function scripts.hero_crab.update(this, store, script)
                                 end
                             end
                             SU.hero_gain_xp_from_skill(this, this.hero.skills.burrow)
+                            b.ts = store.tick_ts
                         end
                         for i, pos in pairs({V.v(10, -16), V.v(-12, -14), V.v(22, -1), V.v(-24, -1)}) do
                             local fx = E:create_entity("fx")

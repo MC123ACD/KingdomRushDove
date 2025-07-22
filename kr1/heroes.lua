@@ -5190,6 +5190,8 @@ local function heroes()
     tt.burrow.radius = 80
     tt.burrow.damage = 15
     tt.burrow.init_accel = 40
+    tt.burrow.cooldown = 6
+    tt.burrow.ts = 0
     tt.invuln = {}
     tt.invuln.animation = "invuln"
     tt.invuln.aura = nil
@@ -5225,7 +5227,8 @@ local function heroes()
     tt.ranged.attacks[1].shoot_time = fts(15)
     tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].xp_from_skill = "shouldercannon"
-    tt.ranged.attacks[1].node_prediction = fts(61)
+    tt.ranged.attacks[1].node_prediction = 2
+    tt.ranged.attacks[1].check_target_before_shot = true
     tt.timed_attacks.list[1] = E:clone_c("area_attack")
     tt.timed_attacks.list[1].animation = "pincer"
     tt.timed_attacks.list[1].cooldown = 7.2
@@ -5276,7 +5279,7 @@ local function heroes()
     tt.render.sprites[1].sort_y_offset = -5
 
     tt = E:register_t("mod_stun_burrow", "mod_stun")
-    tt.modifier.duration = 1.5
+    tt.modifier.duration = 2
 
     tt = E:register_t("aura_crab_invuln", "aura")
     E:add_comps(tt, "render", "tween")
