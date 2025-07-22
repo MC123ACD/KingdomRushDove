@@ -5223,11 +5223,11 @@ local function heroes()
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(9, 50)}
     tt.ranged.attacks[1].cooldown = 9
     tt.ranged.attacks[1].max_range = 256
-    tt.ranged.attacks[1].min_range = 19.2
+    tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].shoot_time = fts(15)
     tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].xp_from_skill = "shouldercannon"
-    tt.ranged.attacks[1].node_prediction = 2
+    tt.ranged.attacks[1].node_prediction = fts(46)
     tt.ranged.attacks[1].check_target_before_shot = true
     tt.timed_attacks.list[1] = E:clone_c("area_attack")
     tt.timed_attacks.list[1].animation = "pincer"
