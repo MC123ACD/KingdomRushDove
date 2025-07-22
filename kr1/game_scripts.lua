@@ -2484,9 +2484,6 @@ function scripts.hero_hacksaw.update(this, store)
 	end
 end
 
-
-
-
 function scripts.hero_ignus.update(this, store)
 	local h = this.health
 	local he = this.hero
@@ -17158,8 +17155,7 @@ function scripts.hero_crab.update(this, store, script)
                     this.health.immune_to = F_ALL
 
                     local original_speed = this.motion.max_speed
-
-                    this.motion.max_speed = this.motion.max_speed + b.extra_speed
+                    U.speed_inc_self(this, b.init_accel)
                     this.unit.marker_hidden = true
 
                     S:queue(this.sound_events.change_rally_point)
@@ -17186,7 +17182,6 @@ function scripts.hero_crab.update(this, store, script)
                     local last_t = band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_TYPES_MASK)
                     local dest = r.pos
                     local n = this.nav_grid
-
                     while not V.veq(this.pos, dest) do
                         local w = table.remove(n.waypoints, 1) or dest
 
@@ -17204,7 +17199,7 @@ function scripts.hero_crab.update(this, store, script)
                                 goto label_400_0
                             end
 
-                            U.walk(this, store.tick_length)
+                            U.walk(this, store.tick_length, b.extra_speed)
                             coroutine.yield()
 
                             this.motion.speed.x, this.motion.speed.y = 0, 0
@@ -17238,25 +17233,42 @@ function scripts.hero_crab.update(this, store, script)
                             end
                         end
                     end
+                    if U.real_max_speed(this) >= b.stun_speed then
+                        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, b.radius, F_STUN, F_BOSS)
+                        if enemies then
+                            local rate = (U.real_max_speed(this) - 60) / (b.stun_speed - 60)
+                            for _, e in pairs(enemies) do
+                                if not e.health.dead then
+                                    local mod = E:create_entity("mod_stun_burrow")
+                                    mod.modifier.target_id = e.id
+                                    mod.modifier.source_id = this.id
+                                    queue_insert(store, mod)
+                                    local d = E:create_entity("damage")
+                                    d.source_id = this.id
+                                    d.target_id = e.id
+                                    d.value = (b.damage + this.damage_buff) * this.unit.damage_factor * rate
+                                    d.damage_type = DAMAGE_EXPLOSION
+                                    queue_damage(store, d)
+                                end
+                            end
+                            SU.hero_gain_xp_from_skill(this, this.hero.skills.burrow)
+                        end
+                        for i, pos in pairs({V.v(10, -16), V.v(-12, -14), V.v(22, -1), V.v(-24, -1)}) do
+                            local fx = E:create_entity("fx")
 
+                            fx.render.sprites[1].name = "fx_hero_crab_quake"
+                            fx.render.sprites[1].ts = store.tick_ts + (i - 1) * 0.1
+                            fx.render.sprites[1].scale = V.v(0.8, 0.8)
+                            fx.render.sprites[1].alpha = 166
+                            fx.render.sprites[1].anchor.y = 0.24
+                            fx.pos.x, fx.pos.y = this.pos.x + pos.x, this.pos.y + pos.y
+
+                            queue_insert(store, fx)
+                        end
+                    end
                     this.health_bar.offset = this.health_bar._orig_offset
                     this.unit.hit_offset = this.unit._orig_hit_offset
                     this.unit.mod_offset = this.unit._orig_mod_offset
-
-                    SU.hero_gain_xp_from_skill(this, this.hero.skills.burrow)
-
-                    for i, pos in pairs({V.v(10, -16), V.v(-12, -14), V.v(22, -1), V.v(-24, -1)}) do
-                        local fx = E:create_entity("fx")
-
-                        fx.render.sprites[1].name = "fx_hero_crab_quake"
-                        fx.render.sprites[1].ts = store.tick_ts + (i - 1) * 0.1
-                        fx.render.sprites[1].scale = V.v(0.8, 0.8)
-                        fx.render.sprites[1].alpha = 166
-                        fx.render.sprites[1].anchor.y = 0.24
-                        fx.pos.x, fx.pos.y = this.pos.x + pos.x, this.pos.y + pos.y
-
-                        queue_insert(store, fx)
-                    end
 
                     S:queue(this.sound_events.burrow_out)
                     U.y_animation_play(this, "burrow_out", r.pos.x < this.pos.x, store.tick_ts)

@@ -74,7 +74,7 @@ return {
                  "hero_crabman_0068", "hero_crabman_0069", "hero_crabman_0070", "hero_crabman_0115",
                  "hero_crabman_0116", "hero_crabman_0117", "hero_crabman_0118", "hero_crabman_0201",
                  "hero_crabman_0202", "hero_crabman_0203", "hero_crabman_0204", "hero_crabman_0205",
-                 "hero_crabman_0206", "hero_crabman_0207", "hero_crabman_0208", "hero_crabman_0245"}
+                 "hero_crabman_0206", "hero_crabman_0207", "hero_crabman_0208", "hero_crabman_0245", "hero_crabman_0310","hero_crabman_0334"}
     },
     hero_crabman_0020 = {
         a_name = "go_hero_crab-1.png",
@@ -250,7 +250,7 @@ return {
         trim = {153, 46, 155, 35},
         a_size = {1024, 1024},
         f_quad = {6, 179, 89, 77},
-        alias = {"hero_crabman_0072"}
+        alias = {"hero_crabman_0072","hero_crabman_0312"}
     },
     hero_crabman_0073 = {
         a_name = "go_hero_crab-1.png",
@@ -258,7 +258,7 @@ return {
         trim = {151, 45, 156, 35},
         a_size = {1024, 1024},
         f_quad = {777, 928, 90, 78},
-        alias = {"hero_crabman_0074"}
+        alias = {"hero_crabman_0074","hero_crabman_0313"}
     },
     hero_crabman_0075 = {
         a_name = "go_hero_crab-2.png",
@@ -266,7 +266,7 @@ return {
         trim = {151, 45, 158, 35},
         a_size = {1024, 1024},
         f_quad = {6, 262, 88, 78},
-        alias = {"hero_crabman_0076"}
+        alias = {"hero_crabman_0076","hero_crabman_0314"}
     },
     hero_crabman_0077 = {
         a_name = "go_hero_crab-2.png",
@@ -274,7 +274,7 @@ return {
         trim = {151, 45, 158, 35},
         a_size = {1024, 1024},
         f_quad = {6, 346, 88, 78},
-        alias = {"hero_crabman_0078"}
+        alias = {"hero_crabman_0078","hero_crabman_0315"}
     },
     hero_crabman_0079 = {
         a_name = "go_hero_crab-2.png",
@@ -282,7 +282,7 @@ return {
         trim = {165, 37, 149, 32},
         a_size = {1024, 1024},
         f_quad = {816, 122, 83, 89},
-        alias = {"hero_crabman_0080"}
+        alias = {"hero_crabman_0080","hero_crabman_0316"}
     },
     hero_crabman_0081 = {
         a_name = "go_hero_crab-2.png",
@@ -290,7 +290,7 @@ return {
         trim = {164, 37, 147, 32},
         a_size = {1024, 1024},
         f_quad = {101, 122, 86, 89},
-        alias = {"hero_crabman_0082"}
+        alias = {"hero_crabman_0082","hero_crabman_0317"}
     },
     hero_crabman_0083 = {
         a_name = "go_hero_crab-1.png",
@@ -298,7 +298,7 @@ return {
         trim = {161, 40, 144, 32},
         a_size = {1024, 1024},
         f_quad = {679, 663, 92, 86},
-        alias = {"hero_crabman_0084"}
+        alias = {"hero_crabman_0084","hero_crabman_0318"}
     },
     hero_crabman_0085 = {
         a_name = "go_hero_crab-1.png",
@@ -306,7 +306,7 @@ return {
         trim = {160, 39, 143, 32},
         a_size = {1024, 1024},
         f_quad = {480, 733, 94, 87},
-        alias = {"hero_crabman_0086"}
+        alias = {"hero_crabman_0086","hero_crabman_0319"}
     },
     hero_crabman_0087 = {
         a_name = "go_hero_crab-2.png",
@@ -314,7 +314,7 @@ return {
         trim = {165, 39, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 512, 83, 87},
-        alias = {"hero_crabman_0088"}
+        alias = {"hero_crabman_0088","hero_crabman_0320"}
     },
     hero_crabman_0089 = {
         a_name = "go_hero_crab-2.png",
@@ -322,7 +322,7 @@ return {
         trim = {165, 38, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 324, 83, 88},
-        alias = {"hero_crabman_0090"}
+        alias = {"hero_crabman_0090","hero_crabman_0321"}
     },
     hero_crabman_0091 = {
         a_name = "go_hero_crab-2.png",
@@ -330,7 +330,7 @@ return {
         trim = {165, 38, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 418, 83, 88},
-        alias = {"hero_crabman_0092"}
+        alias = {"hero_crabman_0092","hero_crabman_0322"}
     },
     hero_crabman_0093 = {
         a_name = "go_hero_crab-2.png",
@@ -338,7 +338,7 @@ return {
         trim = {165, 37, 149, 32},
         a_size = {1024, 1024},
         f_quad = {905, 122, 83, 89},
-        alias = {"hero_crabman_0094"}
+        alias = {"hero_crabman_0094", "hero_crabman_0323"}
     },
     hero_crabman_0095 = {
         a_name = "go_hero_crab-2.png",
@@ -346,7 +346,7 @@ return {
         trim = {165, 35, 149, 32},
         a_size = {1024, 1024},
         f_quad = {638, 122, 83, 91},
-        alias = {"hero_crabman_0096"}
+        alias = {"hero_crabman_0096","hero_crabman_0324"}
     },
     hero_crabman_0097 = {
         a_name = "go_hero_crab-2.png",
@@ -354,7 +354,7 @@ return {
         trim = {165, 36, 149, 32},
         a_size = {1024, 1024},
         f_quad = {727, 122, 83, 90},
-        alias = {"hero_crabman_0098"}
+        alias = {"hero_crabman_0098","hero_crabman_0325"}
     },
     hero_crabman_0099 = {
         a_name = "go_hero_crab-2.png",
@@ -362,7 +362,7 @@ return {
         trim = {165, 37, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 229, 83, 89},
-        alias = {"hero_crabman_0100"}
+        alias = {"hero_crabman_0100","hero_crabman_0326"}
     },
     hero_crabman_0101 = {
         a_name = "go_hero_crab-2.png",
@@ -370,7 +370,7 @@ return {
         trim = {165, 28, 149, 32},
         a_size = {1024, 1024},
         f_quad = {460, 122, 83, 98},
-        alias = {"hero_crabman_0102"}
+        alias = {"hero_crabman_0102","hero_crabman_0327"}
     },
     hero_crabman_0103 = {
         a_name = "go_hero_crab-2.png",
@@ -378,7 +378,7 @@ return {
         trim = {165, 25, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 122, 83, 101},
-        alias = {"hero_crabman_0104"}
+        alias = {"hero_crabman_0104","hero_crabman_0328"}
     },
     hero_crabman_0105 = {
         a_name = "go_hero_crab-2.png",
@@ -386,7 +386,7 @@ return {
         trim = {165, 25, 149, 32},
         a_size = {1024, 1024},
         f_quad = {282, 122, 83, 101},
-        alias = {"hero_crabman_0106"}
+        alias = {"hero_crabman_0106", "hero_crabman_0329"}
     },
     hero_crabman_0107 = {
         a_name = "go_hero_crab-2.png",
@@ -394,7 +394,7 @@ return {
         trim = {165, 27, 149, 32},
         a_size = {1024, 1024},
         f_quad = {371, 122, 83, 99},
-        alias = {"hero_crabman_0108"}
+        alias = {"hero_crabman_0108","hero_crabman_0330"}
     },
     hero_crabman_0109 = {
         a_name = "go_hero_crab-2.png",
@@ -402,7 +402,7 @@ return {
         trim = {165, 34, 149, 32},
         a_size = {1024, 1024},
         f_quad = {549, 122, 83, 92},
-        alias = {"hero_crabman_0110"}
+        alias = {"hero_crabman_0110", "hero_crabman_0331"}
     },
     hero_crabman_0111 = {
         a_name = "go_hero_crab-2.png",
@@ -410,7 +410,7 @@ return {
         trim = {166, 45, 149, 32},
         a_size = {1024, 1024},
         f_quad = {193, 806, 82, 81},
-        alias = {"hero_crabman_0112"}
+        alias = {"hero_crabman_0112","hero_crabman_0332"}
     },
     hero_crabman_0113 = {
         a_name = "go_hero_crab-2.png",
@@ -418,7 +418,7 @@ return {
         trim = {156, 48, 154, 35},
         a_size = {1024, 1024},
         f_quad = {6, 595, 87, 75},
-        alias = {"hero_crabman_0114"}
+        alias = {"hero_crabman_0114","hero_crabman_0333"}
     },
     hero_crabman_0119 = {
         a_name = "go_hero_crab-2.png",
@@ -426,65 +426,65 @@ return {
         trim = {156, 47, 154, 35},
         a_size = {1024, 1024},
         f_quad = {855, 6, 87, 76},
-        alias = {"hero_crabman_0120"}
+        alias = {}
     },
-    hero_crabman_0121 = {
+    hero_crabman_0120 = {
         a_name = "go_hero_crab-2.png",
         size = {397, 158},
         trim = {158, 48, 153, 28},
         a_size = {1024, 1024},
         f_quad = {101, 217, 86, 82},
-        alias = {"hero_crabman_0122"}
+        alias = {}
     },
-    hero_crabman_0123 = {
+    hero_crabman_0121 = {
         a_name = "go_hero_crab-2.png",
         size = {397, 158},
         trim = {159, 46, 153, 28},
         a_size = {1024, 1024},
         f_quad = {101, 540, 85, 84},
-        alias = {"hero_crabman_0124"}
+        alias = {}
     },
-    hero_crabman_0125 = {
+    hero_crabman_0122 = {
         a_name = "go_hero_crab-2.png",
         size = {397, 158},
         trim = {156, 51, 152, 22},
         a_size = {1024, 1024},
         f_quad = {6, 88, 89, 85},
-        alias = {"hero_crabman_0126"}
+        alias = {}
     },
-    hero_crabman_0127 = {
+    hero_crabman_0123 = {
         a_name = "go_hero_crab-2.png",
         size = {397, 158},
         trim = {155, 60, 152, 22},
         a_size = {1024, 1024},
         f_quad = {6, 6, 90, 76},
-        alias = {"hero_crabman_0128"}
+        alias = {}
     },
-    hero_crabman_0129 = {
+    hero_crabman_0124 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {153, 76, 150, 19},
         a_size = {1024, 1024},
         f_quad = {580, 535, 94, 63},
-        alias = {"hero_crabman_0130"}
+        alias = {}
     },
-    hero_crabman_0131 = {
+    hero_crabman_0125 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {153, 87, 150, 19},
         a_size = {1024, 1024},
         f_quad = {583, 367, 94, 52},
-        alias = {"hero_crabman_0132"}
+        alias = {}
     },
-    hero_crabman_0133 = {
+    hero_crabman_0126 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {153, 99, 150, 18},
         a_size = {1024, 1024},
         f_quad = {683, 367, 94, 41},
-        alias = {"hero_crabman_0134"}
+        alias = {}
     },
-    hero_crabman_0135 = {
+    hero_crabman_0127 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {153, 101, 150, 19},
@@ -492,6 +492,78 @@ return {
         f_quad = {417, 165, 94, 38},
         alias = {}
     },
+    -- hero_crabman_0119 = {
+    --     a_name = "go_hero_crab-2.png",
+    --     size = {397, 158},
+    --     trim = {156, 47, 154, 35},
+    --     a_size = {1024, 1024},
+    --     f_quad = {855, 6, 87, 76},
+    --     alias = {"hero_crabman_0120"}
+    -- },
+    -- hero_crabman_0121 = {
+    --     a_name = "go_hero_crab-2.png",
+    --     size = {397, 158},
+    --     trim = {158, 48, 153, 28},
+    --     a_size = {1024, 1024},
+    --     f_quad = {101, 217, 86, 82},
+    --     alias = {"hero_crabman_0122"}
+    -- },
+    -- hero_crabman_0123 = {
+    --     a_name = "go_hero_crab-2.png",
+    --     size = {397, 158},
+    --     trim = {159, 46, 153, 28},
+    --     a_size = {1024, 1024},
+    --     f_quad = {101, 540, 85, 84},
+    --     alias = {"hero_crabman_0124"}
+    -- },
+    -- hero_crabman_0125 = {
+    --     a_name = "go_hero_crab-2.png",
+    --     size = {397, 158},
+    --     trim = {156, 51, 152, 22},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 88, 89, 85},
+    --     alias = {"hero_crabman_0126"}
+    -- },
+    -- hero_crabman_0127 = {
+    --     a_name = "go_hero_crab-2.png",
+    --     size = {397, 158},
+    --     trim = {155, 60, 152, 22},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 6, 90, 76},
+    --     alias = {"hero_crabman_0128"}
+    -- },
+    -- hero_crabman_0129 = {
+    --     a_name = "go_hero_crab-1.png",
+    --     size = {397, 158},
+    --     trim = {153, 76, 150, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {580, 535, 94, 63},
+    --     alias = {"hero_crabman_0130"}
+    -- },
+    -- hero_crabman_0131 = {
+    --     a_name = "go_hero_crab-1.png",
+    --     size = {397, 158},
+    --     trim = {153, 87, 150, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {583, 367, 94, 52},
+    --     alias = {"hero_crabman_0132"}
+    -- },
+    -- hero_crabman_0133 = {
+    --     a_name = "go_hero_crab-1.png",
+    --     size = {397, 158},
+    --     trim = {153, 99, 150, 18},
+    --     a_size = {1024, 1024},
+    --     f_quad = {683, 367, 94, 41},
+    --     alias = {"hero_crabman_0134"}
+    -- },
+    -- hero_crabman_0135 = {
+    --     a_name = "go_hero_crab-1.png",
+    --     size = {397, 158},
+    --     trim = {153, 101, 150, 19},
+    --     a_size = {1024, 1024},
+    --     f_quad = {417, 165, 94, 38},
+    --     alias = {}
+    -- },
     hero_crabman_0136 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
@@ -562,31 +634,31 @@ return {
         trim = {153, 48, 147, 35},
         a_size = {1024, 1024},
         f_quad = {380, 286, 97, 75},
-        alias = {"hero_crabman_0151"}
+        alias = {}
     },
-    hero_crabman_0152 = {
+    hero_crabman_0151 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {155, 48, 149, 35},
         a_size = {1024, 1024},
         f_quad = {580, 773, 93, 75},
-        alias = {"hero_crabman_0153"}
+        alias = {}
     },
-    hero_crabman_0154 = {
+    hero_crabman_0152 = {
         a_name = "go_hero_crab-1.png",
         size = {397, 158},
         trim = {153, 48, 150, 35},
         a_size = {1024, 1024},
         f_quad = {480, 826, 94, 75},
-        alias = {"hero_crabman_0155"}
+        alias = {}
     },
-    hero_crabman_0156 = {
+    hero_crabman_0153 = {
         a_name = "go_hero_crab-2.png",
         size = {397, 158},
         trim = {158, 48, 152, 35},
         a_size = {1024, 1024},
         f_quad = {6, 676, 87, 75},
-        alias = {"hero_crabman_0157"}
+        alias = {}
     },
     hero_crabman_0158 = {
         a_name = "go_hero_crab-2.png",
@@ -1963,5 +2035,5 @@ return {
         a_size = {1024, 1024},
         f_quad = {282, 511, 79, 62},
         alias = {}
-    }
+    },
 }

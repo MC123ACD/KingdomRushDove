@@ -10753,12 +10753,12 @@ local kr2_a = {
     },
     hero_crab_burrow_in = {
         prefix = "hero_crabman",
-        to = 135,
+        to = 127,
         from = 119
     },
     hero_crab_burrow_out = {
         prefix = "hero_crabman",
-        to = 157,
+        to = 153,
         from = 136
     },
     hero_crab_burrow_side_water = {
@@ -10805,6 +10805,11 @@ local kr2_a = {
         prefix = "hero_crabman",
         to = 309,
         from = 289
+    },
+    hero_crab_small_cannon = {
+        prefix = "hero_crabman",
+        to = 334,
+        from = 310
     },
     fx_hero_crab_quake = {
         prefix = "hero_reinforce_rocks",

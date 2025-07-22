@@ -73,6 +73,7 @@ function editor:init(screen_w, screen_h, done_callback)
 
 	self.gui = game_editor_gui
 	self.paths_visible = false
+    -- self.paths_visible = true
 	self.grid_visible = false
 	self.nav_visible = false
 	self.tool_pointer = {

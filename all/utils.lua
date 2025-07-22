@@ -574,11 +574,9 @@ function U.walk(e, dt, accel, unsnapped)
     local v_len = V.len(vx, vy)
 
     if accel then
-        m.buff = m.buff + accel * dt
-    end
-
-    if m.accel and m.speed_limit and m.max_speed + m.buff < m.speed_limit then
-        m.buff = km.clamp(0, m.speed_limit - m.max_speed, m.buff + m.accel * dt)
+        if not (m.speed_limit and m.max_speed >= m.speed_limit) then
+            U.speed_inc_self(e, accel * dt)
+        end
     end
 
     local step = U.real_max_speed(e) * dt

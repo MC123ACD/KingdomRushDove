@@ -5124,8 +5124,8 @@ local function heroes()
     }
     tt.hero.skills.shouldercannon = E:clone_c("hero_skill")
     tt.hero.skills.shouldercannon.damage = {40, 60, 80}
-    tt.hero.skills.shouldercannon.slow_factor = {0.6, 0.5, 0.4}
-    tt.hero.skills.shouldercannon.slow_duration = {4, 5, 8}
+    tt.hero.skills.shouldercannon.slow_factor = {0.6, 0.6, 0.6}
+    tt.hero.skills.shouldercannon.slow_duration = {4, 5, 6}
     tt.hero.skills.shouldercannon.xp_gain_factor = 36
     tt.hero.skills.shouldercannon.xp_level_steps = {
         [2] = 1,
@@ -5133,15 +5133,17 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.burrow = E:clone_c("hero_skill")
-    tt.hero.skills.burrow.extra_speed = {50, 70, 90, 110}
+    tt.hero.skills.burrow.extra_speed = {20, 26, 32, 38}
+    tt.hero.skills.burrow.damage = {15, 30, 45, 60}
     tt.hero.skills.burrow.xp_level_steps = {
         [1] = 1,
         [4] = 2,
         [7] = 3,
         [10] = 4
     }
+    tt.hero.skills.burrow.xp_gain_factor = 50
     tt.health.armor = nil
-    tt.health.dead_lifetime = 20
+    tt.health.dead_lifetime = 15
     tt.health.hp_max = nil
     tt.health.on_damage = scripts.hero_crab.on_damage
     tt.health_bar.offset = vec_2(0, 60)
@@ -5156,6 +5158,7 @@ local function heroes()
     tt.main_script.insert = scripts.hero_crab.insert
     tt.main_script.update = scripts.hero_crab.update
     tt.motion.max_speed = 60
+    tt.motion.speed_limit = 260
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = anchor_y
     tt.render.sprites[1].prefix = "hero_crab"
@@ -5183,6 +5186,10 @@ local function heroes()
     tt.burrow.hit_offset = vec_2(0, -13)
     tt.burrow.min_distance = 100
     tt.burrow.mod_offset = vec_2(0, -7)
+    tt.burrow.stun_speed = 160
+    tt.burrow.radius = 80
+    tt.burrow.damage = 15
+    tt.burrow.init_accel = 40
     tt.invuln = {}
     tt.invuln.animation = "invuln"
     tt.invuln.aura = nil
@@ -5209,13 +5216,13 @@ local function heroes()
     tt.melee.attacks[1].sound = "MeleeSword"
     tt.ranged.attacks[1] = E:clone_c("bullet_attack")
     tt.ranged.attacks[1].disabled = true
-    tt.ranged.attacks[1].animation = "cannon"
+    tt.ranged.attacks[1].animation = "small_cannon"
     tt.ranged.attacks[1].bullet = "crab_water_bomb"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(9, 50)}
     tt.ranged.attacks[1].cooldown = 9
     tt.ranged.attacks[1].max_range = 256
     tt.ranged.attacks[1].min_range = 19.2
-    tt.ranged.attacks[1].shoot_time = fts(30)
+    tt.ranged.attacks[1].shoot_time = fts(15)
     tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].xp_from_skill = "shouldercannon"
     tt.ranged.attacks[1].node_prediction = fts(61)
@@ -5267,6 +5274,9 @@ local function heroes()
     tt.render.sprites[1].z = Z_OBJECTS
     tt.render.sprites[1].anchor.y = 0.21212121212121213
     tt.render.sprites[1].sort_y_offset = -5
+
+    tt = E:register_t("mod_stun_burrow", "mod_stun")
+    tt.modifier.duration = 1.5
 
     tt = E:register_t("aura_crab_invuln", "aura")
     E:add_comps(tt, "render", "tween")

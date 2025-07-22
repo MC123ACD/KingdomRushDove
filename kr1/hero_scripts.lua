@@ -5988,6 +5988,7 @@ return function(scripts)
                 this.burrow.disabled = nil
                 this.burrow.extra_speed = s.extra_speed[s.level]
                 this.nav_grid.valid_terrains = bor(TERRAIN_LAND, TERRAIN_WATER, TERRAIN_SHALLOW, TERRAIN_ICE)
+                this.burrow.damage = s.damage[s.level]
             end)
 
             upgrade_skill(this, "hookedclaw", function(this, s)
