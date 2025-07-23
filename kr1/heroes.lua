@@ -1172,7 +1172,7 @@ local function heroes()
     tt.hero.skills.ice_storm.count = {3, 5, 8}
     tt.hero.skills.ice_storm.damage_max = {40, 50, 60}
     tt.hero.skills.ice_storm.damage_min = {20, 20, 30}
-    tt.hero.skills.ice_storm.max_range = {153.6, 166.4, 179.2}
+    tt.hero.skills.ice_storm.max_range = {154, 167, 180}
     tt.hero.skills.ice_storm.xp_level_steps = {
         [10] = 3,
         [4] = 1,
@@ -1242,7 +1242,7 @@ local function heroes()
     tt.timed_attacks.list[1].min_range = 38.4
     tt.timed_attacks.list[1].nodes_offset = 4
     tt.timed_attacks.list[1].sound = "HeroFrostIceRainSummon"
-    tt.timed_attacks.list[1].vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.timed_attacks.list[1].vis_bans = F_FRIEND
     tt.timed_attacks.list[1].vis_flags = F_RANGED
     tt.timed_attacks.list[1].xp_from_skill = "ice_storm"
     tt.timed_attacks.list[2] = CC("aura_attack")
