@@ -35,7 +35,7 @@ local function mage_towers()
     tt.powers.disintegrate.cooldown_inc = -2
     tt.powers.disintegrate.enc_icon = 15
     tt.powers.disintegrate.name = "DESINTEGRATE"
-    tt.powers.disintegrate.upper_damage = {1000, 1100, 1200}
+    tt.powers.disintegrate.upper_damage = {666, 733, 800}
     tt.powers.disintegrate.attack_idx = 2
     tt.powers.teleport = CC("power")
     tt.powers.teleport.price_base = 250
@@ -1060,7 +1060,7 @@ local function mage_towers()
     tt.attacks.list[3].sound = "TowerWildMagusDisruptionCast"
     tt.powers.eldritch = E:clone_c("power")
     tt.powers.eldritch.attack_idx = 2
-    tt.powers.eldritch.price_base = 300
+    tt.powers.eldritch.price_base = 325
     tt.powers.eldritch.price_inc = 175
     tt.powers.eldritch.cooldowns = {28, 24, 20}
     tt.powers.eldritch.enc_icon = 16

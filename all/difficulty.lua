@@ -129,9 +129,9 @@ function difficulty:patch_templates()
     for _, t in pairs(E:filter_templates("aura")) do
         PT(t.aura, "damage_max")
         PT(t.aura, "damage_min")
-        if t.template_name == "necromancer_aura" then
-            t.min_health_for_knight = t.min_health_for_knight * GS.difficulty_enemy_hp_max_factor[self.level]
-        end
+        -- if t.template_name == "necromancer_aura" then
+        --     t.min_health_for_knight = t.min_health_for_knight * GS.difficulty_enemy_hp_max_factor[self.level]
+        -- end
     end
 
     for _, t in pairs(E:filter_templates("modifier")) do
@@ -142,6 +142,12 @@ function difficulty:patch_templates()
         PT(t.bullet, "damage_max")
         PT(t.bullet, "damage_min")
     end
+
+    local necromancer_aura = E:get_template("necromancer_aura")
+    necromancer_aura.min_health_for_knight = necromancer_aura.min_health_for_knight * GS.difficulty_enemy_hp_max_factor[self.level]
+
+    local tower_arcane_wizard = E:get_template("tower_arcane_wizard")
+    tower_arcane_wizard.powers.disintegrate.upper_damage = tower_arcane_wizard.powers.disintegrate.upper_damage * GS.difficulty_enemy_hp_max_factor[self.level]
 end
 
 return difficulty
