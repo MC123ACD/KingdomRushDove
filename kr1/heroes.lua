@@ -26,7 +26,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 8
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 5
-    tt.hero.level_stats.armor = {0.4, 0.4, 0.4, 0.5, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7}
+    tt.hero.level_stats.armor = {0.34, 0.38, 0.42, 0.46, 0.50, 0.54, 0.58, 0.62, 0.66, 0.7}
     tt.hero.level_stats.hp_max = {400, 425, 450, 475, 500, 525, 550, 575, 600, 625}
     tt.hero.level_stats.melee_damage_max = {20, 23, 27, 30, 34, 37, 41, 45, 48, 50}
     tt.hero.level_stats.melee_damage_min = {12, 14, 15, 17, 19, 21, 23, 25, 27, 29}
@@ -698,7 +698,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 8
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 4
-    tt.hero.level_stats.armor = {0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2}
+    tt.hero.level_stats.armor = {0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2}
     tt.hero.level_stats.hp_max = {450, 500, 550, 600, 650, 720, 790, 860, 930, 1000}
     tt.hero.level_stats.melee_damage_max = {26, 29, 31, 34, 36, 38, 41, 43, 45, 47}
     tt.hero.level_stats.melee_damage_min = {19, 20, 23, 24, 26, 28, 29, 31, 34, 37}
@@ -1038,7 +1038,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 8
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 5
-    tt.hero.level_stats.armor = {0.1, 0.1, 0.15, 0.15, 0.2, 0.2, 0.25, 0.25, 0.3, 0.4}
+    tt.hero.level_stats.armor = {0.13, 0.16, 0.19, 0.22, 0.25, 0.28, 0.31, 0.34, 0.37, 0.4}
     tt.hero.level_stats.hp_max = {430, 460, 490, 520, 550, 580, 610, 640, 670, 670}
     tt.hero.level_stats.melee_damage_max = {45, 49, 54, 58, 63, 67, 72, 76, 81, 85}
     tt.hero.level_stats.melee_damage_min = {27, 30, 32, 34, 38, 40, 43, 45, 49, 51}
@@ -1152,7 +1152,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 3
     tt.hero.fixed_stat_range = 8
     tt.hero.fixed_stat_speed = 7
-    tt.hero.level_stats.armor = {0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.5}
+    tt.hero.level_stats.armor = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5}
     tt.hero.level_stats.hp_max = {270, 290, 310, 330, 350, 370, 390, 410, 430, 450}
     tt.hero.level_stats.melee_damage_max = {2, 4, 6, 8, 11, 13, 16, 18, 20, 23}
     tt.hero.level_stats.melee_damage_min = {1, 2, 4, 6, 7, 9, 10, 12, 14, 15}
@@ -1270,7 +1270,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 7
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 6
-    tt.hero.level_stats.armor = {0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.5, 0.5, 0.6, 0.6}
+    tt.hero.level_stats.armor = {0.32, 0.35, 0.38, 0.41, 0.45, 0.48, 0.51, 0.54, 0.57, 0.6}
     tt.hero.level_stats.hp_max = {425, 450, 475, 500, 525, 550, 575, 600, 625, 650}
     tt.hero.level_stats.melee_damage_max = {41, 45, 49, 53, 56, 60, 64, 68, 71, 75}
     tt.hero.level_stats.melee_damage_min = {18, 19, 20, 21, 23, 24, 25, 26, 27, 28}
@@ -1400,7 +1400,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 8
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 3
-    tt.hero.level_stats.armor = {0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8}
+    tt.hero.level_stats.armor = {0.53, 0.56, 0.59, 0.62, 0.65, 0.68, 0.71, 0.74, 0.77, 0.8}
     tt.hero.level_stats.hp_max = {420, 440, 460, 480, 500, 520, 540, 560, 580, 600}
     tt.hero.level_stats.melee_damage_max = {27, 30, 33, 36, 39, 42, 45, 48, 51, 54}
     tt.hero.level_stats.melee_damage_min = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
@@ -1513,7 +1513,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 7
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 5
-    tt.hero.level_stats.armor = {0.4, 0.4, 0.4, 0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.7}
+    tt.hero.level_stats.armor = {0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7}
     tt.hero.level_stats.hp_max = {380, 410, 440, 470, 500, 530, 560, 590, 620, 650}
     tt.hero.level_stats.melee_damage_max = {31, 34, 36, 39, 42, 44, 47, 49, 52, 55}
     tt.hero.level_stats.melee_damage_min = {25, 27, 29, 32, 34, 36, 38, 40, 42, 44}
@@ -1606,7 +1606,7 @@ local function heroes()
     tt.hero.fixed_stat_health = 8
     tt.hero.fixed_stat_range = 0
     tt.hero.fixed_stat_speed = 5
-    tt.hero.level_stats.armor = {0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.5}
+    tt.hero.level_stats.armor = {0.23, 0.26, 0.29, 0.32, 0.35, 0.38, 0.41, 0.44, 0.47, 0.5}
     tt.hero.level_stats.hp_max = {380, 400, 420, 440, 460, 480, 500, 520, 540, 560}
     tt.hero.level_stats.melee_damage_max = {22, 25, 28, 31, 34, 37, 40, 43, 46, 49}
     tt.hero.level_stats.melee_damage_min = {14, 16, 18, 20, 22, 24, 26, 28, 30, 32}
@@ -2243,7 +2243,7 @@ local function heroes()
     E:add_comps(tt, "melee", "timed_attacks")
     anchor_y = 0.09
     image_y = 90
-    tt.hero.level_stats.armor = {0.29, 0.33, 0.37, 0.41, 0.45, 0.49, 0.53, 0.57, 0.61, 0.65}
+    tt.hero.level_stats.armor = {0.38, 0.41, 0.44, 0.47, 0.5, 0.53, 0.56, 0.59, 0.62, 0.65}
     tt.hero.level_stats.hp_max = {260, 275, 290, 305, 320, 335, 350, 365, 380, 395}
     tt.hero.level_stats.melee_damage_max = {12, 14, 16, 18, 20, 22, 24, 26, 28, 30}
     tt.hero.level_stats.melee_damage_min = {7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
@@ -6012,7 +6012,7 @@ local function heroes()
     image_y = 68
     anchor_y = 16 / image_y
     tt.hero.level_stats.hp_max = {220, 240, 260, 280, 300, 320, 340, 360, 380, 400}
-    tt.hero.level_stats.armor = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55}
+    tt.hero.level_stats.armor = {0.19, 0.23, 0.27, 0.31, 0.35, 0.39, 0.43, 0.47, 0.51, 0.55}
     tt.hero.level_stats.melee_damage_min = {10, 10, 11, 12, 13, 14, 14, 15, 16, 17}
     tt.hero.level_stats.melee_damage_max = {13, 14, 16, 17, 18, 19, 20, 22, 23, 25}
     tt.hero.level_stats.ranged_damage_min = {10, 10, 11, 12, 13, 14, 14, 15, 16, 17}
@@ -6416,8 +6416,8 @@ local function heroes()
 
     tt = RT("hero_lynn", "hero")
     AC(tt, "melee", "timed_attacks")
-    tt.hero.level_stats.armor = {0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4}
-    tt.hero.level_stats.magic_armor = {0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4}
+    tt.hero.level_stats.armor = {0.13, 0.16, 0.19, 0.22, 0.25, 0.28, 0.31, 0.34, 0.37, 0.4}
+    tt.hero.level_stats.magic_armor = {0.13, 0.16, 0.19, 0.22, 0.25, 0.28, 0.31, 0.34, 0.37, 0.4}
     tt.hero.level_stats.hp_max = {350, 370, 390, 410, 430, 450, 470, 490, 510, 530}
     tt.hero.level_stats.melee_damage_max = {14, 17, 19, 22, 24, 26, 29, 31, 34, 36}
     tt.hero.level_stats.melee_damage_min = {10, 11, 13, 14, 16, 18, 19, 21, 22, 24}
@@ -8157,7 +8157,7 @@ local function heroes()
 
     tt = E:register_t("hero_bravebark", "hero")
     E:add_comps(tt, "melee", "teleport", "timed_attacks")
-    tt.hero.level_stats.armor = {0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4}
+    tt.hero.level_stats.armor = {0.13, 0.16, 0.19, 0.22, 0.25, 0.28, 0.31, 0.34, 0.37, 0.4}
     tt.hero.level_stats.hp_max = {375, 400, 425, 450, 475, 500, 525, 550, 575, 600}
     tt.hero.level_stats.melee_damage_max = {29, 34, 38, 43, 48, 53, 58, 62, 67, 72}
     tt.hero.level_stats.melee_damage_min = {19, 22, 26, 29, 32, 35, 38, 42, 45, 48}
@@ -9341,7 +9341,7 @@ local function heroes()
 
     tt = RT("hero_bruce", "hero")
     AC(tt, "melee", "timed_attacks")
-    tt.hero.level_stats.armor = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5}
+    tt.hero.level_stats.armor = {0.14, 0.18, 0.22, 0.26, 0.3, 0.34, 0.38, 0.42, 0.46, 0.5}
     tt.hero.level_stats.hp_max = {365, 390, 415, 440, 465, 490, 515, 540, 565, 590}
     tt.hero.level_stats.melee_damage_max = {27, 31, 34, 38, 41, 45, 49, 52, 56, 59}
     tt.hero.level_stats.melee_damage_min = {18, 20, 23, 25, 28, 30, 32, 35, 37, 40}
