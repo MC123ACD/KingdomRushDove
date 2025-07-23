@@ -961,6 +961,7 @@ modifier.use_mod_offset = true
 modifier.health_bar_offset = nil
 modifier.remove_banned = nil
 modifier.removed_by_ban = nil
+modifier.damage_factor = 1
 modifier.ts = 0
 modifier.type = nil
 
@@ -1086,6 +1087,7 @@ aura.damage_min = nil
 aura.damage_max = nil
 aura.damage_inc = nil
 aura.damage_type = nil
+aura.damage_factor = 1
 aura.level = 1
 aura.vis_flags = 0
 aura.vis_bans = 0

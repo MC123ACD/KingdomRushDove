@@ -859,10 +859,12 @@ local function enemies()
         end
         return true
     end
+
     tt = RT("mod_orc_blood", "mod_blood")
     tt.dps.damage_max = 5
     tt.dps.damage_min = 5
     tt.dps.damage_every = 0.5
+    
     tt = RT("enemy_orc_armored_mad", "enemy_orc_armored")
     tt.motion.max_speed = 1.1 * FPS
     tt.melee.attacks[1].mod = "mod_orc_blood"
