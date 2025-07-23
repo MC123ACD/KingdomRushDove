@@ -242,7 +242,6 @@ local function heroes()
 
     tt = RT("arrow_hero_alleria", "arrow")
     tt.bullet.xp_gain_factor = 2.9
-    tt.bullet.prediction_error = false
     tt.bullet.flight_time = fts(15)
 
     tt = RT("arrow_multishot_hero_alleria", "arrow")
@@ -250,7 +249,6 @@ local function heroes()
     tt.bullet.damage_min = 15
     tt.bullet.damage_max = 50
     tt.bullet.damage_type = DAMAGE_TRUE
-    tt.bullet.prediction_error = false
     -- tt.bullet.mod = "mod_alleria_poison"
     tt.extra_arrows_range = 200
     tt.extra_arrows = 2
@@ -8689,7 +8687,6 @@ local function heroes()
     tt.bullet.miss_fx = "fx_lilith_ranged_hit"
     tt.bullet.miss_decal = nil
     tt.bullet.particles_name = "ps_bullet_lilith_trail"
-    tt.bullet.prediction_error = false
     tt.bullet.predict_target_pos = true
     tt.bullet.use_unit_damage_factor = true
     tt.bullet.xp_gain_factor = 3.2
@@ -9305,7 +9302,6 @@ local function heroes()
     tt.bullet.particles_name = "ps_bullet_rag_trail"
     tt.bullet.pop = nil
     tt.bullet.predict_target_pos = true
-    tt.bullet.prediction_error = false
     tt.bullet.xp_gain_factor = 1.9
     tt.render.sprites[1].name = "razzAndRaggs_hero_proy-f"
     tt.sound_events.insert = "ElvesHeroRagGnomeShot"

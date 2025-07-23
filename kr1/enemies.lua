@@ -2844,7 +2844,6 @@ local function enemies()
     tt.bullet.damage_max = 30
     tt.bullet.pop = nil
     tt.bullet.predict_target_pos = false
-    tt.bullet.prediction_error = false
     tt.endless.factor_map = {{"enemy_desert_archer.rangedDamage", "bullet.damage_min", true},
                              {"enemy_desert_archer.rangedDamage", "bullet.damage_max", true}}
 
@@ -3278,7 +3277,6 @@ local function enemies()
     tt.bullet.damage_max = 20
     tt.bullet.damage_min = 10
     tt.bullet.predict_target_pos = false
-    tt.bullet.prediction_error = false
     tt.render.sprites[1].name = "Dart"
     tt.render.sprites[1].animated = false
     tt.pop = nil
@@ -3962,7 +3960,6 @@ local function enemies()
     tt.bullet.damage_max = 80
     tt.bullet.damage_min = 40
     tt.bullet.predict_target_pos = false
-    tt.bullet.prediction_error = false
     tt.render.sprites[1].name = "spear"
     tt.render.sprites[1].animated = false
 

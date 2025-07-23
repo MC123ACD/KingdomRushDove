@@ -895,7 +895,6 @@ local function archer_towers()
     tt.bullet.damage_type = bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_PHYSICAL)
     tt.bullet.damage_max = 60
     tt.bullet.damage_min = 45
-    tt.bullet.prediction_error = false
     tt.bullet.pop = {"pop_headshot"}
     tt.bullet.pop_conds = DR_KILL
     tt = E:register_t("arrow_silver_sentence_long", "arrow_silver_sentence")

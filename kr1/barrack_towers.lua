@@ -1515,7 +1515,6 @@ local function barrack_towers()
     tt.bullet.damage_inc = 10
     tt.bullet.damage_type = DAMAGE_STAB
     tt.bullet.align_with_trajectory = true
-    tt.bullet.prediction_error = false
     tt.bullet.reset_to_target_pos = true
     tt.bullet.miss_decal = nil
     tt.render.sprites[1].name = "bullet_soldier_ewok"

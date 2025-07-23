@@ -277,7 +277,6 @@ arrow.render.sprites[1].animated = false
 arrow.main_script.insert = scripts.arrow.insert
 arrow.main_script.update = scripts.arrow.update
 arrow.sound_events.insert = "ArrowSound"
-arrow.bullet.prediction_error = true
 arrow.bullet.predict_target_pos = true
 arrow.bullet.hide_radius = 6
 
