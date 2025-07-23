@@ -147,7 +147,13 @@ function difficulty:patch_templates()
     necromancer_aura.min_health_for_knight = necromancer_aura.min_health_for_knight * GS.difficulty_enemy_hp_max_factor[self.level]
 
     local tower_arcane_wizard = E:get_template("tower_arcane_wizard")
-    tower_arcane_wizard.powers.disintegrate.upper_damage = tower_arcane_wizard.powers.disintegrate.upper_damage * GS.difficulty_enemy_hp_max_factor[self.level]
+    tower_arcane_wizard.powers.disintegrate.upper_damage[1] = tower_arcane_wizard.powers.disintegrate.upper_damage[1] * GS.difficulty_enemy_hp_max_factor[self.level]
+    tower_arcane_wizard.powers.disintegrate.upper_damage[2] = tower_arcane_wizard.powers.disintegrate.upper_damage[2] *
+                                                              GS.difficulty_enemy_hp_max_factor[self.level]
+    tower_arcane_wizard.powers.disintegrate.upper_damage[3] = tower_arcane_wizard.powers.disintegrate.upper_damage[3] *
+                                                              GS.difficulty_enemy_hp_max_factor[self.level]
+
+
 end
 
 return difficulty
