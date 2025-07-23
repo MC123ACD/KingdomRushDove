@@ -5225,7 +5225,7 @@ local function heroes()
     tt.ranged.attacks[1].shoot_time = fts(15)
     tt.ranged.attacks[1].vis_bans = 0
     tt.ranged.attacks[1].xp_from_skill = "shouldercannon"
-    tt.ranged.attacks[1].node_prediction = fts(46)
+    tt.ranged.attacks[1].node_prediction = fts(30)
     tt.ranged.attacks[1].check_target_before_shot = true
     tt.timed_attacks.list[1] = E:clone_c("area_attack")
     tt.timed_attacks.list[1].animation = "pincer"
@@ -5245,7 +5245,7 @@ local function heroes()
 
     tt = E:register_t("crab_water_bomb", "bomb")
     tt.bullet.damage_radius = 65
-    tt.bullet.flight_time = fts(31)
+    tt.bullet.flight_time = fts(15)
     tt.bullet.g = -1 / (fts(1) * fts(1))
     tt.bullet.hit_decal = nil
     tt.bullet.hit_fx = "fx_crab_water_bomb_explosion"

@@ -331,19 +331,16 @@ local function engineer_towers()
     tower_dwaarp.sound_events.insert = "EarthquakeTauntReady"
 
     local decal_dwaarp_smoke = E:register_t("decal_dwaarp_smoke", "decal_timed")
-
     decal_dwaarp_smoke.render.sprites[1].prefix = "towerdwaarp_sfx"
     decal_dwaarp_smoke.render.sprites[1].name = "smoke"
     decal_dwaarp_smoke.render.sprites[1].z = Z_DECALS
 
     local decal_dwaarp_smoke_water = E:register_t("decal_dwaarp_smoke_water", "decal_timed")
-
     decal_dwaarp_smoke_water.render.sprites[1].prefix = "towerdwaarp_sfx"
     decal_dwaarp_smoke_water.render.sprites[1].name = "smokewater"
     decal_dwaarp_smoke_water.render.sprites[1].z = Z_DECALS
 
     local decal_dwaarp_pulse = E:register_t("decal_dwaarp_pulse", "decal_tween")
-
     decal_dwaarp_pulse.tween.props[1].name = "scale"
     decal_dwaarp_pulse.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.32, vec_2(2.4, 2.4)}}
     decal_dwaarp_pulse.tween.props[1].sprite_id = 1
@@ -356,7 +353,6 @@ local function engineer_towers()
     decal_dwaarp_pulse.render.sprites[1].z = Z_DECALS
 
     local decal_dwaarp_scorched = E:register_t("decal_dwaarp_scorched", "decal_tween")
-
     decal_dwaarp_scorched.tween.props[1].name = "alpha"
     decal_dwaarp_scorched.tween.props[1].keys = {{0, 0}, {0.1, 255}, {3, 255}, {3.6, 0}}
     decal_dwaarp_scorched.render.sprites[1].animated = false
@@ -364,7 +360,6 @@ local function engineer_towers()
     decal_dwaarp_scorched.render.sprites[1].z = Z_DECALS
 
     local decal_dwaarp_tower_scorched = E:register_t("decal_dwaarp_tower_scorched", "decal_tween")
-
     decal_dwaarp_tower_scorched.tween.props[1].name = "alpha"
     decal_dwaarp_tower_scorched.tween.props[1].keys = {{0, 0}, {0.1, 255}, {3, 255}, {3.6, 0}}
     decal_dwaarp_tower_scorched.render.sprites[1].animated = false
@@ -372,7 +367,6 @@ local function engineer_towers()
     decal_dwaarp_tower_scorched.render.sprites[1].z = Z_DECALS
 
     local decal_dwaarp_scorched_water = E:register_t("decal_dwaarp_scorched_water", "decal_timed")
-
     decal_dwaarp_scorched_water.timed.duration = 3
     decal_dwaarp_scorched_water.timed.runs = nil
     decal_dwaarp_scorched_water.render.sprites[1].prefix = "towerdwaarp_sfx"
