@@ -6065,10 +6065,11 @@ function scripts.ray_tesla.update(this, store)
                     local dps_hits = math.floor(mod.modifier.duration / mod.dps.damage_every)
                     local dps_damage = math.floor(mod_damage / dps_hits)
                     local first_damage = mod_damage - dps_damage * dps_hits
-
+                    mod.modifier.damage_factor = b.damage_factor
                     mod.modifier.level = b.level
                     mod.modifier.source_id = b.source_id
                     mod.modifier.target_id = target.id
+
                     mod.dps.damage_max = dps_damage
                     mod.dps.damage_min = dps_damage
                     mod.dps.damage_last = last_damage
@@ -6104,6 +6105,7 @@ function scripts.ray_tesla.update(this, store)
 					r.bullet.to = V.vclone(bounce_target.pos)
 					r.bullet.target_id = bounce_target.id
 					r.bullet.source_id = target.id
+                    r.bullet.damage_factor = b.damage_factor
                     r.max_bounces = this.max_bounces
 					r.bounce_scale_y = r.bounce_scale_y * r.bounce_scale_y_factor
 					r.seen_targets = this.seen_targets
@@ -6152,7 +6154,9 @@ function scripts.hacksaw_sawblade.update(this, store)
 
 	::label_193_0::
 
-	while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    local mdist2 = mspeed * mspeed * store.tick_length * store.tick_length
+
+	while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mdist2 do
 		target = store.entities[b.target_id]
 
 		if target and target.health and not target.health.dead then

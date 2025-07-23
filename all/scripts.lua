@@ -4961,7 +4961,7 @@ function scripts.mod_dps.update(this, store, script)
 
         d.source_id = this.id
         d.target_id = target.id
-        d.value = value
+        d.value = value * m.damage_factor
         d.damage_type = dps.damage_type
         d.pop = dps.pop
         d.pop_chance = dps.pop_chance
