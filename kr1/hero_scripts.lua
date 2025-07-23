@@ -5963,7 +5963,6 @@ return function(scripts)
             upgrade_skill(this, "battlehardened", function(this, s)
                 this.invuln.disabled = nil
                 this.invuln.chance = s.chance[s.level]
-
             end)
 
             upgrade_skill(this, "pincerattack", function(this, s)
@@ -5979,6 +5978,11 @@ return function(scripts)
                 local b = E:get_template("crab_water_bomb")
                 b.bullet.damage_max = s.damage[s.level]
                 b.bullet.damage_min = s.damage[s.level]
+                b.bullet.damage_radius = s.radius_inc[s.level] + b.bullet.damage_radius
+                b.render.sprites[1].scale.x = b.render.sprites[1].scale.x + b.bullet.damage_radius / 65
+                b.render.sprites[1].scale.y = b.render.sprites[1].scale.x
+                local aura = E:get_template("aura_slow_water_bomb")
+                aura.aura.radius = aura.aura.radius + s.radius_inc[s.level]
                 local m = E:get_template("mod_slow_water_bomb")
                 m.modifier.duration = s.slow_duration[s.level]
                 m.slow.factor = s.slow_factor[s.level]

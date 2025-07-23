@@ -5124,6 +5124,7 @@ local function heroes()
     tt.hero.skills.shouldercannon.damage = {40, 60, 80}
     tt.hero.skills.shouldercannon.slow_factor = {0.6, 0.55, 0.5}
     tt.hero.skills.shouldercannon.slow_duration = {4, 5, 6}
+    tt.hero.skills.shouldercannon.radius_inc = {5, 5, 5}
     tt.hero.skills.shouldercannon.xp_gain_factor = 36
     tt.hero.skills.shouldercannon.xp_level_steps = {
         [2] = 1,
@@ -5244,7 +5245,7 @@ local function heroes()
     tt.vis.flags = bor(tt.vis.flags, F_MOCKING)
 
     tt = E:register_t("crab_water_bomb", "bomb")
-    tt.bullet.damage_radius = 65
+    tt.bullet.damage_radius = 60
     tt.bullet.flight_time = fts(20)
     tt.bullet.g = -1 / (fts(1) * fts(1))
     tt.bullet.hit_decal = nil
@@ -5255,12 +5256,13 @@ local function heroes()
     tt.sound_events.hit = "HeroCrabCannonExplosion"
     tt.sound_events.hit_water = "HeroGiantExplosionRock"
     tt.render.sprites[1].name = "hero_crabman_proy"
+    tt.render.sprites[1].scale = vec_1(1)
 
     tt = E:register_t("aura_slow_water_bomb", "aura")
     tt.aura.mod = "mod_slow_water_bomb"
     tt.aura.cycle_time = fts(1)
     tt.aura.duration = fts(5)
-    tt.aura.radius = 65
+    tt.aura.radius = 60
     tt.aura.vis_bans = F_FRIEND
     tt.aura.vis_flags = F_MOD
     tt.main_script.insert = scripts.aura_apply_mod.insert
