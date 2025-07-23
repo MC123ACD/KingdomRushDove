@@ -242,6 +242,7 @@ local function engineer_towers()
     tt.dps.pop = {"pop_bzzt"}
     tt.dps.pop_chance = 1
     tt.dps.pop_conds = DR_KILL
+    tt.modifier.allows_duplicates = true
     tt.render.sprites[1].prefix = "mod_tesla_hit"
     tt.render.sprites[1].size_names = {"small", "medium", "large"}
     tt.render.sprites[1].z = Z_BULLETS + 1
@@ -259,6 +260,7 @@ local function engineer_towers()
     tt.render.sprites[1].loop = true
     tt.main_script.insert = scripts.mod_track_target.insert
     tt.main_script.update = scripts.mod_track_target.update
+    tt.modifier.allows_duplicates = true
 
     local tower_dwaarp = E:register_t("tower_dwaarp", "tower")
     E:add_comps(tower_dwaarp, "attacks", "powers")
