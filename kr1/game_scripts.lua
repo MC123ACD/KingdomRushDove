@@ -16772,16 +16772,18 @@ function scripts.voodoo_witch_skull_aura.update(this, store)
         if not source.health.dead and store.tick_ts - last_ts >= a.cycle_time then
             last_ts = store.tick_ts
 
-            local targets = U.find_targets_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+            local targets = U.find_targets_in_range(store.entities, this.pos, 0, a.radius, F_NONE, a.vis_bans)
 
             if targets then
                 for _, target in pairs(targets) do
-                    local m = E:create_entity("mod_voodoo_witch_skull_spawn")
+                    if target.enemy or (target.soldier and band(target.vis.bans, a.vis_flags) == 0) then
+                        local m = E:create_entity("mod_voodoo_witch_skull_spawn")
 
-                    m.modifier.source_id = this.id
-                    m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
+                        m.modifier.target_id = target.id
 
-                    queue_insert(store, m)
+                        queue_insert(store, m)
+                    end
                 end
             end
         end
@@ -17238,7 +17240,7 @@ function scripts.hero_crab.update(this, store, script)
                         end
                     end
                     if U.real_max_speed(this) >= b.stun_speed and store.tick_ts - b.ts >= b.cooldown then
-                        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, b.radius, F_STUN, F_BOSS)
+                        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, b.radius, F_STUN, bor(F_BOSS, F_FLYING))
                         if enemies then
                             local rate = (U.real_max_speed(this) - 60) / (b.stun_speed - 60)
                             for _, e in pairs(enemies) do
