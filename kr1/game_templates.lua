@@ -9688,7 +9688,7 @@ tt.render.sprites[1].sort_y_offset = -1
 
 tt = E:register_t("decal_alric_soul_ball", "decal_regson_heal_ball")
 tt.render.sprites[1].color = {255, 122, 0}
-tt.hp_factor = 0.12
+tt.hp_factor = 0.1
 tt.fx_spawn = "fx_alric_soul_ball_spawn"
 tt.fx_receive = "fx_alric_receive_soul"
 tt.render.sprites[1].scale = vec_1(0.9)
