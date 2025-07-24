@@ -6371,30 +6371,6 @@ local function heroes()
     tt.modifier.duration = fts(40)
     tt.main_script.update = scripts.mod_regson_heal.update
 
-    tt = E:register_t("decal_regson_heal_ball", "decal_scripted")
-    E:add_comps(tt, "force_motion")
-    tt.render.sprites[1].name = "regson_heal_ball_travel"
-    tt.render.sprites[1].offset.y = 10
-    tt.render.sprites[1].z = Z_EFFECTS
-    tt.render.sprites[2] = E:clone_c("sprite")
-    tt.render.sprites[2].name = "decal_flying_shadow"
-    tt.render.sprites[2].animated = false
-    tt.render.sprites[2].z = Z_DECALS
-    tt.hp_factor = nil
-    tt.force_motion.max_a = 5400
-    tt.force_motion.max_v = 180
-    tt.force_motion.a_step = 10
-    tt.force_motion.max_flight_height = 60
-    tt.main_script.update = scripts.decal_regson_heal_ball.update
-
-    tt = E:register_t("fx_regson_heal_ball_spawn", "fx")
-    tt.render.sprites[1].name = "fx_regson_heal_ball_spawn"
-    tt.render.sprites[1].anchor.y = 0.35
-
-    tt = E:register_t("fx_regson_heal", "fx")
-    tt.render.sprites[1].name = "fx_regson_heal"
-    tt.render.sprites[1].sort_y_offset = -1
-
     tt = E:register_t("mod_regson_slash", "modifier")
     E:add_comps(tt, "render")
     tt.damage_type = DAMAGE_PHYSICAL

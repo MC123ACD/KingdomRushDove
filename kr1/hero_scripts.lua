@@ -1374,6 +1374,13 @@ return function(scripts)
             while true do
                 if this.health.dead or store.tick_ts - this.lifespan.ts > this.lifespan.duration then
                     this.health.hp = 0
+                    if not U.flag_has(this.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_DISINTEGRATE)) then
+                        local s = E:create_entity("decal_alric_soul_ball")
+                        s.target_id = this.owner_id
+                        s.source_id = this.id
+                        s.source_hp = this.health.hp_max
+                        queue_insert(store, s)
+                    end
                     SU.y_soldier_death(store, this)
                     queue_remove(store, this)
                     return
@@ -1534,7 +1541,7 @@ return function(scripts)
                                 spawn.nav_path.spi = km.zmod(i, 3)
                                 spawn.nav_path.ni = origin[3]
                                 spawn.unit.level = sws.level
-
+                                spawn.owner_id = this.id
                                 queue_insert(store, spawn)
                             end
 
@@ -7738,7 +7745,7 @@ return function(scripts)
             end
 
             do
-                local fx = E:create_entity("fx_regson_heal_ball_spawn")
+                local fx = E:create_entity(this.fx_spawn)
 
                 fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
                 fx.render.sprites[1].offset.y = initial_h
@@ -7765,7 +7772,7 @@ return function(scripts)
             if not hero.health.dead then
                 hero.health.hp = km.clamp(0, hero.health.hp_max, hero.health.hp + this.source_hp * this.hp_factor)
 
-                local fx = E:create_entity("fx_regson_heal")
+                local fx = E:create_entity(this.fx_receive)
 
                 fx.pos = hero.pos
                 fx.render.sprites[1].ts = store.tick_ts
