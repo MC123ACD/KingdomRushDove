@@ -941,5 +941,761 @@ return {
         a_size = {1024, 1024},
         f_quad = {740, 129, 43, 41},
         alias = {"hero_hammerhold_sandWarrior_0082"}
-    }
+    },
+    regson_hero_soulFx_0001 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			3,
+			17,
+			1,
+			0
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			413,
+			897,
+			52,
+			39
+		},
+		alias = {
+			"regson_hero_soulFx_0002"
+		}
+	},
+	regson_hero_soulFx_0003 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			5,
+			13,
+			3,
+			1
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			700,
+			473,
+			48,
+			42
+		},
+		alias = {
+			"regson_hero_soulFx_0004"
+		}
+	},
+	regson_hero_soulFx_0005 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			6,
+			11,
+			4,
+			2
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			754,
+			473,
+			46,
+			43
+		},
+		alias = {
+			"regson_hero_soulFx_0006"
+		}
+	},
+	regson_hero_soulFx_0007 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			7,
+			8,
+			6,
+			4
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			806,
+			473,
+			43,
+			44
+		},
+		alias = {
+			"regson_hero_soulFx_0008"
+		}
+	},
+	regson_hero_soulFx_0009 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			9,
+			6,
+			8,
+			6
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			915,
+			527,
+			39,
+			44
+		},
+		alias = {
+			"regson_hero_soulFx_0010"
+		}
+	},
+	regson_hero_soulFx_0011 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			56
+		},
+		trim = {
+			11,
+			27,
+			9,
+			7
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			900,
+			292,
+			36,
+			22
+		},
+		alias = {
+			"regson_hero_soulFx_0012"
+		}
+	},
+	regson_hero_soulHeal_0001 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			29,
+			26,
+			18
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			983,
+			371,
+			23,
+			23
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0002 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			27,
+			26,
+			20
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			336,
+			1001,
+			23,
+			23
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0003 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			25,
+			26,
+			22
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			365,
+			1001,
+			23,
+			23
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0004 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			23,
+			7,
+			12
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			855,
+			473,
+			42,
+			35
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0005 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			21,
+			8,
+			14
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			477,
+			978,
+			41,
+			35
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0006 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			19,
+			8,
+			10
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			983,
+			324,
+			41,
+			41
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0007 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			18,
+			8,
+			12
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			950,
+			473,
+			41,
+			40
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0008 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			7,
+			15,
+			8,
+			14
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			903,
+			473,
+			41,
+			41
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0009 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			13,
+			8,
+			11
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			642,
+			527,
+			40,
+			46
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0010 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			12,
+			8,
+			13
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			688,
+			527,
+			40,
+			45
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0011 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			10,
+			8,
+			15
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			734,
+			527,
+			40,
+			45
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0012 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			8,
+			9,
+			17
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			870,
+			527,
+			39,
+			45
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0013 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			6,
+			9,
+			10
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			737,
+			586,
+			39,
+			54
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0014 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			8,
+			4,
+			9,
+			13
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			780,
+			527,
+			39,
+			53
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0015 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			9,
+			3,
+			9,
+			16
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			782,
+			586,
+			38,
+			51
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0016 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			11,
+			12,
+			9,
+			19
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			988,
+			229,
+			36,
+			39
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0017 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			11,
+			10,
+			10,
+			21
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			988,
+			274,
+			35,
+			39
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0018 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			11,
+			9,
+			10,
+			24
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			869,
+			586,
+			35,
+			37
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0019 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			12,
+			15,
+			12,
+			27
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			533,
+			990,
+			32,
+			28
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0020 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			12,
+			14,
+			12,
+			29
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			737,
+			646,
+			32,
+			27
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0021 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			12,
+			12,
+			12,
+			32
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			942,
+			292,
+			32,
+			26
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0022 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			12,
+			10,
+			21,
+			35
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			997,
+			473,
+			23,
+			25
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0023 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			12,
+			10,
+			21,
+			38
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			782,
+			643,
+			23,
+			22
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0024 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			13,
+			7,
+			21,
+			41
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			869,
+			629,
+			22,
+			22
+		},
+		alias = {}
+	},
+	regson_hero_soulHeal_0025 = {
+		a_name = "go_hero_regson-1.png",
+		size = {
+			56,
+			70
+		},
+		trim = {
+			13,
+			5,
+			22,
+			44
+		},
+		a_size = {
+			1024,
+			1024
+		},
+		f_quad = {
+			984,
+			586,
+			21,
+			21
+		},
+		alias = {}
+	},
 }

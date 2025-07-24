@@ -2333,7 +2333,7 @@ local function heroes()
     tt.melee.range = 80
     tt.motion.max_speed = 90
     tt.transfer.extra_speed = 90
-    tt.transfer.min_distance = 75
+    tt.transfer.min_distance = 90
     tt.transfer.sound_loop = "HeroAlricSandwarrior"
     tt.transfer.animations = {"sand_travel_start", "sand_travel_loop", "sand_travel_end"}
     tt.transfer.scale = vec_1(1.2)

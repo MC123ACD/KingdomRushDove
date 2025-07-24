@@ -7779,6 +7779,9 @@ return function(scripts)
                 fx.render.sprites[1].offset = hero.unit.mod_offset
 
                 queue_insert(store, fx)
+                if this.side_effect then
+                    this.side_effect(hero, store)
+                end
             end
         end
 
