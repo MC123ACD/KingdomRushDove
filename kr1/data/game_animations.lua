@@ -9694,6 +9694,21 @@ local kr2_a = {
         to = 70,
         from = 63
     },
+    hero_alric_sand_travel_start = {
+        prefix = "hero_hammerhold_sandWarrior",
+        to = 28,
+        from = 25
+    },
+    hero_alric_sand_travel_loop = {
+        prefix = "hero_hammerhold_sandWarrior",
+        to = 36,
+        from = 29
+    },
+    hero_alric_sand_travel_end = {
+        prefix = "hero_hammerhold_sandWarrior",
+        to = 38,
+        from = 37
+    },
     soldier_sand_warrior_raise = {
         prefix = "hero_hammerhold_sandWarrior",
         to = 22,

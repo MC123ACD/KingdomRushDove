@@ -2240,7 +2240,7 @@ local function heroes()
     tt.particle_system.emission_rate = 20
 
     tt = E:register_t("hero_alric", "hero")
-    E:add_comps(tt, "melee", "timed_attacks")
+    E:add_comps(tt, "melee", "timed_attacks", "transfer")
     anchor_y = 0.09
     image_y = 90
     tt.hero.level_stats.armor = {0.38, 0.41, 0.44, 0.47, 0.5, 0.53, 0.56, 0.59, 0.62, 0.65}
@@ -2281,7 +2281,6 @@ local function heroes()
     }
     tt.hero.skills.toughness = E:clone_c("hero_skill")
     tt.hero.skills.toughness.hp_max = {90, 180, 270}
-    tt.hero.skills.toughness.regen = {18, 36, 54}
     tt.hero.skills.toughness.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -2333,6 +2332,11 @@ local function heroes()
     tt.melee.cooldown = 1
     tt.melee.range = 80
     tt.motion.max_speed = 90
+    tt.transfer.extra_speed = 90
+    tt.transfer.min_distance = 75
+    tt.transfer.sound_loop = "HeroAlricSandwarrior"
+    tt.transfer.animations = {"sand_travel_start", "sand_travel_loop", "sand_travel_end"}
+    tt.transfer.scale = vec_1(1.2)
     tt.regen.cooldown = 1
     tt.render.sprites[1] = E:clone_c("sprite")
     tt.render.sprites[1].anchor.y = anchor_y
@@ -2340,6 +2344,8 @@ local function heroes()
     tt.render.sprites[1].angles.walk = {"running"}
     tt.render.sprites[1].name = "idle"
     tt.render.sprites[1].prefix = "hero_alric"
+    tt.render.sprites[1].scale = vec_1(1)
+    tt.render.sprites[1].color = {255, 255, 255}
     tt.soldier.melee_slot_offset.x = 5
     tt.sound_events.change_rally_point = "HeroAlricTaunt"
     tt.sound_events.death = "HeroAlricDeath"

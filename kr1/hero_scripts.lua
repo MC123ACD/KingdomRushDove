@@ -1439,23 +1439,17 @@ return function(scripts)
             end)
 
             upgrade_skill(this, "spikedarmor", function(this, s)
-                if this.health.spiked_armor then
-                    this.health.spiked_armor = this.health.spiked_armor + s.values[s.level]
-                else
-                    this.health.spiked_armor = s.values[s.level]
-                end
+                this.health.spiked_armor = this.health.spiked_armor + s.values[s.level]
             end)
 
             upgrade_skill(this, "toughness", function(this, s)
                 this.toughness_hp_extra = s.hp_max[s.level]
-                this.toughness_regen_extra = s.regen[s.level]
             end)
 
             upgrade_skill(this, "flurry", function(this, s)
                 this.melee.attacks[3].disabled = nil
                 this.melee.attacks[3].cooldown = s.cooldown[s.level]
                 this.melee.attacks[3].loops = s.loops[s.level]
-
             end)
 
             upgrade_skill(this, "sandwarriors", function(this, s)

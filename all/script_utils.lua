@@ -690,7 +690,11 @@ local function y_hero_new_rally(store, this)
             this.vis.bans = F_ALL
             this.health.ignore_damage = true
             this.health_bar.hidden = true
-
+            local prev_scale, prev_color
+            if tr.scale then
+                prev_scale = this.render.sprites[1].scale
+                this.render.sprites[1].scale = tr.scale
+            end
             S:queue(tr.sound_loop)
             U.y_animation_play(this, tr.animations[1], nil, store.tick_ts)
 
@@ -720,7 +724,9 @@ local function y_hero_new_rally(store, this)
 
             S:stop(tr.sound_loop)
             U.y_animation_play(this, tr.animations[3], nil, store.tick_ts)
-
+            if tr.scale then
+                this.render.sprites[1].scale = prev_scale
+            end
             this.health_bar.hidden = false
             this.vis.bans = vis_bans
             this.health.ignore_damage = false
