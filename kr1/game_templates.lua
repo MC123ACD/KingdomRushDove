@@ -9686,12 +9686,14 @@ tt = E:register_t("fx_regson_heal", "fx")
 tt.render.sprites[1].name = "fx_regson_heal"
 tt.render.sprites[1].sort_y_offset = -1
 
+
 tt = E:register_t("decal_alric_soul_ball", "decal_regson_heal_ball")
 tt.render.sprites[1].color = {255, 122, 0}
 tt.hp_factor = 0.1
 tt.fx_spawn = "fx_alric_soul_ball_spawn"
 tt.fx_receive = "fx_alric_receive_soul"
 tt.render.sprites[1].scale = vec_1(0.9)
+tt.render.sprites[1].alpha = 200
 tt.render.sprites[2].scale = vec_1(0.9)
 tt.side_effect = function(hero, store)
     local cool_next = hero.melee.attacks[3].cooldown - (hero.melee.attacks[3].ts - store.tick_ts)
@@ -9704,7 +9706,9 @@ end
 tt = E:register_t("fx_alric_soul_ball_spawn", "fx_regson_heal_ball_spawn")
 tt.render.sprites[1].color = {255, 122, 0}
 tt.render.sprites[1].scale = vec_1(0.9)
+tt.render.sprites[1].alpha = 200
 
 tt = E:register_t("fx_alric_receive_soul", "fx_regson_heal")
 tt.render.sprites[1].color = {255, 122, 0}
 tt.render.sprites[1].scale = vec_1(0.9)
+tt.render.sprites[1].alpha = 200
