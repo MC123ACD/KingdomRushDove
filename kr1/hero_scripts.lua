@@ -6586,6 +6586,8 @@ return function(scripts)
             upgrade_skill(this, "monkeypalm", function(this, s)
                 local a = this.melee.attacks[5]
                 a.disabled = nil
+                a.damage_min = s.damage_min[s.level]
+                a.damage_max = s.damage_max[s.level]
                 local m = E:get_template(a.mod)
                 m.modifier.duration = s.silence_duration[s.level]
                 m.stun_duration = s.stun_duration[s.level]

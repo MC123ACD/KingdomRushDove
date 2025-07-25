@@ -5804,6 +5804,8 @@ local function heroes()
     tt.hero.skills.monkeypalm = E:clone_c("hero_skill")
     tt.hero.skills.monkeypalm.stun_duration = {1, 2, 3}
     tt.hero.skills.monkeypalm.silence_duration = {5, 10, 15}
+    tt.hero.skills.monkeypalm.damage_min = {10, 20, 30}
+    tt.hero.skills.monkeypalm.damage_max = {20, 40, 60}
     tt.hero.skills.monkeypalm.xp_gain_factor = 60
     tt.hero.skills.monkeypalm.xp_level_steps = {
         [3] = 1,
@@ -5911,7 +5913,9 @@ local function heroes()
     tt.melee.attacks[5] = E:clone_c("melee_attack")
     tt.melee.attacks[5].animation = "palm"
     tt.melee.attacks[5].disabled = true
-    tt.melee.attacks[5].damage_type = DAMAGE_NONE
+    tt.melee.attacks[5].damage_type = DAMAGE_MIXED
+    tt.melee.attacks[5].damage_max = nil
+    tt.melee.attacks[5].damage_min = nil
     tt.melee.attacks[5].mod = "mod_monkey_god_palm"
     tt.melee.attacks[5].vis_bans = bor(F_BOSS, F_STUN)
     tt.melee.attacks[5].vis_flags = F_BLOCK
