@@ -315,16 +315,6 @@ local function spawner(store, wave, group_id)
                 e.nav_path.spi = s.fixed_sub_path == 1 and s.path or math.random(#path)
                 e.nav_path.ni = P:get_start_node(pi)
                 e.spawn_data = s.spawn_data
-                if DI.level == DIFFICULTY_IMPOSSIBLE and group_id > 6 and e.enemy and e.health then
-                    e.health.hp_max = e.health.hp_max * (1 + (group_id - 6) * 0.0167)
-                    e.health.hp = e.health.hp_max
-                end
-                -- if e.enemy and gems_spawn_idx == i and gems_creep_idx == j then
-                --     e.enemy.gems = math.floor(store.gems_per_wave * (1 + km.rand_sign() * 0.2))
-
-                --     log.debug("GEMS: %s gems to enemy: (%s)%s spawn:%s creep:%s", e.enemy.gems, e.id, e.template_name,
-                --         i, j)
-                -- end
 
                 queue_insert(store, e)
 

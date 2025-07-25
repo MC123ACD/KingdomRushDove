@@ -15930,14 +15930,7 @@ function scripts.points_spawner.update(this, store)
                         e.motion.forced_waypoint = P:node_pos(e.nav_path)
                         e.render.sprites[1].name = "raise"
                         e.custom_spawn_data = custom_data
-                        if store.level_difficulty == DIFFICULTY_IMPOSSIBLE and store.wave_group_number > 6 then
-                            if e.health then
-                                e.health.hp_max = e.health.hp_max * (1 + (store.wave_group_number - 6) * 0.0167)
-                                e.health.hp = e.health.hp_max
-                            elseif e.health_factor then
-                                e.health_factor = 1 + (store.wave_group_number - 6) * 0.0167
-                            end
-                        end
+
                         queue_insert(store, e)
                         log.paranoid("%06.2f : points_spawner (%06.2f) %s - %s from:%s,%s to:%s,%s pi:%s spi:%s",
                             store.tick_ts, ts, current_wave, template, p_from.x, p_from.y, p_to.x, p_to.y, p_pi, p_spi)

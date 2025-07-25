@@ -172,6 +172,10 @@ function simulation:insert_entity(e)
 	d.entities[e.id] = e
     if e.enemy then
         d.enemies[e.id] = e  -- 优化分类索引
+        if d.level_difficulty == DIFFICULTY_IMPOSSIBLE and d.wave_group_number > 6 then
+            e.health.hp_max = e.health.hp_max * (1 + (d.wave_group_number - 6) * 0.0167)
+            e.health.hp = e.health.hp_max
+        end
     elseif e.soldier then
         d.soldiers[e.id] = e
     elseif e.modifier then
