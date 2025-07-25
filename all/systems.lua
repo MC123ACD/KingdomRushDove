@@ -866,55 +866,55 @@ function sys.game_upgrades:init(store)
 end
 
 function sys.game_upgrades:on_insert(entity, store)
-    local mage_tower_types = {"mage", "archmage", "necromancer"}
-    local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
-    local u = UP:get_upgrade("mage_brilliance")
+    -- local mage_tower_types = {"mage", "archmage", "necromancer"}
+    -- local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
+    -- local u = UP:get_upgrade("mage_brilliance")
 
-    if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-        local existing_towers = table.filter(store.entities, function(_, e)
-            return e.tower and table.contains(mage_tower_types, e.tower.type)
-        end)
+    -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
+    --     local existing_towers = table.filter(store.entities, function(_, e)
+    --         return e.tower and table.contains(mage_tower_types, e.tower.type)
+    --     end)
 
-        if #existing_towers == 0 then
-            for _, bn in pairs(mage_bullet_names) do
-                local b = E:get_template(bn).bullet
+    --     if #existing_towers == 0 then
+    --         for _, bn in pairs(mage_bullet_names) do
+    --             local b = E:get_template(bn).bullet
 
-                b._orig_damage_min = b.damage_min
-                b._orig_damage_max = b.damage_max
-            end
-        else
-            local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
+    --             b._orig_damage_min = b.damage_min
+    --             b._orig_damage_max = b.damage_max
+    --         end
+    --     else
+    --         local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
 
-            for _, bn in pairs(mage_bullet_names) do
-                local b = E:get_template(bn).bullet
+    --         for _, bn in pairs(mage_bullet_names) do
+    --             local b = E:get_template(bn).bullet
 
-                b.damage_min = math.ceil(b._orig_damage_min * f)
-                b.damage_max = math.ceil(b._orig_damage_max * f)
-            end
-        end
-    end
+    --             b.damage_min = math.ceil(b._orig_damage_min * f)
+    --             b.damage_max = math.ceil(b._orig_damage_max * f)
+    --         end
+    --     end
+    -- end
 
     return true
 end
 
 function sys.game_upgrades:on_remove(entity, store)
-    local mage_tower_types = {"mage", "archmage", "necromancer"}
-    local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
-    local u = UP:get_upgrade("mage_brilliance")
+    -- local mage_tower_types = {"mage", "archmage", "necromancer"}
+    -- local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
+    -- local u = UP:get_upgrade("mage_brilliance")
 
-    if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-        local existing_towers = table.filter(store.entities, function(_, e)
-            return e.tower and table.contains(mage_tower_types, e.tower.type)
-        end)
-        local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers - 1)]
+    -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
+    --     local existing_towers = table.filter(store.entities, function(_, e)
+    --         return e.tower and table.contains(mage_tower_types, e.tower.type)
+    --     end)
+    --     local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers - 1)]
 
-        for _, bn in pairs(mage_bullet_names) do
-            local b = E:get_template(bn).bullet
+    --     for _, bn in pairs(mage_bullet_names) do
+    --         local b = E:get_template(bn).bullet
 
-            b.damage_min = math.ceil(b._orig_damage_min * f)
-            b.damage_max = math.ceil(b._orig_damage_max * f)
-        end
-    end
+    --         b.damage_min = math.ceil(b._orig_damage_min * f)
+    --         b.damage_max = math.ceil(b._orig_damage_max * f)
+    --     end
+    -- end
 
     return true
 end
@@ -2161,50 +2161,73 @@ function sys.render:on_update(dt, ts, store)
         end
     end
 
-    local function insertsort(a)
-        local len = #a
+    -- local function insertsort(a)
+    --     local len = #a
 
-        for i = 2, len do
-            local f1_lte_f2
-            local f1 = a[i]
-            local y1 = f1.sort_y or (f1.sort_y_offset and f1.sort_y_offset or 0) + f1.pos.y
+    --     for i = 2, len do
+    --         local f1_lte_f2
+    --         local f1 = a[i]
+    --         local y1 = f1.sort_y or (f1.sort_y_offset and f1.sort_y_offset or 0) + f1.pos.y
 
-            for j = i - 1, 0, -1 do
-                if j == 0 then
-                    a[j + 1] = f1
+    --         for j = i - 1, 0, -1 do
+    --             if j == 0 then
+    --                 a[j + 1] = f1
 
-                    break
-                end
+    --                 break
+    --             end
 
-                local f2 = a[j]
-                local y2 = f2.sort_y or (f2.sort_y_offset and f2.sort_y_offset or 0) + f2.pos.y
+    --             local f2 = a[j]
+    --             local y2 = f2.sort_y or (f2.sort_y_offset and f2.sort_y_offset or 0) + f2.pos.y
 
-                if f1.z == f2.z then
-                    if y1 == y2 then
-                        if f1.draw_order == f2.draw_order then
-                            f1_lte_f2 = f1.pos.x < f2.pos.x
-                        else
-                            f1_lte_f2 = f1.draw_order < f2.draw_order
-                        end
-                    else
-                        f1_lte_f2 = y2 < y1
-                    end
-                else
-                    f1_lte_f2 = f1.z < f2.z
-                end
+    --             if f1.z == f2.z then
+    --                 if y1 == y2 then
+    --                     if f1.draw_order == f2.draw_order then
+    --                         f1_lte_f2 = f1.pos.x < f2.pos.x
+    --                     else
+    --                         f1_lte_f2 = f1.draw_order < f2.draw_order
+    --                     end
+    --                 else
+    --                     f1_lte_f2 = y2 < y1
+    --                 end
+    --             else
+    --                 f1_lte_f2 = f1.z < f2.z
+    --             end
 
-                if f1_lte_f2 then
-                    a[j + 1] = a[j]
-                else
-                    a[j + 1] = f1
+    --             if f1_lte_f2 then
+    --                 a[j + 1] = a[j]
+    --             else
+    --                 a[j + 1] = f1
 
-                    break
-                end
+    --                 break
+    --             end
+    --         end
+    --     end
+    -- end
+
+    -- insertsort(store.render_frames)
+
+    local function sort_frames_optimized(frames)
+    table.sort(frames, function(f1, f2)
+            if f1.z ~= f2.z then
+                return f1.z < f2.z
             end
-        end
+
+            local y1 = f1.sort_y or (f1.sort_y_offset or 0) + f1.pos.y
+            local y2 = f2.sort_y or (f2.sort_y_offset or 0) + f2.pos.y
+            if y1 ~= y2 then
+                return y1 > y2
+            end
+
+            if f1.draw_order ~= f2.draw_order then
+                return f1.draw_order < f2.draw_order
+            end
+
+            return f1.pos.x < f2.pos.x
+        end)
     end
 
-    insertsort(store.render_frames)
+    -- 替换最后一行
+    sort_frames_optimized(store.render_frames)
 end
 
 sys.sound_events = {}
