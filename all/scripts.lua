@@ -2558,7 +2558,7 @@ function scripts.enemy_bomb.update(this, store, script)
     if target and target.vis and U.flag_has(target.vis.flags, F_FLYING) then
         targets = {target}
     else
-        targets = table.filter(store.enemies, function(_, e)
+        targets = table.filter(store.soldiers, function(_, e)
             return e and not e.health.dead and band(e.vis.flags, b.damage_bans) == 0 and
                        band(e.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(e.pos, b.to, b.damage_radius)
         end)
@@ -2656,12 +2656,12 @@ function scripts.missile.update(this, store, script)
     local rot_dir = 1
     local follow = false
     local max_seek_angle = b.max_seek_angle or 0.2
-
+    local dist2 = mspeed * mspeed * store.tick_length * store.tick_length
     if this.render.sprites[1].animated then
         U.animation_start(this, "flying", nil, store.tick_ts, -1)
     end
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
         b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
         this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
         this.render.sprites[1].r = V.angleTo(b.speed.x, b.speed.y)
@@ -2689,7 +2689,7 @@ function scripts.missile.update(this, store, script)
         end
     end
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 
@@ -2839,7 +2839,7 @@ function scripts.enemy_missile.update(this, store, script)
     local rot_dir = 1
     local follow = false
     local max_seek_angle = b.max_seek_angle or 0.2
-
+    local dist2 = mspeed * mspeed * store.tick_length * store.tick_length
     if b.particles_name then
         local ps = E:create_entity(b.particles_name)
 
@@ -2852,7 +2852,7 @@ function scripts.enemy_missile.update(this, store, script)
         U.animation_start(this, "flying", nil, store.tick_ts, -1)
     end
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
         b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
         this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
         this.render.sprites[1].r = V.angleTo(b.speed.x, b.speed.y)
@@ -2880,7 +2880,7 @@ function scripts.enemy_missile.update(this, store, script)
         end
     end
 
-    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * mspeed * store.tick_length * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 
@@ -2995,7 +2995,7 @@ function scripts.bolt_enemy.update(this, store, script)
     local b = this.bullet
     local mspeed = b.min_speed
     local target, ps
-
+    local dist2 = mspeed * mspeed * store.tick_length * store.tick_length
     if b.particles_name then
         ps = E:create_entity(b.particles_name)
         ps.particle_system.track_id = this.id
@@ -3009,7 +3009,7 @@ function scripts.bolt_enemy.update(this, store, script)
         S:queue(this.sound_events.summon)
     end
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
         if b.target_id then
             target = store.entities[b.target_id]
         end
