@@ -860,7 +860,7 @@ local function y_hero_death_and_respawn(store, this)
         end
 
         local targets =
-            U.find_enemies_in_range(store.entities, this.pos, 0, sd.damage_radius, sd.vis_flags, sd.vis_bans)
+            U.find_enemies_in_range(store.enemies, this.pos, 0, sd.damage_radius, sd.vis_flags, sd.vis_bans)
 
         if targets then
             for _, t in pairs(targets) do
@@ -2186,7 +2186,7 @@ end
 
 local function soldier_attract_enemies(store, this)
     if this.soldier.attractive then
-        local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF,
+        local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF,
             function(e)
                 return #e.enemy.blockers == 0 and e.enemy.attract_source_id == nil
             end)
@@ -2213,7 +2213,7 @@ local function soldier_pick_melee_target(store, this)
     if not target then
         -- 如果当前还没有 target_id，就索一下敌
         if this.hero then
-            target = U.find_nearest_enemy(store.entities, center, 0, this.melee.range, F_BLOCK, bit.bor(F_CLIFF),
+            target = U.find_nearest_enemy(store.enemies, center, 0, this.melee.range, F_BLOCK, bit.bor(F_CLIFF),
                 function(e)
                     return (not e.enemy.max_blockers or #e.enemy.blockers == 0) and
                                band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0 and
@@ -2313,7 +2313,7 @@ local function soldier_pick_melee_attack(store, this, target)
                         a.ts = store.tick_ts
                     else
                         if a.min_count and a.type == "area" and a.damage_radius then
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
                                 a.vis_flags, a.vis_bans)
 
                             if not targets or #targets < a.min_count then
@@ -3036,7 +3036,7 @@ local function y_enemy_walk_until_blocked(store, this, ignore_soldiers, func)
             for _, a in pairs(this.ranged.attacks) do
                 if not a.disabled and (this.enemy.can_do_magic) and
                     (a.hold_advance or store.tick_ts - a.ts > a.cooldown) then
-                    ranged = U.find_nearest_soldier(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    ranged = U.find_nearest_soldier(store.soldiers, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans)
                     if ranged ~= nil then
                         break
@@ -3107,7 +3107,7 @@ local function y_enemy_do_ranged_attack(store, this, target, attack)
     local targets
     local target_num = 1
     if attack.multi_num then
-        targets = U.find_soldiers_in_range(store.entities, this.pos, 0, attack.max_range, attack.vis_flags,
+        targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, attack.max_range, attack.vis_flags,
             attack.vis_bans)
         if targets and #targets < attack.multi_num then
             target_num = #targets

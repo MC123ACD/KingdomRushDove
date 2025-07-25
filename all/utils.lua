@@ -754,7 +754,7 @@ function U.find_random_enemy(entities, origin, min_range, max_range, flags, bans
     bans = bans or 0
 
     local enemies = table.filter(entities, function(k, v)
-        return not v.pending_removal and v.enemy and v.vis and v.nav_path and v.health and not v.health.dead and
+        return not v.pending_removal and v.vis and v.nav_path and v.health and not v.health.dead and
                    band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
                    U.is_inside_ellipse(v.pos, origin, max_range) and P:is_node_valid(v.nav_path.pi, v.nav_path.ni) and
                    (min_range == 0 or not U.is_inside_ellipse(v.pos, origin, min_range)) and
@@ -776,7 +776,7 @@ function U.find_random_enemy_with_pos(entities, origin, min_range, max_range, pr
     bans = bans or 0
     local enemies = {}
     for _, e in pairs(entities) do
-        if e.pending_removal or not e.enemy or not e.nav_path or not e.vis or e.health and e.health.dead or
+        if e.pending_removal or not e.nav_path or not e.vis or e.health and e.health.dead or
             band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
             -- block empty
         else
@@ -813,7 +813,7 @@ end
 
 function U.find_enemies_in_range(entities, origin, min_range, max_range, flags, bans, filter_func)
     local enemies = table.filter(entities, function(k, v)
-        return not v.pending_removal and v.enemy and v.vis and v.nav_path and v.health and not v.health.dead and
+        return not v.pending_removal and v.vis and v.nav_path and v.health and not v.health.dead and
                    band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
                    U.is_inside_ellipse(v.pos, origin, max_range) and P:is_node_valid(v.nav_path.pi, v.nav_path.ni) and
                    (min_range == 0 or not U.is_inside_ellipse(v.pos, origin, min_range)) and
@@ -843,7 +843,7 @@ function U.find_enemies_in_paths(entities, origin, min_node_range, max_node_rang
             -- block empty
         else
             for _, e in pairs(entities) do
-                if not e.pending_removal and e.enemy and e.nav_path and e.health and not e.health.dead and e.nav_path.pi ==
+                if not e.pending_removal and e.nav_path and e.health and not e.health.dead and e.nav_path.pi ==
                     opi and
                     (only_upstream == true and oni > e.nav_path.ni or only_upstream == false and oni < e.nav_path.ni or
                         only_upstream == nil) and e.vis and band(e.vis.flags, bans) == 0 and band(e.vis.bans, flags) ==
@@ -882,7 +882,7 @@ function U.find_biggest_enemy(entities, origin, min_range, max_range, prediction
     local biggest_hp = -1
 
     for _, e in pairs(entities) do
-        if not e.pending_removal and e.enemy and e.nav_path and e.vis and e.health and not e.health.dead and
+        if not e.pending_removal and e.nav_path and e.vis and e.health and not e.health.dead and
             band(e.vis.flags, bans) == 0 and band(e.vis.bans, flags) == 0 and
             (not filter_func or filter_func(e, origin)) then
 
@@ -931,7 +931,7 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     local enemies = {}
 
     for _, e in pairs(entities) do
-        if e.pending_removal or not e.enemy or not e.nav_path or not e.vis or e.health and e.health.dead or
+        if e.pending_removal or not e.nav_path or not e.vis or e.health and e.health.dead or
             band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
             -- block empty
         else
@@ -1116,7 +1116,7 @@ function U.find_paths_with_enemies(entities, flags, bans, filter_func)
     local pis = {}
 
     for _, e in pairs(entities) do
-        if not e.pending_removal and e.enemy and e.nav_path and e.health and not e.health.dead and e.vis and
+        if not e.pending_removal and e.nav_path and e.health and not e.health.dead and e.vis and
             band(e.vis.flags, bans) == 0 and band(e.vis.bans, flags) == 0 and (not filter_func or filter_func(e)) then
             pis[e.nav_path.pi] = true
         end

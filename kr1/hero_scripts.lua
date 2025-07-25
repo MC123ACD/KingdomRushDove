@@ -199,7 +199,7 @@ return function(scripts)
 
                     skill = this.hero.skills.courage
                     if ready_to_use_skill(courage, store) then
-                        local triggers = U.find_soldiers_in_range(store.entities, this.pos, 0, courage.range,
+                        local triggers = U.find_soldiers_in_range(store.soldiers, this.pos, 0, courage.range,
                             courage.vis_flags, courage.vis_bans)
 
                         if not triggers or #triggers < courage.min_count then
@@ -211,7 +211,7 @@ return function(scripts)
                             if SU.y_hero_wait(store, this, courage.shoot_time) then
                                 -- block empty
                             else
-                                local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, courage.range,
+                                local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, courage.range,
                                     courage.vis_flags, courage.vis_bans)
                                 if not targets then
                                     -- block empty
@@ -324,7 +324,7 @@ return function(scripts)
     scripts.arrow_multishot_hero_alleria = {
         insert = function(this, store)
             if this.extra_arrows > 0 then
-                local targets = U.find_enemies_in_range(store.entities, this.bullet.to, 0, this.extra_arrows_range,
+                local targets = U.find_enemies_in_range(store.enemies, this.bullet.to, 0, this.extra_arrows_range,
                     F_RANGED, F_NONE)
                 if targets then
                     local rate
@@ -584,7 +584,7 @@ return function(scripts)
 
                     queue_insert(store, smoke)
 
-                    local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, 20, F_AREA, 0)
+                    local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, 20, F_AREA, 0)
                     if enemies then
                         for _, e in pairs(enemies) do
                             if e.health and not e.health.dead then
@@ -758,7 +758,7 @@ return function(scripts)
                             band(store.entities[this.soldier.target_id].vis.bans, a_l.vis_flags) == 0 then
                             target = store.entities[this.soldier.target_id]
                         else
-                            target = U.find_random_enemy(store.entities, this.pos, 0, a_l.range, a_l.vis_flags,
+                            target = U.find_random_enemy(store.enemies, this.pos, 0, a_l.range, a_l.vis_flags,
                                 a_l.vis_bans)
                         end
 
@@ -829,7 +829,7 @@ return function(scripts)
                     end
 
                     if ready_to_use_skill(a_sd, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, a_sd.min_range,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a_sd.min_range,
                             a_sd.max_range, a_sd.vis_flags, a_sd.vis_bans, function(v)
                                 return (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_WATER)) and
                                            (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_FAERIE))
@@ -859,7 +859,7 @@ return function(scripts)
 
                             SU.hero_gain_xp_from_skill(this, s_sd)
 
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a_sd.max_range * 1.5,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a_sd.max_range * 1.5,
                                 a_sd.vis_flags, a_sd.vis_bans, function(v)
                                     return (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_WATER)) and
                                                (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_FAERIE))
@@ -997,7 +997,7 @@ return function(scripts)
                 table.insert(this.seen_targets, target.id)
 
                 if this.bounces > 0 then
-                    local bounce_target = U.find_nearest_enemy(store.entities, target.pos, 0, this.bounce_range,
+                    local bounce_target = U.find_nearest_enemy(store.enemies, target.pos, 0, this.bounce_range,
                         this.bounce_vis_flags, this.bounce_vis_bans, function(v)
                             return not table.contains(this.seen_targets, v.id)
                         end)
@@ -1237,7 +1237,7 @@ return function(scripts)
                     skill = this.hero.skills.disintegrate
 
                     if ready_to_use_skill(a, store) then
-                        local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                        local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
                             a.vis_bans, function(v)
                                 return v.health.hp <= a.total_damage
                             end)
@@ -1247,7 +1247,7 @@ return function(scripts)
                         else
                             local remaining_damage = a.total_damage * this.unit.damage_factor
 
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
                                 a.vis_flags, a.vis_bans, function(v)
                                     return v.health.hp <= remaining_damage
                                 end)
@@ -1503,7 +1503,7 @@ return function(scripts)
                     end
 
                     if ready_to_use_skill(swa, store) then
-                        local target_info = U.find_enemies_in_paths(store.entities, this.pos, 0, swa.range_nodes, nil,
+                        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, 0, swa.range_nodes, nil,
                             swa.vis_flags, swa.vis_bans, true)
 
                         if target_info then
@@ -1591,7 +1591,7 @@ return function(scripts)
                     break
                 end
 
-                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.radius, this.vis_flags,
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.radius, this.vis_flags,
                     this.vis_bans)
 
                 if targets and #targets > 0 then
@@ -1609,7 +1609,7 @@ return function(scripts)
                     fx.render.sprites[1].ts = store.tick_ts
 
                     queue_insert(store, fx)
-                    local new_targets = U.find_enemies_in_range(store.entities, this.pos, 0, 2 * this.radius,
+                    local new_targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 2 * this.radius,
                         this.vis_flags, this.vis_bans)
                     for _, t in ipairs(new_targets) do
                         local d = E:create_entity("damage")
@@ -1690,7 +1690,7 @@ return function(scripts)
                     skill = this.hero.skills.tar
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                        local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not target then
@@ -1747,7 +1747,7 @@ return function(scripts)
                             SU.delay_attack(store, a, 0.5)
                         else
                             local mine_pos
-                            local _, enemy_pos = U.find_random_enemy_with_pos(store.entities, this.pos, a.min_range,
+                            local _, enemy_pos = U.find_random_enemy_with_pos(store.enemies, this.pos, a.min_range,
                                 a.max_range, fts(24), a.vis_flags, a.vis_bans)
                             if enemy_pos then
                                 mine_pos = enemy_pos
@@ -2249,7 +2249,7 @@ return function(scripts)
                     skill = this.hero.skills.catapult
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                        local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not target then
@@ -2388,7 +2388,7 @@ return function(scripts)
                 if store.tick_ts - attack.ts >= attack.cooldown then
                     attack.ts = store.tick_ts
 
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, attack.damage_radius,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, attack.damage_radius,
                         attack.damage_flags, attack.damage_bans, function(v)
                             return not table.contains(this.shared_enemies_hit, v)
                         end)
@@ -2452,7 +2452,7 @@ return function(scripts)
                 end
 
                 if store.tick_ts - ca.ts > ca.cooldown then
-                    local target = U.find_nearest_enemy(store.entities, this.pos, ca.min_range, ca.max_range,
+                    local target = U.find_nearest_enemy(store.enemies, this.pos, ca.min_range, ca.max_range,
                         ca.vis_flags, ca.vis_bans)
 
                     if not target then
@@ -2841,7 +2841,7 @@ return function(scripts)
                     skill = this.hero.skills.stampede
 
                     if ready_to_use_skill(a, store) then
-                        local target_info = U.find_enemies_in_paths(store.entities, this.pos, a.range_nodes_min,
+                        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.range_nodes_min,
                             a.range_nodes_max, 60, a.vis_flags, a.vis_bans, true)
 
                         if not target_info then
@@ -2947,7 +2947,7 @@ return function(scripts)
             end
 
             local target = store.entities[b.target_id]
-            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.damage_flags,
+            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags,
                 b.damage_bans)
             if targets then
                 for _, t in pairs(targets) do
@@ -3167,7 +3167,7 @@ return function(scripts)
                         local target, targets = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                             a.max_range, a.shoot_time, a.vis_flags, a.vis_bans, function(e)
                                 local center_pos = P:node_pos(e.nav_path.pi, 1, e.nav_path.ni)
-                                local nearby = U.find_enemies_in_range(store.entities, center_pos, 0, a.search_range,
+                                local nearby = U.find_enemies_in_range(store.enemies, center_pos, 0, a.search_range,
                                     a.vis_flags, a.vis_bans)
 
                                 return nearby and #nearby >= a.search_min_count
@@ -3221,7 +3221,7 @@ return function(scripts)
 
                                 if target.health.dead then
                                     local center_pos = P:node_pos(target.nav_path.pi, 1, target.nav_path.ni)
-                                    local nearby = U.find_nearest_enemy(store.entities, center_pos, 0, a.search_range,
+                                    local nearby = U.find_nearest_enemy(store.enemies, center_pos, 0, a.search_range,
                                         a.vis_flags, a.vis_bans)
 
                                     if nearby then
@@ -3262,7 +3262,7 @@ return function(scripts)
                             end)
 
                         if not target then
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                                 a.vis_flags, a.vis_bans)
 
                             if targets then
@@ -3410,7 +3410,7 @@ return function(scripts)
                 fx.tween.ts = store.tick_ts
                 queue_insert(store, fx)
                 local targets =
-                    U.find_enemies_in_range(store.entities, pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                    U.find_enemies_in_range(store.enemies, pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
                 if targets then
                     for _, t in pairs(targets) do
                         local d = E:create_entity("damage")
@@ -3702,7 +3702,7 @@ return function(scripts)
                     return
                 end
 
-                local targets = U.find_soldiers_in_range(store.entities, pos, 0, skill.range, 0, 0)
+                local targets = U.find_soldiers_in_range(store.soldiers, pos, 0, skill.range, 0, 0)
 
                 if targets then
                     for i = 1, math.min(#targets, skill.count[skill.level]) do
@@ -4015,7 +4015,7 @@ return function(scripts)
             S:queue(this.sound)
             U.y_wait(store, this.hit_time)
 
-            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.damage_radius, this.damage_flags,
+            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.damage_radius, this.damage_flags,
                 this.damage_bans or 0)
 
             if targets then
@@ -4072,7 +4072,7 @@ return function(scripts)
                     SU.soldier_courage_upgrade(store, this)
                     -- enable arcane rain attack
                     if ready_to_use_skill(arcane_rain, store) then
-                        local target = U.find_random_enemy(store.entities, this.pos, arcane_rain.min_range,
+                        local target = U.find_random_enemy(store.enemies, this.pos, arcane_rain.min_range,
                             arcane_rain.max_range, arcane_rain.vis_flags, arcane_rain.vis_bans)
 
                         if not target then
@@ -4264,7 +4264,7 @@ return function(scripts)
                     a = this.timed_attacks.list[2]
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                        local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not target then
@@ -4606,7 +4606,7 @@ return function(scripts)
                     skill = this.hero.skills.stomp
 
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not targets then
@@ -4631,7 +4631,7 @@ return function(scripts)
 
                                     local flip_sign = this.render.sprites[1].flip_x and -1 or 1
                                     local start_ts = store.tick_ts
-                                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0,
+                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0,
                                         a.damage_radius, a.damage_flags, a.damage_bans)
 
                                     S:queue("HeroGiantStomp")
@@ -5244,7 +5244,7 @@ return function(scripts)
                     skill = this.hero.skills.torment
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
+                        local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
 
                         if not triggers or #triggers < a.min_count then
                             SU.delay_attack(store, a, 0.13333333333333333)
@@ -5262,7 +5262,7 @@ return function(scripts)
 
                             a.ts = start_ts
 
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
 
                             if not targets then
                                 SU.delay_attack(store, a, 0.13333333333333333)
@@ -5686,7 +5686,7 @@ return function(scripts)
                     skill = this.hero.skills.dragonstyle
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                             a.vis_bans)
 
                         if not targets then
@@ -5715,7 +5715,7 @@ return function(scripts)
 
                             SU.hero_gain_xp_from_skill(this, skill)
 
-                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius, a.damage_flags,
+                            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.damage_flags,
                                 a.damage_bans)
 
                             if targets then
@@ -5747,7 +5747,7 @@ return function(scripts)
                     skill = this.hero.skills.leopardstyle
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                         if not targets then
                             SU.delay_attack(store, a, 0.13333333333333333)
@@ -5780,7 +5780,7 @@ return function(scripts)
 
                         while i <= a.loops do
                             i = i + 1
-                            targets = U.find_enemies_in_range(store.entities, start_pos, 0, a.range, a.vis_flags, a.vis_bans)
+                            targets = U.find_enemies_in_range(store.enemies, start_pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                             if not targets then
                                 break
@@ -6239,7 +6239,7 @@ return function(scripts)
                     skill = this.hero.skills.doomspin
 
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not targets or #targets < a.min_count then
@@ -6400,7 +6400,7 @@ return function(scripts)
                         U.set_destination(this, slot_pos)
 
                         while not U.walk(this, store.tick_length) do
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.stun_range,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.stun_range,
                                 a.stun_vis_flags, a.stun_vis_bans, function(v)
                                     return not table.contains(damaged_enemies, v)
                                 end)
@@ -6614,7 +6614,7 @@ return function(scripts)
             return true
         end,
         can_spinningpole = function(this, store, attack, target)
-            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, attack.damage_radius, attack.vis_flags,
+            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, attack.damage_radius, attack.vis_flags,
                 attack.vis_bans)
             return targets and #targets >= attack.min_count
         end,
@@ -6746,7 +6746,7 @@ return function(scripts)
                     skill = this.hero.skills.angrygod
 
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans)
 
                         if not targets or #targets < a.min_count then
@@ -6767,7 +6767,7 @@ return function(scripts)
                             for i = 1, a.loops do
                                 U.animation_start(this, a.animations[2], nil, store.tick_ts, false)
 
-                                local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range,
+                                local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range,
                                     a.max_range, a.vis_flags, a.vis_bans)
 
                                 if targets then
@@ -7459,7 +7459,7 @@ return function(scripts)
                     local a = this.timed_attacks.list[1]
 
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, 200,
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 200,
                             a.vis_flags, a.vis_bans)
                         if targets and #targets > a.min_count then
                             this.health_bar.hidden = true
@@ -7502,7 +7502,7 @@ return function(scripts)
                                         if not damage_applied then
                                             this.render.sprites[1].alpha = 255
                                             damage_applied = true
-                                            local whirlwind_targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                                            local whirlwind_targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
                                             if whirlwind_targets then
                                                 for _, target in pairs(whirlwind_targets) do
                                                     local m = E:create_entity(a.mod)
@@ -7651,7 +7651,7 @@ return function(scripts)
             if not hero.health.dead and store.tick_ts - last_ts >= a.cycle_time then
                 last_ts = store.tick_ts
 
-                local targets = U.find_enemies_in_range(store.entities, hero.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+                local targets = U.find_enemies_in_range(store.enemies, hero.pos, 0, a.radius, a.vis_flags, a.vis_bans)
 
                 if targets then
                     for _, target in pairs(targets) do
@@ -8007,7 +8007,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local enemy = U.find_biggest_enemy(store.entities, this.pos, 0, this.timed_attacks.list[1].range, 0,
+                    local enemy = U.find_biggest_enemy(store.enemies, this.pos, 0, this.timed_attacks.list[1].range, 0,
                         F_RANGED, 0, function(e, origin)
                             return e.health.hp <= this.ultimate.curse_damage_all * this.unit.damage_factor *
                                        e.health.damage_factor
@@ -8030,7 +8030,7 @@ return function(scripts)
                 skill = this.hero.skills.despair
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                         a.vis_bans)
 
                     if not targets or #targets < a.min_count then
@@ -8045,7 +8045,7 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             a.ts = store.tick_ts
-                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range * 1.2, a.vis_flags,
+                            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range * 1.2, a.vis_flags,
                                 a.vis_bans)
 
                             if targets then
@@ -8091,7 +8091,7 @@ return function(scripts)
 
                             if blocked and U.is_blocked_valid(store, this) then
                                 SU.hero_gain_xp_from_skill(this, skill)
-                                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range * 1.2,
+                                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range * 1.2,
                                     a.vis_flags, a.vis_bans)
                                 for i, target in ipairs(targets) do
                                     if i > a.max_count then
@@ -8210,7 +8210,7 @@ return function(scripts)
 
                 SU.insert_sprite(store, this.explode_fx, p)
 
-                local targets = U.find_enemies_in_range(store.entities, target.pos, 0, this.explode_range,
+                local targets = U.find_enemies_in_range(store.enemies, target.pos, 0, this.explode_range,
                     this.explode_vis_flags, this.explode_vis_bans)
 
                 if targets then
@@ -8541,7 +8541,7 @@ return function(scripts)
             skill = this.hero.skills.box
 
             if ready_to_use_skill(a, store) then
-                local target_info = U.find_enemies_in_paths(store.entities, this.pos, a.range_nodes_min,
+                local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.range_nodes_min,
                     a.range_nodes_max, a.max_path_dist, a.vis_flags, a.vis_bans, true, function(e)
                         return not U.flag_has(P:path_terrain_props(e.nav_path.pi), TERRAIN_FAERIE)
                     end)
@@ -8679,7 +8679,7 @@ return function(scripts)
             for _, set in pairs(ca.range_sets) do
                 local min_range, max_range = unpack(set)
 
-                target, targets = U.find_nearest_enemy(store.entities, this.pos, min_range, max_range, ca.vis_flags,
+                target, targets = U.find_nearest_enemy(store.enemies, this.pos, min_range, max_range, ca.vis_flags,
                     ca.vis_bans)
 
                 if target then
@@ -8999,7 +8999,7 @@ return function(scripts)
                 skill = this.hero.skills.soulburn
 
                 if ready_to_use_skill(a, store) then
-                    local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                    local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                         a.vis_bans, function(e)
                             return skill.level == 3 or e.health.hp_max <= a.total_hp
                         end)
@@ -9118,7 +9118,7 @@ return function(scripts)
                         node.spi = 1
 
                         local node_pos = P:node_pos(node)
-                        local targets = U.find_enemies_in_range(store.entities, node_pos, 0, a.damage_radius,
+                        local targets = U.find_enemies_in_range(store.enemies, node_pos, 0, a.damage_radius,
                             a.vis_flags, a.vis_bans)
 
                         if targets then
@@ -9162,14 +9162,14 @@ return function(scripts)
                 skill = this.hero.skills.shackles
 
                 if ready_to_use_skill(a, store) then
-                    local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                    local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                         a.vis_bans)
 
                     if not triggers then
                         SU.delay_attack(store, a, 0.3333333333333333)
                     else
                         local first_target = table.random(triggers)
-                        local targets = U.find_enemies_in_range(store.entities, first_target.pos, 0, a.radius,
+                        local targets = U.find_enemies_in_range(store.enemies, first_target.pos, 0, a.radius,
                             a.vis_flags, a.vis_bans)
                         local af = first_target.pos.x < this.pos.x
 
@@ -9252,7 +9252,7 @@ return function(scripts)
 
         queue_insert(store, e)
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.range, this.vis_flags, this.vis_bans)
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.range, this.vis_flags, this.vis_bans)
 
         if targets then
             for _, target in pairs(targets) do
@@ -9396,7 +9396,7 @@ return function(scripts)
                 skill = this.hero.skills.lethal_prism
 
                 if ready_to_use_skill(a, store) then
-                    local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                    local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                         a.vis_bans)
 
                     if not triggers then
@@ -9417,7 +9417,7 @@ return function(scripts)
                         U.animation_start(this, a.animations[2], nil, store.tick_ts, true)
 
                         for i = 1, a.ray_count do
-                            local target = U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags,
+                            local target = U.find_random_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags,
                                 a.vis_bans)
 
                             if target then
@@ -9568,7 +9568,7 @@ return function(scripts)
 
     function scripts.hero_durax_ultimate.update(this, store)
         this.damage = this.damage * this.damage_factor
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
             function(e)
                 return band(e.vis.flags, F_BOSS) ~= 0 or band(e.vis.bans, F_STUN) == 0
             end)
@@ -9704,7 +9704,7 @@ return function(scripts)
 
         local function shield_strike_filter_fn(e, origin)
             local a = this.ranged.attacks[1]
-            local targets = U.find_enemies_in_range(store.entities, e.pos, 0, a.rebound_range, a.vis_flags, a.vis_bans)
+            local targets = U.find_enemies_in_range(store.enemies, e.pos, 0, a.rebound_range, a.vis_flags, a.vis_bans)
 
             return targets and #targets > 1
         end
@@ -9735,7 +9735,7 @@ return function(scripts)
                 skill = this.hero.skills.celebrity
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans,
+                    local target = U.find_random_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans,
                         function(e)
                             return e.unit and not e.unit.is_stunned
                         end)
@@ -9771,12 +9771,12 @@ return function(scripts)
                             end
 
                             if i <= a.max_targets then
-                                target = U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags,
+                                target = U.find_random_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags,
                                     a.vis_bans, function(e)
                                         return e.unit and not e.unit.is_stunned
                                     end)
                                 target = target or
-                                             U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags,
+                                             U.find_random_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags,
                                         a.vis_bans)
 
                                 if target then
@@ -10030,7 +10030,7 @@ return function(scripts)
 
             ::label_75_1::
 
-            target = U.find_random_enemy(store.entities, this.pos, 0, this.rebound_range, b.vis_flags, b.vis_bans,
+            target = U.find_random_enemy(store.enemies, this.pos, 0, this.rebound_range, b.vis_flags, b.vis_bans,
                 function(v)
                     return not table.contains(visited, v.id)
                 end)
@@ -10250,7 +10250,7 @@ return function(scripts)
                 skill = this.hero.skills.seal_of_fire
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_nearest_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_nearest_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if not target then
@@ -10279,7 +10279,7 @@ return function(scripts)
                                 local offset = a.bullet_start_offset[si]
                                 local b = E:create_entity(a.bullet)
 
-                                target = U.find_nearest_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                                target = U.find_nearest_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                                     a.vis_flags, a.vis_bans)
 
                                 if target then
@@ -10413,7 +10413,7 @@ return function(scripts)
             end
         end
 
-        local targets = U.find_enemies_in_range(store.entities, b.to, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+        local targets = U.find_enemies_in_range(store.enemies, b.to, 0, b.damage_radius, b.damage_flags, b.damage_bans)
 
         if targets then
             for _, target in pairs(targets) do
@@ -10507,7 +10507,7 @@ return function(scripts)
         local np = this.nav_path
         local nodes_step = this.aura.nodes_step
         local last_freeze_target
-        local targets = U.find_enemies_in_paths(store.entities, this.pos, 0, this.aura.range_nodes, nil,
+        local targets = U.find_enemies_in_paths(store.enemies, this.pos, 0, this.aura.range_nodes, nil,
             this.aura.vis_flags, this.aura.vis_bans, true)
 
         if targets then
@@ -10564,7 +10564,7 @@ return function(scripts)
                         if a.chance and (a.chance == 0 or math.random() >= a.chance) then
                             -- block empty
                         else
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range,
                                 a.vis_flags, a.vis_bans)
 
                             if not targets then
@@ -10820,7 +10820,7 @@ return function(scripts)
             end
 
             if ready_to_use_skill(this.ultimate, store) then
-                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.ranged.attacks[1].max_range,
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.ranged.attacks[1].max_range,
                     this.ranged.attacks[1].vis_flags, this.ranged.attacks[1].vis_bans)
                 if targets and valid_land_node_nearby(this.pos) then
                     S:queue(this.sound_events.change_rally_point)
@@ -10844,7 +10844,7 @@ return function(scripts)
             skill = this.hero.skills.inmolate
 
             if ready_to_use_skill(a, store) then
-                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                 if not targets or #targets < a.min_count then
                     SU.delay_attack(store, a, 0.16666666666666666)
@@ -10863,7 +10863,7 @@ return function(scripts)
 
             if ready_to_use_skill(a, store) then
                 local targets = U.find_towers_in_range(store.entities, this.pos, a, function(e, o)
-                    local enemies = U.find_enemies_in_range(store.entities, e.pos, 0, a.enemies_range,
+                    local enemies = U.find_enemies_in_range(store.enemies, e.pos, 0, a.enemies_range,
                         a.enemies_vis_flags, a.enemies_vis_bans)
 
                     return e.tower.can_be_mod and enemies and #enemies >= a.enemies_min_count
@@ -10959,7 +10959,7 @@ return function(scripts)
             U.y_wait(store, 0.2)
             coroutine.yield()
 
-            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
         end
 
         this.tween.disabled = true
@@ -10968,7 +10968,7 @@ return function(scripts)
         SU.insert_sprite(store, a.hit_fx, this.pos)
         SU.insert_sprite(store, a.hit_decal, this.pos)
 
-        targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.damage_vis_bans)
+        targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.damage_vis_bans)
 
         if targets then
             for _, t in pairs(targets) do
@@ -11190,7 +11190,7 @@ return function(scripts)
                 skill = this.hero.skills.rootspikes
 
                 if ready_to_use_skill(a, store) then
-                    local triggers = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if not triggers or #triggers < a.trigger_count then
@@ -11207,7 +11207,7 @@ return function(scripts)
                         end) then
                             -- block empty
                         else
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.damage_radius,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
                                 a.vis_flags, a.vis_bans)
 
                             if not targets then
@@ -11325,7 +11325,7 @@ return function(scripts)
 
                 queue_insert(store, e)
 
-                local targets = U.find_enemies_in_range(store.entities, e.pos, 0, this.damage_radius, this.vis_flags,
+                local targets = U.find_enemies_in_range(store.enemies, e.pos, 0, this.damage_radius, this.vis_flags,
                     this.vis_bans)
 
                 if targets then
@@ -11479,7 +11479,7 @@ return function(scripts)
                 skill = this.hero.skills.fury
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                         a.vis_flags, a.vis_bans)
 
                     if not targets then
@@ -11497,7 +11497,7 @@ return function(scripts)
 
                             SU.hero_gain_xp_from_skill(this, skill)
 
-                            local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                                 a.vis_flags, a.vis_bans)
 
                             if targets then
@@ -11527,7 +11527,7 @@ return function(scripts)
                 skill = this.hero.skills.soul
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans, function(e)
                             return e.health.hp / e.health.hp_max < a.max_hp_factor and
                                        not table.contains(a.excluded_templates, e.template_name)
@@ -11548,7 +11548,7 @@ return function(scripts)
 
                             SU.hero_gain_xp_from_skill(this, skill)
 
-                            local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, a.max_range,
+                            local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.max_range,
                                 a.vis_flags, a.vis_bans, function(e)
                                     return not table.contains(a.excluded_templates, e.template_name)
                                 end)
@@ -11588,7 +11588,7 @@ return function(scripts)
                 skill = this.hero.skills.tale
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if not targets then
@@ -11635,7 +11635,7 @@ return function(scripts)
                     local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
                     local target_found = false
                     if target then
-                        target = U.find_foremost_enemy_with_max_coverage(store.entities, this.pos, 0,
+                        target = U.find_foremost_enemy_with_max_coverage(store.enemies, this.pos, 0,
                             this.ranged.attacks[1].max_range, 0, bor(F_RANGED, F_MOD), 0, nil, nil, this.ultimate.range)
                         if target and target.pos and valid_land_node_nearby(target.pos) then
                             target_found = true
@@ -11693,7 +11693,7 @@ return function(scripts)
         U.animation_start(fx, nil, nil, store.tick_ts, false)
         queue_insert(store, fx)
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
             function(e)
                 return U.flag_has(e.vis.flags, F_BOSS) or not U.flag_has(e.vis.bans, F_STUN)
             end)
@@ -11879,7 +11879,7 @@ return function(scripts)
                 skill = this.hero.skills.infernal_wheel
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_random_enemy(store.entities, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                    local target = U.find_random_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                     if not target then
                         SU.delay_attack(store, a, 0.13333333333333333)
@@ -12252,9 +12252,9 @@ return function(scripts)
                 skill = this.hero.skills.inspire
 
                 if ready_to_use_skill(a, store) then
-                    local soldiers = U.find_soldiers_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local soldiers = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
-                    local enemies = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if not soldiers or #soldiers < a.min_count or not enemies then
@@ -12297,7 +12297,7 @@ return function(scripts)
                         goto label_126_0
                     end
 
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                         a.vis_flags, a.vis_bans, function(e)
                             local ni_s = P:get_visible_start_node(e.nav_path.pi)
                             local ni_e = P:get_visible_end_node(e.nav_path.pi)
@@ -12670,7 +12670,7 @@ return function(scripts)
                 else
                     local bullet_t = E:get_template(a.bullet)
                     local flight_time = a.estimated_flight_time or 1
-                    local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans, function(e)
                             if U.flag_has(a.vis_flags, F_SPELLCASTER) and
                                 (not U.flag_has(e.vis.flags, F_SPELLCASTER) or not e.enemy.can_do_magic) then
@@ -12692,7 +12692,7 @@ return function(scripts)
                                 if a.max_count_range and a.min_count then
                                     local min_count_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi,
                                         e.nav_path.ni - a.min_count_nodes_offset)
-                                    local nearby = U.find_enemies_in_range(store.entities, min_count_pos, 0,
+                                    local nearby = U.find_enemies_in_range(store.enemies, min_count_pos, 0,
                                         a.max_count_range, a.vis_flags, a.vis_bans)
 
                                     return nearby and #nearby >= a.min_count
@@ -12740,7 +12740,7 @@ return function(scripts)
                         targets = {}
 
                         if a.bullet_count then
-                            local extra_targets = U.find_enemies_in_range(store.entities, target.pos, 0, a.extra_range,
+                            local extra_targets = U.find_enemies_in_range(store.enemies, target.pos, 0, a.extra_range,
                                 a.vis_flags, a.vis_bans, function(e)
                                     return af and e.pos.x <= this.pos.x or e.pos.x >= this.pos.x
                                 end)
@@ -12949,7 +12949,7 @@ return function(scripts)
                 skill = this.hero.skills.raggified
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans, function(e)
                             return e.health.hp < a.max_target_hp * this.unit.damage_factor and
                                        GR:cell_is_only(e.pos.x, e.pos.y, bor(TERRAIN_LAND, TERRAIN_ICE))
@@ -12970,7 +12970,7 @@ return function(scripts)
                 skill = this.hero.skills.kamihare
 
                 if ready_to_use_skill(a, store) then
-                    local target_info = U.find_enemies_in_paths(store.entities, this.pos, a.range_nodes_min,
+                    local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.range_nodes_min,
                         a.range_nodes_max, nil, a.vis_flags, a.vis_bans, true, function(e)
                             return not U.flag_has(P:path_terrain_props(e.nav_path.pi),
                                 bor(TERRAIN_FAERIE, TERRAIN_WATER))
@@ -13042,7 +13042,7 @@ return function(scripts)
                 skill = this.hero.skills.angry_gnome
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if not target then
@@ -13066,7 +13066,7 @@ return function(scripts)
 
                 if ready_to_use_skill(a, store) then
                     local nodes, start_node, end_node, next_node, damage_ts
-                    local target, targets = U.find_nearest_enemy(store.entities, this.pos, 0, a.max_range, a.vis_flags,
+                    local target, targets = U.find_nearest_enemy(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
                         a.vis_bans)
                     local total_hp = not targets and 0 or table.reduce(targets, function(e, hp_sum)
                         return e.health.hp + hp_sum
@@ -13126,7 +13126,7 @@ return function(scripts)
 
                                     S:queue(a.sound_hit)
 
-                                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0,
+                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0,
                                         a.damage_radius, a.vis_flags, a.vis_bans)
 
                                     if targets then
@@ -13219,7 +13219,7 @@ return function(scripts)
         SU.insert_sprite(store, this.hit_decal, this.pos)
         U.y_wait(store, this.hit_time)
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.range, this.vis_flags, this.vis_bans,
             function(e)
                 return GR:cell_is_only(e.pos.x, e.pos.y, bor(TERRAIN_LAND, TERRAIN_ICE))
             end)
@@ -13251,7 +13251,7 @@ return function(scripts)
         s.ts = store.tick_ts + (s.random_ts and U.frandom(-s.random_ts, 0) or 0)
 
         while true do
-            local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
+            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
 
             if targets or store.tick_ts - start_ts > this.duration or
                 not P:is_node_valid(this.nav_path.pi, this.nav_path.ni) or not SU.y_enemy_walk_step(store, this) then
@@ -13384,7 +13384,7 @@ return function(scripts)
                 skill = this.hero.skills.kings_roar
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                         a.vis_bans)
 
                     if not targets or #targets < a.min_count then
@@ -13399,7 +13399,7 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             a.ts = store.tick_ts
-                            targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.range, a.vis_flags,
+                            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
                                 a.vis_bans)
 
                             if targets then
@@ -13461,7 +13461,7 @@ return function(scripts)
 
     function scripts.hero_bruce_ultimate.update(this, store)
         local pi, spi, ni
-        local target_info = U.find_enemies_in_paths(store.entities, this.pos, this.range_nodes_min,
+        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, this.range_nodes_min,
             this.range_nodes_max, nil, this.vis_flags, this.vis_bans, true, function(e)
                 return not U.flag_has(P:path_terrain_props(e.nav_path.pi), TERRAIN_FAERIE)
             end)
@@ -13547,7 +13547,7 @@ return function(scripts)
             if not fading and store.tick_ts - attack.ts > attack.cooldown then
                 attack.ts = store.tick_ts
 
-                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, attack.range, attack.vis_flags,
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, attack.range, attack.vis_flags,
                     attack.vis_bans)
 
                 if targets then
@@ -13658,7 +13658,7 @@ return function(scripts)
                 a = this.timed_attacks.list[1]
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                         a.vis_flags, a.vis_bans)
 
                     if not targets or #targets < a.min_count then
@@ -13670,7 +13670,7 @@ return function(scripts)
                         if SU.y_hero_wait(store, this, a.hit_time) then
                             -- block empty
                         else
-                            targets = U.find_enemies_in_range(store.entities, this.pos, a.min_range, a.max_range,
+                            targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
                                 a.vis_flags, a.vis_bans)
 
                             if targets then
@@ -13768,7 +13768,7 @@ return function(scripts)
 
                     local a = this.timed_attacks.list[1]
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
                         local bigger_begin_time = store.tick_ts
                         if targets and #targets >= a.min_count then
                             if targets[1].pos.x < this.pos.x then
@@ -13802,7 +13802,7 @@ return function(scripts)
                             else
                                 hit_pos.x = hit_pos.x + ring.hit_offset.x * a.scale
                             end
-                            targets = U.find_enemies_in_range(store.entities, hit_pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                            targets = U.find_enemies_in_range(store.enemies, hit_pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
                             if targets then
                                 for _, target in pairs(targets) do
                                     local d = SU.create_attack_damage(ring, target.id, this)
@@ -13908,7 +13908,7 @@ return function(scripts)
             skill = this.hero.skills.feast
 
             if ready_to_use_skill(a, store) then
-                local target = U.find_nearest_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                local target = U.find_nearest_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                     a.vis_bans)
 
                 if not target then
@@ -14005,7 +14005,7 @@ return function(scripts)
                     local bullet_t = E:get_template(a.bullet)
                     local bullet_speed = bullet_t.bullet.min_speed
                     local flight_time = bullet_t.bullet.flight_time
-                    local target = U.find_random_enemy(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans)
 
                     if target then
@@ -14171,7 +14171,7 @@ return function(scripts)
 
         queue_insert(store, fx)
 
-        local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
         local every = fts(2)
         local steps = math.floor(this.duration / every)
         local damage_per_step = math.random(b.damage_min, b.damage_max) / steps * b.damage_factor
@@ -14293,7 +14293,7 @@ return function(scripts)
             if store.tick_ts - last_cycle_ts > a.cycle_time then
                 last_cycle_ts = store.tick_ts
 
-                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
 
                 if targets then
                     for _, target in pairs(targets) do
@@ -14406,7 +14406,7 @@ return function(scripts)
                     queue_insert(store, decal)
 
                     targets =
-                        U.find_enemies_in_range(store.entities, pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+                        U.find_enemies_in_range(store.enemies, pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
 
                     if targets then
                         for _, target in pairs(targets) do

@@ -71,7 +71,7 @@ local function register_archer(scripts)
                     SU.tower_update_silenced_powers(store, this)
 
                     if ready_to_use_power(pow_b, ab, store, this.tower.cooldown_factor) then
-                        enemy, pred_pos = U.find_random_enemy_with_pos(store.entities, tpos(this), 0, at.range,
+                        enemy, pred_pos = U.find_random_enemy_with_pos(store.enemies, tpos(this), 0, at.range,
                             ab.node_prediction, ab.vis_flags, ab.vis_bans)
                         if enemy then
                             a = ab
@@ -333,7 +333,7 @@ local function register_archer(scripts)
                         for _, ax in pairs({asi, asn}) do
                             if (ax.chance == 1 or math.random() < ax.chance) and
                                 ready_to_use_power(pow_sn, ax, store, this.tower.cooldown_factor) then
-                                local enemy = U.find_biggest_enemy(store.entities, tpos(this), 0, ax.range, false,
+                                local enemy = U.find_biggest_enemy(store.enemies, tpos(this), 0, ax.range, false,
                                     ax.vis_flags)
 
                                 if not enemy then
@@ -374,7 +374,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_use_power(pow_sh, ash, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0,
+                        local enemy = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0,
                             ash.range * 1.5, false, ash.vis_flags, ash.vis_bans, nil, nil, ash.min_spread + 48)
                         if not enemy then
                             -- block empty
@@ -824,7 +824,7 @@ local function register_archer(scripts)
                                 enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                                     ta.vis_flags, ta.vis_bans, enemy_is_silent_target)
                             else
-                                enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
+                                enemy = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0, a.range,
                                     false, ta.vis_flags, ta.vis_bans, nil, nil, 80)
                             end
 
@@ -1102,7 +1102,7 @@ local function register_archer(scripts)
                     local sa = this.attacks.list[2]
                     local pow = this.powers.burst
                     if ready_to_use_power(pow, sa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
+                        local enemy = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0, a.range,
                             false, sa.vis_flags, sa.vis_bans, nil, nil, 57.5)
 
                         if not enemy then
@@ -1312,7 +1312,7 @@ local function register_archer(scripts)
                     end
                     SU.tower_update_silenced_powers(store, this)
                     if ready_to_use_power(pow_m, am, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_biggest_enemy(store.entities, tpos(this), 0, a.range, false, am.vis_flags,
+                        local enemy = U.find_biggest_enemy(store.enemies, tpos(this), 0, a.range, false, am.vis_flags,
                             am.vis_bans, function(e)
                                 return not U.has_modifiers(store, e, "mod_arrow_silver_mark")
                             end)
@@ -2299,7 +2299,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store, this.tower.cooldown_factor) then
-                        local target, targets = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
+                        local target, targets = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0, a.range,
                                 nil, ba.vis_flags, ba.vis_bans, nil, nil, blast_range)
 
                         if not target and (not ba.max_stored_bullets or ba.max_stored_bullets == #this._stored_bullets) then
@@ -2730,7 +2730,7 @@ local function register_mage(scripts)
                             if dragon.custom_attack.target_id then
                                 -- block empty
                             else
-                                local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.attacks.range,
+                                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.attacks.range,
                                     a.vis_flags, a.vis_bans, function(e)
                                         return not table.contains(assigned_target_ids, e.id)
                                     end)
@@ -2900,7 +2900,7 @@ local function register_mage(scripts)
                     a.ts = store.tick_ts
                     U.animation_start_group(this, "shoot", nil, store.tick_ts, false, group_tower)
                     U.y_wait(store, a.shoot_time)
-                    local enemies = U.find_enemies_in_range(store.entities, target.pos, 0, splash_radius, a.vis_flags,
+                    local enemies = U.find_enemies_in_range(store.enemies, target.pos, 0, splash_radius, a.vis_flags,
                         a.vis_bans)
                     if not enemies then
                         goto continue
@@ -3473,7 +3473,7 @@ local function register_engineer(scripts)
                     local bo = at.bullet_start_offset
                     local b = E:create_entity(at.bullet)
 
-                    local nt, _, nt_pos = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0,
+                    local nt, _, nt_pos = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0,
                         a.range, at.node_prediction, at.vis_flags, at.vis_bans, filter_faerie, nil,
                         b.bullet.damage_radius)
                     if nt then
@@ -3551,7 +3551,7 @@ local function register_engineer(scripts)
 
                         SU.delay_attack(store, ca, 1)
 
-                        local triggers = U.find_enemies_in_range(store.entities, tpos(this), 0, ca.range, ca.vis_flags,
+                        local triggers = U.find_enemies_in_range(store.enemies, tpos(this), 0, ca.range, ca.vis_flags,
                             ca.vis_bans)
 
                         if triggers and #triggers > ca.min_count then
@@ -3586,7 +3586,7 @@ local function register_engineer(scripts)
 
                             queue_insert(store, fx)
 
-                            local targets = U.find_enemies_in_range(store.entities, tpos(this), 0, ca.damage_radius,
+                            local targets = U.find_enemies_in_range(store.enemies, tpos(this), 0, ca.damage_radius,
                                 ca.vis_flags, ca.vis_bans)
                             local stun_count = 0
 
@@ -4235,7 +4235,7 @@ local function register_engineer(scripts)
 
                         local trigger_target, trigger_pos = target, pred_pos
 
-                        target, _, pred_pos = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0,
+                        target, _, pred_pos = U.find_foremost_enemy_with_max_coverage(store.enemies, tpos(this), 0,
                             a.range, ba.node_prediction, ba.vis_flags, ba.vis_bans, filter_faerie, nil, 50)
 
                         if not target then

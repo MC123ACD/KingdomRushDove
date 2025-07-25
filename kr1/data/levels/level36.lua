@@ -422,7 +422,7 @@ function level:y_do_sacrifice(store, delay)
 				return
 			end
 
-			local targets = U.find_soldiers_in_range(store.entities, V.v(0, 0), 0, 1000000000, F_RANGED, F_FLYING)
+			local targets = U.find_soldiers_in_range(store.soldiers, V.v(0, 0), 0, 1000000000, F_RANGED, F_FLYING)
 
 			if not targets or #targets < 1 then
 				-- block empty

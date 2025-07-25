@@ -3644,7 +3644,7 @@ function scripts.ray_enemy.update(this, store, script)
     local targets
 
     if b.damage_radius and b.damage_radius > 0 then
-        targets = U.find_soldiers_in_range(store.entities, dest, 0, b.damage_radius, b.vis_flags, b.vis_bans)
+        targets = U.find_soldiers_in_range(store.soldiers, dest, 0, b.damage_radius, b.vis_flags, b.vis_bans)
     else
         targets = {target}
     end
@@ -3778,7 +3778,7 @@ function scripts.fireball.update(this, store)
         hit_center.y = hit_center.y - target.unit.hit_offset.y
     end
 
-    local targets = U.find_enemies_in_range(store.entities, hit_center, 0, b.damage_radius, b.vis_flags, b.vis_bans)
+    local targets = U.find_enemies_in_range(store.enemies, hit_center, 0, b.damage_radius, b.vis_flags, b.vis_bans)
 
     if targets then
         for _, e in pairs(targets) do
@@ -7040,7 +7040,7 @@ scripts.abomination_explosion_aura = {}
 function scripts.abomination_explosion_aura.update(this, store)
     U.y_wait(store, this.aura.hit_time)
 
-    local targets = U.find_soldiers_in_range(store.entities, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+    local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, this.aura.radius, this.aura.vis_flags,
         this.aura.vis_bans)
 
     if targets then
@@ -7370,7 +7370,7 @@ function scripts.user_item_atomic_freeze.update(this, store, script)
 
     signal.emit("atomic-freeze-starts")
 
-    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, 9999, this.vis_flags, this.vis_bans,
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 9999, this.vis_flags, this.vis_bans,
         function(e)
             return not table.contains(this.excluded_templates, e.template_name)
         end)
@@ -7453,7 +7453,7 @@ function scripts.user_item_freeze.update(this, store)
         end
     end
 
-    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
         function(e)
             return not table.contains(b.excluded_templates, e.template_name)
         end)
