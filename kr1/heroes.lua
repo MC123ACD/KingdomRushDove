@@ -2331,7 +2331,7 @@ local function heroes()
     tt.melee.cooldown = 1
     tt.melee.range = 80
     tt.motion.max_speed = 90
-    tt.transfer.extra_speed = 90
+    tt.transfer.extra_speed = 60
     tt.transfer.min_distance = 90
     tt.transfer.sound_loop = "HeroAlricSandwarrior"
     tt.transfer.animations = {"sand_travel_start", "sand_travel_loop", "sand_travel_end"}

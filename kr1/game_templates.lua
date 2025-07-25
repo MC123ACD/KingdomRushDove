@@ -741,7 +741,8 @@ tt.sound_events.insert = "AxeSound"
 
 tt = RT("arrow_ranger", "arrow")
 tt.bullet.damage_min = 13
-tt.bullet.damage_max = 19
+tt.bullet.damage_max = 20
+tt.bullet.flight_time = fts(19)
 
 tt = RT("arrow_shadow_archer", "arrow")
 tt.bullet.damage_min = 20

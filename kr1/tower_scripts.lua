@@ -224,9 +224,7 @@ local function register_archer(scripts)
 
                             U.y_wait(store, aa.shoot_time)
 
-                            if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range then
-                                shot_bullet(aa, shooter_idx, enemy, pow_p.level)
-                            end
+                            shot_bullet(aa, shooter_idx, enemy, pow_p.level)
 
                             U.y_animation_wait(this, shooter_sids[shooter_idx])
                             U.animation_start(this, idle_an, idle_af, store.tick_ts, false, shooter_sids[shooter_idx])

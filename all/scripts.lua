@@ -1576,13 +1576,13 @@ function scripts.tower_archer.update(this, store, script)
                                                         bullet.bullet.flight_time_factor
                     end
 
-                    local u = UP:get_upgrade("archer_el_obsidian_heads")
+                    -- local u = UP:get_upgrade("archer_el_obsidian_heads")
 
-                    if u and enemy.health and enemy.health.armor == 0 then
-                        bullet.bullet.damage_min = bullet.bullet.damage_max
-                    end
+                    -- if u and enemy.health and enemy.health.armor == 0 then
+                    --     bullet.bullet.damage_min = bullet.bullet.damage_max
+                    -- end
 
-                    u = UP:get_upgrade("archer_precision")
+                    local u = UP:get_upgrade("archer_precision")
 
                     if u and math.random() < u.chance then
                         bullet.bullet.damage_min = bullet.bullet.damage_min * u.damage_factor
@@ -1593,17 +1593,17 @@ function scripts.tower_archer.update(this, store, script)
 
                     queue_insert(store, bullet)
 
-                    u = UP:get_upgrade("archer_twin_shot")
+                    -- u = UP:get_upgrade("archer_twin_shot")
 
-                    if u and math.random() < u.chance then
-                        local b2 = E:clone_entity(bullet)
+                    -- if u and math.random() < u.chance then
+                    --     local b2 = E:clone_entity(bullet)
 
-                        b2.bullet.flight_time = b2.bullet.flight_time - 1 / FPS
+                    --     b2.bullet.flight_time = b2.bullet.flight_time - 1 / FPS
 
-                        queue_insert(store, b2)
+                    --     queue_insert(store, b2)
 
-                        bullet.bullet.flight_time = bullet.bullet.flight_time + 1 / FPS
-                    end
+                    --     bullet.bullet.flight_time = bullet.bullet.flight_time + 1 / FPS
+                    -- end
                 end
 
                 while not U.animation_finished(this, shooter_sid) do
@@ -2218,7 +2218,7 @@ function scripts.arrow.update(this, store, script)
                     mod.modifier.target_id = target.id
                     mod.modifier.level = b.level
                     mod.modifier.source_damage = d
-
+                    mod.modifier.damage_factor = b.damage_factor
                     queue_insert(store, mod)
                 end
             end

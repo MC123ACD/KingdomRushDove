@@ -277,12 +277,16 @@ local function foundamental_towers()
     tt = RT("arrow_1", "arrow")
     tt.bullet.damage_min = 4
     tt.bullet.damage_max = 7
+
     tt = RT("arrow_2", "arrow")
     tt.bullet.damage_min = 8
     tt.bullet.damage_max = 12
+    tt.bullet.flight_time = fts(21)
+
     tt = RT("arrow_3", "arrow")
     tt.bullet.damage_min = 11
     tt.bullet.damage_max = 18
+    tt.bullet.flight_time = fts(20)
 
     tt = RT("tower_barrack_1", "tower")
     AC(tt, "barrack")

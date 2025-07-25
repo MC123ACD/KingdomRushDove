@@ -324,7 +324,7 @@ return function(scripts)
     scripts.arrow_multishot_hero_alleria = {
         insert = function(this, store)
             if this.extra_arrows > 0 then
-                local targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range, F_RANGED, F_NONE)
+                local _, targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range, F_RANGED, F_NONE)
 
                 if targets then
                     local rate
@@ -343,7 +343,7 @@ return function(scripts)
                         if i <= #targets then
                             t = targets[i]
                         else
-                            while j < #targets and predicted_health[targets[j]] <= 0 do
+                            while j < #targets and predicted_health[targets[j].id] <= 0 do
                                 j = j + 1
                             end
                             t = targets[j]
