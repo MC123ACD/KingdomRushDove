@@ -271,10 +271,7 @@ local function mage_towers()
     tt.modifier.remove_banned = true
     tt.modifier.ban_types = {MOD_TYPE_FAST}
     tt.polymorph.custom_entity_names.default = "enemy_sheep_ground"
-    tt.polymorph.custom_entity_names.enemy_demon_imp = "enemy_sheep_fly"
-    tt.polymorph.custom_entity_names.enemy_gargoyle = "enemy_sheep_fly"
-    tt.polymorph.custom_entity_names.enemy_rocketeer = "enemy_sheep_fly"
-    tt.polymorph.custom_entity_names.enemy_witch = "enemy_sheep_fly"
+    tt.polymorph.custom_entity_names.flying = "enemy_sheep_fly"
     tt.polymorph.hit_fx_sizes = {"fx_mod_polymorph_sorcerer_small", "fx_mod_polymorph_sorcerer_big",
                                  "fx_mod_polymorph_sorcerer_big"}
     tt.polymorph.pop = {"pop_puff"}

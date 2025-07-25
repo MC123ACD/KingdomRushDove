@@ -6172,7 +6172,12 @@ function scripts.mod_polymorph.insert(this, store, script)
         target_gold = target.enemy.gold
         target.enemy.gold = 0
     end
-
+    local e_name
+    if pm.custom_entity_names["flying"] and U.flag_has(target.vis.flags, F_FLYING) then
+        e_name = pm.custom_entity_names["flying"]
+    else
+        e_name = pm.custom_entity_names.default
+    end
     local d = E:create_entity("damage")
 
     d.damage_type = bor(DAMAGE_EAT, DAMAGE_NO_LIFESTEAL)
@@ -6199,7 +6204,6 @@ function scripts.mod_polymorph.insert(this, store, script)
         queue_insert(store, fx)
     end
 
-    local e_name = pm.custom_entity_names[target.template_name] or pm.custom_entity_names.default
     local e = E:create_entity(e_name)
 
     e.pos = V.vclone(target.pos)

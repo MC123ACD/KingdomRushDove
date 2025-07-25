@@ -2968,6 +2968,12 @@ end
 scripts.enemy_sheep = {
     update = function (this, store)
         local clicks = 0
+        local hp_max = this.health.hp_max
+        if hp_max > 4000 then
+            this.clicks_to_destroy = 8
+        else
+            this.clicks_to_destroy = hp_max / 500
+        end
         while true do
             if this.health.dead then
                 SU.y_enemy_death(store, this)
@@ -15905,7 +15911,7 @@ function scripts.points_spawner.update(this, store)
                 end
 
                 local wave_ts = store.tick_ts - wave_start_ts
-                
+
                 while ptr <= #spawn_queue and wave_ts >= spawn_queue[ptr][1] do
                     local ts, template, p_from, p_to, p_pi, p_spi, custom_data = unpack(spawn_queue[ptr])
                     local pis = p_pi and {p_pi} or nil

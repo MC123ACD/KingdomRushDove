@@ -2152,7 +2152,7 @@ local function register_mage(scripts)
                                     end
                                 end
 
-                                if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range then
+                                if V.dist2(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range * a.range then
                                     local b
                                     local boffset = aa.bullet_start_offset[ai]
 
