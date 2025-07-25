@@ -251,18 +251,12 @@ function U.animation_start(entity, name, flip_x, ts, loop, idx, force_ts)
 
             a.flip_x = flip_x_i
             if a.animated then
-                if loop then
-                    log.error("loop is true")
-                end
-                if a.loop_forced then
-                    log.error("loop_forced is true")
-                end
+
                 a.loop = loop or a.loop_forced == true
-                log.error("a.animated")
+
                 if not a.loop or force_ts then
                     a.ts = ts
                     a.runs = 0
-                    log.error("a.runs = 0")
                 end
 
                 if name and a.name ~= name then
