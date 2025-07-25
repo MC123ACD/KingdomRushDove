@@ -309,8 +309,8 @@ function A:count_active_mods(template_name, filter)
 	local target_ids = {}
 	local count = 0
 
-	for _, m in pairs(game.store.entities) do
-		if not m.pending_removal and m.modifier and m.template_name == template_name and not target_ids[m.modifier.target_id] and (not filter or filter(m)) then
+	for _, m in pairs(game.store.modifiers) do
+		if not m.pending_removal and m.template_name == template_name and not target_ids[m.modifier.target_id] and (not filter or filter(m)) then
 			target_ids[m.modifier.target_id] = true
 			count = count + 1
 		end

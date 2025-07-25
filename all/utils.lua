@@ -1632,8 +1632,8 @@ end
 
 -- 如果 list 中存在目标为 entity 的 mod 名，返回 true
 function U.has_modifier_in_list(store, entity, list)
-    for _, e in pairs(store.entities) do
-        if e.modifier and e.modifier.target_id == entity.id and table.contains(list, e.template_name) then
+    for _, e in pairs(store.modifiers) do
+        if e.modifier.target_id == entity.id and table.contains(list, e.template_name) then
             return true
         end
     end

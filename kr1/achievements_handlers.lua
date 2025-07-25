@@ -162,7 +162,7 @@ function ah:h_game_victory(store)
 	if store.level_idx == 6 then
 		local count = 0
 
-		for _, e in pairs(store.entities) do
+		for _, e in pairs(store.soldiers) do
 			if e.template_name == "soldier_s6_imperial_guard" and not e.health.dead then
 				count = count + 1
 			end

@@ -663,7 +663,7 @@ sys.tower_upgrade = {}
 sys.tower_upgrade.name = "tower_upgrade"
 
 function sys.tower_upgrade:on_update(dt, ts, store)
-    for _, e in E:filter_iter(store.entities, "tower") do
+    for _, e in store.towers do
         if e.tower.sell or e.tower.destroy then
             log.debug("selling %s", e.id)
 
@@ -861,7 +861,7 @@ function sys.game_upgrades:on_insert(entity, store)
     -- local u = UP:get_upgrade("mage_brilliance")
 
     -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-    --     local existing_towers = table.filter(store.entities, function(_, e)
+    --     local existing_towers = table.filter(store.towers, function(_, e)
     --         return e.tower and table.contains(mage_tower_types, e.tower.type)
     --     end)
 
@@ -893,7 +893,7 @@ function sys.game_upgrades:on_remove(entity, store)
     -- local u = UP:get_upgrade("mage_brilliance")
 
     -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-    --     local existing_towers = table.filter(store.entities, function(_, e)
+    --     local existing_towers = table.filter(store.towers, function(_, e)
     --         return e.tower and table.contains(mage_tower_types, e.tower.type)
     --     end)
     --     local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers - 1)]

@@ -1165,7 +1165,7 @@ return function(scripts)
             local hl, ls = level_up_basic(this)
 
             local mage_tower_types = {"mage", "archmage", "sorcerer", "sunray", "arcane_wizard", "necromancer"}
-            local mage_towers = table.filter(store.entities, function(_, e)
+            local mage_towers = table.filter(store.towers, function(_, e)
                 return e.tower and table.contains(mage_tower_types, e.tower.type)
             end)
             this.mage_tower_count = #mage_towers
@@ -2201,7 +2201,7 @@ return function(scripts)
                     skill = this.hero.skills.tower_buff
 
                     if ready_to_use_skill(a, store) then
-                        local towers = U.find_towers_in_range(store.entities, this.pos, a, function(t)
+                        local towers = U.find_towers_in_range(store.towers, this.pos, a, function(t)
                             return t.tower.can_be_mod
                         end)
 
@@ -3891,7 +3891,7 @@ return function(scripts)
                     skill = this.hero.skills.consecrate
 
                     if ready_to_use_skill(a, store) then
-                        local towers = table.filter(store.entities, function(_, e)
+                        local towers = table.filter(store.towers, function(_, e)
                             return e.tower and e.tower.can_be_mod and not e.tower.blocked and
                                        not table.contains(a.excluded_templates, e.template_name) and
                                        V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a.range
@@ -3915,7 +3915,7 @@ return function(scripts)
                                 end
                             end
 
-                            local towers = table.filter(store.entities, function(_, e)
+                            local towers = table.filter(store.towers, function(_, e)
                                 return e.tower and e.tower.can_be_mod and not e.tower.blocked and
                                            not table.contains(a.excluded_templates, e.template_name) and
                                            V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a.range
@@ -6295,7 +6295,7 @@ return function(scripts)
                     skill = this.hero.skills.roaroffury
 
                     if ready_to_use_skill(a, store) then
-                        local towers = table.filter(store.entities, function(_, e)
+                        local towers = table.filter(store.towers, function(_, e)
                             return e.tower and e.tower.can_be_mod and not e.tower.blocked and
                                        not table.contains(a.excluded_templates, e.template_name)
                         end)
@@ -7844,8 +7844,8 @@ return function(scripts)
     function scripts.hero_regson_ultimate.update(this, store)
         local is_boss
         local sp = this.render.sprites[1]
-        local targets = table.filter(store.entities, function(_, e)
-            return e.pos and e.ui and e.ui.can_click and e.enemy and e.vis and e.nav_path and e.health and
+        local targets = table.filter(store.enemies, function(_, e)
+            return e.pos and e.ui and e.ui.can_click and e.nav_path and
                        not e.health.dead and band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) ==
                        0 and
                        U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y),
@@ -10868,7 +10868,7 @@ return function(scripts)
             skill = this.hero.skills.flaming_path
 
             if ready_to_use_skill(a, store) then
-                local targets = U.find_towers_in_range(store.entities, this.pos, a, function(e, o)
+                local targets = U.find_towers_in_range(store.towers, this.pos, a, function(e, o)
                     local enemies = U.find_enemies_in_range(store.enemies, e.pos, 0, a.enemies_range,
                         a.enemies_vis_flags, a.enemies_vis_bans)
 

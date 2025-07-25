@@ -25,6 +25,8 @@ function simulation:init(store, system_names)
     d.enemies = {}
     d.soldiers = {}
     d.modifiers = {}
+    d.towers = {}
+    d.auras = {}
 
 	d.pending_inserts = {}
 	d.pending_removals = {}
@@ -211,6 +213,10 @@ function simulation:remove_entity(e)
         d.soldiers[e.id] = nil
     elseif e.modifier then
         d.modifiers[e.id] = nil
+    elseif e.tower then
+        d.towers[e.id] = nil
+    elseif e.aura then
+        d.auras[e.id] = nil
     end
 	d.entity_count = d.entity_count - 1
 

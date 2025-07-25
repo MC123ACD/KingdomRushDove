@@ -422,8 +422,8 @@ function scripts.necromancer_aura.update(this, store, script)
 			last_ts = store.tick_ts
 			tower_skeletons_count = 0
 
-			for _, e in pairs(store.entities) do
-				if e and e.health and not e.health.dead and e.soldier and e.soldier.tower_id == source.id and e.template_name ~= "soldier_death_rider" then
+			for _, e in pairs(store.soldiers) do
+				if e and not e.health.dead and e.soldier.tower_id == source.id and e.template_name ~= "soldier_death_rider" then
 					tower_skeletons_count = tower_skeletons_count + 1
 				end
 			end
@@ -2537,8 +2537,8 @@ function scripts.hero_ignus.update(this, store)
 				skill = this.hero.skills.surge_of_flame
 
 				if sta ~= A_NO_TARGET and not a.disabled and store.tick_ts - a.ts >= a.cooldown then
-					local target = U.find_first_target(store.entities, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans, function(e)
-						if not e.enemy or not e.nav_path or not e.nav_path.pi then
+					local target = U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans, function(e)
+						if not e.nav_path or not e.nav_path.pi then
 							return false
 						end
 
@@ -3527,7 +3527,7 @@ scripts.enemy_zombiemancer = {
         end
 
         local function get_zombies()
-            return table.filter(store.entities, function(k,v)
+            return table.filter(store.enemies, function(k,v)
                 return v.owner and v.owner == this.id and v.health and not v.health.dead
             end)
         end
@@ -3681,8 +3681,8 @@ function scripts.enemy_necromancer.update(this, store)
 	while true do
 		if this.health.dead then
             -- 找到所有由此necromancer召唤的骷髅，将它们的减伤效果取消（即damage_factor置为1）
-            for _, entity in pairs(store.entities) do
-                if entity.health and entity.health.damage_factor_source and entity.health.damage_factor_source == this.id then
+            for _, entity in pairs(store.enemies) do
+                if entity.health.damage_factor_source and entity.health.damage_factor_source == this.id then
                     entity.health.damage_factor = entity.health.damage_factor + 0.3
                 end
             end
@@ -4102,7 +4102,7 @@ function scripts.eb_jt.update(this, store)
 			coroutine.yield()
 		else
 			if ready_to_freeze() then
-				local towers = U.find_towers_in_range(store.entities, this.pos, fa, function(t)
+				local towers = U.find_towers_in_range(store.towers, this.pos, fa, function(t)
 					return t.tower.can_be_mod
 				end)
 
@@ -4331,8 +4331,8 @@ function scripts.eb_veznan.update(this, store)
 	end
 
 	local function y_block_towers()
-		local towers = table.filter(store.entities, function(_, e)
-			return e.tower and e.tower.can_be_mod and not U.has_modifiers(store, e, ba.mod)
+		local towers = table.filter(store.towers, function(_, e)
+			return e.tower.can_be_mod and not U.has_modifiers(store, e, ba.mod)
 		end)
 
 		if not towers or #towers == 0 then
@@ -4865,8 +4865,8 @@ function scripts.eb_greenmuck.update(this, store)
 			coroutine.yield()
 		else
 			if ready_to_shoot() then
-				local targets = table.filter(store.entities, function(_, e)
-					return not e.pending_removal and e.soldier and e.vis and e.health and not e.health.dead and band(e.vis.flags, ba.vis_bans) == 0 and band(e.vis.bans, ba.vis_flags) == 0
+				local targets = table.filter(store.soldiers, function(_, e)
+					return not e.pending_removal and not e.health.dead and band(e.vis.flags, ba.vis_bans) == 0 and band(e.vis.bans, ba.vis_flags) == 0
 				end)
 
 				if #targets < 1 then
@@ -5464,7 +5464,7 @@ function scripts.eb_blackburn.update(this, store)
 				queue_insert(store, fx)
 				SU.insert_sprite(store, sa.hit_decal, fx.pos, af, fts(2))
 
-				local towers = U.find_towers_in_range(store.entities, this.pos, sa, function(t)
+				local towers = U.find_towers_in_range(store.towers, this.pos, sa, function(t)
 					return t.tower.can_be_mod
 				end)
 
@@ -5594,8 +5594,8 @@ function scripts.blackburn_aura.update(this, store)
 		if store.tick_ts - last_ts >= this.aura.cycle_time then
 			last_ts = store.tick_ts
 
-			for _, e in pairs(store.entities) do
-				if e and e.health and not e.health.dead and e.soldier and e.soldier.tower_id == source.id then
+			for _, e in pairs(store.soldiers) do
+				if e and not e.health.dead  and e.soldier.tower_id == source.id then
 					tower_skeletons_count = tower_skeletons_count + 1
 				end
 			end
@@ -8407,8 +8407,8 @@ function scripts.enemy_munra.update(this, store, script)
             return false
         end
 
-        local targets = table.filter(store.entities, function(k, v)
-            return v.enemy and v.enemy.can_accept_magic and v.id ~= this.id and v.health and not v.health.dead and
+        local targets = table.filter(store.enemies, function(k, v)
+            return v.enemy.can_accept_magic and v.id ~= this.id and  not v.health.dead and
                        v.health.hp < v.health.hp_max and U.is_inside_ellipse(v.pos, this.pos, ha.range)
         end)
 
@@ -8975,7 +8975,7 @@ function scripts.enemy_shaman_necro.update(this, store, script)
                 na.ts = store.tick_ts
 
                 local dead_enemies = table.filter(store.enemies, function(_, e)
-                    return e.enemy and e.health and e.health.dead and e.unit and not e.unit.hide_after_death and
+                    return e.health.dead and e.unit and not e.unit.hide_after_death and
                                band(e.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE,
                             DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE)) == 0 and band(e.vis.bans, F_UNDEAD) == 0 and
                                table.contains(na.allowed_templates, e.template_name) and
@@ -9780,7 +9780,7 @@ function scripts.enemy_blacksurge.update(this, store, script)
             return false
         end
 
-        local towers = table.filter(store.entities, function(_, e)
+        local towers = table.filter(store.towers, function(_, e)
             return not e.tower_holder and e.tower and e.tower.can_be_mod and not e.tower.blocked and
                        U.is_inside_ellipse(e.pos, this.pos, ta.range)
         end)
@@ -9831,7 +9831,7 @@ function scripts.enemy_blacksurge.update(this, store, script)
                     coroutine.yield()
                 end
 
-                local towers = table.filter(store.entities, function(_, e)
+                local towers = table.filter(store.towers, function(_, e)
                     return not e.tower_holder and e.tower and e.tower.can_be_mod and not e.tower.blocked and
                                U.is_inside_ellipse(e.pos, this.pos, ta.range)
                 end)
@@ -10583,8 +10583,8 @@ scripts.blazefang_explosion = {}
 
 function scripts.blazefang_explosion.update(this, store, script)
     local b = this.bullet
-    local targets = table.filter(store.entities, function(k, v)
-        return v.soldier and v.health and not v.health.dead and U.is_inside_ellipse(v.pos, this.pos, b.damage_radius)
+    local targets = table.filter(store.soldiers, function(k, v)
+        return not v.health.dead and U.is_inside_ellipse(v.pos, this.pos, b.damage_radius)
     end)
 
     for _, target in pairs(targets) do
@@ -10876,8 +10876,8 @@ function scripts.eb_xerxes.update(this, store)
                 if aa == at then
                     log.debug("EB_XERXES: power teleport starts")
 
-                    local targets = table.filter(store.entities, function(_, e)
-                        return not e.pending_removal and e.enemy and e.vis and e.nav_path and e.health and
+                    local targets = table.filter(store.enemies, function(_, e)
+                        return not e.pending_removal and e.nav_path and
                                    not e.health.dead and band(e.vis.flags, at.vis_bans) == 0 and
                                    band(e.vis.bans, at.vis_flags) == 0 and P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and
                                    e.nav_path.ni > P:get_visible_start_node(e.nav_path.pi) + at.path_margins[1] and
@@ -10956,8 +10956,8 @@ function scripts.eb_xerxes.update(this, store)
                     local pconf = wave_config.powers_config.invisibility
                     local radius = pconf.range / 2
                     local duration = pconf.duration + plevel * pconf.durationIncrement
-                    local targets = table.filter(store.entities, function(k, e)
-                        return not e.pending_removal and e.enemy and e.vis and e.nav_path and e.health and
+                    local targets = table.filter(store.enemies, function(k, e)
+                        return not e.pending_removal and e.nav_path and
                                    not e.health.dead and band(e.vis.flags, ai.vis_bans) == 0 and
                                    band(e.vis.bans, ai.vis_flags) == 0 and e.enemy.can_accept_magic and
                                    not table.contains(ai.excluded_templates, e.template_name) and
@@ -11606,8 +11606,8 @@ function scripts.eb_efreeti.update(this, store, script)
     end
 
     local function can_polymorph()
-        for _, e in pairs(store.entities) do
-            if e.soldier and not e.health.dead and band(e.vis.bans, F_POLYMORPH) == 0 and
+        for _, e in pairs(store.soldiers) do
+            if not e.health.dead and band(e.vis.bans, F_POLYMORPH) == 0 and
                 U.is_inside_ellipse(e.pos, this.pos, a_poly.max_range) and
                 not U.is_inside_ellipse(e.pos, this.pos, a_poly.min_range) then
                 return true
@@ -11618,8 +11618,8 @@ function scripts.eb_efreeti.update(this, store, script)
     end
 
     local function do_polymorph()
-        local targets = table.filter(store.entities, function(_, e)
-            return e.soldier and e.health and not e.health.dead and e.vis and band(e.vis.bans, F_POLYMORPH) == 0 and
+        local targets = table.filter(store.soldiers, function(_, e)
+            return  not e.health.dead  and band(e.vis.bans, F_POLYMORPH) == 0 and
                        U.is_inside_ellipse(e.pos, this.pos, a_poly.max_range) and
                        not U.is_inside_ellipse(e.pos, this.pos, a_poly.min_range)
         end)
@@ -11638,8 +11638,8 @@ function scripts.eb_efreeti.update(this, store, script)
     end
 
     local function do_desintegrate()
-        local targets = table.filter(store.entities, function(_, e)
-            return e.soldier and e.health and not e.health.dead and
+        local targets = table.filter(store.soldiers, function(_, e)
+            return  not e.health.dead and
                        U.is_inside_ellipse(e.pos, this.pos, a_des.max_range)
         end)
 
@@ -11667,7 +11667,7 @@ function scripts.eb_efreeti.update(this, store, script)
     end
 
     local function do_sand()
-        local towers = table.filter(store.entities, function(_, e)
+        local towers = table.filter(store.towers, function(_, e)
             return e.tower and not e.tower_holder and not e.tower.blocked and
                        V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range
         end)
@@ -12652,8 +12652,8 @@ function scripts.eb_umbra.update(this, store, script)
                     local start_ts = store.tick_ts
                     local inner, outer = {}, {}
 
-                    for _, e in pairs(store.entities) do
-                        if e.tower and not e.tower_holder and not e.tower.blocked and
+                    for _, e in pairs(store.towers) do
+                        if not e.tower_holder and not e.tower.blocked and
                             (not is_at_home or not table.contains(art.lower_towers, e.tower.holder_id)) and e.pos.y <
                             this.pos.y then
                             if table.contains(art.inner_towers, e.tower.holder_id) then
@@ -13191,9 +13191,9 @@ function scripts.leviathan_tentacle.update(this, store)
     while not this.interrupt and store.tick_ts - start_ts < this.duration do
         U.y_wait(store, 2)
 
-        local targets = table.filter(store.entities, function(k, e)
+        local targets = table.filter(store.towers, function(k, e)
             return
-                e and e.tower and not e.tower_holder and e.tower.type ~= "build_animation" and not e.tower.blocked and
+                e and not e.tower_holder and e.tower.type ~= "build_animation" and not e.tower.blocked and
                     not table.contains(this.tower_bans, e.template_name) and
                     U.is_inside_ellipse(e.pos, search_pos, this.range)
         end)
@@ -13829,7 +13829,7 @@ function scripts.decal_black_dragon.update(this, store, script)
                 end
 
                 if fire_on then
-                    local towers = table.filter(store.entities, function(_, e)
+                    local towers = table.filter(store.towers, function(_, e)
                         return e.tower and not e.tower_holder and
                                    V.dist(e.pos.x, e.pos.y, this.pos.x + fire_comp_x, this.pos.y) < ma.range and
                                    not e.tower.blocked
@@ -14063,12 +14063,12 @@ function scripts.sand_worm.update(this, store, script)
         local best_count = -1
         local target
 
-        for _, ce in pairs(store.entities) do
-            if ce.soldier and ce.soldier.target_id and not ce.health.dead and band(ce.vis.flags, a.vis_bans) == 0 and
+        for _, ce in pairs(store.soldiers) do
+            if ce.soldier.target_id and not ce.health.dead and band(ce.vis.flags, a.vis_bans) == 0 and
                 band(ce.vis.bans, a.vis_flags) == 0 and P:valid_node_nearby(ce.pos.x, ce.pos.y) then
-                local nearby = table.filter(store.entities, function(_, e)
+                local nearby = table.filter(store.soldiers, function(_, e)
                     return
-                        e.soldier and e.soldier.target_id and e ~= ce and e.health and not e.health.dead and e.vis and
+                        e.soldier.target_id and e ~= ce and not e.health.dead and e.vis and
                             band(e.vis.flags, a.vis_bans) == 0 and band(e.vis.bans, a.vis_flags) == 0 and
                             U.is_inside_ellipse(e.pos, ce.pos, a.max_range)
                 end)
@@ -20593,7 +20593,7 @@ function scripts.enemy_twilight_scourger_banshee.update(this, store, script)
 
     while true do
         if not fading and not kamikaze_target and store.tick_ts - a.ts > a.cooldown then
-            local towers = table.filter(store.entities, function(_, e)
+            local towers = table.filter(store.towers, function(_, e)
                 return e.tower and not e.tower_holder and not e.tower.blocked and e.tower.can_be_mod and
                            not e._is_banshee_target and U.is_inside_ellipse(e.pos, this.pos, a.max_range) and
                            not table.contains(a.excluded_templates, e.template_name)
@@ -20884,7 +20884,7 @@ function scripts.enemy_twilight_evoker.update(this, store, script)
             if ready_to_spellwrack() then
                 a = as
 
-                local towers = table.filter(store.entities, function(_, e)
+                local towers = table.filter(store.towers, function(_, e)
                     return e.tower and e.tower.can_be_mod and e.tower.can_do_magic and
                                table.contains(a.included_templates, e.template_name) and
                                U.is_inside_ellipse(e.pos, this.pos, a.range)
@@ -21703,7 +21703,7 @@ function scripts.enemy_mactans.update(this, store)
             local touch_duration = pp.touch_duration
 
             if is_tb then
-                local towers = table.filter(store.entities, function(_, e)
+                local towers = table.filter(store.towers, function(_, e)
                     return e.tower and not e.tower_holder and table.contains(pp.holder_ids, e.tower.holder_id)
                 end)
 
@@ -22570,7 +22570,7 @@ function scripts.eb_drow_queen.update(this, store)
     end
 
     local function block_random_tower()
-        local towers = table.filter(store.entities, function(_, e)
+        local towers = table.filter(store.towers, function(_, e)
             return e.tower and e.tower.can_be_mod and not e.tower.blocked
         end)
         local tower, tower_id = table.random(towers)
@@ -22588,7 +22588,7 @@ function scripts.eb_drow_queen.update(this, store)
     end
 
     local function block_all_towers()
-        local towers = table.filter(store.entities, function(_, e)
+        local towers = table.filter(store.towers, function(_, e)
             return e.tower and e.tower.can_be_mod and not e.tower.blocked
         end)
         local holder_ids = table.map(towers, function(k, v)
@@ -23190,7 +23190,7 @@ function scripts.eb_spider.update(this, store, script)
 
     local function y_destroy_tower()
         local a = this.timed_attacks.list[3]
-        local towers = table.filter(store.entities, function(_, e)
+        local towers = table.filter(store.towers, function(_, e)
             return e.tower and e.tower.can_be_mod and not e.tower.blocked and
                        not table.contains(a.excluded_templates, e.template_name) and math.abs(e.pos.x - this.pos.x) > 45 and
                        U.is_inside_ellipse(e.pos, this.pos, a.max_range)
@@ -23334,7 +23334,7 @@ function scripts.eb_spider.update(this, store, script)
                 U.y_wait(store, a.hit_time)
                 S:queue(a.hit_sound)
 
-                local towers = table.filter(store.entities, function(_, e)
+                local towers = table.filter(store.towers, function(_, e)
                     return e.tower and e.tower.can_be_mod and not e.tower.blocked
                 end)
                 local sel_towers = {}
@@ -24263,7 +24263,7 @@ function scripts.eb_ainyl.update(this, store)
                     U.y_animation_wait(this)
                 elseif a_idx == 2 then
                     local pconf = wave_config.powers_config.blockTower
-                    local targets = U.find_towers_in_range(store.entities, this.pos, aa, function(t)
+                    local targets = U.find_towers_in_range(store.towers, this.pos, aa, function(t)
                         return t.tower.can_be_mod
                     end)
 
@@ -24277,7 +24277,7 @@ function scripts.eb_ainyl.update(this, store)
                     U.animation_start(this, aa.animation, nil, store.tick_ts)
                     U.y_wait(store, aa.shoot_time)
 
-                    targets = U.find_towers_in_range(store.entities, this.pos, aa, function(t)
+                    targets = U.find_towers_in_range(store.towers, this.pos, aa, function(t)
                         return t.tower.can_be_mod
                     end)
 
@@ -24804,7 +24804,7 @@ function scripts.crystal_arcane.update(this, store)
                 U.animation_start(this, aa.animation, nil, store.tick_ts, false)
                 U.y_wait(store, aa.hit_time)
 
-                local towers = table.filter(store.entities, function(_, e)
+                local towers = table.filter(store.towers, function(_, e)
                     return e.tower and not e.tower.blocked and
                                not table.contains(aa.excluded_templates, e.template_name) and
                                U.is_inside_ellipse(e.pos, this.pos, aa.range)
@@ -28380,7 +28380,7 @@ function scripts.user_item_horn_heroism.update(this, store)
         end
     end
 
-    local targets = U.find_towers_in_range(store.entities, this.pos, at, function(e, o)
+    local targets = U.find_towers_in_range(store.towers, this.pos, at, function(e, o)
         return not e.barrack and e.tower.can_be_mod
     end)
 
@@ -29706,8 +29706,8 @@ function scripts.aura_waterfall_entrance.update(this, store)
     local show_queue = {}
 
     while true do
-        for _, e in pairs(store.entities) do
-            if e.enemy and e.nav_path and e._waterfall_entrance_done ~= true then
+        for _, e in pairs(store.enemies) do
+            if e.nav_path and e._waterfall_entrance_done ~= true then
                 for _, item in pairs(this.waterfall_nodes) do
                     local pi, nin, nout = item.path_id, item.from, item.to
 

@@ -587,7 +587,7 @@ local function register_archer(scripts)
                             local busy_ids = table.map(existing_mods, function(k, v)
                                 return v.modifier.target_id
                             end)
-                            local towers = table.filter(store.entities, function(_, e)
+                            local towers = table.filter(store.towers, function(_, e)
                                 return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
                                            U.is_inside_ellipse(e.pos, this.pos, eagle_range)
                             end)
@@ -1699,7 +1699,7 @@ local function register_mage(scripts)
                         local busy_ids = table.map(existing_mods, function(k, v)
                             return v.modifier.target_id
                         end)
-                        local towers = table.filter(store.entities, function(_, e)
+                        local towers = table.filter(store.towers, function(_, e)
                             return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
                                        U.is_inside_ellipse(e.pos, this.pos, pow_s.range)
                         end)
@@ -2803,8 +2803,8 @@ local function register_mage(scripts)
             end
         end,
         can_select_point = function(this, x, y, store)
-            return U.find_entity_at_pos(store.entities, x, y, function(e)
-                return e.enemy and not e.health.dead and not U.flag_has(e.vis.bans, F_RANGED)
+            return U.find_entity_at_pos(store.enemies, x, y, function(e)
+                return not e.health.dead and not U.flag_has(e.vis.bans, F_RANGED)
             end)
         end,
         update = function(this, store)

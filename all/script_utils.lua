@@ -86,8 +86,8 @@ end
 
 -- 移除所有 .aura.track_source 且源为 entity 的 aura
 local function remove_auras(store, entity)
-    local auras = table.filter(store.entities, function(k, v)
-        return v.aura and v.aura.track_source and v.aura.source_id == entity.id
+    local auras = table.filter(store.auras, function(k, v)
+        return v.aura.track_source and v.aura.source_id == entity.id
     end)
 
     for _, a in pairs(auras) do
@@ -119,8 +119,8 @@ end
 
 -- 隐藏所有源为 entity 的 aura 的 sprites
 local function hide_auras(store, entity, keep)
-    local auras = table.filter(store.entities, function(k, v)
-        return v.aura and v.aura.track_source and v.aura.source_id == entity.id
+    local auras = table.filter(store.auras, function(k, v)
+        return v.aura.track_source and v.aura.source_id == entity.id
     end)
 
     for _, a in pairs(auras) do
@@ -130,8 +130,8 @@ end
 
 -- 重新显示目标为 entity 的 aura 的 sprites
 local function show_auras(store, entity, restore)
-    local auras = table.filter(store.entities, function(k, v)
-        return v.aura and v.aura.track_source and v.aura.source_id == entity.id
+    local auras = table.filter(store.auras, function(k, v)
+        return v.aura.track_source and v.aura.source_id == entity.id
     end)
 
     for _, a in pairs(auras) do
