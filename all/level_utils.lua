@@ -478,8 +478,8 @@ function LU.list_entities(t, template_name, tag)
 end
 
 function LU.has_alive_enemies(store, excluded_templates)
-	local store_enemies = table.filter(store.entities, function(_, e)
-		return e.main_script and (e.main_script.co or e.main_script.runs > 0) and (e.enemy and e.health and not e.health.dead or e.enemy and e.death_spawns or e.spawner and not e.spawner.eternal or e.picked_enemies and #e.picked_enemies > 0 or e.tunnel and #e.tunnel.picked_enemies > 0 or e.template_name == "nav_faerie") and (not excluded_templates or not table.contains(excluded_templates, e.template_name))
+	local store_enemies = table.filter(store.enemies, function(_, e)
+		return e.main_script and (e.main_script.co or e.main_script.runs > 0) and (e.health and not e.health.dead or e.death_spawns or e.spawner and not e.spawner.eternal or e.picked_enemies and #e.picked_enemies > 0 or e.tunnel and #e.tunnel.picked_enemies > 0 or e.template_name == "nav_faerie") and (not excluded_templates or not table.contains(excluded_templates, e.template_name))
 	end)
 	local pending_enemies = table.filter(store.pending_inserts, function(_, e)
 		return e.enemy or e.template_name == "nav_faerie"

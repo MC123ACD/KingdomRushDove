@@ -24,6 +24,8 @@ function simulation:init(store, system_names)
     -- 优化分类索引
     d.enemies = {}
     d.soldiers = {}
+    d.modifiers = {}
+
 	d.pending_inserts = {}
 	d.pending_removals = {}
 	d.entity_count = 0
@@ -172,6 +174,8 @@ function simulation:insert_entity(e)
         d.enemies[e.id] = e  -- 优化分类索引
     elseif e.soldier then
         d.soldiers[e.id] = e
+    elseif e.modifier then
+        d.modifiers[e.id] = e
     end
 
 	d.entity_count = d.entity_count + 1
@@ -201,6 +205,8 @@ function simulation:remove_entity(e)
         d.enemies[e.id] = nil  -- 优化分类索引
     elseif e.soldier then
         d.soldiers[e.id] = nil
+    elseif e.modifier then
+        d.modifiers[e.id] = nil
     end
 	d.entity_count = d.entity_count - 1
 

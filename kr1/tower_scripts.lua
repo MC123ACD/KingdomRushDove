@@ -473,7 +473,7 @@ local function register_archer(scripts)
     -- 弩堡
     scripts.tower_crossbow = {
         remove = function(this, store, script)
-            local mods = table.filter(store.entities, function(_, e)
+            local mods = table.filter(store.modifiers, function(_, e)
                 return e.modifier and e.modifier.source_id == this.id
             end)
 
@@ -530,7 +530,7 @@ local function register_archer(scripts)
                         this.eagle_previews = {}
                         eagle_previews_level = pow_e.level
 
-                        local mods = table.filter(store.entities, function(_, e)
+                        local mods = table.filter(store.modifiers, function(_, e)
                             return e.modifier and e.modifier.source_id == this.id
                         end)
                         local modded_ids = {}
@@ -583,7 +583,7 @@ local function register_archer(scripts)
                             ea.ts = store.tick_ts
 
                             local eagle_range = ea.range + ea.range_inc * pow_e.level
-                            local existing_mods = table.filter(store.entities, function(_, e)
+                            local existing_mods = table.filter(store.modifiers, function(_, e)
                                 return e.modifier and e.template_name == ea.mod and e.modifier.level >= pow_e.level
                             end)
                             local busy_ids = table.map(existing_mods, function(k, v)
@@ -1595,7 +1595,7 @@ local function register_mage(scripts)
             return o
         end,
         remove = function(this, store)
-            local mods = table.filter(store.entities, function(_, e)
+            local mods = table.filter(store.modifiers, function(_, e)
                 return e.modifier and e.modifier.source_id == this.id and e.template_name == "mod_high_elven"
             end)
 
@@ -1645,7 +1645,7 @@ local function register_mage(scripts)
                         end
                         this.sentinel_previews = {}
                         sentinel_previews_level = pow_s.level
-                        local mods = table.filter(store.entities, function(_, e)
+                        local mods = table.filter(store.modifiers, function(_, e)
                             return e.modifier and e.modifier.source_id == this.id
                         end)
                         local modded_ids = {}
@@ -1694,7 +1694,7 @@ local function register_mage(scripts)
                     SU.tower_update_silenced_powers(store, this)
                     if ready_to_use_power(pow_s, pow_s, store, this.tower.cooldown_factor) then
                         pow_s.ts = store.tick_ts
-                        local existing_mods = table.filter(store.entities, function(_, e)
+                        local existing_mods = table.filter(store.modifiers, function(_, e)
                             return e.modifier and e.template_name == "mod_high_elven" and e.modifier.level >=
                                        pow_s.level
                         end)
@@ -1983,7 +1983,7 @@ local function register_mage(scripts)
                     queue_insert(store, mod)
                     this.decalmod_disintegrate_ready = true
                 elseif this.decalmod_disintegrate_ready then
-                    local mods = table.filter(store.entities, function(_, e)
+                    local mods = table.filter(store.modifiers, function(_, e)
                         return e.modifier and e.modifier.source_id == this.id and e.template_name ==
                                    "decalmod_arcane_wizard_disintegrate_ready"
                     end)
@@ -3247,7 +3247,7 @@ local function register_engineer(scripts)
                                 coroutine.yield()
                             end
 
-                            local enemies = table.filter(store.entities, function(k, v)
+                            local enemies = table.filter(store.enemies, function(k, v)
                                 return v.enemy and v.vis and v.health and not v.health.dead and
                                            band(v.vis.flags, aa.damage_bans) == 0 and band(v.vis.bans, aa.damage_flags) ==
                                            0 and U.is_inside_ellipse(v.pos, tpos(this), a.range)

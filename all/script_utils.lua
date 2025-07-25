@@ -61,7 +61,7 @@ end
 -- 如果不提供 mod_name，移除所有目标为 entity 的 mod
 -- 如果提供 exclude_name，不移除名称为 exclude_name 的 mod
 local function remove_modifiers(store, entity, mod_name, exclude_name)
-    local mods = table.filter(store.entities, function(k, v)
+    local mods = table.filter(store.modifiers, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and (not mod_name or mod_name == v.template_name) and
                    (not exclude_name or exclude_name ~= v.template_name)
     end)
@@ -74,7 +74,7 @@ end
 -- 移除所有 .modifier.type 为 mod_type，且目标为 entity 的 mod
 -- 如果提供 exclude_name，则不移除名称为 exclued_name 的 mod
 local function remove_modifiers_by_type(store, entity, mod_type, exclude_name)
-    local mods = table.filter(store.entities, function(k, v)
+    local mods = table.filter(store.modifiers, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and v.modifier.type == mod_type and
                    (not exclude_name or exclude_name ~= v.template_name)
     end)
@@ -97,7 +97,7 @@ end
 
 -- 隐藏目标为 entity 的 mod 的 sprites
 local function hide_modifiers(store, entity, keep, exclude_mod)
-    local mods = table.filter(store.entities, function(k, v)
+    local mods = table.filter(store.modifiers, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and v ~= exclude_mod
     end)
 
@@ -108,7 +108,7 @@ end
 
 -- 重新显示目标为 entity 的 mod 的 sprites
 local function show_modifiers(store, entity, restore, exclude_mod)
-    local mods = table.filter(store.entities, function(k, v)
+    local mods = table.filter(store.modifiers, function(k, v)
         return v.modifier and v.modifier.target_id == entity.id and v ~= exclude_mod
     end)
 
@@ -1688,8 +1688,8 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
         hit_pos.y = hit_pos.y + attack.hit_offset.y
     end
 
-    targets = table.filter(store.entities, function(k, v)
-        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, attack.damage_bans) == 0 and
+    targets = table.filter(store.enemies, function(k, v)
+        return not v.health.dead and band(v.vis.flags, attack.damage_bans) == 0 and
                    band(v.vis.bans, attack.damage_flags) == 0 and
                    U.is_inside_ellipse(v.pos, hit_pos, attack.damage_radius)
     end)
@@ -1864,8 +1864,8 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
                     hit_pos.y = hit_pos.y + attack.hit_offset.y
                 end
 
-                local targets = table.filter(store.entities, function(k, v)
-                    return v.enemy and v.vis and v.health and not v.health.dead and
+                local targets = table.filter(store.enemies, function(k, v)
+                    return not v.health.dead and
                                band(v.vis.flags, attack.damage_bans) == 0 and band(v.vis.bans, attack.damage_flags) == 0 and
                                U.is_inside_ellipse(v.pos, hit_pos, attack.damage_radius)
                 end)
@@ -3404,8 +3404,8 @@ local function y_enemy_melee_attacks(store, this, target)
                         if ma.side_effect then
                             ma.side_effect(this, store, ma, target)
                         end
-                        local targets = table.filter(store.entities, function(_, e)
-                            return e.soldier and e.vis and e.health and not e.health.dead and
+                        local targets = table.filter(store.soldiers, function(_, e)
+                            return not e.health.dead and
                                        band(e.vis.flags, ma.vis_bans) == 0 and band(e.vis.bans, ma.vis_flags) == 0 and
                                        U.is_inside_ellipse(e.pos, hit_pos, ma.damage_radius) and
                                        (not ma.fn_filter or ma.fn_filter(this, store, ma, e))

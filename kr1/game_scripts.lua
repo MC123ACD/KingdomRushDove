@@ -107,8 +107,8 @@ function scripts.aura_totem.update(this, store, script)
 	end
 
 	while store.tick_ts - this.aura.ts < a.duration + a.duration_inc * a.level do
-		local enemies = table.filter(store.entities, function(k, e)
-			return e.enemy and e.vis and e.health and not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and band(e.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
+		local enemies = table.filter(store.enemies, function(k, e)
+			return not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and band(e.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
 		end)
 
 		for _, enemy in pairs(enemies) do
@@ -433,7 +433,7 @@ function scripts.necromancer_aura.update(this, store, script)
 			if max_spawns < 1 then
 				-- block empty
 			else
-				local dead_enemies = table.filter(store.entities, function(k, v)
+				local dead_enemies = table.filter(store.enemies, function(k, v)
 					return v.enemy and v.vis and v.health and v.health.dead and band(v.health.last_damage_types, bor(DAMAGE_EAT)) == 0 and band(v.vis.bans, F_SKELETON) == 0 and store.tick_ts - v.health.death_ts >= v.health.dead_lifetime - this.aura.cycle_time and U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
 				end)
 
@@ -5605,7 +5605,7 @@ function scripts.blackburn_aura.update(this, store)
 			if max_spawns < 1 then
 				-- block empty
 			else
-				local dead_soldiers = table.filter(store.entities, function(k, v)
+				local dead_soldiers = table.filter(store.soldiers, function(k, v)
 					return v.soldier and v.health and v.health.dead and band(v.vis.bans or 0, F_SKELETON) == 0 and store.tick_ts - v.health.death_ts >= this.aura.cycle_time and U.is_inside_ellipse(v.pos, this.pos, this.aura.radius)
 				end)
 
@@ -8974,7 +8974,7 @@ function scripts.enemy_shaman_necro.update(this, store, script)
             if ready_to_cast() then
                 na.ts = store.tick_ts
 
-                local dead_enemies = table.filter(store.entities, function(_, e)
+                local dead_enemies = table.filter(store.enemies, function(_, e)
                     return e.enemy and e.health and e.health.dead and e.unit and not e.unit.hide_after_death and
                                band(e.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE,
                             DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE)) == 0 and band(e.vis.bans, F_UNDEAD) == 0 and
@@ -15265,7 +15265,7 @@ function scripts.ray_neptune.update(this, store, script)
 
     queue_insert(store, fx)
 
-    local enemies = table.filter(store.entities, function(k, v)
+    local enemies = table.filter(store.enemies, function(k, v)
         if v.enemy and v.health and not v.health.dead then
             if U.is_inside_ellipse(v.pos, b.to, b.damage_radius) then
                 return true
@@ -30489,7 +30489,7 @@ function scripts.faerie_trails.update(this, store)
             end
         end
 
-        local enemies = table.filter(store.entities, function(_, e)
+        local enemies = table.filter(store.enemies, function(_, e)
             return e and e.enemy and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
                        is_inside_section(e.nav_path.pi, e.nav_path.ni)
         end)
@@ -30962,7 +30962,7 @@ scripts.decal_metropolis_portal = {}
 
 function scripts.decal_metropolis_portal.update(this, store)
     local function should_activate()
-        local enemies = table.filter(store.entities, function(k, v)
+        local enemies = table.filter(store.enemies, function(k, v)
             if v.pending_removal or not v.enemy or not v.vis or not v.nav_path or not v.health or v.health.dead or
                 band(v.vis.flags, this.vis_bans) ~= 0 or band(v.vis.bans, this.vis_flags) ~= 0 or
                 not P:is_node_valid(v.nav_path.pi, v.nav_path.ni) then

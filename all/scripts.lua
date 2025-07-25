@@ -2391,8 +2391,8 @@ function scripts.bomb.update(this, store, script)
         end
     end
 
-    local enemies = table.filter(store.entities, function(k, v)
-        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
+    local enemies = table.filter(store.enemies, function(k, v)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
                    band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, b.to, dradius)
     end)
 
@@ -2558,8 +2558,8 @@ function scripts.enemy_bomb.update(this, store, script)
     if target and target.vis and U.flag_has(target.vis.flags, F_FLYING) then
         targets = {target}
     else
-        targets = table.filter(store.entities, function(_, e)
-            return e and e.health and not e.health.dead and e.vis and band(e.vis.flags, b.damage_bans) == 0 and
+        targets = table.filter(store.enemies, function(_, e)
+            return e and not e.health.dead and band(e.vis.flags, b.damage_bans) == 0 and
                        band(e.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(e.pos, b.to, b.damage_radius)
         end)
     end
@@ -2732,9 +2732,9 @@ function scripts.missile.update(this, store, script)
     end
 
     if b.damage_radius and b.damage_radius > 0 then
-        local enemies = table.filter(store.entities, function(k, v)
+        local enemies = table.filter(store.enemies, function(k, v)
             return
-                v.enemy and v.vis and v.unit and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) ==
+                not v.health.dead and band(v.vis.flags, b.damage_bans) ==
                     0 and band(v.vis.bans, b.damage_flags) == 0 and
                     U.is_inside_ellipse(V.v(v.pos.x + v.unit.hit_offset.x, v.pos.y + v.unit.hit_offset.y), b.to,
                         b.damage_radius)
@@ -3303,8 +3303,8 @@ function scripts.bolt_blast.update(this, store, script)
 
     U.animation_start(this, "hit", nil, store.tick_ts, 1)
 
-    local enemies = table.filter(store.entities, function(k, v)
-        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
+    local enemies = table.filter(store.enemies, function(k, v)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
                    band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, explode_pos, dradius)
     end)
     local d_value = U.frandom(dmin, dmax)
@@ -4297,8 +4297,8 @@ function scripts.tunnel.update(this, store, script)
     tu.length = length
 
     while true do
-        local enemies = table.filter(store.entities, function(_, e)
-            return e and e.enemy and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
+        local enemies = table.filter(store.enemies, function(_, e)
+            return e and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
                        e.nav_path.pi == tu.pick_pi and e.nav_path.ni >= tu.pick_ni
         end)
 
@@ -5627,8 +5627,8 @@ function scripts.mod_tower_remove.update(this, store, script)
 
         U.y_animation_wait(this)
 
-        local mods = table.filter(store.entities, function(_, ee)
-            return ee.modifier and ee.modifier.target_id == target.id
+        local mods = table.filter(store.modifiers, function(_, ee)
+            return ee.modifier.target_id == target.id
         end)
 
         for _, mod in pairs(mods) do
@@ -6929,8 +6929,8 @@ function scripts.power_fireball.update(this, store, script)
     this.pos.x, this.pos.y = b.to.x, b.to.y
     particle.particle_system.source_lifetime = 0
 
-    local enemies = table.filter(store.entities, function(k, v)
-        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
+    local enemies = table.filter(store.enemies, function(k, v)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
                    band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, b.to, b.damage_radius)
     end)
     local damage_value = math.ceil(b.damage_factor * math.random(b.damage_min, b.damage_max))
@@ -7303,8 +7303,8 @@ function scripts.atomic_bomb.update(this, store)
     signal.emit("atomic-bomb-starts")
     U.y_wait(store, 0.3)
 
-    local targets = table.filter(store.entities, function(k, v)
-        return v.enemy and v.vis and v.health and not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
+    local targets = table.filter(store.enemies, function(k, v)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
                    band(v.vis.bans, b.damage_flags) == 0
     end)
 
@@ -7513,8 +7513,8 @@ scripts.heal = function(this, amount)
 end
 
 scripts.find_modifiers_with_flags = function(this, store, bans)
-    return table.filter(store.entities, function(k, v)
-        return v.modifier and band(v.modifier.vis_flags, bans) ~= 0 and v.modifier.target_id == this.id
+    return table.filter(store.modifiers, function(k, v)
+        return band(v.modifier.vis_flags, bans) ~= 0 and v.modifier.target_id == this.id
     end)
 end
 

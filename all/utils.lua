@@ -654,7 +654,7 @@ end
 
 function U.find_soldiers_in_range(entities, origin, min_range, max_range, flags, bans, filter_func)
     local soldiers = table.filter(entities, function(k, v)
-        return not v.pending_removal and v.soldier and v.vis and v.health and not v.health.dead and
+        return not v.pending_removal and v.vis and v.health and not v.health.dead and
                    band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
                    U.is_inside_ellipse(v.pos, origin, max_range) and
                    (min_range == 0 or not U.is_inside_ellipse(v.pos, origin, min_range)) and
@@ -1619,8 +1619,8 @@ end
 -- 获取所有目标为 entity 的 mod。
 -- 如果传入 list，排除模板名存在于 list 中的 mod。
 function U.get_modifiers(store, entity, list)
-    local mods = table.filter(store.entities, function(k, v)
-        return v.modifier and v.modifier.target_id == entity.id and (not list or table.contains(list, v.template_name))
+    local mods = table.filter(store.modifiers, function(k, v)
+        return v.modifier.target_id == entity.id and (not list or table.contains(list, v.template_name))
     end)
 
     return mods
@@ -1629,8 +1629,8 @@ end
 -- return #modes > 0, mods
 -- 忽略 模板名为 mod_name 的 mod
 function U.has_modifiers(store, entity, mod_name)
-    local mods = table.filter(store.entities, function(k, v)
-        return v.modifier and v.modifier.target_id == entity.id and (not mod_name or mod_name == v.template_name)
+    local mods = table.filter(store.modifiers, function(k, v)
+        return v.modifier.target_id == entity.id and (not mod_name or mod_name == v.template_name)
     end)
 
     return #mods > 0, mods
@@ -1651,8 +1651,8 @@ end
 -- mod.modifier.type 存在于 {...} 中
 function U.has_modifier_types(store, entity, ...)
     local types = {...}
-    local mods = table.filter(store.entities, function(k, v)
-        return v.modifier and v.modifier.target_id == entity.id and table.contains(types, v.modifier.type)
+    local mods = table.filter(store.modifiers, function(k, v)
+        return v.modifier.target_id == entity.id and table.contains(types, v.modifier.type)
     end)
 
     return #mods > 0, mods

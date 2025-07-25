@@ -57,8 +57,8 @@ function queue_damage(store, damage)
 end
 
 function soldiers_around_need_heal(this, store, trigger_hp_factor, range)
-    local targets = table.filter(store.entities, function(k,v)
-        return (v.soldier and v.template_name ~= "soldier_mecha" and not v.refinforcement) and (v.health and (not v.health.dead) and v.health.hp < trigger_hp_factor * v.health.hp_max) and U.is_inside_ellipse(v.pos, this.pos, range)
+    local targets = table.filter(store.soldiers, function(k,v)
+        return (not v.reinforcement) and (not v.health.dead and v.health.hp < trigger_hp_factor * v.health.hp_max) and U.is_inside_ellipse(v.pos, this.pos, range)
     end)
     if not targets or #targets == 0 then
         return false

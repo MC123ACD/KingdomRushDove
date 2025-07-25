@@ -592,8 +592,8 @@ function sys.mod_lifecycle:on_insert(entity, store)
 
     local this = entity
     local target_id = this.modifier.target_id
-    local modifiers = table.filter(store.entities, function(k, v)
-        return v.modifier and v.modifier.target_id == target_id
+    local modifiers = table.filter(store.modifiers, function(k, v)
+        return v.modifier.target_id == target_id
     end)
 
     for _, m in pairs(modifiers) do
@@ -685,8 +685,8 @@ function sys.tower_upgrade:on_update(dt, ts, store)
             end
 
             if e.tower.sell then
-                local mods = table.filter(store.entities, function(_, ee)
-                    return ee.modifier and ee.modifier.target_id == e.id
+                local mods = table.filter(store.modifiers, function(_, ee)
+                    return ee.modifier.target_id == e.id
                 end)
 
                 for _, mod in pairs(mods) do
@@ -732,7 +732,7 @@ function sys.tower_upgrade:on_update(dt, ts, store)
         elseif e.tower.upgrade_to then
             log.debug("upgrading %s to %s", e.id, e.tower.upgrade_to)
 
-            local mods = table.filter(store.entities, function(_, ee)
+            local mods = table.filter(store.modifiers, function(_, ee)
                 return ee.modifier and ee.modifier.target_id == e.id
             end)
 
