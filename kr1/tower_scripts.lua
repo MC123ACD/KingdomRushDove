@@ -80,7 +80,7 @@ local function register_archer(scripts)
                     end
 
                     if not a and ready_to_attack(as, store, this.tower.cooldown_factor) then
-                        enemy, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, at.range,
+                        enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range,
                             as.node_prediction, as.vis_flags, as.vis_bans)
 
                         if enemy then
@@ -200,7 +200,7 @@ local function register_archer(scripts)
                         end
                     end
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -436,7 +436,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -614,7 +614,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_use_power(pow_m, ma, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, ma.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, ma.vis_flags,
                             ma.vis_bans)
 
                         if not enemy then
@@ -655,7 +655,7 @@ local function register_archer(scripts)
                                     coroutine.yield()
                                 end
 
-                                enemy = U.find_foremost_enemy(store.entities, origin, 0, range, false, ma.vis_flags,
+                                enemy = U.find_foremost_enemy(store.enemies, origin, 0, range, false, ma.vis_flags,
                                     ma.vis_bans)
 
                                 local shoot_pos, target_id, enemy_id
@@ -710,7 +710,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, aa.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
                             aa.vis_bans)
 
                         if not enemy then
@@ -821,7 +821,7 @@ local function register_archer(scripts)
                         if ready_to_use_power(pow, ta, store, this.tower.cooldown_factor) then
                             local enemy
                             if name == "silence" then
-                                enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                                enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                                     ta.vis_flags, ta.vis_bans, enemy_is_silent_target)
                             else
                                 enemy = U.find_foremost_enemy_with_max_coverage(store.entities, tpos(this), 0, a.range,
@@ -858,7 +858,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, aa.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
                             aa.vis_bans)
 
                         if not enemy then
@@ -974,7 +974,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(a, store, this.tower.cooldown_factor) then
-                        local enemy, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, at.range,
+                        local enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range,
                             a.node_prediction, a.vis_flags, a.vis_bans)
 
                         if not enemy then
@@ -1126,7 +1126,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -1325,7 +1325,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
                         local mark = false
                         if enemies then
@@ -1409,7 +1409,7 @@ local function register_mage(scripts)
                     SU.tower_update_silenced_powers(store, this)
 
                     if ready_to_use_power(pow_e, ea, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, ea.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, ea.vis_flags,
                             ea.vis_bans)
 
                         if not enemy then
@@ -1427,7 +1427,7 @@ local function register_mage(scripts)
 
                             if enemy.health.dead or not U.flags_pass(enemy.vis, ea) or
                                 not U.is_inside_ellipse(tpos(this), enemy.pos, a.range * 1.1) then
-                                enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                                enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                                     ea.vis_flags, ea.vis_bans)
                             end
 
@@ -1452,7 +1452,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_use_power(pow_w, wa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             wa.vis_flags, wa.vis_bans, enemy_is_silent_target)
 
                         if enemy then
@@ -1494,7 +1494,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, ba.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, ba.vis_flags,
                             ba.vis_bans)
 
                         if enemy then
@@ -1718,7 +1718,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_use_power(pow_t, ta, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             ta.vis_flags, ta.vis_bans)
 
                         if enemy then
@@ -1748,7 +1748,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             ba.vis_flags, ba.vis_bans)
 
                         if enemy then
@@ -1763,7 +1763,7 @@ local function register_mage(scripts)
 
                             U.y_wait(store, ba.shoot_time)
 
-                            enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                            enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                                 ba.vis_flags, ba.vis_bans)
 
                             if enemy then
@@ -1845,7 +1845,7 @@ local function register_mage(scripts)
             local aura = E:get_template(at.aura)
             local max_times_applied = E:get_template(aura.aura.mod).max_times_applied
             local function find_target(aa)
-                local target, __, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
+                local target, __, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range,
                     aa.node_prediction, aa.vis_flags, aa.vis_bans, function(e)
                         if aa == at then
                             return e.nav_path.ni >= aa.min_nodes and
@@ -2108,7 +2108,7 @@ local function register_mage(scripts)
                         if (pow and ready_to_use_power(pow, aa, store, this.tower.cooldown_factor)) or
                             (not pow and ready_to_attack(aa, store, this.tower.cooldown_factor)) and store.tick_ts -
                             last_ts > a.min_cooldown * this.tower.cooldown_factor then
-                            local enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                            local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                                 aa.vis_flags, aa.vis_bans)
 
                             if not enemy then
@@ -2144,7 +2144,7 @@ local function register_mage(scripts)
                                 U.y_wait(store, aa.shoot_time)
 
                                 if aa == ap and not store.entities[enemy.id] or enemy.health.dead then
-                                    enemy, enemies = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
+                                    enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range,
                                         false, aa.vis_flags, aa.vis_bans)
 
                                     if not enemy or enemy.health.dead then
@@ -2254,7 +2254,7 @@ local function register_mage(scripts)
                     SU.tower_update_silenced_powers(store, this)
 
                     if ready_to_use_power(pow_t, ta, store, this.tower.cooldown_factor) then
-                        local target = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false,
+                        local target = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
                             ta.vis_flags, ta.vis_bans, function(e)
                                 return P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_TWISTER) and e.nav_path.ni >
                                            P:get_start_node(e.nav_path.pi) + ta.nodes_limit and e.nav_path.ni <
@@ -2523,7 +2523,7 @@ local function register_mage(scripts)
 
                     SU.tower_update_silenced_powers(store, this)
                     if ready_to_use_power(pow_p, pa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, pa.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, pa.vis_flags,
                             pa.vis_bans)
 
                         if enemy then
@@ -2564,7 +2564,7 @@ local function register_mage(scripts)
                     end
 
                     if ready_to_attack(ba, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, false, ba.vis_flags,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, ba.vis_flags,
                             ba.vis_bans)
 
                         if enemy then
@@ -2890,7 +2890,7 @@ local function register_mage(scripts)
                             this.user_selection.new_pos = nil
                         end
                     else
-                        target = U.find_foremost_enemy(store.entities, tpos(this), 0, range, false, a.vis_flags,
+                        target = U.find_foremost_enemy(store.enemies, tpos(this), 0, range, false, a.vis_flags,
                             a.vis_bans)
                     end
                     -- 攻击
@@ -3032,7 +3032,7 @@ local function register_engineer(scripts)
                             (not pow and ready_to_attack(aa, store, this.tower.cooldown_factor) and store.tick_ts -
                                 last_ts > a.min_cooldown * this.tower.cooldown_factor) then
                             local trigger, enemies, trigger_pos =
-                                U.find_foremost_enemy(store.entities, tpos(this), 0, aa.range, aa.node_prediction,
+                                U.find_foremost_enemy(store.enemies, tpos(this), 0, aa.range, aa.node_prediction,
                                     aa.vis_flags, aa.vis_bans)
 
                             if aa == ac or aa == ab then
@@ -3055,7 +3055,7 @@ local function register_engineer(scripts)
                                 U.animation_start(this, aa.animation, nil, store.tick_ts, false, tower_sid)
                                 U.y_wait(store, aa.shoot_time)
 
-                                local enemy, __, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0,
+                                local enemy, __, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0,
                                     aa.range, aa.node_prediction, aa.vis_flags, aa.vis_bans)
                                 local dest = enemy and pred_pos or trigger_pos
 
@@ -3187,7 +3187,7 @@ local function register_engineer(scripts)
                         coroutine.yield()
                     else
                         if drill_ready then
-                            local trigger_enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true,
+                            local trigger_enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, true,
                                 da.vis_flags, da.vis_bans, function(e, origin)
                                     return e.health and e.health.hp > 1000
                                 end)
@@ -3209,7 +3209,7 @@ local function register_engineer(scripts)
                                 if trigger_enemy and trigger_enemy.health.hp > 0 then
                                     enemy = trigger_enemy
                                 else
-                                    enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, true,
+                                    enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, true,
                                         da.vis_flags, da.vis_bans)
                                 end
 
@@ -3231,7 +3231,7 @@ local function register_engineer(scripts)
                         end
 
                         local trigger_range = (lava_ready and 0.8 or 1) * a.range
-                        local trigger_enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, trigger_range, false,
+                        local trigger_enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, trigger_range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if trigger_enemy then
@@ -3459,7 +3459,7 @@ local function register_engineer(scripts)
 
             local function do_attack(at)
                 SU.delay_attack(store, at, 0.25)
-                local target, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
+                local target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range,
                     at.node_prediction, at.vis_flags, at.vis_bans, filter_faerie)
 
                 if target then
@@ -3701,7 +3701,7 @@ local function register_engineer(scripts)
                     end
 
                     if ready_to_attack(ar, store, this.tower.damage_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, ar.range, ar.node_prediction,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, ar.node_prediction,
                             ar.vis_flags, ar.vis_bans)
 
                         if not enemy then
@@ -3714,7 +3714,7 @@ local function register_engineer(scripts)
 
                             if enemy.health.dead or not store.entities[enemy.id] or
                                 not U.is_inside_ellipse(tpos(this), enemy.pos, ar.range * a.range_check_factor) then
-                                enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, ar.range, false,
+                                enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, false,
                                     ar.vis_flags, ar.vis_bans)
                             end
 
@@ -4043,14 +4043,14 @@ local function register_engineer(scripts)
                     end
 
                     if ready_to_attack(ra, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, at.range, ra.node_prediction,
+                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range, ra.node_prediction,
                             ra.vis_flags, ra.vis_bans)
 
                         if not enemy or enemy.health.dead then
                             local frankie = b.soldiers[1]
 
                             if frankie and not frankie.health.dead then
-                                enemy = U.find_foremost_enemy(store.entities, frankie.pos, 0, rb.bounce_range, false,
+                                enemy = U.find_foremost_enemy(store.enemies, frankie.pos, 0, rb.bounce_range, false,
                                     ra.vis_flags, ra.vis_bans)
                                 enemy = enemy and frankie
                             end
@@ -4073,14 +4073,14 @@ local function register_engineer(scripts)
                                 coroutine.yield()
                             end
 
-                            enemy = U.find_foremost_enemy(store.entities, tpos(this), 0, at.range, ra.node_prediction,
+                            enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range, ra.node_prediction,
                                 ra.vis_flags, ra.vis_bans)
 
                             if not enemy or enemy.health.dead then
                                 local frankie = b.soldiers[1]
 
                                 if frankie and not frankie.health.dead then
-                                    enemy = U.find_foremost_enemy(store.entities, frankie.pos, 0, rb.bounce_range,
+                                    enemy = U.find_foremost_enemy(store.enemies, frankie.pos, 0, rb.bounce_range,
                                         false, ra.vis_flags, ra.vis_bans)
                                     enemy = enemy and frankie
                                 end
@@ -4216,7 +4216,7 @@ local function register_engineer(scripts)
                         return not GR:cell_is(ppos.x, ppos.y, TERRAIN_FAERIE)
                     end
 
-                    target, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
+                    target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range,
                         ba.node_prediction, ba.vis_flags, ba.vis_bans, filter_faerie)
 
                     if target then

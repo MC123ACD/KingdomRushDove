@@ -999,7 +999,7 @@ function U.find_foremost_enemy(entities, origin, min_range, max_range, predictio
     local enemies = {}
 
     for _, e in pairs(entities) do
-        if e.pending_removal or not e.enemy or not e.nav_path or not e.vis or e.health and e.health.dead or
+        if e.pending_removal or not e.nav_path or not e.vis or e.health and e.health.dead or
             band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
             -- block empty
         else

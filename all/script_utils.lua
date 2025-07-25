@@ -1334,7 +1334,7 @@ local function y_soldier_do_ranged_attack(store, this, target, attack, pred_pos)
             else
                 node_prediction = nil
             end
-            target, trash, pred_pos = U.find_foremost_enemy(store.entities, this.pos, attack.min_range,
+            target, trash, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, attack.min_range,
                 attack.max_range, node_prediction , attack.vis_flags, attack.vis_bans, attack.filter_fn, F_FLYING)
             if target and not target.health.dead then
                 bullet_to = pred_pos or target.pos
@@ -1422,7 +1422,7 @@ local function soldier_pick_ranged_target_and_attack(store, this)
         elseif a.chance and math.random() > a.chance then
             -- block empty
         else
-            local target, targets, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range,
+            local target, targets, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                 a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
             if target then
@@ -1609,7 +1609,7 @@ local function y_soldier_timed_attacks(store, this)
         if a.disabled or store.tick_ts - a.ts < a.cooldown then
             -- block empty
         else
-            local target = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range, false, a.vis_flags,
+            local target = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range, false, a.vis_flags,
                 a.vis_bans)
 
             if not target then
@@ -2220,7 +2220,7 @@ local function soldier_pick_melee_target(store, this)
                                (not this.melee.fn_can_pick or this.melee.fn_can_pick(this, e))
                 end)
         else
-            target = U.find_foremost_enemy(store.entities, center, 0, this.melee.range, false, F_BLOCK,
+            target = U.find_foremost_enemy(store.enemies, center, 0, this.melee.range, false, F_BLOCK,
                 bit.bor(F_CLIFF), function(e)
                     return (not e.enemy.max_blockers or #e.enemy.blockers == 0) and
                                band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0 and
@@ -2229,7 +2229,7 @@ local function soldier_pick_melee_target(store, this)
         end
     elseif U.blocker_rank(store, this) ~= 1 then
         -- 如果当前拦截的敌人被多个士兵拦截，就尝试寻找别的尚未被拦截的敌人作为目标
-        local alt_target = U.find_foremost_enemy(store.entities, center, 0, this.melee.range, false, F_BLOCK,
+        local alt_target = U.find_foremost_enemy(store.enemies, center, 0, this.melee.range, false, F_BLOCK,
             bit.bor(F_FLYING, F_CLIFF), function(e)
                 return #e.enemy.blockers == 0 and band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0
             end)

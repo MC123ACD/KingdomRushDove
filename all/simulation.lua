@@ -21,6 +21,8 @@ function simulation:init(store, system_names)
 	d.paused = false
 	d.step = false
 	d.entities = {}
+    -- 优化分类索引
+    d.enemies = {}
 	d.pending_inserts = {}
 	d.pending_removals = {}
 	d.entity_count = 0
@@ -165,6 +167,10 @@ function simulation:insert_entity(e)
 
 	e.pending_removal = nil
 	d.entities[e.id] = e
+    if e.enemy then
+        d.enemies[e.id] = e  -- 优化分类索引
+    end
+
 	d.entity_count = d.entity_count + 1
 	d.entity_max = d.entity_count >= d.entity_max and d.entity_count or d.entity_max
 
@@ -188,6 +194,9 @@ function simulation:remove_entity(e)
 
 	e.pending_removal = nil
 	d.entities[e.id] = nil
+    if e.enemy then
+        d.enemies[e.id] = nil  -- 优化分类索引
+    end
 	d.entity_count = d.entity_count - 1
 
 	log.debug("entity (%s) %s removed", e.id, e.template_name)

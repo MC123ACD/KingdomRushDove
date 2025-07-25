@@ -41,7 +41,7 @@ end
 
 local function find_target_at_critical_moment(this, store, range, ignore_bigguy, require_foremost, vis_bans)
     local target = nil
-    local _, targets = U.find_foremost_enemy(store.entities, this.pos, 0, range, 0, F_RANGED, vis_bans or 0)
+    local _, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, range, 0, F_RANGED, vis_bans or 0)
     local num = 0
     local max_hp = 750
     if targets then
@@ -1303,7 +1303,7 @@ return function(scripts)
                     skill = this.hero.skills.magicmissile
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range, false,
+                        local target = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range, false,
                             a.vis_flags, a.vis_bans)
 
                         if target then
@@ -1412,7 +1412,7 @@ return function(scripts)
                             U.walk(this, store.tick_length)
                             coroutine.yield()
 
-                            target = U.find_foremost_enemy(store.entities, this.pos, 0, this.melee.range, false,
+                            target = U.find_foremost_enemy(store.enemies, this.pos, 0, this.melee.range, false,
                                 attack.vis_flags, attack.vis_bans)
                             expired = store.tick_ts - this.lifespan.ts > this.lifespan.duration
                             next_pos = P:next_entity_node(this, store.tick_length)
@@ -1807,7 +1807,7 @@ return function(scripts)
                             a = this.timed_attacks.list[1]
                         end
                         if ready_to_attack(a, store) then
-                            local target, _, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range,
+                            local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                                 a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
                             if not target then
@@ -1838,7 +1838,7 @@ return function(scripts)
                                         (not target or target.health.death or not target_dist or
                                             not (target_dist >= a.min_range) or target_dist <= a.max_range or true) then
                                         target, _, pred_pos =
-                                            U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                                            U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                                                 a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
                                         if not target then
@@ -3164,7 +3164,7 @@ return function(scripts)
                     skill = this.hero.skills.multishoot
 
                     if ready_to_use_skill(a, store) and not shot_ready() then
-                        local target, targets = U.find_foremost_enemy(store.entities, this.pos, a.min_range,
+                        local target, targets = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                             a.max_range, a.shoot_time, a.vis_flags, a.vis_bans, function(e)
                                 local center_pos = P:node_pos(e.nav_path.pi, 1, e.nav_path.ni)
                                 local nearby = U.find_enemies_in_range(store.entities, center_pos, 0, a.search_range,
@@ -3256,7 +3256,7 @@ return function(scripts)
                     skill = this.hero.skills.silverbullet
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                        local target = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                             a.shoot_time, a.vis_flags, a.vis_bans, function(e)
                                 return math.abs(P:nodes_to_defend_point(e.nav_path)) < a.nodes_to_defend
                             end)
@@ -3339,7 +3339,7 @@ return function(scripts)
 
                     if ready_to_use_skill(a, store) and not shot_ready() then
                         local g = E:get_template("van_helsing_grenade")
-                        local target, _, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range,
+                        local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                             a.max_range, a.shoot_time + g.bullet.flight_time, a.vis_flags, a.vis_bans,
                             enemy_is_silent_target)
 
@@ -6494,7 +6494,7 @@ return function(scripts)
 
                         terrains = band(terrains, bnot(TERRAIN_CLIFF, TERRAIN_FAERIE))
 
-                        local target = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range, false,
+                        local target = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range, false,
                             a.vis_flags, a.vis_bans, function(v)
                                 return (band(bnot(v.enemy.valid_terrains), terrains) == 0) and v.health.hp > 540
                             end)
@@ -7076,7 +7076,7 @@ return function(scripts)
                                 retarget_flag = nil
 
                                 local n_target, _, n_pred_pos =
-                                    U.find_foremost_enemy(store.entities, this.pos, attack.min_range, attack.max_range,
+                                    U.find_foremost_enemy(store.enemies, this.pos, attack.min_range, attack.max_range,
                                         attack.node_prediction, attack.vis_flags, attack.vis_bans, function(v)
                                             return v ~= target
                                         end, F_FLYING)
@@ -8492,7 +8492,7 @@ return function(scripts)
             end
 
             if ready_to_use_skill(this.ultimate, store) then
-                local target = U.find_foremost_enemy(store.entities, this.pos, 0, this.ranged.attacks[1].max_range, 0,
+                local target = U.find_foremost_enemy(store.enemies, this.pos, 0, this.ranged.attacks[1].max_range, 0,
                     F_RANGED, 0)
 
                 if target and target.pos then
@@ -8513,7 +8513,7 @@ return function(scripts)
             skill = this.hero.skills.smoke
 
             if ready_to_use_skill(a, store) then
-                local target = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                local target = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                     a.node_prediction, a.vis_flags, a.vis_bans)
 
                 if not target then
@@ -8885,7 +8885,7 @@ return function(scripts)
         if b.shot_index ~= 1 then
             local o_target = store.entities[b.target_id]
             local o = o_target and o_target.pos or this.pos
-            local target, targets = U.find_foremost_enemy(store.entities, o, 0, b.first_retarget_range, false,
+            local target, targets = U.find_foremost_enemy(store.enemies, o, 0, b.first_retarget_range, false,
                 b.vis_flags, b.vis_bans, function(e)
                     return e.id ~= b.target_id
                 end)
@@ -9102,7 +9102,7 @@ return function(scripts)
                 skill = this.hero.skills.arcanenova
 
                 if ready_to_use_skill(a, store) then
-                    local target, targets = U.find_foremost_enemy(store.entities, this.pos, a.min_range, a.max_range,
+                    local target, targets = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                         a.cast_time, a.vis_flags, a.vis_bans)
 
                     if not target or #targets < 2 then
@@ -9506,7 +9506,7 @@ return function(scripts)
 
                 if ready_to_use_skill(this.ultimate, store) then
 
-                    local target = U.find_foremost_enemy(store.entities, this.pos, 0, this.ranged.attacks[1].max_range,
+                    local target = U.find_foremost_enemy(store.enemies, this.pos, 0, this.ranged.attacks[1].max_range,
                         0, F_RANGED, 0)
 
                     if target and target.pos and
@@ -9843,7 +9843,7 @@ return function(scripts)
                 skill = this.hero.skills.shield_strike
 
                 if ready_to_use_skill(a, store) then
-                    local target, _, pred_pos = U.find_foremost_enemy(store.entities, this.pos, a.min_range,
+                    local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                         a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, shield_strike_filter_fn, F_FLYING)
 
                     if target then
@@ -11130,7 +11130,7 @@ return function(scripts)
                 skill = this.hero.skills.oakseeds
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_foremost_enemy(store.entities, this.pos, 0, a.max_range, 0.5, a.vis_flags,
+                    local target = U.find_foremost_enemy(store.enemies, this.pos, 0, a.max_range, 0.5, a.vis_flags,
                         a.vis_bans)
 
                     if not target then
@@ -12028,7 +12028,7 @@ return function(scripts)
                     ni = nearest[1][3]
                 }
                 local node_pos = P:node_pos(node)
-                local target, targets = U.find_foremost_enemy(store.entities, this.pos, 0, this.angel_range, fts(10),
+                local target, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, this.angel_range, fts(10),
                     this.angel_vis_flags, this.angel_vis_bans)
                 local idx = 1
 
@@ -12483,7 +12483,7 @@ return function(scripts)
         }
         local node_pos = P:node_pos(node)
         local count = this.count
-        local target, targets = U.find_foremost_enemy(store.entities, this.pos, 0, this.range, fts(10), this.vis_flags,
+        local target, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, this.range, fts(10), this.vis_flags,
             this.vis_bans)
         local idx = 1
 

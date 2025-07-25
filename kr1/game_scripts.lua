@@ -214,7 +214,7 @@ function scripts.twister.update(this, store, script)
 			end
 
 			if enemies_max > #picked_enemies then
-				local _, enemies = U.find_foremost_enemy(store.entities, this.pos, 0, this.pickup_range, false, this.aura.vis_flags, this.aura.vis_bans, function(e)
+				local _, enemies = U.find_foremost_enemy(store.enemies, this.pos, 0, this.pickup_range, false, this.aura.vis_flags, this.aura.vis_bans, function(e)
 					return (not e.enemy.counts.twister or e.enemy.counts.twister < this.max_times_applied) and band(bnot(e.enemy.valid_terrains), terrains) == 0
 				end)
 
@@ -610,7 +610,7 @@ function scripts.soldier_mecha.update(this, store, script)
 			end
 
 			if store.tick_ts - ao.ts > ao.cooldown * this.owner.tower.cooldown_factor then
-				local _, targets = U.find_foremost_enemy(store.entities, this.pos, ao.min_range, ao.max_range, true, ao.vis_flags, ao.vis_bans)
+				local _, targets = U.find_foremost_enemy(store.enemies, this.pos, ao.min_range, ao.max_range, true, ao.vis_flags, ao.vis_bans)
 
 				if not targets then
 					-- block empty
@@ -654,7 +654,7 @@ function scripts.soldier_mecha.update(this, store, script)
 			end
 
 			if store.tick_ts - am.ts > am.cooldown * this.owner.tower.cooldown_factor then
-				local _, targets = U.find_foremost_enemy(store.entities, this.pos, am.min_range, am.max_range, false, am.vis_flags, am.vis_bans)
+				local _, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range, false, am.vis_flags, am.vis_bans)
 
 				if not targets then
 					-- block empty
@@ -700,7 +700,7 @@ function scripts.soldier_mecha.update(this, store, script)
 
 							queue_insert(store, b)
 
-							_, targets = U.find_foremost_enemy(store.entities, this.pos, am.min_range, am.max_range, false, am.vis_flags, am.vis_bans)
+							_, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range, false, am.vis_flags, am.vis_bans)
 
 							if not targets then
 								goto label_67_1
@@ -730,7 +730,7 @@ function scripts.soldier_mecha.update(this, store, script)
 		end
 
 		if store.tick_ts - ab.ts > ab.cooldown * this.owner.tower.cooldown_factor then
-			local _, targets = U.find_foremost_enemy(store.entities, this.pos, ab.min_range, ab.max_range, ab.node_prediction, ab.vis_flags, ab.vis_bans)
+			local _, targets = U.find_foremost_enemy(store.enemies, this.pos, ab.min_range, ab.max_range, ab.node_prediction, ab.vis_flags, ab.vis_bans)
 
 			if not targets then
 				-- block empty
@@ -6705,7 +6705,7 @@ function scripts.aura_10yr_fireball.update(this, store)
 		end
 
 		for i = 1, a.loops do
-			local target, __, pred_pos = U.find_foremost_enemy(store.entities, owner.pos, a.min_range, a.max_range, bdt, a.vis_flags, a.vis_ban)
+			local target, __, pred_pos = U.find_foremost_enemy(store.enemies, owner.pos, a.min_range, a.max_range, bdt, a.vis_flags, a.vis_ban)
 			local b = E:create_entity(a.entity)
 
 			if target then
@@ -14906,7 +14906,7 @@ function scripts.hero_steam_frigate.update(this, store, script)
         end
 
         if store.tick_ts - ba.ts > ba.cooldown then
-            local enemy, _, pred_pos = U.find_foremost_enemy(store.entities, this.pos, ba.min_range, ba.max_range,
+            local enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, ba.min_range, ba.max_range,
                 ba.node_prediction, ba.vis_flags, ba.vis_bans, function(entity)
                     return math.abs(this.pos.x - entity.pos.x) > throw_min_dist_x
                 end)
@@ -17710,7 +17710,7 @@ function scripts.high_elven_sentinel.update(this, store)
             return nil
         end
 
-        local target, targets = U.find_foremost_enemy(store.entities, this.pos, 0, range, false, ra.vis_flags,
+        local target, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, range, false, ra.vis_flags,
             ra.vis_bans)
 
         if target and #this.owner.sentinels > 1 then
@@ -17899,7 +17899,7 @@ function scripts.tower_rock_thrower.update(this, store)
             if store.tick_ts - ba.ts < ba.cooldown then
                 coroutine.yield()
             else
-                enemy, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range, ba.node_prediction,
+                enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, ba.node_prediction,
                     ba.vis_flags, ba.vis_bans, filter_faerie)
 
                 if enemy then
@@ -17914,7 +17914,7 @@ function scripts.tower_rock_thrower.update(this, store)
 
                     local trigger_pos = pred_pos
 
-                    enemy, _, pred_pos = U.find_foremost_enemy(store.entities, tpos(this), 0, a.range,
+                    enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range,
                         ba.node_prediction, ba.vis_flags, ba.vis_bans, filter_faerie)
 
                     local b = E:create_entity(ba.bullet)
@@ -17950,7 +17950,7 @@ function scripts.druid_shooter_sylvan.update(this, store)
         elseif store.tick_ts - a.ts > a.cooldown then
             SU.delay_attack(store, a, 1)
             local target
-            local _, enemies = U.find_foremost_enemy(store.entities, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function (v)
+            local _, enemies = U.find_foremost_enemy(store.enemies, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function (v)
                 return not table.contains(a.excluded_templates, v.template_name) and not SU.has_modifiers(store, v, "mod_druid_sylvan")
             end)
 
@@ -18140,7 +18140,7 @@ function scripts.tower_bastion.update(this, store)
                 -- block empty
             else
                 target =
-                    U.find_foremost_enemy(store.entities, trigger_pos, 0, a.range, false, ra.vis_flags, ra.vis_bans)
+                    U.find_foremost_enemy(store.enemies, trigger_pos, 0, a.range, false, ra.vis_flags, ra.vis_bans)
 
                 if not target then
                     -- block empty
@@ -24472,7 +24472,7 @@ function scripts.plant_magic_blossom.update(this, store)
             U.animation_start(this, "shoot", nil, store.tick_ts, false)
             U.y_wait(store, ca.shoot_time)
 
-            local first, targets = U.find_foremost_enemy(store.entities, this.pos, 0, ca.range, true, ca.vis_flags,
+            local first, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, ca.range, true, ca.vis_flags,
                 ca.vis_bans)
 
             for i = 1, ca.bullet_count do
@@ -24635,7 +24635,7 @@ function scripts.plant_poison_pumpkin.update(this, store)
             U.y_wait(store, fts(2))
             add_smokes(smokes3)
 
-            local first, targets = U.find_foremost_enemy(store.entities, this.pos, 0, ca.range, false, ca.vis_flags,
+            local first, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, ca.range, false, ca.vis_flags,
                 ca.vis_bans)
 
             if first then
@@ -28458,7 +28458,7 @@ function scripts.user_item_rod_dragon_fire.update(this, store)
         end
 
         if store.tick_ts - at.ts > at.cooldown then
-            local target, _, pred_pos = U.find_foremost_enemy(store.entities, this.pos, 0, at.range, at.node_prediction,
+            local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, 0, at.range, at.node_prediction,
                 at.vis_flags, at.vis_bans)
 
             if not target then

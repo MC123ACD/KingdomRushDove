@@ -82,8 +82,8 @@ function game:init(screen_w, screen_h, done_callback)
 
 	visible_w = km.clamp(REF_H * 4 / 3, REF_H * 16 / 9, visible_w)
 
-	local v_left = (self.ref_w - visible_w) / 2
-	local v_right = self.ref_w + (visible_w - self.ref_w) / 2
+	local v_left = (self.ref_w - visible_w) * 0.5
+	local v_right = self.ref_w + (visible_w - self.ref_w) * 0.5
 	local v_top = (panext and panext.top or 0) + visible_h
 	local v_bottom = panext and panext.bottom or 0
 
