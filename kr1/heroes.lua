@@ -5787,14 +5787,14 @@ local function heroes()
     tt.hero.skills.spinningpole = E:clone_c("hero_skill")
     tt.hero.skills.spinningpole.xp_gain_factor = 28
     tt.hero.skills.spinningpole.loops = {2, 3, 4}
-    tt.hero.skills.spinningpole.damage = {16, 23, 27}
+    tt.hero.skills.spinningpole.damage = {18, 25, 30}
     tt.hero.skills.spinningpole.xp_level_steps = {
         [2] = 1,
         [5] = 2,
         [8] = 3
     }
     tt.hero.skills.tetsubostorm = E:clone_c("hero_skill")
-    tt.hero.skills.tetsubostorm.damage = {40, 70, 100}
+    tt.hero.skills.tetsubostorm.damage = {45, 80, 120}
     tt.hero.skills.tetsubostorm.xp_gain_factor = 60
     tt.hero.skills.tetsubostorm.xp_level_steps = {
         [2] = 1,
@@ -5971,7 +5971,6 @@ local function heroes()
     tt.dps.damage_type = DAMAGE_TRUE
     tt.main_script.insert = scripts.mod_dps.insert
     tt.main_script.update = scripts.mod_dps.update
-
 
     tt = E:register_t("mod_monkey_god_palm", "modifier")
     E:add_comps(tt, "render")
