@@ -10636,13 +10636,13 @@ function scripts.elvira_bat.update(this, store)
 
     if this.payload then
         local e = E:create_entity(this.payload)
-
         e.pos.x, e.pos.y = this.pos.x, this.pos.y
         e.nav_path.pi = this.nav_path.pi
         e.nav_path.spi = this.nav_path.spi
         e.nav_path.ni = this.nav_path.ni
         e.render.sprites[1].name = "raise"
-
+        e.health.hp_max = e.health.hp_max * this.health_factor
+        e.health.hp = e.health.hp_max
         queue_insert(store, e)
     end
 
@@ -15905,7 +15905,7 @@ function scripts.points_spawner.update(this, store)
                 end
 
                 local wave_ts = store.tick_ts - wave_start_ts
-
+                
                 while ptr <= #spawn_queue and wave_ts >= spawn_queue[ptr][1] do
                     local ts, template, p_from, p_to, p_pi, p_spi, custom_data = unpack(spawn_queue[ptr])
                     local pis = p_pi and {p_pi} or nil
@@ -15924,7 +15924,14 @@ function scripts.points_spawner.update(this, store)
                         e.motion.forced_waypoint = P:node_pos(e.nav_path)
                         e.render.sprites[1].name = "raise"
                         e.custom_spawn_data = custom_data
-
+                        if store.level_difficulty == DIFFICULTY_IMPOSSIBLE and store.wave_group_number > 6 then
+                            if e.health then
+                                e.health.hp_max = e.health.hp_max * (1 + (store.wave_group_number - 6) * 0.0167)
+                                e.health.hp = e.health.hp_max
+                            elseif e.health_factor then
+                                e.health_factor = 1 + (store.wave_group_number - 6) * 0.0167
+                            end
+                        end
                         queue_insert(store, e)
                         log.paranoid("%06.2f : points_spawner (%06.2f) %s - %s from:%s,%s to:%s,%s pi:%s spi:%s",
                             store.tick_ts, ts, current_wave, template, p_from.x, p_from.y, p_to.x, p_to.y, p_pi, p_spi)

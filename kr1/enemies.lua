@@ -864,7 +864,7 @@ local function enemies()
     tt.dps.damage_max = 5
     tt.dps.damage_min = 5
     tt.dps.damage_every = 0.5
-    
+
     tt = RT("enemy_orc_armored_mad", "enemy_orc_armored")
     tt.motion.max_speed = 1.1 * FPS
     tt.melee.attacks[1].mod = "mod_orc_blood"
@@ -5108,7 +5108,8 @@ local function enemies()
     tt.render.sprites[2].name = "decal_flying_shadow"
     tt.render.sprites[2].offset = vec_2(0, 0)
     tt.payload = "enemy_elvira"
-
+    tt.health_factor = 1
+    
     tt = E:register_t("mod_elvira_lifesteal", "modifier")
     E:add_comps(tt, "moon")
     tt.heal_hp = 360
