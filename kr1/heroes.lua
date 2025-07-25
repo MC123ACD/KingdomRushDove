@@ -159,7 +159,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_max = {5, 7, 9, 12, 15, 18, 22, 26, 30, 34}
     tt.hero.level_stats.melee_damage_min = {3, 5, 7, 9, 11, 13, 15, 17, 19, 21}
     tt.hero.level_stats.ranged_damage_max = {16, 19, 24, 27, 30, 36, 41, 47, 50, 55}
-    tt.hero.level_stats.ranged_damage_min = {4, 4, 5, 5, 6, 6, 7, 8, 9, 10}
+    tt.hero.level_stats.ranged_damage_min = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
     tt.hero.skills.multishot = CC("hero_skill")
     tt.hero.skills.multishot.count_base = 0
     tt.hero.skills.multishot.count_inc = 2
@@ -249,7 +249,6 @@ local function heroes()
     tt.bullet.damage_min = 15
     tt.bullet.damage_max = 50
     tt.bullet.damage_type = DAMAGE_TRUE
-    -- tt.bullet.mod = "mod_alleria_poison"
     tt.extra_arrows_range = 200
     tt.extra_arrows = 2
     tt.main_script.insert = scripts.arrow_multishot_hero_alleria.insert

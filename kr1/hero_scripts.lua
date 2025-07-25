@@ -324,8 +324,8 @@ return function(scripts)
     scripts.arrow_multishot_hero_alleria = {
         insert = function(this, store)
             if this.extra_arrows > 0 then
-                local targets = U.find_enemies_in_range(store.enemies, this.bullet.to, 0, this.extra_arrows_range,
-                    F_RANGED, F_NONE)
+                local targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range, F_RANGED, F_NONE)
+
                 if targets then
                     local rate
                     if #targets > this.extra_arrows then
@@ -333,27 +333,33 @@ return function(scripts)
                     else
                         rate = #targets
                     end
-                    local flight_time = fts(3 + 3 * rate)
+                    this.bullet.flight_time = fts(3 + 3 * rate)
+                    local j = 1
+                    local predicted_health = {}
                     for i = 1, this.extra_arrows do
                         local b = E:clone_entity(this)
                         b.extra_arrows = 0
                         local t
-                        if targets[i] then
+                        if i <= #targets then
                             t = targets[i]
                         else
-                            t = store.entities[this.bullet.target_id]
-                            b.bullet.damage_min = 15
+                            while j < #targets and predicted_health[targets[j]] <= 0 do
+                                j = j + 1
+                            end
+                            t = targets[j]
                             b.bullet.damage_max = 30
                         end
-                        if t then
-                            b.bullet.target_id = t.id
-                            b.bullet.to = V.v(t.pos.x + t.unit.hit_offset.x, t.pos.y + t.unit.hit_offset.y)
-                            b.bullet.flight_time = flight_time
-                            b.bullet.damage_factor = this.bullet.damage_factor
-                            queue_insert(store, b)
+
+                        b.bullet.target_id = t.id
+                        b.bullet.to = V.v(t.pos.x + t.unit.hit_offset.x, t.pos.y + t.unit.hit_offset.y)
+                        local d = SU.create_bullet_damage(b.bullet, t.id, this.id)
+                        if not predicted_health[t.id] then
+                            predicted_health[t.id] = t.health.hp
                         end
+                        predicted_health[t.id] = predicted_health[t.id] - U.predict_damage(t, d)
+                        queue_insert(store, b)
                     end
-                    this.bullet.flight_time = flight_time
+
                 end
             end
             return scripts.arrow.insert(this, store)

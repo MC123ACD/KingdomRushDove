@@ -813,14 +813,14 @@ end
 
 function U.find_enemies_in_range(entities, origin, min_range, max_range, flags, bans, filter_func)
     local enemies = table.filter(entities, function(k, v)
-        return not v.pending_removal and v.vis and v.nav_path and v.health and not v.health.dead and
+        return not v.pending_removal and v.nav_path and not v.health.dead and
                    band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
                    U.is_inside_ellipse(v.pos, origin, max_range) and P:is_node_valid(v.nav_path.pi, v.nav_path.ni) and
                    (min_range == 0 or not U.is_inside_ellipse(v.pos, origin, min_range)) and
                    (not filter_func or filter_func(v, origin))
     end)
 
-    if not enemies or #enemies == 0 then
+    if #enemies == 0 then
         return nil
     else
         return enemies

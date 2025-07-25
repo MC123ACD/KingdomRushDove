@@ -2329,7 +2329,7 @@ local function register_mage(scripts)
 
                             if target and #this._stored_bullets > 0 then
                                 local i = 1
-
+                                local predicted_health = {}
                                 for _, b in pairs(this._stored_bullets) do
                                     if b.bullet.payload then
                                         b.bullet.target_id = target.id
@@ -2340,7 +2340,11 @@ local function register_mage(scripts)
                                         b.bullet.to = V.v(normal_target.pos.x + normal_target.unit.hit_offset.x, normal_target.pos.y + normal_target.unit.hit_offset.y)
 
                                         local d = SU.create_bullet_damage(b.bullet, normal_target.id, this.id)
-                                        if U.predict_damage(normal_target, d) > normal_target.health.hp then
+                                        if not predicted_health[normal_target.id] then
+                                            predicted_health[normal_target.id] = normal_target.health.hp
+                                        end
+                                        predicted_health[normal_target.id] = predicted_health[normal_target.id] - U.predict_damage(normal_target, d)
+                                        if predicted_health[normal_target.id] < 0 then
                                             i = i + 1
                                             if target.id == targets[km.zmod(i, #targets)].id then
                                                 i = i + 1
