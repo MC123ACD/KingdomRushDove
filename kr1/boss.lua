@@ -535,7 +535,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(80, 0)
     tt.health.dead_lifetime = 8
-    tt.health.hp_max = 17500
+    tt.health.hp_max = 17000
     tt.health.magic_armor = 0.4
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.offset = vec_2(0, 108)
