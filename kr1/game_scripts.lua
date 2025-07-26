@@ -6328,6 +6328,10 @@ function scripts.aura_ranger_thorn.update(this, store)
 						m.modifier.level = owner.powers.thorn.level
 						m.modifier.duration = m.modifier.duration + m.modifier.duration_inc * owner.powers.thorn.level
 
+                        if U.has_modifier_in_list(store, e, {"mod_ranger_poison"}) then
+                            m.modifier.duration = m.modifier.duration + owner.powers.poison.level * m.modifier.duration_inc * 0.5
+                        end
+
 						queue_insert(store, m)
 					end
 

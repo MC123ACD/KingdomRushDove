@@ -465,7 +465,16 @@ function LU.insert_hero(store, name, pos)
         store.main_hero = hero
         hero.hero.xp = 0
         hero.hero.level = 1
-
+        if store.patches.hero_full_level_at_start and hero.hero.fn_level_up then
+            if hero.hero.fn_level_up then
+                for i = 1, 10 do
+                    hero.hero.level = i
+                    hero.hero.fn_level_up(hero, store)
+                end
+            else
+                hero.hero.level = 10
+            end
+        end
         LU.queue_insert(store, hero)
         signal.emit("hero-added", hero)
     end

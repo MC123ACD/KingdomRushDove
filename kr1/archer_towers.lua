@@ -27,13 +27,13 @@ local function archer_towers()
     tt.info.i18n_key = "TOWER_RANGERS"
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_towers_0010" or "info_portraits_towers_0006"
     tt.powers.poison = CC("power")
-    tt.powers.poison.price_base = 225
-    tt.powers.poison.price_inc = 175
-    tt.powers.poison.mod = "mod_ranger_poison"
+    tt.powers.poison.price_base = 250
+    tt.powers.poison.price_inc = 200
+    tt.powers.poison.mods = {"mod_ranger_poison", "mod_ranger_slow"}
     tt.powers.poison.enc_icon = 8
     tt.powers.thorn = CC("power")
-    tt.powers.thorn.price_base = 275
-    tt.powers.thorn.price_inc = 150
+    tt.powers.thorn.price_base = 225
+    tt.powers.thorn.price_inc = 175
     tt.powers.thorn.aura = "aura_ranger_thorn"
     tt.powers.thorn.enc_icon = 9
     tt.powers.thorn.name = "thorns"
@@ -69,6 +69,45 @@ local function archer_towers()
     tt.attacks.list[1].shooters_delay = 0.1
     tt.attacks.list[1].bullet_start_offset = {vec_2(8, 4), vec_2(4, -5)}
     tt.sound_events.insert = "ArcherRangerTaunt"
+
+    tt = RT("mod_ranger_poison", "mod_poison")
+    tt.modifier.duration = 3
+    tt.dps.damage_max = 0
+    tt.dps.damage_min = 0
+    tt.dps.damage_inc = 5
+    tt.dps.damage_every = 1
+    tt.dps.kill = true
+    tt.dps.damage_type = bor(DAMAGE_POISON, DAMAGE_NO_SHIELD_HIT)
+
+    tt = E:register_t("mod_ranger_slow", "mod_slow")
+    tt.modifier.duration = 3
+    tt.slow.factor = 0.9
+
+    tt = RT("mod_thorn", "modifier")
+    AC(tt, "render")
+    tt.animation_start = "thorn"
+    tt.animation_end = "thornFree"
+    tt.modifier.duration = 0
+    tt.modifier.duration_inc = 1
+    tt.modifier.type = MOD_TYPE_FREEZE
+    tt.modifier.vis_flags = bor(F_THORN, F_MOD)
+    tt.modifier.vis_bans = bor(F_FLYING, F_BOSS)
+    tt.max_times_applied = 3
+    tt.damage_min = 40
+    tt.damage_max = 40
+    tt.damage_type = DAMAGE_PHYSICAL
+    tt.damage_every = 1
+    tt.render.sprites[1].prefix = "mod_thorn_small"
+    tt.render.sprites[1].name = "start"
+    tt.render.sprites[1].size_prefixes = {"mod_thorn_small", "mod_thorn_big", "mod_thorn_big"}
+    tt.render.sprites[1].size_scales = {vec_1(0.7), vec_1(0.8), vec_1(1)}
+    tt.render.sprites[1].anchor.y = 0.22
+    tt.main_script.queue = scripts.mod_thorn.queue
+    tt.main_script.dequeue = scripts.mod_thorn.dequeue
+    tt.main_script.insert = scripts.mod_thorn.insert
+    tt.main_script.update = scripts.mod_thorn.update
+    tt.main_script.remove = scripts.mod_thorn.remove
+
 
     local tower_crossbow = E:register_t("tower_crossbow", "tower_archer_1")
     E:add_comps(tower_crossbow, "attacks", "powers")

@@ -1399,41 +1399,9 @@ tt = RT("mod_slow_curse", "mod_slow")
 tt.main_script.insert = scripts.mod_slow_curse.insert
 tt.modifier.excluded_templates = {"enemy_demon_cerberus"}
 
-tt = RT("mod_ranger_poison", "mod_poison")
-tt.modifier.duration = 3
-tt.dps.damage_max = 0
-tt.dps.damage_min = 0
-tt.dps.damage_inc = 5
-tt.dps.damage_every = 1
-tt.dps.kill = true
-tt.dps.damage_type = bor(DAMAGE_POISON, DAMAGE_NO_SHIELD_HIT)
 
-tt = RT("mod_thorn", "modifier")
 
-AC(tt, "render")
 
-tt.animation_start = "thorn"
-tt.animation_end = "thornFree"
-tt.modifier.duration = 0
-tt.modifier.duration_inc = 1
-tt.modifier.type = MOD_TYPE_FREEZE
-tt.modifier.vis_flags = bor(F_THORN, F_MOD)
-tt.modifier.vis_bans = bor(F_FLYING, F_BOSS)
-tt.max_times_applied = 3
-tt.damage_min = 40
-tt.damage_max = 40
-tt.damage_type = DAMAGE_PHYSICAL
-tt.damage_every = 1
-tt.render.sprites[1].prefix = "mod_thorn_small"
-tt.render.sprites[1].name = "start"
-tt.render.sprites[1].size_prefixes = {"mod_thorn_small", "mod_thorn_big", "mod_thorn_big"}
-tt.render.sprites[1].size_scales = {vec_1(0.7), vec_1(0.8), vec_1(1)}
-tt.render.sprites[1].anchor.y = 0.22
-tt.main_script.queue = scripts.mod_thorn.queue
-tt.main_script.dequeue = scripts.mod_thorn.dequeue
-tt.main_script.insert = scripts.mod_thorn.insert
-tt.main_script.update = scripts.mod_thorn.update
-tt.main_script.remove = scripts.mod_thorn.remove
 
 tt = RT("mod_ray_sunray_hit", "modifier")
 

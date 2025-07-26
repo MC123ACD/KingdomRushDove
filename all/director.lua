@@ -483,6 +483,7 @@ function director:queue_load_item_named(name, force_reload)
 		game.store.screen_scale = self:get_texture_scale("game", REF_H)
 		game.store.texture_size = self.params.texture_size
 		game.store.level = LU.load_level(game.store, game.store.level_name)
+        game.store.patches = LU.eval_file("patches/config.lua") 
 
 		self:load_texture_groups(replace_locale(game.required_textures), self.params.texture_size, game.ref_res, true, "game")
 		self:load_texture_groups(replace_locale(game.store.level.required_textures), self.params.texture_size, game.ref_res, true, "game")

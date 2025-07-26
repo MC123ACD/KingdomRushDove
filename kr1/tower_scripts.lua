@@ -174,7 +174,7 @@ local function register_archer(scripts)
                 b.bullet.target_id = enemy.id
                 b.bullet.level = level
                 b.bullet.damage_factor = this.tower.damage_factor
-                b.bullet.mod = pow_p.level > 0 and pow_p.mod
+                b.bullet.mods = pow_p.level > 0 and pow_p.mods
 
                 apply_precision(b)
 
@@ -209,7 +209,7 @@ local function register_archer(scripts)
                             if pow_p.level > 0 then
                                 local poisonable = table.filter(enemies, function(_, e)
                                     return not U.flag_has(e.vis.bans, F_POISON) and
-                                               not U.has_modifiers(store, e, pow_p.mod)
+                                               not U.has_modifiers(store, e, pow_p.mods[1])
                                 end)
 
                                 if #poisonable > 0 then
