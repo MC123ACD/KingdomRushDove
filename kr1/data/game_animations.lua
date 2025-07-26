@@ -5821,7 +5821,9 @@ local kr1_a = {
     },
     hero_10yr_buffed_to_normal = {
         prefix = "hero_10yr_buffed_to_normal",
-        to = 31,
+        -- to = 31,
+        -- to = 29,
+        to = 25,
         from = 1
     },
     decal_sheep_big_idle = {

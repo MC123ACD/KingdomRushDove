@@ -5484,8 +5484,8 @@ return function(scripts)
                     SU.soldier_idle(store, this)
                 else
                     while this.nav_rally.new do
-                        if this.is_buffed and V.dist2(this.pos, this.nav_rally.pos) > 40000 then
-                            local compensation = ba.duration - (store.tick_ts - ba.ts)
+                        if this.is_buffed and V.dist2(this.pos.x,this.pos.y, this.nav_rally.pos.x, this.nav_rally.pos.y) > 40000 then
+                            local compensation = (ba.duration - (store.tick_ts - ba.ts)) / ba.duration * ba.cooldown
                             go_normal()
                             ba.ts = ba.ts - compensation
                         end
@@ -5511,7 +5511,7 @@ return function(scripts)
                             SU.delay_attack(store, a, 0.2)
                         else
                             if this.is_buffed then
-                                local compensation = ba.duration - (store.tick_ts - ba.ts)
+                                local compensation = (ba.duration - (store.tick_ts - ba.ts)) / ba.duration * ba.cooldown
                                 go_normal()
                                 ba.ts = ba.ts - compensation
                             end
