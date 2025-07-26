@@ -475,6 +475,7 @@ function LU.insert_hero(store, name, pos)
                 hero.hero.level = 10
             end
         end
+        hero.unit.damage_factor = store.patches.hero_damage_multiplier
         LU.queue_insert(store, hero)
         signal.emit("hero-added", hero)
     end

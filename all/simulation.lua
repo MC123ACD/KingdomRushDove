@@ -180,8 +180,10 @@ function simulation:insert_entity(e)
             else
                 e.health.hp_max = e.health.hp_max * 1.15
             end
-            e.health.hp = e.health.hp_max
         end
+        e.health.hp_max = d.patches.enemy_health_multiplier * e.health.hp_max
+        e.health.hp = e.health.hp_max
+        e.enemy.gold = math.ceil(e.enemy.gold * d.patches.enemy_gold_multiplier)
     elseif e.soldier then
         d.soldiers[e.id] = e
     elseif e.modifier then

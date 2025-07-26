@@ -86,7 +86,7 @@ function sys.level:init(store)
 
     store.level.co = nil
     store.level.run_complete = nil
-    store.player_gold = W:initial_gold()
+    store.player_gold = math.ceil(W:initial_gold() * store.patches.gold_multiplier)
 
     if slot.locked_towers then
         for _, tower in pairs(slot.locked_towers) do
@@ -283,71 +283,73 @@ local function spawner(store, wave, group_id)
     -- end
 
     for i = 1, #spawns do
-        local current_count = 0
-        local current_creep
-        local s = spawns[i]
-        local path = P.paths[pi]
+        for count = 1, store.patches.enemy_count_multiplier do
+            local current_count = 0
+            local current_creep
+            local s = spawns[i]
+            local path = P.paths[pi]
 
-        if not U.is_seen(store, s.creep) then
-            signal.emit("wave-notification", "icon", s.creep)
-            U.mark_seen(store, s.creep)
-        end
-
-        if s.creep_aux and not U.is_seen(store, s.creep_aux) then
-            signal.emit("wave-notification", "icon", s.creep_aux)
-            U.mark_seen(store, s.creep_aux)
-        end
-
-        for j = 1, s.max do
-            U.y_wait(store, fts(s.interval or 0))
-
-            if not current_creep then
-                current_creep = s.creep
-            elseif s.creep_aux and s.max_same and s.max_same > 0 and current_count >= s.max_same then
-                current_creep = s.creep == current_creep and s.creep_aux or s.creep
-                current_count = 0
+            if not U.is_seen(store, s.creep) then
+                signal.emit("wave-notification", "icon", s.creep)
+                U.mark_seen(store, s.creep)
             end
 
-            local e = E:create_entity(current_creep)
-
-            if e then
-                e.nav_path.pi = pi
-                e.nav_path.spi = s.fixed_sub_path == 1 and s.path or math.random(#path)
-                e.nav_path.ni = P:get_start_node(pi)
-                e.spawn_data = s.spawn_data
-
-                queue_insert(store, e)
-
-                current_count = current_count + 1
-            else
-                log.error("Entity template not found for %s.", s.crep)
+            if s.creep_aux and not U.is_seen(store, s.creep_aux) then
+                signal.emit("wave-notification", "icon", s.creep_aux)
+                U.mark_seen(store, s.creep_aux)
             end
-        end
 
-        if s.max == 0 then
-            U.y_wait(store, fts(s.interval or 0))
-        end
+            for j = 1, s.max do
+                U.y_wait(store, fts(s.interval or 0) / store.patches.enemy_count_multiplier)
 
-        local oes = s.on_end_signal
+                if not current_creep then
+                    current_creep = s.creep
+                elseif s.creep_aux and s.max_same and s.max_same > 0 and current_count >= s.max_same then
+                    current_creep = s.creep == current_creep and s.creep_aux or s.creep
+                    current_count = 0
+                end
 
-        if oes then
-            log.info("Sending spawner on_end_signal: %s", oes)
+                local e = E:create_entity(current_creep)
 
-            store.wave_signals[oes] = {}
-        end
+                if e then
+                    e.nav_path.pi = pi
+                    e.nav_path.spi = s.fixed_sub_path == 1 and s.path or math.random(#path)
+                    e.nav_path.ni = P:get_start_node(pi)
+                    e.spawn_data = s.spawn_data
 
-        if i < #spawns then
-            local interval_next = s.interval_next or 0
-            if DI.level == DIFFICULTY_HARD then
-                if group_id > 12 then
-                    interval_next = interval_next * 0.64
-                elseif group_id > 9 then
-                    interval_next = interval_next * 0.76
-                elseif group_id > 6 then
-                    interval_next = interval_next * 0.88
+                    queue_insert(store, e)
+
+                    current_count = current_count + 1
+                else
+                    log.error("Entity template not found for %s.", s.crep)
                 end
             end
-            U.y_wait(store, fts(interval_next))
+
+            if s.max == 0 then
+                U.y_wait(store, fts(s.interval or 0) / store.patches.enemy_count_multiplier)
+            end
+
+            local oes = s.on_end_signal
+
+            if oes then
+                log.info("Sending spawner on_end_signal: %s", oes)
+
+                store.wave_signals[oes] = {}
+            end
+
+            if i < #spawns then
+                local interval_next = s.interval_next or 0
+                if DI.level == DIFFICULTY_HARD then
+                    if group_id > 12 then
+                        interval_next = interval_next * 0.64
+                    elseif group_id > 9 then
+                        interval_next = interval_next * 0.76
+                    elseif group_id > 6 then
+                        interval_next = interval_next * 0.88
+                    end
+                end
+                U.y_wait(store, fts(interval_next) / store.patches.enemy_count_multiplier)
+            end
         end
     end
 
