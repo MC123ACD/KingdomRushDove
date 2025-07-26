@@ -1625,9 +1625,9 @@ local function heroes()
     tt.hero.skills.buffed.spin_damage_max = {36, 45, 54}
     tt.hero.skills.buffed.duration = {6, 9, 12}
     tt.hero.skills.buffed.xp_level_steps = {
-        [10.0] = 3,
-        [4.0] = 1,
-        [7.0] = 2
+        [10] = 3,
+        [4] = 1,
+        [7] = 2
     }
     tt.hero.skills.buffed.xp_gain = {100, 150, 200}
     tt.health.dead_lifetime = 15

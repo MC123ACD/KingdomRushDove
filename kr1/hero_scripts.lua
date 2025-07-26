@@ -5496,15 +5496,20 @@ return function(scripts)
                     a = ra
                     skill = this.hero.skills.rain
 
-                    if not this.is_buffed and not a.disabled and store.tick_ts - a.ts >= a.cooldown then
+                    if ready_to_use_skill(a, store) then
                         local start_ts, bdy, bdt, au
                         local fired_aura = false
                         local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.trigger_range,
                             a.vis_flags, a.vis_bans)
 
-                        if not targets or #targets < a.min_count then
+                        if not targets then
                             SU.delay_attack(store, a, 0.2)
                         else
+                            if this.is_buffed then
+                                local compensation = ba.duration - (store.tick_ts - ba.ts)
+                                go_normal()
+                                ba.ts = ba.ts - compensation
+                            end
                             S:queue(a.sound_start)
                             U.animation_start(this, a.animations[1], nil, store.tick_ts, false)
 
