@@ -663,7 +663,7 @@ sys.tower_upgrade = {}
 sys.tower_upgrade.name = "tower_upgrade"
 
 function sys.tower_upgrade:on_update(dt, ts, store)
-    for _, e in store.towers do
+    for _, e in pairs(store.towers) do
         if e.tower.sell or e.tower.destroy then
             log.debug("selling %s", e.id)
 

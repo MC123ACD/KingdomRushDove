@@ -182,6 +182,10 @@ function simulation:insert_entity(e)
         d.soldiers[e.id] = e
     elseif e.modifier then
         d.modifiers[e.id] = e
+    elseif e.tower then
+        d.towers[e.id] = e
+    elseif e.aura then
+        d.auras[e.id] = e
     end
 
 	d.entity_count = d.entity_count + 1
