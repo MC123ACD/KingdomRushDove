@@ -5484,6 +5484,11 @@ return function(scripts)
                     SU.soldier_idle(store, this)
                 else
                     while this.nav_rally.new do
+                        if this.is_buffed and V.dist2(this.pos, this.nav_rally.pos) > 40000 then
+                            local compensation = ba.duration - (store.tick_ts - ba.ts)
+                            go_normal()
+                            ba.ts = ba.ts - compensation
+                        end
                         if SU.y_hero_new_rally(store, this) then
                             goto label_90_1
                         end
