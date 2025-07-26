@@ -9085,7 +9085,8 @@ local kr2_a = {
     soldiermecha_missileloop = {
         prefix = "Mecha",
         to = 104,
-        from = 83
+        -- from = 83
+        from = 88
     },
     soldiermecha_missileend = {
         prefix = "Mecha",
