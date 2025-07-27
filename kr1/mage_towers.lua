@@ -801,7 +801,7 @@ local function mage_towers()
     tt.main_script.insert = scripts.tower_high_elven.insert
     tt.tower.type = "high_elven"
     tt.tower.level = 1
-    tt.tower.price = 275
+    tt.tower.price = 260
     tt.tower.size = TOWER_SIZE_LARGE
     tt.attacks.range = 210
     tt.attacks.list[1] = E:clone_c("bullet_attack")
