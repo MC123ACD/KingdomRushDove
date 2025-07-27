@@ -4375,7 +4375,7 @@ local function heroes()
         radius = 0.3,
         speed = 0.5
     }
-    tt.max_gain_count = 50
+    tt.max_gain_count = 60
     tt.main_script.insert = scripts.mod_gain_on_kill.insert
     tt.main_script.update = scripts.mod_vampiress_gain.update
 
