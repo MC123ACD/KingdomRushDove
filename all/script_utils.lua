@@ -2177,7 +2177,7 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
 
     S:stop(attack.sound)
 
-    if dodge_active(this) and this.render.sprite[1].alpha == 128 then
+    if dodge_active(this) and this.render.sprites[1].alpha == 128 then
         this.render.sprites[1].alpha = 255
         this.dodge.active = false
     end

@@ -661,7 +661,8 @@ tt.hold_time = 0.3
 tt.delay_end = nil
 tt.fx_start = nil
 tt.fx_end = nil
-tt.damage = 0
+tt.damage_base = 0
+tt.damage_inc = 0
 tt.damage_type = DAMAGE_MAGICAL_EXPLOSION
 
 tt = E:register_t("mod_freeze", "modifier")

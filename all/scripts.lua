@@ -5977,7 +5977,7 @@ function scripts.mod_teleport.insert(this, store)
     if target and target.health and not target.health.dead and this._target_prev_bans ~= nil and
         (not this.max_times_applied or not target.enemy.counts.mod_teleport or target.enemy.counts.mod_teleport <
             this.max_times_applied) and (not this.jump_connection or P:get_next_pi(target.nav_path.pi)) then
-        if this.damage ~= 0 then
+        if this.damage_base ~= 0 then
             local d = E:create_entity("damage")
             d.source_id = this.id
             d.target_id = target.id
