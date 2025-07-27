@@ -653,7 +653,7 @@ local function register_archer(scripts)
                                     coroutine.yield()
                                 end
 
-                                enemy = U.find_foremost_enemy(store.enemies, origin, 0, range, false, ma.vis_flags,
+                                enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, origin, 0, range, false, ma.vis_flags,
                                     ma.vis_bans)
 
                                 local shoot_pos, target_id, enemy_id
@@ -2669,7 +2669,7 @@ local function register_mage(scripts)
                 damage_type = b.bullet.damage_type
             }
         end,
-        insert = function(this, store, script)
+        insert = function(this, store)
             local aura = E:create_entity(this.aura)
             aura.pos = V.vclone(this.pos)
             aura.aura.source_id = this.id
@@ -2677,11 +2677,16 @@ local function register_mage(scripts)
             queue_insert(store, aura)
             return true
         end,
+        remove = function(this, store)
+            for _, dragon in pairs(this.dragons) do
+                queue_remove(store, dragon)
+            end
+            return true
+        end,
         update = function(this, store)
             local a = this.attacks.list[1]
             local pow_m = this.powers.more_dragons
             local pow_i = this.powers.improve_shot
-            local dragons = {}
             local egg_sids = {3, 4}
 
             while true do
@@ -2709,7 +2714,7 @@ local function register_mage(scripts)
                         e.idle_pos = V.vclone(e.pos)
 
                         queue_insert(store, e)
-                        table.insert(dragons, e)
+                        table.insert(this.dragons, e)
                     end
 
                     if pow_i.changed then
@@ -2717,18 +2722,18 @@ local function register_mage(scripts)
                         this.aura_rate = this.aura_rate + this.aura_rate_inc
                     end
 
-                    if #dragons > 0 and ready_to_attack(a, store, this.tower.damage_factor) then
+                    if #this.dragons > 0 and ready_to_attack(a, store, this.tower.damage_factor) then
                         a.ts = store.tick_ts
 
                         local assigned_target_ids = {}
 
-                        for _, dragon in pairs(dragons) do
+                        for _, dragon in pairs(this.dragons) do
                             if dragon.custom_attack.target_id then
                                 table.insert(assigned_target_ids, dragon.custom_attack.target_id)
                             end
                         end
 
-                        for _, dragon in pairs(dragons) do
+                        for _, dragon in pairs(this.dragons) do
                             if dragon.custom_attack.target_id then
                                 -- block empty
                             else
@@ -2749,8 +2754,8 @@ local function register_mage(scripts)
                                     if f2 ~= 0 then
                                         return true
                                     end
-                                    return V.dist(e1.pos.x, e1.pos.y, origin.x, origin.y) <
-                                               V.dist(e2.pos.x, e2.pos.y, origin.x, origin.y)
+                                    return V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) <
+                                               V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y)
                                 end)
 
                                 dragon.custom_attack.target_id = targets[1].id
@@ -2765,7 +2770,6 @@ local function register_mage(scripts)
 
                 coroutine.yield()
             end
-
         end
     }
     -- 日光

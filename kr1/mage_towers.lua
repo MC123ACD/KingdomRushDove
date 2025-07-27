@@ -1197,6 +1197,7 @@ local function mage_towers()
     tt.info.portrait = (IS_PHONE and "portraits_towers" or "kr3_info_portraits_towers") .. "_0018"
     tt.main_script.update = scripts.tower_faerie_dragon.update
     tt.main_script.insert = scripts.tower_faerie_dragon.insert
+    tt.main_script.remove = scripts.tower_faerie_dragon.remove
     tt.powers.more_dragons = E:clone_c("power")
     tt.powers.more_dragons.price_base = 200
     tt.powers.more_dragons.price_inc = 200
@@ -1232,6 +1233,7 @@ local function mage_towers()
     tt.aura_rate = 0.3
     tt.aura_rate_inc = 0.15
     tt.sound_events.insert = "ElvesFaeryDragonDragonBuy"
+    tt.dragons = {}
 
     tt = E:register_t("aura_tower_faerie_dragon", "aura")
     tt.main_script.update = scripts.aura_tower_faerie_dragon.update

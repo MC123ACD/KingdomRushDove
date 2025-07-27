@@ -101,7 +101,7 @@ function U.sort_foremost_enemies(enemies)
     end)
 end
 
-function U.sort_foremost_enemies_with_flying_preference(enemie)
+function U.sort_foremost_enemies_with_flying_preference(enemies)
     table.sort(enemies, function(e1, e2)
         local e1_mocking = band(e1.vis.flags, F_MOCKING) ~= 0
         local e2_mocking = band(e2.vis.flags, F_MOCKING) ~= 0
