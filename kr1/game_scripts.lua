@@ -7852,7 +7852,7 @@ function scripts.decal_s17_barricade.update(this, store, script)
 	local boss
 
 	while not boss do
-		boss = LU.list_entities(store.entities, this.boss_name)[1]
+		boss = LU.list_entities(store.enemies, this.boss_name)[1]
 
 		if not boss then
 			U.y_wait(store, 5)
@@ -7906,7 +7906,7 @@ end
 scripts.burning_floor_controller = {}
 
 function scripts.burning_floor_controller.update(this, store, script)
-	local auras = LU.list_entities(store.entities, "aura_burning_floor")
+	local auras = LU.list_entities(store.auras, "aura_burning_floor")
 	local data = this.cooldowns[store.level_mode]
 	local wdata, current_wave
 
@@ -10994,8 +10994,8 @@ function scripts.eb_alien.update(this, store)
     end
 
     local function find_screech_targets(flags, bans)
-        return table.filter(store.entities, function(k, v)
-            return not v.pending_removal and v.enemy and v.nav_path and v.health and not v.health.dead and v.vis and
+        return table.filter(store.enemies, function(k, v)
+            return not v.pending_removal and v.nav_path and not v.health.dead and
                        band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
                        (v.template_name == "enemy_alien_reaper" or v.template_name == "enemy_alien_breeder") and
                        P:is_node_valid(v.nav_path.pi, v.nav_path.ni)
@@ -11469,9 +11469,9 @@ function scripts.eb_efreeti.update(this, store, script)
     end
 
     local function can_sand()
-        for _, e in pairs(store.entities) do
-            if e.tower and not e.tower_holder and not e.tower.blocked and
-                V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range then
+        for _, e in pairs(store.towers) do
+            if not e.tower_holder and not e.tower.blocked and
+                V.dist2(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range * a_sand.max_range then
                 return true
             end
         end
@@ -11481,7 +11481,7 @@ function scripts.eb_efreeti.update(this, store, script)
 
     local function do_sand()
         local towers = table.filter(store.towers, function(_, e)
-            return e.tower and not e.tower_holder and not e.tower.blocked and
+            return not e.tower_holder and not e.tower.blocked and
                        V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range
         end)
 
@@ -13820,8 +13820,8 @@ function scripts.decal_tusken.update(this, store, script)
     while true do
         U.animation_start(this, "idle", nil, store.tick_ts)
 
-        local targets = table.filter(store.entities, function(_, e)
-            return e.soldier and e.soldier.target_id and e.health and not e.health.dead and
+        local targets = table.filter(store.soldiers, function(_, e)
+            return e.soldier.target_id and not e.health.dead and
                        U.is_inside_ellipse(e.pos, this.target_center, a.max_range)
         end)
 
@@ -13893,8 +13893,8 @@ function scripts.sand_worm.update(this, store, script)
         end
 
         if not target then
-            local targets = table.filter(store.entities, function(k, v)
-                return v.soldier and v.health and not v.health.dead and v.vis and band(v.vis.flags, a.vis_bans) == 0 and
+            local targets = table.filter(store.soldiers, function(k, v)
+                return not v.health.dead and band(v.vis.flags, a.vis_bans) == 0 and
                            band(v.vis.bans, a.vis_flags) == 0 and v.template_name ~= "soldier_djinn" and v.template_name ~=
                            "soldier_legionnaire" and P:valid_node_nearby(v.pos.x, v.pos.y)
             end)
@@ -16455,8 +16455,8 @@ function scripts.hero_voodoo_witch.update(this, store)
                 else
                     local targets_per_type = {}
 
-                    for _, t in pairs(store.entities) do
-                        if t and t.enemy and t.health and not t.health.dead then
+                    for _, t in pairs(store.enemies) do
+                        if not t.health.dead then
                             if not targets_per_type[t.template_name] then
                                 targets_per_type[t.template_name] = {t}
                             else
@@ -20436,8 +20436,8 @@ function scripts.enemy_twilight_scourger_banshee.update(this, store, script)
 
         if not SU.y_enemy_walk_step(store, this) and kamikaze_target then
             if kamikaze_target.tower and kamikaze_target.tower.upgrade_to then
-                for _, e in pairs(store.entities) do
-                    if e.tower and e.tower.holder_id == kamikaze_target.tower.holder_id and
+                for _, e in pairs(store.towers) do
+                    if e.tower.holder_id == kamikaze_target.tower.holder_id and
                         V.veq(e.pos, kamikaze_target.pos) then
                         log.debug("banshee target %s changed for %s", kamikaze_target.id, e.id)
 
@@ -23642,7 +23642,7 @@ scripts.eb_balrog = {}
 function scripts.eb_balrog.update(this, store)
     local at = this.timed_attacks.list[1]
     local cont, blocker, ranged
-    local stage_hero = LU.list_entities(store.entities, "hero_bolverk")[1]
+    local stage_hero = LU.list_entities(store.soldiers, "hero_bolverk")[1]
 
     local function ready_to_taint()
         return store.tick_ts - at.ts > at.cooldown
@@ -29733,8 +29733,8 @@ scripts.aura_tower_faerie_dragon = {
             end
             if store.tick_ts - last_ts >= source.attacks.list[1].cooldown then
                 last_ts = store.tick_ts
-                local targets = table.filter(store.entities, function(k, v)
-                    return v.enemy and v.health and (not v.health.dead) and (v.vis and (band(F_BOSS, v.vis.flags) == 0) and (band(bor(F_MOD, F_STUN), v.vis.bans) == 0)) and U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
+                local targets = table.filter(store.enemies, function(k, v)
+                    return (not v.health.dead) and ((band(F_BOSS, v.vis.flags) == 0) and (band(bor(F_MOD, F_STUN), v.vis.bans) == 0)) and U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
                 end)
 
                 if targets then
@@ -31953,7 +31953,7 @@ function scripts.lava_fireball_controller.update(this, store)
             start_ts = store.tick_ts
 
             while duration > store.tick_ts - start_ts do
-                local boss = LU.list_entities(store.entities, "eb_balrog")[1]
+                local boss = LU.list_entities(store.enemies, "eb_balrog")[1]
                 local cooldown = boss and cooldown_boss or cooldown_normal
 
                 U.y_wait(store, cooldown)

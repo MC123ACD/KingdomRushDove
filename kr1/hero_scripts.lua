@@ -3793,10 +3793,9 @@ return function(scripts)
                     a = this.timed_attacks.list[1]
                     skill = this.hero.skills.holylight
                     if ready_to_attack(a, store) then
-                        local targets = table.filter(store.entities, function(k, v)
-                            return v.soldier and v.health and v.health.hp < 0.7 * v.health.hp_max and
-                                       U.is_inside_ellipse(v.pos, this.pos, a.range) and v.template_name ~=
-                                       "soldier_mecha"
+                        local targets = table.filter(store.soldiers, function(k, v)
+                            return v.health.hp < 0.7 * v.health.hp_max and
+                                       U.is_inside_ellipse(v.pos, this.pos, a.range)
                         end)
 
                         if #targets < 1 then
@@ -3909,21 +3908,21 @@ return function(scripts)
 
                             local buffed_tower_ids = {}
 
-                            for _, e in pairs(store.entities) do
-                                if e.modifier and e.template_name == "mod_priest_consecrate" then
+                            for _, e in pairs(store.modifiers) do
+                                if e.template_name == "mod_priest_consecrate" then
                                     table.insert(buffed_tower_ids, e.modifier.target_id)
                                 end
                             end
 
                             local towers = table.filter(store.towers, function(_, e)
-                                return e.tower and e.tower.can_be_mod and not e.tower.blocked and
+                                return e.tower.can_be_mod and not e.tower.blocked and
                                            not table.contains(a.excluded_templates, e.template_name) and
                                            V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a.range
                             end)
 
                             table.sort(towers, function(e1, e2)
-                                return V.dist(e1.pos.x, e1.pos.y, this.pos.x, this.pos.y) <
-                                           V.dist(e2.pos.x, e2.pos.y, this.pos.x, this.pos.y)
+                                return V.dist2(e1.pos.x, e1.pos.y, this.pos.x, this.pos.y) <
+                                           V.dist2(e2.pos.x, e2.pos.y, this.pos.x, this.pos.y)
                             end)
 
                             local buffed_tower, unbuffed_tower
@@ -6547,7 +6546,7 @@ return function(scripts)
                     skill = this.hero.skills.bullrush
 
                     if ready_to_use_skill(a, store) then
-                        local target = U.find_first_target(store.entities, this.pos, a.min_range, a.max_range,
+                        local target = U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range,
                             a.vis_flags, a.vis_bans, function(e)
                                 if not e.heading or not e.nav_path then
                                     return false
@@ -7496,7 +7495,7 @@ return function(scripts)
                 coroutine.yield()
             end
 
-            local targets = U.find_targets_in_range(store.entities, b.to, 0, b.damage_radius, b.damage_flags,
+            local targets = U.find_targets_in_range(store.enemies, b.to, 0, b.damage_radius, b.damage_flags,
                 b.damage_bans)
 
             if targets then
@@ -8344,8 +8343,8 @@ return function(scripts)
     scripts.hero_lynn_ultimate = {}
 
     function scripts.hero_lynn_ultimate.update(this, store)
-        local targets = table.filter(store.entities, function(_, e)
-            return e.pos and e.ui and e.ui.can_click and e.enemy and e.vis and e.nav_path and e.health and
+        local targets = table.filter(store.enemies, function(_, e)
+            return e.pos and e.ui and e.ui.can_click and e.nav_path and
                        not e.health.dead and band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) ==
                        0 and
                        U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y),
@@ -8354,8 +8353,8 @@ return function(scripts)
         end)
 
         table.sort(targets, function(e1, e2)
-            return V.dist(e1.pos.x + e1.unit.hit_offset.x, e1.pos.y + e1.unit.hit_offset.y, this.pos.x, this.pos.y) <
-                       V.dist(e2.pos.x + e2.unit.hit_offset.x, e2.pos.y + e2.unit.hit_offset.y, this.pos.x, this.pos.y)
+            return V.dist2(e1.pos.x + e1.unit.hit_offset.x, e1.pos.y + e1.unit.hit_offset.y, this.pos.x, this.pos.y) <
+                       V.dist2(e2.pos.x + e2.unit.hit_offset.x, e2.pos.y + e2.unit.hit_offset.y, this.pos.x, this.pos.y)
         end)
 
         local target = targets[1]
@@ -9763,8 +9762,8 @@ return function(scripts)
     scripts.hero_durax_ultimate = {}
 
     function scripts.hero_durax_ultimate.can_fire_fn(this, x, y, store)
-        for _, e in pairs(store.entities) do
-            if e.pos and e.ui and e.ui.can_click and e.enemy and e.vis and e.nav_path and e.health and not e.health.dead and
+        for _, e in pairs(store.enemies) do
+            if e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
                 band(e.vis.flags, F_FLYING) == 0 and band(e.vis.bans, F_MOD) == 0 and
                 U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y), V.v(x, y), 250) and
                 P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_POWER_1) then
@@ -10896,7 +10895,7 @@ return function(scripts)
             local au = E:get_template("aura_phoenix_purification")
             au.aura.targets_per_cycle = s.max_targets[s.evel]
 
-            for _, e in pairs(store.entities) do
+            for _, e in pairs(store.auras) do
                 if e.template_name == "aura_phoenix_purification" then
                     e.aura.targets_per_cycle = s.max_targets[s.level]
                     break

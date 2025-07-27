@@ -539,15 +539,13 @@ if DEBUG then
 
 				self.simulation:queue_insert_entity(m)
 			else
-				for _, e in pairs(self.store.entities) do
-					if e.enemy then
-						local m = E:create_entity(name)
+				for _, e in pairs(self.store.enemies) do
+                    local m = E:create_entity(name)
 
-						m.modifier.target_id = e.id
-						m.pos = V.vclone(e.pos)
+                    m.modifier.target_id = e.id
+                    m.pos = V.vclone(e.pos)
 
-						self.simulation:queue_insert_entity(m)
-					end
+                    self.simulation:queue_insert_entity(m)
 				end
 			end
 		end

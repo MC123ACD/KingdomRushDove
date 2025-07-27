@@ -538,8 +538,8 @@ local function register_archer(scripts)
                         end
 
                         local range = ea.range + km.clamp(1, 3, pow_e.level + 1) * ea.range_inc
-                        local targets = table.filter(store.entities, function(_, e)
-                            return e ~= this and e.tower and not table.contains(modded_ids, e.id) and
+                        local targets = table.filter(store.towers, function(_, e)
+                            return e ~= this and not table.contains(modded_ids, e.id) and
                                        U.is_inside_ellipse(e.pos, this.pos, range)
                         end)
 
@@ -1658,8 +1658,8 @@ local function register_mage(scripts)
                         else
                             range = pow_s.range + pow_s.range_inc
                         end
-                        local targets = table.filter(store.entities, function(_, e)
-                            return e ~= this and e.tower and not table.contains(modded_ids, e.id) and
+                        local targets = table.filter(store.towers, function(_, e)
+                            return e ~= this and not table.contains(modded_ids, e.id) and
                                        U.is_inside_ellipse(e.pos, this.pos, range)
                         end)
 
@@ -2461,8 +2461,8 @@ local function register_mage(scripts)
                                     s.melee.attacks[1].damage_max + s.melee.attacks[1].damage_inc
                                 s.health.hp = s.health.hp_max
 
-                                local auras = table.filter(store.entities, function(k, v)
-                                    return v.aura and v.aura.source_id == s.id
+                                local auras = table.filter(store.auras, function(k, v)
+                                    return v.aura.source_id == s.id
                                 end)
 
                                 for _, aura in pairs(auras) do
@@ -2512,8 +2512,8 @@ local function register_mage(scripts)
 
                     if pow_p.changed then
                         pow_p.changed = nil
-                        local e_table = table.filter(store.entities, function(k, v)
-                            return v.aura and v.aura.source_id == this.id and v.template_name == this.auras.list[1].name
+                        local e_table = table.filter(store.auras, function(k, v)
+                            return v.aura.source_id == this.id and v.template_name == this.auras.list[1].name
                         end)
                         for _, e in pairs(e_table) do
                             e.max_skeletons_tower = e.max_skeletons_tower + 1
@@ -2886,9 +2886,7 @@ local function register_mage(scripts)
                     if manual.level == 1 then
                         if this.user_selection.new_pos then
                             local pos = this.user_selection.new_pos
-                            target = U.find_entity_at_pos(store.entities, pos.x, pos.y, function(e)
-                                return e.enemy
-                            end)
+                            target = U.find_entity_at_pos(store.enemies, pos.x, pos.y)
                             this.user_selection.new_pos = nil
                         end
                     else

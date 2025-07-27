@@ -542,7 +542,7 @@ end
 
 function LU.kill_all_enemies(store, discard_gold, keep_spawners)
 	for _, list in pairs({
-		store.entities,
+		store.enemies,
 		store.pending_inserts
 	}) do
 		local all = E:filter(list, "enemy")
