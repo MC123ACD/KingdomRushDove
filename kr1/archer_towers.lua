@@ -605,8 +605,8 @@ local function archer_towers()
     tt.main_script.update = scripts.tower_pirate_watchtower.update
     tt.main_script.remove = scripts.tower_pirate_watchtower.remove
     tt.powers.reduce_cooldown = E:clone_c("power")
-    tt.powers.reduce_cooldown.price_base = 50
-    tt.powers.reduce_cooldown.price_inc = 50
+    tt.powers.reduce_cooldown.price_base = 40
+    tt.powers.reduce_cooldown.price_inc = 40
     tt.powers.reduce_cooldown.values = {2.2, 1.5, 1}
     tt.powers.parrot = E:clone_c("power")
     tt.powers.parrot.price_base = 300
