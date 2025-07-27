@@ -6291,10 +6291,11 @@ tt.hold_time = 0.4
 tt.delay_end = fts(2)
 tt.fx_start = "fx_teleport_faustus"
 tt.fx_end = "fx_teleport_faustus"
+tt.damage_base = 50
+tt.damage_inc = 25
+
 tt = E:register_t("mod_enervation_faustus", "modifier")
-
 E:add_comps(tt, "render", "tween")
-
 tt.main_script.insert = scripts.mod_silence.insert
 tt.main_script.remove = scripts.mod_silence.remove
 tt.main_script.update = scripts.mod_track_target.update

@@ -2355,7 +2355,7 @@ local function register_mage(scripts)
                                 local start_offset = ba.bullet_start_offset[ai]
                                 if target then
                                     for i = 1, ba.max_stored_bullets do
-                                        if i == 1 or math.random() < ba.repetition_rate then
+                                        if i == 1 or math.random() < ba.repetition_rate + pow_t.level * ba.repetition_rate_inc then
                                             prepare_bullet(start_offset, i)
                                         end
                                     end
