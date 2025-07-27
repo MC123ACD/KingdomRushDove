@@ -2,7 +2,7 @@
 
 return {
 	lives = 20,
-	cash = 1900,
+	cash = 2000,
 	groups = {
 		{
 			interval = 1000,
