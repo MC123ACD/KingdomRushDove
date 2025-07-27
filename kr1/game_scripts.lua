@@ -22326,7 +22326,7 @@ function scripts.eb_drow_queen.on_damage(this, store, damage)
     if this.phase == "fighting" then
         if this.enemy.can_do_magic then
             this.shield.shield_dps = 0
-            this.shield.health.hp = 2000
+            this.shield.health.hp = 1
             damage.value = damage.value * 0.6
         else
             this.shield.health.hp = 0
@@ -22366,7 +22366,7 @@ function scripts.eb_drow_queen.update(this, store)
     ps.particle_system.track_id = d_flying.id
 
     local function block_tower_ids(holder_ids, duration)
-        for _, e in E:filter_iter(store.entities, "tower") do
+        for _, e in pairs(store.towers) do
             if e.tower.can_be_mod and table.contains(holder_ids, e.tower.holder_id) then
                 local m = E:create_entity("mod_drow_queen_tower_block")
 
@@ -22385,7 +22385,7 @@ function scripts.eb_drow_queen.update(this, store)
 
     local function block_random_tower()
         local towers = table.filter(store.towers, function(_, e)
-            return e.tower and e.tower.can_be_mod and not e.tower.blocked
+            return e.tower.can_be_mod and not e.tower.blocked
         end)
         local tower, tower_id = table.random(towers)
 
