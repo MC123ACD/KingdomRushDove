@@ -15690,9 +15690,10 @@ function scripts.points_spawner.update(this, store)
                         for _, point_id in pairs(point_ids) do
                             local point = this.spawner_points[point_id]
                             local spi = subpath > 0 and subpath or math.random(1, 3)
-
-                            table.insert(spawn_queue, {c_delay + U.frandom(0, delay_var), template, point.from,
-                                                       point.to, point.path, spi, custom_data})
+                            local this_delay = c_delay + U.frandom(0, delay_var)
+                            for i = 1, store.patches.enemy_count_multiplier do
+                                table.insert(spawn_queue, {this_delay / i, template, point.from, point.to, point.path, spi, custom_data})
+                            end
                         end
                     else
                         if i == 1 then
@@ -15702,9 +15703,9 @@ function scripts.points_spawner.update(this, store)
                         local point_id = table.random(point_ids)
                         local point = this.spawner_points[point_id]
                         local spi = subpath > 0 and subpath or math.random(1, 3)
-
-                        table.insert(spawn_queue,
-                            {c_delay, template, point.from, point.to, point.path, spi, custom_data})
+                        for i = 1, store.patches.enemy_count_multiplier do
+                            table.insert(spawn_queue, {c_delay / i, template, point.from, point.to, point.path, spi, custom_data})
+                        end
                     end
 
                     c_delay = c_delay + U.frandom(int_min, int_max)

@@ -1109,8 +1109,6 @@ function scripts.soldier_reinforcement.update(this, store, script)
     end
 end
 
-
-
 scripts.soldier_barrack = {}
 
 function scripts.soldier_barrack.get_info(this)
@@ -1169,7 +1167,8 @@ function scripts.soldier_barrack.get_info(this)
         local b = E:get_template(this.timed_attacks.list[1].bullet)
 
         if b and b.bullet and b.bullet.damage_min and b.bullet.damage_max then
-            ranged_min, ranged_max = math.ceil((b.bullet.damage_min + this.damage_buff)*this.unit.damage_factor), math.ceil((b.bullet.damage_max + this.damage_buff)*this.unit.damage_factor)
+            ranged_min, ranged_max = math.ceil((b.bullet.damage_min + this.damage_buff) * this.unit.damage_factor),
+                math.ceil((b.bullet.damage_max + this.damage_buff) * this.unit.damage_factor)
             ranged_damage_type = b.bullet.damage_type
         end
     end
@@ -1195,8 +1194,7 @@ function scripts.soldier_barrack.get_info(this)
                 ranged_min, ranged_max = math.ceil(ranged_min), math.ceil(ranged_max)
                 break
             end
-            melee_count = melee_count
-            - 1
+            melee_count = melee_count - 1
         end
     end
 
@@ -2392,8 +2390,8 @@ function scripts.bomb.update(this, store, script)
     end
 
     local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
-                   band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, b.to, dradius)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
+                   U.is_inside_ellipse(v.pos, b.to, dradius)
     end)
 
     for _, enemy in pairs(enemies) do
@@ -2734,8 +2732,7 @@ function scripts.missile.update(this, store, script)
     if b.damage_radius and b.damage_radius > 0 then
         local enemies = table.filter(store.enemies, function(k, v)
             return
-                not v.health.dead and band(v.vis.flags, b.damage_bans) ==
-                    0 and band(v.vis.bans, b.damage_flags) == 0 and
+                not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
                     U.is_inside_ellipse(V.v(v.pos.x + v.unit.hit_offset.x, v.pos.y + v.unit.hit_offset.y), b.to,
                         b.damage_radius)
         end)
@@ -3304,8 +3301,8 @@ function scripts.bolt_blast.update(this, store, script)
     U.animation_start(this, "hit", nil, store.tick_ts, 1)
 
     local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
-                   band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, explode_pos, dradius)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
+                   U.is_inside_ellipse(v.pos, explode_pos, dradius)
     end)
     local d_value = U.frandom(dmin, dmax)
 
@@ -4945,7 +4942,6 @@ function scripts.mod_dps.insert(this, store, script)
     return true
 end
 
-
 function scripts.mod_dps.update(this, store, script)
     local cycles, total_damage = 0, 0
     local m = this.modifier
@@ -6491,15 +6487,16 @@ function scripts.mega_spawner.update(this, store)
 
                                 break
                             end
-
-                            table.insert(spawn_queue, {
-                                c_delay,
-                                template,
-                                [5] = {
-                                    spawner = spawner,
-                                    data = custom_data
-                                }
-                            })
+                            for i = 1, store.patches.enemy_count_multiplier do
+                                table.insert(spawn_queue, {
+                                    c_delay / i,
+                                    template,
+                                    [5] = {
+                                        spawner = spawner,
+                                        data = custom_data
+                                    }
+                                })
+                            end
                         end
                     else
                         if template == "PACK" then
@@ -6523,9 +6520,11 @@ function scripts.mega_spawner.update(this, store)
                                         }
                                         local spi = p_subpath and p_subpath > 0 and p_subpath or math.random(1, 3)
 
-                                        table.insert(spawn_queue, {c_delay, p_template, point, spi, {
-                                            pack = custom_data.spawnPackId
-                                        }})
+                                        for i = 1, store.patches.enemy_count_multiplier do
+                                            table.insert(spawn_queue, {c_delay / i, p_template, point, spi, {
+                                                pack = custom_data.spawnPackId
+                                            }})
+                                        end
 
                                         c_delay = c_delay + U.frandom(p_int_min, p_int_max)
                                     end
@@ -6547,8 +6546,9 @@ function scripts.mega_spawner.update(this, store)
                                     local point_id = table.random(point_ids)
                                     local point = this.spawner_points[point_id]
                                     local spi = subpath and subpath > 0 and subpath or math.random(1, 3)
-
-                                    table.insert(spawn_queue, {c_delay, template, point, spi, custom_data})
+                                    for j = 1, store.patches.enemy_count_multiplier do
+                                        table.insert(spawn_queue, {c_delay / j, template, point, spi, custom_data})
+                                    end
 
                                     c_delay = c_delay + U.frandom(int_min, int_max)
                                 end
@@ -6576,8 +6576,13 @@ function scripts.mega_spawner.update(this, store)
 
                                         int_delay = int_delay + U.frandom(int_min, int_max)
 
-                                        table.insert(spawn_queue, {c_delay + U.frandom(0, delay_var) + int_delay,
-                                                                   template, point, spi, custom_data})
+                                        local this_delay = c_delay + U.frandom(0, delay_var) + int_delay
+                                        for j = 1, store.patches.enemy_count_multiplier do
+                                            table.insert(spawn_queue, {this_delay / j, template, point, spi, custom_data})
+
+                                        end
+
+
                                     end
                                 end
                             end
@@ -6930,8 +6935,8 @@ function scripts.power_fireball.update(this, store, script)
     particle.particle_system.source_lifetime = 0
 
     local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
-                   band(v.vis.bans, b.damage_flags) == 0 and U.is_inside_ellipse(v.pos, b.to, b.damage_radius)
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
+                   U.is_inside_ellipse(v.pos, b.to, b.damage_radius)
     end)
     local damage_value = math.ceil(b.damage_factor * math.random(b.damage_min, b.damage_max))
 
@@ -7304,8 +7309,7 @@ function scripts.atomic_bomb.update(this, store)
     U.y_wait(store, 0.3)
 
     local targets = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and
-                   band(v.vis.bans, b.damage_flags) == 0
+        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0
     end)
 
     for _, target in pairs(targets) do
@@ -7370,10 +7374,9 @@ function scripts.user_item_atomic_freeze.update(this, store, script)
 
     signal.emit("atomic-freeze-starts")
 
-    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 9999, this.vis_flags, this.vis_bans,
-        function(e)
-            return not table.contains(this.excluded_templates, e.template_name)
-        end)
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 9999, this.vis_flags, this.vis_bans, function(e)
+        return not table.contains(this.excluded_templates, e.template_name)
+    end)
 
     if targets then
         for _, target in pairs(targets) do
@@ -7535,7 +7538,7 @@ scripts.soldier_revive_resist = function(this, store)
     local clear_stun = false
     this.health.ignore_damage = true
     for _, m in pairs(mods) do
-        if band (m.modifier.vis_flags, F_STUN) ~= 0 then
+        if band(m.modifier.vis_flags, F_STUN) ~= 0 then
             m.abort = true
             while not m.aborted do
                 coroutine.yield()

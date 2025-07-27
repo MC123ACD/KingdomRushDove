@@ -14,3 +14,4 @@ _assets/kr1-desktop/strings/ru.lua
 _assets/kr1-desktop/strings/zh-Hant.lua
 mdbuild/
 kr1-desktop/data/comics
+patches/config.lua
