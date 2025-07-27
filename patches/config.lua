@@ -10,9 +10,9 @@ return {
     -- 开局金币数倍率，默认为 1
     gold_multiplier = 1,
     -- 英雄伤害倍率，默认为 1
-    hero_damage_multiplier = 1.2,
+    hero_damage_multiplier = 1,
     -- 英雄升级速度倍率，默认为 1
-    hero_xp_gain_multiplier = 0.8,
+    hero_xp_gain_multiplier = 1,
     -- 启动自定义配置开关，默认为 true。如果需要恢复默认配置，可以将它变为 true
     custom_config_enabled = true,
 }

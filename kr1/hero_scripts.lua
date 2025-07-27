@@ -623,7 +623,6 @@ return function(scripts)
             bt.bullet.damage_max = ls.ranged_damage_max[hl]
 
             upgrade_skill(this, "precision", function(this, s)
-                -- this.ranged.attacks[1].max_range = this.ranged.attacks[1].max_range + s.extra_range[s.level]
                 this.damage_buff = this.damage_buff + s.extra_buff[s.level]
             end)
 
@@ -675,7 +674,7 @@ return function(scripts)
                 if this.unit.is_stunned then
                     SU.soldier_idle(store, this)
                 else
-                    if this.dodge and this.dodge.chance > 0 and this.dodge.active then
+                    if this.dodge.active then
                         this.dodge.active = false
                         this.health.immune_to = F_ALL
                         S:queue("HeroMirageShadowDodge")
