@@ -241,13 +241,13 @@ local function archer_towers()
     tower_totem.tower.type = "totem"
     tower_totem.tower.price = 210
     tower_totem.powers.weakness = E:clone_c("power")
-    tower_totem.powers.weakness.price_base = 225
+    tower_totem.powers.weakness.price_base = 200
     tower_totem.powers.weakness.price_inc = 200
     tower_totem.powers.weakness.enc_icon = 30
     tower_totem.powers.weakness.attack_idx = 2
     tower_totem.powers.silence = E:clone_c("power")
-    tower_totem.powers.silence.price_base = 150
-    tower_totem.powers.silence.price_inc = 150
+    tower_totem.powers.silence.price_base = 145
+    tower_totem.powers.silence.price_inc = 145
     tower_totem.powers.silence.name = "SPIRITS"
     tower_totem.powers.silence.enc_icon = 31
     tower_totem.powers.silence.attack_idx = 3
