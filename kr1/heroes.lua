@@ -1531,7 +1531,7 @@ local function heroes()
     tt.hero.skills.thunderclap = CC("hero_skill")
     tt.hero.skills.thunderclap.damage_max = {60, 80, 120}
     tt.hero.skills.thunderclap.secondary_damage_max = {50, 70, 90}
-    tt.hero.skills.thunderclap.max_range = {70, 75, 80}
+    tt.hero.skills.thunderclap.max_range = {70, 77, 84}
     tt.hero.skills.thunderclap.stun_duration = {3, 4, 6}
     tt.hero.skills.thunderclap.xp_level_steps = {
         [10] = 3,
@@ -1587,13 +1587,13 @@ local function heroes()
     tt.ranged.attacks[1].bullet = "hammer_hero_thor"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(25, 10)}
     tt.ranged.attacks[1].disabled = true
-    tt.ranged.attacks[1].cooldown = 10 + fts(28)
+    tt.ranged.attacks[1].cooldown = 9.5 + fts(28)
     tt.ranged.attacks[1].max_range = 250
-    tt.ranged.attacks[1].min_range = 40
+    tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].shoot_time = fts(12)
     tt.ranged.attacks[1].sound_shoot = "HeroThorHammer"
     tt.ranged.attacks[1].xp_from_skill = "thunderclap"
-    tt.lightning_heal = 19
+    tt.lightning_heal = 20
 
     tt = RT("hero_10yr", "hero")
     AC(tt, "melee", "timed_attacks", "teleport")
