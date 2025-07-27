@@ -484,7 +484,7 @@ function director:queue_load_item_named(name, force_reload)
 		game.store.texture_size = self.params.texture_size
 		game.store.level = LU.load_level(game.store, game.store.level_name)
         game.store.patches = LU.eval_file("patches/config.lua")
-        if not game.store.patches.custom_config_enabled then
+        if not game.store.patches or not game.store.patches.custom_config_enabled then
             game.store.patches = LU.eval_file("patches/default.lua")
         end
 
