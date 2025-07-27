@@ -1040,10 +1040,9 @@ tt.aura.owner_sid = 5
 tt.aura.hit_time = fts(17)
 tt.aura.hit_sound = "ThornSound"
 tt.main_script.update = scripts.aura_ranger_thorn.update
+
 tt = RT("aura_teleport_arcane", "aura")
-
 AC(tt, "render")
-
 tt.aura.mod = "mod_teleport_arcane"
 tt.aura.duration = fts(23)
 tt.aura.apply_delay = fts(5)
@@ -1060,6 +1059,7 @@ tt.render.sprites[1].loop = false
 tt.render.sprites[1].z = Z_DECALS
 tt.render.sprites[1].anchor.y = 0.375
 tt.sound_events.insert = "TeleporthSound"
+
 tt = RT("aura_tesla_overcharge", "aura")
 tt.aura.duration = fts(22)
 tt.aura.mod = "mod_tesla_overcharge"

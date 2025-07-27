@@ -39,7 +39,7 @@ local function mage_towers()
     tt.powers.disintegrate.attack_idx = 2
     tt.powers.teleport = CC("power")
     tt.powers.teleport.price_base = 250
-    tt.powers.teleport.price_inc = 100
+    tt.powers.teleport.price_inc = 125
     tt.powers.teleport.max_count_base = 3
     tt.powers.teleport.max_count_inc = 1
     tt.powers.teleport.enc_icon = 16
@@ -130,6 +130,8 @@ local function mage_towers()
     tt.nodes_offset_min = -26
     tt.nodes_offset_max = -17
     tt.nodes_offset_inc = -5
+    tt.damage_inc = 25
+    tt.damage_base = 25
 
     tt = RT("decalmod_arcane_wizard_disintegrate_ready", "modifier")
     E:add_comps(tt, "render", "tween")

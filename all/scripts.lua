@@ -5977,10 +5977,15 @@ function scripts.mod_teleport.insert(this, store)
     if target and target.health and not target.health.dead and this._target_prev_bans ~= nil and
         (not this.max_times_applied or not target.enemy.counts.mod_teleport or target.enemy.counts.mod_teleport <
             this.max_times_applied) and (not this.jump_connection or P:get_next_pi(target.nav_path.pi)) then
-        -- target.health.ignore_damage = true
-
+        if this.damage ~= 0 then
+            local d = E:create_entity("damage")
+            d.source_id = this.id
+            d.target_id = target.id
+            d.damage_type = this.damage_type
+            d.value = (this.damage_base + this.damage_inc * this.modifier.level) * this.modifier.damage_factor
+            queue_damage(store, d)
+        end
         SU.stun_inc(target)
-
         return true
     else
         return false
@@ -5991,8 +5996,6 @@ function scripts.mod_teleport.remove(this, store)
     local target = store.entities[this.modifier.target_id]
 
     if target then
-        -- target.health.ignore_damage = false
-
         SU.stun_dec(target)
     end
 
