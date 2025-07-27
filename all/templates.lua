@@ -1011,9 +1011,7 @@ local stage_hero = E:register_t("stage_hero", "hero")
 stage_hero.hero.stage_hero = true
 
 local enemy = E:register_t("enemy", "unit")
-
 E:add_comps(enemy, "enemy", "motion", "nav_path", "main_script", "sound_events", "vis", "info")
-
 enemy.vis.flags = F_ENEMY
 enemy.render.sprites[1].angles = {}
 enemy.render.sprites[1].angles.walk = {"walkingRightLeft", "walkingUp", "walkingDown"}

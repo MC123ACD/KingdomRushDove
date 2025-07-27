@@ -64,7 +64,7 @@ local function archer_towers()
     tt.attacks.list[1] = CC("bullet_attack")
     tt.attacks.list[1].animation = "shoot"
     tt.attacks.list[1].bullet = "arrow_ranger"
-    tt.attacks.list[1].cooldown = 0.4
+    tt.attacks.list[1].cooldown = 0.39
     tt.attacks.list[1].shoot_time = fts(4)
     tt.attacks.list[1].shooters_delay = 0.1
     tt.attacks.list[1].bullet_start_offset = {vec_2(8, 4), vec_2(4, -5)}

@@ -80,7 +80,7 @@ local function register_archer(scripts)
                     end
 
                     if not a and ready_to_attack(as, store, this.tower.cooldown_factor) then
-                        enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range,
+                        enemy, _, pred_pos = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, at.range,
                             as.node_prediction, as.vis_flags, as.vis_bans)
 
                         if enemy then
@@ -200,7 +200,7 @@ local function register_archer(scripts)
                         end
                     end
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -434,7 +434,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -582,13 +582,13 @@ local function register_archer(scripts)
 
                             local eagle_range = ea.range + ea.range_inc * pow_e.level
                             local existing_mods = table.filter(store.modifiers, function(_, e)
-                                return e.modifier and e.template_name == ea.mod and e.modifier.level >= pow_e.level
+                                return e.template_name == ea.mod and e.modifier.level >= pow_e.level
                             end)
                             local busy_ids = table.map(existing_mods, function(k, v)
                                 return v.modifier.target_id
                             end)
                             local towers = table.filter(store.towers, function(_, e)
-                                return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
+                                return e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
                                            U.is_inside_ellipse(e.pos, this.pos, eagle_range)
                             end)
 
@@ -612,7 +612,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_use_power(pow_m, ma, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, ma.vis_flags,
+                        local enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false, ma.vis_flags,
                             ma.vis_bans)
 
                         if not enemy then
@@ -708,7 +708,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
+                        local enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
                             aa.vis_bans)
 
                         if not enemy then
@@ -856,7 +856,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
+                        local enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
                             aa.vis_bans)
 
                         if not enemy then
@@ -972,7 +972,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(a, store, this.tower.cooldown_factor) then
-                        local enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range,
+                        local enemy, _, pred_pos = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, at.range,
                             a.node_prediction, a.vis_flags, a.vis_bans)
 
                         if not enemy then
@@ -1124,7 +1124,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
 
                         if not enemy then
@@ -1203,7 +1203,7 @@ local function register_archer(scripts)
             local sid = 3
 
             local function is_long(enemy)
-                return V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) > a.short_range
+                return V.dist2(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) > a.short_range * a.short_range
             end
 
             local function y_do_shot(attack, enemy, level)
@@ -1219,7 +1219,7 @@ local function register_archer(scripts)
 
                 U.y_wait(store, shoot_time)
 
-                if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range then
+                if V.dist2(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range * a.range then
                     local boffset = attack.bullet_start_offsets[lidx][ai]
                     local b = E:create_entity(attack.bullets[lidx])
 
@@ -1323,7 +1323,7 @@ local function register_archer(scripts)
                     end
 
                     if ready_to_attack(aa, store, this.tower.cooldown_factor) then
-                        local enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false,
+                        local enemy, enemies = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, a.range, false,
                             aa.vis_flags, aa.vis_bans)
                         local mark = false
                         if enemies then

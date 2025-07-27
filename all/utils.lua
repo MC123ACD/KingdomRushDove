@@ -88,7 +88,7 @@ function U.sort_foremost_enemies(enemies)
         local e1_flying = band(e1.vis.flags, F_FLYING) ~= 0
         local e2_flying = band(e2.vis.flags, F_FLYING) ~= 0
         -- 优先处理嘲讽标志，且嘲讽对空中单位无保护效果
-        if e1_mocking and not(e2_mocking or e2_flying) then
+        if e1_mocking and not (e2_mocking or e2_flying) then
             return true
         elseif not (e1_mocking or e1_flying) and e2_mocking then
             return false
@@ -97,6 +97,27 @@ function U.sort_foremost_enemies(enemies)
         local p1 = e1.nav_path
         local p2 = e2.nav_path
 
+        return P:nodes_to_goal(p1.pi, p1.spi, p1.ni) < P:nodes_to_goal(p2.pi, p2.spi, p2.ni)
+    end)
+end
+
+function U.sort_foremost_enemies_with_flying_preference(enemie)
+    table.sort(enemies, function(e1, e2)
+        local e1_mocking = band(e1.vis.flags, F_MOCKING) ~= 0
+        local e2_mocking = band(e2.vis.flags, F_MOCKING) ~= 0
+        local e1_flying = band(e1.vis.flags, F_FLYING) ~= 0
+        local e2_flying = band(e2.vis.flags, F_FLYING) ~= 0
+        if e1_flying and not e2_flying then
+            return true
+        elseif e2_flying and not e1_flying then
+            return false
+        elseif e1_mocking and not (e2_mocking or e2_flying) then
+            return true
+        elseif e2_mocking and not (e1_mocking or e1_flying) then
+            return false
+        end
+        local p1 = e1.nav_path
+        local p2 = e2.nav_path
         return P:nodes_to_goal(p1.pi, p1.spi, p1.ni) < P:nodes_to_goal(p2.pi, p2.spi, p2.ni)
     end)
 end
@@ -876,12 +897,12 @@ function U.find_biggest_enemy(entities, origin, min_range, max_range, prediction
     local biggest_hp = -1
 
     for _, e in pairs(entities) do
-        if not e.pending_removal and e.nav_path and e.vis and e.health and not e.health.dead and
+        if not e.pending_removal and not e.health.dead and
             band(e.vis.flags, bans) == 0 and band(e.vis.bans, flags) == 0 and
             (not filter_func or filter_func(e, origin)) then
 
             local e_pos, e_ni
-            if prediction_time and e.motion and e.motion.speed then
+            if prediction_time and e.motion.speed then
                 if e.motion.forced_waypoint then
                     local dt = prediction_time == true and 1 or prediction_time
                     e_pos = V.v(e.pos.x + dt * e.motion.speed.x, e.pos.y + dt * e.motion.speed.y)
@@ -925,13 +946,13 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     local enemies = {}
 
     for _, e in pairs(entities) do
-        if e.pending_removal or not e.nav_path or not e.vis or e.health and e.health.dead or
+        if e.pending_removal or e.health.dead or
             band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
             -- block empty
         else
             local e_pos, e_ni
 
-            if prediction_time and e.motion and e.motion.speed then
+            if prediction_time and e.motion.speed then
                 if e.motion.forced_waypoint then
                     local dt = prediction_time == true and 1 or prediction_time
 
@@ -983,6 +1004,57 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     end
 end
 
+function U.find_foremost_enemy_with_flying_preference(entities, origin, min_range, max_range, prediction_time, flags, bans, filter_func,
+    min_override_flags)
+    flags = flags or 0
+    bans = bans or 0
+    min_override_flags = min_override_flags or 0
+
+    local enemies = {}
+
+    for _, e in pairs(entities) do
+        if e.pending_removal or e.health.dead or
+            band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
+            -- block empty
+        else
+            local e_pos, e_ni
+
+            if prediction_time and e.motion.speed then
+                if e.motion.forced_waypoint then
+                    local dt = prediction_time == true and 1 or prediction_time
+
+                    e_pos = V.v(e.pos.x + dt * e.motion.speed.x, e.pos.y + dt * e.motion.speed.y)
+                    e_ni = e.nav_path.ni
+                else
+                    local node_offset = P:predict_enemy_node_advance(e, prediction_time)
+
+                    e_ni = e.nav_path.ni + node_offset
+                    e_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
+                end
+            else
+                e_pos = e.pos
+                e_ni = e.nav_path.ni
+            end
+
+            if U.is_inside_ellipse(e_pos, origin, max_range) and P:is_node_valid(e.nav_path.pi, e_ni) and
+                (min_range == 0 or band(e.vis.flags, min_override_flags) ~= 0 or
+                    not U.is_inside_ellipse(e_pos, origin, min_range)) then
+                e.__ffe_pos = V.vclone(e_pos)
+
+                table.insert(enemies, e)
+            end
+        end
+    end
+
+    if not enemies or #enemies == 0 then
+        return nil, nil
+    else
+        U.sort_foremost_enemies_with_flying_preference(enemies)
+
+        return enemies[1], enemies, enemies[1].__ffe_pos
+    end
+end
+
 -- 如果敌人满足了 bor(vis.flags, min_override_flags)，则无论是不是在 min_range 内，都可以索敌
 function U.find_foremost_enemy(entities, origin, min_range, max_range, prediction_time, flags, bans, filter_func,
     min_override_flags)
@@ -993,13 +1065,13 @@ function U.find_foremost_enemy(entities, origin, min_range, max_range, predictio
     local enemies = {}
 
     for _, e in pairs(entities) do
-        if e.pending_removal or not e.nav_path or not e.vis or e.health and e.health.dead or
+        if e.pending_removal or e.health.dead or
             band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or filter_func and not filter_func(e, origin) then
             -- block empty
         else
             local e_pos, e_ni
 
-            if prediction_time and e.motion and e.motion.speed then
+            if prediction_time and e.motion.speed then
                 if e.motion.forced_waypoint then
                     local dt = prediction_time == true and 1 or prediction_time
 
@@ -1037,7 +1109,7 @@ end
 
 function U.find_towers_in_range(entities, origin, attack, filter_func)
     local towers = table.filter(entities, function(k, v)
-        return not v.pending_removal and v.tower and not v.tower.blocked and
+        return not v.pending_removal and not v.tower.blocked and
                    (not attack.excluded_templates or not table.contains(attack.excluded_templates, v.template_name)) and
                    U.is_inside_ellipse(v.pos, origin, attack.max_range) and
                    (attack.min_range == 0 or not U.is_inside_ellipse(v.pos, origin, attack.min_range)) and
