@@ -2914,6 +2914,7 @@ scripts.enemy_spider_big = {
                     e.spawner.ni = ni
                     if this.health_judger then
                         e.health_factor = this.health.hp / this.health.hp_max
+                        e.health_factor = e.health_factor * e.health_factor
                     end
                     queue_insert(store, e)
                 end
@@ -26112,7 +26113,7 @@ function scripts.mod_timelapse.insert(this, store)
 
     if target and target.health and not target.health.dead and this._target_prev_bans ~= nil then
         SU.stun_inc(target)
-        scripts.cast_silence(target)
+        scripts.cast_silence(target, store)
         return true
     else
         return false
@@ -26124,7 +26125,7 @@ function scripts.mod_timelapse.remove(this, store)
 
     if target then
         SU.stun_dec(target)
-        scripts.remove_silence(target)
+        scripts.remove_silence(target, store)
     end
 
     return true

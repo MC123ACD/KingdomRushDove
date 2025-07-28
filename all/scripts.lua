@@ -5283,9 +5283,10 @@ function scripts.mod_armor_buff.update(this, store, script)
     end
 end
 
-scripts.cast_silence = function(target)
+scripts.cast_silence = function(target, store)
     if not target.silence_cast_count then
         target.silence_cast_count = 1
+        target.silence_ts = store.tick_ts
     else
         target.silence_cast_count = target.silence_cast_count + 1
     end
@@ -5293,7 +5294,7 @@ scripts.cast_silence = function(target)
     target.enemy.can_accept_magic = false
 end
 
-scripts.remove_silence = function(target)
+scripts.remove_silence = function(target, store)
     if target then
         target.silence_cast_count = target.silence_cast_count - 1
         if target.enemy then
@@ -5303,6 +5304,17 @@ scripts.remove_silence = function(target)
             elseif target.silence_cast_count < 1 then
                 target.enemy.can_do_magic = true
                 target.enemy.can_accept_magic = true
+                local duration = store.ts - target.silence_ts
+                if target.ranged then
+                    for _, a in pairs(target.ranged.attacks) do
+                        a.ts = a.ts + duration
+                    end
+                end
+                if target.timed_attacks then
+                    for _, a in pairs(target.timed_attacks.list) do
+                        a.ts = a.ts + duration
+                    end
+                end
             end
         end
     end
@@ -5317,7 +5329,7 @@ function scripts.mod_silence.insert(this, store, script)
         return false
     end
 
-    scripts.cast_silence(target)
+    scripts.cast_silence(target, store)
 
     local s = this.render.sprites[1]
 
@@ -5344,7 +5356,7 @@ end
 function scripts.mod_silence.remove(this, store, script)
     local target = store.entities[this.modifier.target_id]
 
-    scripts.remove_silence(target)
+    scripts.remove_silence(target, store)
 
     return true
 end

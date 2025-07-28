@@ -348,7 +348,7 @@ return function(scripts)
                                 j = j + 1
                             end
                             t = targets[j]
-                            b.bullet.damage_max = 30
+                            b.bullet.damage_max = b.bullet.damage_max - 20
                         end
 
                         b.bullet.target_id = t.id
@@ -7053,7 +7053,7 @@ return function(scripts)
 
                 queue_insert(store, sm)
 
-                scripts.cast_silence(target)
+                scripts.cast_silence(target, store)
 
                 local s = this.render.sprites[1]
 
@@ -7707,7 +7707,7 @@ return function(scripts)
                                     break
                                 end
                                 S:queue(a.sound)
-                                
+
                                 this.pos.x = target.pos.x
                                 this.pos.y = target.pos.y
                                 U.animation_start(this, a.animation, nil, store.tick_ts, false)
@@ -8579,7 +8579,7 @@ return function(scripts)
         end
 
         log.debug("mod_lynn_curse chance hit")
-        scripts.cast_silence(target)
+        scripts.cast_silence(target, store)
 
         return true
     end
@@ -8600,7 +8600,7 @@ return function(scripts)
 
     function scripts.mod_lynn_curse.remove(this, store)
         local target = store.entities[this.modifier.target_id]
-        scripts.remove_silence(target)
+        scripts.remove_silence(target, store)
         return true
     end
 

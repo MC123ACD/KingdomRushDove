@@ -27,7 +27,7 @@ image_db.queue_load_done_images = 0
 image_db.use_canvas = true
 
 local _MAX_THREADS = 8
-local _LOAD_IMAGE_THREAD_CODE = "local cin,cout,th_i = ...\nrequire 'love.filesystem'\nrequire 'love.image'\nrequire 'love.timer'\nlocal file_count = 0\nwhile true do\n    -- get params\n    local fn = cin:demand()\n    if fn == 'QUIT' then goto quit end\n    local path = cin:demand()\n    local f = path .. '/' .. fn\n\n    --print('TH  ' ..th_i.. ' ARGS ' .. fn .. ' ' .. path .. '\\n')\n    \n    if not love.filesystem.isFile(f) then\n        cout:push({'ERROR','Not a file',f})\n    else\n        local data\n        --local t_start = love.timer.getTime()\n        if string.match(fn, '.pkm$') or string.match(fn, '.astc$') then\n            data = love.image.newCompressedData(f)\n        else\n            data = love.image.newImageData(f)\n        end\n        --print('TH  ' ..th_i.. ' newXData time: ' .. (love.timer.getTime()-t_start) .. '\\n')\n        if not data then\n            cout:push({'ERROR','Image could not be loaded',f})\n        else\n            file_count = file_count + 1\n            local w,h = data:getDimensions()\n            local key = string.gsub(fn, '.png$', '')\n            key = string.gsub(key, '.jpg$', '')\n            key = string.gsub(key, '.pkm$', '')\n            key = string.gsub(key, '.astc$', '')\n            cout:push({'OK',key,data,w,h})\n        end\n    end\nend\n::quit::\ncout:supply({'DONE'})\n--print('TH  ' ..th_i.. ' QUIT - FILES LOADED ' .. file_count .. '\\n')\n"
+local _LOAD_IMAGE_THREAD_CODE = "local cin,cout,th_i = ...\nrequire 'love.filesystem'\nrequire 'love.image'\nrequire 'love.timer'\nlocal file_count = 0\nwhile true do\n    -- get params\n    local fn = cin:demand()\n    if fn == 'QUIT' then goto quit end\n    local path = cin:demand()\n    local f = path .. '/' .. fn\n\n    --print('TH  ' ..th_i.. ' ARGS ' .. fn .. ' ' .. path .. '\\n')\n    \n    if not love.filesystem.isFile(f) then\n        cout:push({'ERROR','Not a file',f})\n    else\n        local data\n        --local t_start = love.timer.getTime()\n        if string.match(fn, '.pkm$') or string.match(fn, '.astc$') or string.match(fn, '.dds$') then\n            data = love.image.newCompressedData(f)\n        else\n            data = love.image.newImageData(f)\n        end\n        --print('TH  ' ..th_i.. ' newXData time: ' .. (love.timer.getTime()-t_start) .. '\\n')\n        if not data then\n            cout:push({'ERROR','Image could not be loaded',f})\n        else\n            file_count = file_count + 1\n            local w,h = data:getDimensions()\n            local key = string.gsub(fn, '.png$', '')\n            key = string.gsub(key, '.jpg$', '')\n            key = string.gsub(key, '.pkm$', '')\n            key = string.gsub(key, '.astc$', '')\n            key = string.gsub(key, '.dds$', '')\n            cout:push({'OK',key,data,w,h})\n        end\n    end\nend\n::quit::\ncout:supply({'DONE'})\n--print('TH  ' ..th_i.. ' QUIT - FILES LOADED ' .. file_count .. '\\n')\n"
 
 function image_db:get_short_stats()
 	local count_frames = 0
@@ -400,7 +400,7 @@ function image_db:preload_atlas(ref_scale, path, name)
 		v.atlas = string.gsub(v.a_name, ".png$", "")
 		v.atlas = string.gsub(v.atlas, ".pkm$", "")
 		v.atlas = string.gsub(v.atlas, ".astc$", "")
-
+        v.atlas = string.gsub(v.atlas, ".dds$", "")
 		for _, a in ipairs(v.alias) do
 			unique_frames[a] = v
 		end
@@ -420,6 +420,7 @@ function image_db:preload_atlas(ref_scale, path, name)
 		key = string.gsub(key, ".jpg$", "")
 		key = string.gsub(key, ".pkm$", "")
 		key = string.gsub(key, ".astc$", "")
+        key = string.gsub(key, ".dds$", "")
 		self.db_images[key] = {
 			[4] = fn,
 			[5] = path
@@ -543,7 +544,7 @@ function image_db:load_image_file(fn, path)
 		return
 	end
 
-	if string.match(f, ".png$") or string.match(f, ".jpg$") or string.match(f, ".pkm$") or string.match(f, ".astc$") then
+	if string.match(f, ".png$") or string.match(f, ".jpg$") or string.match(f, ".pkm$") or string.match(f, ".astc$") or string.match(f, ".dds$") then
 		log.paranoid("  loading image file %s", f)
 
 		local compressed = false

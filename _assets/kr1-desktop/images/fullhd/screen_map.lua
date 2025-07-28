@@ -1843,6 +1843,297 @@ return {
 		},
 		alias = {}
     },
+    	hero_room_portraits_small_thumb_hero_bird_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3274,
+			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_builder_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3274,
+			164,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_dragon_gem_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3274,
+			322,
+			155,
+			152
+		},
+		alias = {}
+	},
+    -- 安雅小头像
+	heroroom_thumbs_0052 = {
+		a_name = "room_hero-1.dds",
+		-- size = {
+		-- 	155,
+		-- 	152
+		-- },
+		-- trim = {
+		-- 	0,
+		-- 	0,
+		-- 	0,
+		-- 	0
+		-- },
+        size = {84, 84},
+        trim = {18, 16, 18, 14},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3274,
+			480,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_lumenir_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3435,
+			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_mecha_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3596,
+			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_muyrn_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3757,
+			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_raelyn_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3918,
+			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_robot_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3435,
+			164,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_space_elf_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3435,
+			322,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_venom_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3435,
+			480,
+			155,
+			152
+		},
+		alias = {}
+	},
+	hero_room_portraits_small_thumb_hero_vesper_0001 = {
+		a_name = "room_hero-1.dds",
+		size = {
+			155,
+			152
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3596,
+			164,
+			155,
+			152
+		},
+		alias = {}
+	},
     heroroom_tooltip_coin = {
         a_name = "screen_map-1.png",
         size = {15, 15},
