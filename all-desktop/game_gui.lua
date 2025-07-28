@@ -2070,9 +2070,9 @@ function HeroPortrait:update(dt)
 
             self.ov_cooldown.hidden = false
             self.ov_cooldown.scale.y = -1
-            self.death_start_ts = game_gui.game.store.ts
+            self.death_start_ts = game_gui.game.store.tick_ts
         else
-            local phase = km.clamp(0, 1, (game_gui.game.store.ts - self.death_start_ts) / e.health.dead_lifetime)
+            local phase = km.clamp(0, 1, (game_gui.game.store.tick_ts - self.death_start_ts) / e.health.dead_lifetime)
 
             self.ov_cooldown.scale.y = phase - 1
         end
@@ -2141,7 +2141,7 @@ function PowerButton:set_mode(mode)
         self:disable()
 
         self.cooldown_view.hidden = false
-        self.cooldown_view.start_ts = game_gui.game.store.ts
+        self.cooldown_view.start_ts = game_gui.game.store.tick_ts
         self.cooldown_view.scale.x, self.cooldown_view.scale.y = 1, -1
     elseif mode == "ready" then
         S:queue("GUISpellRefresh")
@@ -2150,7 +2150,7 @@ end
 
 function PowerButton:update(dt)
     if self.mode == "cooldown" then
-        local phase = km.clamp(0, 1, (game_gui.game.store.ts - self.cooldown_view.start_ts) / self.cooldown_time)
+        local phase = km.clamp(0, 1, (game_gui.game.store.tick_ts - self.cooldown_view.start_ts) / self.cooldown_time)
 
         self.cooldown_view.scale.y = phase - 1
 
@@ -2491,7 +2491,7 @@ end
 function PowerButtonBlock:block()
     self.power_button:disable(false)
 
-    self.start_ts = game_gui.game.store.ts
+    self.start_ts = game_gui.game.store.tick_ts
     self.animation = self.animations.block
     self.ts = 0
 end
@@ -2509,7 +2509,7 @@ function PowerButtonBlock:unblock()
 end
 
 function PowerButtonBlock:update(dt)
-    if self.start_ts and game_gui.game.store.ts - self.start_ts > self.duration then
+    if self.start_ts and game_gui.game.store.tick_ts - self.start_ts > self.duration then
         self:unblock()
     end
 
@@ -7122,7 +7122,7 @@ function WaveFlag:initialize(flying, duration, report)
 
     self.duration = duration
     self.report = report
-    self.start_game_ts = game_gui.game.store.ts
+    self.start_game_ts = game_gui.game.store.tick_ts
     self.ts = 0
     self.pulse_animation = true
 
@@ -7220,7 +7220,7 @@ function WaveFlag:update(dt)
 
     if self.duration and self.duration > 0 then
         self.bg_circle.phase = km.clamp(0, 1,
-            (self.duration - (game_gui.game.store.ts - self.start_game_ts)) / self.duration)
+            (self.duration - (game_gui.game.store.tick_ts - self.start_game_ts)) / self.duration)
     end
 
     if not self.clicked and not self.hide_timer then
