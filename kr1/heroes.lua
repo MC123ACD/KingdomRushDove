@@ -513,7 +513,7 @@ local function heroes()
     tt.sound_events.respawn = "HeroMageTauntIntro"
     tt.sound_events.change_rally_point = "HeroMageTaunt"
     tt.sound_events.hero_room_select = "HeroMageTauntSelect"
-    tt.teleport.min_distance = 0
+    tt.teleport.min_distance = 45
     tt.teleport.delay = 0
     tt.teleport.sound = "TeleporthSound"
     tt.ui.click_rect = r(-13, -5, 26, 32)
@@ -2099,7 +2099,7 @@ local function heroes()
     tt.sound_events.respawn = "HeroWizardTauntIntro"
     tt.sound_events.insert = "HeroWizardTauntIntro"
     tt.sound_events.hero_room_select = "HeroWizardTauntSelect"
-    tt.teleport.min_distance = 80
+    tt.teleport.min_distance = 45
     tt.teleport.sound = "HeroWizardTeleport"
     tt.unit.hit_offset = vec_2(0, 12)
     tt.unit.marker_offset = vec_2(0, -0.16)
@@ -6963,7 +6963,7 @@ local function heroes()
     tt.sound_events.respawn = "ElvesHeroVeznanTauntIntro"
     tt.sound_events.insert = "ElvesHeroVeznanTauntIntro"
     tt.sound_events.hero_room_select = "ElvesHeroVeznanTauntSelect"
-    tt.teleport.min_distance = 0
+    tt.teleport.min_distance = 55
     tt.teleport.sound = "ElvesHeroVeznanTeleport"
     tt.unit.hit_offset = vec_2(0, 15)
     tt.unit.mod_offset = vec_2(0, 15)
@@ -8217,7 +8217,7 @@ local function heroes()
     tt.sound_events.respawn = "ElvesHeroForestElementalTauntIntro"
     tt.sound_events.insert = "ElvesHeroForestElementalTauntIntro"
     tt.sound_events.hero_room_select = "ElvesHeroForestElementalTauntSelect"
-    tt.teleport.min_distance = 120
+    tt.teleport.min_distance = 65
     tt.teleport.delay = fts(10)
     tt.teleport.fx_out = "fx_bravebark_teleport_out"
     tt.teleport.fx_in = "fx_bravebark_teleport_in"
