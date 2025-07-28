@@ -324,7 +324,8 @@ return function(scripts)
     scripts.arrow_multishot_hero_alleria = {
         insert = function(this, store)
             if this.extra_arrows > 0 then
-                local _, targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range, F_RANGED, F_NONE)
+                local _, targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range,
+                    F_RANGED, F_NONE)
 
                 if targets then
                     local rate
@@ -834,8 +835,8 @@ return function(scripts)
                     end
 
                     if ready_to_use_skill(a_sd, store) then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a_sd.min_range,
-                            a_sd.max_range, a_sd.vis_flags, a_sd.vis_bans, function(v)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a_sd.min_range, a_sd.max_range,
+                            a_sd.vis_flags, a_sd.vis_bans, function(v)
                                 return (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_WATER)) and
                                            (not GR:cell_is(v.pos.x, v.pos.y, TERRAIN_FAERIE))
                             end)
@@ -2694,7 +2695,7 @@ return function(scripts)
                 end
 
                 local opi, ospi, oni = unpack(nodes[1])
-                local offset_options = {-2,-4, -6, -8, 2, 4, 6, 8}
+                local offset_options = {-2, -4, -6, -8, 2, 4, 6, 8}
                 local positions = {}
 
                 for i, offset in ipairs(offset_options) do
@@ -3169,8 +3170,8 @@ return function(scripts)
                     skill = this.hero.skills.multishoot
 
                     if ready_to_use_skill(a, store) and not shot_ready() then
-                        local target, targets = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
-                            a.max_range, a.shoot_time, a.vis_flags, a.vis_bans, function(e)
+                        local target, targets = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
+                            a.shoot_time, a.vis_flags, a.vis_bans, function(e)
                                 local center_pos = P:node_pos(e.nav_path.pi, 1, e.nav_path.ni)
                                 local nearby = U.find_enemies_in_range(store.enemies, center_pos, 0, a.search_range,
                                     a.vis_flags, a.vis_bans)
@@ -3414,8 +3415,7 @@ return function(scripts)
                 fx.render.sprites[2].ts = store.tick_ts
                 fx.tween.ts = store.tick_ts
                 queue_insert(store, fx)
-                local targets =
-                    U.find_enemies_in_range(store.enemies, pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                local targets = U.find_enemies_in_range(store.enemies, pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
                 if targets then
                     for _, t in pairs(targets) do
                         local d = E:create_entity("damage")
@@ -3793,8 +3793,7 @@ return function(scripts)
                     skill = this.hero.skills.holylight
                     if ready_to_attack(a, store) then
                         local targets = table.filter(store.soldiers, function(k, v)
-                            return v.health.hp < 0.7 * v.health.hp_max and
-                                       U.is_inside_ellipse(v.pos, this.pos, a.range)
+                            return v.health.hp < 0.7 * v.health.hp_max and U.is_inside_ellipse(v.pos, this.pos, a.range)
                         end)
 
                         if #targets < 1 then
@@ -4431,8 +4430,8 @@ return function(scripts)
                         enabled = false
                         add_damage(-added_damage)
                         added_damage = 0
-                    elseif V.dist2(rally_pos.x, rally_pos.y, hero.pos.x, hero.pos.y) > this.max_distance * this.max_distance and
-                        store.tick_ts - last_tick > this.tick_time then
+                    elseif V.dist2(rally_pos.x, rally_pos.y, hero.pos.x, hero.pos.y) > this.max_distance *
+                        this.max_distance and store.tick_ts - last_tick > this.tick_time then
                         add_damage(-this.damage_per_tick)
                         last_tick = store.tick_ts
                     elseif added_damage < this.max_damage and store.tick_ts - last_tick > this.tick_time then
@@ -4635,8 +4634,8 @@ return function(scripts)
 
                                     local flip_sign = this.render.sprites[1].flip_x and -1 or 1
                                     local start_ts = store.tick_ts
-                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0,
-                                        a.damage_radius, a.damage_flags, a.damage_bans)
+                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
+                                        a.damage_flags, a.damage_bans)
 
                                     S:queue("HeroGiantStomp")
                                     U.animation_start(this, "stomp", nil, store.tick_ts, false)
@@ -5180,7 +5179,7 @@ return function(scripts)
 
             this.health.hp = this.health.hp_max
         end,
-        on_damage= function(this, store, damage)
+        on_damage = function(this, store, damage)
             if this.timed_attacks.list[1].ts then
                 this.timed_attacks.list[1].ts = this.timed_attacks.list[1].ts - 1
             end
@@ -5222,7 +5221,7 @@ return function(scripts)
                     SU.y_hero_death_and_respawn(store, this)
                 end
 
-                local rate = (this.health.hp_max - this.health.hp)/this.health.hp_max
+                local rate = (this.health.hp_max - this.health.hp) / this.health.hp_max
                 local rage = rate * this.rage_max
                 this.damage_buff = this.damage_buff - this.rage + rage
                 this.rage = rage
@@ -5248,7 +5247,8 @@ return function(scripts)
                     skill = this.hero.skills.torment
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
+                        local triggers = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
+                            a.vis_bans)
 
                         if not triggers or #triggers < a.min_count then
                             SU.delay_attack(store, a, 0.13333333333333333)
@@ -5266,7 +5266,8 @@ return function(scripts)
 
                             a.ts = start_ts
 
-                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                            local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
+                                a.vis_flags, a.vis_bans)
 
                             if not targets then
                                 SU.delay_attack(store, a, 0.13333333333333333)
@@ -5482,7 +5483,8 @@ return function(scripts)
                     SU.soldier_idle(store, this)
                 else
                     while this.nav_rally.new do
-                        if this.is_buffed and V.dist2(this.pos.x,this.pos.y, this.nav_rally.pos.x, this.nav_rally.pos.y) > 40000 then
+                        if this.is_buffed and
+                            V.dist2(this.pos.x, this.pos.y, this.nav_rally.pos.x, this.nav_rally.pos.y) > 40000 then
                             local compensation = (ba.duration - (store.tick_ts - ba.ts)) / ba.duration * ba.cooldown
                             go_normal()
                             ba.ts = ba.ts - compensation
@@ -5560,7 +5562,8 @@ return function(scripts)
                     skill = this.hero.skills.buffed
 
                     if not this.is_buffed and not a.disabled and store.tick_ts - a.ts >= a.cooldown then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
+                            a.vis_bans)
 
                         if targets and #targets >= a.min_count then
                             SU.hero_gain_xp_from_skill(this, skill)
@@ -5573,8 +5576,8 @@ return function(scripts)
                     a = bma
 
                     if this.is_buffed and store.tick_ts - a.ts >= a.cooldown then
-                        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.min_nodes, a.max_nodes, nil,
-                            a.vis_flags, a.vis_bans)
+                        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.min_nodes, a.max_nodes,
+                            nil, a.vis_flags, a.vis_bans)
 
                         if not target_info or #target_info < a.min_count then
                             SU.delay_attack(store, a, 0.2)
@@ -5892,8 +5895,8 @@ return function(scripts)
                     skill = this.hero.skills.dragonstyle
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
-                            a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range,
+                            a.vis_flags, a.vis_bans)
 
                         if not targets then
                             SU.delay_attack(store, a, 0.13333333333333333)
@@ -5921,8 +5924,8 @@ return function(scripts)
 
                             SU.hero_gain_xp_from_skill(this, skill)
 
-                            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.damage_flags,
-                                a.damage_bans)
+                            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
+                                a.damage_flags, a.damage_bans)
 
                             if targets then
                                 for _, t in pairs(targets) do
@@ -5930,7 +5933,8 @@ return function(scripts)
 
                                     d.source_id = this.id
                                     d.target_id = t.id
-                                    d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
+                                    d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) *
+                                                  this.unit.damage_factor
                                     d.damage_type = a.damage_type
 
                                     queue_damage(store, d)
@@ -5953,7 +5957,8 @@ return function(scripts)
                     skill = this.hero.skills.leopardstyle
 
                     if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
+                            a.vis_bans)
 
                         if not targets then
                             SU.delay_attack(store, a, 0.13333333333333333)
@@ -5986,7 +5991,8 @@ return function(scripts)
 
                         while i <= a.loops do
                             i = i + 1
-                            targets = U.find_enemies_in_range(store.enemies, start_pos, 0, a.range, a.vis_flags, a.vis_bans)
+                            targets = U.find_enemies_in_range(store.enemies, start_pos, 0, a.range, a.vis_flags,
+                                a.vis_bans)
 
                             if not targets then
                                 break
@@ -6035,7 +6041,8 @@ return function(scripts)
 
                             d.source_id = this.id
                             d.target_id = target.id
-                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
+                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) *
+                                          this.unit.damage_factor
 
                             queue_damage(store, d)
 
@@ -6103,14 +6110,14 @@ return function(scripts)
         end
     }
     scripts.mod_monk_damage_reduction = {
-    insert = function(this, store)
-        local target = store.entities[this.modifier.target_id]
-        if target and target.unit then
-            target.unit.damage_factor = target.unit.damage_factor * (1 - this.reduction_factor)
+        insert = function(this, store)
+            local target = store.entities[this.modifier.target_id]
+            if target and target.unit then
+                target.unit.damage_factor = target.unit.damage_factor * (1 - this.reduction_factor)
+            end
+            return false
         end
-        return false
-    end
-}
+    }
 
     -- 女巫
     scripts.hero_voodoo_witch = {
@@ -6996,7 +7003,7 @@ return function(scripts)
 
                                 while not U.animation_finished(this) do
                                     if SU.hero_interrupted(this) then
-                                        a.ts = a.ts - a.cooldown * (a.loops - i)/a.loops
+                                        a.ts = a.ts - a.cooldown * (a.loops - i) / a.loops
                                         goto label_452_1
                                     end
 
@@ -7169,6 +7176,7 @@ return function(scripts)
                     if this.dodge and this.dodge.active then
                         this.dodge.active = false
                         this.dodge.counter_attack_pending = true
+                        this.melee.attacks[2].ts = this.melee.attacks[2].ts - 0.8
                     end
 
                     while this.nav_rally.new do
@@ -7204,6 +7212,9 @@ return function(scripts)
                     if not target then
                         -- block empty
                     else
+                        if ready_to_use_skill(this.ranged.attacks[2], store) then
+                            goto bow_ready_in_sword
+                        end
                         if is_sword then
                             local slot_pos = U.melee_slot_position(this, target)
 
@@ -7240,14 +7251,14 @@ return function(scripts)
 
                         goto label_79_4
                     end
+                    ::bow_ready_in_sword::
+                    do
+                        if is_sword then
+                            U.y_animation_play(this, "sword2bow", nil, store.tick_ts)
 
-                    if is_sword then
-                        U.y_animation_play(this, "sword2bow", nil, store.tick_ts)
+                            is_sword = false
+                        end
 
-                        is_sword = false
-                    end
-
-                    if this.ranged then
                         local target, attack, pred_pos = SU.soldier_pick_ranged_target_and_attack(store, this)
 
                         if not target then
@@ -7274,6 +7285,7 @@ return function(scripts)
                             local loops, loops_done = attack.max_loops, 0
                             local pred_shots
                             local b = E:create_entity(attack.bullet)
+                            b.bullet.damage_factor = this.unit.damage_factor
                             local d = SU.create_bullet_damage(b.bullet)
 
                             ::label_79_0::
@@ -7298,7 +7310,7 @@ return function(scripts)
                             update_porcupine(attack, target)
 
                             d.value = math.ceil((b.bullet.damage_min + b.bullet.damage_max + 2 * attack.level *
-                                                    (b.bullet.damage_inc or 0)) / 2)
+                                                    (b.bullet.damage_inc or 0)) * 0.5)
                             pred_shots = math.ceil(target.health.hp / U.predict_damage(target, d))
 
                             log.paranoid("+++ pred_shots:%s d.value:%s target.hp:%s", pred_shots, d.value,
@@ -7397,7 +7409,6 @@ return function(scripts)
 
                         goto label_79_4
                     end
-
                     ::label_79_3::
 
                     if SU.soldier_go_back_step(store, this) then
@@ -7638,7 +7649,8 @@ return function(scripts)
                 U.animation_start(this, this.timed_attacks.list[1].animation .. "_end", nil, store.tick_ts, false)
                 while not U.animation_finished(this) do
                     if store.tick_ts - fade_start_time < this.timed_attacks.list[1].fade_start_end_time then
-                        this.render.sprites[1].alpha = 255 * (store.tick_ts - fade_start_time) / this.timed_attacks.list[1].fade_start_end_time
+                        this.render.sprites[1].alpha = 255 * (store.tick_ts - fade_start_time) /
+                                                           this.timed_attacks.list[1].fade_start_end_time
                     end
                     coroutine.yield()
                 end
@@ -7665,8 +7677,8 @@ return function(scripts)
                     local a = this.timed_attacks.list[1]
 
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 200,
-                            a.vis_flags, a.vis_bans)
+                        local targets =
+                            U.find_enemies_in_range(store.enemies, this.pos, 0, 200, a.vis_flags, a.vis_bans)
                         if targets and #targets > a.min_count then
                             this.health_bar.hidden = true
                             fade_start_time = store.tick_ts
@@ -7675,7 +7687,9 @@ return function(scripts)
                             U.animation_start(this, a.animation .. "_start", nil, store.tick_ts, false)
                             while not U.animation_finished(this) do
                                 if store.tick_ts - fade_start_time < a.fade_start_end_time then
-                                    this.render.sprites[1].alpha = 255 * (1 - (store.tick_ts - fade_start_time) / a.fade_start_end_time)
+                                    this.render.sprites[1].alpha = 255 *
+                                                                       (1 - (store.tick_ts - fade_start_time) /
+                                                                           a.fade_start_end_time)
                                 end
                                 if SU.hero_interrupted(this) then
                                     this.render.sprites[1].alpha = 255
@@ -7688,11 +7702,12 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, this.hero.skills.slash)
                             origin_pos = V.vclone(this.pos)
                             for i = 1, a.loops do
-                                if not targets[i] or targets[i].health.dead then
+                                local target = targets[km.zmod(i, #targets)]
+                                if not target or target.health.dead then
                                     break
                                 end
                                 S:queue(a.sound)
-                                local target = targets[i]
+                                
                                 this.pos.x = target.pos.x
                                 this.pos.y = target.pos.y
                                 U.animation_start(this, a.animation, nil, store.tick_ts, false)
@@ -7702,13 +7717,15 @@ return function(scripts)
                                 while not U.animation_finished(this) do
                                     -- 显形
                                     if store.tick_ts - fade_start_time < a.fade_time then
-                                        this.render.sprites[1].alpha = 255 * (store.tick_ts - fade_start_time) /
-                                            a.fade_time
+                                        this.render.sprites[1].alpha =
+                                            255 * (store.tick_ts - fade_start_time) / a.fade_time
                                     else
                                         if not damage_applied then
                                             this.render.sprites[1].alpha = 255
                                             damage_applied = true
-                                            local whirlwind_targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.vis_flags, a.vis_bans)
+                                            local whirlwind_targets =
+                                                U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
+                                                    a.vis_flags, a.vis_bans)
                                             if whirlwind_targets then
                                                 for _, target in pairs(whirlwind_targets) do
                                                     local m = E:create_entity(a.mod)
@@ -7723,7 +7740,10 @@ return function(scripts)
                                         end
                                         -- 隐形
                                         if store.tick_ts - fade_out_start_time < a.fade_time then
-                                            this.render.sprites[1].alpha = 255 * (1 - (store.tick_ts - fade_out_start_time) / a.fade_time)
+                                            this.render.sprites[1].alpha = 255 *
+                                                                               (1 -
+                                                                                   (store.tick_ts - fade_out_start_time) /
+                                                                                   a.fade_time)
                                         else
                                             this.render.sprites[1].alpha = 0
                                         end
@@ -8045,9 +8065,8 @@ return function(scripts)
         local is_boss
         local sp = this.render.sprites[1]
         local targets = table.filter(store.enemies, function(_, e)
-            return e.pos and e.ui and e.ui.can_click and e.nav_path and
-                       not e.health.dead and band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) ==
-                       0 and
+            return e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
+                       band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) == 0 and
                        U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y),
                     V.v(this.pos.x, this.pos.y), this.range) and
                        P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_POWER_1)
@@ -8236,8 +8255,8 @@ return function(scripts)
                 skill = this.hero.skills.despair
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
-                        a.vis_bans)
+                    local targets =
+                        U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                     if not targets or #targets < a.min_count then
                         SU.delay_attack(store, a, 0.13333333333333333)
@@ -8343,9 +8362,8 @@ return function(scripts)
 
     function scripts.hero_lynn_ultimate.update(this, store)
         local targets = table.filter(store.enemies, function(_, e)
-            return e.pos and e.ui and e.ui.can_click and e.nav_path and
-                       not e.health.dead and band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) ==
-                       0 and
+            return e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
+                       band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) == 0 and
                        U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y),
                     V.v(this.pos.x, this.pos.y), this.range) and
                        P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_POWER_1)
@@ -9762,8 +9780,8 @@ return function(scripts)
 
     function scripts.hero_durax_ultimate.can_fire_fn(this, x, y, store)
         for _, e in pairs(store.enemies) do
-            if e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
-                band(e.vis.flags, F_FLYING) == 0 and band(e.vis.bans, F_MOD) == 0 and
+            if e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and band(e.vis.flags, F_FLYING) ==
+                0 and band(e.vis.bans, F_MOD) == 0 and
                 U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y), V.v(x, y), 250) and
                 P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_POWER_1) then
                 return true
@@ -10049,8 +10067,8 @@ return function(scripts)
                 skill = this.hero.skills.shield_strike
 
                 if ready_to_use_skill(a, store) then
-                    local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
-                        a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, shield_strike_filter_fn, F_FLYING)
+                    local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
+                        a.node_prediction, a.vis_flags, a.vis_bans, shield_strike_filter_fn, F_FLYING)
 
                     if target then
                         local start_ts = store.tick_ts
@@ -12017,13 +12035,14 @@ return function(scripts)
         this.health_bar.hidden = false
         local function skill_come_into_cooldown(skill_attack, is_ultimate)
             if is_ultimate then
-                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.15
+                skill_attack.ts = store.tick_ts - km.clamp(0, 1, this.revive.protect) * skill_attack.cooldown * 0.15
             else
-                skill_attack.ts = store.tick_ts - km.clamp(0,1,this.revive.protect) * skill_attack.cooldown * 0.4
+                skill_attack.ts = store.tick_ts - km.clamp(0, 1, this.revive.protect) * skill_attack.cooldown * 0.4
             end
         end
         local function inc_instakill_chance()
-            this.melee.attacks[4].chance = this.melee.attacks[4].origin_chance + 0.2 * km.clamp(0, 1, this.revive.protect)
+            this.melee.attacks[4].chance = this.melee.attacks[4].origin_chance + 0.2 *
+                                               km.clamp(0, 1, this.revive.protect)
         end
         local function update_color()
             local revive_rate = km.clamp(0, 1, this.revive.protect) * 100
@@ -12123,7 +12142,8 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target, target_num = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
+                    local target, target_num = find_target_at_critical_moment(this, store,
+                        this.ranged.attacks[1].max_range)
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
                         U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
@@ -13332,8 +13352,8 @@ return function(scripts)
 
                                     S:queue(a.sound_hit)
 
-                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0,
-                                        a.damage_radius, a.vis_flags, a.vis_bans)
+                                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius,
+                                        a.vis_flags, a.vis_bans)
 
                                     if targets then
                                         for _, t in pairs(targets) do
@@ -13355,7 +13375,7 @@ return function(scripts)
                             end
                         end
 
-                        a.ts = store.tick_ts - (1 - km.clamp(0, 1 ,(store.tick_ts - a.ts) / a.duration)) * a.cooldown
+                        a.ts = store.tick_ts - (1 - km.clamp(0, 1, (store.tick_ts - a.ts) / a.duration)) * a.cooldown
 
                         S:stop(a.sound_loop)
                         U.y_animation_play(this, a.animations[3], nil, store.tick_ts)
@@ -13365,7 +13385,8 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false, false, bor(F_FLYING, F_BOSS))
+                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false,
+                        false, bor(F_FLYING, F_BOSS))
 
                     if target and target.pos and valid_land_node_nearby(target.pos) then
                         this.health.ignore_damage = true
@@ -13590,8 +13611,8 @@ return function(scripts)
                 skill = this.hero.skills.kings_roar
 
                 if ready_to_use_skill(a, store) then
-                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags,
-                        a.vis_bans)
+                    local targets =
+                        U.find_enemies_in_range(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
 
                     if not targets or #targets < a.min_count then
                         SU.delay_attack(store, a, 0.13333333333333333)
@@ -13667,8 +13688,8 @@ return function(scripts)
 
     function scripts.hero_bruce_ultimate.update(this, store)
         local pi, spi, ni
-        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, this.range_nodes_min,
-            this.range_nodes_max, nil, this.vis_flags, this.vis_bans, true, function(e)
+        local target_info = U.find_enemies_in_paths(store.enemies, this.pos, this.range_nodes_min, this.range_nodes_max,
+            nil, this.vis_flags, this.vis_bans, true, function(e)
                 return not U.flag_has(P:path_terrain_props(e.nav_path.pi), TERRAIN_FAERIE)
             end)
 
@@ -13804,20 +13825,20 @@ return function(scripts)
         this.melee.attacks[1].damage_min = ls.melee_damage_min[hl]
         this.melee.attacks[1].damage_max = ls.melee_damage_max[hl]
 
-        upgrade_skill(this, "slash", function (this, s)
+        upgrade_skill(this, "slash", function(this, s)
             this.melee.attacks[2].disabled = nil
             this.melee.attacks[2].damage_min = s.damage_min[s.level]
             this.melee.attacks[2].damage_max = s.damage_max[s.level]
         end)
 
-        upgrade_skill(this, "scream", function (this, s)
+        upgrade_skill(this, "scream", function(this, s)
             this.timed_attacks.list[1].disabled = nil
             local mod = E:get_template("mod_bolverk_fire")
             mod.dps.damage_min = s.fire_damage[s.level]
             mod.dps.damage_max = s.fire_damage[s.level]
         end)
 
-        upgrade_skill(this, "berserker", function (this, s)
+        upgrade_skill(this, "berserker", function(this, s)
             this.berserker_factor = s.factor[s.level]
         end)
 
@@ -13853,10 +13874,11 @@ return function(scripts)
                 end
 
                 if SU.hero_level_up(store, this) then
-                    U.y_animation_play(this,"respawn", nil, store.tick_ts)
+                    U.y_animation_play(this, "respawn", nil, store.tick_ts)
                 end
 
-                local factor = (this.health.hp / this.health.hp_max) * (1 - this.berserker_factor) + this.berserker_factor
+                local factor = (this.health.hp / this.health.hp_max) * (1 - this.berserker_factor) +
+                                   this.berserker_factor
                 this.timed_attacks.list[1].cooldown = this.timed_attacks.list[1].raw_cooldown * factor
                 this.melee.attacks[1].cooldown = this.melee.attacks[1].raw_cooldown * factor
                 this.melee.attacks[2].cooldown = this.melee.attacks[2].raw_cooldown * factor
@@ -13894,7 +13916,7 @@ return function(scripts)
                             end
                             scripts.heal(this, (this.health.hp_max - this.health.hp) * 0.06)
                             SU.y_hero_animation_wait(this)
-                            SU.hero_gain_xp_from_skill(this,this.hero.skills.scream)
+                            SU.hero_gain_xp_from_skill(this, this.hero.skills.scream)
                             a.ts = store.tick_ts
                         end
 
@@ -13974,7 +13996,8 @@ return function(scripts)
 
                     local a = this.timed_attacks.list[1]
                     if ready_to_use_skill(a, store) then
-                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0,
+                            ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
                         local bigger_begin_time = store.tick_ts
                         if targets and #targets >= a.min_count then
                             if targets[1].pos.x < this.pos.x then
@@ -14008,7 +14031,8 @@ return function(scripts)
                             else
                                 hit_pos.x = hit_pos.x + ring.hit_offset.x * a.scale
                             end
-                            targets = U.find_enemies_in_range(store.enemies, hit_pos, 0, ring.damage_radius * a.scale, a.vis_flags, a.vis_bans)
+                            targets = U.find_enemies_in_range(store.enemies, hit_pos, 0, ring.damage_radius * a.scale,
+                                a.vis_flags, a.vis_bans)
                             if targets then
                                 for _, target in pairs(targets) do
                                     local d = SU.create_attack_damage(ring, target.id, this)
@@ -14027,7 +14051,8 @@ return function(scripts)
                                     decal.render.sprites[1].scale.y = a.scale * decal.render.sprites[1].scale.y
                                     queue_insert(store, decal)
                                     local mod = E:create_entity(a.mod)
-                                    if band(target.vis.flags, mod.modifier.vis_bans) == 0 and band(target.vis.bans, mod.modifier.vis_flags) == 0 then
+                                    if band(target.vis.flags, mod.modifier.vis_bans) == 0 and
+                                        band(target.vis.bans, mod.modifier.vis_flags) == 0 then
                                         mod.modifier.source_id = this.id
                                         mod.modifier.target_id = target.id
                                         mod.modifier.duration = mod.modifier.duration * a.scale
@@ -14231,7 +14256,8 @@ return function(scripts)
                         if a.name == "fierymist" or a.name == "blazingbreath" then
                             t_pos = P:node_pos(target.nav_path.pi, 1, target.nav_path.ni + node_offset)
                         else
-                            t_pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + node_offset)
+                            t_pos =
+                                P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + node_offset)
                         end
 
                         local an, af, ai = U.animation_name_facing_point(this, a.animation, t_pos)
@@ -14278,7 +14304,8 @@ return function(scripts)
                             emit_ts = store.tick_ts
 
                             local ps = E:create_entity(a.emit_ps)
-                            local mspeed = V.dist(dest.x, dest.y, b.bullet.from.x, b.bullet.from.y) / b.bullet.flight_time
+                            local mspeed = V.dist(dest.x, dest.y, b.bullet.from.x, b.bullet.from.y) /
+                                               b.bullet.flight_time
 
                             ps.particle_system.emit_direction =
                                 V.angleTo(dest.x - b.bullet.from.x, dest.y - b.bullet.from.y)
@@ -14377,7 +14404,8 @@ return function(scripts)
 
         queue_insert(store, fx)
 
-        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags,
+            b.damage_bans)
         local every = fts(2)
         local steps = math.floor(this.duration / every)
         local damage_per_step = math.random(b.damage_min, b.damage_max) / steps * b.damage_factor
@@ -14599,7 +14627,8 @@ return function(scripts)
                 if not P:is_node_valid(n.pi, n.ni) then
                     -- block empty
                 else
-                    fx = E:create_entity("fx_wildfirebarrage_explosion_" .. ((i == 1 or i == 5 or i == 6) and "2" or "1"))
+                    fx = E:create_entity("fx_wildfirebarrage_explosion_" ..
+                                             ((i == 1 or i == 5 or i == 6) and "2" or "1"))
                     fx.pos = pos
                     fx.render.sprites[1].ts = store.tick_ts
 
@@ -14611,8 +14640,8 @@ return function(scripts)
 
                     queue_insert(store, decal)
 
-                    targets =
-                        U.find_enemies_in_range(store.enemies, pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+                    targets = U.find_enemies_in_range(store.enemies, pos, 0, b.damage_radius, b.damage_flags,
+                        b.damage_bans)
 
                     if targets then
                         for _, target in pairs(targets) do

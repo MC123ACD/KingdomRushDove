@@ -6106,7 +6106,7 @@ local function heroes()
     tt.dodge.disabled = true
     tt.dodge.counter_attack = E:clone_c("melee_attack")
     tt.dodge.counter_attack.animation = "nimble_fencer"
-    tt.dodge.counter_attack.cooldown = 1
+    tt.dodge.counter_attack.cooldown = 0.5
     tt.dodge.counter_attack.damage_max = 40
     tt.dodge.counter_attack.damage_min = 20
     tt.dodge.counter_attack.hit_time = fts(8)
