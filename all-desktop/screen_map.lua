@@ -4678,20 +4678,26 @@ function HeroRoomViewKR1:initialize(size)
     local ht = self:get_child_by_id("hero_thumbs")
     local finished_levels = self:get_finished_levels()
     local single_hero_thumb_x_size
+    local thumb_scale = 1.08
+    local thumb_scale_1 = 0.385 * thumb_scale
+    local thumb_scale_2 = 0.217 * thumb_scale
+    local thumb_scale_3 = 0.5 * thumb_scale
+
     for i, d in ipairs(screen_map.hero_data) do
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
 
         local v2
+
         if d.thumb == 26 or d.thumb == 50 or d.thumb == 51 then
-            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.385)
-            v2.size.x = v2.size.x / 0.385 * 0.5
-            v2.size.y = v2.size.y / 0.385 * 0.5
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_1)
+            v2.size.x = v2.size.x / thumb_scale_1 * 0.5
+            v2.size.y = v2.size.y / thumb_scale_1 * 0.5
         elseif d.thumb >= 17 then
-            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.217)
-            v2.size.x = v2.size.x / 0.217 * 0.5
-            v2.size.y = v2.size.y / 0.217 * 0.5
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_2)
+            v2.size.x = v2.size.x / thumb_scale_2 * 0.5
+            v2.size.y = v2.size.y / thumb_scale_2 * 0.5
         else
-            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, 0.5)
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_3)
         end
 
         v2.pos = tpos
@@ -4725,11 +4731,11 @@ function HeroRoomViewKR1:initialize(size)
     self.check_image_2 = KImageView("heroroom_thumbs_0010")
     self.border_image = KImageView("heroroom_thumbs_0009")
     self.hover_image = KImageView("heroroom_thumbs_0008")
-    self.check_image_1.scale = V.v(0.5, 0.5)
-    self.check_image_2.scale = V.v(0.5, 0.5)
+    self.check_image_1.scale = V.vv(thumb_scale_3)
+    self.check_image_2.scale = V.vv(thumb_scale_3)
     self.check_image_1.anchor.x = self.check_image_1.anchor.x + single_hero_thumb_x_size - self.check_image_1.size.x * 0.06
-    self.border_image.scale = V.v(0.5, 0.5)
-    self.hover_image.scale = V.v(0.5, 0.5)
+    self.border_image.scale = V.vv(thumb_scale_3)
+    self.hover_image.scale = V.vv(thumb_scale_3)
     self.check_image_1.hidden = true
     self.check_image_2.hidden = true
     self.border_image.hidden = true

@@ -17,3 +17,4 @@ fi
 
 zip "$OUTPUT_ZIP" "./必读说明.md"
 zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/strings/zh-Hans.lua"
+zip "$OUTPUT_ZIP" "./存档位置.lnk"

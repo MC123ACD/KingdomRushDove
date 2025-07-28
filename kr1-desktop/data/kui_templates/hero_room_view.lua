@@ -7,8 +7,15 @@ local BC = {
 	0
 }
 local W, H = 920, 752
-
-return {
+-- local W, H = 1420, 1128
+local scale = 1.4
+local function vscale(x, y)
+    return {
+        x = x * scale,
+        y = y * scale
+    }
+end
+local hero_room_view = {
 	class = "HeroRoomViewKR1",
 	colors = {
 		background = {
@@ -18,7 +25,10 @@ return {
 			80
 		}
 	},
-	size = v(1920, 1080),
+	size = {
+        x = 1920,
+        y = 1080
+    },
 	children = {
 		{
 			id = "back",
@@ -27,6 +37,7 @@ return {
 			size = v(W, H),
 			anchor = v(W / 2, H / 2),
 			pos = v(960, 540),
+            scale = vscale(1, 1),
 			children = {
 				{
 					text_key = "HERO ROOM",
@@ -1555,3 +1566,19 @@ return {
 		}
 	}
 }
+
+-- local function recursively_scale(table, scale)
+--     for _, child in pairs(table) do
+--         if child.x then
+--             child.x = child.x * scale
+--             child.y = child.y * scale
+--         end
+--         if type(child) == "table" then
+--             recursively_scale(child, scale)
+--         end
+--     end
+-- end
+
+-- recursively_scale(hero_room_view, 1.5)
+
+return hero_room_view

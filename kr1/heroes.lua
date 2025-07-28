@@ -6152,7 +6152,7 @@ local function heroes()
     tt.ranged.attacks[2].disabled = true
     tt.ranged.attacks[2].max_loops = nil
     tt.ranged.attacks[2].max_range = 215
-    tt.ranged.attacks[2].min_range = 60
+    tt.ranged.attacks[2].min_range = 0
     tt.ranged.attacks[2].shoot_times = {fts(3)}
     tt.ranged.attacks[2].xp_from_skill = "multishot"
     tt.ultimate = {}
