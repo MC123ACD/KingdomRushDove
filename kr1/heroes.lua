@@ -1660,7 +1660,7 @@ local function heroes()
     tt.sound_events.hero_room_select = "TenShiTauntSelect"
     tt.sound_events.insert = "TenShiTauntIntro"
     tt.sound_events.respawn = "TenShiRespawn"
-    tt.teleport.min_distance = 0
+    tt.teleport.min_distance = 55
     tt.teleport.delay = 0
     tt.teleport.sound = "TenShiTeleportSfx"
     tt.unit.marker_offset = vec_2(0, 0)

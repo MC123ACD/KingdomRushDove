@@ -1142,7 +1142,6 @@ function MapView:initialize(screen_w, screen_h)
 
         -- self:load_map_animations(3)
         self:show_flags(3)
-
     else
         KImageView.initialize(self, "map_background")
         self.screen_w = screen_w
