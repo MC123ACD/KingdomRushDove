@@ -14800,81 +14800,43 @@ return function(scripts)
                 coroutine.yield()
             end
 
-            if attack.check_target_before_shot and (target.health.dead or not store.entities[target.id]) then
-                log.debug("target (%s) is dead or removed from store", target.id)
-            elseif attack.max_track_distance and
-                V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
-                log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id,
-                    target.pos.x, target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
-            else
-                S:queue(attack.sound_shoot)
 
-                bullet = E:create_entity(attack.bullet)
-                bullet.pos = V.vclone(this.pos)
+            S:queue(attack.sound_shoot)
 
-                if attack.bullet_start_offset then
-                    local offset = attack.bullet_start_offset[ai]
+            bullet = E:create_entity(attack.bullet)
+            bullet.pos = V.vclone(this.pos)
 
-                    bullet.pos.x, bullet.pos.y = bullet.pos.x + (af and -1 or 1) * offset.x, bullet.pos.y + offset.y
-                end
+            if attack.bullet_start_offset then
+                local offset = attack.bullet_start_offset[ai]
 
-                bullet.bullet.from = V.vclone(bullet.pos)
-                bullet.bullet.to = V.vclone(bullet_to)
-
-                if not attack.ignore_hit_offset then
-                    bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
-                    bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
-                end
-
-                bullet.bullet.target_id = target.id
-                bullet.bullet.source_id = this.id
-                bullet.bullet.xp_dest_id = this.id
-                bullet.bullet.level = attack.level
-                bullet.bullet.damage_factor = this.unit.damage_factor
-
-                queue_insert(store, bullet)
-
-                if attack.xp_from_skill then
-                    SU.hero_gain_xp_from_skill(this, this.hero.skills[attack.xp_from_skill])
-                end
-
-                attack_done = true
+                bullet.pos.x, bullet.pos.y = bullet.pos.x + (af and -1 or 1) * offset.x, bullet.pos.y + offset.y
             end
+
+            bullet.bullet.from = V.vclone(bullet.pos)
+            bullet.bullet.to = V.vclone(bullet_to)
+
+            if not attack.ignore_hit_offset then
+                bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
+                bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
+            end
+
+            bullet.bullet.target_id = target.id
+            bullet.bullet.source_id = this.id
+            bullet.bullet.xp_dest_id = this.id
+            bullet.bullet.level = attack.level
+            bullet.bullet.damage_factor = this.unit.damage_factor
+
+            queue_insert(store, bullet)
+
+            if attack.xp_from_skill then
+                SU.hero_gain_xp_from_skill(this, this.hero.skills[attack.xp_from_skill])
+            end
+
+            attack_done = true
 
             ::label_338_0::
 
             return attack_done, bullet
-        end
-
-        local function explosion_damage(point, radius, damage_min, damage_max, damage_type, damage_bans, damage_flags,
-            mod_to_apply)
-            local enemies = table.filter(store.enemies, function(k, v)
-                return not v.health.dead and band(v.vis.flags, damage_bans) == 0 and
-                           band(v.vis.bans, damage_flags) == 0 and U.is_inside_ellipse(v.pos, point, radius)
-            end)
-
-            for _, enemy in pairs(enemies) do
-                local d = E:create_entity("damage")
-
-                d.damage_type = damage_type
-
-                local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, point, radius)
-
-                d.value = math.floor(damage_max - (damage_max - damage_min) * dist_factor)
-                d.source_id = this.id
-                d.target_id = enemy.id
-
-                queue_damage(store, d)
-
-                if mod_to_apply then
-                    local mod = E:create_entity(mod_to_apply)
-
-                    mod.modifier.target_id = enemy.id
-                    mod.modifier.source_id = this.id
-
-                    queue_insert(store, mod)
-                end
-            end
         end
 
         local function animation_name_facing_angle_hero_hunter(group, angle_deg)
@@ -14953,17 +14915,6 @@ return function(scripts)
                 shooting_state = true
                 start_ts = store.tick_ts
             end
-            -- if aim_before_shot then
-            --     local an, af, ai = U.animation_name_facing_point(this, attack.animation_prepare, bullet_to)
-
-            --     U.y_animation_play(this, an, af, store.tick_ts, 1)
-
-            --     local an, af, ai = animation_name_facing_point_hero_hunter(this, attack.animation_aim, bullet_to)
-
-            --     U.y_animation_play(this, an, af, store.tick_ts, 1)
-
-            --     aim_before_shot = false
-            -- end
 
             local an, af, ai = animation_name_facing_point_hero_hunter(this, attack.animation, bullet_to)
 
@@ -14978,54 +14929,47 @@ return function(scripts)
                 coroutine.yield()
             end
 
-            if attack.check_target_before_shot and (target.health.dead or not store.entities[target.id]) then
-                log.debug("target (%s) is dead or removed from store", target.id)
-            elseif attack.max_track_distance and
-                V.dist(target.pos.x, target.pos.y, bullet_to_start.x, bullet_to_start.y) > attack.max_track_distance then
-                log.debug("target (%s) at %s,%s  exceeds attack.max_track_distance %s to %s,%s", target.id,
-                    target.pos.x, target.pos.y, attack.max_track_distance, bullet_to_start.x, bullet_to_start.y)
-            else
-                S:queue(attack.sound_shoot)
+            S:queue(attack.sound_shoot)
 
-                bullet = E:create_entity(attack.bullet)
-                bullet.pos = V.vclone(this.pos)
+            bullet = E:create_entity(attack.bullet)
+            bullet.pos = V.vclone(this.pos)
 
-                if attack.bullet_start_offset then
-                    local offset = attack.bullet_start_offset[ai]
+            if attack.bullet_start_offset then
+                local offset = attack.bullet_start_offset[ai]
 
-                    bullet.pos.x, bullet.pos.y = bullet.pos.x + (af and -1 or 1) * offset.x, bullet.pos.y + offset.y
-                end
-
-                bullet.bullet.from = V.vclone(bullet.pos)
-                bullet.bullet.to = V.vclone(bullet_to)
-
-                if not attack.ignore_hit_offset then
-                    bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
-                    bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
-                end
-
-                bullet.bullet.target_id = target.id
-                bullet.bullet.source_id = this.id
-                bullet.bullet.xp_dest_id = this.id
-                bullet.bullet.level = this.hero.level
-                bullet.bullet.damage_factor = this.unit.damage_factor
-
-                queue_insert(store, bullet)
-
-                if attack.xp_from_skill then
-                    SU.hero_gain_xp_from_skill(this, this.hero.skills[attack.xp_from_skill])
-                end
-
-                attack_done = true
-
-                while not U.animation_finished(this) do
-                    if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
-                        break
-                    end
-
-                    coroutine.yield()
-                end
+                bullet.pos.x, bullet.pos.y = bullet.pos.x + (af and -1 or 1) * offset.x, bullet.pos.y + offset.y
             end
+
+            bullet.bullet.from = V.vclone(bullet.pos)
+            bullet.bullet.to = V.vclone(bullet_to)
+
+            if not attack.ignore_hit_offset then
+                bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
+                bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
+            end
+
+            bullet.bullet.target_id = target.id
+            bullet.bullet.source_id = this.id
+            bullet.bullet.xp_dest_id = this.id
+            bullet.bullet.level = this.hero.level
+            bullet.bullet.damage_factor = this.unit.damage_factor
+
+            queue_insert(store, bullet)
+
+            if attack.xp_from_skill then
+                SU.hero_gain_xp_from_skill(this, this.hero.skills[attack.xp_from_skill])
+            end
+
+            attack_done = true
+
+            while not U.animation_finished(this) do
+                if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
+                    break
+                end
+
+                coroutine.yield()
+            end
+
 
             ::label_343_0::
 
@@ -15043,37 +14987,11 @@ return function(scripts)
                 return false, A_IN_COOLDOWN
             end
 
-            -- local upg = UP:get_upgrade("heroes_lethal_focus")
-            -- local triggered_lethal_focus = false
-            -- local bullet_t = E:get_template(attack.bullet)
-            -- local bullet_use_unit_damage_factor = bullet_t.bullet.use_unit_damage_factor
-            -- local bullet_pop = bullet_t.bullet.pop
-            -- local bullet_pop_conds = bullet_t.bullet.pop_conds
-
-            -- if attack.basic_attack and upg then
-            --     if not hero._lethal_focus_deck then
-            --         hero._lethal_focus_deck = SU.deck_new(upg.trigger_cards, upg.total_cards)
-            --     end
-
-            --     triggered_lethal_focus = SU.deck_draw(hero._lethal_focus_deck)
-            -- end
-
-            -- if triggered_lethal_focus then
-            --     hero.unit.damage_factor = hero.unit.damage_factor * upg.damage_factor
-            --     bullet_t.bullet.use_unit_damage_factor = true
-            --     bullet_t.bullet.pop = {"pop_crit"}
-            --     bullet_t.bullet.pop_conds = DR_DAMAGE
-            -- end
-
             local attack_done
 
             U.set_destination(hero, hero.pos)
 
-            if attack.loops then
-                attack_done = SU.y_soldier_do_loopable_ranged_attack(store, hero, target, attack)
-            else
-                attack_done = y_soldier_do_ranged_attack_hero_hunter(store, hero, target, attack, pred_pos)
-            end
+            attack_done = y_soldier_do_ranged_attack_hero_hunter(store, hero, target, attack, pred_pos)
 
             if attack_done then
                 attack.ts = start_ts
@@ -15091,173 +15009,12 @@ return function(scripts)
                 end
             end
 
-            -- if triggered_lethal_focus then
-            --     hero.unit.damage_factor = hero.unit.damage_factor / upg.damage_factor
-            --     bullet_t.bullet.use_unit_damage_factor = bullet_use_unit_damage_factor
-            --     bullet_t.bullet.pop = bullet_pop
-            --     bullet_t.bullet.pop_conds = bullet_pop_conds
-            -- end
-
             if attack_done then
                 return false, A_DONE
             else
                 return true
             end
         end
-
-        -- local function y_hero_death_and_respawn_hero_hunter(store, this)
-        --     local h = this.health
-        --     local he = this.hero
-
-        --     this.ui.can_click = false
-
-        --     local death_ts = store.tick_ts
-        --     local dead_lifetime = h.dead_lifetime
-
-        --     U.unblock_target(store, this)
-
-        --     if this.selfdestruct and not this.selfdestruct.disabled and
-        --         band(h.last_damage_types, bor(DAMAGE_EAT, DAMAGE_HOST, DAMAGE_DISINTEGRATE_BOSS)) == 0 then
-        --         local sd = this.selfdestruct
-
-        --         this.unit.hide_after_death = true
-        --         this.health_bar.hidden = true
-        --         dead_lifetime = sd.dead_lifetime or dead_lifetime
-
-        --         U.animation_start(this, sd.animation, nil, store.tick_ts)
-        --         S:queue(this.sound_events.death, this.sound_events.death_args)
-        --         S:queue(sd.sound, sd.sound_args)
-        --         U.y_wait(store, sd.hit_time)
-        --         S:queue(sd.sound_hit)
-
-        --         if sd.hit_fx then
-        --             insert_sprite(store, sd.hit_fx, this.pos)
-        --         end
-
-        --         if sd.xp_from_skill then
-        --             hero_gain_xp_from_skill(this, this.hero.skills[sd.xp_from_skill])
-        --         end
-
-        --         local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, sd.damage_radius, sd.vis_flags,
-        --             sd.vis_bans)
-
-        --         if targets then
-        --             for _, t in pairs(targets) do
-        --                 local d = E:create_entity("damage")
-
-        --                 d.damage_type = sd.damage_type
-        --                 d.value = sd.damage and sd.damage or math.random(sd.damage_min, sd.damage_max)
-        --                 d.source_id = this.id
-        --                 d.target_id = t.id
-
-        --                 queue_damage(store, d)
-        --             end
-        --         end
-
-        --         U.y_animation_wait(this)
-        --     elseif band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE_BOSS)) ~= 0 then
-        --         this.unit.hide_after_death = true
-
-        --         local fx = E:create_entity("fx_soldier_desintegrate")
-
-        --         fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-        --         fx.render.sprites[1].ts = store.tick_ts
-
-        --         queue_insert(store, fx)
-        --     elseif band(h.last_damage_types, bor(DAMAGE_EAT)) ~= 0 then
-        --         this.unit.hide_after_death = true
-        --     elseif band(h.last_damage_types, bor(DAMAGE_HOST)) ~= 0 then
-        --         this.unit.hide_after_death = true
-
-        --         S:queue("DeathEplosion")
-
-        --         local fx = E:create_entity("fx_unit_explode")
-
-        --         fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-        --         fx.render.sprites[1].ts = store.tick_ts
-        --         fx.render.sprites[1].name = fx.render.sprites[1].size_names[this.unit.size]
-
-        --         queue_insert(store, fx)
-
-        --         if this.unit.show_blood_pool and this.unit.blood_color ~= BLOOD_NONE then
-        --             local decal = E:create_entity("decal_blood_pool")
-
-        --             decal.pos = V.vclone(this.pos)
-        --             decal.render.sprites[1].ts = store.tick_ts
-        --             decal.render.sprites[1].name = this.unit.blood_color
-
-        --             queue_insert(store, decal)
-        --         end
-        --     else
-        --         S:queue(this.sound_events.death, this.sound_events.death_args)
-        --         U.y_animation_play(this, "death", nil, store.tick_ts, 1)
-        --     end
-
-        --     this.health.death_finished_ts = store.tick_ts
-
-        --     if this.unit.hide_after_death then
-        --         for _, s in pairs(this.render.sprites) do
-        --             s.hidden = true
-        --         end
-        --     end
-
-        --     local tombstone
-
-        --     if he and he.tombstone_show_time then
-        --         while store.tick_ts - death_ts < he.tombstone_show_time do
-        --             coroutine.yield()
-        --         end
-
-        --         tombstone = E:create_entity(he.tombstone_decal)
-        --         tombstone.pos = this.pos
-
-        --         queue_insert(store, tombstone)
-
-        --         for _, s in pairs(this.render.sprites) do
-        --             s.hidden = true
-        --         end
-        --     end
-
-        --     while dead_lifetime > store.tick_ts - death_ts do
-        --         if this.do_revive then
-        --             this.do_revive = nil
-
-        --             break
-        --         end
-
-        --         coroutine.yield()
-        --     end
-
-        --     this.health.death_finished_ts = nil
-
-        --     if tombstone then
-        --         queue_remove(store, tombstone)
-        --     end
-
-        --     if he and he.respawn_point then
-        --         local p = he.respawn_point
-
-        --         this.pos.x, this.pos.y = p.x, p.y
-        --         this.nav_rally.pos.x, this.nav_rally.pos.y = p.x, p.y
-        --         this.nav_rally.center.x, this.nav_rally.center.y = p.x, p.y
-        --         this.nav_rally.new = false
-        --     end
-
-        --     for _, s in pairs(this.render.sprites) do
-        --         s.hidden = false
-        --     end
-
-        --     h.ignore_damage = true
-
-        --     S:queue(this.sound_events.respawn)
-        --     U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
-
-        --     this.health_bar.hidden = false
-        --     this.ui.can_click = true
-        --     h.dead = false
-        --     h.hp = h.hp_max
-        --     h.ignore_damage = false
-        -- end
 
         local function quit_shooting_state()
             if shooting_state then
@@ -15297,8 +15054,6 @@ return function(scripts)
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
                 shooting_state = false
-
-                aim_before_shot = true
             else
                 while this.nav_rally.new do
                     local r = this.nav_rally
@@ -15313,9 +15068,7 @@ return function(scripts)
                         end
                     end
 
-                    aim_before_shot = true
-
-                    if force_flywalk or V.dist(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > tw.min_distance then
+                    if force_flywalk or V.dist2(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > tw.min_distance * tw.min_distance then
                         r.new = false
 
                         U.unblock_target(store, this)
@@ -15426,11 +15179,6 @@ return function(scripts)
                     end
                 end
 
-                -- SU.heroes_visual_learning_upgrade(store, this)
-                -- SU.heroes_lone_wolves_upgrade(store, this)
-                -- SU.alliance_merciless_upgrade(store, this)
-                -- SU.alliance_corageous_upgrade(store, this)
-
                 if SU.hero_level_up(store, this) then
                     quit_shooting_state()
                     U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
@@ -15499,8 +15247,6 @@ return function(scripts)
                         SU.hero_gain_xp_from_skill(this, skill)
                         U.y_animation_wait(this)
 
-                        aim_before_shot = true
-
                         goto label_337_1
                     end
                 end
@@ -15559,14 +15305,13 @@ return function(scripts)
                             -- block empty
                         else
                             S:queue(a.sound)
-
+                            this.health.immune_to = F_ALL
                             a.ts = start_ts
                             last_ts = start_ts
 
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             local aura = E:create_entity(a.aura)
-
                             aura.aura.source_id = this.id
                             aura.aura.ts = store.tick_ts
                             aura.pos = this.pos
@@ -15577,16 +15322,15 @@ return function(scripts)
                             if SU.y_hero_wait(store, this, aura.aura.duration - (store.tick_ts - a.ts)) then
                                 S:stop(a.sound)
                                 S:queue(a.sound_interrupt)
+                                a.ts = a.ts - (1 - (store.tick_ts - a.ts) / aura.aura.duration) * a.cooldown
                             end
 
                             S:stop(a.sound)
                             S:queue(a.sound_interrupt)
                             queue_remove(store, aura)
                             U.y_animation_play(this, a.animations[3], nil, store.tick_ts, 1)
-
-                            aim_before_shot = true
+                            this.health.immune_to = F_NONE
                             last_ts = start_ts
-
                             goto label_337_1
                         end
                     end
@@ -15658,20 +15402,14 @@ return function(scripts)
                     else
                         if sta == A_DONE then
                             last_attack_ranged = true
-                            aim_before_shot = false
                         end
 
                         if last_attack_ranged then
                             if store.tick_ts - ranged_attack.ts > 2 then
-                                U.y_animation_play(this, "shoot_backtoidle", nil, store.tick_ts, 1)
-
                                 last_attack_ranged = false
-                                aim_before_shot = true
                             end
                         else
                             SU.soldier_idle(store, this)
-
-                            aim_before_shot = true
                         end
 
                         SU.soldier_regen(store, this)
