@@ -16245,10 +16245,8 @@ function scripts.alien_purification_drone.update(this, store)
     local attacking = false
     local target = store.entities[this.target_id]
     local start_ts, switch_ts
-    local first_stun = true
     local function y_switch_target(new_target)
         this.target_id = new_target.id
-        first_stun = true
         attacking = false
 
         S:stop(this.sound_events.loop)
@@ -16289,7 +16287,6 @@ function scripts.alien_purification_drone.update(this, store)
                 end)
 
             if new_target then
-                SU.stun_dec(target)
                 target = new_target
 
                 y_switch_target(new_target)
@@ -16323,10 +16320,6 @@ function scripts.alien_purification_drone.update(this, store)
         this.render.sprites[2].flip_x = target.render.sprites[1].flip_x
 
         if store.tick_ts - this.dps.ts >= this.dps.damage_every then
-            if first_stun then
-                SU.stun_inc(target)
-                first_stun = false
-            end
             this.dps.ts = store.tick_ts
 
             local d = E:create_entity("damage")
@@ -16337,6 +16330,13 @@ function scripts.alien_purification_drone.update(this, store)
             d.damage_type = this.dps.damage_type
 
             queue_damage(store, d)
+            if band(target.vis.flags, F_BOSS) == 0 and band(target.vis.bans, F_STUN) == 0 then
+                local m = E:create_entity(this.mod)
+                m.modifier.target_id = target.id
+                m.modifier.source_id = this.id
+                m.modifier.ts = store.tick_ts
+                queue_insert(store, m)
+            end
         end
 
         coroutine.yield()

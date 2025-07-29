@@ -3530,14 +3530,14 @@ local heroes = {
 			},
 			damage_type = DAMAGE_RUDE,
 			damage_max = {
-				43,
-				78,
-				106
+				47,
+				85,
+				116
 			},
 			damage_min = {
-				28,
-				52,
-				72
+				30,
+				57,
+				79
 			},
 			bounces = {
 				2,
@@ -3567,14 +3567,14 @@ local heroes = {
 			damage_type = DAMAGE_TRUE,
 			damage_every = fts(3),
 			damage_min = {
-				2,
 				3,
-				4
+				4,
+				5
 			},
 			damage_max = {
-				5,
 				6,
-				7
+				7,
+				8
 			},
 			s_damage_min = {
 				44,
@@ -3609,14 +3609,14 @@ local heroes = {
 				18
 			},
 			damage_min = {
-				3,
 				4,
-				5
+				5,
+				6
 			},
 			damage_max = {
-				4,
-				8,
-				10
+				5,
+				9,
+				11
 			},
 			duration = {
 				8,
@@ -3653,16 +3653,16 @@ local heroes = {
 					cooldown = 1,
 					min_range = 0,
 					damage_min = {
-						6,
-						13,
-						18,
-						26
+						7,
+						14,
+						19,
+						28
 					},
 					damage_max = {
-						10,
-						18,
-						28,
-						39
+						11,
+						19,
+						30,
+						42
 					},
 					damage_type = DAMAGE_TRUE
 				}

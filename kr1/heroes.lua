@@ -4644,6 +4644,7 @@ local function heroes()
     tt.dps.damage_max = 16
     tt.dps.damage_every = fts(6)
     tt.dps.damage_type = DAMAGE_TRUE
+    tt.mod = "mod_stun"
     tt.jump_range = 150
     tt.switch_targets_every = fts(31)
     tt.vis_bans = bor(F_BOSS)
@@ -9788,7 +9789,7 @@ local function heroes()
     tt.render.sprites[1].angles_flip_vertical = {
         ranged = true
     }
-    tt.render.sprites[1].scale = vec_1(0.5)
+    tt.render.sprites[1].scale = vec_1(0.52)
     tt.unit.hit_offset = vec_2(0, 16)
     tt.unit.size = UNIT_SIZE_LARGE
     tt.unit.fade_time_after_death = tt.health.dead_lifetime

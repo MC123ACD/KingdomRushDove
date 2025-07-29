@@ -15019,6 +15019,7 @@ return function(scripts)
                 U.y_animation_play(this, "shoot_backtoidle", nil, store.tick_ts, 1)
             end
         end
+
         this.health_bar.hidden = false
 
         while true do
@@ -15181,6 +15182,7 @@ return function(scripts)
                 if ready_to_use_skill(this.ultimate, store) then
                     local enemy = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
                     if enemy and enemy.pos and valid_rally_node_nearby(enemy.pos) then
+                        shooting_state = false
                         U.y_animation_play(this, "respawn", nil ,store.tick_ts, 1)
                         S:queue(this.sound_events.change_rally_point)
                         local ultimate_entity = E:create_entity(this.hero.skills.ultimate.controller_name)
@@ -15213,7 +15215,7 @@ return function(scripts)
                         last_ts = store.tick_ts
 
                         local an, af, ai = U.animation_name_facing_point(this, a.animation, target.pos)
-
+                        shooting_state = false
                         U.animation_start(this, an, af, store.tick_ts, false)
                         U.y_wait(store, fts(18))
                         S:queue(a.sound)
@@ -15255,6 +15257,7 @@ return function(scripts)
                     if not enemy then
                         SU.delay_attack(store, a, fts(10))
                     elseif enemy and #enemies >= ricochet_attack.min_targets then
+                        shooting_state = false
                         local start_ts = store.tick_ts
                         local an, af = U.animation_name_facing_point(this, "mist_run_in", enemy.pos, 1)
 
@@ -15292,7 +15295,7 @@ return function(scripts)
                         SU.delay_attack(store, a, fts(10))
                     else
                         local start_ts = store.tick_ts
-
+                        shooting_state = false
                         U.animation_start(this, a.animations[1], nil, store.tick_ts, 1)
 
                         if SU.y_hero_animation_wait(this) then
@@ -15341,7 +15344,7 @@ return function(scripts)
                         SU.delay_attack(store, a, fts(10))
                     else
                         local start_ts = store.tick_ts
-
+                        shooting_state = false
                         S:queue(a.sound)
                         U.animation_start(this, a.animation, nil, store.tick_ts, 1)
 
@@ -15386,8 +15389,10 @@ return function(scripts)
 
                 if brk or sta ~= A_NO_TARGET then
                     -- block empty
+                    shooting_state = false
                 elseif SU.soldier_go_back_step(store, this) then
                     -- block empty
+                    shooting_state = false
                 else
                     brk, sta = y_hero_ranged_attack_hero_hunter(store, this)
 
@@ -15399,8 +15404,9 @@ return function(scripts)
                         end
 
                         if last_attack_ranged then
-                            if store.tick_ts - ranged_attack.ts > 2 then
+                            if store.tick_ts - ranged_attack.ts > 1.6 then
                                 last_attack_ranged = false
+                                quit_shooting_state()
                             end
                         else
                             SU.soldier_idle(store, this)
