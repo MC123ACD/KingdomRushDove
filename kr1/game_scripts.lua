@@ -837,7 +837,7 @@ function scripts.amazona_gain_mod.update(this, store, script)
             end
             speed_limit = speed_limit - this.gain.speed
             if speed_limit >= 0 then
-                target.motion.max_speed = target.motion.max_speed + this.gain.speed
+                U.speed_inc_self(target, this.gain.speed)
             end
             cooldown_limit = cooldown_limit - this.gain.cooldown
             if cooldown_limit >= 0 then
@@ -1552,7 +1552,7 @@ function scripts.dracolich_plague_carrier.update(this, store)
     a.duration = a.duration + U.frandom(-a.duration_var, 0)
     m.max_speed = m.max_speed + math.random(0, m.max_speed_var)
 
-    local step = U.real_max_speed(this) * dt
+    local step = this.motion.real_speed * dt
     local next_pos = P:node_pos(nav)
 
     next_pos.y = next_pos.y + y_off
@@ -2559,8 +2559,7 @@ function scripts.hero_ignus.update(this, store)
 
 						this.vis.bans = F_ALL
 						this.health.ignore_damage = true
-                        this.motion.factor = this.motion.factor * a.speed_factor
-
+                        U.speed_mul(this, a.speed_factor)
 						U.set_destination(this, slot_pos)
 						S:queue(a.sound)
 						U.y_animation_play(this, a.animations[1], nil, store.tick_ts)
@@ -2585,8 +2584,7 @@ function scripts.hero_ignus.update(this, store)
 						a.ts = store.tick_ts
 						this.vis.bans = vis_bans
 						this.health.ignore_damage = nil
-                        this.motion.factor = this.motion.factor / a.speed_factor
-
+                        U.speed_div(this, a.speed_factor)
 						goto label_71_0
 					end
 				end
@@ -4368,6 +4366,7 @@ function scripts.eb_veznan.update(this, store)
 	this.melee.attacks[1].disabled = true
 	this.melee.attacks[2].disabled = false
 	this.motion.max_speed = this.demon.speed
+    this.motion.real_speed = U.real_max_speed(this)
 	this.render.sprites[1].prefix = this.demon.sprites_prefix
 	this.ui.click_rect = this.demon.ui_click_rect
 	this.unit.hit_offset = this.demon.unit_hit_offset
@@ -8681,7 +8680,7 @@ function scripts.enemy_alien_breeder.update(this, store, script)
                     local y_offset = 3 + fh_offset.y
                     local dest = V.v(blocker.pos.x, blocker.pos.y - 1)
                     local dist = V.dist(this.pos.x, this.pos.y, dest.x, dest.y)
-                    local eta = dist / this.motion.max_speed
+                    local eta = dist / this.motion.real_speed
 
                     this.tween.props[1].keys = {{0, V.v(0, 0)}, {eta, V.v(x_offset, y_offset)}}
                     this.tween.disabled = false
@@ -8979,7 +8978,7 @@ function scripts.enemy_cannibal_volcano.update(this, store, script)
                 U.y_animation_play(this, "lol", nil, store.tick_ts, 8)
 
                 local dist = 25
-                local eta = dist / this.motion.max_speed
+                local eta = dist / this.motion.real_speed
                 local fade_step = 255 / (eta / store.tick_length)
 
                 U.animation_start(this, "away", false, store.tick_ts, true)
@@ -10264,8 +10263,6 @@ function scripts.aura_damage_sprint.remove(this, store, script)
     local target = store.entities[this.aura.source_id]
 
     if target and target.health and target.motion then
-        log.paranoid("aura_damage_sprint.remove: current max_speed: %s / prev: %s", target.motion.max_speed,
-            this.last_sprint_factor)
         U.speed_div(target, this.last_sprint_factor)
     end
 
@@ -10286,8 +10283,6 @@ function scripts.aura_damage_sprint.update(this, store, script)
             local hp, hp_max = target.health.hp, target.health.hp_max
             local sprint_factor = 1 + (hp_max - hp) / hp_max * target.damage_sprint_factor
 
-            log.paranoid("aura_damage_sprint.update: current max_speed: %s / %s * %s", target.motion.max_speed,
-                this.last_sprint_factor, sprint_factor)
             U.speed_mul(target, sprint_factor / this.last_sprint_factor )
             this.last_sprint_hp = target.health.hp
             this.last_sprint_factor = sprint_factor
@@ -12138,7 +12133,7 @@ function scripts.eb_umbra.update(this, store, script)
                 SU.remove_modifiers(store, p)
 
                 p.motion.max_speed = p.motion.max_speed_called
-
+                p.motion.real_speed = U.real_max_speed(p)
                 SU.stun_dec(p, true)
 
                 p.vis.bans = F_ALL
@@ -12170,7 +12165,7 @@ function scripts.eb_umbra.update(this, store, script)
 
                         recovered_hp = recovered_hp + hp_per_piece
                         p.motion.max_speed = 0
-
+                        p.motion.real_speed = U.real_max_speed(p)
                         S:queue("FrontiersFinalBossPiecesRegroup")
 
                         if this.render.sprites[1].hidden and #pieces_returned == 2 then
@@ -13069,7 +13064,7 @@ function scripts.eb_dracula.update(this, store, script)
         U.set_destination(this, pos)
 
         this.motion.max_speed = this.motion.max_speed_bat
-
+        this.motion.real_speed = U.real_max_speed(this)
         while not this.motion.arrived do
             U.walk(this, store.tick_length)
             coroutine.yield()
@@ -13079,6 +13074,7 @@ function scripts.eb_dracula.update(this, store, script)
 
         this.nav_path.ni = nodes[1][3]
         this.motion.max_speed = this.motion.max_speed_default
+        this.motion.real_speed = U.real_max_speed(this)
     end
 
     this.phase = "intro"
@@ -13123,7 +13119,7 @@ function scripts.eb_dracula.update(this, store, script)
                 this.health.hp = this.health.hp_max
                 this.health.dead = false
                 this.motion.max_speed = this.motion.max_speed_angry
-
+                this.motion.real_speed = U.real_max_speed(this)
                 local e = E:create_entity("dracula_damage_aura")
                 e.aura.source_id = this.id
                 queue_insert(store, e)
@@ -13578,8 +13574,7 @@ function scripts.decal_black_dragon.update(this, store, script)
             U.animation_start(this, "flying", nil, store.tick_ts, true, 1)
 
             this.render.sprites[1].sort_y_offset = -200
-            this.motion.max_speed = this.speed_takeoff
-
+            U.update_max_speed(this, this.speed_takeoff)
             U.set_destination(this, V.v(150, REF_H + 100))
 
             while not this.motion.arrived do
@@ -13597,8 +13592,7 @@ function scripts.decal_black_dragon.update(this, store, script)
             flame_hit.flip_x = flip
             s.flip_x = flip
             this.pos.x, this.pos.y = start_x, ap.y
-            this.motion.max_speed = this.speed_fly
-
+            U.update_max_speed(this, this.speed_fly)
             U.set_destination(this, V.v(end_x, ap.y))
 
             local flame_on, fire_on = false, false
@@ -13676,8 +13670,7 @@ function scripts.decal_black_dragon.update(this, store, script)
             U.animation_start(this, "flying", false, store.tick_ts, true, 1)
 
             this.pos.x, this.pos.y = this.sleep_pos.x - 5, this.sleep_pos.y + 116
-            this.motion.max_speed = this.speed_takeoff
-
+            U.update_max_speed(this, this.speed_takeoff)
             U.set_destination(this, this.sleep_pos)
 
             while not this.motion.arrived do
@@ -14341,7 +14334,7 @@ function scripts.decal_volcano_virgin.update(this, store, script)
     U.y_wait(store, 1)
 
     local dist = 25
-    local eta = dist / this.motion.max_speed
+    local eta = dist / this.motion.real_speed
     local fade_step = 255 / (eta / store.tick_length)
 
     U.animation_start(this, "walk", false, store.tick_ts, true)
@@ -15165,8 +15158,7 @@ function scripts.hero_vampiress.update(this, store, script)
                         this.health.ignore_damage = true
                         this.render.sprites[1].prefix = this.fly_to.animation_prefix
                         this.render.sprites[2].hidden = false
-                        this.motion.max_speed = this.motion.max_speed_bat
-
+                        U.update_max_speed(this, this.motion.max_speed_bat)
                         U.animation_start(this, "enter", nil, store.tick_ts)
                         -- U.y_wait(store, fts(7))
 
@@ -15189,7 +15181,7 @@ function scripts.hero_vampiress.update(this, store, script)
                     this.render.sprites[2].hidden = true
                     U.y_animation_play(this, "exit", nil, store.tick_ts)
                     this.render.sprites[1].prefix = orig_prefix
-                    this.motion.max_speed = orig_speed
+                    U.update_max_speed(this, orig_speed)
                     this.vis.bans = orig_vis_bans
                     this.health.ignore_damage = false
                 end
@@ -15301,7 +15293,8 @@ scripts.mod_vampiress_gain = {
                     target.timed_attacks.list[1].cooldown = target.timed_attacks.list[1].cooldown - this.gain.cooldown
                     target.timed_attacks.list[1].damage_radius = target.timed_attacks.list[1].damage_radius + this.gain.radius
                     target.motion.max_speed_bat = target.motion.max_speed_bat + this.gain.speed
-                    target.motion.max_speed = target.motion.max_speed + this.gain.speed
+
+                    U.update_max_speed(target, this.gain.speed)
                     target.gain_count = target.gain_count + 1
                 end
                 scripts.heal(target, this.gain.heal)
@@ -17060,10 +17053,10 @@ function scripts.hero_crab.update(this, store, script)
                             end
                         end
                     end
-                    if U.real_max_speed(this) >= b.stun_speed and store.tick_ts - b.ts >= b.cooldown then
+                    if this.motion.real_speed >= b.stun_speed and store.tick_ts - b.ts >= b.cooldown then
                         local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, b.radius, F_STUN, bor(F_BOSS, F_FLYING))
                         if enemies then
-                            local rate = (U.real_max_speed(this) - 60) / (b.stun_speed - 60)
+                            local rate = (this.motion.real_speed - 60) / (b.stun_speed - 60)
                             for _, e in pairs(enemies) do
                                 if not e.health.dead then
                                     local mod = E:create_entity("mod_stun_burrow")
@@ -17100,8 +17093,7 @@ function scripts.hero_crab.update(this, store, script)
 
                     S:queue(this.sound_events.burrow_out)
                     U.y_animation_play(this, "burrow_out", r.pos.x < this.pos.x, store.tick_ts)
-
-                    this.motion.max_speed = original_speed
+                    U.update_max_speed(this, original_speed)
                     this.vis.bans = vis_bans
                     this.health.immune_to = 0
                     this.unit.marker_hidden = nil
@@ -17330,7 +17322,7 @@ scripts.decal_arachnomancer_mini_spider = {}
 
 function scripts.decal_arachnomancer_mini_spider.update(this, store)
     local delta_y, dest_y = 0, 0
-    local delta_speed = this.motion.max_speed * U.frandom(0.8, 1.2) * km.rand_sign()
+    local delta_speed = this.motion.real_speed * U.frandom(0.8, 1.2) * km.rand_sign()
     local state, last_state
     local ow = this.owner
     local oo = this.spider_offsets[this.spider_idx]
@@ -18773,7 +18765,7 @@ function scripts.decal_minidragon_faustus.update(this, store)
     local af = this.pos.x > this.attack_pos.x
     local emit_angle = math.pi / 8
     local loop_duration = fts(18)
-    local vx = this.motion.max_speed
+    local vx = this.motion.real_speed
     local attack_w = loop_duration * vx
     local emit_x = this.attack_pos.x + (af and 1 or -1) * (attack_w / 2 + this.emit_ox)
     local cast_x = this.attack_pos.x + (af and 1 or -1) * (attack_w / 2 + this.cast_ox)
@@ -19843,7 +19835,7 @@ function scripts.enemy_bandersnatch.update(this, store)
                 U.y_animation_play(this, "idle2ball", nil, store.tick_ts)
 
                 rolling = true
-                this.motion.max_speed = this.motion.min_speed
+                U.update_max_speed(this, this.motion.min_speed)
             end
 
             local cont, blocker, ranged = SU.y_enemy_walk_until_blocked(store, this)
@@ -20419,7 +20411,7 @@ function scripts.enemy_twilight_scourger_banshee.update(this, store, script)
 
                 target._is_banshee_target = true
                 kamikaze_target = target
-                this.motion.max_speed = a.max_speed
+                U.update_max_speed(this, a.max_speed)
                 this.motion.forced_waypoint = V.vclone(target.pos)
             end
         end
@@ -21035,7 +21027,7 @@ function scripts.enemy_mantaray.update(this, store)
                     local y_offset = fh_offset.y + 1
                     local dest = V.v(blocker.pos.x, blocker.pos.y - 1)
                     local dist = V.dist(this.pos.x, this.pos.y, dest.x, dest.y)
-                    local eta = dist / this.motion.max_speed
+                    local eta = dist / this.motion.real_speed
 
                     this.tween.props[1].keys = {{0, V.v(0, 0)}, {eta, V.v(x_offset, y_offset)}}
                     this.tween.disabled = false
@@ -28639,15 +28631,14 @@ function scripts.decal_river_object.update(this, store)
         local normal_speed = this.motion.max_speed
         local fall_dest = P:node_pos(this.nav_path)
 
-        this.motion.max_speed = V.dist(fall_dest.x, fall_dest.y, this.pos.x, this.pos.y) / this.fall_time
+        U.update_max_speed(this, V.dist(fall_dest.x, fall_dest.y, this.pos.x, this.pos.y) / this.fall_time)
 
         U.set_destination(this, fall_dest)
 
         while not U.walk(this, store.tick_length) do
             coroutine.yield()
         end
-
-        this.motion.max_speed = normal_speed
+        U.update_max_speed(this, normal_speed)
 
         if fall_count == 1 then
             S:queue(this.sound_events.fall)
@@ -30317,7 +30308,7 @@ function scripts.faerie_trails.update(this, store)
 
             f.pos.x, f.pos.y = enemy.pos.x, enemy.pos.y
             f.nav_path.pi, f.nav_path.spi, f.nav_path.ni = enemy.nav_path.pi, enemy.nav_path.spi, enemy.nav_path.ni
-            f.motion.max_speed = speed
+            U.update_max_speed(f, speed)
             f.enemy_size = enemy.unit.size
             f.enemy_offset = V.vclone(enemy.unit.mod_offset)
             f.faerie_color = color
@@ -30350,7 +30341,7 @@ function scripts.faerie_trails.update(this, store)
 
             if is_inside_section(f.nav_path.pi, f.nav_path.ni) then
                 if color ~= f.faerie_color then
-                    f.motion.max_speed = speed
+                    U.update_max_speed(f, speed)
                     f.faerie_color = color
                 end
             else

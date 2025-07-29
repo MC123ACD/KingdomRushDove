@@ -111,6 +111,7 @@ motion.invulnerable = nil
 motion.max_speed = 0
 motion.factor = 1
 motion.buff = 0
+motion.real_speed = 0
 motion.speed = v(0, 0)
 motion.arrived = true
 

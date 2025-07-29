@@ -600,7 +600,7 @@ function U.walk(e, dt, accel, unsnapped)
         end
     end
 
-    local step = U.real_max_speed(e) * dt
+    local step = e.motion.real_speed * dt
     local nx, ny = V.normalize(V.rotate(v_angle, 1, 0))
 
     if v_len <= step and not (e.teleport and e.teleport.pending) then
@@ -1731,34 +1731,47 @@ end
 
 function U.speed_mul(entity, factor)
     entity.motion.factor = entity.motion.factor * factor
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_div(entity, factor)
     entity.motion.factor = entity.motion.factor / factor
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_inc(entity, amount)
     entity.motion.buff = entity.motion.buff + amount
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_dec(entity, amount)
     entity.motion.buff = entity.motion.buff - amount
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_mul_self(entity, factor)
     entity.motion.max_speed = entity.motion.max_speed * factor
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_div_self(entity, factor)
     entity.motion.max_speed = entity.motion.max_speed / factor
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_inc_self(entity, amount)
     entity.motion.max_speed = entity.motion.max_speed + amount
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 function U.speed_dec_self(entity, amount)
     entity.motion.max_speed = entity.motion.max_speed - amount
+    entity.motion.real_speed = U.real_max_speed(entity)
+end
+
+function U.update_max_speed(entity, max_speed)
+    entity.motion.max_speed = max_speed
+    entity.motion.real_speed = U.real_max_speed(entity)
 end
 
 return U

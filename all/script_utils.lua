@@ -698,8 +698,7 @@ local function y_hero_new_rally(store, this)
             S:queue(tr.sound_loop)
             U.y_animation_play(this, tr.animations[1], nil, store.tick_ts)
 
-            this.motion.max_speed = this.motion.max_speed + tr.extra_speed
-
+            U.speed_inc_self(this, tr.extra_speed)
             if tr.particles_name then
                 ps = E:create_entity(tr.particles_name)
                 ps.particle_system.track_id = this.id
@@ -720,7 +719,7 @@ local function y_hero_new_rally(store, this)
                 ps.particle_system.emit = false
                 ps.particle_system.source_lifetime = 1
             end
-            this.motion.max_speed = this.motion.max_speed - tr.extra_speed
+            U.speed_dec_self(this, tr.extra_speed)
 
             S:stop(tr.sound_loop)
             U.y_animation_play(this, tr.animations[3], nil, store.tick_ts)
@@ -2975,7 +2974,7 @@ local function y_enemy_walk_step(store, this, animation_name, sprite_id)
 
         next = w
 
-        if V.dist(w.x, w.y, this.pos.x, this.pos.y) < 2 * U.real_max_speed(this) * store.tick_length then
+        if V.dist(w.x, w.y, this.pos.x, this.pos.y) < 2 * this.motion.real_speed * store.tick_length then
             this.pos.x, this.pos.y = w.x, w.y
             this.motion.forced_waypoint = nil
 

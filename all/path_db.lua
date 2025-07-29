@@ -473,7 +473,7 @@ function path_db:next_entity_node(e, dt)
 	local next_node = path[n.ni + n.dir]
 	local new = false
 
-	if not next_node or V.dist(next_node.x, next_node.y, e.pos.x, e.pos.y) < 2 * U.real_max_speed(e) * dt then
+	if not next_node or V.dist(next_node.x, next_node.y, e.pos.x, e.pos.y) < 2 * e.motion.real_speed * dt then
 		n.ni = n.ni + n.dir
 
 		if n.ni < 1 or n.ni > #path then
@@ -525,7 +525,7 @@ function path_db:predict_enemy_node_advance(e, flight_time)
 end
 
 function path_db:predict_enemy_time(e, nodes_count)
-	return nodes_count * self.average_node_dist / U.real_max_speed(e)
+	return nodes_count * self.average_node_dist / e.motion.real_speed
 end
 function path_db:predict_enemy_pos(e, flight_time)
 	local node_offset = self:predict_enemy_node_advance(e, flight_time)

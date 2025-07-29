@@ -853,7 +853,7 @@ local function enemies()
     tt.accelerated = false
     tt.health.on_damage = function(this, store, damage)
         if this.health.hp <= this.health.hp_max * 0.5 and not this.accelerated then
-            this.motion.buff = this.motion.buff + 0.2 * FPS
+            U.speed_inc(this, 0.2 * FPS)
             this.melee.attacks[1].mod = "mod_orc_blood"
             this.accelerated = true
         end
@@ -871,7 +871,7 @@ local function enemies()
     tt.strengthened = false
     tt.health.on_damage = function(this, store, damage)
         if this.health.hp <= this.health.hp_max * 0.5 and not this.strengthened then
-            this.motion.buff = this.motion.buff - 0.5 * FPS
+            U.speed_dec(this, 0.5 * FPS)
             this.health.damage_factor = 0.3
             this.strengthened = true
         end
@@ -5109,7 +5109,7 @@ local function enemies()
     tt.render.sprites[2].offset = vec_2(0, 0)
     tt.payload = "enemy_elvira"
     tt.health_factor = 1
-    
+
     tt = E:register_t("mod_elvira_lifesteal", "modifier")
     E:add_comps(tt, "moon")
     tt.heal_hp = 360

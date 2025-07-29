@@ -4309,7 +4309,7 @@ function scripts.tunnel.update(this, store, script)
                 queue_insert(store, fx)
             end
 
-            local release_ts = store.tick_ts + length / (tu.speed_factor * U.real_max_speed(enemy))
+            local release_ts = store.tick_ts + length / (tu.speed_factor * enemy.motion.real_speed)
 
             log.debug("tunnel %s picked %s", this.id, enemy.id)
             table.insert(picked_enemies, {
@@ -5432,7 +5432,7 @@ function scripts.mod_slow.insert(this, store, script)
     end
 
     log.paranoid("mod_slow.insert (%s)-%s for (%s)-%s", this.id, this.template_name, target.id, target.template_name)
-    target.motion.factor = target.motion.factor * this.slow.factor
+    U.speed_mul(target, this.slow.factor)
     this.modifier.ts = store.tick_ts
 
     signal.emit("mod-applied", this, target)
@@ -5444,8 +5444,7 @@ function scripts.mod_slow.remove(this, store, script)
     local target = store.entities[this.modifier.target_id]
 
     if target and target.health and target.motion then
-        target.motion.factor = target.motion.factor / this.slow.factor
-
+        U.speed_div(target, this.slow.factor)
         log.paranoid("mod_slow.remove (%s)-%s for (%s)-%s", this.id, this.template_name, target.id, target.template_name)
     else
         log.debug("mod_slow.remove target is nil for id %s", this.modifier.target_id)
@@ -5867,7 +5866,7 @@ function scripts.mod_gain_on_kill.update(this, store, script)
             if this.gain.speed then
                 speed_limit = speed_limit - this.gain.speed
                 if speed_limit >= 0 then
-                    target.motion.max_speed = target.motion.max_speed + this.gain.speed
+                    U.speed_inc_self(target, this.gain.speed)
                 end
             end
             if this.gain.cooldown then
@@ -6234,16 +6233,15 @@ function scripts.mod_polymorph.insert(this, store, script)
     end
 
     if pm.transfer_speed_factor then
-        e.motion.factor = target.motion.factor * pm.transfer_speed_factor
-
+        U.speed_mul(e, pm.transfer_speed_factor)
         local has, mods = U.has_modifier_types(store, target, MOD_TYPE_FAST, MOD_TYPE_SLOW)
 
         if has then
             for _, m in pairs(mods) do
                 if m.fast then
-                    e.motion.factor = e.motion.factor / m.fast.factor
+                    U.speed_div(e, m.fast.factor)
                 elseif m.slow then
-                    e.motion.factor = e.motion.factor / m.slow.factor
+                    U.speed_div(e, m.slow.factor)
                 end
             end
         end

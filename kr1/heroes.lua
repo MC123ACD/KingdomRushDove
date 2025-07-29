@@ -10020,8 +10020,6 @@ local function heroes()
     tt.bullet.damage_type = DAMAGE_SHOT
     tt.bullet.damage_max = nil
     tt.bullet.damage_min = nil
-    -- tt.bullet.damage_max_config = nil
-    -- tt.bullet.damage_min_config = b.damage_min
     tt.bullet.level = 1
     tt.bullet.xp_gain_factor = b.xp_gain_factor
     tt.render = nil

@@ -228,6 +228,9 @@ function simulation:remove_entity(e)
     elseif e.aura then
         d.auras[e.id] = nil
     end
+    if e.motion and e.motion.max_speed ~= 0 then
+        e.motion.real_speed = e.motion.max_speed
+    end
 	d.entity_count = d.entity_count - 1
 
 	log.debug("entity (%s) %s removed", e.id, e.template_name)

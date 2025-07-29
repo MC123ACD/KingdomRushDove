@@ -636,7 +636,7 @@ return function(scripts)
             end)
 
             upgrade_skill(this, "swiftness", function(this, s)
-                this.motion.max_speed = this.motion.max_speed * s.max_speed_factor[s.level]
+                U.speed_mul_self(this, s.max_speed_factor[s.level])
                 this.melee.range = this.melee.range * s.max_speed_factor[s.level]
             end)
 
@@ -5432,7 +5432,7 @@ return function(scripts)
                 this.teleport.disabled = true
                 this.is_buffed = true
                 this.health_bar.offset = this.health_bar.offset_buffed
-                this.motion.max_speed = this.motion.max_speed_buffed
+                U.update_max_speed(this, this.motion.max_speed_buffed)
                 this.melee.range = this.melee.range_buffed
             end
 
@@ -5455,7 +5455,7 @@ return function(scripts)
                 this.render.sprites[1].prefix = "hero_10yr"
                 this.teleport.disabled = nil
                 this.health_bar.offset = this.health_bar.offset_normal
-                this.motion.max_speed = this.motion.max_speed_normal
+                U.update_max_speed(this, this.motion.max_speed_normal)
                 this.melee.range = this.melee.range_normal
                 ba.ts = store.tick_ts
             end
@@ -6559,7 +6559,7 @@ return function(scripts)
                                 end
 
                                 local dist = V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y)
-                                local ftime = dist / (this.motion.max_speed * a.speed_factor)
+                                local ftime = dist / (this.motion.real_speed * a.speed_factor)
                                 local pni = e.nav_path.ni + P:predict_enemy_node_advance(e, ftime)
                                 local ppos = P:predict_enemy_pos(e, ftime)
                                 local slot_pos = U.melee_slot_position(this, e, 1)
@@ -6588,8 +6588,7 @@ return function(scripts)
                         local vis_bans = this.vis.bans
 
                         this.vis.bans = F_ALL
-
-                        this.motion.max_speed = this.motion.max_speed * a.speed_factor
+                        U.speed_mul_self(this, a.speed_factor)
 
                         local an, af = U.animation_name_facing_point(this, a.animations[1], target.pos)
 
@@ -6665,7 +6664,7 @@ return function(scripts)
                         this.health_bar.hidden = nil
                         this.health.ignore_damage = false
                         this.vis.bans = vis_bans
-                        this.motion.max_speed = this.motion.max_speed / a.speed_factor
+                        U.speed_div_self(this, a.speed_factor)
                         a.ts = store.tick_ts
                         this.timed_attacks.list[1].ts = 0
 
@@ -6879,8 +6878,7 @@ return function(scripts)
                             this.health.immune_to = F_ALL
 
                             local original_speed = this.motion.max_speed
-
-                            this.motion.max_speed = this.motion.max_speed + cw.extra_speed
+                            U.speed_inc_self(this, cw.extra_speed)
                             this.unit.marker_hidden = true
                             this.health_bar.hidden = true
 
@@ -6939,7 +6937,7 @@ return function(scripts)
 
                             this.render.sprites[1].z = Z_OBJECTS
                             this.render.sprites[2].hidden = true
-                            this.motion.max_speed = original_speed
+                            U.update_max_speed(this, original_speed)
                             this.vis.bans = vis_bans
                             this.health.immune_to = 0
                             this.unit.marker_hidden = nil
@@ -8667,8 +8665,7 @@ return function(scripts)
             m.custom_attack.damage_max = s.damage[s.level] - 1
             m.custom_attack.damage_min = -1
         end)
-
-        this.motion.max_speed = this.motion.max_speed_base * this.engine_factor
+        U.update_max_speed(this, this.motion.max_speed_base * this.engine_factor)
 
         this.health.hp = this.health.hp_max
     end
@@ -15046,9 +15043,7 @@ return function(scripts)
                 end
                 shooting_state = false
                 SU.y_hero_death_and_respawn(store, this)
-
-                this.motion.max_speed = base_speed
-                aim_before_shot = true
+                U.update_max_speed(this, base_speed)
             end
 
             if this.unit.is_stunned then
@@ -15079,8 +15074,7 @@ return function(scripts)
                         this.health.immune_to = F_ALL
 
                         local original_speed = this.motion.max_speed
-
-                        this.motion.max_speed = this.motion.max_speed + tw.extra_speed
+                        U.speed_inc_self(this, tw.extra_speed)
                         this.unit.marker_hidden = true
                         this.health_bar.hidden = true
 
@@ -15169,7 +15163,7 @@ return function(scripts)
                         U.y_animation_play(this, tw.animations[3], nil, store.tick_ts)
                         SU.show_modifiers(store, this, true)
 
-                        this.motion.max_speed = original_speed
+                        U.update_max_speed(this, original_speed)
                         this.vis.bans = vis_bans
                         this.health.immune_to = 0
                         this.unit.marker_hidden = nil
