@@ -4389,7 +4389,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_min = {10, 12, 14, 16, 18, 20, 22, 24, 26, 28}
     tt.hero.level_stats.melee_damage_max = {16, 19, 22, 25, 28, 31, 34, 37, 40, 43}
     tt.hero.skills.energyglaive = E:clone_c("hero_skill")
-    tt.hero.skills.energyglaive.damage = {22, 30, 38}
+    tt.hero.skills.energyglaive.damage = {22, 34, 46}
     tt.hero.skills.energyglaive.bounce_chance = {0.4, 0.5, 0.6}
     tt.hero.skills.energyglaive.xp_level_steps = {
         [1] = 1,
@@ -4414,7 +4414,7 @@ local function heroes()
     }
     tt.hero.skills.abduction.xp_gain = {100, 150, 200}
     tt.hero.skills.vibroblades = E:clone_c("hero_skill")
-    tt.hero.skills.vibroblades.extra_damage = {5, 10, 15}
+    tt.hero.skills.vibroblades.extra_damage = {10, 15, 20}
     tt.hero.skills.vibroblades.damage_type = DAMAGE_TRUE
     tt.hero.skills.vibroblades.xp_level_steps = {
         [1] = 1,
