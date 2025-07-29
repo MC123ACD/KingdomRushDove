@@ -24,6 +24,7 @@ require("barrack_towers")()
 require("enemies")()
 require("heroes")()
 require("boss")()
+-- require("game_templates_5")()
 ----------
 
 tt = E:register_t("pop_crit", "pop")
@@ -9682,3 +9683,37 @@ tt = E:register_t("fx_alric_receive_soul", "fx_regson_heal")
 tt.render.sprites[1].color = {255, 122, 0}
 tt.render.sprites[1].scale = vec_1(0.9)
 tt.render.sprites[1].alpha = 200
+
+-- kr5
+
+tt = E:register_t("ps_hero_hunter_walk_trail")
+
+E:add_comps(tt, "pos", "particle_system")
+
+tt.particle_system.name = "mist_run_trail_run"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 15
+tt.particle_system.emit_rotation_spread = d2r(45)
+tt.particle_system.emit_area_spread = vec_2(2, 2)
+tt.particle_system.emit_speed = {5, 25}
+tt.particle_system.anchor = vec_2(0.5, 0.5)
+tt.particle_system.emit_offsets = {vec_2(13, 12), vec_2(-13, 12)}
+tt.particle_system.z = Z_OBJECTS
+tt.particle_system.particle_lifetime = {fts(14), fts(14)}
+tt.emit_direction = d2r(90)
+
+tt = E:register_t("fx_hero_hunter_skill_heal_strike_hit", "fx")
+tt.render.sprites[1].name = "mistystep_hit_run"
+tt = E:register_t("fx_hero_hunter_ranged_attack", "fx")
+tt.render.sprites[1].name = "shothit_run"
+tt = E:register_t("fx_hero_hunter_skill_ricochet_hit", "fx")
+tt.render.sprites[1].name = "mistystep_hit_run"
+tt = E:register_t("fx_hero_hunter_skill_shoot_around_decal", "fx")
+tt.render.sprites[1].name = "argent_storm_decal_run"
+tt = E:register_t("fx_hero_hunter_ultimate_hit", "fx")
+tt.render.sprites[1].name = "hit_dante_run"
+tt = E:register_t("fx_hero_hunter_steal", "fx")
+tt.render.sprites[1].name = "duskbeast_coin_run"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].z = Z_OBJECTS_COVERS

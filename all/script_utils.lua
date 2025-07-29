@@ -929,7 +929,7 @@ local function y_hero_death_and_respawn(store, this)
     local tombstone
 
     if he and he.tombstone_show_time then
-        while store.tick_ts - death_ts < he.tombstone_show_time do
+        while store.tick_ts - death_ts < he.tombstone_show_time and not this.force_respawn do
             coroutine.yield()
         end
 
@@ -943,7 +943,7 @@ local function y_hero_death_and_respawn(store, this)
         end
     end
 
-    while dead_lifetime > store.tick_ts - death_ts do
+    while dead_lifetime > store.tick_ts - death_ts and not this.force_respawn do
         coroutine.yield()
     end
 

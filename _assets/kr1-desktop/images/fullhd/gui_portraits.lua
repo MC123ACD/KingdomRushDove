@@ -6108,8 +6108,2005 @@ local kr3 = {
     }
 }
 
+local kr5 = {
+    gui_bottom_info_image_enemies_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1789, 468, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1890, 468, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1026, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1126, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1226, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1326, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1426, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1526, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0013 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0014 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0015 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0016 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {487, 1926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0017 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0018 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0019 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0020 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0021 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1026, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0022 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1126, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0023 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1226, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0024 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1326, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0025 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1426, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0026 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1526, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0027 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0028 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0029 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0030 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {588, 1926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0031 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0032 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0033 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0034 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0035 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1093, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0036 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1194, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0037 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1295, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0038 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1396, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0039 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1497, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0040 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1598, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0041 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1699, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0042 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1800, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_enemies_0043 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1901, 626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1026, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1126, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1226, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1326, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1426, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1526, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0013 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {689, 1926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0014 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0015 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0016 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0017 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1093, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0018 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1194, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0019 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1295, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0020 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1396, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0021 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1497, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0022 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1598, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0023 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1699, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0024 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1800, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0025 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1901, 726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0026 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0027 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0028 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1026, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0029 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1126, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0030 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1226, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0031 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1326, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0032 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1426, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0033 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1526, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0034 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1626, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0035 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1726, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0036 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0037 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {790, 1926, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0038 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0039 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0040 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1093, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0041 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1194, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0042 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1295, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0043 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1396, 826, 95, 94},
+        alias = {}
+    },
+    gui_bottom_info_image_soldiers_0044 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1497, 826, 95, 94},
+        alias = {}
+    },
+    hero_portraits_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {45, 17, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {1432, 229, 176, 220},
+        alias = {}
+    },
+    hero_portraits_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 34, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {271, 965, 162, 203},
+        alias = {}
+    },
+    hero_portraits_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {38, 4, 31, 23},
+        a_size = {2048, 2048},
+        f_quad = {271, 229, 211, 233},
+        alias = {}
+    },
+    hero_portraits_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {47, 25, 45, 23},
+        a_size = {2048, 2048},
+        f_quad = {1521, 6, 188, 212},
+        alias = {}
+    },
+    hero_portraits_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 35, 48, 23},
+        a_size = {2048, 2048},
+        f_quad = {1614, 229, 173, 202},
+        alias = {}
+    },
+    hero_portraits_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {30, 22, 27, 23},
+        a_size = {2048, 2048},
+        f_quad = {6, 1016, 223, 215},
+        alias = {}
+    },
+    hero_portraits_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {55, 9, 32, 23},
+        a_size = {2048, 2048},
+        f_quad = {488, 229, 193, 228},
+        alias = {}
+    },
+    hero_portraits_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {43, 58, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {882, 229, 178, 179},
+        alias = {}
+    },
+    hero_portraits_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 59, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {271, 1174, 162, 178},
+        alias = {}
+    },
+    hero_portraits_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {31, 52, 28, 23},
+        a_size = {2048, 2048},
+        f_quad = {6, 1237, 221, 185},
+        alias = {}
+    },
+    hero_portraits_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {39, 9, 37, 15},
+        a_size = {2048, 2048},
+        f_quad = {271, 723, 204, 236},
+        alias = {}
+    },
+    hero_portraits_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {44, 47, 39, 23},
+        a_size = {2048, 2048},
+        f_quad = {1121, 6, 197, 190},
+        alias = {}
+    },
+    hero_portraits_disabled_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {271, 1676, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {271, 1834, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {487, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 22},
+        a_size = {2048, 2048},
+        f_quad = {271, 1358, 162, 153},
+        alias = {}
+    },
+    hero_portraits_disabled_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {655, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 88, 59, 22},
+        a_size = {2048, 2048},
+        f_quad = {6, 1898, 162, 150},
+        alias = {}
+    },
+    hero_portraits_disabled_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {823, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {991, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {1159, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {1327, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_disabled_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 22},
+        a_size = {2048, 2048},
+        f_quad = {271, 1517, 162, 153},
+        alias = {}
+    },
+    hero_portraits_disabled_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {59, 85, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {1495, 468, 162, 152},
+        alias = {}
+    },
+    hero_portraits_none = {
+        a_name = "gui_portraits-6.dds",
+        size = {134, 134},
+        trim = {1, 0, 1, 0},
+        a_size = {2048, 2048},
+        f_quad = {1907, 6, 132, 134},
+        alias = {}
+    },
+    hero_portraits_selected_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {40, 25, 51, 15},
+        a_size = {2048, 2048},
+        f_quad = {687, 229, 189, 220},
+        alias = {}
+    },
+    hero_portraits_selected_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {52, 32, 51, 15},
+        a_size = {2048, 2048},
+        f_quad = {1066, 229, 177, 213},
+        alias = {}
+    },
+    hero_portraits_selected_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {33, 35, 27, 15},
+        a_size = {2048, 2048},
+        f_quad = {6, 1428, 220, 210},
+        alias = {}
+    },
+    hero_portraits_selected_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {42, 32, 39, 15},
+        a_size = {2048, 2048},
+        f_quad = {916, 6, 199, 213},
+        alias = {}
+    },
+    hero_portraits_selected_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {52, 35, 42, 14},
+        a_size = {2048, 2048},
+        f_quad = {1715, 6, 186, 211},
+        alias = {}
+    },
+    hero_portraits_selected_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {25, 35, 20, 14},
+        a_size = {2048, 2048},
+        f_quad = {6, 594, 235, 211},
+        alias = {}
+    },
+    hero_portraits_selected_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {49, 35, 27, 14},
+        a_size = {2048, 2048},
+        f_quad = {706, 6, 204, 211},
+        alias = {}
+    },
+    hero_portraits_selected_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {37, 53, 52, 14},
+        a_size = {2048, 2048},
+        f_quad = {1324, 6, 191, 193},
+        alias = {}
+    },
+    hero_portraits_selected_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {51, 54, 52, 14},
+        a_size = {2048, 2048},
+        f_quad = {1249, 229, 177, 192},
+        alias = {}
+    },
+    hero_portraits_selected_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {25, 47, 23, 14},
+        a_size = {2048, 2048},
+        f_quad = {6, 811, 232, 199},
+        alias = {}
+    },
+    hero_portraits_selected_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {33, 35, 32, 8},
+        a_size = {2048, 2048},
+        f_quad = {271, 6, 215, 217},
+        alias = {}
+    },
+    hero_portraits_selected_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {38, 42, 34, 14},
+        a_size = {2048, 2048},
+        f_quad = {492, 6, 208, 204},
+        alias = {}
+    },
+    ingame_ui_gui_portraits_hero_bg = {
+        a_name = "gui_portraits-6.dds",
+        size = {268, 304},
+        trim = {29, 30, 29, 25},
+        a_size = {2048, 2048},
+        f_quad = {271, 468, 210, 249},
+        alias = {}
+    },
+    ingame_ui_gui_portraits_hero_bg_hover = {
+        a_name = "gui_portraits-6.dds",
+        size = {328, 368},
+        trim = {47, 46, 46, 41},
+        a_size = {2048, 2048},
+        f_quad = {6, 307, 235, 281},
+        alias = {}
+    },
+    ingame_ui_hero_cooldown = {
+        a_name = "gui_portraits-6.dds",
+        size = {200, 200},
+        trim = {18, 24, 18, 24},
+        a_size = {2048, 2048},
+        f_quad = {1793, 229, 164, 152},
+        alias = {}
+    },
+    portraits_hero_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1598, 826, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1699, 826, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0002ar = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1800, 826, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1901, 826, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 926, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1026, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1126, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1226, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1326, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1426, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1526, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1626, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1726, 95, 94},
+        alias = {}
+    },
+    portraits_hero_0013 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {992, 1526, 87, 87},
+        alias = {}
+    },
+    portraits_hero_0014 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {992, 1619, 87, 87},
+        alias = {}
+    },
+    portraits_hero_0015 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {992, 1712, 87, 87},
+        alias = {}
+    },
+    portraits_hero_0016 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {992, 1805, 87, 87},
+        alias = {}
+    },
+    portraits_hero_0017 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {992, 1898, 87, 87},
+        alias = {}
+    },
+    portraits_hero_0018 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 18, 18},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1026, 87, 87},
+        alias = {}
+    },
+    portraits_hero_bg = {
+        a_name = "gui_portraits-6.dds",
+        size = {272, 304},
+        trim = {27, 30, 28, 26},
+        a_size = {2048, 2048},
+        f_quad = {6, 1644, 217, 248},
+        alias = {}
+    },
+    portraits_hero_bg_hover = {
+        a_name = "gui_portraits-6.dds",
+        size = {272, 304},
+        trim = {6, 5, 7, 4},
+        a_size = {2048, 2048},
+        f_quad = {6, 6, 259, 295},
+        alias = {}
+    },
+    portraits_sc = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {1, 2, 1, 2},
+        a_size = {2048, 2048},
+        f_quad = {1663, 468, 120, 118},
+        alias = {}
+    },
+    portraits_sc_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1963, 229, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1963, 319, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1186, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1277, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1368, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1459, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1550, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1641, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1732, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1823, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1914, 1026, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0012 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0013 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0014 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0015 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0016 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0017 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1569, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0018 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1659, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0019 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1749, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0020 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1839, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0021 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1093, 1929, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0022 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0023 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0024 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0025 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0026 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1548, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0027 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1639, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0028 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1730, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0029 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1821, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0030 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1912, 1119, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0031 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0032 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0033 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0034 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0035 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1569, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0036 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1659, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0037 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1749, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0038 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1839, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0039 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1184, 1929, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0040 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1209, 85, 84},
+        alias = {"portraits_sc_0041"}
+    },
+    portraits_sc_0042 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0043 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0044 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1548, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0045 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1639, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0046 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1730, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0047 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1821, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0048 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1912, 1209, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0049 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0050 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0051 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0052 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1569, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0053 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1659, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0054 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1749, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0055 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1839, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0056 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1275, 1929, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0057 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0058 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0059 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1548, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0060 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1639, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0061 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1730, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0062 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1821, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0063 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1912, 1299, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0064 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0065 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0066 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1569, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0067 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1659, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0068 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1749, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0069 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1839, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0070 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1366, 1929, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0071 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0072 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1548, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0073 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1639, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0074 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1730, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0075 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1821, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0076 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1912, 1389, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0077 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0078 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1569, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0079 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1659, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0080 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1749, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0081 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1839, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0082 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1457, 1929, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0083 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {18, 19, 19, 19},
+        a_size = {2048, 2048},
+        f_quad = {1548, 1479, 85, 84},
+        alias = {}
+    },
+    portraits_sc_0084 = {
+        a_name = "gui_portraits-6.dds",
+        size = {122, 122},
+        trim = {17, 17, 17, 18},
+        a_size = {2048, 2048},
+        f_quad = {174, 1898, 88, 87},
+        alias = {}
+    },
+    portraits_towers_0001 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1826, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0002 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {891, 1926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0003 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0004 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1093, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0005 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1194, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0006 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1295, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0007 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1396, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0008 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1497, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0009 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1598, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0010 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1699, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0011 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1800, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0014 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {1901, 926, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0015 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 1026, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0016 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 1126, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0017 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 1226, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0018 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 1326, 95, 94},
+        alias = {}
+    },
+    portraits_towers_0019 = {
+        a_name = "gui_portraits-6.dds",
+        size = {104, 104},
+        trim = {5, 5, 4, 5},
+        a_size = {2048, 2048},
+        f_quad = {992, 1426, 95, 94},
+        alias = {}
+    }
+}
+
 local merge_conflict_tables = require("script_utils").merge_conflict_tables
 
 local kr_all = merge_conflict_tables(kr1, kr2)
 kr_all = merge_conflict_tables(kr_all, kr3)
+kr_all = merge_conflict_tables(kr_all, kr5)
+
 return kr_all

@@ -1364,6 +1364,23 @@ local hero_room_view = {
                             pos = v(140, 95),
                             scale = v(0.85,0.85)
 						},
+                        {
+							id = "portrait_hero_hunter",
+							hidden = true,
+							class = "KView",
+							children = {
+								{
+									class = "KImageView",
+									image_name = "hero_room_portraits_big_hero_hunter_0001"
+								},{
+									id = "name_img",
+									image_name = "heroroom_bigportraits_name_0013",
+									class = "KImageView"
+								},
+							},
+                            pos = v(230, 150),
+                            scale = v(0.45,0.45)
+						},
 						{
 							id = "portrait_hero_name_label",
 							class = "HeroNameLabel",

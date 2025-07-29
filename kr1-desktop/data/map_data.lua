@@ -1413,8 +1413,9 @@ return {
         name = "hero_hunter",
         available_level = 1,
         starting_level = 1,
-        icon = 4,
-        stats = {6, 5, 0, 4}
+        icon = 52,
+        stats = {6, 5, 6, 4},
+        is_kr5 = true
     }
 },
     level_data = {{

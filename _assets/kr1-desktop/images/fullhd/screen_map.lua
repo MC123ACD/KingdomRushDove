@@ -1843,7 +1843,7 @@ return {
 		},
 		alias = {}
     },
-    	hero_room_portraits_small_thumb_hero_bird_0001 = {
+    hero_room_portraits_small_thumb_hero_bird_0001 = {
 		a_name = "room_hero-1.dds",
 		size = {
 			155,
@@ -1942,6 +1942,14 @@ return {
 		},
 		alias = {}
 	},
+    mapButtons_portrait_hero_0052 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {31, 52, 28, 23},
+        a_size = {2048, 2048},
+        f_quad = {6, 1237, 221, 185},
+        alias = {}
+    },
 	hero_room_portraits_small_thumb_hero_lumenir_0001 = {
 		a_name = "room_hero-1.dds",
 		size = {

@@ -4784,8 +4784,18 @@ function HeroRoomViewKR1:initialize(size)
 
         if selected_name and get_hero_index(selected_name) then
             local hd = screen_map.hero_data[get_hero_index(selected_name)]
+            if hd.is_kr5 then
+                screen_map.hero_icon_portrait.image_scale = 0.4
+                screen_map.hero_icon_portrait.pos.x = 60
+                screen_map.hero_icon_portrait.pos.y = 20
+            else
+                screen_map.hero_icon_portrait.pos.x = 0
+                screen_map.hero_icon_portrait.pos.y = 0
+                screen_map.hero_icon_portrait.image_scale = 1
+            end
 
-            screen_map.hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
+            screen_map.
+            hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
         else
             screen_map.hero_icon_portrait:set_image("mapButtons_portrait_hero_0010")
         end
@@ -4856,7 +4866,9 @@ function HeroRoomViewKR1:deselect_hero(name)
 
     bs.hidden = false
     bd.hidden = true
-
+    screen_map.hero_icon_portrait.image_scale = 1
+    screen_map.hero_icon_portrait.pos.x = 0
+    screen_map.hero_icon_portrait.pos.y = 0
     screen_map.hero_icon_portrait:set_image("mapButtons_portrait_hero_0010")
     local last_hero_num = #screen_map.user_data.heroes.selected
     for i, hero in pairs(screen_map.user_data.heroes.selected) do
@@ -4900,7 +4912,18 @@ function HeroRoomViewKR1:select_hero(name, silent)
         S:queue(ht.sound_events.hero_room_select)
     end
 
+    if hd.is_kr5 then
+        screen_map.hero_icon_portrait.image_scale = 0.4
+        screen_map.hero_icon_portrait.pos.x = 60
+        screen_map.hero_icon_portrait.pos.y = 20
+    else
+        screen_map.hero_icon_portrait.pos.x = 0
+        screen_map.hero_icon_portrait.pos.y = 0
+        screen_map.hero_icon_portrait.image_scale = 1
+    end
     screen_map.hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
+
+    -- screen_map.hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
 
     screen_map.hero_icon_portrait.hidden = false
 

@@ -13,6 +13,8 @@ end
 local function ady(v)
     return v - anchor_y * image_y
 end
+local balance = require("kr1.data.balance")
+local b
 require("game_templates_utils")
 
 local function heroes()
@@ -1387,7 +1389,6 @@ local function heroes()
     tt.render.sprites[1].color = {255, 100, 100}
     tt.tween.remove = false
     tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
-
 
     tt = RT("hero_hacksaw", "hero")
     AC(tt, "melee", "ranged")
@@ -4822,7 +4823,7 @@ local function heroes()
     tt.timed_attacks.list[2].hit_animations = {"leopard_hit1", "leopard_hit2", "leopard_hit3", "leopard_hit4"}
     tt.timed_attacks.list[2].hit_times = {fts(3), fts(3), fts(3), fts(3)}
     tt.timed_attacks.list[2].particle_pos = {vec_2(20, 14), vec_2(24, 22), vec_2(18, 14), vec_2(21, 18)}
-    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING,F_BOSS, F_WATER, F_CLIFF)
+    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING, F_BOSS, F_WATER, F_CLIFF)
     tt.timed_attacks.list[2].vis_flags = bor(F_STUN, F_RANGED)
     tt.timed_attacks.list[2].loops = nil
     tt.timed_attacks.list[2].range = 100
@@ -6050,7 +6051,7 @@ local function heroes()
     tt.hero.skills.nimble_fencer.xp_level_steps = {
         [1] = 1,
         [4] = 2,
-        [7] = 3,
+        [7] = 3
     }
     tt.hero.skills.porcupine = E:clone_c("hero_skill")
     tt.hero.skills.porcupine.damage_inc = {2, 4, 6, 8}
@@ -7280,12 +7281,7 @@ local function heroes()
         [7] = 3,
         [10] = 4
     }
-    tt.hero.skills.ultimate.cooldown = {
-        48,
-        43.2,
-        38.88,
-        34.992
-    }
+    tt.hero.skills.ultimate.cooldown = {48, 43.2, 38.88, 34.992}
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 46)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
@@ -7803,7 +7799,7 @@ local function heroes()
     tt = RT("hero_phoenix", "hero")
     E:add_comps(tt, "ranged", "timed_attacks", "selfdestruct")
     tt.hero.level_stats.armor = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    tt.hero.level_stats.hp_max = {530,510,490,470,450,430,410,390,370,350}
+    tt.hero.level_stats.hp_max = {530, 510, 490, 470, 450, 430, 410, 390, 370, 350}
     tt.hero.level_stats.melee_damage_max = {1, 2, 4, 4, 5, 6, 7, 8, 9, 10}
     tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
     tt.hero.level_stats.ranged_damage_min = {16, 19, 22, 24, 27, 30, 33, 35, 38, 41}
@@ -9569,7 +9565,7 @@ local function heroes()
     tt.melee.attacks[2].xp_gain_factor = 3.5
     tt.melee.attacks[2].disabled = true
     tt.melee.attacks[2].side_effect = function(this, store, attack, target)
-        scripts.heal(this, (this.health.hp_max-this.health.hp) * 0.12)
+        scripts.heal(this, (this.health.hp_max - this.health.hp) * 0.12)
     end
     tt.melee.range = 55
     tt.timed_attacks.list[1] = CC("mod_attack")
@@ -9579,7 +9575,7 @@ local function heroes()
     tt.timed_attacks.list[1].max_range = 60
     tt.timed_attacks.list[1].min_range = 0
     tt.timed_attacks.list[1].min_count = 1
-    tt.timed_attacks.list[1].mods = {"mod_bolverk_scream","mod_bolverk_fire"}
+    tt.timed_attacks.list[1].mods = {"mod_bolverk_scream", "mod_bolverk_fire"}
     tt.timed_attacks.list[1].hit_time = fts(9)
     tt.timed_attacks.list[1].sound = "ElvesHeroBolverkCry"
     tt.timed_attacks.list[1].vis_flags = F_RANGED
@@ -9620,12 +9616,12 @@ local function heroes()
     tt.dps.damage_type = DAMAGE_POISON
 
     tt = E:register_t("hero_dwarf", "hero")
-    E:add_comps(tt, "melee","timed_attacks")
+    E:add_comps(tt, "melee", "timed_attacks")
     image_y = 94
     anchor_y = 0.13
     tt.hero.level_stats.armor = {0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7}
     tt.hero.level_stats.hp_max = {285, 300, 315, 330, 345, 360, 375, 390, 405, 420}
-    tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8 , 9, 10}
+    tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
     tt.hero.level_stats.melee_damage_max = {12, 14, 16, 18, 20, 22, 24, 26, 28, 30}
     tt.hero.skills.ring = E:clone_c("hero_skill")
     tt.hero.skills.ring.xp_level_steps = {
@@ -9722,6 +9718,445 @@ local function heroes()
     tt = RT("mod_dwarf_champion_stun", "mod_stun")
     tt.modifier.vis_flags = bor(F_MOD, F_STUN)
     tt.modifier.vis_bans = bor(F_FLYING, F_BOSS)
+
+    -- kr5
+    tt = E:register_t("soldier_hero_hunter_beast", "decal_scripted")
+    E:add_comps(tt, "pos", "main_script", "attacks", "force_motion", "tween", "sound_events", "force_motion")
+    b = balance.heroes.hero_hunter.beasts
+    tt.flight_height = 50
+    tt.force_motion.max_a = 6000
+    tt.force_motion.max_v = 6000
+    tt.force_motion.ramp_radius = 30
+    tt.force_motion.fr = 0.1
+    tt.force_motion.a_step = 30
+    tt.main_script.update = scripts.soldier_hero_hunter_beast.update
+    tt.main_script.remove = scripts.soldier_hero_hunter_beast.remove
+    tt.max_distance_from_owner = b.max_distance_from_owner
+    tt.min_distance_to_attack = 30
+    tt.duration = nil
+    tt.attacks.list[1] = E:clone_c("custom_attack")
+    tt.mark_mod_duration = 1e+99
+    tt.attacks.list[1].cooldown = b.attack_cooldown
+    tt.attacks.list[1].shoot_time = fts(15)
+    tt.attacks.list[1].damage_type = DAMAGE_PHYSICAL
+    tt.attacks.list[1].vis_flags = F_RANGED
+    -- tt.attacks.list[1].vis_bans = bor(F_NIGHTMARE)
+    tt.attacks.list[1].vis_bans = 0
+    tt.attacks.list[1].range = b.attack_range
+    tt.render.sprites[1].prefix = "duskbeast"
+    tt.render.sprites[1].offset = vec_2(0, 0)
+    tt.render.sprites[1].z = Z_FLYING_HEROES
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].animated = false
+    tt.render.sprites[2].name = "decal_flying_shadow_hard"
+    tt.render.sprites[2].offset = vec_2(0, 0)
+    tt.render.sprites[2].z = Z_DECALS
+    tt.render.sprites[2].scale = vec_1(0.7)
+    tt.tween.disabled = true
+    tt.tween.remove = false
+    tt.steal_fx = "fx_hero_hunter_steal"
+    tt.chance_to_steal = b.chance_to_steal
+    tt.gold_to_steal = nil
+    tt.fx_offset_y = 60
+    tt.tween.props[1].name = "offset"
+    tt.tween.props[1].interp = "sine"
+    tt.tween.props[1].keys = {{0, vec_2(0, tt.flight_height)}, {nil, vec_2(0, tt.flight_height - 5)},
+                              {nil, vec_2(0, tt.flight_height)}}
+    tt.tween.props[1].sprite_id = 1
+    tt.tween.props[1].loop = true
+    tt.mark_mod = "mod_hero_hunter_beast_mark"
+    tt.idle_change_pos_cd = fts(8)
+    tt.idle_change_pos_offset = vec_2(35, 35)
+    tt = E:register_t("soldier_hero_hunter_ultimate", "soldier_militia")
+    E:add_comps(tt, "nav_grid", "ranged", "reinforcement", "tween")
+    tt.is_kr5 = true
+    b = balance.heroes.hero_hunter
+    tt.health_bar.offset = vec_2(0, 50)
+    tt.info.i18n_key = "HERO_HUNTER_ULTIMATE_ENTITY"
+    tt.info.enc_icon = 12
+    tt.info.portrait = "gui_bottom_info_image_soldiers_0038"
+    tt.info.fn = scripts.soldier_reinforcement.get_info
+    tt.info.random_name_format = nil
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].prefix = "dante"
+    tt.render.sprites[1].name = "Idle"
+    tt.render.sprites[1].draw_order = DO_SOLDIER_BIG
+    tt.render.sprites[1].angles.ranged = {"shoot", "shoot_diagonal_back", "shoot_diagonal"}
+    tt.render.sprites[1].angles_custom = {
+        ranged = {45, 135, 210, 315}
+    }
+    tt.render.sprites[1].angles_flip_vertical = {
+        ranged = true
+    }
+    tt.render.sprites[1].scale = vec_1(0.5)
+    tt.unit.hit_offset = vec_2(0, 16)
+    tt.unit.size = UNIT_SIZE_LARGE
+    tt.unit.fade_time_after_death = tt.health.dead_lifetime
+    tt.soldier.melee_slot_offset = vec_2(20, 0)
+    tt.health_bar.hidden = true
+    tt.health.immune_to = F_ALL
+    tt.main_script.insert = scripts.soldier_reinforcement.insert
+    tt.main_script.update = scripts.soldier_hero_hunter_ultimate.update
+    tt.regen.cooldown = 1
+    tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE, F_BLOCK, F_RANGED, F_MOD)
+    tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+    tt.tween.props[1].name = "alpha"
+    tt.tween.remove = false
+    tt.tween.reverse = false
+    tt.tween.disabled = true
+    tt.melee = nil
+    tt.ranged.attacks[1] = E:clone_c("bullet_attack")
+    tt.ranged.attacks[1].cooldown = b.ultimate.entity.basic_ranged.cooldown
+    tt.ranged.attacks[1].max_range = b.ultimate.entity.basic_ranged.max_range
+    tt.ranged.attacks[1].min_range = b.ultimate.entity.basic_ranged.min_range
+    tt.ranged.attacks[1].bullet = "bullet_hero_hunter_ultimate_ranged_attack"
+    tt.ranged.attacks[1].vis_flags = bor(F_RANGED)
+    tt.ranged.attacks[1].sound = "HeroHunterUltimateAttack"
+    tt.ranged.attacks[1].shoot_times = {fts(2), fts(9), fts(16)}
+    tt.ranged.attacks[1].loops = 1
+    tt.ranged.attacks[1].animations = {nil, "ranged"}
+    tt.ranged.attacks[1].damage_type = b.ultimate.entity.basic_ranged.damage_type
+    tt.reinforcement.duration = b.ultimate.duration
+    tt.reinforcement.fade = nil
+    tt.reinforcement.fade_out = nil
+    tt.ui.click_rect = r(-20, -5, 40, 50)
+    tt.distance_to_revive = b.ultimate.distance_to_revive
+
+    -- 安雅
+    tt = E:register_t("hero_hunter", "hero")
+    b = balance.heroes.hero_hunter
+    E:add_comps(tt, "melee", "ranged", "timed_attacks")
+    tt.is_kr5 = true
+    tt.hero.level_stats.armor = b.armor
+    tt.hero.level_stats.hp_max = b.hp_max
+    tt.hero.level_stats.melee_damage_min = b.basic_melee.damage_min
+    tt.hero.level_stats.melee_damage_max = b.basic_melee.damage_max
+    tt.hero.level_stats.ranged_damage_max = b.basic_ranged.damage_max
+    tt.hero.level_stats.ranged_damage_min = b.basic_ranged.damage_min
+    tt.hero.skills.heal_strike = E:clone_c("hero_skill")
+    tt.hero.skills.heal_strike.damage_min = b.heal_strike.damage_min
+    tt.hero.skills.heal_strike.damage_max = b.heal_strike.damage_max
+    tt.hero.skills.heal_strike.heal_factor = b.heal_strike.heal_factor
+    tt.hero.skills.heal_strike.xp_gain = b.heal_strike.xp_gain
+    tt.hero.skills.heal_strike.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.ricochet = E:clone_c("hero_skill")
+    tt.hero.skills.ricochet.cooldown = b.ricochet.cooldown
+    tt.hero.skills.ricochet.damage_min = b.ricochet.damage_min
+    tt.hero.skills.ricochet.damage_max = b.ricochet.damage_max
+    tt.hero.skills.ricochet.bounces = b.ricochet.bounces
+    tt.hero.skills.ricochet.xp_gain = b.ricochet.xp_gain
+    tt.hero.skills.ricochet.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.shoot_around = E:clone_c("hero_skill")
+    tt.hero.skills.shoot_around.cooldown = b.shoot_around.cooldown
+    tt.hero.skills.shoot_around.damage_min = b.shoot_around.damage_min
+    tt.hero.skills.shoot_around.damage_max = b.shoot_around.damage_max
+    tt.hero.skills.shoot_around.duration = b.shoot_around.duration
+    tt.hero.skills.shoot_around.xp_gain = b.shoot_around.xp_gain
+    tt.hero.skills.shoot_around.xp_level_steps = {
+        [3] = 1,
+        [6] = 2,
+        [9] = 3
+    }
+    tt.hero.skills.beasts = E:clone_c("hero_skill")
+    tt.hero.skills.beasts.cooldown = b.beasts.cooldown
+    tt.hero.skills.beasts.damage_min = b.beasts.damage_min
+    tt.hero.skills.beasts.damage_max = b.beasts.damage_max
+    tt.hero.skills.beasts.gold_to_steal = b.beasts.gold_to_steal
+    tt.hero.skills.beasts.duration = b.beasts.duration
+    tt.hero.skills.beasts.xp_gain = b.beasts.xp_gain
+    tt.hero.skills.beasts.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
+    }
+    tt.hero.skills.ultimate = E:clone_c("hero_skill")
+    tt.hero.skills.ultimate.controller_name = "controller_hero_hunter_ultimate"
+    tt.hero.skills.ultimate.cooldown = b.ultimate.cooldown
+    tt.hero.skills.ultimate.damage_min = b.ultimate.entity.basic_ranged.damage_min
+    tt.hero.skills.ultimate.damage_max = b.ultimate.entity.basic_ranged.damage_max
+    tt.hero.skills.ultimate.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.hero.skills.ultimate.xp_gain_factor = 50
+    tt.hero.fn_level_up = scripts.hero_hunter.level_up
+    tt.health.dead_lifetime = b.dead_lifetime
+    tt.health_bar.offset = vec_2(0, 40)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.info.hero_portrait = "hero_portraits_0010"
+    tt.info.ultimate_icon = "0010"
+    tt.info.i18n_key = "HERO_HUNTER"
+    tt.info.portrait = "portraits_hero_0010"
+    tt.info.stat_hp = b.stats.hp
+    tt.info.stat_armor = b.stats.armor
+    tt.info.stat_damage = b.stats.damage
+    tt.info.stat_cooldown = b.stats.cooldown
+    tt.main_script.insert = scripts.hero_hunter.insert
+    tt.main_script.update = scripts.hero_hunter.update
+    tt.motion.max_speed = b.speed
+    tt.regen.cooldown = b.regen_cooldown
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"run"}
+    tt.render.sprites[1].angles.shot = {"shoot_diagonal", "shoot_side", "shoot_diagonal_up", "shoot_up", "shoot_down"}
+    tt.render.sprites[1].angles.aim = {"aim_diagonal", "aim_side", "aim_diagonal_up", "aim_up", "aim_down"}
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].prefix = "anya"
+    tt.render.sprites[1].draw_order = DO_HEROES
+    tt.render.sprites[1].scale = vec_1(0.7)
+    tt.soldier.melee_slot_offset = vec_2(20, 0)
+    tt.sound_events.change_rally_point = "HeroHunterTaunt"
+    tt.sound_events.death = "HeroHunterDeath"
+    tt.sound_events.respawn = "HeroHunterTauntIntro"
+    tt.sound_events.hero_room_select = "HeroHunterTauntSelect"
+    tt.unit.hit_offset = vec_2(0, 14)
+    tt.unit.mod_offset = vec_2(0, 14)
+    tt.melee.range = balance.heroes.common.melee_attack_range
+    tt.melee.attacks[1] = E:clone_c("melee_attack")
+    tt.melee.attacks[1].animations = {nil, "melee_loop"}
+    tt.melee.attacks[1].cooldown = b.basic_melee.cooldown
+    tt.melee.attacks[1].shared_cooldown = b.basic_melee.cooldown
+    tt.melee.attacks[1].hit_times = {fts(7), fts(15)}
+    tt.melee.attacks[1].loops = 1
+    tt.melee.attacks[1].hit_offset = vec_2(45, 15)
+    tt.melee.attacks[1].xp_gain_factor = b.basic_melee.xp_gain_factor
+    tt.melee.attacks[1].basic_attack = true
+    tt.melee.attacks[1].sound = "MeleeSword"
+    tt.ranged.attacks[1] = E:clone_c("bullet_attack")
+    tt.ranged.attacks[1].animation = "shot"
+    tt.ranged.attacks[1].animation_aim = "aim"
+    tt.ranged.attacks[1].animation_prepare = "aim_start"
+    tt.ranged.attacks[1].bullet = "bullet_hero_hunter_ranged_attack"
+    tt.ranged.attacks[1].cooldown = b.basic_ranged.cooldown
+    tt.ranged.attacks[1].max_range = b.basic_ranged.max_range
+    tt.ranged.attacks[1].min_range = b.basic_ranged.min_range
+    tt.ranged.attacks[1].shoot_time = fts(4)
+    tt.ranged.attacks[1].vis_bans = 0
+    --  bor(F_NIGHTMARE)
+    tt.ranged.attacks[1].shared_cooldown = true
+    tt.ranged.attacks[1].basic_attack = true
+    tt.ranged.attacks[1].sound = "HeroHunterBasicAttack"
+    tt.timed_attacks.list[1] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[1].animation = "skill1"
+    tt.timed_attacks.list[1].shoot_time = fts(4)
+    tt.timed_attacks.list[1].damage_type = b.heal_strike.damage_type
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].hits_to_trigger = 6
+    tt.timed_attacks.list[1].hit_fx = "fx_hero_hunter_skill_heal_strike_hit"
+    tt.timed_attacks.list[1].hit_offset = vec_2(45, 15)
+    tt.timed_attacks.list[1].sound = "HeroHunterHealStrikeCast"
+    tt.timed_attacks.list[2] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[2].animation = "idle"
+    tt.timed_attacks.list[2].bullet = "arrow_hero_hunter_ricochet"
+    tt.timed_attacks.list[2].cooldown = tt.hero.skills.ricochet.cooldown[1]
+    tt.timed_attacks.list[2].disabled = true
+    tt.timed_attacks.list[2].xp_from_skill = "ricochet"
+    tt.timed_attacks.list[2].shoot_time = fts(0)
+    tt.timed_attacks.list[2].min_targets = b.ricochet.min_targets
+    tt.timed_attacks.list[2].max_range_trigger = b.ricochet.max_range_trigger
+    tt.timed_attacks.list[2].min_range = 0
+    tt.timed_attacks.list[2].max_range_trigger = b.ricochet.max_range_trigger
+    tt.timed_attacks.list[2].min_targets = b.ricochet.min_targets
+    tt.timed_attacks.list[2].vis_flags = bor(F_RANGED)
+    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[2].node_prediction = fts(10)
+    tt.timed_attacks.list[2].min_cooldown = 5
+    tt.timed_attacks.list[2].entity_waiting = "decal_hero_hunter_skill_ricochet_entity"
+    tt.timed_attacks.list[2].sound = "HeroHunterRicochetCast"
+    tt.timed_attacks.list[3] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[3].animations = {"argent_storm_in", "argent_storm_loop", "argent_storm_out"}
+    tt.timed_attacks.list[3].cooldown = tt.hero.skills.shoot_around.cooldown[1]
+    tt.timed_attacks.list[3].disabled = true
+    tt.timed_attacks.list[3].cast_time = fts(15)
+    tt.timed_attacks.list[3].max_range = b.shoot_around.max_range
+    tt.timed_attacks.list[3].min_targets = b.shoot_around.min_targets
+    tt.timed_attacks.list[3].aura = "aura_hero_hunter_shoot_around"
+    tt.timed_attacks.list[3].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[3].fx = "fx_hero_builder_demolition_man"
+    tt.timed_attacks.list[3].min_cooldown = 5
+    tt.timed_attacks.list[3].min_fight_cooldown = 2
+    tt.timed_attacks.list[3].sound = "HeroHunterShootAroundCast"
+    tt.timed_attacks.list[3].sound_interrupt = "HeroHunterShootAroundInterrupt"
+    tt.timed_attacks.list[4] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[4].animation = "dusk_beasts"
+    tt.timed_attacks.list[4].cooldown = tt.hero.skills.beasts.cooldown[1]
+    tt.timed_attacks.list[4].disabled = true
+    tt.timed_attacks.list[4].cast_time = fts(15)
+    tt.timed_attacks.list[4].max_range = b.shoot_around.max_range
+    tt.timed_attacks.list[4].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[4].vis_flags = bor(F_RANGED)
+    tt.timed_attacks.list[4].min_cooldown = 5
+    tt.timed_attacks.list[4].entity = "soldier_hero_hunter_beast"
+    tt.timed_attacks.list[4].spawn_offset_y = 0
+    tt.timed_attacks.list[4].spawn_offset_x = 30
+    tt.timed_attacks.list[4].sound = "HeroHunterBeastsCast"
+    tt.ui.click_rect = r(-20, -5, 40, 40)
+    tt.vis.bans = bor(F_POLYMORPH, F_DISINTEGRATED, F_CANNIBALIZE, F_SKELETON, F_BLOOD, F_POISON)
+    tt.flywalk = {}
+    tt.flywalk.min_distance = b.distance_to_flywalk
+    tt.flywalk.extra_speed = b.flywalk_speed
+    tt.flywalk.animations = {"mist_run_in", "mist_run_loop", "mist_run_end"}
+    tt.flywalk.sound = "HeroHunterRicochetCast"
+    tt.flywalk.trail = "ps_hero_hunter_walk_trail"
+    tt.ultimate = {
+        ts = 0,
+        death_triger_ts = 0,
+        disabled = true
+    }
+
+    tt = E:register_t("bullet_hero_hunter_ranged_attack", "bullet")
+    b = balance.heroes.hero_hunter.basic_ranged
+    tt.bullet.hit_fx = "fx_hero_hunter_skill_heal_strike_hit"
+    tt.bullet.flight_time = fts(2)
+    tt.bullet.damage_type = DAMAGE_SHOT
+    tt.bullet.damage_max = nil
+    tt.bullet.damage_min = nil
+    -- tt.bullet.damage_max_config = nil
+    -- tt.bullet.damage_min_config = b.damage_min
+    tt.bullet.level = 1
+    tt.bullet.xp_gain_factor = b.xp_gain_factor
+    tt.render = nil
+    tt.main_script.update = scripts.bullet_hero_hunter_ranged_attack.update
+    tt = E:register_t("arrow_hero_hunter_ricochet", "bullet")
+    b = balance.heroes.hero_hunter.ricochet
+    tt.main_script.update = scripts.arrow_hero_hunter_ricochet.update
+    tt.bullet.damage_type = b.damage_type
+    tt.bullet.damage_min = nil
+    tt.bullet.damage_max = nil
+    tt.bullet.vis_flags = F_RANGED
+    tt.bullet.vis_bans = 0
+    tt.bullet.hit_time = fts(2)
+    tt.render = nil
+    tt.bounces = nil
+    tt.bounce_range = b.bounce_range
+    tt.track_target = true
+    tt.ray_duration = fts(3)
+    tt.time_between_bounces = fts(2)
+    tt.bullet.mods = {"mod_hero_hunter_ricochet_attack", "mod_hero_hunter_ricochet_stun"}
+    tt.trail_arrow = "arrow_hero_hunter_ricochet_trail"
+    tt.sound_bounce = "HeroHunterRicochetBounce"
+    tt = E:register_t("arrow_hero_hunter_ricochet_trail", "bullet")
+    b = balance.heroes.hero_hunter.ricochet
+    tt.main_script.update = scripts.arrow_hero_hunter_ricochet_trail.update
+    tt.image_width = 137
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].name = "mistystep_trailbetweenclones_run"
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].animated = true
+    tt.track_target = true
+    tt.ray_duration = fts(12)
+    tt = E:register_t("bullet_hero_hunter_ultimate_ranged_attack", "bullet")
+    b = balance.heroes.hero_hunter
+    tt.bullet.hit_fx = "fx_hero_hunter_ultimate_hit"
+    tt.bullet.flight_time = fts(2)
+    tt.bullet.damage_type = DAMAGE_PHYSICAL
+    tt.bullet.damage_max = nil
+    tt.bullet.damage_min = nil
+    tt.bullet.damage_max_config = b.ultimate.entity.basic_ranged.damage_max
+    tt.bullet.damage_min_config = b.ultimate.entity.basic_ranged.damage_min
+    tt.bullet.level = 1
+    tt.render = nil
+    tt.main_script.update = scripts.bullet_hero_hunter_ultimate_ranged_attack.update
+
+    tt = E:register_t("aura_hero_hunter_shoot_around", "aura")
+    b = balance.heroes.hero_hunter.shoot_around
+    tt.aura.duration = nil
+    tt.aura.damage_min = nil
+    tt.aura.damage_max = nil
+    tt.aura.damage_type = b.damage_type
+    tt.aura.track_source = true
+    tt.aura.cycle_time = b.damage_every
+    tt.aura.radius = b.radius
+    tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.aura.vis_flags = F_RANGED
+    tt.main_script.update = scripts.aura_hero_hunter_shoot_around.update
+    tt.aura.mods = {"mod_hero_hunter_skill_shoot_around_hit_fx"}
+    tt.fx = "fx_hero_hunter_skill_shoot_around_decal"
+    tt.fx_every = fts(15)
+    tt.fx_amount = 3
+    tt = E:register_t("aura_hero_hunter_ultimate", "aura")
+    b = balance.heroes.hero_hunter.ultimate
+
+    E:add_comps(tt, "render")
+
+    tt.aura.mod = "mod_hero_hunter_ultimate_slow"
+    tt.aura.radius = b.slow_radius
+    tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.aura.vis_flags = F_RANGED
+    tt.aura.cycle_time = fts(5)
+    tt.aura.duration = b.duration
+    tt.aura.track_source = true
+    tt.aura.use_mod_offset = false
+    tt.render.sprites[1].name = "dante_decal_Idle"
+    tt.render.sprites[1].animated = true
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[1].loop = true
+    tt.main_script.insert = scripts.aura_apply_mod.insert
+    tt.main_script.update = scripts.aura_apply_mod.update
+
+    tt = E:register_t("mod_hero_hunter_skill_shoot_around_hit_fx", "modifier")
+
+    E:add_comps(tt, "render")
+
+    tt.render.sprites[1].name = "shothit_run"
+    tt.main_script.insert = scripts.mod_track_target.insert
+    tt.main_script.remove = scripts.mod_track_target.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.modifier.duration = fts(10)
+    tt = E:register_t("mod_hero_hunter_ricochet_attack", "modifier")
+    b = balance.heroes.hero_hunter.ricochet
+
+    E:add_comps(tt, "render", "tween")
+
+    tt.render.sprites[1].name = "mistystep_clone1_run"
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.28)
+    tt.main_script.insert = scripts.mod_track_target.insert
+    tt.main_script.remove = scripts.mod_track_target.remove
+    tt.main_script.update = scripts.mod_hero_hunter_ricochet_attack.update
+    tt.modifier.duration = fts(8)
+    tt.modifier.use_mod_offset = true
+    tt.animations = {"mistystep_clone1_run", "mistystep_clone2_run", "mistystep_clone3_run"}
+    tt.enemy_distance = 30
+    tt.hit_delay = fts(3)
+    tt.damage_type = b.damage_type
+    tt.damage_min = nil
+    tt.damage_max = nil
+    tt.tween.props[1].keys = {{0, 255}, {tt.modifier.duration - fts(4), 255}, {tt.modifier.duration, 0}}
+    tt = E:register_t("mod_hero_hunter_ricochet_stun", "mod_stun")
+    tt.modifier.duration = fts(9)
+    tt = E:register_t("mod_hero_hunter_beast_mark", "modifier")
+
+    E:add_comps(tt, "mark_flags")
+
+    tt.mark_flags.vis_bans = F_CUSTOM
+    tt.main_script.queue = scripts.mod_mark_flags.queue
+    tt.main_script.dequeue = scripts.mod_mark_flags.dequeue
+    tt.main_script.update = scripts.soldier_hero_hunter_beast_mark.update
+    tt = E:register_t("mod_hero_hunter_ultimate_slow", "mod_slow")
+    b = balance.heroes.hero_hunter.ultimate
+    tt.slow.factor = b.slow_factor
+    tt.modifier.duration = b.slow_duration
+
+    tt = E:register_t("controller_hero_hunter_ultimate")
+
+    E:add_comps(tt, "pos", "main_script", "sound_events")
+
+    -- tt.can_fire_fn = scripts.hero_hunter_ultimate.can_fire_fn
+    tt.cooldown = nil
+    tt.entity = "soldier_hero_hunter_ultimate"
+    tt.aura = "aura_hero_hunter_ultimate"
+    tt.main_script.update = scripts.hero_hunter_ultimate.update
+    tt.sound = "HeroHunterUltimateCast"
+
 end
 
 return heroes

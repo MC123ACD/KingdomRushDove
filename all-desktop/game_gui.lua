@@ -1883,7 +1883,13 @@ function HeroPortrait:initialize(hero_entity)
     self.disabled_tint_color = {200, 200, 200, 255}
     self.hero_id = hero_entity.id
     self.portrait_image_name = hero_entity.info.hero_portrait
-    self.portrait = KImageView:new(hero_entity.info.hero_portrait)
+    if hero_entity.is_kr5 then
+        self.portrait = KImageView:new(self.portrait_image_name, nil, 0.51)
+        self.portrait.pos.y = self.portrait.pos.y - 10
+    else
+        self.portrait = KImageView:new(self.portrait_image_name)
+    end
+
     self.portrait.propagate_on_click = true
 
     self:add_child(self.portrait)
@@ -3043,7 +3049,15 @@ function InfoBar:update_portrait()
     if self.v_portrait_image_name ~= e.info.portrait then
         if e.info.portrait then
             self.v_portrait:set_image(e.info.portrait)
-
+            if e.is_kr5 then
+                self.v_portrait.image_scale = 0.65
+                self.v_portrait.pos.x = 68
+                self.v_portrait.pos.y = 45
+            else
+                self.v_portrait.image_scale = 1
+                self.v_portrait.pos.x = 61
+                self.v_portrait.pos.y = 32
+            end
             self.v_portrait.hidden = false
             self.v_portrait_image_name = e.info.portrait
         else

@@ -1,6 +1,7 @@
 _assets/all-desktop
 _assets/kr1-desktop/icons
 _assets/kr1-desktop/images/fullhd/*.png
+_assets/kr1-desktop/images/fullhd/*.dds
 _assets/kr1-desktop/sounds/files
 _assets/kr1-desktop/strings/de.lua
 _assets/kr1-desktop/strings/en.lua
@@ -13,6 +14,7 @@ _assets/kr1-desktop/strings/pt.lua
 _assets/kr1-desktop/strings/ru.lua
 _assets/kr1-desktop/strings/zh-Hant.lua
 mdbuild/
+tmp/
 kr1-desktop/data/comics
 patches/config.lua
 英雄明细.pdf
