@@ -392,41 +392,44 @@ function game_gui:init(w, h, game)
     self.is_premium = PS.services.iap and PS.services.iap:is_premium()
 
     local settings = storage:load_settings()
-
-    self.pause_on_switch = settings.pause_on_switch
-    self.key_shortcuts = {}
-    self.key_shortcuts.pow_1 = settings.key_pow_1 or KEYPRESS_1
-    self.key_shortcuts.pow_2 = settings.key_pow_2 or KEYPRESS_2
-    self.key_shortcuts.pow_3 = settings.key_pow_3 or KEYPRESS_3
-    self.key_shortcuts.hero_1 = KEYPRESS_A
-    self.key_shortcuts.hero_2 = KEYPRESS_D
-    self.key_shortcuts.hero_no_panel_1 = KEYPRESS_S
-    self.key_shortcuts.hero_no_panel_2 = KEYPRESS_Q
-    self.key_shortcuts.hero_no_panel_3 = KEYPRESS_R
-    self.key_shortcuts.controable = KEYPRESS_F
-    self.key_shortcuts.bag = settings.key_wave or KEYPRESS_Q
-    self.key_shortcuts.wave = settings.key_wave or KEYPRESS_W
-    self.key_shortcuts.slow = KEYPRESS_4
-    self.key_shortcuts.quick = KEYPRESS_5
-
-    if IS_KR1 or IS_KR2 then
-        self.key_shortcuts.item_coins = settings.key_item_coins or KEYPRESS_F1
-        self.key_shortcuts.item_hearts = settings.key_item_hearts or KEYPRESS_F2
-        self.key_shortcuts.item_freeze = settings.key_item_freeze or KEYPRESS_F3
-        self.key_shortcuts.item_dynamite = settings.key_item_dynamite or KEYPRESS_F4
-        self.key_shortcuts.item_atomic_freeze = settings.key_item_atomic_freeze or KEYPRESS_F5
-        self.key_shortcuts.item_atomic_bomb = settings.key_item_atomic_bomb or KEYPRESS_F6
-        self.key_shortcuts.all_items = {
-            [self.key_shortcuts.item_coins] = "coins",
-            [self.key_shortcuts.item_hearts] = "hearts",
-            [self.key_shortcuts.item_freeze] = "freeze",
-            [self.key_shortcuts.item_dynamite] = "dynamite",
-            [self.key_shortcuts.item_atomic_freeze] = "atomic_freeze",
-            [self.key_shortcuts.item_atomic_bomb] = "atomic_bomb"
-        }
-    else
-        log.error("TODO: add KR3 items shortcuts")
+    self.key_shortcuts = LU.eval_file("patches/keyset_custom.lua")
+    if not self.key_shortcuts then
+        self.key_shortcuts = LU.eval_file("patches/keyset_default.lua")
     end
+    self.pause_on_switch = settings.pause_on_switch
+    -- self.key_shortcuts = {}
+    -- self.key_shortcuts.pow_1 = settings.key_pow_1 or KEYPRESS_1
+    -- self.key_shortcuts.pow_2 = settings.key_pow_2 or KEYPRESS_2
+    -- self.key_shortcuts.pow_3 = settings.key_pow_3 or KEYPRESS_3
+    -- self.key_shortcuts.hero_1 = KEYPRESS_A
+    -- self.key_shortcuts.hero_2 = KEYPRESS_D
+    -- self.key_shortcuts.hero_3 = KEYPRESS_S
+    -- self.key_shortcuts.hero_4 = KEYPRESS_Q
+    -- self.key_shortcuts.hero_5 = KEYPRESS_R
+    -- self.key_shortcuts.reinforce = KEYPRESS_F
+    -- self.key_shortcuts.bag = settings.key_wave or KEYPRESS_Q
+    -- self.key_shortcuts.next_wave = settings.key_wave or KEYPRESS_W
+    -- self.key_shortcuts.slow = KEYPRESS_4
+    -- self.key_shortcuts.quick = KEYPRESS_5
+
+    -- if IS_KR1 or IS_KR2 then
+    --     self.key_shortcuts.item_coins = settings.key_item_coins or KEYPRESS_F1
+    --     self.key_shortcuts.item_hearts = settings.key_item_hearts or KEYPRESS_F2
+    --     self.key_shortcuts.item_freeze = settings.key_item_freeze or KEYPRESS_F3
+    --     self.key_shortcuts.item_dynamite = settings.key_item_dynamite or KEYPRESS_F4
+    --     self.key_shortcuts.item_atomic_freeze = settings.key_item_atomic_freeze or KEYPRESS_F5
+    --     self.key_shortcuts.item_atomic_bomb = settings.key_item_atomic_bomb or KEYPRESS_F6
+    --     self.key_shortcuts.all_items = {
+    --         [self.key_shortcuts.item_coins] = "coins",
+    --         [self.key_shortcuts.item_hearts] = "hearts",
+    --         [self.key_shortcuts.item_freeze] = "freeze",
+    --         [self.key_shortcuts.item_dynamite] = "dynamite",
+    --         [self.key_shortcuts.item_atomic_freeze] = "atomic_freeze",
+    --         [self.key_shortcuts.item_atomic_bomb] = "atomic_bomb"
+    --     }
+    -- else
+    --     log.error("TODO: add KR3 items shortcuts")
+    -- end
 
     local window = KWindow:new(V.v(sw, sh))
 
@@ -976,21 +979,21 @@ function game_gui:keypressed(key, isrepeat)
 
     local ks = self.key_shortcuts
 
-    if key == ks.pow_1 and not self.power_1:is_disabled() then
+    if table.contains(ks.pow_1, key) and not self.power_1:is_disabled() then
         self.power_1:toggle_selection()
-    elseif key == ks.pow_2 and not self.power_2:is_disabled() then
+    elseif table.contains(ks.pow_2, key) and not self.power_2:is_disabled() then
         self.power_2:toggle_selection()
-    elseif IS_KR3 and key == ks.pow_3 and not self.power_3:is_disabled() then
-        self.power_3:toggle_selection()
-    elseif key == KEYPRESS_SPACE or key == ks.hero_1 then
+    -- elseif IS_KR3 and key == ks.pow_3 and not self.power_3:is_disabled() then
+    --     self.power_3:toggle_selection()
+    elseif table.contains(ks.hero_1, key) then
         if self.heroes and self.heroes[1] then
             self.heroes[1]:on_click(1, 0, 0)
         end
-    elseif key == ks.hero_2 then
+    elseif table.contains(ks.hero_2, key) then
         if self.heroes and self.heroes[2] then
             self.heroes[2]:on_click(1, 0, 0)
         end
-    elseif key == ks.hero_no_panel_1 then
+    elseif table.contains(ks.hero_3, key) then
         if self.heroes_no_panel and self.heroes_no_panel[1] then
             local e = game_gui:entity_by_id(self.heroes_no_panel[1].id)
             if e == game_gui.selected_entity then
@@ -1000,7 +1003,7 @@ function game_gui:keypressed(key, isrepeat)
                 game_gui:select_entity(e)
             end
         end
-    elseif key == ks.hero_no_panel_2 then
+    elseif table.contains(ks.hero_4, key) then
         if self.heroes_no_panel and self.heroes_no_panel[2] then
             local e = game_gui:entity_by_id(self.heroes_no_panel[2].id)
             if e == game_gui.selected_entity then
@@ -1010,7 +1013,7 @@ function game_gui:keypressed(key, isrepeat)
                 game_gui:select_entity(e)
             end
         end
-    elseif key == ks.hero_no_panel_3 then
+    elseif table.contains(ks.hero_5, key) then
         if self.heroes_no_panel and self.heroes_no_panel[3] then
             local e = game_gui:entity_by_id(self.heroes_no_panel[3].id)
             if e == game_gui.selected_entity then
@@ -1020,52 +1023,52 @@ function game_gui:keypressed(key, isrepeat)
                 game_gui:select_entity(e)
             end
         end
-    elseif key == ks.controable then
+    elseif table.contains(ks.reinforce, key) then
         if #self.selected_controables > 0 then
             self:deselect_controables()
         else
-            for _, e in pairs(self.game.simulation.store.entities) do
+            for _, e in pairs(self.game.simulation.store.soldiers) do
                 if e.controable and not e.health.dead and not e.ban_global_control then
                     self:select_controable(e)
                 end
             end
             self:set_mode(GUI_MODE_RALLY_CONTROABLES)
         end
-    elseif key == ks.slow then
+    elseif table.contains(ks.slow, key) then
         if self.game.simulation.store.speed_factor ~= 0.5 then
             self.game.simulation.store.speed_factor = 0.5
         else
             self.game.simulation.store.speed_factor = 1
         end
-    elseif key == ks.quick then
+    elseif table.contains(ks.quick, key) then
         if self.game.simulation.store.speed_factor ~= 2 then
             self.game.simulation.store.speed_factor = 2
         else
             self.game.simulation.store.speed_factor = 1
         end
-    elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
-        if self.bag_button and not self.bag_button:is_disabled() then
-            self.bag_button:on_click()
-        end
-    elseif key == KEYPRESS_RETURN or not game.DBG_ENEMY_PAGES and key == ks.wave then
+    -- elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
+    --     if self.bag_button and not self.bag_button:is_disabled() then
+    --         self.bag_button:on_click()
+    --     end
+    elseif table.contains(ks.next_wave, key) then
         if not self.next_wave_button:is_disabled() then
             game_gui.game.store.send_next_wave = true
         end
-    elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
-        table.contains(table.keys(ks.all_items), key) then
-        local bb = self.bag_button
-        local item = ks.all_items[key]
-        local last_selected_item = bb.selected_item
+    -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
+    --     table.contains(table.keys(ks.all_items), key) then
+    --     local bb = self.bag_button
+    --     local item = ks.all_items[key]
+    --     local last_selected_item = bb.selected_item
 
-        self:deselect_all()
+    --     self:deselect_all()
 
-        if last_selected_item ~= item then
-            local ib = wid("bag_item_" .. item)
+    --     if last_selected_item ~= item then
+    --         local ib = wid("bag_item_" .. item)
 
-            if ib and not ib:is_disabled() then
-                bb:select_item(item)
-            end
-        end
+    --         if ib and not ib:is_disabled() then
+    --             bb:select_item(item)
+    --         end
+    --     end
     end
 end
 

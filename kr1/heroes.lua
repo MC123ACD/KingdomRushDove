@@ -4470,6 +4470,7 @@ local function heroes()
     tt.ranged.attacks[1].cooldown = 4.8 + fts(28)
     tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].max_range = 125
+    tt.ranged.attacks[1].mod = "mod_slow_alien_glaive"
     tt.ranged.attacks[1].shoot_time = fts(13)
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(22, 16)}
     tt.timed_attacks.list[1] = E:clone_c("spawn_attack")
@@ -4507,10 +4508,14 @@ local function heroes()
     tt.selfdestruct.xp_from_skill = "finalcountdown"
     tt.selfdestruct.mod = "mod_alien_selfdestruct"
 
+    tt = E:register_t("mod_slow_alien_glaive", "mod_slow")
+    tt.modifier.duration = 2
+    tt.slow.factor = 0.65
+
     tt = E:register_t("mod_alien_selfdestruct", "mod_stun")
     tt.modifier.vis_flags = bor(F_MOD, F_STUN)
     tt.modifier.vis_bans = bor(F_BOSS)
-    tt.modifier.duration = 1
+    tt.modifier.duration = 1.5
 
     tt = E:register_t("alien_glaive", "bullet")
     tt.main_script.update = scripts.alien_glaive.update
