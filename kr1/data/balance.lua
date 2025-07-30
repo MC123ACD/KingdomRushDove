@@ -1103,6 +1103,11 @@ local heroes = {
 			entity = {
 				range = 90,
 				duration = 12,
+                hp_max = {
+                    60,
+                    120,
+                    180
+                },
 				basic_melee = {
 					cooldown = 1,
 					damage_type = DAMAGE_MAGICAL,
@@ -1139,14 +1144,14 @@ local heroes = {
 			range = 200,
 			explosion_range = 80,
 			xp_gain = {
-				144,
-				288,
-				432
+				120,
+				240,
+				360
 			},
 			cooldown = {
 				18,
-				18,
-				18
+				17,
+				16
 			},
 			duration = {
 				6,
@@ -1163,10 +1168,10 @@ local heroes = {
 				78,
 				117
 			},
-			explosion_damage_type = DAMAGE_MAGICAL
+			explosion_damage_type = DAMAGE_MAGICAL_EXPLOSION
 		},
 		void_rift = {
-			radius = 130,
+			radius = 120,
 			min_targets = 2,
 			max_range_effect = 300,
 			max_range_trigger = 200,
@@ -1201,13 +1206,13 @@ local heroes = {
 				6,
 				6
 			},
-			damage_type = DAMAGE_MAGICAL
+			damage_type = DAMAGE_MAGICAL_EXPLOSION
 		},
 		spatial_distortion = {
 			cooldown = {
 				25,
-				25,
-				25
+				23,
+				20
 			},
 			duration = {
 				6,
@@ -1220,10 +1225,20 @@ local heroes = {
 				600
 			},
 			range_factor = {
-				1.1,
-				1.12,
-				1.15
+				1.04,
+				1.05,
+				1.06
 			},
+            damage_factor = {
+                1.04,
+                1.05,
+                1.06
+            },
+            cooldown_factor = {
+                1.04,
+                1.05,
+                1.06
+            },
 			s_range_factor = {
 				0.1,
 				0.12,

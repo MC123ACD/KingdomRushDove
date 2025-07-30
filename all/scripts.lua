@@ -5466,17 +5466,15 @@ function scripts.mod_tower_factors.insert(this, store)
     end
 
     if this.range_factor then
-        if target.attacks then
-            target.attacks.range = target.attacks.range * this.range_factor
-        end
-
-        if target.barrack then
-            target.barrack.rally_range = target.barrack.rally_range * this.range_factor
-        end
+        SU.insert_tower_range_buff(target, this.range_factor, true)
     end
 
     if this.damage_factor then
-        target.tower.damage_factor = target.tower.damage_factor * this.damage_factor
+        SU.insert_tower_damage_factor_buff(target, this.damage_factor - 1)
+    end
+
+    if this.cooldown_factor then
+        SU.insert_tower_cooldown_buff(target, this.cooldown_factor)
     end
 
     signal.emit("mod-applied", this, target)
@@ -5495,17 +5493,15 @@ function scripts.mod_tower_factors.remove(this, store)
     end
 
     if this.range_factor then
-        if target.attacks then
-            target.attacks.range = target.attacks.range / this.range_factor
-        end
-
-        if target.barrack then
-            target.barrack.rally_range = target.barrack.rally_range / this.range_factor
-        end
+        SU.remove_tower_range_buff(target, this.range_factor, true)
     end
 
     if this.damage_factor then
-        target.tower.damage_factor = target.tower.damage_factor / this.damage_factor
+        SU.remove_tower_damage_factor_buff(target, this.damage_factor - 1)
+    end
+
+    if this.cooldown_factor then
+        SU.remove_tower_cooldown_buff(target, this.cooldown_factor)
     end
 
     return true

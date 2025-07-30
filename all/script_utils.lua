@@ -3693,6 +3693,7 @@ local function merge_conflict_tables(t1, t2)
     return merged
 end
 
+-- 乘算
 local function insert_tower_range_buff(target, range_factor, allow_barrack)
     if not target then
         return
@@ -3713,6 +3714,7 @@ local function insert_tower_range_buff(target, range_factor, allow_barrack)
 
 end
 
+-- 乘算
 local function insert_tower_cooldown_buff(target, cooldown_factor)
     if not target then
         return

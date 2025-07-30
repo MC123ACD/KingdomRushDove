@@ -16312,8 +16312,6 @@ return function(scripts)
                 return
             end
 
-            SU.soldier_courage_upgrade(store, this)
-
             while this.nav_rally.new do
                 if SU.y_hero_new_rally(store, this) then
                     goto label_367_0
@@ -16391,6 +16389,8 @@ return function(scripts)
 
             modifier.modifier.duration = s.duration[s.level]
             modifier.range_factor = s.range_factor[s.level]
+            modifier.damage_factor = s.damage_factor[s.level]
+            modifier.cooldown_factor = s.cooldown_factor[s.level]
             modifier.tween.props[1].keys[2][1] = modifier.fade_duration
             modifier.tween.props[1].keys[3][1] = s.duration[s.level] - modifier.fade_duration
             modifier.tween.props[1].keys[4][1] = s.duration[s.level]

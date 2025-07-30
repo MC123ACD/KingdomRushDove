@@ -9779,15 +9779,17 @@ local function heroes()
     tt.mark_mod = "mod_hero_hunter_beast_mark"
     tt.idle_change_pos_cd = fts(8)
     tt.idle_change_pos_offset = vec_2(35, 35)
+
     tt = E:register_t("soldier_hero_hunter_ultimate", "soldier_militia")
     E:add_comps(tt, "nav_grid", "ranged", "reinforcement", "tween")
+    tt.controable = true
+    tt.ban_global_control = true
     tt.is_kr5 = true
     b = balance.heroes.hero_hunter
     tt.health_bar.offset = vec_2(0, 50)
     tt.info.i18n_key = "HERO_HUNTER_ULTIMATE_ENTITY"
     tt.info.enc_icon = 12
     tt.info.portrait = "gui_bottom_info_image_soldiers_0038"
-    tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.info.random_name_format = nil
     tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
     tt.render.sprites[1].prefix = "dante"
@@ -10065,7 +10067,7 @@ local function heroes()
     b = balance.heroes.hero_hunter
     tt.bullet.hit_fx = "fx_hero_hunter_ultimate_hit"
     tt.bullet.flight_time = fts(2)
-    tt.bullet.damage_type = DAMAGE_PHYSICAL
+    tt.bullet.damage_type = DAMAGE_TRUE
     tt.bullet.damage_max = nil
     tt.bullet.damage_min = nil
     tt.bullet.damage_max_config = b.ultimate.entity.basic_ranged.damage_max
@@ -10206,6 +10208,8 @@ local function heroes()
     tt.hero.skills.spatial_distortion.cooldown = b.spatial_distortion.cooldown
     tt.hero.skills.spatial_distortion.duration = b.spatial_distortion.duration
     tt.hero.skills.spatial_distortion.range_factor = b.spatial_distortion.range_factor
+    tt.hero.skills.spatial_distortion.damage_factor = b.spatial_distortion.damage_factor
+    tt.hero.skills.spatial_distortion.cooldown_factor = b.spatial_distortion.cooldown_factor
     tt.hero.skills.spatial_distortion.xp_gain = b.spatial_distortion.xp_gain
     tt.hero.skills.spatial_distortion.xp_level_steps = {
         [2] = 1,
@@ -10341,13 +10345,14 @@ local function heroes()
     }
 
     tt = E:register_t("soldier_hero_space_elf_astral_reflection", "soldier_militia")
-    E:add_comps(tt, "melee", "ranged", "reinforcement", "tween", "transfer", "timed_attacks")
+    E:add_comps(tt, "melee", "ranged", "reinforcement", "tween", "transfer", "timed_attacks", "nav_grid")
     b = balance.heroes.hero_space_elf
+    tt.controable = true
+    tt.ban_global_control = true
     tt.is_kr5 = true
     tt.info.i18n_key = "HERO_SPACE_ELF_ASTRAL_REFLECTION_ENTITY"
     tt.info.enc_icon = 12
     tt.info.portrait = "portraits_hero_0002ar"
-    tt.info.fn = scripts.soldier_reinforcement.get_info
     tt.info.random_name_format = nil
     tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
     tt.render.sprites[1].prefix = "hero_therien_reflection"
@@ -10400,19 +10405,21 @@ local function heroes()
     tt.melee.attacks[1].damage_max = b.astral_reflection.entity.basic_melee.damage_max[1]
     tt.ranged.attacks[1].damage_min = b.astral_reflection.entity.basic_ranged.damage_min[1]
     tt.ranged.attacks[1].damage_max = b.astral_reflection.entity.basic_ranged.damage_max[1]
+    tt.health.hp_max = b.astral_reflection.entity.hp_max[1]
     tt = E:register_t("soldier_hero_space_elf_astral_reflection_2", "soldier_hero_space_elf_astral_reflection")
     b = balance.heroes.hero_space_elf
     tt.melee.attacks[1].damage_min = b.astral_reflection.entity.basic_melee.damage_min[2]
     tt.melee.attacks[1].damage_max = b.astral_reflection.entity.basic_melee.damage_max[2]
     tt.ranged.attacks[1].damage_min = b.astral_reflection.entity.basic_ranged.damage_min[2]
     tt.ranged.attacks[1].damage_max = b.astral_reflection.entity.basic_ranged.damage_max[2]
+    tt.health.hp_max = b.astral_reflection.entity.hp_max[2]
     tt = E:register_t("soldier_hero_space_elf_astral_reflection_3", "soldier_hero_space_elf_astral_reflection")
     b = balance.heroes.hero_space_elf
     tt.melee.attacks[1].damage_min = b.astral_reflection.entity.basic_melee.damage_min[3]
     tt.melee.attacks[1].damage_max = b.astral_reflection.entity.basic_melee.damage_max[3]
     tt.ranged.attacks[1].damage_min = b.astral_reflection.entity.basic_ranged.damage_min[3]
     tt.ranged.attacks[1].damage_max = b.astral_reflection.entity.basic_ranged.damage_max[3]
-
+    tt.health.hp_max = b.astral_reflection.entity.hp_max[3]
     tt = E:register_t("bolt_hero_space_elf_basic_attack", "bolt")
     b = balance.heroes.hero_space_elf
     tt.render.sprites[1].prefix = "hero_therien_ranged_proyectile"
@@ -10523,7 +10530,8 @@ local function heroes()
     tt.main_script.remove = scripts.mod_tower_factors.remove
     tt.main_script.update = scripts.mod_tower_factors.update
     tt.modifier.duration = nil
-    tt.range_factor = nil
+    tt.range_factor = 1
+    tt.cooldown_factor = 1
     tt.damage_factor = 1
     tt.render.sprites[1].name = "hero_therien_space_warp_idle"
     tt.render.sprites[1].animated = true
