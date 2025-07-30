@@ -973,6 +973,7 @@ local function y_hero_death_and_respawn(store, this)
     h.dead = false
     h.hp = h.hp_max
     h.ignore_damage = false
+    this.force_respawn = false
 end
 
 local function y_reinforcement_fade_in(store, this)

@@ -14737,6 +14737,8 @@ return function(scripts)
             bullet.bullet.damage_max = s.damage_max[s.level]
 
             uc.level = s.level
+            local mod = E:get_template("mod_anya_ultimate_beacon")
+            mod.inflicted_damage_factor = 1.5 + s.level * 0.5
         end)
 
         this.health.hp = this.health.hp_max
@@ -14822,6 +14824,8 @@ return function(scripts)
             bullet.bullet.xp_dest_id = this.id
             bullet.bullet.level = attack.level
             bullet.bullet.damage_factor = this.unit.damage_factor
+            bullet.bullet.damage_min = bullet.bullet.damage_min + this.damage_buff
+            bullet.bullet.damage_max = bullet.bullet.damage_max + this.damage_buff
 
             queue_insert(store, bullet)
 
@@ -14950,7 +14954,8 @@ return function(scripts)
             bullet.bullet.xp_dest_id = this.id
             bullet.bullet.level = this.hero.level
             bullet.bullet.damage_factor = this.unit.damage_factor
-
+            bullet.bullet.damage_min = attack.damage_min + this.damage_buff
+            bullet.bullet.damage_max = attack.damage_max + this.damage_buff
             queue_insert(store, bullet)
 
             if attack.xp_from_skill then
@@ -15038,6 +15043,7 @@ return function(scripts)
                         ultimate_entity.pos = V.vclone(this.pos)
                         ultimate_entity.level = this.hero.skills.ultimate.level
                         ultimate_entity.damage_factor = this.unit.damage_factor
+                        ultimate_entity.owner_id = this.id
                         queue_insert(store, ultimate_entity)
                         this.ultimate.death_triger_ts = store.tick_ts
                     end
@@ -15189,6 +15195,7 @@ return function(scripts)
                         ultimate_entity.pos = V.vclone(enemy.pos)
                         ultimate_entity.level = this.hero.skills.ultimate.level
                         ultimate_entity.damage_factor = this.unit.damage_factor
+                        ultimate_entity.owner_id = this.id
                         queue_insert(store, ultimate_entity)
                         this.ultimate.ts = store.tick_ts
                         SU.hero_gain_xp_from_skill(this, this.hero.skills.ultimate)
@@ -15312,7 +15319,7 @@ return function(scripts)
                             aura.aura.source_id = this.id
                             aura.aura.ts = store.tick_ts
                             aura.pos = this.pos
-
+                            aura.aura.damage_factor = this.unit.damage_factor
                             queue_insert(store, aura)
                             U.animation_start(this, a.animations[2], nil, store.tick_ts, true)
 
@@ -15785,7 +15792,7 @@ return function(scripts)
                         dmax = dmax + this.aura.damage_inc * this.aura.level
                     end
 
-                    d.value = math.random(dmin, dmax)
+                    d.value = math.random(dmin, dmax) * this.aura.damage_factor
                     d.damage_type = this.aura.damage_type
                     d.track_damage = this.aura.track_damage
                     d.xp_dest_id = this.aura.xp_dest_id
@@ -16216,26 +16223,44 @@ return function(scripts)
 
     function scripts.hero_hunter_ultimate.update(this, store)
         local x, y = this.pos.x, this.pos.y
-        local e = E:create_entity(this.entity)
+        local has_dante = false
+        for _, s in pairs(store.soldiers) do
+            if s.template_name == "hero_van_helsing" then
+                has_dante = true
+                break
+            end
+        end
 
-        e.pos.x = x
-        e.pos.y = y
-        e.unit.damage_factor = this.damage_factor
-        e.nav_rally.center = V.v(x, y)
-        e.nav_rally.pos = V.vclone(e.pos)
-        e.level = this.level
+        if has_dante then
+            if store.entities[this.owner_id].health.dead then
+                store.entities[this.owner_id].force_respawn = true
+            end
+            local mod = E:create_entity("mod_anya_ultimate_beacon")
+            mod.modifier.source_id = this.id
+            mod.modifier.target_id = this.owner_id
+            queue_insert(store, mod)
+        else
+            local e = E:create_entity(this.entity)
 
-        queue_insert(store, e)
+            e.pos.x = x
+            e.pos.y = y
+            e.unit.damage_factor = this.damage_factor
+            e.nav_rally.center = V.v(x, y)
+            e.nav_rally.pos = V.vclone(e.pos)
+            e.level = this.level
 
-        local a = E:create_entity(this.aura)
+            queue_insert(store, e)
 
-        a.pos = e.pos
-        a.level = this.level
-        a.aura.source_id = e.id
+            local a = E:create_entity(this.aura)
 
-        queue_insert(store, a)
-        S:queue(this.sound)
-        queue_remove(store, this)
+            a.pos = e.pos
+            a.level = this.level
+            a.aura.source_id = e.id
+
+            queue_insert(store, a)
+            S:queue(this.sound)
+            queue_remove(store, this)
+        end
     end
 
     scripts.soldier_hero_hunter_ultimate = {}

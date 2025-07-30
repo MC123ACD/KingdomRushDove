@@ -4157,6 +4157,12 @@ local function heroes()
     tt.render.sprites[1].name = "Halloween_hero_vhelsing_buffeffect"
     tt.render.sprites[1].z = Z_DECALS
 
+    tt = E:register_t("mod_anya_ultimate_beacon", "mod_van_helsing_beacon")
+    tt.inflicted_damage_factor = 1.5
+    tt.modifier.duration = 12
+    tt.render.sprites[1].color = {100, 100, 255}
+    tt.render.sprites[1].scale = vec_1(1.2)
+
     tt = E:register_t("hero_steam_frigate", "stage_hero")
     E:add_comps(tt, "ranged", "timed_attacks")
     image_y = 120
