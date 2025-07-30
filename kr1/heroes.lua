@@ -8226,7 +8226,7 @@ local function heroes()
     tt.ui.click_rect = IS_PHONE and r(-35, -15, 70, 80) or r(-20, -5, 40, 60)
     tt.unit.hit_offset = vec_2(0, 25)
     tt.unit.mod_offset = vec_2(0, 25)
-    tt.melee.attacks[1].cooldown = 2
+    tt.melee.attacks[1].cooldown = 1.8
     tt.melee.attacks[1].hit_time = fts(16)
     tt.melee.attacks[1].hit_fx = "fx_bravebark_melee_hit"
     tt.melee.attacks[1].hit_decal = "decal_bravebark_melee_hit"
