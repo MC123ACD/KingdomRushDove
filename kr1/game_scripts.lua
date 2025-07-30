@@ -26201,10 +26201,6 @@ function scripts.mod_timelapse.update(this, store)
 
     this._decal_timelapse = nil
 
-    -- if target.ui then
-        -- target.ui.can_click = true
-    -- end
-
     if not target.health.dead then
         if target.health_bar then
             target.health_bar.hidden = nil

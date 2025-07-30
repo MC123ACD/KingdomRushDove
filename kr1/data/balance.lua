@@ -1003,14 +1003,8 @@ local heroes = {
 	hero_space_elf = {
 		speed = 90,
 		dead_lifetime = 15,
-		teleport_min_distance = 200,
+		teleport_min_distance = 72.5,
 		regen_cooldown = 1,
-		stats = {
-			cooldown = 8,
-			armor = 0,
-			hp = 3,
-			damage = 6
-		},
 		armor = {
 			0,
 			0,
@@ -1024,55 +1018,43 @@ local heroes = {
 			0
 		},
 		hp_max = {
-			160,
-			170,
-			180,
-			190,
-			200,
-			210,
-			220,
-			230,
-			240,
-			250
-		},
-		regen_health = {
-			13,
-			14,
-			14,
-			15,
-			16,
-			17,
-			18,
-			18,
-			19,
-			20
+			208,
+			221,
+			234,
+			247,
+			260,
+			273,
+			286,
+			299,
+			312,
+			325
 		},
 		basic_melee = {
 			cooldown = 1,
 			xp_gain_factor = 2.36,
 			damage_max = {
-				7,
 				9,
-				10,
-				12,
+				11,
 				13,
 				15,
 				16,
-				18,
+				19,
 				20,
-				24
+				23,
+				26,
+				31
 			},
 			damage_min = {
-				5,
 				6,
 				7,
-				8,
 				9,
 				10,
 				11,
-				12,
 				13,
-				15
+				14,
+				15,
+				16,
+				19
 			}
 		},
 		basic_ranged = {
@@ -1081,28 +1063,28 @@ local heroes = {
 			cooldown = 1.5,
 			min_range = 68,
 			damage_max = {
-				20,
-				22,
-				25,
+				26,
 				28,
-				31,
-				34,
-				37,
+				32,
+				36,
 				40,
 				44,
-				48
+				47,
+				52,
+				57,
+				62
 			},
 			damage_min = {
-				11,
-				12,
 				14,
 				15,
-				17,
 				18,
-				20,
+				19,
 				22,
-				24,
-				26
+				23,
+				26,
+				28,
+				31,
+				33
 			},
 			damage_type = DAMAGE_MAGICAL
 		},
@@ -1114,9 +1096,9 @@ local heroes = {
 				25
 			},
 			xp_gain = {
-				25,
-				50,
-				75
+				200,
+				400,
+				600
 			},
 			entity = {
 				range = 90,
@@ -1125,14 +1107,14 @@ local heroes = {
 					cooldown = 1,
 					damage_type = DAMAGE_MAGICAL,
 					damage_min = {
-						4,
-						8,
-						10
+						5,
+						10,
+						13
 					},
 					damage_max = {
-						8,
-						12,
-						16
+						10,
+						15,
+						20
 					}
 				},
 				basic_ranged = {
@@ -1141,14 +1123,14 @@ local heroes = {
 					cooldown = 1.5,
 					damage_type = DAMAGE_MAGICAL,
 					damage_min = {
-						14,
 						18,
-						22
+						23,
+						28
 					},
 					damage_max = {
-						25,
 						32,
-						40
+						41,
+						52
 					}
 				}
 			}
@@ -1157,9 +1139,9 @@ local heroes = {
 			range = 200,
 			explosion_range = 80,
 			xp_gain = {
-				18,
-				36,
-				54
+				144,
+				288,
+				432
 			},
 			cooldown = {
 				18,
@@ -1172,19 +1154,19 @@ local heroes = {
 				10
 			},
 			shield_base = {
-				60,
-				100,
-				140
+				78,
+				130,
+				182
 			},
 			explosion_damage = {
-				30,
-				60,
-				90
+				39,
+				78,
+				117
 			},
 			explosion_damage_type = DAMAGE_MAGICAL
 		},
 		void_rift = {
-			radius = 100,
+			radius = 130,
 			min_targets = 2,
 			max_range_effect = 300,
 			max_range_trigger = 200,
@@ -1195,9 +1177,9 @@ local heroes = {
 				20
 			},
 			xp_gain = {
-				30,
-				60,
-				90
+				240,
+				480,
+				720
 			},
 			duration = {
 				6,
@@ -1210,14 +1192,14 @@ local heroes = {
 				3
 			},
 			damage_min = {
-				2,
-				2,
-				2
+				3,
+				3,
+				3
 			},
 			damage_max = {
-				5,
-				5,
-				5
+				6,
+				6,
+				6
 			},
 			damage_type = DAMAGE_MAGICAL
 		},
@@ -1233,9 +1215,9 @@ local heroes = {
 				8
 			},
 			xp_gain = {
-				25,
-				50,
-				75
+				200,
+				400,
+				600
 			},
 			range_factor = {
 				1.1,
@@ -1257,10 +1239,10 @@ local heroes = {
 				45
 			},
 			damage = {
-				30,
-				90,
-				180,
-				270
+				39,
+				117,
+				234,
+				351
 			},
 			damage_type = DAMAGE_TRUE,
 			duration = {

@@ -425,7 +425,7 @@ function upgrades:bolts()
 			"bolt_elora_slow",
 			"bolt_magnus",
 			"bolt_magnus_illusion","bolt_priest",
-            "bolt_voodoo_witch","bolt_veznan","ray_arivan_simple","bullet_rag","ray_wizard","ray_wizard_chain"
+            "bolt_voodoo_witch","bolt_veznan","ray_arivan_simple","bullet_rag","ray_wizard","ray_wizard_chain","bolt_hero_space_elf_basic_attack"
     }
     return table.append(other_bolts, self:mage_tower_bolts())
 end

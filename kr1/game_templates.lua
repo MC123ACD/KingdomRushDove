@@ -9717,3 +9717,47 @@ tt = E:register_t("fx_hero_hunter_steal", "fx")
 tt.render.sprites[1].name = "duskbeast_coin_run"
 tt.render.sprites[1].animated = true
 tt.render.sprites[1].z = Z_OBJECTS_COVERS
+
+tt = E:register_t("ps_hero_space_elf_basic_attack_trail")
+
+E:add_comps(tt, "pos", "particle_system")
+
+tt.particle_system.name = "hero_therien_ranged_particle_idle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 30
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.z = Z_BULLET_PARTICLES
+tt.particle_system.anchor = vec_2(0.5, 0.5)
+tt.particle_system.emit_area_spread = vec_2(5, 5)
+
+tt = E:register_t("fx_hero_space_elf_ranged_hit", "fx")
+tt.render.sprites[1].name = "hero_therien_ranged_hit_idle"
+
+tt = E:register_t("fx_hero_space_elf_melee_hit", "fx")
+tt.render.sprites[1].name = "hero_therien_melee_hit_idle"
+
+tt = E:register_t("fx_hero_space_elf_astral_reflection_spawn", "fx")
+tt.render.sprites[1].name = "hero_therien_reflection_spawn_fx_idle"
+
+tt = E:register_t("fx_hero_space_elf_black_aegis_hit", "fx")
+tt.render.sprites[1].name = "hero_therien_black_aegis_hit"
+
+tt = E:register_t("decal_hero_space_elf_ultimate", "decal_timed")
+tt.render.sprites[1].name = "hero_therien_void_prison_floor_fx_idle"
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].loop = false
+tt.render.sprites[1].animated = true
+tt = E:register_t("decal_hero_space_elf_ultimate_mod", "decal_tween")
+tt.tween.remove = false
+tt.tween.disabled = true
+tt.tween.props[1].keys = {{0, 255}, {0.13, 0}}
+tt = E:register_t("decal_hero_space_elf_void_rift_therien", "decal_tween")
+tt.render.sprites[1].name = "hero_therien_rift_therien_fx_idle"
+tt.render.sprites[1].z = Z_DECALS + 1
+tt.render.sprites[1].loop = false
+tt.render.sprites[1].animated = true
+tt.tween.disabled = false
+tt.tween.props[1].name = "alpha"
+tt.tween.props[1].keys = {{0, 0}, {0.3, 255}, {1.5, 255}, {1.8, 0}}
+tt.tween.remove = true

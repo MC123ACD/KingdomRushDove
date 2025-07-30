@@ -1414,7 +1414,17 @@ return {
         available_level = 1,
         starting_level = 1,
         icon = 52,
-        stats = {6, 5, 6, 4},
+        stats = {6, 5, 6, 7},
+        is_kr5 = true
+    },
+    {
+        portrait = 4,
+        thumb = 53,
+        name = "hero_space_elf",
+        available_level = 1,
+        starting_level = 1,
+        icon = 53,
+        stats = {4, 4, 6, 8},
         is_kr5 = true
     }
 },

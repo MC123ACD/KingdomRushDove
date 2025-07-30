@@ -3860,6 +3860,7 @@ local SU = {
     hero_interrupted = soldier_interrupted,
     soldier_interrupted = soldier_interrupted,
     hero_will_teleport = hero_will_teleport,
+    hero_will_transfer = hero_will_transfer,
     y_hero_walk_waypoints = y_hero_walk_waypoints,
     y_hero_new_rally = y_hero_new_rally,
     hero_gain_xp_from_skill = hero_gain_xp_from_skill,

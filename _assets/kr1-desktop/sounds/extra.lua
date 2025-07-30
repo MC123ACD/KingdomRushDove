@@ -2224,7 +2224,10 @@ local kr3_sounds = {
 local kr5_groups = {
     hero_hunter = {
         alias = "hero_hunter"
-    }
+    },
+    hero_space_elf = {
+        alias = "hero_space_elf"
+    },
 }
 
 local merge_conflict_tables = require("script_utils").merge_conflict_tables
