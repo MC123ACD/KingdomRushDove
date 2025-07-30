@@ -14824,8 +14824,6 @@ return function(scripts)
             bullet.bullet.xp_dest_id = this.id
             bullet.bullet.level = attack.level
             bullet.bullet.damage_factor = this.unit.damage_factor
-            bullet.bullet.damage_min = bullet.bullet.damage_min + this.damage_buff
-            bullet.bullet.damage_max = bullet.bullet.damage_max + this.damage_buff
 
             queue_insert(store, bullet)
 
@@ -14954,8 +14952,8 @@ return function(scripts)
             bullet.bullet.xp_dest_id = this.id
             bullet.bullet.level = this.hero.level
             bullet.bullet.damage_factor = this.unit.damage_factor
-            bullet.bullet.damage_min = attack.damage_min + this.damage_buff
-            bullet.bullet.damage_max = attack.damage_max + this.damage_buff
+            bullet.bullet.damage_min = bullet.bullet.damage_min + this.damage_buff
+            bullet.bullet.damage_max = bullet.bullet.damage_max + this.damage_buff
             queue_insert(store, bullet)
 
             if attack.xp_from_skill then
@@ -15411,7 +15409,7 @@ return function(scripts)
                         end
 
                         if last_attack_ranged then
-                            if store.tick_ts - ranged_attack.ts > 1.6 then
+                            if store.tick_ts - ranged_attack.ts > 1.5 then
                                 last_attack_ranged = false
                                 quit_shooting_state()
                             end
