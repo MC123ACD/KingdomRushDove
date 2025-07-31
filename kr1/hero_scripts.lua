@@ -2136,6 +2136,10 @@ return function(scripts)
             U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
             this.health_bar.hidden = false
 
+            for _, t in pairs(E:filter_templates("tower")) do
+                t.tower.price = math.floor(t.tower.price * 0.96)
+            end
+
             local function do_denas_attack(target, attack, pred_pos)
                 local bullet
                 local bullet_to = pred_pos or target.pos
@@ -15197,6 +15201,7 @@ return function(scripts)
                         ultimate_entity.owner_id = this.id
                         queue_insert(store, ultimate_entity)
                         this.ultimate.ts = store.tick_ts
+                        melee_hits = melee_hits + 1
                         SU.hero_gain_xp_from_skill(this, this.hero.skills.ultimate)
                     else
                         this.ultimate.ts = this.ultimate.ts + 1
@@ -15240,6 +15245,8 @@ return function(scripts)
 
                         if this.health.hp > this.health.hp_max then
                             this.health.hp = this.health.hp_max
+                        elseif this.health.hp > 0 and this.health.dead then
+                            this.health.dead = false
                         end
 
                         heal_strike_ready = false
@@ -15274,6 +15281,8 @@ return function(scripts)
                         local attack_done, bullet = shoot_ricochet_arrow(store, this, enemy, a, V.vclone(enemy.pos))
 
                         U.animation_start(this, "mist_run_loop", nil, store.tick_ts, true)
+
+                        melee_hits = melee_hits + 1
 
                         if attack_done then
                             while not bullet.end_bounces do
@@ -15310,6 +15319,7 @@ return function(scripts)
                             S:queue(a.sound)
                             this.health.immune_to = F_ALL
                             a.ts = start_ts
+                            melee_hits = melee_hits + 1
                             last_ts = start_ts
 
                             SU.hero_gain_xp_from_skill(this, skill)
@@ -15356,6 +15366,7 @@ return function(scripts)
 
                         a.ts = start_ts
                         last_ts = start_ts
+                        melee_hits = melee_hits + 1
 
                         SU.hero_gain_xp_from_skill(this, skill)
 
