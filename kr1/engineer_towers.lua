@@ -210,6 +210,7 @@ local function engineer_towers()
         4
     }
     tt.bounce_range = 95
+    tt.bounce_range_inc = 5
     tt.bounce_vis_flags = F_RANGED
     tt.bounce_vis_bans = 0
     tt.bounce_damage_min = 57
@@ -623,7 +624,7 @@ local function engineer_towers()
         4,
         5
     }
-    tt.bounce_range = 100
+    tt.bounce_range = 110
     tt.bounce_vis_flags = F_RANGED
     tt.bounce_vis_bans = 0
     tt.bounce_damage_factor = 1

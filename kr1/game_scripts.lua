@@ -5900,13 +5900,11 @@ function scripts.ray_tesla.update(this, store)
 				this.max_bounces = this.bounces_lvl[b.level]
                 this.bounces = 0
 			end
-
+            if this.bounce_range_inc then
+                this.bounce_range = this.bounce_range + this.bounce_range_inc * b.level
+            end
 			if this.bounces < this.max_bounces then
 				U.y_wait(store, this.bounce_delay)
-
-				-- local bounce_target = U.find_nearest_enemy(store.enemies, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
-				-- 	return not table.contains(this.seen_targets, v.id)
-				-- end)
                 local bounce_target = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
 					return (not table.contains(this.seen_targets, v.id)) and (v.enemy or v.template_name == "hero_thor")
 				end)
@@ -5917,10 +5915,12 @@ function scripts.ray_tesla.update(this, store)
 					local r = E:create_entity(this.template_name)
 
 					r.pos = V.vclone(dest)
+                    r.bounce_range = this.bounce_range
 					r.bullet.to = V.vclone(bounce_target.pos)
 					r.bullet.target_id = bounce_target.id
 					r.bullet.source_id = target.id
                     r.bullet.damage_factor = b.damage_factor
+                    r.bullet.level = b.level
                     r.max_bounces = this.max_bounces
 					r.bounce_scale_y = r.bounce_scale_y * r.bounce_scale_y_factor
 					r.seen_targets = this.seen_targets
