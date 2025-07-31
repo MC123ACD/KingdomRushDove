@@ -26169,10 +26169,6 @@ function scripts.mod_timelapse.update(this, store)
     queue_insert(store, es)
     U.unblock_all(store, target)
 
-    -- if target.ui then
-        -- target.ui.can_click = false
-    -- end
-
     if target.health_bar then
         target.health_bar.hidden = true
     end

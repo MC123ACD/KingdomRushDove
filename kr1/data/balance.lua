@@ -1150,8 +1150,8 @@ local heroes = {
 			},
 			cooldown = {
 				18,
-				17,
-				16
+				16,
+				14
 			},
 			duration = {
 				6,
