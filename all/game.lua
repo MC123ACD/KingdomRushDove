@@ -792,6 +792,38 @@ function game:draw_game()
 		rox, roy = rox + self.store.world_offset.x, roy + self.store.world_offset.y
 	end
 
+    if self.shown_path and not self.path_canvas then
+        log.error("Path canvas is not initialized, but shown_path is set to " .. self.shown_path)
+        local node_size = 4
+        local point_size = 3
+
+        G.push()
+        G.translate(rox, roy)
+        G.scale(gs, gs)
+
+        self.path_canvas = G.newCanvas()
+
+        G.setCanvas(self.path_canvas)
+        for pi, p in ipairs(P.paths) do
+            if pi == self.shown_path then
+                for _, sp in pairs(p) do
+                    for ni, o in ipairs(sp) do
+                        if ni % 3 == 0 then
+                            G.setColor(255, 0, 0, 200)
+                            G.circle("fill", o.x, REF_H - o.y, node_size, 6)
+                        end
+                    end
+                end
+            end
+        end
+        G.setLineWidth(1)
+        G.setColor(255, 255, 255, 255)
+        G.setCanvas()
+        G.pop()
+    elseif not self.shown_path then
+        self.path_canvas = nil
+    end
+
 	if self.DBG_DRAW_PATHS and not self.path_canvas then
 		local node_size = 2
 		local point_size = 3
@@ -804,122 +836,124 @@ function game:draw_game()
 
 		G.setCanvas(self.path_canvas)
 
-		if self.DBG_DRAW_PATHS == 2 then
-			for pi, p in ipairs(P.paths) do
-				if pi == self.dbg_active_pi then
-					local pw = P:path_width(pi)
+		-- if self.DBG_DRAW_PATHS == 2 then
+		-- 	for pi, p in ipairs(P.paths) do
+		-- 		if pi == self.dbg_active_pi then
+		-- 			local pw = P:path_width(pi)
 
-					for ni, o in pairs(p[1]) do
-						if P:is_node_valid(pi, ni) then
-							G.setColor(0, 0, 255, 150)
-							G.circle("fill", o.x, REF_H - o.y, pw, 16)
-						end
-					end
-				end
-			end
-		end
+		-- 			for ni, o in pairs(p[1]) do
+		-- 				if P:is_node_valid(pi, ni) then
+		-- 					G.setColor(0, 0, 255, 150)
+		-- 					G.circle("fill", o.x, REF_H - o.y, pw, 16)
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
 
 		for pi, p in ipairs(P.paths) do
 			for _, sp in pairs(p) do
 				for ni, o in ipairs(sp) do
-					if not P:is_node_valid(pi, ni) then
-						G.setColor(255, 255, 0, 255)
-						G.rectangle("fill", o.x - node_size, REF_H - o.y - node_size, 2 * node_size, 2 * node_size)
-					else
-						G.setColor(255, 255, 255, 255)
-						G.circle("fill", o.x, REF_H - o.y, node_size, 6)
-					end
+					-- if not P:is_node_valid(pi, ni) then
+					-- 	G.setColor(255, 255, 0, 255)
+					-- 	G.rectangle("fill", o.x - node_size, REF_H - o.y - node_size, 2 * node_size, 2 * node_size)
+					-- else
+                        if ni % 2 == 0 then
+                            G.setColor(255, 0, 0, 120)
+                            G.circle("fill", o.x, REF_H - o.y, 3, 6)
+                        end
+					-- end
 				end
 			end
 		end
 
-		for pi, p in ipairs(P.paths) do
-			if pi == self.dbg_active_pi then
-				local start_node = P:get_start_node(pi)
-				local end_node = P:get_end_node(pi)
-				local v_start_node = P:get_visible_start_node(pi)
-				local v_end_node = P:get_visible_end_node(pi)
-				local dp_node = P:get_defend_point_node(pi)
+		-- for pi, p in ipairs(P.paths) do
+		-- 	if pi == self.dbg_active_pi then
+		-- 		local start_node = P:get_start_node(pi)
+		-- 		local end_node = P:get_end_node(pi)
+		-- 		local v_start_node = P:get_visible_start_node(pi)
+		-- 		local v_end_node = P:get_visible_end_node(pi)
+		-- 		local dp_node = P:get_defend_point_node(pi)
 
-				log.debug("-- path color lines ------------------------------------------")
+		-- 		log.debug("-- path color lines ------------------------------------------")
 
-				for sp_i, sp in pairs(p) do
-					for ni, o in ipairs(sp) do
-						if sp_i == 3 and ni == dp_node then
-							local p1 = p[1][ni]
+		-- 		for sp_i, sp in pairs(p) do
+		-- 			for ni, o in ipairs(sp) do
+		-- 				if sp_i == 3 and ni == dp_node then
+		-- 					local p1 = p[1][ni]
 
-							G.setColor(0, 0, 0, 255)
-							G.setLineWidth(5)
-							G.circle("fill", p1.x, REF_H - p1.y, 20, 5)
-							log.debug("pi:%s ni:%s : %s (black)", pi, ni, "defend point")
-						end
+		-- 					G.setColor(0, 0, 0, 255)
+		-- 					G.setLineWidth(5)
+		-- 					G.circle("fill", p1.x, REF_H - p1.y, 20, 5)
+		-- 					log.debug("pi:%s ni:%s : %s (black)", pi, ni, "defend point")
+		-- 				end
 
-						if sp_i == 3 and (ni == start_node or ni == end_node) then
-							local p2, p3 = p[2][ni], p[3][ni]
+		-- 				if sp_i == 3 and (ni == start_node or ni == end_node) then
+		-- 					local p2, p3 = p[2][ni], p[3][ni]
 
-							G.setColor(255, 255, 255, 255)
-							G.setLineWidth(5)
-							G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
-							log.debug("pi:%s ni:%s : %s (white)", pi, ni, ni == start_node and "start" or "end")
-						end
+		-- 					G.setColor(255, 255, 255, 255)
+		-- 					G.setLineWidth(5)
+		-- 					G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
+		-- 					log.debug("pi:%s ni:%s : %s (white)", pi, ni, ni == start_node and "start" or "end")
+		-- 				end
 
-						if sp_i == 3 and (ni == v_start_node + 0 or ni == v_end_node - 0) then
-							local p2, p3 = p[2][ni], p[3][ni]
+		-- 				if sp_i == 3 and (ni == v_start_node + 0 or ni == v_end_node - 0) then
+		-- 					local p2, p3 = p[2][ni], p[3][ni]
 
-							G.setColor(255, 0, 0, 255)
-							G.setLineWidth(3)
-							G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
-							log.debug("pi:%s ni:%s : %s (red)", pi, ni, ni == v_start_node and "visible start" or "visible end")
-						end
+		-- 					G.setColor(255, 0, 0, 255)
+		-- 					G.setLineWidth(3)
+		-- 					G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
+		-- 					log.debug("pi:%s ni:%s : %s (red)", pi, ni, ni == v_start_node and "visible start" or "visible end")
+		-- 				end
 
-						if sp_i == 3 and (ni == v_start_node + 10 or ni == v_end_node - 10) then
-							local p2, p3 = p[2][ni], p[3][ni]
+		-- 				if sp_i == 3 and (ni == v_start_node + 10 or ni == v_end_node - 10) then
+		-- 					local p2, p3 = p[2][ni], p[3][ni]
 
-							G.setColor(0, 0, 255, 255)
-							G.setLineWidth(3)
-							G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
-							log.debug("pi:%s ni:%s : vis - 10 (blue)", pi, ni)
-						end
+		-- 					G.setColor(0, 0, 255, 255)
+		-- 					G.setLineWidth(3)
+		-- 					G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
+		-- 					log.debug("pi:%s ni:%s : vis - 10 (blue)", pi, ni)
+		-- 				end
 
-						if sp_i == 3 and (ni == v_start_node + 20 or ni == v_end_node - 20) then
-							local p2, p3 = p[2][ni], p[3][ni]
+		-- 				if sp_i == 3 and (ni == v_start_node + 20 or ni == v_end_node - 20) then
+		-- 					local p2, p3 = p[2][ni], p[3][ni]
 
-							G.setColor(0, 0, 0)
-							G.setColor(0, 255, 0, 255)
-							G.setLineWidth(3)
-							G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
-							log.debug("pi:%s ni:%s : vis - 20 (green)", pi, ni)
-						end
+		-- 					G.setColor(0, 0, 0)
+		-- 					G.setColor(0, 255, 0, 255)
+		-- 					G.setLineWidth(3)
+		-- 					G.line(p2.x, REF_H - p2.y, p3.x, REF_H - p3.y)
+		-- 					log.debug("pi:%s ni:%s : vis - 20 (green)", pi, ni)
+		-- 				end
 
-						G.setLineWidth(1)
-						G.setColor(255, 0, 255, 255)
-						G.rectangle("line", o.x - point_size, REF_H - o.y - point_size, 2 * point_size, 2 * point_size)
-					end
-				end
-			end
-		end
+		-- 				G.setLineWidth(1)
+		-- 				G.setColor(255, 0, 255, 255)
+		-- 				G.rectangle("line", o.x - point_size, REF_H - o.y - point_size, 2 * point_size, 2 * point_size)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
 
-		if self.store.level and self.store.level.points_spawner and self.store.level.points_spawner.spawner_points then
-			G.setColor(0, 0, 255, 255)
-			G.setLineWidth(3)
+		-- if self.store.level and self.store.level.points_spawner and self.store.level.points_spawner.spawner_points then
+		-- 	G.setColor(0, 0, 255, 255)
+		-- 	G.setLineWidth(3)
 
-			for _, p in pairs(self.store.level.points_spawner.spawner_points) do
-				G.circle("fill", p.from.x, REF_H - p.from.y, 10, 8)
-				G.line(p.from.x, REF_H - p.from.y, p.to.x, REF_H - p.to.y)
-			end
-		end
+		-- 	for _, p in pairs(self.store.level.points_spawner.spawner_points) do
+		-- 		G.circle("fill", p.from.x, REF_H - p.from.y, 10, 8)
+		-- 		G.line(p.from.x, REF_H - p.from.y, p.to.x, REF_H - p.to.y)
+		-- 	end
+		-- end
 
-		if self.store.level then
-			G.setColor(0, 0, 255, 255)
+		-- if self.store.level then
+		-- 	G.setColor(0, 0, 255, 255)
 
-			for _, e in pairs(self.store.entities) do
-				if e.graveyard and e.graveyard.spawn_pos then
-					for _, p in pairs(e.graveyard.spawn_pos) do
-						G.circle("fill", p.x, REF_H - p.y, 5, 4)
-					end
-				end
-			end
-		end
+		-- 	for _, e in pairs(self.store.entities) do
+		-- 		if e.graveyard and e.graveyard.spawn_pos then
+		-- 			for _, p in pairs(e.graveyard.spawn_pos) do
+		-- 				G.circle("fill", p.x, REF_H - p.y, 5, 4)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
 
 		G.setLineWidth(1)
 		G.setColor(255, 255, 255, 255)
@@ -1137,7 +1171,7 @@ function game:draw_game()
 
 	G.pop()
 
-	if self.DBG_DRAW_PATHS then
+	if self.DBG_DRAW_PATHS or self.shown_path then
 		G.setColor(255, 255, 255, 100)
 		G.draw(self.path_canvas)
 		G.setColor(255, 255, 255, 255)

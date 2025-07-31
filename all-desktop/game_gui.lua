@@ -1266,7 +1266,7 @@ function game_gui:show_wave_flags(group)
             local incoming_report = GU.incoming_wave_report(group, w.path_index, self.game.store.level_mode)
 
             if incoming_report and #incoming_report > 0 then
-                local wf = WaveFlag:new(w.some_flying, duration, incoming_report)
+                local wf = WaveFlag:new(w.some_flying, duration, incoming_report, w.path_index)
                 local wfx, wfy = self:g2u(item.pos)
 
                 wf.pointer.r = item.r - math.pi / 2
@@ -7134,9 +7134,9 @@ end
 
 WaveFlag = class("WaveFlag", KView)
 
-function WaveFlag:initialize(flying, duration, report)
+function WaveFlag:initialize(flying, duration, report, path_index)
     WaveFlag.super.initialize(self)
-
+    self.path_index = path_index
     self.duration = duration
     self.report = report
     self.start_game_ts = game_gui.game.store.tick_ts
@@ -7197,12 +7197,14 @@ end
 function WaveFlag:on_enter()
     self.halo.hidden = false
 
-    game_gui.incoming_tooltip:show(self.pos.x, self.pos.y, self.pointer.r + math.pi / 2, self.report)
+    game_gui.incoming_tooltip:show(self.pos.x, self.pos.y, self.pointer.r + math.pi * 0.5, self.report)
+    log.error("shown_path:%s", self.path_index)
+    game.shown_path = self.path_index
 end
 
 function WaveFlag:on_exit()
     self.halo.hidden = true
-
+    game.shown_path = nil
     game_gui.incoming_tooltip:hide()
 end
 

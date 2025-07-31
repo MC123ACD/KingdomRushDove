@@ -533,6 +533,10 @@ function path_db:predict_enemy_pos(e, flight_time)
 	return self:node_pos(e.nav_path.pi, e.nav_path.spi, e.nav_path.ni + node_offset)
 end
 
+-- margin = {
+--   离出怪口最小节点数
+--   离家最小节点数
+-- }
 function path_db:get_random_position(margin, valid_terrains, node_flags, margin_from_defend)
 	if margin and type(margin) == "number" then
 		margin = {
