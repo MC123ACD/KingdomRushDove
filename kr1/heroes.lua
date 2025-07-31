@@ -4449,7 +4449,7 @@ local function heroes()
     tt.info.i18n_key = "HERO_ALIEN"
     tt.main_script.insert = scripts.hero_alien.insert
     tt.main_script.update = scripts.hero_alien.update
-    tt.motion.max_speed = 90
+    tt.motion.max_speed = 100
     tt.regen.cooldown = 1
     tt.render.sprites[1].anchor.y = anchor_y
     tt.render.sprites[1].prefix = "hero_alien"
@@ -4476,7 +4476,6 @@ local function heroes()
     tt.ranged.attacks[1].cooldown = 4.8 + fts(28)
     tt.ranged.attacks[1].min_range = 0
     tt.ranged.attacks[1].max_range = 125
-    tt.ranged.attacks[1].mod = "mod_slow_alien_glaive"
     tt.ranged.attacks[1].shoot_time = fts(13)
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(22, 16)}
     tt.timed_attacks.list[1] = E:clone_c("spawn_attack")
@@ -4536,6 +4535,7 @@ local function heroes()
     tt.bullet.xp_gain_factor = 2.5
     tt.bounce_chance = nil
     tt.bounce_range = 150
+    tt.bullet.mod = "mod_slow_alien_glaive"
     tt.sound_events.insert = "HeroAlienDiscoThrow"
 
     tt = E:register_t("fx_alien_glaive_hit", "fx")
