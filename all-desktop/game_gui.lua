@@ -7198,7 +7198,7 @@ function WaveFlag:on_enter()
     self.halo.hidden = false
 
     game_gui.incoming_tooltip:show(self.pos.x, self.pos.y, self.pointer.r + math.pi * 0.5, self.report)
-    log.error("shown_path:%s", self.path_index)
+
     game.shown_path = self.path_index
 end
 

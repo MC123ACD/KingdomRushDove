@@ -10345,10 +10345,8 @@ local function heroes()
     }
 
     tt = E:register_t("soldier_hero_space_elf_astral_reflection", "soldier_militia")
-    E:add_comps(tt, "melee", "ranged", "reinforcement", "tween", "transfer", "timed_attacks", "nav_grid")
+    E:add_comps(tt, "melee", "ranged", "reinforcement", "tween", "transfer", "timed_attacks")
     b = balance.heroes.hero_space_elf
-    tt.controable = true
-    tt.ban_global_control = true
     tt.is_kr5 = true
     tt.info.i18n_key = "HERO_SPACE_ELF_ASTRAL_REFLECTION_ENTITY"
     tt.info.enc_icon = 12

@@ -793,7 +793,6 @@ function game:draw_game()
 	end
 
     if self.shown_path and not self.path_canvas then
-        log.error("Path canvas is not initialized, but shown_path is set to " .. self.shown_path)
         local node_size = 4
         local point_size = 3
 
