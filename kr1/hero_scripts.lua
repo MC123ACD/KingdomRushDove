@@ -16766,13 +16766,14 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
 
                             targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.range, a.vis_flags,
-                                a.vis_bans, function(e)
-                                    return e.soldier.target_id
-                                end)
+                                a.vis_bans)
 
                             if targets and #targets > 0 then
+                                table.sort(targets, function(a,b)
+                                    return a.soldier.target_id and not b.soldier.target_id
+                                end)
                                 for i = 1, 3 do
-                                    local target = targets[1]
+                                    local target = targets[i]
                                     if target then
                                         local m = E:create_entity(a.mod)
                                         m.modifier.source_id = this.id
