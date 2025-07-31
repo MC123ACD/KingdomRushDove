@@ -16114,7 +16114,7 @@ function scripts.hero_alien.update(this, store, script)
             skill = this.hero.skills.purificationprotocol
 
             if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-                local target = U.find_foremost_enemy(store.enemies, this.pos, 0, a.range, a.vis_flags, a.vis_bans)
+                local target = U.find_foremost_enemy(store.enemies, this.pos, 0, a.range, nil, a.vis_flags, a.vis_bans)
 
                 if not target then
                     SU.delay_attack(store, a, 0.13333333333333333)
@@ -16227,7 +16227,7 @@ function scripts.alien_glaive.update(this, store)
     end
 
     if bounce_count == 0 or math.random() < this.bounce_chance then
-        local target = U.find_foremost_enemy_with_flying_preference(store.enemies, this.pos, 0, this.bounce_range,
+        local target = U.find_foremost_enemy_with_flying_preference(store.enemies, this.pos, 0, this.bounce_range,nil,
             b.vis_flags, b.vis_bans,
             function(v)
                 return v ~= target

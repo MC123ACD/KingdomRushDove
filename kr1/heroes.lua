@@ -4436,7 +4436,7 @@ local function heroes()
     }
     tt.hero.skills.finalcountdown.xp_gain = {100, 200, 300}
     tt.health.armor = nil
-    tt.health.dead_lifetime = 7
+    tt.health.dead_lifetime = 6
     tt.health.hp_max = nil
     tt.health_bar.offset = vec_2(0, 41)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
