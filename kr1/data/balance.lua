@@ -1159,14 +1159,14 @@ local heroes = {
 				10
 			},
 			shield_base = {
+				50,
 				78,
-				130,
-				182
+				110
 			},
 			explosion_damage = {
-				39,
-				78,
-				117
+				24,
+				47,
+				71
 			},
 			explosion_damage_type = DAMAGE_MAGICAL_EXPLOSION
 		},

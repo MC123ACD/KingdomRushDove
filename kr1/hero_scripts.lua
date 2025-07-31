@@ -16771,13 +16771,15 @@ return function(scripts)
                                 end)
 
                             if targets and #targets > 0 then
-                                local target = targets[1]
-                                local m = E:create_entity(a.mod)
-
-                                m.modifier.source_id = this.id
-                                m.modifier.target_id = target.id
-
-                                queue_insert(store, m)
+                                for i = 1, 3 do
+                                    local target = targets[1]
+                                    if target then
+                                        local m = E:create_entity(a.mod)
+                                        m.modifier.source_id = this.id
+                                        m.modifier.target_id = target.id
+                                        queue_insert(store, m)
+                                    end
+                                end
                             end
 
                             SU.y_hero_animation_wait(this)
