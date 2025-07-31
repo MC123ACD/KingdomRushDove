@@ -1240,7 +1240,7 @@ local function mage_towers()
     tt.aura.duration = -1
     tt.aura.mod = "mod_faerie_dragon_l0"
     tt.aura.damage_type = DAMAGE_MAGICAL_EXPLOSION
-    tt.aura.damage = 10
+    tt.aura.damage = 11
 
     tt = E:register_t("faerie_dragon", "decal_scripted")
     E:add_comps(tt, "force_motion", "custom_attack")
@@ -1302,7 +1302,7 @@ local function mage_towers()
     tt.sound_events.insert = "ElvesFaeryDragonAttackCristalization"
 
     tt = E:register_t("mod_faerie_dragon_l0", "mod_faerie_dragon")
-    tt.modifier.duration = 1
+    tt.modifier.duration = 0.9
     tt = E:register_t("mod_faerie_dragon_l1", "mod_faerie_dragon")
     tt.modifier.duration = 1.25
     tt = E:register_t("mod_faerie_dragon_l2", "mod_faerie_dragon")
