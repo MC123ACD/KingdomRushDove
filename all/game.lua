@@ -787,8 +787,13 @@ function game:draw_game()
         G.push()
         G.translate(rox, roy)
         G.scale(gs, gs)
-        self.path_canvas = G.newCanvas()
-        G.setCanvas(self.path_canvas)
+        if not self.path_canvas then
+            self.path_canvas = G.newCanvas()
+            G.setCanvas(self.path_canvas)
+        else
+            G.setCanvas(self.path_canvas)
+            G.clear(0, 0, 0, 0)
+        end
         G.setLineWidth(4)
         G.setColor(255, 0, 0, 255)
 
@@ -796,7 +801,7 @@ function game:draw_game()
             local i = 1
             local path = P.paths[self.shown_path][spi]
             local path_line = self.path_lines[self.shown_path][spi]
-            while path_line[i] < self.dash_start_offset do
+            while i <= #path_line and path_line[i] < self.dash_start_offset do
                 i = i + 1
             end
             local x1 = path[i-1].x
@@ -808,8 +813,15 @@ function game:draw_game()
             local line_len = path_line[i] - self.dash_start_offset
             -- 从第 i 个点开始往下画线
             while i < #path_line do
-                while line_len < dash_length + gap_length do
+                while line_len <= dash_length + gap_length do
                     local next_span_len = path_line[i+1] - path_line[i]
+                    while next_span_len <= 0 do
+                        i = i + 1
+                        if i >= #path_line then
+                            break
+                        end
+                        next_span_len = path_line[i+1] - path_line[i]
+                    end
                     if line_len + next_span_len < dash_length then
                         G.line(path[i].x, REF_H - path[i].y, path[i+1].x, REF_H - path[i+1].y)
                     else

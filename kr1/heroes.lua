@@ -9836,7 +9836,7 @@ local function heroes()
     tt.ui.click_rect = r(-20, -5, 40, 50)
     tt.distance_to_revive = b.ultimate.distance_to_revive
 
-    tt = E:register_t("hero5","hero")
+    tt = E:register_t("hero5", "hero")
     tt.is_kr5 = true
     tt.render.sprites[1].scale = vec_1(0.7)
 
@@ -10604,6 +10604,384 @@ local function heroes()
     tt.entity = "aura_hero_space_elf_ultimate"
     tt.decal = "decal_hero_space_elf_ultimate"
     tt.main_script.update = scripts.hero_space_elf_ultimate.update
+
+    tt = E:register_t("hero_raelyn", "hero5")
+    b = balance.heroes.hero_raelyn
+    E:add_comps(tt, "melee", "timed_attacks")
+    tt.hero.level_stats.armor = b.armor
+    tt.hero.level_stats.hp_max = b.hp_max
+    tt.hero.level_stats.melee_damage_max = b.melee_damage_max
+    tt.hero.level_stats.melee_damage_min = b.melee_damage_min
+    tt.hero.skills.unbreakable = E:clone_c("hero_skill")
+    tt.hero.skills.unbreakable.cooldown = b.unbreakable.cooldown
+    tt.hero.skills.unbreakable.duration = b.unbreakable.duration
+    tt.hero.skills.unbreakable.shield_base = b.unbreakable.shield_base
+    tt.hero.skills.unbreakable.shield_per_enemy = b.unbreakable.shield_per_enemy
+    tt.hero.skills.unbreakable.xp_gain = b.unbreakable.xp_gain
+    tt.hero.skills.unbreakable.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.inspire_fear = E:clone_c("hero_skill")
+    tt.hero.skills.inspire_fear.cooldown = b.inspire_fear.cooldown
+    tt.hero.skills.inspire_fear.damage_duration = b.inspire_fear.damage_duration
+    tt.hero.skills.inspire_fear.stun_duration = b.inspire_fear.stun_duration
+    tt.hero.skills.inspire_fear.slow_factor = b.inspire_fear.slow_factor
+    tt.hero.skills.inspire_fear.inflicted_damage_factor = b.inspire_fear.inflicted_damage_factor
+    tt.hero.skills.inspire_fear.xp_gain = b.inspire_fear.xp_gain
+    tt.hero.skills.inspire_fear.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.brutal_slash = E:clone_c("hero_skill")
+    tt.hero.skills.brutal_slash.cooldown = b.brutal_slash.cooldown
+    tt.hero.skills.brutal_slash.damage_max = b.brutal_slash.damage_max
+    tt.hero.skills.brutal_slash.damage_min = b.brutal_slash.damage_min
+    tt.hero.skills.brutal_slash.xp_gain = b.brutal_slash.xp_gain
+    tt.hero.skills.brutal_slash.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.onslaught = E:clone_c("hero_skill")
+    tt.hero.skills.onslaught.damage_factor = b.onslaught.damage_factor
+    tt.hero.skills.onslaught.melee_cooldown = b.onslaught.melee_cooldown
+    tt.hero.skills.onslaught.duration = b.onslaught.duration
+    tt.hero.skills.onslaught.cooldown = b.onslaught.cooldown
+    tt.hero.skills.onslaught.hit_aura = "hero_raelyn_onslaught_aura"
+    tt.hero.skills.onslaught.xp_gain = b.onslaught.xp_gain
+    tt.hero.skills.onslaught.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.ultimate = E:clone_c("hero_skill")
+    tt.hero.skills.ultimate.controller_name = "hero_raelyn_ultimate"
+    tt.hero.skills.ultimate.duration = b.ultimate.duration
+    tt.hero.skills.ultimate.cooldown = b.ultimate.cooldown
+    tt.hero.skills.ultimate.damage_min = b.ultimate.damage_min
+    tt.hero.skills.ultimate.damage_max = b.ultimate.damage_max
+    tt.hero.skills.ultimate.xp_gain_factor = 48
+    tt.hero.skills.ultimate.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.health.dead_lifetime = b.dead_lifetime
+    tt.health_bar.offset = vec_2(0, 40)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.hero.fn_level_up = scripts.hero_raelyn.level_up
+    tt.info.hero_portrait = "hero_portraits_0002"
+    tt.info.i18n_key = "HERO_RAELYN"
+    tt.info.portrait = "portraits_hero" .. "_0003"
+    tt.info.ultimate_icon = "0005"
+    tt.main_script.insert = scripts.hero_raelyn.insert
+    tt.main_script.update = scripts.hero_raelyn.update
+    tt.motion.max_speed = b.speed
+    tt.regen.cooldown = b.regen_cooldown
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"walk"}
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].prefix = "hero_raelyn_hero"
+    tt.render.sprites[1].scale = vec_2(1.05, 1.05)
+    tt.render.sprites[1].draw_order = DO_HEROES
+    tt.soldier.melee_slot_offset = vec_2(10, 0)
+    tt.sound_events.change_rally_point = "HeroRaelynTaunt"
+    tt.sound_events.death = "HeroRaelynDeath"
+    tt.sound_events.respawn = "HeroRaelynTauntIntro"
+    tt.sound_events.hero_room_select = "HeroRaelynTauntSelect"
+    tt.unit.hit_offset = vec_2(0, 14)
+    tt.unit.mod_offset = vec_2(0, 13)
+    tt.melee.range = balance.heroes.common.melee_attack_range
+    tt.melee.attacks[1] = E:clone_c("melee_attack")
+    tt.melee.attacks[1].animation = "melee_attack"
+    tt.melee.attacks[1].cooldown = b.basic_melee.cooldown
+    tt.melee.attacks[1].hit_time = fts(10)
+    tt.melee.attacks[1].hit_fx = "hero_raelyn_melee_attack_hit"
+    tt.melee.attacks[1].hit_offset = vec_2(35, 15)
+    tt.melee.attacks[1].sound = "HeroRaelynBasicAttack"
+    tt.melee.attacks[1].xp_gain_factor = b.basic_melee.xp_gain_factor
+    tt.melee.attacks[1].basic_attack = true
+    tt.melee.attacks[2] = E:clone_c("melee_attack")
+    tt.melee.attacks[2].disabled = true
+    tt.melee.attacks[2].cooldown = nil
+    tt.melee.attacks[2].damage_max = nil
+    tt.melee.attacks[2].damage_min = nil
+    tt.melee.attacks[2].hit_time = fts(18)
+    tt.melee.attacks[2].sound = "HeroRaelynBrutalSlashCast"
+    tt.melee.attacks[2].animation = "brutal_slash"
+    tt.melee.attacks[2].damage_type = bor(b.brutal_slash.damage_type, DAMAGE_FX_EXPLODE)
+    tt.melee.attacks[2].xp_gain_factor = b.brutal_slash.xp_gain_factor
+    tt.melee.attacks[2].xp_from_skill = "brutal_slash"
+    tt.melee.attacks[2].pop = {"pop_whaam", "pop_kapow"}
+    tt.melee.attacks[2].pop_chance = 0.3
+    tt.melee.attacks[2].hit_decal = "hero_raelyn_brutal_slash_decal"
+    tt.melee.attacks[2].hit_offset = vec_2(35, 0)
+    tt.timed_attacks.list[1] = E:clone_c("mod_attack")
+    tt.timed_attacks.list[1].animation = "unbreakable"
+    tt.timed_attacks.list[1].cooldown = nil
+    tt.timed_attacks.list[1].max_range_trigger = b.unbreakable.max_range_trigger
+    tt.timed_attacks.list[1].max_range_effect = b.unbreakable.max_range_effect
+    tt.timed_attacks.list[1].min_targets = b.unbreakable.min_targets
+    tt.timed_attacks.list[1].max_targets = b.unbreakable.max_targets
+    tt.timed_attacks.list[1].mod = "hero_raelyn_unbreakable_mod"
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].cast_time = fts(8)
+    tt.timed_attacks.list[1].xp_from_skill = "unbreakable"
+    tt.timed_attacks.list[1].sound = "HeroRaelynUnbreakableCast"
+    tt.timed_attacks.list[1].mod_decal = "hero_raelyn_unbreakable_floor_decal_mod"
+    tt.timed_attacks.list[1].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[2] = E:clone_c("mod_attack")
+    tt.timed_attacks.list[2].animation = "inspire_fear"
+    tt.timed_attacks.list[2].cooldown = nil
+    tt.timed_attacks.list[2].cast_time = fts(13)
+    tt.timed_attacks.list[2].disabled = true
+    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.timed_attacks.list[2].vis_flags = bor(F_RANGED)
+    tt.timed_attacks.list[2].max_range_trigger = b.inspire_fear.max_range_trigger
+    tt.timed_attacks.list[2].min_range_trigger = 0
+    tt.timed_attacks.list[2].max_range_effect = b.inspire_fear.max_range_effect
+    tt.timed_attacks.list[2].min_range_effect = 0
+    tt.timed_attacks.list[2].min_targets = b.inspire_fear.min_targets
+    tt.timed_attacks.list[2].mods = {"hero_raelyn_inspire_fear_damage_mod", "hero_raelyn_inspire_fear_stun_mod",
+                                     "hero_raelyn_inspire_fear_fx_mod"}
+    tt.timed_attacks.list[2].sound = "HeroRaelynInspireFearCast"
+    tt.timed_attacks.list[2].xp_from_skill = "inspire_fear"
+    tt.timed_attacks.list[2].mod_decal = "hero_raelyn_inspire_fear_floor_decal_mod"
+    tt.timed_attacks.list[3] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[3].animation = nil
+    tt.timed_attacks.list[3].cooldown = nil
+    tt.timed_attacks.list[3].melee_cooldown = nil
+    tt.timed_attacks.list[3].duration = nil
+    tt.timed_attacks.list[3].max_range_trigger = b.onslaught.max_range_trigger
+    tt.timed_attacks.list[3].min_targets = b.onslaught.min_targets
+    tt.timed_attacks.list[3].disabled = true
+    tt.timed_attacks.list[3].vis_bans = bor(F_FLYING)
+    tt.timed_attacks.list[3].hit_decal = "decal_hero_raelyn_onslaught_decal"
+    tt.timed_attacks.list[3].hit_offset = vec_2(35, 0)
+    tt.timed_attacks.list[3].sound = "HeroRaelynOnslaughtCast"
+    tt.ui.click_rect = r(-20, -5, 40, 43)
+    tt.ultimate = {
+        ts = 0,
+        cooldown = 48,
+        disabled = true
+    }
+
+    tt = E:register_t("hero_raelyn_melee_attack_hit", "fx")
+    tt.render.sprites[1].name = "hero_raelyn_melee_attack_hit"
+
+    tt = E:register_t("hero_raelyn_brutal_slash_decal", "decal_tween")
+    tt.render.sprites[1].name = "hero_raelyn_brutal_slash_decal"
+    tt.render.sprites[1].animated = false
+    tt.tween.props[1].keys = {{1, 255}, {2.5, 0}}
+
+    tt = E:register_t("hero_raelyn_unbreakable_floor_decal_mod", "modifier")
+    E:add_comps(tt, "render")
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.render.sprites[1].name = "hero_raelyn_unbreakable_fx_idle"
+    tt.render.sprites[1].animated = true
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].hide_after_runs = 1
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].animated = false
+    tt.render.sprites[2].name = "hero_raelyn_unbreakable_shield_floor_glow"
+    tt.render.sprites[2].offset = vec_2(0, 0)
+    tt.render.sprites[2].hidden = false
+    tt.modifier.use_mod_offset = false
+    tt.modifier.duration = fts(17)
+
+    tt = E:register_t("hero_raelyn_unbreakable_mod", "modifier")
+    E:add_comps(tt, "render", "health_bar", "health")
+    tt.modifier.vis_flags = bor(F_MOD)
+    tt.modifier.duration = nil
+    tt.modifier.use_mod_offset = false
+    tt.shield_base = nil
+    tt.shield_per_enemy = nil
+    tt.shield_max_damage = nil
+    tt.damage_taken = 0
+    tt.main_script.insert = scripts.hero_raelyn_unbreakable_mod.insert
+    tt.main_script.remove = scripts.hero_raelyn_unbreakable_mod.remove
+    tt.main_script.update = scripts.hero_raelyn_unbreakable_mod.update
+    tt.health_bar.offset = vec_2(0, 42)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.health_bar.colors = {}
+    tt.health_bar.colors.fg = {255, 255, 0, 255}
+    tt.health_bar.colors.bg = {0, 0, 0, 255}
+    tt.health_bar.sort_y_offset = -2
+    tt.health_bar.disable_fade = true
+    tt.sprites_per_enemies = {"hero_raelyn_unbreakable_shield_lvl1", "hero_raelyn_unbreakable_shield_lvl1",
+                              "hero_raelyn_unbreakable_shield_lvl1"}
+    tt.animation_start = "start"
+    tt.animation_loop = "idle"
+    tt.animation_end = "end"
+    tt.render.sprites[1].prefix = nil
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].loop = true
+
+    tt = E:register_t("hero_raelyn_inspire_fear_floor_decal_mod", "modifier")
+    E:add_comps(tt, "render")
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.render.sprites[1].name = "hero_raelyn_inspire_fear_fx_area_idle"
+    tt.render.sprites[1].animated = true
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[1].hide_after_runs = 1
+    tt.modifier.use_mod_offset = false
+    tt.modifier.duration = fts(28)
+
+    tt = E:register_t("hero_raelyn_inspire_fear_damage_mod", "modifier")
+    E:add_comps(tt, "render")
+    tt.main_script.insert = scripts.mod_damage_factors.insert
+    tt.main_script.remove = scripts.mod_damage_factors.remove
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.inflicted_damage_factor = nil
+    tt.modifier.duration = nil
+    tt.render.sprites[1] = E:clone_c("sprite")
+    tt.render.sprites[1].name = "hero_raelyn_inspire_fear_decal"
+    tt.render.sprites[1].draw_order = 20
+    tt.modifier.use_mod_offset = false
+
+    tt = E:register_t("hero_raelyn_inspire_fear_stun_mod", "mod_stun")
+    tt.modifier.duration = nil
+    tt.render.sprites[1].hidden = true
+    tt.modifier.vis_bans = bor(F_BOSS)
+
+    tt = E:register_t("hero_raelyn_inspire_fear_fx_mod", "modifier")
+    tt.main_script.update = scripts.mod_track_target.update
+    tt.modifier.duration = nil
+
+    tt = E:register_t("hero_raelyn_onslaught_aura", "aura")
+    E:add_comps(tt, "render")
+    tt.aura.duration = fts(11)
+    tt.aura.cycle_time = fts(11)
+    tt.aura.damage_min = nil
+    tt.aura.damage_max = nil
+    tt.aura.damage_type = b.onslaught.damage_type
+    tt.aura.radius = b.onslaught.radius
+    tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.aura.vis_flags = bor(F_RANGED)
+    tt.aura.excluded_entities = nil
+    tt.main_script.update = scripts.aura_apply_damage.update
+
+    function tt.main_script.insert(this, store, script)
+        if this.render then
+            for _, s in pairs(this.render.sprites) do
+                s.ts = store.tick_ts
+            end
+        end
+
+        this.aura.excluded_entities = {this.aura.target_id}
+
+        return true
+    end
+
+    tt = E:register_t("hero_raelyn_ultimate")
+    E:add_comps(tt, "pos", "main_script", "sound_events")
+    tt.cooldown = nil
+    tt.entity = nil
+    tt.entity_prefix = "hero_raelyn_ultimate_entity"
+    tt.main_script.update = scripts.hero_raelyn_ultimate.update
+    tt.sound_events.insert = "HeroRaelynUltimateCast"
+
+    tt = E:register_t("hero_raelyn_ultimate_entity", "soldier_militia")
+    E:add_comps(tt, "melee", "nav_grid", "reinforcement", "tween")
+    b = balance.heroes.hero_raelyn
+    tt.controable = true
+    tt.ban_global_control = true
+    tt.health_bar.offset = vec_2(0, 50)
+    tt.info.i18n_key = "HERO_RAELYN_ULTIMATE_ENTITY"
+    tt.info.enc_icon = 12
+    tt.info.portrait = "gui_bottom_info_image_soldiers_0009"
+    tt.info.random_name_format = nil
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].prefix = "hero_raelyn_command_orders_dark_knight"
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].draw_order = DO_SOLDIER_BIG
+    tt.sound_events.insert = "HeroRaelynUltimateTaunt"
+    tt.sound_events.death = "HeroRaelynUltimateDeath"
+    tt.unit.hit_offset = vec_2(0, 16)
+    tt.unit.size = UNIT_SIZE_LARGE
+    tt.unit.fade_time_after_death = tt.health.dead_lifetime
+    tt.soldier.melee_slot_offset = vec_2(20, 0)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.main_script.insert = scripts.soldier_reinforcement.insert
+    tt.main_script.update = scripts.hero_raelyn_command_orders_dark_knight.update
+    tt.regen.cooldown = 1
+    tt.vis.bans = bor(F_SKELETON, F_CANNIBALIZE)
+    tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+    tt.tween.props[1].name = "alpha"
+    tt.tween.remove = false
+    tt.tween.reverse = false
+    tt.tween.disabled = true
+    tt.spawn_mod_decal = "hero_raelyn_ultimate_entity_spawn_mod_decal"
+    tt.melee.attacks[1].vis_bans = bor(F_FLYING, F_CLIFF, F_WATER)
+    tt.melee.attacks[1].vis_flags = F_BLOCK
+    tt.melee.attacks[1].sound = "CommonNoSwordAttack"
+    tt.melee.attacks[1].sound_args = {
+        delay = fts(8)
+    }
+    tt.melee.attacks[1].damage_type = b.ultimate.entity.damage_type
+    tt.melee.attacks[1].hit_times = {fts(16), fts(28)}
+    tt.melee.attacks[1].loops = 1
+    tt.melee.attacks[1].hit_fx = "hero_raelyn_command_orders_hit_fx"
+    tt.melee.attacks[1].hit_offset = vec_2(30, 20)
+    tt.melee.attacks[1].animations = {nil, "attack_1"}
+    tt.melee.attacks[1].shared_cooldown = true
+    tt.melee.range = b.ultimate.entity.range
+    tt.reinforcement.duration = b.ultimate.entity.duration
+    tt.reinforcement.fade = nil
+    tt.reinforcement.fade_out = nil
+    tt.ui.click_rect = r(-20, -5, 40, 50)
+
+    tt = E:register_t("hero_raelyn_ultimate_entity_1", "hero_raelyn_ultimate_entity")
+    tt.motion.max_speed = b.ultimate.entity.speed[1]
+    for _, attack in ipairs(tt.melee.attacks) do
+        attack.cooldown = b.ultimate.entity.cooldown[1]
+        attack.damage_max = b.ultimate.entity.damage_max[1]
+        attack.damage_min = b.ultimate.entity.damage_min[1]
+    end
+    tt.health.hp_max = b.ultimate.entity.hp_max[1]
+    tt.regen.health = b.ultimate.entity.regen_health[1]
+    tt.health.armor = b.ultimate.entity.armor[1]
+
+    tt = E:register_t("hero_raelyn_ultimate_entity_2", "hero_raelyn_ultimate_entity")
+    tt.motion.max_speed = b.ultimate.entity.speed[2]
+    for _, attack in ipairs(tt.melee.attacks) do
+        attack.cooldown = b.ultimate.entity.cooldown[2]
+        attack.damage_max = b.ultimate.entity.damage_max[2]
+        attack.damage_min = b.ultimate.entity.damage_min[2]
+    end
+
+    tt.health.hp_max = b.ultimate.entity.hp_max[2]
+    tt.regen.health = b.ultimate.entity.regen_health[2]
+    tt.health.armor = b.ultimate.entity.armor[2]
+
+    tt = E:register_t("hero_raelyn_ultimate_entity_3", "hero_raelyn_ultimate_entity")
+    tt.motion.max_speed = b.ultimate.entity.speed[3]
+    for _, attack in ipairs(tt.melee.attacks) do
+        attack.cooldown = b.ultimate.entity.cooldown[3]
+        attack.damage_max = b.ultimate.entity.damage_max[3]
+        attack.damage_min = b.ultimate.entity.damage_min[3]
+    end
+    tt.health.hp_max = b.ultimate.entity.hp_max[3]
+    tt.regen.health = b.ultimate.entity.regen_health[3]
+    tt.health.armor = b.ultimate.entity.armor[3]
+
+    tt = E:register_t("hero_raelyn_ultimate_entity_4", "hero_raelyn_ultimate_entity")
+    tt.motion.max_speed = b.ultimate.entity.speed[4]
+    for _, attack in ipairs(tt.melee.attacks) do
+        attack.cooldown = b.ultimate.entity.cooldown[4]
+        attack.damage_max = b.ultimate.entity.damage_max[4]
+        attack.damage_min = b.ultimate.entity.damage_min[4]
+    end
+    tt.health.hp_max = b.ultimate.entity.hp_max[4]
+    tt.regen.health = b.ultimate.entity.regen_health[4]
+    tt.health.armor = b.ultimate.entity.armor[4]
+
+
 end
 
 return heroes

@@ -3821,6 +3821,19 @@ local function y_controable_new_rally(store, this)
     end
 end
 
+local function update_on_damage(entity)
+    entity.health.on_damage = function(this, store, damage)
+        local pass = false
+        for _, on_damage in pairs(entity.health.on_damages) do
+            pass = on_damage(this, store, damage)
+            if not pass then
+                return false
+            end
+        end
+        return pass
+    end
+end
+
 local SU = {
     has_modifiers = U.has_modifiers,
     ui_click_proxy_add = ui_click_proxy_add,
@@ -3923,7 +3936,8 @@ local SU = {
     remove_tower_cooldown_buff = remove_tower_cooldown_buff,
     insert_tower_damage_factor_buff = insert_tower_damage_factor_buff,
     remove_tower_damage_factor_buff = remove_tower_damage_factor_buff,
-    y_controable_new_rally = y_controable_new_rally
+    y_controable_new_rally = y_controable_new_rally,
+    update_on_damage = update_on_damage
 }
 
 return SU

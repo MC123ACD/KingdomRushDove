@@ -2228,6 +2228,9 @@ local kr5_groups = {
     hero_space_elf = {
         alias = "hero_space_elf"
     },
+    hero_raelyn = {
+        alias = "hero_raelyn"
+    },
 }
 
 local merge_conflict_tables = require("script_utils").merge_conflict_tables

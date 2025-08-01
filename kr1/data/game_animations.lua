@@ -34280,6 +34280,166 @@ local kr5_a = {
 		prefix = "hero_therien_rift_fx_decal",
 		to = 69,
 		from = 62
+	},
+    hero_raelyn_hero_idle = {
+		prefix = "hero_raelyn_hero",
+		to = 23,
+		from = 1
+	},
+	hero_raelyn_hero_idle2 = {
+		prefix = "hero_raelyn_hero",
+		to = 24,
+		from = 24
+	},
+	hero_raelyn_hero_walk = {
+		prefix = "hero_raelyn_hero",
+		to = 48,
+		from = 25
+	},
+	hero_raelyn_hero_melee_attack = {
+		prefix = "hero_raelyn_hero",
+		to = 86,
+		from = 49
+	},
+	hero_raelyn_hero_brutal_slash = {
+		prefix = "hero_raelyn_hero",
+		to = 135,
+		from = 87
+	},
+	hero_raelyn_hero_inspire_fear = {
+		prefix = "hero_raelyn_hero",
+		to = 175,
+		from = 136
+	},
+	hero_raelyn_hero_unbreakable = {
+		prefix = "hero_raelyn_hero",
+		to = 212,
+		from = 176
+	},
+	hero_raelyn_hero_respawn = {
+		prefix = "hero_raelyn_hero",
+		to = 236,
+		from = 213
+	},
+	hero_raelyn_hero_levelup = {
+		prefix = "hero_raelyn_hero",
+		to = 236,
+		from = 213
+	},
+	hero_raelyn_hero_death = {
+		prefix = "hero_raelyn_hero",
+		to = 280,
+		from = 237
+	},
+	hero_raelyn_hero_grave = {
+		prefix = "hero_raelyn_hero",
+		to = 281,
+		from = 281
+	},
+	hero_raelyn_hero_onslaught = {
+		prefix = "hero_raelyn_hero",
+		to = 301,
+		from = 282
+	},
+	hero_raelyn_onslaught_fx_idle = {
+		prefix = "hero_raelyn_onslaught_fx",
+		to = 13,
+		from = 1
+	},
+	hero_raelyn_brutal_slash_decal_idle = {
+		prefix = "hero_raelyn_brutal_slash_decal",
+		to = 1,
+		from = 1
+	},
+	hero_raelyn_inspire_fear_fx_area_idle = {
+		prefix = "hero_raelyn_inspire_fear_fx_area",
+		to = 31,
+		from = 1
+	},
+	hero_raelyn_inspire_fear_decal = {
+		prefix = "hero_raelyn_inspire_fear_decal",
+		to = 32,
+		from = 1
+	},
+	hero_raelyn_unbreakable_fx_idle = {
+		prefix = "hero_raelyn_unbreakable_fx",
+		to = 16,
+		from = 1
+	},
+	hero_raelyn_unbreakable_shield_floor_glow_idle = {
+		prefix = "hero_raelyn_unbreakable_shield_floor_glow",
+		to = 1,
+		from = 1
+	},
+	hero_raelyn_unbreakable_shield_lvl1_start = {
+		prefix = "hero_raelyn_unbreakable_shield_lvl1",
+		to = 12,
+		from = 1
+	},
+	hero_raelyn_unbreakable_shield_lvl1_idle = {
+		prefix = "hero_raelyn_unbreakable_shield_lvl1",
+		to = 36,
+		from = 13
+	},
+	hero_raelyn_unbreakable_shield_lvl1_end = {
+		prefix = "hero_raelyn_unbreakable_shield_lvl1",
+		to = 42,
+		from = 37
+	},
+	hero_raelyn_melee_attack_hit = {
+		prefix = "hero_raelyn_melee_attack_hit",
+		to = 6,
+		from = 1
+	},
+    hero_raelyn_command_orders_dark_knight_idle = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 8,
+		from = 1
+	},
+	hero_raelyn_command_orders_dark_knight_walk = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 38,
+		from = 9
+	},
+	hero_raelyn_command_orders_dark_knight_attack_1 = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 60,
+		from = 39
+	},
+	hero_raelyn_command_orders_dark_knight_attack_2 = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 78,
+		from = 61
+	},
+	hero_raelyn_command_orders_dark_knight_attack_1_return_to_Idle = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 86,
+		from = 79
+	},
+	hero_raelyn_command_orders_dark_knight_death = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 132,
+		from = 87
+	},
+	hero_raelyn_command_orders_spawn_fx_Idle1_1 = {
+		prefix = "hero_raelyn_command_orders_spawn_fx",
+		to = 21,
+		from = 1
+	},
+	hero_raelyn_command_orders_hit_fx_Idle1_1 = {
+		prefix = "hero_raelyn_command_orders_hit_fx",
+		to = 8,
+		from = 1
+	},
+	hero_raelyn_command_orders_dark_knight_running = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 38,
+		from = 9
+	},
+	hero_raelyn_command_orders_dark_knight_attack_1 = {
+		prefix = "hero_raelyn_command_orders_dark_knight",
+		to = 78,
+		from = 39
 	}
 }
 

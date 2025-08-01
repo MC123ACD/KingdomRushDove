@@ -9761,3 +9761,19 @@ tt.tween.disabled = false
 tt.tween.props[1].name = "alpha"
 tt.tween.props[1].keys = {{0, 0}, {0.3, 255}, {1.5, 255}, {1.8, 0}}
 tt.tween.remove = true
+
+tt = E:register_t("hero_raelyn_command_orders_hit_fx", "fx")
+tt.render.sprites[1].name = "hero_raelyn_command_orders_hit_fx_Idle1_1"
+tt = E:register_t("hero_raelyn_ultimate_entity_spawn_mod_decal", "modifier")
+E:add_comps(tt, "render")
+tt.modifier.duration = fts(21)
+tt.render.sprites[1].name = "hero_raelyn_command_orders_spawn_fx_Idle1_1"
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].loop = false
+tt.modifier.use_mod_offset = false
+tt.main_script.update = scripts.mod_track_target.update
+tt = E:register_t("decal_hero_raelyn_onslaught_decal", "decal_tween")
+tt.render.sprites[1].name = "hero_raelyn_onslaught_fx_idle"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].hide_after_runs = 1
+tt.tween.props[1].keys = {{1, 255}, {2.5, 0}}

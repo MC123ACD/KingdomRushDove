@@ -16636,8 +16636,8 @@ return function(scripts)
 
         local function spatial_distortion_get_towers(a)
             local targets = table.filter(store.towers, function(k, v)
-                return not v.pending_removal and not v.tower.blocked and
-                                     not U.has_modifiers(store, v, a.mod) and v.tower.can_be_mod
+                return not v.pending_removal and not v.tower.blocked and not U.has_modifiers(store, v, a.mod) and
+                           v.tower.can_be_mod
             end)
 
             if targets and #targets > 0 then
@@ -16666,7 +16666,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this,store, this.ranged.attacks[1].max_range)
+                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
                     if target and valid_rally_node_nearby(target.pos) then
                         U.y_animation_play(this, "lvlup", nil, store.tick_ts, 1)
                         S:queue(this.sound_events.change_rally_point)
@@ -16760,7 +16760,7 @@ return function(scripts)
                                 a.vis_bans)
 
                             if targets and #targets > 0 then
-                                table.sort(targets, function(a,b)
+                                table.sort(targets, function(a, b)
                                     return a.soldier.target_id and not b.soldier.target_id
                                 end)
                                 for i = 1, 3 do
@@ -16977,8 +16977,8 @@ return function(scripts)
                 a = this.timed_attacks.list[4]
                 skill = this.hero.skills.spatial_distortion
 
-                if ready_to_use_skill(a, store) and store.tick_ts - last_ts > a.min_cooldown and
-                    store.wave_group_number > 0 then
+                if ready_to_use_skill(a, store) and store.tick_ts - last_ts > a.min_cooldown and store.wave_group_number >
+                    0 then
                     local towers = spatial_distortion_get_towers(a)
 
                     if not towers then
@@ -17156,19 +17156,15 @@ return function(scripts)
         end
 
         m.ts = store.tick_ts
-        target.health.original_on_damage = target.health.on_damage
-        if target.health.on_damage then
-            target.health.on_damage = function(this, store, damage)
-                local original_pass = target.health.original_on_damage(this, store, damage)
-                if original_pass then
-                    return scripts.mod_hero_space_elf_black_aegis.on_damage(this, store, damage)
-                else
-                    return false
-                end
+        if not target.health.on_damages then
+            target.health.on_damages = {}
+            if target.health.on_damage then
+                target.health.on_damages[1] = target.health.on_damage
             end
-        else
-            target.health.on_damage = scripts.mod_hero_space_elf_black_aegis.on_damage
         end
+        target.health.on_damages[#target.health.on_damages + 1] = scripts.mod_hero_space_elf_black_aegis.on_damage
+        this.on_damages_index = #target.health.on_damages
+        SU.update_on_damage(target)
 
         this._hit_sources = {}
         this._blood_color = target.unit.blood_color
@@ -17185,7 +17181,8 @@ return function(scripts)
         local target = store.entities[m.target_id]
 
         if target then
-            target.health.on_damage = target.health.original_on_damage
+            target.health.on_damages[this.on_damages_index] = nil
+            SU.update_on_damage(target)
             target._shield_mod = nil
             target.unit.blood_color = this._blood_color
         end
@@ -17368,10 +17365,9 @@ return function(scripts)
                 last_hit_ts = store.tick_ts
 
                 local targets = table.filter(store.enemies, function(k, v)
-                    return
-                         not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
-                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
-                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius)
+                    return not v.health.dead and band(v.vis.flags, this.aura.vis_bans) == 0 and
+                               band(v.vis.bans, this.aura.vis_flags) == 0 and
+                               U.is_inside_ellipse(v.pos, this.pos, this.aura.radius)
                 end)
 
                 for _, target in pairs(targets) do
@@ -17660,4 +17656,552 @@ return function(scripts)
 
         signal.emit("mod-applied", this, target)
     end
+
+    scripts.hero_raelyn = {}
+
+    function scripts.hero_raelyn.level_up(this, store)
+        local hl, ls = level_up_basic(this)
+
+        this.melee.attacks[1].damage_min = ls.melee_damage_min[hl]
+        this.melee.attacks[1].damage_max = ls.melee_damage_max[hl]
+
+        upgrade_skill(this, "unbreakable", function(this, s)
+            local a = this.timed_attacks.list[1]
+
+            a.disabled = nil
+            a.cooldown = s.cooldown[s.level]
+
+            local m = E:get_template(a.mod)
+
+            m.modifier.duration = s.duration[s.level]
+            m.shield_per_enemy = s.shield_per_enemy[s.level]
+            m.shield_base = s.shield_base[s.level]
+
+        end)
+
+        upgrade_skill(this, "inspire_fear", function(this, s)
+            local a = this.timed_attacks.list[2]
+
+            a.disabled = nil
+            a.cooldown = s.cooldown[s.level]
+
+            local md = E:get_template(a.mods[1])
+
+            md.modifier.duration = s.damage_duration[s.level]
+            md.inflicted_damage_factor = s.inflicted_damage_factor[s.level]
+
+            local ms = E:get_template(a.mods[2])
+
+            ms.modifier.duration = s.stun_duration[s.level]
+
+            local mf = E:get_template(a.mods[3])
+
+            mf.modifier.duration = s.stun_duration[s.level]
+        end)
+
+        upgrade_skill(this, "brutal_slash", function(this, s)
+            local a = this.melee.attacks[2]
+            a.disabled = nil
+            a.cooldown = s.cooldown[s.level]
+            a.damage_max = s.damage_max[s.level]
+            a.damage_min = s.damage_min[s.level]
+        end)
+
+        upgrade_skill(this, "onslaught", function(this, s)
+            local a = this.melee.attacks[1]
+            local o = this.timed_attacks.list[3]
+            local hit_aura = E:get_template(s.hit_aura)
+
+            hit_aura.aura.damage_max = a.damage_max * s.damage_factor[s.level]
+            hit_aura.aura.damage_min = a.damage_min * s.damage_factor[s.level]
+            o.hit_aura = hit_aura
+            o.melee_cooldown = s.melee_cooldown[s.level]
+            o.duration = s.duration[s.level]
+            o.cooldown = s.cooldown[s.level]
+            o.disabled = nil
+
+        end)
+
+        upgrade_skill(this, "ultimate", function(this, s)
+            local uc = E:get_template(s.controller_name)
+            uc.entity = string.format("%s_%i", uc.entity_prefix, s.level)
+            this.ultimate.cooldown = s.cooldown[s.level]
+            this.ultimate.disabled = nil
+        end)
+
+        this.health.hp = this.health.hp_max
+        this.hero.melee_active_status = {}
+
+        for index, attack in ipairs(this.melee.attacks) do
+            this.hero.melee_active_status[index] = attack.disabled
+        end
+    end
+
+    function scripts.hero_raelyn.insert(this, store)
+        this.hero.fn_level_up(this, store)
+
+        this.melee.order = U.attack_order(this.melee.attacks)
+
+        return true
+    end
+
+    function scripts.hero_raelyn.update(this, store)
+        local h = this.health
+        local a, skill, brk, sta
+        local ultimate = this.hero.skills.ultimate
+        local basic_attack = this.melee.attacks[1]
+        local unbreakable_attack = this.timed_attacks.list[1]
+        local inspire_fear_attack = this.timed_attacks.list[2]
+        local onslaught_attack = this.timed_attacks.list[3]
+        local onslaught_on = false
+
+        this.health_bar.hidden = false
+        U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+
+        while true do
+            -- while this.spawning_in_cinematic_s2 do
+            --     coroutine.yield()
+            -- end
+
+            if h.dead then
+                SU.y_hero_death_and_respawn(store, this)
+            end
+
+            if this.unit.is_stunned then
+                SU.soldier_idle(store, this)
+            else
+                while this.nav_rally.new do
+                    if SU.y_hero_new_rally(store, this) then
+                        goto label_222_0
+                    end
+                end
+
+                if SU.hero_level_up(store, this) then
+                    U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                end
+
+                skill = this.hero.skills.inspire_fear
+                a = inspire_fear_attack
+
+                if ready_to_use_skill(a, store) then
+                    local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_trigger,
+                        a.vis_flags, a.vis_bans)
+
+                    if not enemies or #enemies < a.min_targets then
+                        SU.delay_attack(store, a, fts(10))
+                    else
+                        local start_ts = store.tick_ts
+
+                        S:queue(a.sound)
+
+                        if a.mod_decal then
+                            local d = E:create_entity(a.mod_decal)
+
+                            d.modifier.source_id = this.id
+                            d.modifier.target_id = this.id
+
+                            queue_insert(store, d)
+                        end
+
+                        U.animation_start(this, a.animation, nil, store.tick_ts, 1)
+
+                        if SU.y_hero_wait(store, this, a.cast_time) then
+                            -- block empty
+                        else
+                            a.ts = start_ts
+
+                            SU.hero_gain_xp_from_skill(this, skill)
+
+                            enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_effect,
+                                a.vis_flags, a.vis_bans)
+
+                            if enemies then
+                                for _, t in ipairs(enemies) do
+                                    for _, mod in ipairs(a.mods) do
+                                        local m = E:create_entity(mod)
+
+                                        m.modifier.source_id = this.id
+                                        m.modifier.target_id = t.id
+
+                                        queue_insert(store, m)
+                                    end
+                                end
+                            end
+
+                            SU.y_hero_animation_wait(this)
+                        end
+
+                        goto label_222_0
+                    end
+                end
+
+                skill = this.hero.skills.unbreakable
+                a = unbreakable_attack
+
+                if ready_to_use_skill(a, store) and not U.has_modifiers(store, this, a.mod) then
+                    local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_trigger,
+                        a.vis_flags, a.vis_bans)
+
+                    if not enemies or #enemies < a.min_targets then
+                        SU.delay_attack(store, a, fts(10))
+                    else
+                        local start_ts = store.tick_ts
+
+                        S:queue(a.sound)
+                        U.animation_start(this, a.animation, nil, store.tick_ts, 1)
+
+                        if SU.y_hero_wait(store, this, a.cast_time) then
+                            -- block empty
+                        else
+                            local d = E:create_entity(a.mod_decal)
+
+                            d.modifier.source_id = this.id
+                            d.modifier.target_id = this.id
+
+                            queue_insert(store, d)
+
+                            a.ts = start_ts
+
+                            SU.hero_gain_xp_from_skill(this, skill)
+                            enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_effect,
+                                a.vis_flags, a.vis_bans)
+                            local count = #enemies > a.max_targets and a.max_targets or #enemies
+                            local m = E:create_entity(a.mod)
+                            local shield_max_damage = m.shield_base * this.health.hp_max
+
+                            shield_max_damage = shield_max_damage + this.health.hp_max * m.shield_per_enemy *
+                                                    count
+                            m.modifier.source_id = this.id
+                            m.modifier.target_id = this.id
+                            m.shield_max_damage = shield_max_damage
+
+                            local mod_prefix
+
+                            if #enemies <= #m.sprites_per_enemies then
+                                mod_prefix = m.sprites_per_enemies[count]
+                            else
+                                mod_prefix = m.sprites_per_enemies[#m.sprites_per_enemies]
+                            end
+
+                            m.render.sprites[1].prefix = mod_prefix
+
+                            queue_insert(store, m)
+
+                            SU.y_hero_animation_wait(this)
+                        end
+
+                        goto label_222_0
+                    end
+                end
+
+                skill = this.hero.skills.onslaught
+                a = onslaught_attack
+
+                if ready_to_use_skill(a, store) then
+                    local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_trigger,
+                        a.vis_flags, a.vis_bans)
+
+                    if not enemies or #enemies < a.min_targets then
+                        SU.delay_attack(store, a, fts(10))
+                    else
+                        onslaught_on = true
+                        a.duration_ts = store.tick_ts
+                        a._sound = basic_attack.sound
+                        a._cooldown = basic_attack.cooldown
+                        a._hit_fx = basic_attack.hit_fx
+                        a._hit_offset = basic_attack.hit_offset
+                        basic_attack.hit_aura = a.hit_aura
+                        basic_attack.cooldown = a.melee_cooldown
+                        basic_attack.hit_decal = a.hit_decal
+                        basic_attack.hit_fx = nil
+                        basic_attack.hit_offset = a.hit_offset
+                        basic_attack.sound = a.sound
+                    end
+                end
+
+                if onslaught_on and store.tick_ts - a.duration_ts > a.duration then
+                    onslaught_on = false
+                    basic_attack.hit_aura = nil
+                    basic_attack.cooldown = a._cooldown
+                    basic_attack.hit_decal = nil
+                    basic_attack.hit_fx = a._hit_fx
+                    basic_attack.hit_offset = a._hit_offset
+                    basic_attack.sound = a._sound
+                    a.ts = store.tick_ts
+                end
+
+                brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                if brk or sta ~= A_NO_TARGET then
+                    -- block empty
+                elseif SU.soldier_go_back_step(store, this) then
+                    -- block empty
+                else
+                    SU.soldier_idle(store, this)
+                    SU.soldier_regen(store, this)
+                end
+            end
+
+            ::label_222_0::
+
+            coroutine.yield()
+        end
+    end
+
+    scripts.hero_raelyn_unbreakable_mod = {}
+
+    function scripts.hero_raelyn_unbreakable_mod.insert(this, store)
+        local m = this.modifier
+        local target = store.entities[this.modifier.target_id]
+
+        if not target or not target.health or target.health.dead then
+            return false
+        end
+
+        m.ts = store.tick_ts
+        if not target.health.on_damages then
+            target.health.on_damages = {}
+            if target.health.on_damage then
+                target.health.on_damages[1] = target.health.on_damage
+            end
+        end
+        target.health.on_damages[#target.health.on_damages + 1] = scripts.hero_raelyn_unbreakable_mod.on_damage
+        this.on_damages_index = #target.health.on_damages
+
+        SU.update_on_damage(target)
+
+        this._hit_sources = {}
+        this._blood_color = target.unit.blood_color
+        target.unit.blood_color = BLOOD_NONE
+        target._shield_mod = this
+        this.health.hp = this.shield_max_damage
+        this.health.hp_max = this.shield_max_damage
+
+        return true
+    end
+
+    function scripts.hero_raelyn_unbreakable_mod.remove(this, store)
+        local m = this.modifier
+        local target = store.entities[m.target_id]
+
+        if target then
+            target.health.on_damages[this.on_damages_index] = nil
+            SU.update_on_damage(target)
+            target._shield_mod = nil
+            target.unit.blood_color = this._blood_color
+        end
+
+        return true
+    end
+
+    function scripts.hero_raelyn_unbreakable_mod.update(this, store)
+        local m = this.modifier
+
+        this.modifier.ts = store.tick_ts
+
+        local target = store.entities[m.target_id]
+
+        if not target or not target.pos then
+            queue_remove(store, this)
+
+            return
+        end
+
+        this.pos = target.pos
+
+        U.y_animation_play(this, this.animation_start, nil, store.tick_ts, 1)
+
+        while true do
+            target = store.entities[m.target_id]
+
+            if not target or target.health.dead or m.duration >= 0 and store.tick_ts - m.ts > m.duration or m.last_node and
+                target.nav_path.ni > m.last_node then
+                U.y_animation_play(this, this.animation_end, nil, store.tick_ts, 1)
+                queue_remove(store, this)
+
+                return
+            end
+
+            if this.render and target.unit then
+                local s = this.render.sprites[1]
+                local flip_sign = 1
+
+                if target.render then
+                    flip_sign = target.render.sprites[1].flip_x and -1 or 1
+                end
+
+                if m.health_bar_offset and target.health_bar then
+                    local hb = target.health_bar.offset
+                    local hbo = m.health_bar_offset
+
+                    s.offset.x, s.offset.y = hb.x + hbo.x * flip_sign, hb.y + hbo.y
+                elseif m.use_mod_offset and target.unit.mod_offset then
+                    s.offset.x, s.offset.y = target.unit.mod_offset.x * flip_sign, target.unit.mod_offset.y
+                end
+            end
+
+            U.y_animation_play(this, this.animation_loop, nil, store.tick_ts, 1)
+            coroutine.yield()
+        end
+    end
+
+    function scripts.hero_raelyn_unbreakable_mod.on_damage(this, store, damage)
+        local mod = this._shield_mod
+
+        if not mod then
+            log.error("hero_raelyn_unbreakable_mod.on_damage for enemy %s has no mod pointer", this.id)
+
+            return true
+        end
+
+        if mod.shield_broken then
+            return true
+        end
+
+        if U.flag_has(damage.damage_type, bor(DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_EAT, DAMAGE_IGNORE_SHIELD)) then
+            mod.shield_broken = true
+
+            queue_remove(store, mod)
+
+            return true
+        else
+            mod.damage_taken = mod.damage_taken + damage.value
+        end
+
+        mod.health.hp = mod.shield_max_damage - mod.damage_taken
+
+        if mod.damage_taken >= mod.shield_max_damage then
+            mod.shield_broken = true
+
+            queue_remove(store, mod)
+
+            if mod.damage_taken - mod.shield_max_damage > 0 then
+                damage.value = mod.damage_taken - mod.shield_max_damage
+
+                return true
+            end
+        end
+
+        return false
+    end
+
+    scripts.hero_raelyn_ultimate = {}
+
+    function scripts.hero_raelyn_ultimate.update(this, store)
+        local x, y = this.pos.x, this.pos.y
+        local e = E:create_entity(this.entity)
+
+        e.pos.x = x
+        e.pos.y = y
+        e.nav_rally.center = V.v(x, y)
+        e.nav_rally.pos = V.vclone(e.pos)
+
+        queue_insert(store, e)
+
+        local d = E:create_entity(e.spawn_mod_decal)
+
+        d.modifier.source_id = e.id
+        d.modifier.target_id = e.id
+
+        queue_insert(store, d)
+        queue_remove(store, this)
+    end
+
+    scripts.hero_raelyn_command_orders_dark_knight = {}
+
+    function scripts.hero_raelyn_command_orders_dark_knight.update(this, store, script)
+        local brk, stam, star
+
+        this.reinforcement.ts = store.tick_ts
+        this.render.sprites[1].ts = store.tick_ts
+
+        if this.reinforcement.fade or this.reinforcement.fade_in then
+            SU.y_reinforcement_fade_in(store, this)
+        elseif this.render.sprites[1].name == "raise" then
+            if this.sound_events and this.sound_events.raise then
+                S:queue(this.sound_events.raise)
+            end
+
+            this.health_bar.hidden = true
+
+            U.y_animation_play(this, "raise", nil, store.tick_ts, 1)
+
+            if not this.health.dead then
+                this.health_bar.hidden = nil
+            end
+        end
+
+        while true do
+            if this.health.dead or this.reinforcement.duration and store.tick_ts - this.reinforcement.ts >
+                this.reinforcement.duration then
+                if this.health.hp > 0 then
+                    this.reinforcement.hp_before_timeout = this.health.hp
+                end
+
+                if this.health.dead then
+                    this.reinforcement.fade = nil
+                    this.tween = nil
+                else
+                    this.reinforcement.fade = true
+                end
+
+                this.health.hp = 0
+
+                SU.remove_modifiers(store, this)
+
+                this.ui.can_click = false
+
+                SU.y_soldier_death(store, this)
+
+                return
+            end
+
+            if this.unit.is_stunned then
+                SU.soldier_idle(store, this)
+            else
+
+                while this.nav_rally.new do
+                    if SU.y_hero_new_rally(store, this) then
+                        goto label_229_1
+                    end
+                end
+
+                if this.melee then
+                    brk, stam = SU.y_soldier_melee_block_and_attacks(store, this)
+
+                    if brk or stam == A_DONE or stam == A_IN_COOLDOWN and not this.melee.continue_in_cooldown then
+                        goto label_229_1
+                    end
+                end
+
+                if this.ranged then
+                    brk, star = SU.y_soldier_ranged_attacks(store, this)
+
+                    if brk or star == A_DONE then
+                        goto label_229_1
+                    elseif star == A_IN_COOLDOWN then
+                        goto label_229_0
+                    end
+                end
+
+                if this.melee.continue_in_cooldown and stam == A_IN_COOLDOWN then
+                    goto label_229_1
+                end
+
+                if SU.soldier_go_back_step(store, this) then
+                    goto label_229_1
+                end
+
+                ::label_229_0::
+
+                SU.soldier_idle(store, this)
+                SU.soldier_regen(store, this)
+            end
+
+            ::label_229_1::
+
+            coroutine.yield()
+        end
+    end
+
 end
