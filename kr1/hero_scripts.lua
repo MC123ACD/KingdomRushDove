@@ -15922,31 +15922,22 @@ return function(scripts)
 
             queue_damage(store, d)
 
-            if band(target.vis.flags, F_FLYING) ~= 0 then
+            if b.hit_fx then
                 local fx = E:create_entity(b.hit_fx)
 
-                fx.pos.x, fx.pos.y = target.pos.x, target.pos.y + target.flight_height
+                fx.pos = V.v(target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y)
                 fx.render.sprites[1].ts = store.tick_ts
 
                 queue_insert(store, fx)
-            else
-                if b.hit_fx then
-                    local fx = E:create_entity(b.hit_fx)
+            end
 
-                    fx.pos = V.v(target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y)
-                    fx.render.sprites[1].ts = store.tick_ts
+            if b.floor_fx and band(target.vis.flags, F_CLIFF) == 0 then
+                local fx = E:create_entity(b.floor_fx)
 
-                    queue_insert(store, fx)
-                end
+                fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
+                fx.render.sprites[1].ts = store.tick_ts
 
-                if b.floor_fx and band(target.vis.flags, F_CLIFF) == 0 then
-                    local fx = E:create_entity(b.floor_fx)
-
-                    fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
-                    fx.render.sprites[1].ts = store.tick_ts
-
-                    queue_insert(store, fx)
-                end
+                queue_insert(store, fx)
             end
         end
 
