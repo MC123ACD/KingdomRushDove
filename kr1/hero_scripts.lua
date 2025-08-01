@@ -16695,8 +16695,8 @@ return function(scripts)
                 skill = this.hero.skills.astral_reflection
 
                 if ready_to_use_skill(a, store) and store.tick_ts - last_ts > a.min_cooldown then
-                    local target, targets = U.find_foremost_enemy(store.enemies, this.pos, 0, a.max_range, false,
-                        a.vis_flags, a.vis_bans)
+                    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
+                        a.vis_bans)
 
                     if not targets or #targets == 0 then
                         SU.delay_attack(store, a, fts(10))

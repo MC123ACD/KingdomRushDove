@@ -10435,6 +10435,18 @@ local function heroes()
     tt.sound_events.insert = "EnemyTurtleShamanBasicAttack"
     tt.bullet.damage_type = b.basic_ranged.damage_type
     tt.bullet.particles_name = "ps_hero_space_elf_basic_attack_trail"
+    tt.bullet.mod = "mod_hero_space_elf_bolt"
+
+    tt = E:register_t("mod_hero_space_elf_bolt", "modifier")
+    tt.received_damage_factor = 1.1
+    tt.inflicted_damage_factor = nil
+    tt.modifier.duration = 4
+    tt.main_script.insert = scripts.mod_damage_factors.insert
+    tt.main_script.remove = scripts.mod_damage_factors.remove
+    tt.main_script.update = scripts.mod_track_target.update
+
+    tt = E:register_t("mod_hero_space_elf_void_rift", "mod_slow")
+    tt.slow.factor = 0.9
 
     tt = E:register_t("aura_hero_space_elf_void_rift", "aura")
     b = balance.heroes.hero_space_elf
@@ -10449,6 +10461,7 @@ local function heroes()
     tt.aura.radius = b.void_rift.radius
     tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
     tt.aura.vis_flags = F_RANGED
+    tt.aura.mod = "mod_hero_space_elf_void_rift"
     tt.render.sprites[1].prefix = "hero_therien_rift_fx_decal"
     tt.render.sprites[1].z = Z_DECALS + 1
     tt.render.sprites[1].loop = false
