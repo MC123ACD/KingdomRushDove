@@ -9774,6 +9774,7 @@ tt.modifier.use_mod_offset = false
 tt.main_script.update = scripts.mod_track_target.update
 tt = E:register_t("decal_hero_raelyn_onslaught_decal", "decal_tween")
 tt.render.sprites[1].name = "hero_raelyn_onslaught_fx_idle"
+tt.render.sprites[1].scale = vec_1(0.7)
 tt.render.sprites[1].animated = true
 tt.render.sprites[1].hide_after_runs = 1
 tt.tween.props[1].keys = {{1, 255}, {2.5, 0}}

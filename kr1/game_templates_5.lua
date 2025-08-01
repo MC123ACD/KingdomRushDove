@@ -10413,6 +10413,7 @@ return function()
     tt.render.sprites[1].prefix = nil
     tt.render.sprites[1].name = "idle"
     tt.render.sprites[1].loop = true
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt = E:register_t("hero_raelyn_inspire_fear_floor_decal_mod", "modifier")
 
     E:add_comps(tt, "render")
@@ -10423,6 +10424,7 @@ return function()
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].z = Z_DECALS
     tt.render.sprites[1].hide_after_runs = 1
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt.modifier.use_mod_offset = false
     tt.modifier.duration = fts(28)
     tt = E:register_t("hero_raelyn_inspire_fear_damage_mod", "modifier")

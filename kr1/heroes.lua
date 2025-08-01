@@ -10686,7 +10686,6 @@ local function heroes()
     tt.render.sprites[1].angles.walk = {"walk"}
     tt.render.sprites[1].name = "idle"
     tt.render.sprites[1].prefix = "hero_raelyn_hero"
-    tt.render.sprites[1].scale = vec_2(1.05, 1.05)
     tt.render.sprites[1].draw_order = DO_HEROES
     tt.soldier.melee_slot_offset = vec_2(10, 0)
     tt.sound_events.change_rally_point = "HeroRaelynTaunt"
@@ -10785,6 +10784,7 @@ local function heroes()
     tt.render.sprites[1].animated = true
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].hide_after_runs = 1
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
     tt.render.sprites[2].name = "hero_raelyn_unbreakable_shield_floor_glow"
@@ -10820,6 +10820,7 @@ local function heroes()
     tt.render.sprites[1].prefix = nil
     tt.render.sprites[1].name = "idle"
     tt.render.sprites[1].loop = true
+    tt.render.sprites[1].scale = vec_1(0.7)
 
     tt = E:register_t("hero_raelyn_inspire_fear_floor_decal_mod", "modifier")
     E:add_comps(tt, "render")
@@ -10829,6 +10830,7 @@ local function heroes()
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].z = Z_DECALS
     tt.render.sprites[1].hide_after_runs = 1
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt.modifier.use_mod_offset = false
     tt.modifier.duration = fts(28)
 
@@ -10842,6 +10844,7 @@ local function heroes()
     tt.render.sprites[1] = E:clone_c("sprite")
     tt.render.sprites[1].name = "hero_raelyn_inspire_fear_decal"
     tt.render.sprites[1].draw_order = 20
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt.modifier.use_mod_offset = false
 
     tt = E:register_t("hero_raelyn_inspire_fear_stun_mod", "mod_stun")
@@ -10900,6 +10903,7 @@ local function heroes()
     tt.render.sprites[1].prefix = "hero_raelyn_command_orders_dark_knight"
     tt.render.sprites[1].name = "idle"
     tt.render.sprites[1].draw_order = DO_SOLDIER_BIG
+    tt.render.sprites[1].scale = vec_1(0.7)
     tt.sound_events.insert = "HeroRaelynUltimateTaunt"
     tt.sound_events.death = "HeroRaelynUltimateDeath"
     tt.unit.hit_offset = vec_2(0, 16)

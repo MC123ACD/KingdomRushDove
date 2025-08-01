@@ -16666,7 +16666,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range)
+                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false, false, F_BOSS)
                     if target and valid_rally_node_nearby(target.pos) then
                         U.y_animation_play(this, "lvlup", nil, store.tick_ts, 1)
                         S:queue(this.sound_events.change_rally_point)
@@ -17169,7 +17169,7 @@ return function(scripts)
         this._hit_sources = {}
         this._blood_color = target.unit.blood_color
         target.unit.blood_color = BLOOD_NONE
-        target._shield_mod = this
+        target._shield_mod_black_aegis = this
         this.health.hp = this.shield_base
         this.health.hp_max = this.shield_base
 
@@ -17183,7 +17183,7 @@ return function(scripts)
         if target then
             target.health.on_damages[this.on_damages_index] = nil
             SU.update_on_damage(target)
-            target._shield_mod = nil
+            target._shield_mod_black_aegis = nil
             target.unit.blood_color = this._blood_color
         end
 
@@ -17288,7 +17288,7 @@ return function(scripts)
     end
 
     function scripts.mod_hero_space_elf_black_aegis.on_damage(this, store, damage)
-        local mod = this._shield_mod
+        local mod = this._shield_mod_black_aegis
 
         if not mod then
             log.error("mod_hero_space_elf_black_aegis.on_damage for enemy %s has no mod pointer", this.id)
@@ -17780,6 +17780,22 @@ return function(scripts)
                     U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
                 end
 
+                if ready_to_use_skill(this.ultimate, store) then
+                    local target = find_target_at_critical_moment(this, store, 140, false, true, F_FLYING)
+                    if target and valid_rally_node_nearby(target.pos) then
+                        U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+                        S:queue(this.sound_events.change_rally_point)
+                        local e = E:create_entity(this.hero.skills.ultimate.controller_name)
+                        e.pos.x, e.pos.y = target.pos.x, target.pos.y
+                        e.damage_factor = this.unit.damage_factor
+                        e.level = this.hero.skills.ultimate.level
+                        queue_insert(store, e)
+                        this.ultimate.ts = store.tick_ts
+                    else
+                        this.ultimate.ts = this.ultimate.ts + 1
+                    end
+                end
+
                 skill = this.hero.skills.inspire_fear
                 a = inspire_fear_attack
 
@@ -17866,26 +17882,44 @@ return function(scripts)
                             enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_effect,
                                 a.vis_flags, a.vis_bans)
                             local count = #enemies > a.max_targets and a.max_targets or #enemies
-                            local m = E:create_entity(a.mod)
-                            local shield_max_damage = m.shield_base * this.health.hp_max
 
-                            shield_max_damage = shield_max_damage + this.health.hp_max * m.shield_per_enemy *
-                                                    count
-                            m.modifier.source_id = this.id
-                            m.modifier.target_id = this.id
-                            m.shield_max_damage = shield_max_damage
+                            local function apply_unbreakable(target, is_soldier)
+                                local m = E:create_entity(a.mod)
+                                local shield_max_damage = m.shield_base * target.health.hp_max
 
-                            local mod_prefix
+                                shield_max_damage = shield_max_damage + target.health.hp_max * m.shield_per_enemy * count
+                                if is_soldier then
+                                    shield_max_damage = shield_max_damage * 0.5
+                                end
+                                m.modifier.source_id = this.id
+                                m.modifier.target_id = target.id
+                                m.shield_max_damage = shield_max_damage
 
-                            if #enemies <= #m.sprites_per_enemies then
-                                mod_prefix = m.sprites_per_enemies[count]
-                            else
-                                mod_prefix = m.sprites_per_enemies[#m.sprites_per_enemies]
+                                local mod_prefix
+
+                                if #enemies <= #m.sprites_per_enemies then
+                                    mod_prefix = m.sprites_per_enemies[count]
+                                else
+                                    mod_prefix = m.sprites_per_enemies[#m.sprites_per_enemies]
+                                end
+
+                                m.render.sprites[1].prefix = mod_prefix
+                                queue_insert(store, m)
                             end
+                            apply_unbreakable(this, false)
 
-                            m.render.sprites[1].prefix = mod_prefix
+                            local soldiers = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.max_range_effect, a.vis_flags, a.vis_bans)
 
-                            queue_insert(store, m)
+                            if soldiers then
+                                for index, soldier in ipairs(soldiers) do
+                                    if soldier.id ~= this.id and not U.has_modifiers(store, soldier, a.mod)  then
+                                        if index >= a.max_targets then
+                                            break
+                                        end
+                                        apply_unbreakable(soldier, true)
+                                    end
+                                end
+                            end
 
                             SU.y_hero_animation_wait(this)
                         end
@@ -17973,10 +18007,10 @@ return function(scripts)
         this._hit_sources = {}
         this._blood_color = target.unit.blood_color
         target.unit.blood_color = BLOOD_NONE
-        target._shield_mod = this
+        target._shield_mod_unbreakable = this
         this.health.hp = this.shield_max_damage
         this.health.hp_max = this.shield_max_damage
-
+        log.error("shield_max_damage %s", this.shield_max_damage)
         return true
     end
 
@@ -17987,7 +18021,7 @@ return function(scripts)
         if target then
             target.health.on_damages[this.on_damages_index] = nil
             SU.update_on_damage(target)
-            target._shield_mod = nil
+            target._shield_mod_unbreakable = nil
             target.unit.blood_color = this._blood_color
         end
 
@@ -18046,7 +18080,7 @@ return function(scripts)
     end
 
     function scripts.hero_raelyn_unbreakable_mod.on_damage(this, store, damage)
-        local mod = this._shield_mod
+        local mod = this._shield_mod_unbreakable
 
         if not mod then
             log.error("hero_raelyn_unbreakable_mod.on_damage for enemy %s has no mod pointer", this.id)

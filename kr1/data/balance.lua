@@ -2222,14 +2222,14 @@ local heroes = {
 				6
 			},
 			shield_base = {
-				0,
-				0,
-				0
+				0.2,
+				0.2,
+				0.2
 			},
 			shield_per_enemy = {
 				0.1,
-				0.2,
-				0.3
+				0.15,
+				0.2
 			},
 			xp_gain = {
 				280,
@@ -2238,7 +2238,7 @@ local heroes = {
 			}
 		},
 		inspire_fear = {
-			min_targets = 2,
+			min_targets = 1,
 			max_range_trigger = 72,
 			max_range_effect = 120,
 			cooldown = {

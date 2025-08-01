@@ -3823,6 +3823,9 @@ end
 
 local function update_on_damage(entity)
     entity.health.on_damage = function(this, store, damage)
+        if #entity.health.on_damages == 0 then
+            return true
+        end
         local pass = false
         for _, on_damage in pairs(entity.health.on_damages) do
             pass = on_damage(this, store, damage)
