@@ -10446,7 +10446,7 @@ local function heroes()
     tt.main_script.update = scripts.mod_track_target.update
 
     tt = E:register_t("mod_hero_space_elf_void_rift", "mod_slow")
-    tt.slow.factor = 0.9
+    tt.slow.factor = 0.8
 
     tt = E:register_t("aura_hero_space_elf_void_rift", "aura")
     b = balance.heroes.hero_space_elf
