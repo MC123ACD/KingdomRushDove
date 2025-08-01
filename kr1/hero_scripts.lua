@@ -17432,10 +17432,6 @@ return function(scripts)
 
     scripts.hero_space_elf_ultimate = {}
 
-    function scripts.hero_space_elf_ultimate.can_fire_fn(this, x, y)
-        return GR:cell_is_only(x, y, TERRAIN_LAND) and P:valid_node_nearby(x, y, nil, NF_RALLY)
-    end
-
     function scripts.hero_space_elf_ultimate.update(this, store)
         local function spawn_aura(pi, spi, ni)
             local pos = P:node_pos(pi, spi, ni)
@@ -17480,8 +17476,8 @@ return function(scripts)
 
             if U.flags_pass(target.vis, this.modifier) then
                 this._target_prev_bans = target.vis.bans
-                target.vis.bans = F_ALL
-                target.health.ignore_damage = true
+                -- target.vis.bans = F_ALL
+                -- target.health.ignore_damage = true
             end
         else
             log.debug("%s (%s) queue/removal", this.template_name, this.id)
@@ -17623,7 +17619,7 @@ return function(scripts)
 
         U.animation_start(this, "idle", nil, store.tick_ts, true, 1)
         U.y_wait(store, m.duration - (store.tick_ts - m.ts) - fts(10), function(store, time)
-            return this.interrupt
+            return this.interrupt or target.health.dead
         end)
 
         tween_levitate.disabled = true
@@ -17641,7 +17637,7 @@ return function(scripts)
         S:queue(this.out_sfx)
         U.y_animation_wait(this)
 
-        if target.health_bar then
+        if not target.health.dead and target.health_bar then
             target.health_bar.hidden = nil
         end
 

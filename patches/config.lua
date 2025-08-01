@@ -8,7 +8,7 @@ return {
     -- 怪物掉落金币倍率，默认为 1，向上取整
     enemy_gold_multiplier = 1,
     -- 开局金币数倍率，默认为 1
-    gold_multiplier = 1,
+    gold_multiplier = 10,
     -- 英雄伤害倍率，默认为 1
     hero_damage_multiplier = 1,
     -- 英雄升级速度倍率，默认为 1

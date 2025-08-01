@@ -1700,7 +1700,7 @@ local function register_mage(scripts)
                             return v.modifier.target_id
                         end)
                         local towers = table.filter(store.towers, function(_, e)
-                            return e.tower and e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
+                            return e.tower.can_be_mod and not table.contains(busy_ids, e.id) and
                                        U.is_inside_ellipse(e.pos, this.pos, pow_s.range)
                         end)
 
@@ -1720,28 +1720,30 @@ local function register_mage(scripts)
                             ta.vis_flags, ta.vis_bans)
 
                         if enemy then
-                            ta.ts = store.tick_ts
+                            if #enemies >= 3 or enemy.health.hp > 750 then
+                                ta.ts = store.tick_ts
 
-                            local an, af = U.animation_name_facing_point(this, ta.animation, enemy.pos, shooter_sid)
+                                local an, af = U.animation_name_facing_point(this, ta.animation, enemy.pos, shooter_sid)
 
-                            U.animation_start(this, an, af, store.tick_ts, false, shooter_sid)
+                                U.animation_start(this, an, af, store.tick_ts, false, shooter_sid)
 
-                            this.tween.props[1].ts = store.tick_ts
+                                this.tween.props[1].ts = store.tick_ts
 
-                            S:queue(ta.sound)
-                            U.y_wait(store, ta.cast_time)
+                                S:queue(ta.sound)
+                                U.y_wait(store, ta.cast_time)
 
-                            for i = 1, math.min(#enemies, pow_t.target_count[pow_t.level]) do
-                                local target = enemies[i]
-                                local mod = E:create_entity(ta.spell)
+                                for i = 1, math.min(#enemies, pow_t.target_count[pow_t.level]) do
+                                    local target = enemies[i]
+                                    local mod = E:create_entity(ta.spell)
 
-                                mod.modifier.target_id = target.id
-                                mod.modifier.level = pow_t.level
+                                    mod.modifier.target_id = target.id
+                                    mod.modifier.level = pow_t.level
 
-                                queue_insert(store, mod)
+                                    queue_insert(store, mod)
+                                end
+
+                                U.y_animation_wait(this, shooter_sid)
                             end
-
-                            U.y_animation_wait(this, shooter_sid)
                         end
                     end
 

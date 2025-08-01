@@ -7659,14 +7659,4 @@ scripts.mod_ban.remove = function(this, store)
     return true
 end
 
-scripts.mod_weak.insert = function(this, store)
-    local target = store.entities[this.modifier.target_id]
-    if not target or target.health.dead then
-        return false
-    end
-    if target.health then
-        target.health.damage_factor = target.health.damage_factor + this.modifier.
-    end
-end
-
 return scripts

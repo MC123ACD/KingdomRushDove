@@ -26188,7 +26188,7 @@ function scripts.mod_timelapse.update(this, store)
     U.y_animation_wait(this)
     U.animation_start(this, "loop", nil, store.tick_ts, true, 1)
     U.y_wait(store, m.duration - (store.tick_ts - m.ts) - fts(10), function(store, time)
-        return this.interrupt
+        return this.interrupt or target.health.dead
     end)
     S:queue("TowerHighMageTimeCastEnd")
     U.animation_start(this, "end", nil, store.tick_ts, false, 1)
