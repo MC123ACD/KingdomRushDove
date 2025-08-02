@@ -39,6 +39,7 @@ function game:init(screen_w, screen_h, done_callback)
     self.screen_w = screen_w
     self.screen_h = screen_h
     self.done_callback = done_callback
+    self.path_lines = {}
 
     local aspect = screen_w / screen_h
 
@@ -762,9 +763,6 @@ function game:draw_game()
         local total_length = 0
         self.dash_start_offset = self.dash_start_offset or 0
         self.dash_start_offset = (self.dash_start_offset + 0.4) % (dash_length + gap_length)
-        if not self.path_lines then
-            self.path_lines = {}
-        end
         -- self.path_lines[self.shown_path] 记录了这个路径上各个子路径展平成直线后各个顶点在直线上的坐标。
         if not self.path_lines[self.shown_path] then
             self.path_lines[self.shown_path] = {}
