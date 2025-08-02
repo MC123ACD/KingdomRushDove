@@ -1553,7 +1553,7 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.chainlightning.xp_gain = {50, 100, 150}
-    tt.hero.skills.chainlightning.chance = {0.25, 0.3, 0.35}
+    tt.hero.skills.chainlightning.chance = {0.27, 0.33, 0.38}
     tt.hero.skills.thunderclap = CC("hero_skill")
     tt.hero.skills.thunderclap.damage_max = {60, 80, 120}
     tt.hero.skills.thunderclap.secondary_damage_max = {50, 70, 90}
