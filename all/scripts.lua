@@ -898,7 +898,8 @@ function scripts.enemies_spawner.update(this, store, script)
         else
             local spawn = E:create_entity(sp.entity)
             if this.health_factor then
-                spawn.health.hp = spawn.health.hp_max * this.health_factor
+                spawn.health.hp_max = spawn.health.hp_max * this.health_factor
+                spawn.health.hp = spawn.health.hp_max
                 spawn.enemy.gold = math.floor(spawn.enemy.gold * this.health_factor)
             end
             if this.total_gold then
