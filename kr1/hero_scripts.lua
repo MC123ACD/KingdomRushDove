@@ -17883,7 +17883,12 @@ return function(scripts)
                             SU.hero_gain_xp_from_skill(this, skill)
                             enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_effect,
                                 a.vis_flags, a.vis_bans)
-                            local count = #enemies > a.max_targets and a.max_targets or #enemies
+                            local count
+                            if enemies then
+                                count = #enemies > a.max_targets and a.max_targets or #enemies
+                            else
+                                count = 0
+                            end
 
                             local function apply_unbreakable(target, is_soldier)
                                 local m = E:create_entity(a.mod)
@@ -17933,7 +17938,7 @@ return function(scripts)
                 skill = this.hero.skills.onslaught
                 a = onslaught_attack
 
-                if ready_to_use_skill(a, store) then
+                if ready_to_use_skill(a, store) and not onslaught_on then
                     local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range_trigger,
                         a.vis_flags, a.vis_bans)
 
@@ -17952,6 +17957,7 @@ return function(scripts)
                         basic_attack.hit_fx = nil
                         basic_attack.hit_offset = a.hit_offset
                         basic_attack.sound = a.sound
+                        U.speed_inc(this, this.motion.max_speed * 0.4)
                     end
                 end
 
@@ -17964,6 +17970,7 @@ return function(scripts)
                     basic_attack.hit_offset = a._hit_offset
                     basic_attack.sound = a._sound
                     a.ts = store.tick_ts
+                    U.speed_dec(this, this.motion.max_speed * 0.4)
                 end
 
                 brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
