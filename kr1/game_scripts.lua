@@ -7584,7 +7584,7 @@ function scripts.graveyard_controller.update(this, store)
 
 	while not this.interrupt do
 		local targets = table.filter(store.entities, function(k, v)
-			return not v._in_graveyard and v.health and v.health.dead and band(v.vis.flags, g.vis_has) ~= 0 and band(v.vis.flags, g.vis_bans) == 0 and band(v.vis.bans, g.vis_flags) == 0 and store.tick_ts - v.health.death_ts >= g.dead_time and (not v.reinforcement or not v.reinforcement.hp_before_timeout) and (not g.excluded_templates or not table.contains(g.excluded_templates, v.template_name))
+			return not v._in_graveyard and (v.health and v.health.dead) and (v.vis and band(v.vis.flags, g.vis_has) ~= 0 and band(v.vis.flags, g.vis_bans) == 0 and band(v.vis.bans, g.vis_flags) == 0) and store.tick_ts - v.health.death_ts >= g.dead_time and (not v.reinforcement or not v.reinforcement.hp_before_timeout) and (not g.excluded_templates or not table.contains(g.excluded_templates, v.template_name))
 		end)
 
 		if #targets == 0 then

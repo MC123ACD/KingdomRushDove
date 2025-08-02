@@ -822,6 +822,9 @@ function game:draw_game()
                         end
                         next_span_len = path_line[i+1] - path_line[i]
                     end
+                    if i >= #path_line then
+                        break
+                    end
                     if line_len + next_span_len < dash_length then
                         G.line(path[i].x, REF_H - path[i].y, path[i+1].x, REF_H - path[i+1].y)
                     else
