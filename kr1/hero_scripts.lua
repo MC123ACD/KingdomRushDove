@@ -16677,6 +16677,7 @@ return function(scripts)
                         e.level = this.hero.skills.ultimate.level
                         queue_insert(store, e)
                         this.ultimate.ts = store.tick_ts
+                        SU.hero_gain_xp_from_skill(this, this.hero.skills.ultimate)
                     else
                         this.ultimate.ts = this.ultimate.ts + 1
                     end
@@ -17791,6 +17792,7 @@ return function(scripts)
                         e.level = this.hero.skills.ultimate.level
                         queue_insert(store, e)
                         this.ultimate.ts = store.tick_ts
+                        SU.hero_gain_xp_from_skill(this,this.hero.skills.ultimate)
                     else
                         this.ultimate.ts = this.ultimate.ts + 1
                     end

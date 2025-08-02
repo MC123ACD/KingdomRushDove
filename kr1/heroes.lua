@@ -10948,7 +10948,6 @@ local function heroes()
         attack.damage_min = b.ultimate.entity.damage_min[1]
     end
     tt.health.hp_max = b.ultimate.entity.hp_max[1]
-    tt.regen.health = b.ultimate.entity.regen_health[1]
     tt.health.armor = b.ultimate.entity.armor[1]
 
     tt = E:register_t("hero_raelyn_ultimate_entity_2", "hero_raelyn_ultimate_entity")
@@ -10960,7 +10959,6 @@ local function heroes()
     end
 
     tt.health.hp_max = b.ultimate.entity.hp_max[2]
-    tt.regen.health = b.ultimate.entity.regen_health[2]
     tt.health.armor = b.ultimate.entity.armor[2]
 
     tt = E:register_t("hero_raelyn_ultimate_entity_3", "hero_raelyn_ultimate_entity")
@@ -10971,7 +10969,6 @@ local function heroes()
         attack.damage_min = b.ultimate.entity.damage_min[3]
     end
     tt.health.hp_max = b.ultimate.entity.hp_max[3]
-    tt.regen.health = b.ultimate.entity.regen_health[3]
     tt.health.armor = b.ultimate.entity.armor[3]
 
     tt = E:register_t("hero_raelyn_ultimate_entity_4", "hero_raelyn_ultimate_entity")
@@ -10982,10 +10979,7 @@ local function heroes()
         attack.damage_min = b.ultimate.entity.damage_min[4]
     end
     tt.health.hp_max = b.ultimate.entity.hp_max[4]
-    tt.regen.health = b.ultimate.entity.regen_health[4]
     tt.health.armor = b.ultimate.entity.armor[4]
-
-
 end
 
 return heroes

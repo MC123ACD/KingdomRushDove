@@ -13484,27 +13484,30 @@ function scripts.gorilla_small_liana.update(this, store, script)
     queue_remove(store, this)
 end
 
-scripts.decal_tunnel_light = {}
+-- scripts.decal_tunnel_light = {}
 
-function scripts.decal_tunnel_light.update(this, store, script)
-    while true do
-        local empty = true
+-- function scripts.decal_tunnel_light.update(this, store, script)
+--     if not this.track_ids then
+--         queue_remove(store, this)
+--     end
+--     while true do
+--         local empty = true
 
-        for _, id in pairs(this.track_ids) do
-            local e = store.entities[id]
+--         for _, id in pairs(this.track_ids) do
+--             local e = store.entities[id]
 
-            if #e.tunnel.picked_enemies > 0 then
-                empty = false
+--             if #e.tunnel.picked_enemies > 0 then
+--                 empty = false
 
-                break
-            end
-        end
+--                 break
+--             end
+--         end
 
-        this.render.sprites[1].hidden = empty
+--         this.render.sprites[1].hidden = empty
 
-        coroutine.yield()
-    end
-end
+--         coroutine.yield()
+--     end
+-- end
 
 scripts.decal_black_dragon = {}
 
