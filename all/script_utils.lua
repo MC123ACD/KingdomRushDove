@@ -2108,6 +2108,16 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
             hit_pos.y = hit_pos.y + attack.hit_offset.y
         end
 
+        if attack.hit_aura then
+            local a = E:create_entity(attack.hit_aura)
+
+            a.pos = V.vclone(hit_pos)
+            a.aura.target_id = target.id
+            a.aura.source_id = this.id
+
+            queue_insert(store, a)
+        end
+
         if attack.hit_fx then
             local fx = E:create_entity(attack.hit_fx)
 

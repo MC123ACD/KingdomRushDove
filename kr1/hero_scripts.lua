@@ -17958,11 +17958,13 @@ return function(scripts)
                         basic_attack.hit_offset = a.hit_offset
                         basic_attack.sound = a.sound
                         U.speed_inc(this, this.motion.max_speed * 0.4)
+                        this.melee.attacks[2].hit_aura = a.hit_aura
                     end
                 end
 
                 if onslaught_on and store.tick_ts - a.duration_ts > a.duration then
                     onslaught_on = false
+                    this.melee.attacks[2].hit_aura = nil
                     basic_attack.hit_aura = nil
                     basic_attack.cooldown = a._cooldown
                     basic_attack.hit_decal = nil
