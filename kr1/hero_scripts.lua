@@ -18010,7 +18010,7 @@ return function(scripts)
         target._shield_mod_unbreakable = this
         this.health.hp = this.shield_max_damage
         this.health.hp_max = this.shield_max_damage
-        log.error("shield_max_damage %s", this.shield_max_damage)
+
         return true
     end
 

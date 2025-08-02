@@ -24740,656 +24740,561 @@ local kr5_a = {
 		to = 10,
 		from = 1
 	},
-	bullet_rod_dragon_fire_idle = {
-		prefix = "rodOfDragonfire_proy",
-		to = 10,
-		from = 1
-	},
-	bullet_rod_dragon_fire_explosion = {
-		prefix = "rodOfDragonfire_explosion",
-		to = 14,
-		from = 1
-	},
-	ps_rod_dragon_fire_particle = {
-		prefix = "rodOfDragonfire_proyParticle",
-		to = 10,
-		from = 1
-	},
-	rod_dragon_fire_start = {
-		prefix = "rodOfDragonfire_totem",
-		to = 12,
-		from = 1
-	},
-	rod_dragon_fire_end = {
-		prefix = "rodOfDragonfire_totem",
-		to = 41,
-		from = 13
-	},
-	rod_dragon_fire_flame = {
-		prefix = "rodOfDragonfire_totem_fire",
-		to = 10,
-		from = 1
-	},
-	tower_archer_shooter_idleDown = {
-		prefix = "archer_shooter",
-		to = 10,
-		from = 10
-	},
-	tower_archer_shooter_idleUp = {
-		prefix = "archer_shooter",
-		to = 20,
-		from = 20
-	},
-	tower_archer_shooter_shootingDown = {
-		prefix = "archer_shooter",
-		to = 9,
-		from = 1
-	},
-	tower_archer_shooter_shootingUp = {
-		prefix = "archer_shooter",
-		to = 19,
-		from = 11
-	},
-	tower_arcane_shooter_idleDown = {
-		prefix = "archer_arcane_shooter",
-		to = 9,
-		from = 9
-	},
-	tower_arcane_shooter_shootDown = {
-		prefix = "archer_arcane_shooter",
-		to = 9,
-		from = 1
-	},
-	tower_arcane_shooter_idleUp = {
-		prefix = "archer_arcane_shooter",
-		to = 18,
-		from = 18
-	},
-	tower_arcane_shooter_shootUp = {
-		prefix = "archer_arcane_shooter",
-		to = 18,
-		from = 10
-	},
-	tower_arcane_shooter_specialDown = {
-		prefix = "archer_arcane_shooter",
-		to = 41,
-		from = 19
-	},
-	tower_arcane_shooter_specialUp = {
-		prefix = "archer_arcane_shooter",
-		to = 64,
-		from = 42
-	},
-	tower_arcane_bubbles = {
-		prefix = "archer_arcane_decos",
-		to = 21,
-		from = 1
-	},
-	tower_silver_shooter_idleDown = {
-		prefix = "archer_silver_shooter",
-		to = 12,
-		from = 1
-	},
-	tower_silver_shooter_idleUp = {
-		prefix = "archer_silver_shooter",
-		to = 24,
-		from = 13
-	},
-	tower_silver_shooter_shootDown = {
-		prefix = "archer_silver_shooter",
-		to = 58,
-		from = 41
-	},
-	tower_silver_shooter_shootUp = {
-		prefix = "archer_silver_shooter",
-		to = 76,
-		from = 59
-	},
-	tower_silver_shooter_shootShortDown = {
-		prefix = "archer_silver_shooter",
-		to = 32,
-		from = 25
-	},
-	tower_silver_shooter_shootShortUp = {
-		prefix = "archer_silver_shooter",
-		to = 40,
-		from = 33
-	},
-	tower_silver_shooter_shootSpecialDown = {
-		prefix = "archer_silver_shooter",
-		to = 100,
-		from = 77
-	},
-	tower_silver_shooter_shootSpecialUp = {
-		prefix = "archer_silver_shooter",
-		to = 124,
-		from = 101
-	},
-	tower_silver_shooter_shootSpecialShortDown = {
-		prefix = "archer_silver_shooter",
-		to = 148,
-		from = 125
-	},
-	tower_silver_shooter_shootSpecialShortUp = {
-		prefix = "archer_silver_shooter",
-		to = 172,
-		from = 149
-	},
-	tower_silver_shooter_instakillDown = {
-		prefix = "archer_silver_shooter",
-		to = 196,
-		from = 173
-	},
-	tower_silver_shooter_instakillUp = {
-		prefix = "archer_silver_shooter",
-		to = 220,
-		from = 197
-	},
-	tower_mage_1_platform_shoot = {
-		prefix = "mage_towers_layer2",
-		to = 31,
-		from = 1
-	},
-	tower_mage_1_platform_idle = {
-		prefix = "mage_towers_layer2",
-		to = 32,
-		from = 32
-	},
-	tower_mage_2_platform_shoot = {
-		prefix = "mage_towers_layer2",
-		to = 63,
-		from = 33
-	},
-	tower_mage_2_platform_idle = {
-		prefix = "mage_towers_layer2",
-		to = 64,
-		from = 64
-	},
-	tower_mage_3_platform_shoot = {
-		prefix = "mage_towers_layer2",
-		to = 95,
-		from = 65
-	},
-	tower_mage_3_platform_idle = {
-		prefix = "mage_towers_layer2",
-		to = 96,
-		from = 96
-	},
-	tower_mage_shooter_shootingDown = {
-		prefix = "mage_tower_shooter",
-		to = 31,
-		from = 1
-	},
-	tower_mage_shooter_idleDown = {
-		prefix = "mage_tower_shooter",
-		to = 32,
-		from = 32
-	},
-	tower_mage_shooter_shootingUp = {
-		prefix = "mage_tower_shooter",
-		to = 63,
-		from = 33
-	},
-	tower_mage_shooter_idleUp = {
-		prefix = "mage_tower_shooter",
-		to = 64,
-		from = 64
-	},
-	bolt_elves_travel = {
-		prefix = "mage_proy",
-		to = 15,
-		from = 1
-	},
-	bolt_elves_hit = {
-		prefix = "mage_proy",
-		to = 25,
-		from = 16
-	},
-	tower_wild_magus_shooter_idleDown = {
-		prefix = "mage_wild_shooter",
-		to = 1,
-		from = 1
-	},
-	tower_wild_magus_shooter_idleUp = {
-		prefix = "mage_wild_shooter",
-		to = 2,
-		from = 2
-	},
-	tower_wild_magus_shooter_rh_shootDown = {
-		prefix = "mage_wild_shooter",
-		to = 10,
-		from = 3
-	},
-	tower_wild_magus_shooter_lh_shootDown = {
-		prefix = "mage_wild_shooter",
-		to = 18,
-		from = 11
-	},
-	tower_wild_magus_shooter_rh_shootUp = {
-		prefix = "mage_wild_shooter",
-		to = 26,
-		from = 19
-	},
-	tower_wild_magus_shooter_lh_shootUp = {
-		prefix = "mage_wild_shooter",
-		to = 34,
-		from = 27
-	},
-	tower_wild_magus_shooter_rayDown = {
-		prefix = "mage_wild_shooter",
-		to = 68,
-		from = 35
-	},
-	tower_wild_magus_shooter_rayUp = {
-		prefix = "mage_wild_shooter",
-		to = 102,
-		from = 69
-	},
-	tower_wild_magus_shooter_wardDown = {
-		prefix = "mage_wild_shooter",
-		to = 134,
-		from = 103
-	},
-	tower_wild_magus_shooter_wardUp = {
-		prefix = "mage_wild_shooter",
-		to = 166,
-		from = 135
-	},
-	tower_wild_magus_ward_rune = {
-		prefix = "mage_wild_shooter",
-		to = 193,
-		from = 169
-	},
-	bolt_wild_magus_flying = {
-		prefix = "mage_wild_proy",
-		to = 8,
-		from = 1
-	},
-	bolt_wild_magus_hit = {
-		prefix = "mage_wild_proy",
-		to = 32,
-		from = 9
-	},
-	ray_wild_magus = {
-		prefix = "mage_wild_ray",
-		to = 16,
-		from = 1
-	},
-	fx_ray_wild_magus_hit = {
-		prefix = "mage_wild_ray_head",
-		to = 14,
-		from = 1
-	},
-	mod_eldritch = {
-		prefix = "mage_wild_creepFx",
-		to = 12,
-		from = 1
-	},
-	fx_eldritch_explosion = {
-		prefix = "mage_wild_explosion",
-		to = 19,
-		from = 1
-	},
-	mod_ward_decal = {
-		prefix = "mage_wild_silence_decal",
-		to = 15,
-		from = 1
-	},
-	tower_high_elven_shooter_idleDown = {
-		prefix = "mage_highElven_shooter",
-		to = 1,
-		from = 1
-	},
-	tower_high_elven_shooter_idleUp = {
-		prefix = "mage_highElven_shooter",
-		to = 2,
-		from = 2
-	},
-	tower_high_elven_shooter_shootDown = {
-		prefix = "mage_highElven_shooter",
-		to = 40,
-		from = 3
-	},
-	tower_high_elven_shooter_shootUp = {
-		prefix = "mage_highElven_shooter",
-		to = 78,
-		from = 41
-	},
-	tower_high_elven_shooter_timeLapseDown = {
-		prefix = "mage_highElven_shooter",
-		to = 108,
-		from = 79
-	},
-	tower_high_elven_shooter_timeLapseUp = {
-		prefix = "mage_highElven_shooter",
-		to = 138,
-		from = 109
-	},
-	bolt_high_elven_weak_travel = {
-		prefix = "mage_highElven_proy",
-		to = 15,
-		from = 1
-	},
-	bolt_high_elven_weak_hit = {
-		prefix = "mage_highElven_proy",
-		to = 25,
-		from = 16
-	},
-	bolt_high_elven_strong_travel = {
-		prefix = "mage_highElven_proyBig",
-		to = 1,
-		from = 1
-	},
-	bolt_high_elven_strong_hit = {
-		prefix = "mage_highElven_proyBig",
-		to = 17,
-		from = 2
-	},
-	mod_timelapse_start = {
-		prefix = "mage_highElven_energyBall",
-		to = 28,
-		from = 1
-	},
-	mod_timelapse_loop = {
-		prefix = "mage_highElven_energyBall",
-		to = 44,
-		from = 29
-	},
-	mod_timelapse_end = {
-		prefix = "mage_highElven_energyBall",
-		to = 52,
-		from = 45
-	},
-	high_elven_sentinel_small = {
-		prefix = "mage_highElven_balls",
-		to = 1,
-		from = 1
-	},
-	high_elven_sentinel_big = {
-		prefix = "mage_highElven_balls",
-		to = 19,
-		from = 2
-	},
-	high_elven_sentinel_shoot = {
-		prefix = "mage_highElven_balls",
-		to = 34,
-		from = 21
-	},
-	high_elven_sentinel_particle = {
-		prefix = "mage_highElven_balls",
-		to = 20,
-		from = 20
-	},
-	ray_high_elven_sentinel = {
-		prefix = "mage_highElven_balls_ray",
-		to = 4,
-		from = 1
-	},
-	fx_ray_high_elven_sentinel_hit = {
-		prefix = "mage_highElven_balls_hitFx_big",
-		to = 10,
-		from = 1
-	},
-	tower_rock_thrower_shooter_l1_idleDown = {
-		prefix = "artillery_thrower",
-		to = 1,
-		from = 1
-	},
-	tower_rock_thrower_shooter_l1_loadDown = {
-		prefix = "artillery_thrower",
-		to = 49,
-		from = 2
-	},
-	tower_rock_thrower_shooter_l1_shootDown = {
-		prefix = "artillery_thrower",
-		to = 73,
-		from = 50
-	},
-	tower_rock_thrower_shooter_l1_idleUp = {
-		prefix = "artillery_thrower",
-		to = 74,
-		from = 74
-	},
-	tower_rock_thrower_shooter_l1_loadUp = {
-		prefix = "artillery_thrower",
-		to = 122,
-		from = 75
-	},
-	tower_rock_thrower_shooter_l1_shootUp = {
-		prefix = "artillery_thrower",
-		to = 145,
-		from = 123
-	},
-	tower_rock_thrower_shooter_l2_idleDown = {
-		prefix = "artillery_thrower_lvl2",
-		to = 1,
-		from = 1
-	},
-	tower_rock_thrower_shooter_l2_loadDown = {
-		prefix = "artillery_thrower_lvl2",
-		to = 49,
-		from = 2
-	},
-	tower_rock_thrower_shooter_l2_shootDown = {
-		prefix = "artillery_thrower_lvl2",
-		to = 73,
-		from = 50
-	},
-	tower_rock_thrower_shooter_l2_idleUp = {
-		prefix = "artillery_thrower_lvl2",
-		to = 74,
-		from = 74
-	},
-	tower_rock_thrower_shooter_l2_loadUp = {
-		prefix = "artillery_thrower_lvl2",
-		to = 122,
-		from = 75
-	},
-	tower_rock_thrower_shooter_l2_shootUp = {
-		prefix = "artillery_thrower_lvl2",
-		to = 145,
-		from = 123
-	},
-	tower_rock_thrower_shooter_l3_idleDown = {
-		prefix = "artillery_thrower_lvl3",
-		to = 1,
-		from = 1
-	},
-	tower_rock_thrower_shooter_l3_loadDown = {
-		prefix = "artillery_thrower_lvl3",
-		to = 49,
-		from = 2
-	},
-	tower_rock_thrower_shooter_l3_shootDown = {
-		prefix = "artillery_thrower_lvl3",
-		to = 73,
-		from = 50
-	},
-	tower_rock_thrower_shooter_l3_idleUp = {
-		prefix = "artillery_thrower_lvl3",
-		to = 74,
-		from = 74
-	},
-	tower_rock_thrower_shooter_l3_loadUp = {
-		prefix = "artillery_thrower_lvl3",
-		to = 122,
-		from = 75
-	},
-	tower_rock_thrower_shooter_l3_shootUp = {
-		prefix = "artillery_thrower_lvl3",
-		to = 145,
-		from = 123
-	},
-	tower_rock_thrower_loading_stones_play = {
-		prefix = "artillery_thrower_stones",
-		to = 26,
-		from = 1
-	},
-	tower_druid_shooter_idleDown = {
-		prefix = "artillery_henge_druid1",
-		to = 1,
-		from = 1
-	},
-	tower_druid_shooter_castDown = {
-		prefix = "artillery_henge_druid1",
-		to = 29,
-		from = 2
-	},
-	tower_druid_shooter_shootDown = {
-		prefix = "artillery_henge_druid1",
-		to = 51,
-		from = 30
-	},
-	tower_druid_shooter_idleUp = {
-		prefix = "artillery_henge_druid1",
-		to = 52,
-		from = 52
-	},
-	tower_druid_shooter_castUp = {
-		prefix = "artillery_henge_druid1",
-		to = 80,
-		from = 53
-	},
-	tower_druid_shooter_shootUp = {
-		prefix = "artillery_henge_druid1",
-		to = 102,
-		from = 81
-	},
-	tower_druid_shooter_nature_cast = {
-		prefix = "artillery_henge_druid3",
-		to = 57,
-		from = 1
-	},
-	tower_druid_shooter_nature_idle = {
-		prefix = "artillery_henge_druid3",
-		to = 57,
-		from = 57
-	},
-	tower_druid_shooter_sylvan_cast = {
-		prefix = "artillery_henge_druid2",
-		to = 46,
-		from = 1
-	},
-	tower_druid_shooter_sylvan_idle = {
-		prefix = "artillery_henge_druid2",
-		to = 46,
-		from = 46
-	},
-	mod_druid_sylvan_small = {
-		prefix = "artillery_henge_curse_small",
-		to = 22,
-		from = 1
-	},
-	mod_druid_sylvan_big = {
-		prefix = "artillery_henge_curse_big",
-		to = 22,
-		from = 1
-	},
-	mod_druid_sylvan_affected_small = {
-		prefix = "artillery_henge_affected_small",
-		to = 18,
-		from = 1
-	},
-	mod_druid_sylvan_affected_big = {
-		prefix = "artillery_henge_affected_big",
-		to = 18,
-		from = 1
-	},
-	ray_druid_sylvan = {
-		prefix = "artillery_henge_curse_ray",
-		to = 12,
-		from = 1
-	},
-	druid_stone1_load = {
-		prefix = "artillery_henge_chargeStone",
-		to = 13,
-		from = 1
-	},
-	druid_stone1_travel = {
-		prefix = "artillery_henge_chargeStone",
-		to = 13,
-		from = 13
-	},
-	druid_stone2_load = {
-		prefix = "artillery_henge_chargeStone",
-		to = 26,
-		from = 14
-	},
-	druid_stone2_travel = {
-		prefix = "artillery_henge_chargeStone",
-		to = 26,
-		from = 26
-	},
-	druid_stone3_load = {
-		prefix = "artillery_henge_chargeStone",
-		to = 39,
-		from = 27
-	},
-	druid_stone3_travel = {
-		prefix = "artillery_henge_chargeStone",
-		to = 39,
-		from = 39
-	},
-	soldier_druid_bear_idle = {
-		prefix = "artillery_henge_bear",
-		to = 1,
-		from = 1
-	},
-	soldier_druid_bear_walk = {
-		prefix = "artillery_henge_bear",
-		to = 13,
-		from = 2
-	},
-	soldier_druid_bear_attack = {
-		prefix = "artillery_henge_bear",
-		to = 40,
-		from = 18
-	},
-	soldier_druid_bear_idle2stance = {
-		prefix = "artillery_henge_bear",
-		to = 17,
-		from = 14
-	},
-	soldier_druid_bear_stance2idle = {
-		prefix = "artillery_henge_bear",
-		to = 45,
-		from = 41
-	},
-	soldier_druid_bear_spawn = {
-		prefix = "artillery_henge_bear",
-		to = 90,
-		from = 46
-	},
-	soldier_druid_bear_death = {
-		prefix = "artillery_henge_bear",
-		to = 172,
-		from = 121
-	},
-	fx_druid_bear_spawn_rune = {
-		prefix = "artillery_henge_bear",
-		to = 99,
-		from = 91
-	},
-	fx_druid_bear_spawn_effect = {
-		prefix = "artillery_henge_bear",
-		to = 115,
-		from = 100
-	},
-	fx_druid_bear_spawn_decal = {
-		prefix = "artillery_henge_bear",
-		to = 116,
-		from = 116
-	},
-	fx_druid_bear_death_rune = {
-		prefix = "artillery_henge_bear",
-		to = 182,
-		from = 173
-	},
-	fx_druid_bear_death_effect = {
-		prefix = "artillery_henge_bear",
-		to = 198,
-		from = 183
-	},
+	-- bullet_rod_dragon_fire_idle = {
+	-- 	prefix = "rodOfDragonfire_proy",
+	-- 	to = 10,
+	-- 	from = 1
+	-- },
+	-- bullet_rod_dragon_fire_explosion = {
+	-- 	prefix = "rodOfDragonfire_explosion",
+	-- 	to = 14,
+	-- 	from = 1
+	-- },
+	-- ps_rod_dragon_fire_particle = {
+	-- 	prefix = "rodOfDragonfire_proyParticle",
+	-- 	to = 10,
+	-- 	from = 1
+	-- },
+	-- rod_dragon_fire_start = {
+	-- 	prefix = "rodOfDragonfire_totem",
+	-- 	to = 12,
+	-- 	from = 1
+	-- },
+	-- rod_dragon_fire_end = {
+	-- 	prefix = "rodOfDragonfire_totem",
+	-- 	to = 41,
+	-- 	from = 13
+	-- },
+	-- rod_dragon_fire_flame = {
+	-- 	prefix = "rodOfDragonfire_totem_fire",
+	-- 	to = 10,
+	-- 	from = 1
+	-- },
+	-- tower_archer_shooter_idleDown = {
+	-- 	prefix = "archer_shooter",
+	-- 	to = 10,
+	-- 	from = 10
+	-- },
+	-- tower_archer_shooter_idleUp = {
+	-- 	prefix = "archer_shooter",
+	-- 	to = 20,
+	-- 	from = 20
+	-- },
+	-- tower_archer_shooter_shootingDown = {
+	-- 	prefix = "archer_shooter",
+	-- 	to = 9,
+	-- 	from = 1
+	-- },
+	-- tower_archer_shooter_shootingUp = {
+	-- 	prefix = "archer_shooter",
+	-- 	to = 19,
+	-- 	from = 11
+	-- },
+	-- tower_arcane_shooter_idleDown = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 9,
+	-- 	from = 9
+	-- },
+	-- tower_arcane_shooter_shootDown = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 9,
+	-- 	from = 1
+	-- },
+	-- tower_arcane_shooter_idleUp = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 18,
+	-- 	from = 18
+	-- },
+	-- tower_arcane_shooter_shootUp = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 18,
+	-- 	from = 10
+	-- },
+	-- tower_arcane_shooter_specialDown = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 41,
+	-- 	from = 19
+	-- },
+	-- tower_arcane_shooter_specialUp = {
+	-- 	prefix = "archer_arcane_shooter",
+	-- 	to = 64,
+	-- 	from = 42
+	-- },
+	-- tower_arcane_bubbles = {
+	-- 	prefix = "archer_arcane_decos",
+	-- 	to = 21,
+	-- 	from = 1
+	-- },
+	-- tower_silver_shooter_idleDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 12,
+	-- 	from = 1
+	-- },
+	-- tower_silver_shooter_idleUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 24,
+	-- 	from = 13
+	-- },
+	-- tower_silver_shooter_shootDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 58,
+	-- 	from = 41
+	-- },
+	-- tower_silver_shooter_shootUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 76,
+	-- 	from = 59
+	-- },
+	-- tower_silver_shooter_shootShortDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 32,
+	-- 	from = 25
+	-- },
+	-- tower_silver_shooter_shootShortUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 40,
+	-- 	from = 33
+	-- },
+	-- tower_silver_shooter_shootSpecialDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 100,
+	-- 	from = 77
+	-- },
+	-- tower_silver_shooter_shootSpecialUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 124,
+	-- 	from = 101
+	-- },
+	-- tower_silver_shooter_shootSpecialShortDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 148,
+	-- 	from = 125
+	-- },
+	-- tower_silver_shooter_shootSpecialShortUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 172,
+	-- 	from = 149
+	-- },
+	-- tower_silver_shooter_instakillDown = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 196,
+	-- 	from = 173
+	-- },
+	-- tower_silver_shooter_instakillUp = {
+	-- 	prefix = "archer_silver_shooter",
+	-- 	to = 220,
+	-- 	from = 197
+	-- },
+	-- tower_mage_1_platform_shoot = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 31,
+	-- 	from = 1
+	-- },
+	-- tower_mage_1_platform_idle = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 32,
+	-- 	from = 32
+	-- },
+	-- tower_mage_2_platform_shoot = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 63,
+	-- 	from = 33
+	-- },
+	-- tower_mage_2_platform_idle = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 64,
+	-- 	from = 64
+	-- },
+	-- tower_mage_3_platform_shoot = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 95,
+	-- 	from = 65
+	-- },
+	-- tower_mage_3_platform_idle = {
+	-- 	prefix = "mage_towers_layer2",
+	-- 	to = 96,
+	-- 	from = 96
+	-- },
+	-- tower_mage_shooter_shootingDown = {
+	-- 	prefix = "mage_tower_shooter",
+	-- 	to = 31,
+	-- 	from = 1
+	-- },
+	-- tower_mage_shooter_idleDown = {
+	-- 	prefix = "mage_tower_shooter",
+	-- 	to = 32,
+	-- 	from = 32
+	-- },
+	-- tower_mage_shooter_shootingUp = {
+	-- 	prefix = "mage_tower_shooter",
+	-- 	to = 63,
+	-- 	from = 33
+	-- },
+	-- tower_mage_shooter_idleUp = {
+	-- 	prefix = "mage_tower_shooter",
+	-- 	to = 64,
+	-- 	from = 64
+	-- },
+	-- bolt_elves_travel = {
+	-- 	prefix = "mage_proy",
+	-- 	to = 15,
+	-- 	from = 1
+	-- },
+	-- bolt_elves_hit = {
+	-- 	prefix = "mage_proy",
+	-- 	to = 25,
+	-- 	from = 16
+	-- },
+	-- tower_wild_magus_shooter_idleDown = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- tower_wild_magus_shooter_idleUp = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 2,
+	-- 	from = 2
+	-- },
+	-- tower_wild_magus_shooter_rh_shootDown = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 10,
+	-- 	from = 3
+	-- },
+	-- tower_wild_magus_shooter_lh_shootDown = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 18,
+	-- 	from = 11
+	-- },
+	-- tower_wild_magus_shooter_rh_shootUp = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 26,
+	-- 	from = 19
+	-- },
+	-- tower_wild_magus_shooter_lh_shootUp = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 34,
+	-- 	from = 27
+	-- },
+	-- tower_wild_magus_shooter_rayDown = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 68,
+	-- 	from = 35
+	-- },
+	-- tower_wild_magus_shooter_rayUp = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 102,
+	-- 	from = 69
+	-- },
+	-- tower_wild_magus_shooter_wardDown = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 134,
+	-- 	from = 103
+	-- },
+	-- tower_wild_magus_shooter_wardUp = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 166,
+	-- 	from = 135
+	-- },
+	-- tower_wild_magus_ward_rune = {
+	-- 	prefix = "mage_wild_shooter",
+	-- 	to = 193,
+	-- 	from = 169
+	-- },
+	-- bolt_wild_magus_flying = {
+	-- 	prefix = "mage_wild_proy",
+	-- 	to = 8,
+	-- 	from = 1
+	-- },
+	-- bolt_wild_magus_hit = {
+	-- 	prefix = "mage_wild_proy",
+	-- 	to = 32,
+	-- 	from = 9
+	-- },
+	-- ray_wild_magus = {
+	-- 	prefix = "mage_wild_ray",
+	-- 	to = 16,
+	-- 	from = 1
+	-- },
+	-- fx_ray_wild_magus_hit = {
+	-- 	prefix = "mage_wild_ray_head",
+	-- 	to = 14,
+	-- 	from = 1
+	-- },
+	-- mod_eldritch = {
+	-- 	prefix = "mage_wild_creepFx",
+	-- 	to = 12,
+	-- 	from = 1
+	-- },
+	-- fx_eldritch_explosion = {
+	-- 	prefix = "mage_wild_explosion",
+	-- 	to = 19,
+	-- 	from = 1
+	-- },
+	-- mod_ward_decal = {
+	-- 	prefix = "mage_wild_silence_decal",
+	-- 	to = 15,
+	-- 	from = 1
+	-- },
+	-- tower_high_elven_shooter_idleDown = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- tower_high_elven_shooter_idleUp = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 2,
+	-- 	from = 2
+	-- },
+	-- tower_high_elven_shooter_shootDown = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 40,
+	-- 	from = 3
+	-- },
+	-- tower_high_elven_shooter_shootUp = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 78,
+	-- 	from = 41
+	-- },
+	-- tower_high_elven_shooter_timeLapseDown = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 108,
+	-- 	from = 79
+	-- },
+	-- tower_high_elven_shooter_timeLapseUp = {
+	-- 	prefix = "mage_highElven_shooter",
+	-- 	to = 138,
+	-- 	from = 109
+	-- },
+	-- bolt_high_elven_weak_travel = {
+	-- 	prefix = "mage_highElven_proy",
+	-- 	to = 15,
+	-- 	from = 1
+	-- },
+	-- bolt_high_elven_weak_hit = {
+	-- 	prefix = "mage_highElven_proy",
+	-- 	to = 25,
+	-- 	from = 16
+	-- },
+	-- bolt_high_elven_strong_travel = {
+	-- 	prefix = "mage_highElven_proyBig",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- bolt_high_elven_strong_hit = {
+	-- 	prefix = "mage_highElven_proyBig",
+	-- 	to = 17,
+	-- 	from = 2
+	-- },
+	-- mod_timelapse_start = {
+	-- 	prefix = "mage_highElven_energyBall",
+	-- 	to = 28,
+	-- 	from = 1
+	-- },
+	-- mod_timelapse_loop = {
+	-- 	prefix = "mage_highElven_energyBall",
+	-- 	to = 44,
+	-- 	from = 29
+	-- },
+	-- mod_timelapse_end = {
+	-- 	prefix = "mage_highElven_energyBall",
+	-- 	to = 52,
+	-- 	from = 45
+	-- },
+	-- high_elven_sentinel_small = {
+	-- 	prefix = "mage_highElven_balls",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- high_elven_sentinel_big = {
+	-- 	prefix = "mage_highElven_balls",
+	-- 	to = 19,
+	-- 	from = 2
+	-- },
+	-- high_elven_sentinel_shoot = {
+	-- 	prefix = "mage_highElven_balls",
+	-- 	to = 34,
+	-- 	from = 21
+	-- },
+	-- high_elven_sentinel_particle = {
+	-- 	prefix = "mage_highElven_balls",
+	-- 	to = 20,
+	-- 	from = 20
+	-- },
+	-- ray_high_elven_sentinel = {
+	-- 	prefix = "mage_highElven_balls_ray",
+	-- 	to = 4,
+	-- 	from = 1
+	-- },
+	-- fx_ray_high_elven_sentinel_hit = {
+	-- 	prefix = "mage_highElven_balls_hitFx_big",
+	-- 	to = 10,
+	-- 	from = 1
+	-- },
+	-- tower_druid_shooter_idleDown = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- tower_druid_shooter_castDown = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 29,
+	-- 	from = 2
+	-- },
+	-- tower_druid_shooter_shootDown = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 51,
+	-- 	from = 30
+	-- },
+	-- tower_druid_shooter_idleUp = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 52,
+	-- 	from = 52
+	-- },
+	-- tower_druid_shooter_castUp = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 80,
+	-- 	from = 53
+	-- },
+	-- tower_druid_shooter_shootUp = {
+	-- 	prefix = "artillery_henge_druid1",
+	-- 	to = 102,
+	-- 	from = 81
+	-- },
+	-- tower_druid_shooter_nature_cast = {
+	-- 	prefix = "artillery_henge_druid3",
+	-- 	to = 57,
+	-- 	from = 1
+	-- },
+	-- tower_druid_shooter_nature_idle = {
+	-- 	prefix = "artillery_henge_druid3",
+	-- 	to = 57,
+	-- 	from = 57
+	-- },
+	-- tower_druid_shooter_sylvan_cast = {
+	-- 	prefix = "artillery_henge_druid2",
+	-- 	to = 46,
+	-- 	from = 1
+	-- },
+	-- tower_druid_shooter_sylvan_idle = {
+	-- 	prefix = "artillery_henge_druid2",
+	-- 	to = 46,
+	-- 	from = 46
+	-- },
+	-- mod_druid_sylvan_small = {
+	-- 	prefix = "artillery_henge_curse_small",
+	-- 	to = 22,
+	-- 	from = 1
+	-- },
+	-- mod_druid_sylvan_big = {
+	-- 	prefix = "artillery_henge_curse_big",
+	-- 	to = 22,
+	-- 	from = 1
+	-- },
+	-- mod_druid_sylvan_affected_small = {
+	-- 	prefix = "artillery_henge_affected_small",
+	-- 	to = 18,
+	-- 	from = 1
+	-- },
+	-- mod_druid_sylvan_affected_big = {
+	-- 	prefix = "artillery_henge_affected_big",
+	-- 	to = 18,
+	-- 	from = 1
+	-- },
+	-- ray_druid_sylvan = {
+	-- 	prefix = "artillery_henge_curse_ray",
+	-- 	to = 12,
+	-- 	from = 1
+	-- },
+	-- druid_stone1_load = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 13,
+	-- 	from = 1
+	-- },
+	-- druid_stone1_travel = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 13,
+	-- 	from = 13
+	-- },
+	-- druid_stone2_load = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 26,
+	-- 	from = 14
+	-- },
+	-- druid_stone2_travel = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 26,
+	-- 	from = 26
+	-- },
+	-- druid_stone3_load = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 39,
+	-- 	from = 27
+	-- },
+	-- druid_stone3_travel = {
+	-- 	prefix = "artillery_henge_chargeStone",
+	-- 	to = 39,
+	-- 	from = 39
+	-- },
+	-- soldier_druid_bear_idle = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- soldier_druid_bear_walk = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 13,
+	-- 	from = 2
+	-- },
+	-- soldier_druid_bear_attack = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 40,
+	-- 	from = 18
+	-- },
+	-- soldier_druid_bear_idle2stance = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 17,
+	-- 	from = 14
+	-- },
+	-- soldier_druid_bear_stance2idle = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 45,
+	-- 	from = 41
+	-- },
+	-- soldier_druid_bear_spawn = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 90,
+	-- 	from = 46
+	-- },
+	-- soldier_druid_bear_death = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 172,
+	-- 	from = 121
+	-- },
+	-- fx_druid_bear_spawn_rune = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 99,
+	-- 	from = 91
+	-- },
+	-- fx_druid_bear_spawn_effect = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 115,
+	-- 	from = 100
+	-- },
+	-- fx_druid_bear_spawn_decal = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 116,
+	-- 	from = 116
+	-- },
+	-- fx_druid_bear_death_rune = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 182,
+	-- 	from = 173
+	-- },
+	-- fx_druid_bear_death_effect = {
+	-- 	prefix = "artillery_henge_bear",
+	-- 	to = 198,
+	-- 	from = 183
+	-- },
 	decal_fiery_nut_scorched = {
 		prefix = "artillery_tree_scorched",
 		to = 20,
@@ -26340,224 +26245,224 @@ local kr5_a = {
 		to = 11,
 		from = 1
 	},
-	hero_elves_archer_idle = {
-		prefix = "archer_hero",
-		to = 18,
-		from = 1
-	},
-	hero_elves_archer_walk = {
-		prefix = "archer_hero",
-		to = 23,
-		from = 19
-	},
-	hero_elves_archer_bow2sword = {
-		prefix = "archer_hero",
-		to = 29,
-		from = 24
-	},
-	hero_elves_archer_idle_sword = {
-		prefix = "archer_hero",
-		to = 47,
-		from = 30
-	},
-	hero_elves_archer_sword2bow = {
-		prefix = "archer_hero",
-		to = 53,
-		from = 48
-	},
-	hero_elves_archer_shoot_start = {
-		prefix = "archer_hero",
-		to = 57,
-		from = 54
-	},
-	hero_elves_archer_shoot_loop = {
-		prefix = "archer_hero",
-		to = 69,
-		from = 64
-	},
-	hero_elves_archer_shoot_final = {
-		prefix = "archer_hero",
-		to = 73,
-		from = 70
-	},
-	hero_elves_archer_shoot_end = {
-		prefix = "archer_hero",
-		to = 79,
-		from = 74
-	},
-	hero_elves_archer_attack = {
-		prefix = "archer_hero",
-		to = 96,
-		from = 80
-	},
-	hero_elves_archer_double_strike = {
-		prefix = "archer_hero",
-		to = 122,
-		from = 97
-	},
-	hero_elves_archer_nimble_fencer = {
-		prefix = "archer_hero",
-		to = 138,
-		from = 123
-	},
-	hero_elves_archer_death = {
-		prefix = "archer_hero",
-		to = 150,
-		from = 139
-	},
-	hero_elves_archer_levelup = {
-		prefix = "archer_hero",
-		to = 167,
-		from = 151
-	},
-	hero_elves_archer_respawn = {
-		prefix = "archer_hero",
-		to = 167,
-		from = 151
-	},
-	hero_elves_archer_shoot = {
-		prefix = "archer_hero",
-		ranges = {
-			{
-				54,
-				63
-			},
-			{
-				74,
-				79
-			}
-		}
-	},
-	decal_hero_elves_archer_ultimate = {
-		prefix = "archer_hero_arrows_decal",
-		to = 11,
-		from = 1
-	},
-	fx_hero_elves_archer_ultimate_smoke = {
-		prefix = "archer_hero_arrows_smokeDecal",
-		to = 11,
-		from = 1
-	},
-	hero_elves_denas_idle = {
-		prefix = "denas_hero",
-		to = 1,
-		from = 1
-	},
-	hero_elves_denas_walk = {
-		prefix = "denas_hero",
-		to = 17,
-		from = 2
-	},
-	hero_elves_denas_attack = {
-		prefix = "denas_hero",
-		to = 53,
-		from = 18
-	},
-	hero_elves_denas_attack2 = {
-		prefix = "denas_hero",
-		to = 79,
-		from = 54
-	},
-	hero_elves_denas_eat = {
-		prefix = "denas_hero",
-		to = 139,
-		from = 80
-	},
-	hero_elves_denas_showOff = {
-		prefix = "denas_hero",
-		to = 217,
-		from = 140
-	},
-	hero_elves_denas_specialAttack = {
-		prefix = "denas_hero",
-		to = 271,
-		from = 218
-	},
-	hero_elves_denas_coinThrow = {
-		prefix = "denas_hero",
-		to = 391,
-		from = 355
-	},
-	hero_elves_denas_death = {
-		prefix = "denas_hero",
-		to = 332,
-		from = 307
-	},
-	hero_elves_denas_respawn = {
-		prefix = "denas_hero",
-		to = 354,
-		from = 333
-	},
-	hero_elves_denas_levelup = {
-		prefix = "denas_hero",
-		to = 354,
-		from = 333
-	},
-	hero_elves_denas_shieldThrow = {
-		prefix = "denas_hero",
-		to = 306,
-		from = 272
-	},
-	fx_elves_denas_heal = {
-		prefix = "denas_hero_healFx",
-		to = 25,
-		from = 1
-	},
-	fx_elves_denas_flash = {
-		prefix = "denas_hero_flash",
-		to = 3,
-		from = 1
-	},
-	shield_elves_denas_loop = {
-		prefix = "hero_denas_proy",
-		to = 8,
-		from = 1
-	},
-	shield_elves_denas_particle = {
-		prefix = "hero_denas_proyParticle",
-		to = 8,
-		from = 1
-	},
-	fx_shield_elves_denas_hit = {
-		prefix = "hero_denas_proyHit",
-		to = 7,
-		from = 1
-	},
-	elves_denas_guard_idle = {
-		prefix = "denas_hero_guard",
-		to = 1,
-		from = 1
-	},
-	elves_denas_guard_running = {
-		prefix = "denas_hero_guard",
-		to = 6,
-		from = 2
-	},
-	elves_denas_guard_attack = {
-		prefix = "denas_hero_guard",
-		to = 28,
-		from = 7
-	},
-	elves_denas_guard_attack2 = {
-		prefix = "denas_hero_guard",
-		to = 52,
-		from = 29
-	},
-	elves_denas_guard_death = {
-		prefix = "denas_hero_guard",
-		to = 60,
-		from = 53
-	},
-	elves_denas_guard_respawn = {
-		prefix = "denas_hero_guard",
-		to = 79,
-		from = 61
-	},
-	elves_denas_guard_raise = {
-		prefix = "denas_hero_guard",
-		to = 79,
-		from = 61
-	},
+	-- hero_elves_archer_idle = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 18,
+	-- 	from = 1
+	-- },
+	-- hero_elves_archer_walk = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 23,
+	-- 	from = 19
+	-- },
+	-- hero_elves_archer_bow2sword = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 29,
+	-- 	from = 24
+	-- },
+	-- hero_elves_archer_idle_sword = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 47,
+	-- 	from = 30
+	-- },
+	-- hero_elves_archer_sword2bow = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 53,
+	-- 	from = 48
+	-- },
+	-- hero_elves_archer_shoot_start = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 57,
+	-- 	from = 54
+	-- },
+	-- hero_elves_archer_shoot_loop = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 69,
+	-- 	from = 64
+	-- },
+	-- hero_elves_archer_shoot_final = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 73,
+	-- 	from = 70
+	-- },
+	-- hero_elves_archer_shoot_end = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 79,
+	-- 	from = 74
+	-- },
+	-- hero_elves_archer_attack = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 96,
+	-- 	from = 80
+	-- },
+	-- hero_elves_archer_double_strike = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 122,
+	-- 	from = 97
+	-- },
+	-- hero_elves_archer_nimble_fencer = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 138,
+	-- 	from = 123
+	-- },
+	-- hero_elves_archer_death = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 150,
+	-- 	from = 139
+	-- },
+	-- hero_elves_archer_levelup = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 167,
+	-- 	from = 151
+	-- },
+	-- hero_elves_archer_respawn = {
+	-- 	prefix = "archer_hero",
+	-- 	to = 167,
+	-- 	from = 151
+	-- },
+	-- hero_elves_archer_shoot = {
+	-- 	prefix = "archer_hero",
+	-- 	ranges = {
+	-- 		{
+	-- 			54,
+	-- 			63
+	-- 		},
+	-- 		{
+	-- 			74,
+	-- 			79
+	-- 		}
+	-- 	}
+	-- },
+	-- decal_hero_elves_archer_ultimate = {
+	-- 	prefix = "archer_hero_arrows_decal",
+	-- 	to = 11,
+	-- 	from = 1
+	-- },
+	-- fx_hero_elves_archer_ultimate_smoke = {
+	-- 	prefix = "archer_hero_arrows_smokeDecal",
+	-- 	to = 11,
+	-- 	from = 1
+	-- },
+	-- hero_elves_denas_idle = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- hero_elves_denas_walk = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 17,
+	-- 	from = 2
+	-- },
+	-- hero_elves_denas_attack = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 53,
+	-- 	from = 18
+	-- },
+	-- hero_elves_denas_attack2 = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 79,
+	-- 	from = 54
+	-- },
+	-- hero_elves_denas_eat = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 139,
+	-- 	from = 80
+	-- },
+	-- hero_elves_denas_showOff = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 217,
+	-- 	from = 140
+	-- },
+	-- hero_elves_denas_specialAttack = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 271,
+	-- 	from = 218
+	-- },
+	-- hero_elves_denas_coinThrow = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 391,
+	-- 	from = 355
+	-- },
+	-- hero_elves_denas_death = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 332,
+	-- 	from = 307
+	-- },
+	-- hero_elves_denas_respawn = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 354,
+	-- 	from = 333
+	-- },
+	-- hero_elves_denas_levelup = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 354,
+	-- 	from = 333
+	-- },
+	-- hero_elves_denas_shieldThrow = {
+	-- 	prefix = "denas_hero",
+	-- 	to = 306,
+	-- 	from = 272
+	-- },
+	-- fx_elves_denas_heal = {
+	-- 	prefix = "denas_hero_healFx",
+	-- 	to = 25,
+	-- 	from = 1
+	-- },
+	-- fx_elves_denas_flash = {
+	-- 	prefix = "denas_hero_flash",
+	-- 	to = 3,
+	-- 	from = 1
+	-- },
+	-- shield_elves_denas_loop = {
+	-- 	prefix = "hero_denas_proy",
+	-- 	to = 8,
+	-- 	from = 1
+	-- },
+	-- shield_elves_denas_particle = {
+	-- 	prefix = "hero_denas_proyParticle",
+	-- 	to = 8,
+	-- 	from = 1
+	-- },
+	-- fx_shield_elves_denas_hit = {
+	-- 	prefix = "hero_denas_proyHit",
+	-- 	to = 7,
+	-- 	from = 1
+	-- },
+	-- elves_denas_guard_idle = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 1,
+	-- 	from = 1
+	-- },
+	-- elves_denas_guard_running = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 6,
+	-- 	from = 2
+	-- },
+	-- elves_denas_guard_attack = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 28,
+	-- 	from = 7
+	-- },
+	-- elves_denas_guard_attack2 = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 52,
+	-- 	from = 29
+	-- },
+	-- elves_denas_guard_death = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 60,
+	-- 	from = 53
+	-- },
+	-- elves_denas_guard_respawn = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 79,
+	-- 	from = 61
+	-- },
+	-- elves_denas_guard_raise = {
+	-- 	prefix = "denas_hero_guard",
+	-- 	to = 79,
+	-- 	from = 61
+	-- },
 	hero_arivan_idle = {
 		prefix = "arivan_hero",
 		to = 1,
