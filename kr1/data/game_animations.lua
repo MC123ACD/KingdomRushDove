@@ -33788,7 +33788,7 @@ local kr5_a = {
 	},
 	duskbeast_coin_run = {
 		prefix = "duskbeast_coin",
-		to = 20,
+		to = 19,
 		from = 1
 	},
 	duskbeast_spawn = {
