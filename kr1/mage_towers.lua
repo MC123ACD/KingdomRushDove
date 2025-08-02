@@ -280,7 +280,7 @@ local function mage_towers()
     tt.polymorph.transfer_gold_factor = 1
     tt.polymorph.transfer_health_factor = 0.5
     tt.polymorph.transfer_lives_cost_factor = 1
-    tt.polymorph.transfer_speed_factor = 1.5
+    tt.polymorph.transfer_speed_factor = 1.25
 
     tt = RT("soldier_elemental", "soldier_militia")
     AC(tt, "melee")
