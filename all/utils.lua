@@ -601,6 +601,7 @@ function U.walk(e, dt, accel, unsnapped)
     end
 
     local step = e.motion.real_speed * dt
+    
     local nx, ny = V.normalize(V.rotate(v_angle, 1, 0))
 
     if v_len <= step and not (e.teleport and e.teleport.pending) then

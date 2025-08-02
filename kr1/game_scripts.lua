@@ -15153,7 +15153,7 @@ function scripts.hero_vampiress.update(this, store, script)
         else
             while r.new do
                 if not already_flying then
-                    should_fly = V.dist(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > this.fly_to.min_distance
+                    should_fly = V.dist2(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > this.fly_to.min_distance * this.fly_to.min_distance
 
                     if should_fly then
                         already_flying = true
@@ -15161,6 +15161,7 @@ function scripts.hero_vampiress.update(this, store, script)
                         this.health.ignore_damage = true
                         this.render.sprites[1].prefix = this.fly_to.animation_prefix
                         this.render.sprites[2].hidden = false
+                        orig_speed = this.motion.max_speed
                         U.update_max_speed(this, this.motion.max_speed_bat)
                         U.animation_start(this, "enter", nil, store.tick_ts)
                         -- U.y_wait(store, fts(7))
@@ -15296,8 +15297,7 @@ scripts.mod_vampiress_gain = {
                     target.timed_attacks.list[1].cooldown = target.timed_attacks.list[1].cooldown - this.gain.cooldown
                     target.timed_attacks.list[1].damage_radius = target.timed_attacks.list[1].damage_radius + this.gain.radius
                     target.motion.max_speed_bat = target.motion.max_speed_bat + this.gain.speed
-
-                    U.update_max_speed(target, this.gain.speed)
+                    U.speed_inc_self(target, this.gain.speed)
                     target.gain_count = target.gain_count + 1
                 end
                 scripts.heal(target, this.gain.heal)
