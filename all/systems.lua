@@ -329,14 +329,14 @@ local function spawner(store, wave, group_id)
                 local interval_next = s.interval_next or 0
                 if DI.level == DIFFICULTY_HARD then
                     if group_id > 12 then
-                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.36
-                        interval_next = interval_next * 0.64
+                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.75
+                        interval_next = interval_next * 0.25
                     elseif group_id > 9 then
-                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.24
-                        interval_next = interval_next * 0.76
+                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.5
+                        interval_next = interval_next * 0.5
                     elseif group_id > 6 then
-                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.12
-                        interval_next = interval_next * 0.88
+                        store.last_wave_ts = store.last_wave_ts - interval_next * 0.25
+                        interval_next = interval_next * 0.75
                     end
                 end
                 U.y_wait(store, fts(interval_next) / store.patches.enemy_count_multiplier)
