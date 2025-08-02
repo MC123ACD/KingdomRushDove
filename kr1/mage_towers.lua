@@ -1061,7 +1061,7 @@ local function mage_towers()
     tt.powers.eldritch = E:clone_c("power")
     tt.powers.eldritch.attack_idx = 2
     tt.powers.eldritch.price_base = 325
-    tt.powers.eldritch.price_inc = 175
+    tt.powers.eldritch.price_inc = 185
     tt.powers.eldritch.cooldowns = {28, 24, 20}
     tt.powers.eldritch.enc_icon = 16
     tt.powers.ward = E:clone_c("power")
