@@ -165,6 +165,7 @@ local function heroes()
     tt.hero.skills.multishot = CC("hero_skill")
     tt.hero.skills.multishot.count_base = 0
     tt.hero.skills.multishot.count_inc = 2
+    tt.hero.skills.multishot.cooldown = {3 + fts(29), 2.9 + fts(29), 2.8 + fts(29), 2.7 + fts(29), 2.6 + fts(29)}
     tt.hero.skills.multishot.xp_level_steps = {
         [2] = 1,
         [4] = 2,
@@ -338,7 +339,6 @@ local function heroes()
         {vec_2(0, 20), vec_2(0, 20), vec_2(0, 20), vec_2(0, 20), vec_2(0, 20)}
     tt.timed_attacks.list[1].cooldown = 2
     tt.timed_attacks.list[1].shoot_times = {fts(10), fts(12), fts(12), fts(12), fts(12)}
-    tt.timed_attacks.list[1].max_shoots = 5
     tt.timed_attacks.list[1].min_range = 40
     tt.timed_attacks.list[1].max_range = 200
     tt.timed_attacks.list[1].shoot_time = fts(2)
@@ -346,6 +346,7 @@ local function heroes()
     tt.timed_attacks.list[1].vis_flags = bor(F_RANGED)
     tt.timed_attacks.list[1].xp_gain_factor = 3
     tt.timed_attacks.list[1].damage_type = bor(DAMAGE_SHOT, DAMAGE_NO_DODGE)
+    tt.timed_attacks.list[1].count = 1
     -- 倒油
     tt.timed_attacks.list[2] = CC("bullet_attack")
     tt.timed_attacks.list[2].bullet = "bomb_tar_bolin"
@@ -373,7 +374,31 @@ local function heroes()
     tt.timed_attacks.list[4].bullet_start_offset = {vec_2(0, 20), vec_2(0, 20), vec_2(0, 20), vec_2(0, 20),
                                                     vec_2(0, 20), vec_2(0, 20), vec_2(0, 20)}
     tt.timed_attacks.list[4].shoot_times = {fts(10), fts(12), fts(12), fts(12), fts(12), fts(12), fts(12)}
-    tt.timed_attacks.list[4].max_shoots = 7
+    tt.timed_attacks.list[5] = table.deepclone(tt.timed_attacks.list[1])
+    tt.timed_attacks.list[5].cooldown = 15
+    tt.timed_attacks.list[5].disabled = false
+    tt.timed_attacks.list[5].shoot_times = {fts(10)}
+    tt.timed_attacks.list[5].bullet = "bomb_shrapnel_bolin"
+    tt.timed_attacks.list[5].count = 3
+
+    tt = RT("bomb_shrapnel_bolin", "bomb")
+    tt.bullet.damage_max = 72
+    tt.bullet.damage_min = 36
+    tt.bullet.damage_radius = 72
+    tt.bullet.flight_time = fts(6)
+    tt.bullet.hit_fx = "fx_explosion_shrapnel_bolin"
+    tt.bullet.pop = nil
+    tt.render.sprites[1].name = "bombs_0007"
+    tt.sound_events.insert = "ShrapnelSound"
+    tt.sound_events.hit = nil
+    tt.sound_events.hit_water = nil
+
+    tt = RT("fx_explosion_shrapnel_bolin", "fx")
+    tt.render.sprites[1].anchor.y = 0.2
+    tt.render.sprites[1].sort_y_offset = -2
+    tt.render.sprites[1].prefix = "explosion"
+    tt.render.sprites[1].name = "shrapnel"
+    tt.render.sprites[1].scale = vec_1(1.5)
 
     tt = RT("bomb_mine_bolin", "bomb")
     tt.bullet.damage_bans = F_ALL

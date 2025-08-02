@@ -2211,6 +2211,7 @@ function scripts.arrow.update(this, store, script)
             end
             if mods then
                 for _, mod_name in pairs(mods) do
+                    
                     local mod = E:create_entity(mod_name)
 
                     mod.modifier.source_id = this.id

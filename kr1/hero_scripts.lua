@@ -379,6 +379,7 @@ return function(scripts)
             upgrade_skill(this, "multishot", function(this, s)
                 local a = this.ranged.attacks[2]
                 a.disabled = nil
+                a.cooldown = s.cooldown[s.level]
                 local b = E:get_template(a.bullet)
                 b.extra_arrows = s.count_base + s.count_inc * s.level
             end)
@@ -1662,6 +1663,10 @@ return function(scripts)
                 m.damage_max = s.damage_max[s.level]
             end)
 
+            if hl == 10 then
+                this.timed_attacks.list[5].disabled = nil
+            end
+
             this.health.hp = this.health.hp_max
         end,
         update = function(this, store)
@@ -1807,13 +1812,15 @@ return function(scripts)
                         -- block empty
                     else
                         -- 连射或普攻
-                        if math.random() < this.timed_attacks.list[4].chance then
+                        if ready_to_use_skill(this.timed_attacks.list[5], store) then
+                            a = this.timed_attacks.list[5]
+                        elseif math.random() < this.timed_attacks.list[4].chance then
                             a = this.timed_attacks.list[4]
                         else
                             a = this.timed_attacks.list[1]
                         end
                         if ready_to_attack(a, store) then
-                            local target, _, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
+                            local target, targets, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, a.min_range,
                                 a.max_range, a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
                             if not target then
@@ -1843,7 +1850,7 @@ return function(scripts)
                                     if si > 1 and
                                         (not target or target.health.death or not target_dist or
                                             not (target_dist >= a.min_range) or target_dist <= a.max_range or true) then
-                                        target, _, pred_pos =
+                                        target, targets, pred_pos =
                                             U.find_foremost_enemy(store.enemies, this.pos, a.min_range, a.max_range,
                                                 a.node_prediction, a.vis_flags, a.vis_bans, a.filter_fn, F_FLYING)
 
@@ -1861,29 +1868,29 @@ return function(scripts)
                                     end) then
                                         goto label_47_0
                                     end
+                                    for i = 1, a.count do
+                                        target = targets[km.zmod(i, #targets)]
+                                        b = E:create_entity(a.bullet)
+                                        b.pos = V.vclone(this.pos)
+                                        b.bullet.damage_type = a.damage_type
+                                        if a.chance then
+                                            b.bullet.damage_min = b.bullet.damage_max
+                                            b.bullet.pop = {"pop_splat"}
+                                        end
+                                        if a.bullet_start_offset then
+                                            local offset = a.bullet_start_offset[ai]
+                                            b.pos.x, b.pos.y = b.pos.x + (af and -1 or 1) * offset.x, b.pos.y + offset.y
+                                        end
 
-                                    b = E:create_entity(a.bullet)
-                                    b.pos = V.vclone(this.pos)
-                                    b.bullet.damage_type = a.damage_type
-                                    if a.chance then
-                                        b.bullet.damage_min = b.bullet.damage_max
-                                        b.bullet.pop = {"pop_splat"}
+                                        b.bullet.from = V.vclone(b.pos)
+                                        b.bullet.to = V.v(target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y)
+                                        b.bullet.target_id = target.id
+                                        b.bullet.shot_index = si
+                                        b.bullet.source_id = this.id
+                                        b.bullet.xp_dest_id = this.id
+                                        b.bullet.damage_factor = this.unit.damage_factor
+                                        queue_insert(store, b)
                                     end
-                                    if a.bullet_start_offset then
-                                        local offset = a.bullet_start_offset[ai]
-                                        b.pos.x, b.pos.y = b.pos.x + (af and -1 or 1) * offset.x, b.pos.y + offset.y
-                                    end
-
-                                    b.bullet.from = V.vclone(b.pos)
-                                    b.bullet.to = V.v(target.pos.x + target.unit.hit_offset.x,
-                                        target.pos.y + target.unit.hit_offset.y)
-                                    b.bullet.target_id = target.id
-                                    b.bullet.shot_index = si
-                                    b.bullet.source_id = this.id
-                                    b.bullet.xp_dest_id = this.id
-                                    b.bullet.damage_factor = this.unit.damage_factor
-
-                                    queue_insert(store, b)
                                 end
 
                                 U.y_animation_wait(this)
