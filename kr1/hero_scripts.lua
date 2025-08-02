@@ -16666,7 +16666,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false, false, F_BOSS)
+                    local target = find_target_at_critical_moment(this, store, this.ranged.attacks[1].max_range, false, false, bor(F_BOSS, F_FLYING))
                     if target and valid_rally_node_nearby(target.pos) then
                         U.y_animation_play(this, "lvlup", nil, store.tick_ts, 1)
                         S:queue(this.sound_events.change_rally_point)

@@ -10892,6 +10892,7 @@ local function heroes()
     tt = E:register_t("hero_raelyn_ultimate_entity", "soldier_militia")
     E:add_comps(tt, "melee", "nav_grid", "reinforcement", "tween")
     b = balance.heroes.hero_raelyn
+    tt.is_kr5 = true
     tt.controable = true
     tt.ban_global_control = true
     tt.health_bar.offset = vec_2(0, 50)
