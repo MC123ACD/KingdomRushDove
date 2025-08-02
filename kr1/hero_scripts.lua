@@ -8245,7 +8245,10 @@ return function(scripts)
                         local ultimate_entity = E:create_entity(this.hero.skills.ultimate.controller_name)
                         ultimate_entity.level = this.hero.skills.ultimate.level
                         ultimate_entity.damage_factor = this.unit.damage_factor
-                        ultimate_entity.pos = V.vclone(enemy.pos)
+                        ultimate_entity.pos = {
+                            x = enemy.pos.x + enemy.unit.hit_offset.x,
+                            y = enemy.pos.y + enemy.unit.hit_offset.y
+                        }
                         queue_insert(store, ultimate_entity)
                         this.ultimate.ts = store.tick_ts
                         SU.hero_gain_xp_from_skill(this, this.hero.skills.ultimate)
@@ -8364,7 +8367,7 @@ return function(scripts)
 
     function scripts.hero_lynn_ultimate.update(this, store)
         local targets = table.filter(store.enemies, function(_, e)
-            return e.pos and e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
+            return e.ui and e.ui.can_click and e.nav_path and not e.health.dead and
                        band(e.vis.flags, this.vis_bans) == 0 and band(e.vis.bans, this.vis_flags) == 0 and
                        U.is_inside_ellipse(V.v(e.pos.x + e.unit.hit_offset.x, e.pos.y + e.unit.hit_offset.y),
                     V.v(this.pos.x, this.pos.y), this.range) and
