@@ -5322,7 +5322,7 @@ local function heroes()
     tt.render.sprites[1].sort_y_offset = -5
 
     tt = E:register_t("mod_stun_burrow", "mod_stun")
-    tt.modifier.duration = 2
+    tt.modifier.duration = 2.2
 
     tt = E:register_t("aura_crab_invuln", "aura")
     E:add_comps(tt, "render", "tween")
