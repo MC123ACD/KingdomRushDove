@@ -14619,9 +14619,9 @@ return function(scripts)
         this.render.sprites[1].hidden = true
         ps.particle_system.emit = false
 
-        local delays = {0, 0.1, 0, 0.1, 0, 0.1, 0, 0.1, 0, 0, 0, 0.2, 0, 0}
-        local node_offsets = {0, 2, 4, -4, 0, 0, 6, -6, 8, 8, -8, -8, 10, -10}
-        local node_subpaths = {1, 1, 1, 1, 2, 3, 1, 1, 2, 3, 2, 3, 1, 1}
+        local delays = {0, 0.1, 0, 0.1, 0, 0.1, 0, 0.1, 0, 0, 0, 0.2, 0, 0, 0, 0}
+        local node_offsets = {0, 2, 4, -4, 0, 0, 6, -6, 8, 8, -8, -8, 10, -10, 12, -12}
+        local node_subpaths = {1, 1, 1, 1, 2, 3, 1, 1, 2, 3, 2, 3, 1, 1, 2, 3}
         local node
         local nodes = P:nearest_nodes(b.to.x, b.to.y, nil, nil, true)
 

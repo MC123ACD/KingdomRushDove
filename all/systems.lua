@@ -57,7 +57,9 @@ function sys.level:init(store)
     DI:set_level(store.level_difficulty)
     GR:load(store.level_name)
     P:load(store.level_name, store.visible_coords)
-    P:reverse_all_paths()
+    if store.patches.reverse_path then
+        P:reverse_all_paths()
+    end
     W:load(store.level_name, store.level_mode)
     A:load()
     E:load()

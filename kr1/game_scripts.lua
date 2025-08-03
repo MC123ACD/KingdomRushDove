@@ -32141,6 +32141,30 @@ function scripts.mod_dwarf_beer.remove(this, store)
     return true
 end
 
+scripts.mod_dragon_reign = {
+    remove = function(this, store)
+        local target = store.entities[this.modifier.target_id]
+
+        if not target then
+            return true
+        end
+
+        local spread_targets = U.find_enemies_in_range(store.enemies, target.pos, 0, this.spread_radius, F_MOD, 0)
+
+        if spread_targets then
+            for _, t in pairs(spread_targets) do
+                local m = E:create_entity(this.template_name)
+                m.modifier.target_id = t.id
+                m.modifier.source_id = this.modifier.source_id
+                m.modifier.level = this.modifier.level
+                m.modifier.damage_factor = this.modifier.damage_factor
+                queue_insert(store, m)
+            end
+        end
+        return true
+    end
+}
+
 return scripts
 
 

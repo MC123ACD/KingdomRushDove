@@ -3777,11 +3777,13 @@ local function heroes()
     tt.dps.damage_every = fts(15)
     tt.main_script.insert = scripts.mod_dps.insert
     tt.main_script.update = scripts.mod_dps.update
+    tt.main_script.remove = scripts.mod_dragon_reign.remove
     tt.render.sprites[1].size_names = {"small", "medium", "large"}
     tt.render.sprites[1].prefix = "fire"
     tt.render.sprites[1].name = "small"
     tt.render.sprites[1].draw_order = 2
     tt.render.sprites[1].loop = true
+    tt.spread_radius = 60
 
     tt = E:register_t("breath_dragon", "bullet")
     tt.render.sprites[1].name = "hero_dragon_flameBurnDecal"
