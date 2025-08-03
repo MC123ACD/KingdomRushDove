@@ -232,7 +232,7 @@ local function boss()
     tt.render.sprites[1].prefix = "bomb_juggernaut_spawner"
     tt.render.sprites[1].loop = false
     tt.spawner.animation_concurrent = "open"
-    tt.spawner.count = 7
+    tt.spawner.count = 5
     tt.spawner.count_inc = 1
     tt.spawner.cycle_time = fts(6)
     tt.spawner.entity = "enemy_golem_head"
