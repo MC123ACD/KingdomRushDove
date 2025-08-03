@@ -737,8 +737,8 @@ local function barrack_towers()
     tt.powers.armor.price_base = 125
     tt.powers.armor.price_inc = 125
     tt.powers.beer = E:clone_c("power")
-    tt.powers.beer.price_base = 200
-    tt.powers.beer.price_inc = 120
+    tt.powers.beer.price_base = 160
+    tt.powers.beer.price_inc = 140
     tt.powers.hammer = E:clone_c("power")
     tt.powers.hammer.price_base = 100
     tt.powers.hammer.price_inc = 100
