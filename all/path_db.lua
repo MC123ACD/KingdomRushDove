@@ -130,6 +130,22 @@ function path_db:load(name, visible_coords)
 	end
 end
 
+function path_db:reverse_all_paths()
+    if not self.paths then
+        return
+    end
+    for i, path_group in ipairs(self.paths) do
+        for j, subpath in ipairs(path_group) do
+            if type(subpath) == "table" then
+                local n = #subpath
+                for k = 1, math.floor(n / 2) do
+                    subpath[k], subpath[n - k + 1] = subpath[n - k + 1], subpath[k]
+                end
+            end
+        end
+    end
+end
+
 function path_db:path(index, subindex)
 	subindex = subindex or 1
 

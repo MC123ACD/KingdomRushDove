@@ -33973,7 +33973,7 @@ local kr5_a = {
 	},
 	hero_therien_void_prison_fx_small_out = {
 		prefix = "hero_therien_void_prison_fx_small",
-		to = 89,
+		to = 88,
 		from = 53
 	},
 	hero_therien_void_prison_fx_big_in = {

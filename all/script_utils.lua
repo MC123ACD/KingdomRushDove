@@ -2743,10 +2743,12 @@ local function enemy_water_change(store, this)
             end
         elseif w.last_terrain_type == TERRAIN_WATER and terrain_type == TERRAIN_LAND then
             this.vis.flags = band(this.vis.flags, bnot(F_WATER))
-            this.vis.bans = w._orig_vis_bans
+            if w._orig_vis_bans then
+                this.vis.bans = w._orig_vis_bans
+            end
             U.speed_div_self(this, this.water.speed_factor)
 
-            if this.water.health_bar_offset then
+            if this.water.health_bar_offset and this.health_bar._orig_offset then
                 this.health_bar.offset = this.health_bar._orig_offset
             end
 
@@ -2754,16 +2756,21 @@ local function enemy_water_change(store, this)
                 this.health_bar.hidden = false
             end
 
-            if this.water.hit_offset then
+            if this.water.hit_offset and this.unit._orig_hit_offset then
                 this.unit.hit_offset = this.unit._orig_hit_offset
             end
 
-            if this.water.mod_offset then
+            if this.water.mod_offset and this.unit._orig_mod_offset then
                 this.unit.mod_offset = this.unit._orig_mod_offset
             end
 
-            this.unit.can_explode = this.unit._orig_can_explode
-            this.unit.show_blood_pool = this.unit._orig_show_blood_pool
+            if this.unit._orig_can_explode then
+                this.unit.can_explode = this.unit._orig_can_explode
+            end
+
+            if this.unit._orig_show_blood_pool then
+                this.unit.show_blood_pool = this.unit._orig_show_blood_pool
+            end
 
             for i = 1, #this.render.sprites do
                 local s = this.render.sprites[i]

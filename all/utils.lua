@@ -661,7 +661,14 @@ function U.find_nearest_soldier(entities, origin, min_range, max_range, flags, b
         return nil
     else
         table.sort(soldiers, function(e1, e2)
-            return (band(e1.vis.flags, F_MOCKING) ~= 0 and band(e2.vis.flags, F_MOCKING) == 0) or (V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y))
+            local e1_mock = band(e1.vis.flags, F_MOCKING) ~= 0
+            local e2_mock = band(e2.vis.flags, F_MOCKING) ~= 0
+            if e1_mock and not e2_mock then
+                return true
+            elseif not e1_mock and e2_mock then
+                return false
+            end
+            return V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y)
         end)
 
         return soldiers[1]
