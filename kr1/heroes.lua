@@ -118,12 +118,15 @@ local function heroes()
     tt.dodge.chance_inc = 0.25
     tt.dodge.time_before_hit = fts(4)
     tt.dodge.low_chance_factor = 0.5
-    tt.dodge.counter_attack = E:clone_c("melee_attack")
+    tt.dodge.counter_attack = E:clone_c("area_attack")
     tt.dodge.counter_attack.animation = "counter"
-    tt.dodge.counter_attack.damage_type = bor(DAMAGE_TRUE, DAMAGE_NO_DODGE)
-    tt.dodge.counter_attack.reflected_damage_factor = 0.5
-    tt.dodge.counter_attack.reflected_damage_factor_inc = 0.5
+    tt.dodge.counter_attack.damage_type = DAMAGE_MAGICAL_EXPLOSION
+    tt.dodge.counter_attack.reflected_damage_factor = 0.25
+    tt.dodge.counter_attack.reflected_damage_factor_inc = 0.25
+    tt.dodge.counter_attack.damage_radius = 50
     tt.dodge.counter_attack.hit_time = fts(5)
+    tt.dodge.counter_attack.hit_decal = "decal_paladin_holystrike"
+    tt.dodge.counter_attack.hit_offset = vec_2(0, 0)
     tt.dodge.counter_attack.sound = "HeroPaladinDeflect"
 
     tt = RT("mod_gerald_courage", "modifier")

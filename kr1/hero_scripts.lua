@@ -360,7 +360,15 @@ return function(scripts)
                         predicted_health[t.id] = predicted_health[t.id] - U.predict_damage(t, d)
                         queue_insert(store, b)
                     end
-
+                else
+                    if store.entities[this.bullet.target_id] then
+                        for i = 1, this.extra_arrows do
+                            local b = E:clone_entity(this)
+                            b.extra_arrows = 0
+                            b.bullet.damage_max = b.bullet.damage_max - 20
+                            queue_insert(store, b)
+                        end
+                    end
                 end
             end
             return scripts.arrow.insert(this, store)

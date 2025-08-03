@@ -83,7 +83,8 @@ function director:init(params)
 
 	if params.locale then
 		main:set_locale(params.locale)
-		love.window.setTitle(_("GAME_TITLE_" .. string.upper(KR_GAME)))
+		-- love.window.setTitle(_("GAME_TITLE_" .. string.upper(KR_GAME)))
+        love.window.setTitle(version.title .. version.id)
 	end
 
 	if features.overrides and (table.contains(features.overrides, "censored_cn") or table.contains(features.overrides, "yodo1sdk")) then
@@ -106,7 +107,7 @@ function director:init(params)
 		end
 
 		if not dir then
-			log.error("Could not find original install dir. Skipping savegame import")
+			log.info("Could not find original install dir. Skipping savegame import")
 		else
 			storage:import_dotnet(dir)
 		end

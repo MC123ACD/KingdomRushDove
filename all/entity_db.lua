@@ -40,7 +40,7 @@ function entity_db:register_t(name, base)
 		end
 
 		if base == nil then
-			log.error("template base %s does not exist", base)
+			-- log.error("template base %s does not exist", base)
 
 			return
 		end
