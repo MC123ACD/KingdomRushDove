@@ -62,7 +62,8 @@ else
 fi
 
 # 生成更新日志
-echo "版本 $current_id 更新内容：" > "$LOG_FILE"
+echo "------------------------------" >> "$LOG_FILE"
+echo "版本 $current_id 更新内容：" >> "$LOG_FILE"
 git log --pretty=format:"%h %ad %an %s" --date=short "$last_commit..$current_commit" >> "$LOG_FILE"
 echo "" >> "$LOG_FILE"
 
