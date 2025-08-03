@@ -4700,7 +4700,7 @@ local function heroes()
     tt.hero.level_stats.melee_damage_max = {17, 19, 22, 24, 26, 29, 31, 34, 36, 38}
     tt.hero.skills.snakestyle = E:clone_c("hero_skill")
     tt.hero.skills.snakestyle.damage = {40, 60, 80, 100}
-    tt.hero.skills.snakestyle.damage_reduction_factor = {0.2, 0.4, 0.6, 0.7}
+    tt.hero.skills.snakestyle.damage_reduction_factor = {0.24, 0.36, 0.48, 0.64}
     tt.hero.skills.snakestyle.xp_gain_factor = 42
     tt.hero.skills.snakestyle.xp_level_steps = {
         [1] = 1,
