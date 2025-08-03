@@ -913,8 +913,6 @@ function scripts.soldier_dwarf.update(this, store, script)
 		if this.unit.is_stunned then
 			SU.soldier_idle(store, this)
 		else
-			SU.soldier_courage_upgrade(store, this)
-
 			while this.nav_rally.new do
 				if SU.y_soldier_new_rally(store, this) then
 					goto label_180_0
@@ -32096,6 +32094,51 @@ function scripts.decal_catapult_endless.update(this, store)
         U.animation_start(this, "running", false, store.tick_ts, true)
         U.y_ease_key(store, this.pos, "x", this.x_inside, this.x_outside, this.transit_time)
     end
+end
+
+scripts.mod_dwarf_beer = {}
+
+function scripts.mod_dwarf_beer.insert(this, store, script)
+    local target = store.entities[this.modifier.target_id]
+
+    if not target or not target.health or target.health.dead then
+        return false
+    end
+
+    if target.health.hp == target.health.hp_max then
+        return false
+    end
+
+    if target and target.unit and this.render then
+        for i = 1, #this.render.sprites do
+            local s = this.render.sprites[i]
+
+            s.ts = store.tick_ts
+
+            if s.size_names then
+                s.name = s.size_names[target.unit.size]
+            end
+        end
+    end
+
+    this.hps.ts = store.tick_ts - this.hps.heal_every
+    this.modifier.ts = store.tick_ts
+    target.health.damage_factor = target.health.damage_factor * 0.8
+    signal.emit("mod-applied", this, target)
+
+    return true
+end
+
+function scripts.mod_dwarf_beer.remove(this, store)
+    local target = store.entities[this.modifier.target_id]
+
+    if not target or not target.health or target.health.dead then
+        return true
+    end
+
+    target.health.damage_factor = target.health.damage_factor * 1.25
+
+    return true
 end
 
 return scripts

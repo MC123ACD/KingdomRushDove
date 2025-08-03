@@ -2052,6 +2052,44 @@ local function enemies()
     tt.unit.mod_offset = vec_2(adx(23), ady(17))
 
     tt = RT("enemy_skeleton_blackburn", "enemy_skeleton")
+
+    tt = E:register_t("enemy_halloween_zombie", "enemy")
+    E:add_comps(tt, "melee", "moon")
+    anchor_y = 0.18
+    image_y = 50
+    E:add_comps(tt, "auras")
+    tt.auras.list[1] = E:clone_c("aura_attack")
+    tt.auras.list[1].name = "moon_enemy_aura"
+    tt.auras.list[1].cooldown = 0
+    tt.enemy.gold = 7
+    tt.enemy.melee_slot = vec_2(18, 0)
+    tt.health.armor = 0
+    tt.health.hp_max = 360
+    tt.health.magic_armor = 0
+    tt.health_bar.offset = vec_2(0, 32)
+    tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
+    tt.info.enc_icon = 60
+    tt.main_script.insert = scripts.enemy_basic.insert
+    tt.main_script.update = scripts.enemy_mixed.update
+    tt.melee.attacks[1].cooldown = 1.2
+    tt.melee.attacks[1].damage_max = 15
+    tt.melee.attacks[1].damage_min = 5
+    tt.melee.attacks[1].hit_time = fts(12)
+    tt.melee.attacks[1].sound = "HWZombieAmbient"
+    tt.motion.max_speed = 0.4 * FPS
+    tt.moon.speed_factor = 2
+    tt.render.sprites[1].prefix = "enemy_halloween_zombie"
+    tt.render.sprites[1].name = "raise"
+    tt.render.sprites[1].anchor.y = anchor_y
+    tt.unit.blood_color = BLOOD_GREEN
+    tt.unit.hit_offset = vec_2(0, 12)
+    tt.unit.marker_offset = vec_2(0, ady(10))
+    tt.unit.mod_offset = vec_2(0, 12)
+    tt.sound_events.death = "DeathSkeleton"
+    tt.sound_events.insert = "HWZombieAmbient"
+    tt.vis.bans = bor(F_POISON)
+
     tt = RT("enemy_zombie_blackburn", "enemy_halloween_zombie")
     tt = RT("enemy_skeleton_warrior", "enemy_skeleton_big")
 
@@ -2463,43 +2501,6 @@ local function enemies()
     tt.unit.marker_offset = vec_2(0, 0)
     tt.unit.mod_offset = vec_2(0, 14)
 
-    tt = E:register_t("enemy_halloween_zombie", "enemy")
-    E:add_comps(tt, "melee", "moon")
-    anchor_y = 0.18
-    image_y = 50
-    E:add_comps(tt, "auras")
-    tt.auras.list[1] = E:clone_c("aura_attack")
-    tt.auras.list[1].name = "moon_enemy_aura"
-    tt.auras.list[1].cooldown = 0
-    tt.enemy.gold = 7
-    tt.enemy.melee_slot = vec_2(18, 0)
-    tt.health.armor = 0
-    tt.health.hp_max = 360
-    tt.health.magic_armor = 0
-    tt.health_bar.offset = vec_2(0, 32)
-    tt.info.i18n_key = "ENEMY_HALLOWEEN_ZOMBIE"
-    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0083" or "info_portraits_sc_0083"
-    tt.info.enc_icon = 60
-    tt.main_script.insert = scripts.enemy_basic.insert
-    tt.main_script.update = scripts.enemy_mixed.update
-    tt.melee.attacks[1].cooldown = 1.2
-    tt.melee.attacks[1].damage_max = 15
-    tt.melee.attacks[1].damage_min = 5
-    tt.melee.attacks[1].hit_time = fts(12)
-    tt.melee.attacks[1].sound = "HWZombieAmbient"
-    tt.motion.max_speed = 0.4 * FPS
-    tt.moon.speed_factor = 2
-    tt.render.sprites[1].prefix = "enemy_halloween_zombie"
-    tt.render.sprites[1].name = "raise"
-    tt.render.sprites[1].anchor.y = anchor_y
-    tt.unit.blood_color = BLOOD_GREEN
-    tt.unit.hit_offset = vec_2(0, 12)
-    tt.unit.marker_offset = vec_2(0, ady(10))
-    tt.unit.mod_offset = vec_2(0, 12)
-    tt.sound_events.death = "DeathSkeleton"
-    tt.sound_events.insert = "HWZombieAmbient"
-    tt.vis.bans = bor(F_POISON)
-
     tt = E:register_t("enemy_lycan", "enemy")
     E:add_comps(tt, "melee", "moon", "auras")
     anchor_y = 0.14516129032258066
@@ -2871,8 +2872,8 @@ local function enemies()
     tt.melee.attacks[2] = E:clone_c("melee_attack")
     tt.melee.attacks[2].animation = "poison"
     tt.melee.attacks[2].cooldown = 10
-    tt.melee.attacks[2].damage_max = nil
-    tt.melee.attacks[2].damage_min = nil
+    tt.melee.attacks[2].damage_max = 1
+    tt.melee.attacks[2].damage_min = 1
     tt.melee.attacks[2].hit_time = fts(20)
     tt.melee.attacks[2].mod = "mod_poison"
     tt.melee.attacks[2].vis_flags = bor(F_POISON)

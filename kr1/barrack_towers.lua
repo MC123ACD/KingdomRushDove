@@ -781,7 +781,7 @@ local function barrack_towers()
     tt.melee.attacks[1].power_name = "hammer"
     tt.melee.attacks[1].cooldown = 1
     tt.melee.attacks[1].side_effect = function(this, store, attack, target)
-        this.beer.ts = this.beer.ts - 0.5
+        this.beer.ts = this.beer.ts - 0.4
     end
     tt.melee.range = 64
     tt.motion.max_speed = 2.5 * FPS
@@ -808,8 +808,9 @@ local function barrack_towers()
     tt.render.sprites[2].loop = true
     tt.render.sprites[2].offset.y = 10
     tt.render.sprites[2].z = Z_EFFECTS
-    tt.main_script.insert = scripts.mod_hps.insert
+    tt.main_script.insert = scripts.mod_dwarf_beer.insert
     tt.main_script.update = scripts.mod_hps.update
+    tt.main_script.remove = scripts.mod_dwarf_beer.remove
 
     tt = E:register_t("tower_barrack_mercenaries", "tower_barrack_1")
     E:add_comps(tt, "powers")

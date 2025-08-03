@@ -33808,7 +33808,7 @@ local kr5_a = {
 	},
 	duskbeast_leave = {
 		prefix = "duskbeast",
-		to = 52,
+		to = 51,
 		from = 45
 	},
 	hit_dante_run = {
