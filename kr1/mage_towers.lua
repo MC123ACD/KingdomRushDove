@@ -881,7 +881,7 @@ local function mage_towers()
     tt.tween.remove = false
     tt.tween.disabled = false
     tt.tween.reverse = false
-    tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}}
+    tt.tween.props[1].keys = {{0, 0}, {fts(10), 150}}
     tt.render.sprites[1].color = {0, 255, 255}
 
     local decal_high_elven_sentinel_preview = E:register_t("decal_high_elven_sentinel_preview", "decal_tween")
