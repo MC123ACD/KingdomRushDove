@@ -114,8 +114,8 @@ local function heroes()
     tt.dodge.animation = "counter"
     tt.dodge.can_dodge = scripts.hero_gerald.fn_can_dodge
     tt.dodge.chance = 0
-    tt.dodge.chance_base = 0
-    tt.dodge.chance_inc = 0.25
+    tt.dodge.chance_base = 0.15
+    tt.dodge.chance_inc = 0.2
     tt.dodge.time_before_hit = fts(4)
     tt.dodge.low_chance_factor = 0.5
     tt.dodge.counter_attack = E:clone_c("area_attack")
