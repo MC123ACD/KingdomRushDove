@@ -22,7 +22,7 @@ local function barrack_towers()
     tt.info.enc_icon = 14
     tt.info.i18n_key = "TOWER_PALADINS"
     tt.tower.type = "paladin"
-    tt.tower.price = 190
+    tt.tower.price = 185
     tt.powers.healing = E:clone_c("power")
     tt.powers.healing.price_base = 150
     tt.powers.healing.price_inc = 100
@@ -148,7 +148,7 @@ local function barrack_towers()
     tt.info.enc_icon = 18
     tt.info.i18n_key = "TOWER_BARBARIANS"
     tt.tower.type = "barbarian"
-    tt.tower.price = 190
+    tt.tower.price = 195
     tt.powers.dual = E:clone_c("power")
     tt.powers.dual.price_base = 250
     tt.powers.dual.price_inc = 100
@@ -181,7 +181,7 @@ local function barrack_towers()
     image_y = 62
     tt.health.armor = 0
     tt.health.dead_lifetime = 10
-    tt.health.hp_max = 305
+    tt.health.hp_max = 310
     tt.health_bar.offset = vec_2(0, ady(48))
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0005" or "info_portraits_sc_0005"
     tt.info.random_name_count = 20
@@ -511,7 +511,7 @@ local function barrack_towers()
     tower_templar.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0007"
     tower_templar.info.enc_icon = 19
     tower_templar.tower.type = "templar"
-    tower_templar.tower.price = 190
+    tower_templar.tower.price = 185
     tower_templar.powers.holygrail = E:clone_c("power")
     tower_templar.powers.holygrail.price_base = 250
     tower_templar.powers.holygrail.price_inc = 150
@@ -618,7 +618,7 @@ local function barrack_towers()
     tower_assassin.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0008"
     tower_assassin.info.enc_icon = 20
     tower_assassin.tower.type = "assassin"
-    tower_assassin.tower.price = 190
+    tower_assassin.tower.price = 185
     tower_assassin.powers.sneak = E:clone_c("power")
     tower_assassin.powers.sneak.price_base = 225
     tower_assassin.powers.sneak.price_inc = 150
@@ -751,7 +751,7 @@ local function barrack_towers()
     tt.render.sprites[3].offset = vec_2(0, 30)
     tt.sound_events.insert = "DwarfTaunt"
     tt.sound_events.change_rally_point = "DwarfTaunt"
-    tt.tower.price = 190
+    tt.tower.price = 185
     tt.tower.type = "barrack_dwarf"
 
     tt = E:register_t("soldier_dwarf", "soldier_militia")
@@ -816,7 +816,7 @@ local function barrack_towers()
     E:add_comps(tt, "powers")
     tt.tower.type = "mercenaries_desert"
     tt.tower.level = 1
-    tt.tower.price = 190
+    tt.tower.price = 185
     tt.barrack.max_soldiers = 4
     tt.mercenary = true
     tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0013"
@@ -944,7 +944,7 @@ local function barrack_towers()
     E:add_comps(tt, "barrack", "powers")
     tt.tower.type = "mercenaries_pirates"
     tt.tower.level = 1
-    tt.tower.price = 190
+    tt.tower.price = 195
     tt.barrack.max_soldiers = 4
     tt.info.fn = function()
         local tpl = E:get_template("tower_barrack_pirates")
@@ -1080,7 +1080,7 @@ local function barrack_towers()
     tt.render.sprites[3].prefix = "tower_blade_door"
     tt.sound_events.change_rally_point = "ElvesBarrackBladesingerTaunt"
     tt.sound_events.insert = "ElvesBarrackBladesingerTaunt"
-    tt.tower.price = 190
+    tt.tower.price = 185
     tt.tower.type = "blade"
 
     tt = E:register_t("tower_forest", "tower_barrack_1")
@@ -1110,7 +1110,7 @@ local function barrack_towers()
     tt.render.sprites[3].hidden = true
     tt.sound_events.change_rally_point = "ElvesBarrackForestKeeperTaunt"
     tt.sound_events.insert = "ElvesBarrackForestKeeperTaunt"
-    tt.tower.price = 190
+    tt.tower.price = 185
     tt.tower.type = "forest"
 
     tt = E:register_t("soldier_blade", "soldier_barrack_1")
