@@ -16199,7 +16199,7 @@ return function(scripts)
             coroutine.yield()
         end
 
-        this.render.sprites[2].hidden = true
+        -- this.render.sprites[2].hidden = true
 
         U.y_animation_play(this, "leave", nil, store.tick_ts, 1)
         queue_remove(store, this)
