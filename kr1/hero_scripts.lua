@@ -14962,12 +14962,8 @@ return function(scripts)
 
             bullet.bullet.from = V.vclone(bullet.pos)
             bullet.bullet.to = V.vclone(bullet_to)
-
-            if not attack.ignore_hit_offset then
-                bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
-                bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
-            end
-
+            bullet.bullet.to.x = bullet.bullet.to.x + target.unit.hit_offset.x
+            bullet.bullet.to.y = bullet.bullet.to.y + target.unit.hit_offset.y
             bullet.bullet.target_id = target.id
             bullet.bullet.source_id = this.id
             bullet.bullet.xp_dest_id = this.id
@@ -15915,9 +15911,6 @@ return function(scripts)
         local b = this.bullet
         local target = store.entities[b.target_id]
         local source = store.entities[b.source_id]
-
-        -- b.damage_min = b.damage_min_config[b.level]
-        -- b.damage_max = b.damage_max_config[b.level]
 
         U.y_wait(store, b.flight_time)
 

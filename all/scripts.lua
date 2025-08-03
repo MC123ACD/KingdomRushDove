@@ -578,7 +578,7 @@ function scripts.enemy_basic.insert(this, store, script)
         end
     end
 
-    this.enemy.gold_bag = math.ceil(this.enemy.gold * 0.3)
+    this.enemy.gold_bag = math.ceil(this.enemy.gold * 0.6)
 
     if this.water and this.spawn_data and this.spawn_data.water_ignore_pi then
         this.water.ignore_pi = this.spawn_data.water_ignore_pi
@@ -2211,7 +2211,7 @@ function scripts.arrow.update(this, store, script)
             end
             if mods then
                 for _, mod_name in pairs(mods) do
-                    
+
                     local mod = E:create_entity(mod_name)
 
                     mod.modifier.source_id = this.id
