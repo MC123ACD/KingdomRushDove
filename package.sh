@@ -46,3 +46,28 @@ zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/strings/zh-Hans.lua"
 zip "$OUTPUT_ZIP" "./存档位置.lnk"
 zip "$OUTPUT_ZIP" "./patches/default.lua"
 zip "$OUTPUT_ZIP" "./patches/keyset_default.lua"
+
+# 记录 commit hash 文件
+COMMIT_FILE="last_build_commit.txt"
+LOG_FILE="update_log.txt"
+
+# 获取当前最新 commit hash
+current_commit=$(git rev-parse HEAD)
+
+# 获取上次打包的 commit hash（如果没有，取最早一次提交）
+if [ -f "$COMMIT_FILE" ]; then
+    last_commit=$(cat "$COMMIT_FILE")
+else
+    last_commit=$(git rev-list --max-parents=0 HEAD)
+fi
+
+# 生成更新日志
+echo "版本 $current_id 更新内容：" > "$LOG_FILE"
+git log --pretty=format:"%h %ad %an %s" --date=short "$last_commit..$current_commit" >> "$LOG_FILE"
+echo "" >> "$LOG_FILE"
+
+# 更新 commit hash
+echo "$current_commit" > "$COMMIT_FILE"
+
+# 把日志文件打包进压缩包
+zip "$OUTPUT_ZIP" "$LOG_FILE"
