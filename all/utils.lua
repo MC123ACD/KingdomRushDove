@@ -601,7 +601,7 @@ function U.walk(e, dt, accel, unsnapped)
     end
 
     local step = e.motion.real_speed * dt
-    
+
     local nx, ny = V.normalize(V.rotate(v_angle, 1, 0))
 
     if v_len <= step and not (e.teleport and e.teleport.pending) then
@@ -661,7 +661,7 @@ function U.find_nearest_soldier(entities, origin, min_range, max_range, flags, b
         return nil
     else
         table.sort(soldiers, function(e1, e2)
-            return band(e1.vis.flags, F_MOCKING) ~= 0 or (V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y))
+            return (band(e1.vis.flags, F_MOCKING) ~= 0 and band(e2.vis.flags, F_MOCKING) == 0) or (V.dist2(e1.pos.x, e1.pos.y, origin.x, origin.y) < V.dist2(e2.pos.x, e2.pos.y, origin.x, origin.y))
         end)
 
         return soldiers[1]
