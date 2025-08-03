@@ -181,7 +181,7 @@ local function barrack_towers()
     image_y = 62
     tt.health.armor = 0
     tt.health.dead_lifetime = 10
-    tt.health.hp_max = 320
+    tt.health.hp_max = 305
     tt.health_bar.offset = vec_2(0, ady(48))
     tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0005" or "info_portraits_sc_0005"
     tt.info.random_name_count = 20
