@@ -10065,6 +10065,7 @@ local function heroes()
     tt.bullet.xp_gain_factor = b.xp_gain_factor
     tt.render = nil
     tt.main_script.update = scripts.bullet_hero_hunter_ranged_attack.update
+    
     tt = E:register_t("arrow_hero_hunter_ricochet", "bullet")
     b = balance.heroes.hero_hunter.ricochet
     tt.main_script.update = scripts.arrow_hero_hunter_ricochet.update
