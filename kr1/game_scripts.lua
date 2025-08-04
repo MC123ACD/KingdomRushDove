@@ -32181,6 +32181,206 @@ scripts.mod_dragon_reign = {
     end
 }
 
+scripts.ray5_simple = {}
+
+function scripts.ray5_simple.update(this, store)
+    local b = this.bullet
+    local s = this.render.sprites[1]
+    local target = store.entities[b.target_id]
+    local dest = V.vclone(b.to)
+    local tower = this.tower_ref
+
+    local function update_sprite()
+        if this.track_target and target and target.motion then
+            local tpx, tpy = target.pos.x, target.pos.y
+
+            if not b.ignore_hit_offset then
+                tpx, tpy = tpx + target.unit.hit_offset.x, tpy + target.unit.hit_offset.y
+            end
+
+            local d = math.max(math.abs(tpx - b.to.x), math.abs(tpy - b.to.y))
+
+            if d > b.max_track_distance then
+                log.paranoid("(%s) ray_simple target (%s) out of max_track_distance", this.id, target.id)
+
+                target = nil
+            else
+                dest.x, dest.y = target.pos.x, target.pos.y
+
+                if target.unit and target.unit.hit_offset then
+                    dest.x, dest.y = dest.x + target.unit.hit_offset.x, dest.y + target.unit.hit_offset.y
+                end
+            end
+        end
+
+        local angle = V.angleTo(dest.x - this.pos.x, dest.y - this.pos.y)
+
+        s.r = angle
+
+        local dist_offset = 0
+
+        if this.dist_offset then
+            dist_offset = this.dist_offset
+        end
+
+        s.scale.x = (V.dist(dest.x, dest.y, this.pos.x, this.pos.y) + dist_offset) / this.image_width
+    end
+
+    if not b.ignore_hit_offset and this.track_target and target and target.motion then
+        b.to.x, b.to.y = target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y
+    end
+
+    s.scale = s.scale or V.v(1, 1)
+    s.ts = store.tick_ts
+
+    update_sprite()
+
+    s.hidden = true
+
+    if b.hit_time > fts(1) then
+        while store.tick_ts - s.ts < b.hit_time do
+            coroutine.yield()
+
+            if target and U.flag_has(target.vis.bans, F_RANGED) then
+                target = nil
+            end
+
+            if this.track_target then
+                update_sprite()
+            end
+        end
+    end
+
+    if target and b.damage_type ~= DAMAGE_NONE then
+        local d = SU.create_bullet_damage(b, target.id, this.id)
+
+        queue_damage(store, d)
+    end
+
+    local mods_added = {}
+
+    if target and (b.mod or b.mods) then
+        local mods = b.mods or {b.mod}
+
+        for _, mod_name in pairs(mods) do
+            local m = E:create_entity(mod_name)
+
+            m.modifier.target_id = b.target_id
+            m.modifier.damage_factor = b.damage_factor
+            if m.damage_from_bullet then
+                if m.dps then
+                    m.dps.damage_min = b.damage_min
+                    m.dps.damage_max = b.damage_max
+                else
+                    m.modifier.damage_min = b.damage_min
+                    m.modifier.damage_max = b.damage_max
+                end
+            else
+                local level
+
+                if not tower then
+                    level = this.bullet.level
+                else
+                    level = tower.level
+                    level = level or this.bullet.level
+                end
+
+                m.modifier.level = level
+            end
+
+            table.insert(mods_added, m)
+            queue_insert(store, m)
+        end
+    end
+
+    if b.hit_payload then
+        local hp
+
+        if type(b.hit_payload) == "string" then
+            hp = E:create_entity(b.hit_payload)
+        else
+            hp = b.hit_payload
+        end
+
+        if hp.aura then
+            hp.aura.level = this.bullet.level
+            hp.aura.source_id = this.id
+            hp.aura.damage_factor = b.damage_factor
+            if target then
+                hp.pos.x, hp.pos.y = target.pos.x, target.pos.y
+            else
+                hp.pos.x, hp.pos.y = dest.x, dest.y
+            end
+        else
+            hp.pos.x, hp.pos.y = dest.x, dest.y
+        end
+
+        queue_insert(store, hp)
+    end
+
+    local disable_hit = false
+
+    if this.hit_fx_only_no_target then
+        disable_hit = target ~= nil and not target.health.dead
+    end
+
+    local fx
+
+    if b.hit_fx and not disable_hit then
+        local is_air = target and band(target.vis.flags, F_FLYING) ~= 0
+
+        fx = E:create_entity(b.hit_fx)
+
+        if b.hit_fx_ignore_hit_offset and target and not is_air then
+            fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
+        else
+            fx.pos.x, fx.pos.y = dest.x, dest.y
+        end
+
+        fx.render.sprites[1].ts = store.tick_ts
+
+        queue_insert(store, fx)
+    end
+
+    if this.ray_duration then
+        while store.tick_ts - s.ts < this.ray_duration do
+            if this.track_target then
+                update_sprite()
+            end
+
+            if tower and not store.entities[tower.id] then
+                queue_remove(store, this)
+
+                if fx then
+                    queue_remove(store, fx)
+                end
+
+                for key, value in pairs(mods_added) do
+                    queue_remove(store, value)
+                end
+
+                break
+            end
+
+            coroutine.yield()
+
+            s.hidden = false
+        end
+    else
+        while not U.animation_finished(this, 1) do
+            if tower and not store.entities[tower.id] then
+                queue_remove(store, this)
+
+                break
+            end
+
+            coroutine.yield()
+        end
+    end
+
+    queue_remove(store, this)
+end
+
 return scripts
 
 

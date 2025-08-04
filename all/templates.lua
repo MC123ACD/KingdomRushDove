@@ -365,6 +365,9 @@ fx.timed.runs = 1
 fx.render.sprites[1].loop = false
 fx.render.sprites[1].z = Z_EFFECTS
 
+local fx5 = E:register_t("fx5", "fx")
+fx5.render.sprites[1].scale = vv(0.7)
+
 local fx_fade = E:register_t("fx_fade")
 
 E:add_comps(fx_fade, "pos", "render", "tween")

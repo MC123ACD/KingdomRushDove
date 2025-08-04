@@ -9778,3 +9778,36 @@ tt.render.sprites[1].scale = vec_1(0.7)
 tt.render.sprites[1].animated = true
 tt.render.sprites[1].hide_after_runs = 1
 tt.tween.props[1].keys = {{1, 255}, {2.5, 0}}
+
+tt = E:register_t("fx_hero_venom_melee_attack_hit", "fx5")
+tt.render.sprites[1].name = "hero_venom_hit_fx_idle"
+tt.render.sprites[1].z = Z_BULLETS + 1
+tt = E:register_t("fx_hero_venom_beast_lvl_up", "fx5")
+tt.render.sprites[1].name = "hero_venom_lvlup_fx_idle"
+
+tt = E:register_t("decal_hero_venom_slimewalk", "decal_timed")
+tt.render.sprites[1].prefix = "hero_venom_run_particle"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].loop = false
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].fps = 15
+tt.render.sprites[1].scale = vec_1(0.7)
+tt.timed.duration = fts(20)
+
+tt = E:register_t("decal_hero_venom_spike_b", "decal_hero_venom_spike_a")
+tt.render.sprites[1].prefix = "hero_venom_spike_b"
+tt.render.sprites[1].scale = vec_1(0.7)
+
+tt = E:register_t("decal_hero_venom_death", "decal_scripted")
+E:add_comps(tt, "tween")
+tt.render.sprites[1].prefix = "hero_venom_death_decal"
+tt.render.sprites[1].name = "idle"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].hidden = true
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].scale = vec_1(0.7)
+tt.main_script.update = scripts.decal_hero_venom_death.update
+tt.tween.disabled = true
+tt.tween.props[1].name = "alpha"
+tt.tween.props[1].keys = {{0, 0}, {1, 255}}
+tt.tween.remove = false

@@ -1436,6 +1436,16 @@ return {
         icon = 54,
         stats = {7, 6, 0, 3},
         is_kr5 = true
+    },
+    {
+        portrait = 4,
+        thumb = 55,
+        name = "hero_venom",
+        available_level = 1,
+        starting_level = 1,
+        icon = 55,
+        stats = {5, 5, 5, 6},
+        is_kr5 = true
     }
 },
     level_data = {{

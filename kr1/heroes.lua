@@ -11012,6 +11012,324 @@ local function heroes()
     end
     tt.health.hp_max = b.ultimate.entity.hp_max[4]
     tt.health.armor = b.ultimate.entity.armor[4]
+
+    tt = E:register_t("decal_hero_venom_spike_a", "decal_scripted")
+    b = balance.heroes.hero_venom.floor_spikes
+    tt.render.sprites[1].prefix = "hero_venom_spike_a"
+    tt.render.sprites[1].name = "in"
+    tt.render.sprites[1].animated = true
+    tt.render.sprites[1].scale = vec_1(0.7)
+    tt.main_script.update = scripts.decal_hero_venom_spike.update
+    tt.damage_type = b.damage_type
+    tt.damage_min = nil
+    tt.damage_max = nil
+    tt.damage_radius = b.damage_radius
+    tt.vis_flags = bor(F_AREA)
+    tt.vis_bans = bor(F_FLYING)
+
+    tt = E:register_t("hero_venom", "hero5")
+    b = balance.heroes.hero_venom
+    E:add_comps(tt, "melee", "timed_attacks")
+    tt.hero.level_stats.armor = b.armor
+    tt.hero.level_stats.hp_max = b.hp_max
+    tt.hero.level_stats.melee_damage_min = b.basic_melee.damage_min
+    tt.hero.level_stats.melee_damage_max = b.basic_melee.damage_max
+    tt.hero.skills.ranged_tentacle = E:clone_c("hero_skill")
+    tt.hero.skills.ranged_tentacle.cooldown = b.ranged_tentacle.cooldown
+    tt.hero.skills.ranged_tentacle.damage_min = b.ranged_tentacle.damage_min
+    tt.hero.skills.ranged_tentacle.damage_max = b.ranged_tentacle.damage_max
+    tt.hero.skills.ranged_tentacle.bleed_chance = b.ranged_tentacle.bleed_chance
+    tt.hero.skills.ranged_tentacle.bleed_damage_min = b.ranged_tentacle.bleed_damage_min
+    tt.hero.skills.ranged_tentacle.bleed_damage_max = b.ranged_tentacle.bleed_damage_max
+    tt.hero.skills.ranged_tentacle.bleed_every = b.ranged_tentacle.bleed_every
+    tt.hero.skills.ranged_tentacle.bleed_duration = b.ranged_tentacle.bleed_duration
+    tt.hero.skills.ranged_tentacle.xp_gain = b.ranged_tentacle.xp_gain
+    tt.hero.skills.ranged_tentacle.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3
+    }
+    tt.hero.skills.inner_beast = E:clone_c("hero_skill")
+    tt.hero.skills.inner_beast.cooldown = b.inner_beast.cooldown
+    tt.hero.skills.inner_beast.duration = b.inner_beast.duration
+    tt.hero.skills.inner_beast.damage_factor = b.inner_beast.basic_melee.damage_factor
+    tt.hero.skills.inner_beast.trigger_hp = b.inner_beast.trigger_hp
+    tt.hero.skills.inner_beast.xp_gain = b.inner_beast.xp_gain
+    tt.hero.skills.inner_beast.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.floor_spikes = E:clone_c("hero_skill")
+    tt.hero.skills.floor_spikes.cooldown = b.floor_spikes.cooldown
+    tt.hero.skills.floor_spikes.damage_type = b.floor_spikes.damage_type
+    tt.hero.skills.floor_spikes.damage_radius = b.floor_spikes.damage_radius
+    tt.hero.skills.floor_spikes.damage_min = b.floor_spikes.damage_min
+    tt.hero.skills.floor_spikes.damage_max = b.floor_spikes.damage_max
+    tt.hero.skills.floor_spikes.spikes = b.floor_spikes.spikes
+    tt.hero.skills.floor_spikes.xp_gain = b.floor_spikes.xp_gain
+    tt.hero.skills.floor_spikes.xp_level_steps = {
+        [3] = 1,
+        [6] = 2,
+        [9] = 3
+    }
+    tt.hero.skills.eat_enemy = E:clone_c("hero_skill")
+    tt.hero.skills.eat_enemy.cooldown = b.eat_enemy.cooldown
+    tt.hero.skills.eat_enemy.hp_trigger = b.eat_enemy.hp_trigger
+    tt.hero.skills.eat_enemy.regen = b.eat_enemy.regen
+    tt.hero.skills.eat_enemy.cooldown = b.eat_enemy.cooldown
+    tt.hero.skills.eat_enemy.xp_gain = b.eat_enemy.xp_gain
+    tt.hero.skills.eat_enemy.xp_level_steps = {
+        [2] = 1,
+        [5] = 2,
+        [8] = 3
+    }
+    tt.hero.skills.ultimate = E:clone_c("hero_skill")
+    tt.hero.skills.ultimate.controller_name = "controller_hero_venom_ultimate"
+    tt.hero.skills.ultimate.cooldown = b.ultimate.cooldown
+    tt.hero.skills.ultimate.duration = b.ultimate.duration
+    tt.hero.skills.ultimate.damage_min = b.ultimate.damage_min
+    tt.hero.skills.ultimate.damage_max = b.ultimate.damage_max
+    tt.hero.skills.ultimate.xp_gain_factor = 40
+    tt.hero.skills.ultimate.xp_level_steps = {
+        [1] = 1,
+        [4] = 2,
+        [7] = 3,
+        [10] = 4
+    }
+    tt.hero.fn_level_up = scripts.hero_venom.level_up
+    tt.health.dead_lifetime = b.dead_lifetime
+    tt.health_bar.offset = vec_2(0, 40)
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.info.hero_portrait = "hero_portraits_0008"
+    tt.info.i18n_key = "HERO_VENOM"
+    tt.info.portrait = "portraits_hero" .. "_0008"
+    tt.main_script.insert = scripts.hero_venom.insert
+    tt.main_script.update = scripts.hero_venom.update
+    tt.motion.max_speed = b.speed
+    tt.regen.cooldown = b.regen_cooldown
+    tt.slimewalk = {}
+    tt.slimewalk.min_distance = b.distance_to_slimewalk
+    tt.slimewalk.extra_speed = b.slimewalk_speed
+    tt.slimewalk.animations = {"run_in", "run", "run_out"}
+    tt.slimewalk.decal = "decal_hero_venom_slimewalk"
+    tt.slimewalk.sound = nil
+    tt.beast = {}
+    tt.beast.health_bar_offset = vec_2(0, 55)
+    tt.beast.health_bar_type = HEALTH_BAR_SIZE_MEDIUM
+    tt.beast.click_rect = r(-30, -5, 60, 60)
+    tt.beast.hit_mod_offset = vec_2(0, 25)
+    tt.beast.regen_health = b.inner_beast.basic_melee.regen_health
+    tt.beast.lvl_up_fx = "fx_hero_venom_beast_lvl_up"
+    tt.render.sprites[1].angles = {}
+    tt.render.sprites[1].angles.walk = {"walk"}
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].prefix = "hero_venom_hero"
+    tt.render.sprites[1].draw_order = DO_HEROES
+    tt.soldier.melee_slot_offset = vec_2(20, 0)
+    tt.sound_events.change_rally_point = "HeroVenomTaunt"
+    tt.sound_events.death = "HeroVenomDeath"
+    tt.sound_events.respawn = "HeroVenomTauntIntro"
+    tt.sound_events.hero_room_select = "HeroVenomTauntSelect"
+    tt.unit.hit_offset = vec_2(0, 14)
+    tt.unit.mod_offset = vec_2(0, 14)
+    tt.melee.range = balance.heroes.common.melee_attack_range
+    tt.melee.attacks[1] = E:clone_c("melee_attack")
+    tt.melee.attacks[1].animation = "attack_1"
+    tt.melee.attacks[1].cooldown = b.basic_melee.cooldown
+    tt.melee.attacks[1].shared_cooldown = b.basic_melee.cooldown
+    tt.melee.attacks[1].hit_time = fts(16)
+    tt.melee.attacks[1].hit_fx = "fx_hero_venom_melee_attack_hit"
+    tt.melee.attacks[1].hit_offset = vec_2(45, 15)
+    tt.melee.attacks[1].sound = "HeroVenomBasicAttack"
+    tt.melee.attacks[1].sound_args = {
+        delay = fts(14)
+    }
+    tt.melee.attacks[1].xp_gain_factor = b.basic_melee.xp_gain_factor
+    tt.melee.attacks[1].basic_attack = true
+    tt.melee.attacks[2] = table.deepclone(tt.melee.attacks[1])
+    tt.melee.attacks[2].animation = "attack_2"
+    tt.melee.attacks[2].chance = 0.2
+    tt.melee.attacks[2].hit_time = fts(20)
+    tt.melee.attacks[3] = table.deepclone(tt.melee.attacks[1])
+    tt.melee.attacks[3].animation = "attack_1"
+    tt.melee.attacks[3].cooldown = b.inner_beast.basic_melee.cooldown
+    tt.melee.attacks[3].shared_cooldown = nil
+    tt.melee.attacks[3].hit_time = fts(10)
+    tt.melee.attacks[3].disabled = true
+    tt.melee.attacks[3].xp_gain_factor = b.inner_beast.basic_melee.xp_gain_factor
+    tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
+    tt.melee.attacks[4].animation = "attack_2"
+    tt.melee.attacks[4].hit_time = fts(8)
+    tt.melee.attacks[5] = table.deepclone(tt.melee.attacks[3])
+    tt.melee.attacks[5].animation = "attack_3"
+    tt.melee.attacks[5].hit_time = fts(8)
+    tt.melee.attacks[6] = E:clone_c("melee_attack")
+    tt.melee.attacks[6].animation = "instakill"
+    tt.melee.attacks[6].cooldown = nil
+    tt.melee.attacks[6].hp_trigger = b.eat_enemy.hp_trigger
+    tt.melee.attacks[6].hit_time = fts(23)
+    tt.melee.attacks[6].sound_hit = nil
+    tt.melee.attacks[6].sound_hit_args = {
+        delay = fts(14)
+    }
+    tt.melee.attacks[6].damage_type = DAMAGE_EAT
+    tt.melee.attacks[6].xp_from_skill = "eat_enemy"
+    tt.melee.attacks[6].basic_attack = false
+    tt.melee.attacks[6].instakill = true
+    tt.melee.attacks[6].disabled = true
+    tt.melee.attacks[6].hp_trigger_normal = b.eat_enemy.hp_trigger
+    tt.melee.attacks[6].fn_can = function(t, s, a, target)
+        return target.health and target.health.hp <= target.health.hp_max * a.hp_trigger
+    end
+    tt.melee.attacks[6].mod_regen = "mod_hero_venom_eat_enemy_regen"
+    tt.melee.attacks[6].sound = "HeroVenomRenewFleshCast"
+    tt.melee.attacks[6].sound_args = {
+        delay = fts(10)
+    }
+    tt.melee.attacks[6].side_effect = function(this, store, attack, target)
+        this.melee.attacks[6].hp_trigger = this.melee.attacks[6].hp_trigger_normal
+        if target then
+            local factor = (target.health.hp_max - target.health.hp + 200) / target.health.hp_max
+            this.melee.attacks[6].ts = this.melee.attacks[6].ts - factor * this.melee.attacks[6].cooldown
+        end
+    end
+    tt.melee.attacks[6].vis_bans = F_BOSS
+
+    tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
+    tt.timed_attacks.list[1].animation = "ranged_skill"
+    tt.timed_attacks.list[1].min_range = b.ranged_tentacle.min_range
+    tt.timed_attacks.list[1].max_range = b.ranged_tentacle.max_range
+    tt.timed_attacks.list[1].bullet = "bullet_hero_venom_ranged_tentacle"
+    tt.timed_attacks.list[1].shoot_time = fts(4)
+    tt.timed_attacks.list[1].bullet_start_offset = vec_2(8, 15)
+    tt.timed_attacks.list[1].cooldown = nil
+    tt.timed_attacks.list[1].disabled = true
+    tt.timed_attacks.list[1].ignore_out_of_range_check = 1
+    tt.timed_attacks.list[1].sound = "HeroVenomHeartseekerCast"
+    tt.timed_attacks.list[1].min_cooldown = b.shared_cooldown
+    tt.timed_attacks.list[1].vis_bans = bor(F_NIGHTMARE)
+    tt.timed_attacks.list[2] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[2].animation_in = "beast_in"
+    tt.timed_attacks.list[2].animation_out = "out"
+    tt.timed_attacks.list[2].cooldown = nil
+    tt.timed_attacks.list[2].disabled = true
+    tt.timed_attacks.list[2].vis_bans = bor(F_FLYING, F_NIGHTMARE)
+    tt.timed_attacks.list[2].sound_in = "HeroVenomInnerBeastCast"
+    tt.timed_attacks.list[2].sound_out = "HeroVenomInnerBeastOut"
+    tt.timed_attacks.list[2].min_cooldown = b.shared_cooldown
+    tt.timed_attacks.list[3] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[3].animation_in = "spikes_in"
+    tt.timed_attacks.list[3].animation_idle = "spikes_idle"
+    tt.timed_attacks.list[3].animation_out = "spikes_out"
+    tt.timed_attacks.list[3].cooldown = nil
+    tt.timed_attacks.list[3].disabled = true
+    tt.timed_attacks.list[3].cast_time = fts(8)
+    tt.timed_attacks.list[3].damage_type = b.floor_spikes.damage_type
+    tt.timed_attacks.list[3].range_trigger_min = b.floor_spikes.range_trigger_min
+    tt.timed_attacks.list[3].range_trigger_max = b.floor_spikes.range_trigger_max
+    tt.timed_attacks.list[3].spikes = b.floor_spikes.spikes
+    tt.timed_attacks.list[3].min_targets = b.floor_spikes.min_targets
+    tt.timed_attacks.list[3].vis_bans = bor(F_FLYING, F_NIGHTMARE, F_CLIFF)
+    tt.timed_attacks.list[3].vis_flags = bor(F_AREA)
+    tt.timed_attacks.list[3].sound_in = "HeroVenomDeadlySpikesCast"
+    tt.timed_attacks.list[3].sound_out = "HeroVenomDeadlySpikesOut"
+    tt.timed_attacks.list[3].min_cooldown = b.shared_cooldown
+    tt.timed_attacks.list[3].spike_template = {"decal_hero_venom_spike_a", "decal_hero_venom_spike_b"}
+    tt.ui.click_rect = r(-27, -5, 54, 50)
+    tt.death_decal = "decal_hero_venom_death"
+    tt.ultimate = {
+        ts = 0,
+        cooldown = 40,
+        disabled = true
+    }
+
+    tt = E:register_t("bullet_hero_venom_ranged_tentacle", "bullet")
+    local b = balance.heroes.hero_venom.ranged_tentacle
+    tt.bullet.damage_type = b.damage_type
+    tt.bullet.damage_min = nil
+    tt.bullet.damage_max = nil
+    tt.bullet.hit_time = fts(4)
+    tt.bullet.mods = {"mod_bullet_hero_venom_ranged_tentacle_bleed", "mod_bullet_hero_venom_ranged_tentacle_stun"}
+    tt.bullet.hit_fx = "fx_hero_venom_melee_attack_hit"
+    tt.image_width = 179
+    tt.dist_offset = 70
+    tt.main_script.insert = scripts.bullet_hero_venom_ranged_tentacle.insert
+    tt.main_script.update = scripts.ray5_simple.update
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].name = "hero_venom_ranged_skill_tentacle_idle"
+    tt.render.sprites[1].loop = false
+    tt.sound_events.insert = nil
+    tt.track_target = false
+    tt.ray_duration = fts(20)
+
+    tt = E:register_t("aura_hero_venom_ultimate", "aura")
+    b = balance.heroes.hero_venom.ultimate
+    E:add_comps(tt, "render")
+    tt.aura.mod = "mod_hero_venom_ultimate_slow"
+    tt.aura.radius = b.radius
+    tt.aura.vis_flags = bor(F_AREA)
+    tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
+    tt.aura.cycle_time = fts(5)
+    tt.aura.duration = nil
+    tt.render.sprites[1].prefix = "hero_venom_ultimate"
+    tt.render.sprites[1].name = "in"
+    tt.render.sprites[1].animated = true
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].scale = vec_1(0.7)
+    tt.main_script.insert = scripts.aura_apply_mod.insert
+    tt.main_script.update = scripts.aura_hero_venom_ultimate.update
+    tt.slow_delay = b.slow_delay
+    tt.end_damage_min = nil
+    tt.end_damage_max = nil
+    tt.end_damage_type = b.damage_type
+    tt.sound_attack = "HeroVenomRenewCreepingDeathSpikes"
+
+    tt = E:register_t("mod_bullet_hero_venom_ranged_tentacle_bleed", "mod_blood")
+    b = balance.heroes.hero_venom.ranged_tentacle
+    tt.dps.damage_min = nil
+    tt.dps.damage_max = nil
+    tt.dps.damage_inc = 0
+    tt.dps.damage_every = nil
+    tt.dps.fx_every = tt.dps.damage_every
+    tt.dps.fx_every = fts(20)
+    tt.modifier.duration = nil
+    tt = E:register_t("mod_bullet_hero_venom_ranged_tentacle_stun", "mod_stun")
+    tt.modifier.duration = fts(7)
+    tt.modifier.vis_flags = bor(F_MOD, F_STUN)
+
+    tt = E:register_t("mod_hero_venom_eat_enemy_regen", "modifier")
+    E:add_comps(tt, "render", "tween")
+    tt.modifier.duration = fts(43)
+    tt.main_script.insert = scripts.mod_track_target.insert
+    tt.main_script.update = scripts.mod_hero_venom_eat_enemy_regen.update
+    tt.main_script.remove = scripts.mod_track_target.remove
+    tt.render.sprites[1].prefix = "hero_venom_heal_fx_back"
+    tt.render.sprites[1].name = "idle"
+    tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[1].z = Z_EFFECTS
+    tt.render.sprites[1].scale = vec_1(0.7)
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].prefix = "hero_venom_heal_fx_front"
+    tt.render.sprites[2].name = "idle"
+    tt.render.sprites[2].anchor = vec_2(0.5, 0.5)
+    tt.render.sprites[2].z = Z_DECALS
+    tt.render.sprites[2].scale = vec_1(0.7)
+    tt.tween.props[1].keys = {{0, 255}, {tt.modifier.duration - fts(10), 255}, {tt.modifier.duration, 0}}
+
+    tt = E:register_t("mod_hero_venom_ultimate_slow", "mod_slow")
+    b = balance.heroes.hero_mecha.tar_bomb
+    tt.slow.factor = b.slow_factor
+    tt.modifier.duration = 0.5
+
+    tt = E:register_t("controller_hero_venom_ultimate")
+    E:add_comps(tt, "pos", "main_script", "sound_events")
+    tt.cooldown = nil
+    tt.aura = "aura_hero_venom_ultimate"
+    tt.main_script.update = scripts.hero_venom_ultimate.update
+    tt.sound = "HeroVenomRenewCreepingDeathCast"
+
 end
 
 return heroes

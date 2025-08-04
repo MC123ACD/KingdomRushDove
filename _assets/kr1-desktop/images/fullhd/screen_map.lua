@@ -1958,7 +1958,7 @@ return {
 		},
 		alias = {}
 	},
-    	heroroom_thumbs_0054 = {
+    heroroom_thumbs_0054 = {
 		a_name = "room_hero-1.dds",
         size = {84, 84},
         trim = {18, 16, 18, 14},
@@ -1969,6 +1969,22 @@ return {
 		f_quad = {
 			3918,
 			6,
+			155,
+			152
+		},
+		alias = {}
+	},
+    heroroom_thumbs_0055 = {
+		a_name = "room_hero-1.dds",
+		size = {84, 84},
+        trim = {18, 16, 18, 14},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3435,
+			480,
 			155,
 			152
 		},
@@ -1997,6 +2013,14 @@ return {
         a_size = {2048, 2048},
         f_quad = {271, 965, 162, 203},
         alias = {}
+    },
+    mapButtons_portrait_hero_0055 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {43, 58, 59, 23},
+        a_size = {2048, 2048},
+        f_quad = {882, 229, 178, 179},
+        alias = {"hero_portraits_0008"}
     },
 	hero_room_portraits_small_thumb_hero_lumenir_0001 = {
 		a_name = "room_hero-1.dds",
@@ -2090,30 +2114,6 @@ return {
 		f_quad = {
 			3435,
 			164,
-			155,
-			152
-		},
-		alias = {}
-	},
-	hero_room_portraits_small_thumb_hero_venom_0001 = {
-		a_name = "room_hero-1.dds",
-		size = {
-			155,
-			152
-		},
-		trim = {
-			0,
-			0,
-			0,
-			0
-		},
-		a_size = {
-			4096,
-			4096
-		},
-		f_quad = {
-			3435,
-			480,
 			155,
 			152
 		},

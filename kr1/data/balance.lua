@@ -2857,7 +2857,7 @@ local heroes = {
 		dead_lifetime = 15,
 		speed = 75,
 		shared_cooldown = 3,
-		distance_to_slimewalk = 150,
+		distance_to_slimewalk = 72,
 		regen_cooldown = 1,
 		stats = {
 			cooldown = 8,
@@ -2866,16 +2866,16 @@ local heroes = {
 			damage = 6
 		},
 		hp_max = {
-			180,
-			205,
-			230,
-			255,
-			280,
-			305,
-			330,
-			355,
-			380,
-			400
+			234,
+			266,
+			299,
+			341,
+			364,
+			396,
+			429,
+			461,
+			494,
+			520
 		},
 		armor = {
 			0,
@@ -2889,45 +2889,33 @@ local heroes = {
 			0,
 			0
 		},
-		regen_health = {
-			14,
-			16,
-			18,
-			20,
-			22,
-			24,
-			26,
-			28,
-			30,
-			32
-		},
 		basic_melee = {
 			xp_gain_factor = 1.55,
 			cooldown = 1,
 			damage_type = DAMAGE_PHYSICAL,
 			damage_max = {
-				12,
-				14,
-				16,
-				17,
-				19,
-				21,
-				23,
+				15,
+				18,
+				20,
+				22,
 				24,
-				26,
-				28
+				27,
+				29,
+				31,
+				33,
+				36
 			},
 			damage_min = {
-				8,
-				9,
 				10,
-				12,
+				11,
 				13,
-				14,
 				15,
 				16,
 				18,
-				20
+				19,
+				20,
+				23,
+				26
 			}
 		},
 		ranged_tentacle = {
@@ -2937,19 +2925,19 @@ local heroes = {
 			node_prediction = 60,
 			cooldown = {
 				10,
-				10,
-				10
+				9,
+				8
 			},
 			damage_type = DAMAGE_PHYSICAL,
 			damage_max = {
-				12,
-				36,
-				60
+				15,
+				46,
+				78
 			},
 			damage_min = {
-				12,
-				36,
-				60
+				15,
+				46,
+				78
 			},
 			s_damage = {
 				12,
@@ -2962,14 +2950,14 @@ local heroes = {
 				1
 			},
 			bleed_damage_min = {
-				2,
-				2,
-				2
+				3,
+				3,
+				3
 			},
 			bleed_damage_max = {
-				2,
-				2,
-				2
+				3,
+				3,
+                3
 			},
 			bleed_every = {
 				0.25,
@@ -2982,28 +2970,28 @@ local heroes = {
 				4
 			},
 			xp_gain = {
-				10,
-				20,
-				30
+				80,
+				160,
+				240
 			}
 		},
 		inner_beast = {
 			duration = 10,
-			trigger_hp = 0.25,
+			trigger_hp = 0.5,
 			cooldown = {
 				35,
 				35,
 				35
 			},
 			basic_melee = {
-				regen_health = 0.05,
+				regen_health = 0.1,
 				xp_gain_factor = 1,
-				cooldown = 2.5,
-				damage_type = DAMAGE_PHYSICAL,
+				cooldown = 2.1,
+				damage_type = DAMAGE_RUDE,
 				damage_factor = {
-					1.2,
-					1.4,
-					1.6
+					1.25,
+					1.5,
+					1.75
 				},
 				s_damage_factor = {
 					0.2,
@@ -3029,14 +3017,14 @@ local heroes = {
 			},
 			damage_type = DAMAGE_TRUE,
 			damage_max = {
-				18,
-				36,
-				54
+				23,
+				46,
+				70
 			},
 			damage_min = {
-				18,
-				36,
-				54
+				23,
+				46,
+				70
 			},
 			s_damage = {
 				18,
@@ -3049,13 +3037,13 @@ local heroes = {
 				15
 			},
 			xp_gain = {
-				30,
-				60,
-				90
+				240,
+				480,
+				720
 			}
 		},
 		eat_enemy = {
-			hp_trigger = 0.2,
+			hp_trigger = 0.3,
 			cooldown = {
 				40,
 				35,
@@ -3063,14 +3051,14 @@ local heroes = {
 			},
 			damage_type = DAMAGE_INSTAKILL,
 			regen = {
-				0.25,
-				0.4,
-				0.6
+				0.1,
+				0.15,
+				0.2
 			},
 			xp_gain = {
-				40,
-				70,
-				90
+				320,
+				560,
+				720
 			}
 		},
 		ultimate = {
@@ -3091,16 +3079,16 @@ local heroes = {
 			},
 			damage_type = DAMAGE_TRUE,
 			damage_max = {
-				150,
-				200,
-				250,
-				300
+				195,
+				260,
+				325,
+				390
 			},
 			damage_min = {
-				150,
-				200,
-				250,
-				300
+				195,
+				260,
+				325,
+				390
 			},
 			s_damage = {
 				150,
