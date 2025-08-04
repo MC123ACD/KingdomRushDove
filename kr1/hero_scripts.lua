@@ -17904,7 +17904,7 @@ return function(scripts)
 
                                 local mod_prefix
 
-                                if #enemies <= #m.sprites_per_enemies then
+                                if count <= #m.sprites_per_enemies then
                                     mod_prefix = m.sprites_per_enemies[count]
                                 else
                                     mod_prefix = m.sprites_per_enemies[#m.sprites_per_enemies]
