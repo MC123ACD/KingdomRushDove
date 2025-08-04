@@ -5864,9 +5864,19 @@ function scripts.ray_tesla.update(this, store)
 		if not update_sprite() then
 			-- block empty
 		else
+            this.orig_bounce_range = this.bounce_range
+            if not this.bounces then
+                this.max_bounces = this.bounces_lvl[b.level]
+                this.bounces = 0
+            end
+            if this.bounce_range_inc then
+                this.bounce_range = this.bounce_range + this.bounce_range_inc * b.level
+            end
+
 			if not this.excluded_templates or not table.contains(this.excluded_templates, target.template_name) then
                 if target.template_name == "hero_thor" then
                     scripts.heal(target, target.lightning_heal)
+                    this.bounce_range = this.bounce_range * 1.5
                 else
                     local mod = E:create_entity(b.mod)
                     local bounce_factor = UP:get_upgrade("engineer_efficiency") and 1 or this.bounce_damage_factor
@@ -5894,18 +5904,19 @@ function scripts.ray_tesla.update(this, store)
 
 			table.insert(this.seen_targets, target.id)
 
-			if not this.bounces then
-				this.max_bounces = this.bounces_lvl[b.level]
-                this.bounces = 0
-			end
-            if this.bounce_range_inc then
-                this.bounce_range = this.bounce_range + this.bounce_range_inc * b.level
-            end
 			if this.bounces < this.max_bounces then
 				U.y_wait(store, this.bounce_delay)
-                local bounce_target = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
+                local bounce_target, bounce_targets = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
 					return (not table.contains(this.seen_targets, v.id)) and (v.enemy or v.template_name == "hero_thor")
 				end)
+                if this.bounces + 1 == this.max_bounces then
+                    for _, t in pairs(bounce_targets) do
+                        if t.template_name == "hero_thor" then
+                            bounce_target = t
+                            break
+                        end
+                    end
+                end
 
 				if bounce_target then
 					log.paranoid("ray_tesla bounce from %s to %s dist:%s", target.id, bounce_target.id, V.dist(dest.x, dest.y, bounce_target.pos.x, bounce_target.pos.y))
@@ -5913,7 +5924,7 @@ function scripts.ray_tesla.update(this, store)
 					local r = E:create_entity(this.template_name)
 
 					r.pos = V.vclone(dest)
-                    r.bounce_range = this.bounce_range
+                    r.bounce_range = this.orig_bounce_range
 					r.bullet.to = V.vclone(bounce_target.pos)
 					r.bullet.target_id = bounce_target.id
 					r.bullet.source_id = target.id
@@ -5925,7 +5936,6 @@ function scripts.ray_tesla.update(this, store)
 					r.bounce_damage_factor = math.max(this.bounce_damage_factor + this.bounce_damage_factor_inc, this.bounce_damage_factor_min)
                     if bounce_target.template_name == "hero_thor" then
                         r.bounces = 0
-                        r.bounce_range = this.bounce_range * 1.5
                     else
                         r.bounces = this.bounces + 1
                     end
