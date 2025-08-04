@@ -5773,7 +5773,8 @@ return {
 			}
 		}
 	},
-    map_decos = {{
+    map_decos = {
+        [1] = {{
         id = "md_muelle",
         image = "muelle",
         layer = 2,
@@ -6008,5 +6009,91 @@ return {
         fns = {
             unlock = deco_fn.path_open.unlock
         }
-    }}
+    }},
+    [2] = {
+        -- {
+		-- 	layer = 3,
+		-- 	id = "md_m1",
+		-- 	image = "map_background_cover_1",
+		-- 	trigger_level = 12,
+		-- 	pos = v(1250, 378),
+		-- 	fns = {
+		-- 		unlock = deco_fn.m1.unlock
+		-- 	}
+		-- },
+		-- {
+		-- 	layer = 3,
+		-- 	id = "md_m2",
+		-- 	image = "map_background_cover_2",
+		-- 	trigger_level = 14,
+		-- 	pos = v(1460, 335),
+		-- 	fns = {
+		-- 		unlock = deco_fn.m2.unlock
+		-- 	}
+		-- },
+		{
+			layer = 2,
+			id = "md_gate",
+			image = "ma_gate_0001",
+			trigger_level = 7,
+			pos = v(680, 836),
+			fns = {
+				unlock = deco_fn.gate.unlock
+			}
+		},
+		{
+			loop = true,
+			layer = 2,
+			id = "ship",
+			image = "big_ship_0001",
+			trigger_level = 6,
+			pos = v(0, 0),
+			fns = {
+				prepare = deco_fn.ship.prepare,
+				unlock = deco_fn.ship.unlock,
+				update = deco_fn.ship.update
+			},
+			animations = {
+				down_stopped = {
+					to = 225,
+					prefix = "big_ship",
+					from = 181
+				},
+				down = {
+					to = 45,
+					prefix = "big_ship",
+					from = 1
+				},
+				down_side = {
+					to = 90,
+					prefix = "big_ship",
+					from = 46
+				},
+				side = {
+					to = 135,
+					prefix = "big_ship",
+					from = 91
+				},
+				side_stopped = {
+					to = 180,
+					prefix = "big_ship",
+					from = 136
+				}
+			}
+		}
+    },
+    [3] = {
+        {
+			layer = 3,
+			id = "md_ft_mountain",
+			image = "map_background_0002",
+			trigger_level = 21,
+			pos = v(960, 540),
+			hit_rect = r(1240, 110, 300, 240),
+			fns = {
+				unlock = deco_fn.md_ft_mountain.unlock
+			}
+		}
+    }
+}
 }

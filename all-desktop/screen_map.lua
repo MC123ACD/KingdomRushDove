@@ -1515,11 +1515,11 @@ function MapView:clear_flags()
     self.level_decos = {}
 end
 
-function MapView:load_level_decos()
+function MapView:load_level_decos(i)
     local layers = {self.ma_under_layer, self.ma_mid_layer, self.ma_over_layer}
     local out = {}
 
-    for _, d in pairs(map_data.map_decos) do
+    for _, d in pairs(map_data.map_decos[i]) do
         local v = KImageView:new(d.image)
 
         v.id = d.id
@@ -1569,7 +1569,7 @@ function MapView:show_flags(num)
     self.flags = {}
     self.wings = {}
     self.point_groups = {}
-    self.level_decos = self:load_level_decos()
+    self.level_decos = self:load_level_decos(num)
 
     local max_level = 26
     local jnum = 0
