@@ -3,31 +3,33 @@
 local i18n = {}
 
 i18n.msgs = {}
-i18n.default_locale = "en"
-i18n.current_locale = "en"
+-- i18n.default_locale = "en"
+-- i18n.current_locale = "en"
+i18n.default_locale = "zh-Hans"
+i18n.current_locale = "zh-Hans"
 i18n.supported_locales = {
-	"de",
-	"en",
-	"es",
-	"fr",
-	"ja",
-	"ko",
-	"pt",
-	"ru",
+	-- "de",
+	-- "en",
+	-- "es",
+	-- "fr",
+	-- "ja",
+	-- "ko",
+	-- "pt",
+	-- "ru",
 	"zh-Hans",
-	"zh-Hant"
+	-- "zh-Hant"
 }
 i18n.locale_names = {
-	ko = "한국어",
-	de = "Deutsch",
-	ru = "Русский",
-	pt = "Português",
-	["zh-Hant"] = "中文 (繁體)",
-	fr = "Français",
-	en = "English",
-	ja = "日本語",
+	-- ko = "한국어",
+	-- de = "Deutsch",
+	-- ru = "Русский",
+	-- pt = "Português",
+	-- ["zh-Hant"] = "中文 (繁體)",
+	-- fr = "Français",
+	-- en = "English",
+	-- ja = "日本語",
 	["zh-Hans"] = "中文 (简体)",
-	es = "Español"
+	-- es = "Español"
 }
 
 function i18n.load_locale(locale)
