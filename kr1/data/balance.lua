@@ -1101,7 +1101,7 @@ local heroes = {
 				600
 			},
 			entity = {
-				range = 90,
+				range = 72.5,
 				duration = 12,
                 hp_max = {
                     60,
