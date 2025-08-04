@@ -5919,6 +5919,8 @@ function scripts.ray_tesla.update(this, store)
                         end
                     elseif bounce_targets[#bounce_targets].template_name == "hero_thor" then
                         bounce_target = bounce_targets[#bounce_targets]
+                    elseif #bounce_targets > 1 and bounce_targets[#bounce_targets-1].template_name == "hero_thor" then
+                        bounce_target = bounce_targets[#bounce_targets-1]
                     end
                 end
 

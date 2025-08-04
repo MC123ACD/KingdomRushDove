@@ -1556,7 +1556,7 @@ local function heroes()
         [8] = 3
     }
     tt.hero.skills.chainlightning.xp_gain = {50, 100, 150}
-    tt.hero.skills.chainlightning.chance = {0.27, 0.33, 0.38}
+    tt.hero.skills.chainlightning.chance = {0.28, 0.32, 0.36}
     tt.hero.skills.thunderclap = CC("hero_skill")
     tt.hero.skills.thunderclap.damage_max = {60, 80, 120}
     tt.hero.skills.thunderclap.secondary_damage_max = {50, 70, 90}
@@ -10065,7 +10065,7 @@ local function heroes()
     tt.bullet.xp_gain_factor = b.xp_gain_factor
     tt.render = nil
     tt.main_script.update = scripts.bullet_hero_hunter_ranged_attack.update
-    
+
     tt = E:register_t("arrow_hero_hunter_ricochet", "bullet")
     b = balance.heroes.hero_hunter.ricochet
     tt.main_script.update = scripts.arrow_hero_hunter_ricochet.update
