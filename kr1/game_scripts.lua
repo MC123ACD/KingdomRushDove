@@ -5876,7 +5876,7 @@ function scripts.ray_tesla.update(this, store)
 			if not this.excluded_templates or not table.contains(this.excluded_templates, target.template_name) then
                 if target.template_name == "hero_thor" then
                     scripts.heal(target, target.lightning_heal)
-                    this.bounce_range = this.bounce_range * 1.5
+                    this.bounce_range = this.bounce_range * 2
                 else
                     local mod = E:create_entity(b.mod)
                     local bounce_factor = UP:get_upgrade("engineer_efficiency") and 1 or this.bounce_damage_factor
@@ -5909,12 +5909,16 @@ function scripts.ray_tesla.update(this, store)
                 local bounce_target, bounce_targets = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
 					return (not table.contains(this.seen_targets, v.id)) and (v.enemy or v.template_name == "hero_thor")
 				end)
-                if this.bounces + 1 == this.max_bounces and bounce_targets then
-                    for _, t in pairs(bounce_targets) do
-                        if t.template_name == "hero_thor" then
-                            bounce_target = t
-                            break
+                if  bounce_targets then
+                    if this.bounces + 1 >= this.max_bounces then
+                        for _, t in pairs(bounce_targets) do
+                            if t.template_name == "hero_thor" then
+                                bounce_target = t
+                                break
+                            end
                         end
+                    elseif bounce_targets[#bounce_targets].template_name == "hero_thor" then
+                        bounce_target = bounce_targets[#bounce_targets]
                     end
                 end
 

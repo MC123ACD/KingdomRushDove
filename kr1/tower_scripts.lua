@@ -3726,7 +3726,7 @@ local function register_engineer(scripts)
                                 return nil
                             end
                             if thor.health.hp == thor.health.hp_max then
-                                local bounce_target = U.find_enemies_in_range(store.enemies, thor.pos, 0, E:get_template(ar.bullet).bounce_range * 1.5,
+                                local bounce_target = U.find_enemies_in_range(store.enemies, thor.pos, 0, E:get_template(ar.bullet).bounce_range * 2,
                                     ar.vis_flags, ar.vis_bans)
                                 if bounce_target then
                                     return thor
@@ -3946,7 +3946,7 @@ local function register_engineer(scripts)
                 if not thor then
                     return nil
                 end
-                if not U.is_inside_ellipse(thor.pos, tpos(this), ar.range * a.range_check_factor) then
+                if not U.is_inside_ellipse(thor.pos, tpos(this), at.range) then
                     return nil
                 end
                 if thor.health.dead then
@@ -3954,7 +3954,7 @@ local function register_engineer(scripts)
                 end
                 if thor.health.hp == thor.health.hp_max then
                     local bounce_target = U.find_enemies_in_range(store.enemies, thor.pos, 0,
-                        E:get_template(ar.bullet).bounce_range * 1.5, ar.vis_flags, ar.vis_bans)
+                        rb.bounce_range * 2, ra.vis_flags, ra.vis_bans)
                     if bounce_target then
                         return thor
                     else
@@ -4136,18 +4136,9 @@ local function register_engineer(scripts)
                             while store.tick_ts - ra.ts < ra.shoot_time do
                                 coroutine.yield()
                             end
-
-                            enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range, ra.node_prediction,
-                                ra.vis_flags, ra.vis_bans)
-
-                            if not enemy or enemy.health.dead then
-                                local frankie = b.soldiers[1]
-
-                                if frankie and not frankie.health.dead then
-                                    enemy = U.find_foremost_enemy(store.enemies, frankie.pos, 0, rb.bounce_range,
-                                        false, ra.vis_flags, ra.vis_bans)
-                                    enemy = enemy and frankie
-                                end
+                            if not enemy or store.entities[enemy.id] == nil or enemy.health.dead or
+                                not U.is_inside_ellipse(tpos(this), enemy.pos, at.range) then
+                                enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range, ra.node_prediction, ra.vis_flags, ra.vis_bans)
                             end
 
                             if not enemy or enemy.health.dead then
