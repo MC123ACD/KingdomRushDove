@@ -675,6 +675,7 @@ function U.find_nearest_soldier(entities, origin, min_range, max_range, flags, b
     end
 end
 
+-- filter_func: function(entity, origin)
 function U.find_soldiers_in_range(entities, origin, min_range, max_range, flags, bans, filter_func)
     local soldiers = table.filter(entities, function(k, v)
         return not v.pending_removal and v.vis and v.health and not v.health.dead and

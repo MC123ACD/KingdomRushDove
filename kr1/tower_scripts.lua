@@ -2724,7 +2724,7 @@ local function register_mage(scripts)
                         this.aura_rate = this.aura_rate + this.aura_rate_inc
                     end
 
-                    if #this.dragons > 0 and ready_to_attack(a, store, this.tower.damage_factor) then
+                    if #this.dragons > 0 and ready_to_attack(a, store, this.tower.cooldown_factor) then
                         a.ts = store.tick_ts
 
                         local assigned_target_ids = {}
@@ -3685,7 +3685,13 @@ local function register_engineer(scripts)
             local pow_b = this.powers.bolt
             local pow_o = this.powers.overcharge
             local last_ts = store.tick_ts
-
+            local thor = nil
+            for _, soldier in pairs(store.soldiers) do
+                if soldier.template_name == "hero_thor" then
+                    thor = soldier
+                    break
+                end
+            end
             ar.ts = store.tick_ts
 
             local aa, pow
@@ -3706,11 +3712,31 @@ local function register_engineer(scripts)
                         end
                     end
 
-                    if ready_to_attack(ar, store, this.tower.damage_factor) then
-                        local enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, ar.node_prediction,
+                    if ready_to_attack(ar, store, this.tower.cooldown_factor) then
+                        local target = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, ar.node_prediction,
                             ar.vis_flags, ar.vis_bans)
-
-                        if not enemy then
+                        local function target_after_check_thor()
+                            if not thor then
+                                return nil
+                            end
+                            if thor.health.dead then
+                                return nil
+                            end
+                            if thor.health.hp == thor.health.hp_max then
+                                local bounce_target = U.find_enemies_in_range(store.enemies, thor.pos, 0, E:get_template(ar.bullet).bounce_range * 1.5,
+                                    ar.vis_flags, ar.vis_bans)
+                                if bounce_target then
+                                    return thor
+                                else
+                                    return nil
+                                end
+                            end
+                            return thor
+                        end
+                        if not target then
+                            target = target_after_check_thor()
+                        end
+                        if not target then
                             -- block empty
                         else
                             ar.ts = store.tick_ts
@@ -3718,13 +3744,13 @@ local function register_engineer(scripts)
                             U.animation_start(this, ar.animation, nil, store.tick_ts, false, tower_sid)
                             U.y_wait(store, ar.shoot_time)
 
-                            if enemy.health.dead or not store.entities[enemy.id] or
-                                not U.is_inside_ellipse(tpos(this), enemy.pos, ar.range * a.range_check_factor) then
-                                enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, false,
+                            if target.health.dead or not store.entities[target.id] or
+                                not U.is_inside_ellipse(tpos(this), target.pos, ar.range * a.range_check_factor) then
+                                target = U.find_foremost_enemy(store.enemies, tpos(this), 0, ar.range, false,
                                     ar.vis_flags, ar.vis_bans)
                             end
 
-                            if enemy then
+                            if target then
                                 S:queue(ar.sound_shoot)
 
                                 local b = E:create_entity(ar.bullet)
@@ -3733,9 +3759,9 @@ local function register_engineer(scripts)
                                     this.pos.y + ar.bullet_start_offset.y
                                 b.bullet.damage_factor = this.tower.damage_factor
                                 b.bullet.from = V.vclone(b.pos)
-                                b.bullet.to = V.v(enemy.pos.x + enemy.unit.hit_offset.x,
-                                    enemy.pos.y + enemy.unit.hit_offset.y)
-                                b.bullet.target_id = enemy.id
+                                b.bullet.to = V.v(target.pos.x + target.unit.hit_offset.x,
+                                    target.pos.y + target.unit.hit_offset.y)
+                                b.bullet.target_id = target.id
                                 b.bullet.source_id = this.id
                                 b.bullet.level = pow_b.level
 
