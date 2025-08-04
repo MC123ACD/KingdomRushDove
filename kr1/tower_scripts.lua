@@ -3719,6 +3719,9 @@ local function register_engineer(scripts)
                             if not thor then
                                 return nil
                             end
+                            if not U.is_inside_ellipse(thor.pos, tpos(this), ar.range * a.range_check_factor) then
+                                return nil
+                            end
                             if thor.health.dead then
                                 return nil
                             end
@@ -3932,6 +3935,34 @@ local function register_engineer(scripts)
             local pow_l = this.powers.lightning
             local pow_f = this.powers.frankie
             local a, pow, bu
+            local thor = nil
+            for _, soldier in pairs(store.soldiers) do
+                if soldier.template_name == "hero_thor" then
+                    thor = soldier
+                    break
+                end
+            end
+            local function target_after_check_thor()
+                if not thor then
+                    return nil
+                end
+                if not U.is_inside_ellipse(thor.pos, tpos(this), ar.range * a.range_check_factor) then
+                    return nil
+                end
+                if thor.health.dead then
+                    return nil
+                end
+                if thor.health.hp == thor.health.hp_max then
+                    local bounce_target = U.find_enemies_in_range(store.enemies, thor.pos, 0,
+                        E:get_template(ar.bullet).bounce_range * 1.5, ar.vis_flags, ar.vis_bans)
+                    if bounce_target then
+                        return thor
+                    else
+                        return nil
+                    end
+                end
+                return thor
+            end
 
             ra.ts = store.tick_ts
 
@@ -4079,12 +4110,13 @@ local function register_engineer(scripts)
                             ra.vis_flags, ra.vis_bans)
 
                         if not enemy or enemy.health.dead then
-                            local frankie = b.soldiers[1]
-
-                            if frankie and not frankie.health.dead then
-                                enemy = U.find_foremost_enemy(store.enemies, frankie.pos, 0, rb.bounce_range, false,
-                                    ra.vis_flags, ra.vis_bans)
-                                enemy = enemy and frankie
+                            enemy = target_after_check_thor()
+                            if not enemy then
+                                local frankie = b.soldiers[1]
+                                if frankie and not frankie.health.dead then
+                                    enemy = U.find_foremost_enemy(store.enemies, frankie.pos, 0, rb.bounce_range, false, ra.vis_flags, ra.vis_bans)
+                                    enemy = enemy and frankie
+                                end
                             end
                         end
 
