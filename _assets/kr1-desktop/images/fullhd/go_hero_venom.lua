@@ -2314,7 +2314,10 @@ return {
 			"hero_venom_hero_0439",
 			"hero_venom_hero_0440",
 			"hero_venom_hero_0489",
-			"hero_venom_hero_0490"
+			"hero_venom_hero_0490",
+            "hero_venom_hero_0500",
+            "hero_venom_hero_0525",
+            "hero_venom_hero_0526"
 		}
 	},
 	hero_venom_hero_0085 = {
@@ -4136,7 +4139,8 @@ return {
 			88
 		},
 		alias = {
-			"hero_venom_hero_0241"
+			"hero_venom_hero_0241",
+            "hero_venom_hero_0527"
 		}
 	},
 	hero_venom_hero_0242 = {
@@ -4162,7 +4166,8 @@ return {
 			103
 		},
 		alias = {
-			"hero_venom_hero_0243"
+			"hero_venom_hero_0243",
+            "hero_venom_hero_0528"
 		}
 	},
 	hero_venom_hero_0244 = {
@@ -4188,7 +4193,8 @@ return {
 			125
 		},
 		alias = {
-			"hero_venom_hero_0245"
+			"hero_venom_hero_0245",
+            "hero_venom_hero_0529"
 		}
 	},
 	hero_venom_hero_0246 = {
@@ -4214,7 +4220,8 @@ return {
 			129
 		},
 		alias = {
-			"hero_venom_hero_0247"
+			"hero_venom_hero_0247",
+            "hero_venom_hero_0530"
 		}
 	},
 	hero_venom_hero_0248 = {
@@ -4240,7 +4247,8 @@ return {
 			135
 		},
 		alias = {
-			"hero_venom_hero_0249"
+			"hero_venom_hero_0249",
+            "hero_venom_hero_0531"
 		}
 	},
 	hero_venom_hero_0250 = {
@@ -4266,7 +4274,8 @@ return {
 			140
 		},
 		alias = {
-			"hero_venom_hero_0251"
+			"hero_venom_hero_0251",
+            "hero_venom_hero_0532"
 		}
 	},
 	hero_venom_hero_0252 = {
@@ -4292,7 +4301,8 @@ return {
 			136
 		},
 		alias = {
-			"hero_venom_hero_0253"
+			"hero_venom_hero_0253",
+            "hero_venom_hero_0533"
 		}
 	},
 	hero_venom_hero_0254 = {
@@ -4318,7 +4328,8 @@ return {
 			129
 		},
 		alias = {
-			"hero_venom_hero_0255"
+			"hero_venom_hero_0255",
+            "hero_venom_hero_0534"
 		}
 	},
 	hero_venom_hero_0256 = {
@@ -4344,7 +4355,8 @@ return {
 			127
 		},
 		alias = {
-			"hero_venom_hero_0257"
+			"hero_venom_hero_0257",
+            "hero_venom_hero_0535"
 		}
 	},
 	hero_venom_hero_0258 = {
@@ -4370,7 +4382,8 @@ return {
 			103
 		},
 		alias = {
-			"hero_venom_hero_0259"
+			"hero_venom_hero_0259",
+            "hero_venom_hero_0536"
 		}
 	},
 	hero_venom_hero_0260 = {
@@ -4396,7 +4409,8 @@ return {
 			97
 		},
 		alias = {
-			"hero_venom_hero_0261"
+			"hero_venom_hero_0261",
+            "hero_venom_hero_0537"
 		}
 	},
 	hero_venom_hero_0262 = {
@@ -4422,7 +4436,8 @@ return {
 			85
 		},
 		alias = {
-			"hero_venom_hero_0263"
+			"hero_venom_hero_0263",
+            "hero_venom_hero_0538"
 		}
 	},
 	hero_venom_hero_0264 = {
@@ -4448,7 +4463,8 @@ return {
 			57
 		},
 		alias = {
-			"hero_venom_hero_0265"
+			"hero_venom_hero_0265",
+            "hero_venom_hero_0539"
 		}
 	},
 	hero_venom_hero_0266 = {
@@ -4474,7 +4490,8 @@ return {
 			64
 		},
 		alias = {
-			"hero_venom_hero_0267"
+			"hero_venom_hero_0267",
+            "hero_venom_hero_0540"
 		}
 	},
 	hero_venom_hero_0268 = {
@@ -4500,7 +4517,8 @@ return {
 			121
 		},
 		alias = {
-			"hero_venom_hero_0269"
+			"hero_venom_hero_0269",
+            "hero_venom_hero_0541"
 		}
 	},
 	hero_venom_hero_0270 = {
@@ -4526,7 +4544,8 @@ return {
 			142
 		},
 		alias = {
-			"hero_venom_hero_0271"
+			"hero_venom_hero_0271",
+            "hero_venom_hero_0542"
 		}
 	},
 	hero_venom_hero_0272 = {
@@ -4552,7 +4571,8 @@ return {
 			96
 		},
 		alias = {
-			"hero_venom_hero_0273"
+			"hero_venom_hero_0273",
+            "hero_venom_hero_0543"
 		}
 	},
 	hero_venom_hero_0274 = {
@@ -4578,7 +4598,8 @@ return {
 			105
 		},
 		alias = {
-			"hero_venom_hero_0275"
+			"hero_venom_hero_0275",
+            "hero_venom_hero_0544"
 		}
 	},
 	hero_venom_hero_0276 = {
@@ -4633,7 +4654,8 @@ return {
 			105
 		},
 		alias = {
-			"hero_venom_hero_0278"
+			"hero_venom_hero_0278",
+            "hero_venom_hero_0545"
 		}
 	},
 	hero_venom_hero_0279 = {
@@ -4659,7 +4681,8 @@ return {
 			96
 		},
 		alias = {
-			"hero_venom_hero_0280"
+			"hero_venom_hero_0280",
+            "hero_venom_hero_0546"
 		}
 	},
 	hero_venom_hero_0281 = {
@@ -4685,7 +4708,8 @@ return {
 			142
 		},
 		alias = {
-			"hero_venom_hero_0282"
+			"hero_venom_hero_0282",
+            "hero_venom_hero_0547"
 		}
 	},
 	hero_venom_hero_0283 = {
@@ -4711,7 +4735,8 @@ return {
 			121
 		},
 		alias = {
-			"hero_venom_hero_0284"
+			"hero_venom_hero_0284",
+            "hero_venom_hero_0548"
 		}
 	},
 	hero_venom_hero_0285 = {
@@ -4737,7 +4762,8 @@ return {
 			64
 		},
 		alias = {
-			"hero_venom_hero_0286"
+			"hero_venom_hero_0286",
+            "hero_venom_hero_0549"
 		}
 	},
 	hero_venom_hero_0287 = {
@@ -4763,7 +4789,8 @@ return {
 			57
 		},
 		alias = {
-			"hero_venom_hero_0288"
+			"hero_venom_hero_0288",
+            "hero_venom_hero_0550"
 		}
 	},
 	hero_venom_hero_0289 = {
@@ -4789,7 +4816,8 @@ return {
 			85
 		},
 		alias = {
-			"hero_venom_hero_0290"
+			"hero_venom_hero_0290",
+            "hero_venom_hero_0551"
 		}
 	},
 	hero_venom_hero_0291 = {
@@ -4815,7 +4843,8 @@ return {
 			97
 		},
 		alias = {
-			"hero_venom_hero_0292"
+			"hero_venom_hero_0292",
+            "hero_venom_hero_0552"
 		}
 	},
 	hero_venom_hero_0293 = {
@@ -4841,7 +4870,8 @@ return {
 			102
 		},
 		alias = {
-			"hero_venom_hero_0294"
+			"hero_venom_hero_0294",
+            "hero_venom_hero_0553"
 		}
 	},
 	hero_venom_hero_0295 = {
@@ -4867,7 +4897,8 @@ return {
 			129
 		},
 		alias = {
-			"hero_venom_hero_0296"
+			"hero_venom_hero_0296",
+            "hero_venom_hero_0554"
 		}
 	},
 	hero_venom_hero_0297 = {
@@ -4893,7 +4924,8 @@ return {
 			140
 		},
 		alias = {
-			"hero_venom_hero_0298"
+			"hero_venom_hero_0298",
+            "hero_venom_hero_0555"
 		}
 	},
 	hero_venom_hero_0299 = {
@@ -4919,7 +4951,8 @@ return {
 			124
 		},
 		alias = {
-			"hero_venom_hero_0300"
+			"hero_venom_hero_0300",
+            "hero_venom_hero_0556"
 		}
 	},
 	hero_venom_hero_0301 = {
@@ -4945,7 +4978,8 @@ return {
 			91
 		},
 		alias = {
-			"hero_venom_hero_0302"
+			"hero_venom_hero_0302",
+            "hero_venom_hero_0557"
 		}
 	},
 	hero_venom_hero_0303 = {
@@ -4971,7 +5005,8 @@ return {
 			68
 		},
 		alias = {
-			"hero_venom_hero_0304"
+			"hero_venom_hero_0304",
+            "hero_venom_hero_0558"
 		}
 	},
 	hero_venom_hero_0305 = {
@@ -6645,7 +6680,9 @@ return {
 		alias = {
 			"hero_venom_hero_0442",
 			"hero_venom_hero_0487",
-			"hero_venom_hero_0488"
+			"hero_venom_hero_0488",
+            "hero_venom_hero_0501",
+            "hero_venom_hero_0524"
 		}
 	},
 	hero_venom_hero_0443 = {
@@ -6673,7 +6710,9 @@ return {
 		alias = {
 			"hero_venom_hero_0444",
 			"hero_venom_hero_0485",
-			"hero_venom_hero_0486"
+			"hero_venom_hero_0486",
+            "hero_venom_hero_0502",
+            "hero_venom_hero_0523"
 		}
 	},
 	hero_venom_hero_0445 = {
@@ -6701,7 +6740,9 @@ return {
 		alias = {
 			"hero_venom_hero_0446",
 			"hero_venom_hero_0483",
-			"hero_venom_hero_0484"
+			"hero_venom_hero_0484",
+            "hero_venom_hero_0503",
+            "hero_venom_hero_0522"
 		}
 	},
 	hero_venom_hero_0447 = {
@@ -6727,7 +6768,8 @@ return {
 			78
 		},
 		alias = {
-			"hero_venom_hero_0448"
+			"hero_venom_hero_0448",
+            "hero_venom_hero_0504",
 		}
 	},
 	hero_venom_hero_0449 = {
@@ -6755,7 +6797,9 @@ return {
 		alias = {
 			"hero_venom_hero_0450",
 			"hero_venom_hero_0481",
-			"hero_venom_hero_0482"
+			"hero_venom_hero_0482",
+            "hero_venom_hero_0505",
+            "hero_venom_hero_0521"
 		}
 	},
 	hero_venom_hero_0451 = {
@@ -6781,7 +6825,8 @@ return {
 			114
 		},
 		alias = {
-			"hero_venom_hero_0452"
+			"hero_venom_hero_0452",
+            "hero_venom_hero_0506",
 		}
 	},
 	hero_venom_hero_0453 = {
@@ -6807,7 +6852,8 @@ return {
 			158
 		},
 		alias = {
-			"hero_venom_hero_0454"
+			"hero_venom_hero_0454",
+            "hero_venom_hero_0507",
 		}
 	},
 	hero_venom_hero_0455 = {
@@ -6833,7 +6879,8 @@ return {
 			188
 		},
 		alias = {
-			"hero_venom_hero_0456"
+			"hero_venom_hero_0456",
+            "hero_venom_hero_0508",
 		}
 	},
 	hero_venom_hero_0457 = {
@@ -6859,7 +6906,8 @@ return {
 			169
 		},
 		alias = {
-			"hero_venom_hero_0458"
+			"hero_venom_hero_0458",
+            "hero_venom_hero_0509",
 		}
 	},
 	hero_venom_hero_0459 = {
@@ -6885,7 +6933,8 @@ return {
 			169
 		},
 		alias = {
-			"hero_venom_hero_0460"
+			"hero_venom_hero_0460",
+            "hero_venom_hero_0510",
 		}
 	},
 	hero_venom_hero_0461 = {
@@ -6911,7 +6960,8 @@ return {
 			192
 		},
 		alias = {
-			"hero_venom_hero_0462"
+			"hero_venom_hero_0462",
+            "hero_venom_hero_0511",
 		}
 	},
 	hero_venom_hero_0463 = {
@@ -6937,7 +6987,8 @@ return {
 			147
 		},
 		alias = {
-			"hero_venom_hero_0464"
+			"hero_venom_hero_0464",
+            "hero_venom_hero_0512",
 		}
 	},
 	hero_venom_hero_0465 = {
@@ -6963,7 +7014,8 @@ return {
 			106
 		},
 		alias = {
-			"hero_venom_hero_0466"
+			"hero_venom_hero_0466",
+            "hero_venom_hero_0513",
 		}
 	},
 	hero_venom_hero_0467 = {
@@ -6989,7 +7041,8 @@ return {
 			106
 		},
 		alias = {
-			"hero_venom_hero_0468"
+			"hero_venom_hero_0468",
+            "hero_venom_hero_0514",
 		}
 	},
 	hero_venom_hero_0469 = {
@@ -7015,7 +7068,8 @@ return {
 			106
 		},
 		alias = {
-			"hero_venom_hero_0470"
+			"hero_venom_hero_0470",
+            "hero_venom_hero_0515",
 		}
 	},
 	hero_venom_hero_0471 = {
@@ -7041,7 +7095,8 @@ return {
 			106
 		},
 		alias = {
-			"hero_venom_hero_0472"
+			"hero_venom_hero_0472",
+            "hero_venom_hero_0516",
 		}
 	},
 	hero_venom_hero_0473 = {
@@ -7067,7 +7122,8 @@ return {
 			102
 		},
 		alias = {
-			"hero_venom_hero_0474"
+			"hero_venom_hero_0474",
+            "hero_venom_hero_0517",
 		}
 	},
 	hero_venom_hero_0475 = {
@@ -7093,7 +7149,8 @@ return {
 			131
 		},
 		alias = {
-			"hero_venom_hero_0476"
+			"hero_venom_hero_0476",
+            "hero_venom_hero_0518",
 		}
 	},
 	hero_venom_hero_0477 = {
@@ -7119,7 +7176,8 @@ return {
 			160
 		},
 		alias = {
-			"hero_venom_hero_0478"
+			"hero_venom_hero_0478",
+            "hero_venom_hero_0519",
 		}
 	},
 	hero_venom_hero_0479 = {
@@ -7145,7 +7203,8 @@ return {
 			110
 		},
 		alias = {
-			"hero_venom_hero_0480"
+			"hero_venom_hero_0480",
+            "hero_venom_hero_0520",
 		}
 	},
 	hero_venom_hit_fx_0001 = {

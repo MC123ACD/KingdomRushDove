@@ -11167,7 +11167,8 @@ local function heroes()
     tt.melee.attacks[6].animation = "instakill"
     tt.melee.attacks[6].cooldown = b.eat_enemy.cooldown[1]
     tt.melee.attacks[6].hp_trigger = b.eat_enemy.hp_trigger
-    tt.melee.attacks[6].hit_time = fts(23)
+    -- tt.melee.attacks[6].hit_time = fts(23)
+    tt.melee.attacks[6].hit_time = fts(12)
     tt.melee.attacks[6].sound_hit = nil
     tt.melee.attacks[6].sound_hit_args = {
         delay = fts(14)
@@ -11175,7 +11176,7 @@ local function heroes()
     tt.melee.attacks[6].damage_type = DAMAGE_EAT
     tt.melee.attacks[6].xp_from_skill = "eat_enemy"
     tt.melee.attacks[6].basic_attack = false
-    tt.melee.attacks[6].instakill = true
+    -- tt.melee.attacks[6].instakill = true
     tt.melee.attacks[6].disabled = true
     tt.melee.attacks[6].hp_trigger_normal = b.eat_enemy.hp_trigger
     tt.melee.attacks[6].fn_can = function(t, s, a, target)

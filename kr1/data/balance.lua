@@ -2928,7 +2928,7 @@ local heroes = {
 				9,
 				8
 			},
-			damage_type = DAMAGE_PHYSICAL,
+			damage_type = DAMAGE_RUDE,
 			damage_max = {
 				15,
 				46,

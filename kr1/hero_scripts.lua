@@ -18669,12 +18669,12 @@ return function(scripts)
                 skill = this.hero.skills.inner_beast
 
                 if not this.is_transformed and ready_to_use_skill(a, store) and this.health.hp <= this.health.hp_max *
-                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown and this.soldier.target_id then
+                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown and this.soldier.target_id and store.entities[this.soldier.target_id] and not store.entities[this.soldier.target_id].health.dead then
                     y_transform_in()
                 end
 
                 if this.is_transformed then
-                    if this.soldier.target_id then
+                    if this.soldier.target_id and store.tick_ts - a.ts > skill.duration * 0.4 then
                         local target = store.entities[this.soldier.target_id]
 
                         if target and eat_enemy_attack.fn_can(this, nil, eat_enemy_attack, target) and ready_to_attack(eat_enemy_attack, store) then
@@ -18793,13 +18793,13 @@ return function(scripts)
                     end
 
                     U.animation_start(this, a.animation_idle, nil, store.tick_ts, true)
-                    U.y_wait(store, fts(20))
+                    U.y_wait(store, fts(10))
                     S:queue(a.sound_out)
 
                     for i = #spikes, 1, -1 do
                         spikes[i].hide = true
 
-                        U.y_wait(store, fts(0.5))
+                        U.y_wait(store, fts(1))
                     end
 
                     U.animation_start(this, a.animation_out, nil, store.tick_ts, false)
