@@ -11038,7 +11038,6 @@ local function heroes()
     tt.hero.skills.ranged_tentacle.cooldown = b.ranged_tentacle.cooldown
     tt.hero.skills.ranged_tentacle.damage_min = b.ranged_tentacle.damage_min
     tt.hero.skills.ranged_tentacle.damage_max = b.ranged_tentacle.damage_max
-    tt.hero.skills.ranged_tentacle.bleed_chance = b.ranged_tentacle.bleed_chance
     tt.hero.skills.ranged_tentacle.bleed_damage_min = b.ranged_tentacle.bleed_damage_min
     tt.hero.skills.ranged_tentacle.bleed_damage_max = b.ranged_tentacle.bleed_damage_max
     tt.hero.skills.ranged_tentacle.bleed_every = b.ranged_tentacle.bleed_every
@@ -11078,6 +11077,7 @@ local function heroes()
     tt.hero.skills.eat_enemy.regen = b.eat_enemy.regen
     tt.hero.skills.eat_enemy.cooldown = b.eat_enemy.cooldown
     tt.hero.skills.eat_enemy.xp_gain = b.eat_enemy.xp_gain
+    tt.hero.skills.eat_enemy.damage = b.eat_enemy.damage
     tt.hero.skills.eat_enemy.xp_level_steps = {
         [2] = 1,
         [5] = 2,
@@ -11157,45 +11157,15 @@ local function heroes()
     tt.melee.attacks[3].hit_time = fts(10)
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].xp_gain_factor = b.inner_beast.basic_melee.xp_gain_factor
+    tt.melee.attacks[3].damage_type = DAMAGE_RUDE
     tt.melee.attacks[4] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[4].animation = "attack_2"
     tt.melee.attacks[4].hit_time = fts(8)
+    tt.melee.attacks[4].damage_type = DAMAGE_RUDE
     tt.melee.attacks[5] = table.deepclone(tt.melee.attacks[3])
     tt.melee.attacks[5].animation = "attack_3"
     tt.melee.attacks[5].hit_time = fts(8)
-    tt.melee.attacks[6] = E:clone_c("melee_attack")
-    tt.melee.attacks[6].animation = "instakill"
-    tt.melee.attacks[6].cooldown = b.eat_enemy.cooldown[1]
-    tt.melee.attacks[6].hp_trigger = b.eat_enemy.hp_trigger
-    -- tt.melee.attacks[6].hit_time = fts(23)
-    tt.melee.attacks[6].hit_time = fts(12)
-    tt.melee.attacks[6].sound_hit = nil
-    tt.melee.attacks[6].sound_hit_args = {
-        delay = fts(14)
-    }
-    tt.melee.attacks[6].damage_type = DAMAGE_EAT
-    tt.melee.attacks[6].xp_from_skill = "eat_enemy"
-    tt.melee.attacks[6].basic_attack = false
-    -- tt.melee.attacks[6].instakill = true
-    tt.melee.attacks[6].disabled = true
-    tt.melee.attacks[6].hp_trigger_normal = b.eat_enemy.hp_trigger
-    tt.melee.attacks[6].fn_can = function(t, s, a, target)
-        return target.health and target.health.hp <= target.health.hp_max * a.hp_trigger
-    end
-    tt.melee.attacks[6].mod_regen = "mod_hero_venom_eat_enemy_regen"
-    tt.melee.attacks[6].sound = "HeroVenomRenewFleshCast"
-    tt.melee.attacks[6].sound_args = {
-        delay = fts(10)
-    }
-    tt.melee.attacks[6].side_effect = function(this, store, attack, target)
-        this.melee.attacks[6].hp_trigger = this.melee.attacks[6].hp_trigger_normal
-        if target then
-            local factor = (target.health.hp_max - target.health.hp + 200) / target.health.hp_max
-            this.melee.attacks[6].ts = this.melee.attacks[6].ts - factor * this.melee.attacks[6].cooldown
-        end
-    end
-    tt.melee.attacks[6].vis_bans = F_BOSS
-
+    tt.melee.attacks[5].damage_type = DAMAGE_RUDE
     tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
     tt.timed_attacks.list[1].animation = "ranged_skill"
     tt.timed_attacks.list[1].min_range = b.ranged_tentacle.min_range
@@ -11236,6 +11206,27 @@ local function heroes()
     tt.timed_attacks.list[3].sound_out = "HeroVenomDeadlySpikesOut"
     tt.timed_attacks.list[3].min_cooldown = b.shared_cooldown
     tt.timed_attacks.list[3].spike_template = {"decal_hero_venom_spike_a", "decal_hero_venom_spike_b"}
+    tt.timed_attacks.list[4] = E:clone_c("custom_attack")
+    tt.timed_attacks.list[4].animation = "instakill"
+    tt.timed_attacks.list[4].cooldown = b.eat_enemy.cooldown[1]
+    tt.timed_attacks.list[4].hp_trigger = b.eat_enemy.hp_trigger
+    -- tt.melee.attacks[6].hit_time = fts(23)
+    tt.timed_attacks.list[4].hit_time = fts(12)
+    tt.timed_attacks.list[4].sound_hit = nil
+    tt.timed_attacks.list[4].sound_hit_args = {
+        -- delay = fts(14)
+        delay = fts(7)
+    }
+    tt.timed_attacks.list[4].xp_from_skill = "eat_enemy"
+    tt.timed_attacks.list[4].disabled = true
+    tt.timed_attacks.list[4].hp_trigger_normal = b.eat_enemy.hp_trigger
+    tt.timed_attacks.list[4].mod_regen = "mod_hero_venom_eat_enemy_regen"
+    tt.timed_attacks.list[4].sound = "HeroVenomRenewFleshCast"
+    tt.timed_attacks.list[4].sound_args = {
+        -- delay = fts(10)
+        delay = fts(5)
+    }
+    tt.timed_attacks.list[4].radius = 65
     tt.ui.click_rect = r(-27, -5, 54, 50)
     tt.death_decal = "decal_hero_venom_death"
     tt.ultimate = {

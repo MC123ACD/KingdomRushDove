@@ -2930,24 +2930,19 @@ local heroes = {
 			},
 			damage_type = DAMAGE_RUDE,
 			damage_max = {
-				15,
-				46,
-				78
+				20,
+				50,
+				80
 			},
 			damage_min = {
-				15,
-				46,
-				78
+				20,
+				50,
+				80
 			},
 			s_damage = {
 				12,
 				36,
 				60
-			},
-			bleed_chance = {
-				0.6,
-				0.8,
-				1
 			},
 			bleed_damage_min = {
 				3,
@@ -3017,14 +3012,14 @@ local heroes = {
 			},
 			damage_type = DAMAGE_TRUE,
 			damage_max = {
-				23,
-				46,
-				70
+				20,
+				40,
+				60
 			},
 			damage_min = {
-				23,
-				46,
-				70
+				20,
+				40,
+				60
 			},
 			s_damage = {
 				18,
@@ -3045,9 +3040,9 @@ local heroes = {
 		eat_enemy = {
 			hp_trigger = 0.3,
 			cooldown = {
-				40,
-				35,
-				30
+				50,
+				45,
+				40
 			},
 			damage_type = DAMAGE_INSTAKILL,
 			regen = {
@@ -3055,10 +3050,15 @@ local heroes = {
 				0.15,
 				0.2
 			},
+            damage = {
+                10,
+                20,
+                30
+            },
 			xp_gain = {
-				320,
-				560,
-				720
+				160,
+				280,
+				360
 			}
 		},
 		ultimate = {

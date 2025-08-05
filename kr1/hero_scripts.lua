@@ -18278,7 +18278,6 @@ return function(scripts)
 
             b.bullet.damage_min = s.damage_min[s.level]
             b.bullet.damage_max = s.damage_max[s.level]
-            b.bleed_chance = s.bleed_chance[s.level]
 
             local m = E:get_template(b.bullet.mods[1])
 
@@ -18323,11 +18322,12 @@ return function(scripts)
         end)
 
         upgrade_skill(this, "eat_enemy", function(this, s)
-            local a = this.melee.attacks[6]
+            local a = this.timed_attacks.list[4]
 
             a.disabled = nil
             a.cooldown = s.cooldown[s.level]
-            a.regen = s.regen[s.level]
+            a.regen = s.regen[s.level] * this.health.hp_max
+            a.damage = s.damage[s.level]
         end)
 
         upgrade_skill(this, "ultimate", function(this, s)
@@ -18362,7 +18362,7 @@ return function(scripts)
         local ranged_tentacle_attack = this.timed_attacks.list[1]
         local inner_beast_attack = this.timed_attacks.list[2]
         local floor_spikes_attack = this.timed_attacks.list[3]
-        local eat_enemy_attack = this.melee.attacks[6]
+        local eat_enemy_attack = this.timed_attacks.list[4]
         local last_ts = store.tick_ts
         local last_target
         local last_target_ts = store.tick_ts
@@ -18421,8 +18421,8 @@ return function(scripts)
             this.melee.attacks[3].disabled = false
             this.melee.attacks[4].disabled = false
             this.melee.attacks[5].disabled = false
-            this.melee.attacks[6].hp_trigger = this.melee.attacks[6].hp_trigger_normal * 1.5
-            this.melee.attacks[6].disabled = true
+            eat_enemy_attack.hp_trigger = eat_enemy_attack.hp_trigger_normal * 1.5
+            eat_enemy_attack.disabled = true
             this._bar_offset = V.vclone(this.health_bar.offset)
             this._bar_type = this.health_bar.type
             this._click_rect = table.deepclone(this.ui.click_rect)
@@ -18452,7 +18452,8 @@ return function(scripts)
             this.melee.attacks[3].disabled = true
             this.melee.attacks[4].disabled = true
             this.melee.attacks[5].disabled = true
-            this.melee.attacks[6].disabled = false
+            -- this.melee.attacks[6].disabled = false
+            eat_enemy_attack.disabled = false
             this.health_bar.offset = V.vclone(this._bar_offset)
             this.health_bar.type = this._bar_type
             this.ui.click_rect = table.deepclone(this._click_rect)
@@ -18582,6 +18583,79 @@ return function(scripts)
                     play_level_up_animation()
                 end
 
+                skill = this.hero.skills.eat_enemy
+                a = eat_enemy_attack
+
+                if (not ready_to_attack(eat_enemy_attack, store) or this.soldier.target_id == nil) or not this.motion.arrived or this.is_transformed then
+                    -- block empty
+                else
+                    local target = store.entities[this.soldier.target_id]
+                    if not target or target.health.dead or band(target.vis.flags, F_BOSS) ~= 0 or band(target.vis.bans, F_INSTAKILL) ~= 0 then
+                        -- block empty
+                    else
+                        local function do_eat_enemy_attack()
+                            local start_ts = store.tick_ts
+                            local an, af = U.animation_name_facing_point(this, a.animation, target.pos)
+                            U.animation_start(this, an, af, store.tick_ts, 1)
+                            S:queue(eat_enemy_attack.sound, eat_enemy_attack.sound_args)
+
+                            while store.tick_ts - start_ts < eat_enemy_attack.hit_time do
+                                coroutine.yield()
+                            end
+
+                            S:queue(eat_enemy_attack.sound_hit, eat_enemy_attack.sound_hit_args)
+                            eat_enemy_attack.ts = start_ts - eat_enemy_attack.cooldown
+                            local center = target.pos
+
+                            local eat_targets = table.filter(store.enemies, function(k, v)
+                                return not v.health.dead and band(v.vis.flags, F_BOSS) == 0 and band(v.vis.bans, F_INSTAKILL) == 0 and U.is_inside_ellipse(v.pos, center, eat_enemy_attack.radius)
+                            end)
+
+                            if eat_targets then
+                                for _, eat_target in pairs(eat_targets) do
+                                    local d = E:create_entity("damage")
+                                    d.source_id = this.id
+                                    d.target_id = eat_target.id
+                                    if eat_target.health.hp <= eat_target.health.hp_max * eat_enemy_attack.hp_trigger then
+                                        d.damage_type = DAMAGE_EAT
+                                        d.value = 1
+                                        eat_enemy_attack.ts = eat_enemy_attack.ts + (target.health.hp - 100) / target.health.hp_max * eat_enemy_attack.cooldown
+                                        scripts.heal(this, eat_enemy_attack.regen)
+                                    else
+                                        d.damage_type = DAMAGE_RUDE
+                                        d.value = (eat_enemy_attack.damage + this.damage_buff ) * this.unit.damage_factor
+                                    end
+                                    queue_damage(store, d)
+                                    SU.hero_gain_xp_from_skill(this, skill)
+                                end
+                                local mod = E:create_entity(eat_enemy_attack.mod_regen)
+                                mod.modifier.target_id = this.id
+                                queue_insert(store, mod)
+                            end
+
+                            while not U.animation_finished(this) do
+                                if this.health.dead or this.unit.is_stunned then
+                                    break
+                                end
+
+                                coroutine.yield()
+                            end
+
+                            S:stop(eat_enemy_attack.sound)
+                            eat_enemy_attack.hp_trigger = eat_enemy_attack.hp_trigger_normal
+                        end
+
+                        -- 此时必为人形
+                        if target.health.hp <= target.health.hp_max * eat_enemy_attack.hp_trigger then
+                            do_eat_enemy_attack()
+                        elseif ready_to_use_skill(inner_beast_attack, store) and target.health.hp <= target.health.hp_max * eat_enemy_attack.hp_trigger_normal * 1.5 then
+                            inner_beast_attack.ts = store.tick_ts - 0.5 * inner_beast_attack.cooldown
+                            eat_enemy_attack.hp_trigger = eat_enemy_attack.hp_trigger_normal * 1.5
+                            do_eat_enemy_attack()
+                        end
+                    end
+                end
+
                 if ready_to_use_skill(this.ultimate, store) then
                     local target = find_target_at_critical_moment(this, store, 160, false, true, F_FLYING)
                     if target and valid_rally_node_nearby(target.pos) then
@@ -18599,72 +18673,6 @@ return function(scripts)
                     end
                 end
 
-                skill = this.hero.skills.ranged_tentacle
-                a = ranged_tentacle_attack
-
-                if not this.is_transformed and ready_to_use_skill(a, store) and store.tick_ts -
-                    last_ts > a.min_cooldown then
-                    local target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), a.min_range,
-                        a.max_range, a.node_prediction, a.vis_flags, a.vis_bans)
-
-                    if not target then
-                        SU.delay_attack(store, a, fts(10))
-                    else
-                        local enemy_id = target.id
-                        local enemy_pos = target.pos
-
-                        last_ts = store.tick_ts
-
-                        local an, af, ai = U.animation_name_facing_point(this, a.animation, enemy_pos)
-
-                        U.animation_start(this, an, af, store.tick_ts, false)
-                        S:queue(a.sound)
-
-                        local start_offset = V.vclone(a.bullet_start_offset)
-
-                        if af then
-                            start_offset.x = start_offset.x * -1
-                        end
-
-                        U.y_wait(store, a.shoot_time)
-
-                        if SU.soldier_interrupted(this) then
-                            -- block empty
-                        else
-                            local target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), a.min_range,
-                                a.max_range, a.shoot_time, a.vis_flags, a.vis_bans)
-
-                            if target then
-                                enemy_id = target.id
-                                enemy_pos = target.pos
-                            end
-
-                            if not target then
-                                -- block empty
-                            else
-                                a.ts = last_ts
-
-                                local b = E:create_entity(a.bullet)
-
-                                b.pos.x, b.pos.y = this.pos.x + start_offset.x, this.pos.y + start_offset.y
-                                b.bullet.from = V.vclone(b.pos)
-                                b.bullet.to = V.vclone(pred_pos)
-                                b.bullet.to.x = b.bullet.to.x + target.unit.hit_offset.x
-                                b.bullet.to.y = b.bullet.to.y + target.unit.hit_offset.y
-                                b.bullet.target_id = enemy_id
-                                b.bullet.source_id = this.id
-                                b.bullet.level = this.hero.level
-                                b.bullet.damage_factor = this.unit.damage_factor
-                                queue_insert(store, b)
-                                SU.hero_gain_xp_from_skill(this, skill)
-                                U.y_animation_wait(this)
-
-                                goto label_294_2
-                            end
-                        end
-                    end
-                end
-
                 a = inner_beast_attack
                 skill = this.hero.skills.inner_beast
 
@@ -18674,12 +18682,13 @@ return function(scripts)
                 end
 
                 if this.is_transformed then
-                    if this.soldier.target_id and store.tick_ts - a.ts > skill.duration * 0.4 then
+                    if this.soldier.target_id and store.tick_ts - a.ts > skill.duration * 0.5 then
                         local target = store.entities[this.soldier.target_id]
 
-                        if target and eat_enemy_attack.fn_can(this, nil, eat_enemy_attack, target) and ready_to_attack(eat_enemy_attack, store) then
+                        if target and target.health.hp <= target.health.hp_max * eat_enemy_attack.hp_trigger and ready_to_attack(eat_enemy_attack, store) then
                             a.ts = a.ts - a.cooldown * 0.5
                             y_transform_out()
+                            goto label_294_2
                         end
                     elseif store.tick_ts - a.ts > skill.duration then
                         y_transform_out()
@@ -18808,7 +18817,83 @@ return function(scripts)
                     goto label_294_2
                 end
 
+                skill = this.hero.skills.ranged_tentacle
+                a = ranged_tentacle_attack
+
+                if not this.is_transformed and ready_to_use_skill(a, store) and store.tick_ts - last_ts > a.min_cooldown then
+                    local target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), a.min_range, a.max_range,
+                        a.node_prediction, a.vis_flags, a.vis_bans)
+
+                    if not target then
+                        SU.delay_attack(store, a, fts(10))
+                    else
+                        local enemy_id = target.id
+                        local enemy_pos = target.pos
+
+                        last_ts = store.tick_ts
+
+                        local an, af, ai = U.animation_name_facing_point(this, a.animation, enemy_pos)
+
+                        U.animation_start(this, an, af, store.tick_ts, false)
+                        S:queue(a.sound)
+
+                        local start_offset = V.vclone(a.bullet_start_offset)
+
+                        if af then
+                            start_offset.x = start_offset.x * -1
+                        end
+
+                        U.y_wait(store, a.shoot_time)
+
+                        if SU.soldier_interrupted(this) then
+                            -- block empty
+                        else
+                            local target, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), a.min_range, a.max_range,
+                                a.shoot_time, a.vis_flags, a.vis_bans)
+
+                            if target then
+                                enemy_id = target.id
+                                enemy_pos = target.pos
+                            end
+
+                            if not target then
+                                -- block empty
+                            else
+                                a.ts = last_ts
+
+                                local b = E:create_entity(a.bullet)
+
+                                b.pos.x, b.pos.y = this.pos.x + start_offset.x, this.pos.y + start_offset.y
+                                b.bullet.from = V.vclone(b.pos)
+                                b.bullet.to = V.vclone(pred_pos)
+                                b.bullet.to.x = b.bullet.to.x + target.unit.hit_offset.x
+                                b.bullet.to.y = b.bullet.to.y + target.unit.hit_offset.y
+                                b.bullet.target_id = enemy_id
+                                b.bullet.source_id = this.id
+                                b.bullet.level = this.hero.level
+                                b.bullet.damage_factor = this.unit.damage_factor
+                                queue_insert(store, b)
+                                SU.hero_gain_xp_from_skill(this, skill)
+                                U.y_animation_wait(this)
+
+                                goto label_294_2
+                            end
+                        end
+                    end
+                end
+
+
                 ::label_294_1::
+
+                if not this.soldier.target_id and ready_to_use_skill(eat_enemy_attack, store) then
+                    local targets = U.find_enemies_in_range(store.enemies, this.nav_rally.center, 0, this.melee.range, F_BLOCK, F_CLIFF, function(e)
+                    return (not e.enemy.max_blockers or #e.enemy.blockers == 0) and
+                               band(GR:cell_type(e.pos.x, e.pos.y), TERRAIN_NOWALK) == 0 and e.health.hp < e.health.hp_max * eat_enemy_attack.hp_trigger
+                    end)
+                    if targets then
+                        U.block_enemy(store, this, targets[1])
+                    end
+                end
 
                 brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
@@ -18819,18 +18904,6 @@ return function(scripts)
                         if this.health.hp > this.health.hp_max then
                             this.health.hp = this.health.hp_max
                         end
-                    elseif this.melee.last_attack.attack == eat_enemy_attack then
-                        this.health.hp = this.health.hp + this.health.hp_max * eat_enemy_attack.regen
-
-                        if this.health.hp > this.health.hp_max then
-                            this.health.hp = this.health.hp_max
-                        end
-
-                        local mod = E:create_entity(eat_enemy_attack.mod_regen)
-
-                        mod.modifier.target_id = this.id
-
-                        queue_insert(store, mod)
                     end
                 end
 
@@ -18853,12 +18926,10 @@ return function(scripts)
     scripts.bullet_hero_venom_ranged_tentacle = {}
 
     function scripts.bullet_hero_venom_ranged_tentacle.insert(this, store, script)
-        if math.random(0, 100) > this.bleed_chance * 100 then
-            if not this.bullet.mods then
-                this.bullet.mods = {"mod_bullet_hero_venom_ranged_tentacle_stun"}
-            else
-                table.insert(this.bullet.mods, "mod_bullet_hero_venom_ranged_tentacle_stun")
-            end
+        if not this.bullet.mods then
+            this.bullet.mods = {"mod_bullet_hero_venom_ranged_tentacle_stun"}
+        else
+            table.insert(this.bullet.mods, "mod_bullet_hero_venom_ranged_tentacle_stun")
         end
 
         return true
