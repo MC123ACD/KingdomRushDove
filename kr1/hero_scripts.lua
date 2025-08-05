@@ -18328,7 +18328,6 @@ return function(scripts)
             a.disabled = nil
             a.cooldown = s.cooldown[s.level]
             a.regen = s.regen[s.level]
-
         end)
 
         upgrade_skill(this, "ultimate", function(this, s)
@@ -18342,15 +18341,15 @@ return function(scripts)
         end)
 
         this.health.hp = this.health.hp_max
-        this.hero.melee_active_status = {}
+        -- this.hero.melee_active_status = {}
 
-        for index, attack in ipairs(this.melee.attacks) do
-            this.hero.melee_active_status[index] = attack.disabled
-        end
+        -- for index, attack in ipairs(this.melee.attacks) do
+        --     this.hero.melee_active_status[index] = attack.disabled
+        -- end
     end
 
     function scripts.hero_venom.insert(this, store)
-        this.hero.fn_level_up(this, store, true)
+        this.hero.fn_level_up(this, store)
 
         this.melee.order = U.attack_order(this.melee.attacks)
 
@@ -18584,7 +18583,7 @@ return function(scripts)
                 end
 
                 if ready_to_use_skill(this.ultimate, store) then
-                    local target = find_target_at_critical_moment(this, store, 160, false, false, F_FLYING)
+                    local target = find_target_at_critical_moment(this, store, 160, false, true, F_FLYING)
                     if target and valid_rally_node_nearby(target.pos) then
                         play_level_up_animation()
                         S:queue(this.sound_events.change_rally_point)
@@ -18670,7 +18669,7 @@ return function(scripts)
                 skill = this.hero.skills.inner_beast
 
                 if not this.is_transformed and ready_to_use_skill(a, store) and this.health.hp <= this.health.hp_max *
-                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown then
+                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown and this.soldier.target_id then
                     y_transform_in()
                 end
 
@@ -18678,7 +18677,7 @@ return function(scripts)
                     if this.soldier.target_id then
                         local target = store.entities[this.soldier.target_id]
 
-                        if target and eat_enemy_attack.fn_can(this, nil, eat_enemy_attack, target) then
+                        if target and eat_enemy_attack.fn_can(this, nil, eat_enemy_attack, target) and ready_to_attack(eat_enemy_attack, store) then
                             a.ts = a.ts - a.cooldown * 0.5
                             y_transform_out()
                         end

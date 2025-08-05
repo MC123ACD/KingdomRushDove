@@ -11074,7 +11074,6 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.eat_enemy = E:clone_c("hero_skill")
-    tt.hero.skills.eat_enemy.cooldown = b.eat_enemy.cooldown
     tt.hero.skills.eat_enemy.hp_trigger = b.eat_enemy.hp_trigger
     tt.hero.skills.eat_enemy.regen = b.eat_enemy.regen
     tt.hero.skills.eat_enemy.cooldown = b.eat_enemy.cooldown
@@ -11166,7 +11165,7 @@ local function heroes()
     tt.melee.attacks[5].hit_time = fts(8)
     tt.melee.attacks[6] = E:clone_c("melee_attack")
     tt.melee.attacks[6].animation = "instakill"
-    tt.melee.attacks[6].cooldown = nil
+    tt.melee.attacks[6].cooldown = b.eat_enemy.cooldown[1]
     tt.melee.attacks[6].hp_trigger = b.eat_enemy.hp_trigger
     tt.melee.attacks[6].hit_time = fts(23)
     tt.melee.attacks[6].sound_hit = nil
@@ -11243,6 +11242,7 @@ local function heroes()
         cooldown = 40,
         disabled = true
     }
+    tt.vis.bans = bor(tt.vis.bans, F_POISON)
 
     tt = E:register_t("bullet_hero_venom_ranged_tentacle", "bullet")
     local b = balance.heroes.hero_venom.ranged_tentacle
