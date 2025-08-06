@@ -379,7 +379,7 @@ local function heroes()
     tt.timed_attacks.list[4].shoot_times = {fts(10), fts(12), fts(12), fts(12), fts(12), fts(12), fts(12)}
     tt.timed_attacks.list[5] = table.deepclone(tt.timed_attacks.list[1])
     tt.timed_attacks.list[5].cooldown = 15
-    tt.timed_attacks.list[5].disabled = false
+    tt.timed_attacks.list[5].disabled = true
     tt.timed_attacks.list[5].shoot_times = {fts(10)}
     tt.timed_attacks.list[5].bullet = "bomb_shrapnel_bolin"
     tt.timed_attacks.list[5].count = 3
@@ -3598,7 +3598,7 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.reignoffire = E:clone_c("hero_skill")
-    tt.hero.skills.reignoffire.dps = {14, 25, 36}
+    tt.hero.skills.reignoffire.dps = {13, 24, 35}
     tt.hero.skills.reignoffire.xp_level_steps = {
         [1] = 1,
         [4] = 2,
