@@ -3040,9 +3040,9 @@ local heroes = {
 		eat_enemy = {
 			hp_trigger = 0.3,
 			cooldown = {
+				55,
 				50,
-				45,
-				40
+				45
 			},
 			damage_type = DAMAGE_INSTAKILL,
 			regen = {
@@ -3056,9 +3056,9 @@ local heroes = {
                 30
             },
 			xp_gain = {
-				160,
-				280,
-				360
+				100,
+				200,
+				300
 			}
 		},
 		ultimate = {
@@ -3079,16 +3079,16 @@ local heroes = {
 			},
 			damage_type = DAMAGE_TRUE,
 			damage_max = {
-				195,
-				260,
-				325,
-				390
+				190,
+				250,
+				315,
+				370
 			},
 			damage_min = {
-				195,
-				260,
-				325,
-				390
+				190,
+				250,
+				315,
+				370
 			},
 			s_damage = {
 				150,
