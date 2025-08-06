@@ -11100,6 +11100,7 @@ local function heroes()
     tt.health.dead_lifetime = b.dead_lifetime
     tt.health_bar.offset = vec_2(0, 40)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
+    tt.health.hp_max = b.hp_max[1]
     tt.info.hero_portrait = "hero_portraits_0008"
     tt.info.i18n_key = "HERO_VENOM"
     tt.info.portrait = "portraits_hero" .. "_0008"
@@ -11227,6 +11228,7 @@ local function heroes()
         delay = fts(5)
     }
     tt.timed_attacks.list[4].radius = 65
+    tt.timed_attacks.list[4].regen = b.eat_enemy.regen[1] * tt.health.hp_max
     tt.ui.click_rect = r(-27, -5, 54, 50)
     tt.death_decal = "decal_hero_venom_death"
     tt.ultimate = {

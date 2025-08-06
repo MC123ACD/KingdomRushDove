@@ -6231,9 +6231,8 @@ function scripts.mod_polymorph.insert(this, store, script)
     end
 
     if pm.transfer_speed_factor then
-        U.speed_mul(e, pm.transfer_speed_factor)
+        U.update_max_speed(e, pm.transfer_speed_factor * target.motion.max_speed)
         local has, mods = U.has_modifier_types(store, target, MOD_TYPE_FAST, MOD_TYPE_SLOW)
-
         if has then
             for _, m in pairs(mods) do
                 if m.fast then
@@ -6883,7 +6882,23 @@ function scripts.power_fireball_control.update(this, store, script)
         end
 
         if i <= this.cataclysm_count then
-            local dest = P:get_random_position(10, bor(TERRAIN_LAND, TERRAIN_WATER))
+            local dest
+            local enemies = table.filter(store.entities, function (k, v)
+                return v.enemy and not v.health.dead and band(v.vis.bans, F_RANGED) == 0
+            end)
+            if #enemies > 0 then
+                local target = table.random(enemies)
+                local predicted_time = (start_y - target.pos.y) / (target.motion.speed.y - 13 * FPS)
+                local target_current_node = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni)
+                local node_advance = math.ceil((predicted_time * target.motion.real_speed + V.dist(target.pos.x, target.pos.y, target_current_node.x, target_current_node.y)) / P.average_node_dist)
+                local predicted_node_id = target.nav_path.ni + node_advance
+                if predicted_node_id > #P.paths[target.nav_path.pi][target.nav_path.spi] then
+                    predicted_node_id = #P.paths[target.nav_path.pi][target.nav_path.spi]
+                end
+                dest = P:node_pos(target.nav_path.pi, target.nav_path.spi, predicted_node_id)
+            else
+                dest = P:get_random_position(10, bor(TERRAIN_LAND, TERRAIN_WATER))
+            end
 
             if dest then
                 local e = E:create_entity("power_fireball")
@@ -6912,7 +6927,7 @@ scripts.power_fireball = {}
 
 function scripts.power_fireball.update(this, store, script)
     local b = this.bullet
-    local mspeed = 10 * FPS
+    local mspeed = 13 * FPS
     local particle = E:create_entity("ps_power_fireball")
 
     particle.particle_system.track_id = this.id
@@ -6926,23 +6941,26 @@ function scripts.power_fireball.update(this, store, script)
 
     queue_insert(store, shadow)
 
-    local shadow_tracks = b.from.x ~= b.to.x
+    -- local shadow_tracks = b.from.x ~= b.to.x
+    b.speed.x = 0
+    b.speed.y = -13 * FPS
 
-    while V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * store.tick_length do
-        mspeed = mspeed + FPS * math.ceil(mspeed * (1 / FPS) * b.acceleration_factor)
-        mspeed = km.clamp(b.min_speed, b.max_speed, mspeed)
-        b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
-        this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
-        this.render.sprites[1].r = V.angleTo(b.to.x - this.pos.x, b.to.y - this.pos.y)
+    this.render.sprites[1].r = V.angleTo(0, -1)
+    local dist2 = (mspeed * store.tick_length) ^ 2
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > dist2 do
+        -- mspeed = mspeed + FPS * math.ceil(mspeed * (1 / FPS) * b.acceleration_factor)
+        -- mspeed = km.clamp(b.min_speed, b.max_speed, mspeed)
+        -- b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
+        -- this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
+        this.pos.y = this.pos.y + b.speed.y * store.tick_length
 
-        if shadow_tracks then
-            shadow.pos.x = this.pos.x
-        end
+        -- if shadow_tracks then
+        -- end
 
         coroutine.yield()
     end
 
-    this.pos.x, this.pos.y = b.to.x, b.to.y
+    this.pos.y = b.to.y
     particle.particle_system.source_lifetime = 0
 
     local enemies = table.filter(store.enemies, function(k, v)

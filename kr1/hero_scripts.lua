@@ -18586,7 +18586,7 @@ return function(scripts)
                 skill = this.hero.skills.eat_enemy
                 a = eat_enemy_attack
 
-                if (not ready_to_attack(eat_enemy_attack, store) or this.soldier.target_id == nil) or not this.motion.arrived or this.is_transformed then
+                if (not ready_to_use_skill(eat_enemy_attack, store) or this.soldier.target_id == nil) or not this.motion.arrived then
                     -- block empty
                 else
                     local target = store.entities[this.soldier.target_id]
