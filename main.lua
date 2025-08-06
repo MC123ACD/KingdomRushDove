@@ -760,15 +760,21 @@ function love.errhand(msg)
 	local err = {}
 
 	table.insert(err, "Error\n")
-	table.insert(err, msg .. "\n\n")
+    if string.find(msg, "Error running coro", 1, true) then
+        msg = msg:gsub("^[^:]+:%d+: ", "")
+        local l = string.gsub(msg, "stack traceback:", "\n\n\nTraceback\n")
+        table.insert(err, l)
+    else
+        table.insert(err, msg .. "\n\n")
 
-	for l in string.gmatch(trace, "(.-)\n") do
-		if not string.match(l, "boot.lua") then
-			l = string.gsub(l, "stack traceback:", "Traceback\n")
+        for l in string.gmatch(trace, "(.-)\n") do
+            if not string.match(l, "boot.lua") then
+                l = string.gsub(l, "stack traceback:", "Traceback\n")
 
-			table.insert(err, l)
-		end
-	end
+                table.insert(err, l)
+            end
+        end
+    end
 
 	if love.nx then
 		table.insert(err, "\n\nFree memory:" .. love.nx.allocGetTotalFreeSize() .. "\n")
