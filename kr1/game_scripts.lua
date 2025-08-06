@@ -6924,7 +6924,7 @@ function scripts.mod_ray_arcane_disintegrate.update(this, store)
                 d.source_id = this.id
                 d.target_id = target.id
                 d.damage_type = bor(DAMAGE_TRUE)
-                d.value = (100 + target.health.hp_max * 0.047) * m.damage_factor
+                d.value = (642 + target.health.hp_max * 0.047) * m.damage_factor
                 d.pop = m.pop
                 d.pop_chance = m.pop_chance
                 d.pop_conds = m.pop_conds
