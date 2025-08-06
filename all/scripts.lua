@@ -1201,15 +1201,15 @@ function scripts.soldier_barrack.get_info(this)
 
     if damage_type == DAMAGE_STAB then
         if min and max then
-            min = math.ceil(min / 2)
-            max = math.ceil(max / 2)
+            min = math.ceil(min * 0.5)
+            max = math.ceil(max * 0.5)
         end
     end
 
     if ranged_damage_type == DAMAGE_STAB then
         if ranged_max and ranged_min then
-            ranged_max = math.ceil(ranged_max / 2)
-            ranged_min = math.ceil(ranged_min / 2)
+            ranged_max = math.ceil(ranged_max * 0.5)
+            ranged_min = math.ceil(ranged_min * 0.5)
         end
     end
     return {
@@ -1490,7 +1490,7 @@ function scripts.tower_common.get_info(this)
         d_type = b.bullet.damage_type
     end
 
-    min, max = math.ceil(min * this.tower.damage_factor), math.ceil(max * this.tower.damage_factor)
+    min, max = min * this.tower.damage_factor, max * this.tower.damage_factor
 
     local cooldown
 
@@ -1500,8 +1500,8 @@ function scripts.tower_common.get_info(this)
 
     return {
         type = STATS_TYPE_TOWER,
-        damage_min = min,
-        damage_max = max,
+        damage_min = math.ceil(min),
+        damage_max = math.ceil(max),
         damage_type = d_type,
         range = this.attacks.range,
         cooldown = cooldown
@@ -2409,10 +2409,10 @@ function scripts.bomb.update(this, store, script)
         else
             local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, b.to, dradius)
 
-            d.value = math.floor(dmax - (dmax - dmin) * dist_factor)
+            d.value = dmax - (dmax - dmin) * dist_factor
         end
 
-        d.value = math.ceil(b.damage_factor * d.value)
+        d.value = b.damage_factor * d.value
         d.source_id = this.id
         d.target_id = enemy.id
 
@@ -2570,11 +2570,11 @@ function scripts.enemy_bomb.update(this, store, script)
         d.damage_type = b.damage_type
 
         if b.damage_decay_random then
-            d.value = math.ceil(U.frandom(b.damage_min, b.damage_max))
+            d.value = U.frandom(b.damage_min, b.damage_max)
         else
             local dist_factor = U.dist_factor_inside_ellipse(target.pos, this.pos, b.damage_radius)
 
-            d.value = math.floor(b.damage_max - (b.damage_max - b.damage_min) * dist_factor)
+            d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
         end
 
         d.source_id = this.id
@@ -2757,10 +2757,10 @@ function scripts.missile.update(this, store, script)
             else
                 local dist_factor = U.dist_factor_inside_ellipse(enemy_pos, this.pos, b.damage_radius)
 
-                d.value = math.floor(b.damage_max - (b.damage_max - b.damage_min) * dist_factor)
+                d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
             end
 
-            d.value = math.ceil(b.damage_factor * d.value)
+            d.value = b.damage_factor * d.value
 
             queue_damage(store, d)
 
@@ -2941,8 +2941,8 @@ function scripts.enemy_missile.update(this, store, script)
 
             local dist_factor = U.dist_factor_inside_ellipse(t_pos, this.pos, b.damage_radius)
 
-            d.value = math.floor(b.damage_max - (b.damage_max - b.damage_min) * dist_factor)
-            d.value = math.ceil(b.damage_factor * d.value)
+            d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
+            d.value = b.damage_factor * d.value
 
             queue_damage(store, d)
 
@@ -3313,7 +3313,7 @@ function scripts.bolt_blast.update(this, store, script)
 
         d.source_id = this.id
         d.target_id = enemy.id
-        d.value = math.ceil(d_value)
+        d.value = d_value
         d.damage_type = b.damage_type
         d.track_damage = true
 
@@ -6967,7 +6967,7 @@ function scripts.power_fireball.update(this, store, script)
         return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
                    U.is_inside_ellipse(v.pos, b.to, b.damage_radius)
     end)
-    local damage_value = math.ceil(b.damage_factor * math.random(b.damage_min, b.damage_max))
+    local damage_value = b.damage_factor * math.random(b.damage_min, b.damage_max)
 
     for _, enemy in pairs(enemies) do
         local d = E:create_entity("damage")

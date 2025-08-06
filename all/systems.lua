@@ -1073,7 +1073,7 @@ function sys.health:on_update(dt, ts, store)
                                     local sad = E:create_entity("damage")
 
                                     sad.damage_type = DAMAGE_TRUE
-                                    sad.value = math.ceil(h.spiked_armor * d.value)
+                                    sad.value = h.spiked_armor * d.value
                                     sad.source_id = e.id
                                     sad.target_id = t.id
 

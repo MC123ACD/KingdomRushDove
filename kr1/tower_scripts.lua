@@ -26,8 +26,8 @@ local function register_archer(scripts)
             local min, max = b.bullet.damage_min, b.bullet.damage_max
 
             if pow.level > 0 then
-                min = min + math.floor(b.bullet.damage_inc * pow.level)
-                max = max + math.floor(b.bullet.damage_inc * pow.level)
+                min = min + b.bullet.damage_inc * pow.level
+                max = max + b.bullet.damage_inc * pow.level
             end
 
             min, max = math.ceil(min * this.tower.damage_factor), math.ceil(max * this.tower.damage_factor)
@@ -1526,8 +1526,8 @@ local function register_mage(scripts)
                                     local dmg_dec = km.clamp(0, b.bullet.damage_same_target_max,
                                         last_enemy_shots * b.bullet.damage_same_target_inc)
 
-                                    b.bullet.damage_max = math.floor(b.bullet.damage_max - dmg_dec)
-                                    b.bullet.damage_min = math.floor(b.bullet.damage_min - dmg_dec)
+                                    b.bullet.damage_max = b.bullet.damage_max - dmg_dec
+                                    b.bullet.damage_min = b.bullet.damage_min - dmg_dec
                                 else
                                     last_enemy = enemy
                                     last_enemy_shots = 0
@@ -3280,7 +3280,7 @@ local function register_engineer(scripts)
                                     d.value = math.random(aa.damage_min, aa.damage_max)
                                 end
 
-                                d.value = math.ceil(this.tower.damage_factor * d.value)
+                                d.value = this.tower.damage_factor * d.value
 
                                 queue_damage(store, d)
 

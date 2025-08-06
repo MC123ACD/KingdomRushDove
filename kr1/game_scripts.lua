@@ -5880,13 +5880,13 @@ function scripts.ray_tesla.update(this, store)
                 else
                     local mod = E:create_entity(b.mod)
                     local bounce_factor = UP:get_upgrade("engineer_efficiency") and 1 or this.bounce_damage_factor
-                    local total_damage = math.ceil(math.random(this.bounce_damage_min, this.bounce_damage_max) * bounce_factor)
+                    local total_damage = math.random(this.bounce_damage_min, this.bounce_damage_max) * bounce_factor
                     local actual_damage = math.min(total_damage, target.health.hp)
                     local last_damage = total_damage - actual_damage
-                    local frame_damage = math.floor(actual_damage / mod.dps.cocos_frames)
+                    local frame_damage = actual_damage / mod.dps.cocos_frames
                     local mod_damage = frame_damage * mod.dps.cocos_cycles
-                    local dps_hits = math.floor(mod.modifier.duration / mod.dps.damage_every)
-                    local dps_damage = math.floor(mod_damage / dps_hits)
+                    local dps_hits = mod.modifier.duration / mod.dps.damage_every
+                    local dps_damage = mod_damage / dps_hits
                     local first_damage = mod_damage - dps_damage * dps_hits
                     mod.modifier.damage_factor = b.damage_factor
                     mod.modifier.level = b.level
@@ -10415,7 +10415,7 @@ function scripts.blazefang_explosion.update(this, store, script)
 
         d.source_id = this.id
         d.target_id = target.id
-        d.value = b.damage_min + math.ceil(U.frandom(b.damage_min, b.damage_max))
+        d.value = b.damage_min + U.frandom(b.damage_min, b.damage_max)
         d.damage_type = b.damage_type
 
         queue_damage(store, d)
@@ -13215,7 +13215,7 @@ function scripts.dracula_damage_aura.update(this, store)
                         local dist_factor = U.dist_factor_inside_ellipse(target.pos, this.pos, a.radius,
                             a.dist_factor_min_radius)
 
-                        value = math.ceil(value * (1 - dist_factor))
+                        value = value * (1 - dist_factor)
                     end
 
                     local d = E:create_entity("damage")
@@ -13324,7 +13324,7 @@ function scripts.eb_saurian_king.update(this, store, script)
                 local d = E:create_entity("damage")
 
                 d.damage_type = ha.damage_type
-                d.value = math.ceil(dmax - (dmax - dmin) * dist_factor)
+                d.value = dmax - (dmax - dmin) * dist_factor
                 d.target_id = target.id
                 d.source_id = this.id
 
@@ -14139,7 +14139,7 @@ function scripts.bomb_pirate_cannon.update(this, store, script)
         local d = E:create_entity("damage")
 
         d.damage_type = b.damage_type
-        d.value = b.damage_min + math.ceil(U.frandom(0, b.damage_max - b.damage_min))
+        d.value = b.damage_min + U.frandom(0, b.damage_max - b.damage_min)
         d.source_id = this.id
         d.target_id = target.id
 
@@ -14900,7 +14900,7 @@ function scripts.steam_frigate_mine.update(this, store, script)
                 local d = E:create_entity("damage")
 
                 d.damage_type = b.damage_type
-                d.value = math.ceil(U.frandom(b.damage_min, b.damage_max))
+                d.value = U.frandom(b.damage_min, b.damage_max)
                 d.source_id = this.id
                 d.target_id = enemy.id
 
@@ -15897,7 +15897,7 @@ function scripts.eb_saurian_king.update(this, store, script)
                 local d = E:create_entity("damage")
 
                 d.damage_type = ha.damage_type
-                d.value = math.ceil(dmax - (dmax - dmin) * dist_factor)
+                d.value = dmax - (dmax - dmin) * dist_factor
                 d.target_id = target.id
                 d.source_id = this.id
 
@@ -18222,7 +18222,7 @@ function scripts.soldier_blade.update(this, store)
 
                     d.source_id = this.id
                     d.target_id = target.id
-                    d.value = math.ceil(U.frandom(bda.damage_min, bda.damage_max))
+                    d.value = U.frandom(bda.damage_min, bda.damage_max)
                     d.damage_type = bda.damage_type
 
                     queue_damage(store, d)
@@ -18764,7 +18764,7 @@ function scripts.soldier_xin_shadow.update(this, store)
                     local d = E:create_entity("damage")
 
                     d.damage_type = attack.damage_type
-                    d.value = math.ceil(U.frandom(attack.damage_min, attack.damage_max)) * this.unit.damage_factor
+                    d.value = U.frandom(attack.damage_min, attack.damage_max) * this.unit.damage_factor
                     d.source_id = this.id
                     d.target_id = target.id
 
@@ -20372,7 +20372,7 @@ function scripts.enemy_twilight_scourger.update(this, store, script)
                                         if band(target.vis.flags, F_DARK_ELF) ~= 0 then
                                             d.value = 0
                                         else
-                                            d.value = math.ceil(U.frandom(a.damage_min, a.damage_max))
+                                            d.value = U.frandom(a.damage_min, a.damage_max)
                                         end
                                         d.target_id = target.id
                                         d.source_id = this.id
@@ -21846,7 +21846,7 @@ function scripts.mod_ogre_magi_shield.on_damage(this, store, damage)
     if filtered_damage_type ~= 0 then
         local d = E:create_entity("damage")
 
-        d.value = math.floor(v * mod.modifier.deflect_factor)
+        d.value = v * mod.modifier.deflect_factor
         d.damage_type = filtered_damage_type
         d.target_id = defl_target.id
         d.source_id = damage.source_id
@@ -22176,7 +22176,7 @@ function scripts.mod_shadow_champion.remove(this, store, script)
     local target = store.entities[m.target_id]
 
     if target then
-        target.unit.damage_factor = math.ceil(target.unit.damage_factor / this.inflicted_damage_factor)
+        target.unit.damage_factor = target.unit.damage_factor / this.inflicted_damage_factor
     end
 
     return true
@@ -22339,7 +22339,7 @@ function scripts.mod_gnoll_boss.remove(this, store, script)
     if target then
         target.health.hp_max = target.health.hp_max - this._hp_bonus
         target.health.hp = target.health.hp - this._hp_bonus
-        target.unit.damage_factor = math.ceil(target.unit.damage_factor / this.inflicted_damage_factor)
+        target.unit.damage_factor = target.unit.damage_factor / this.inflicted_damage_factor
     end
 
     return true
@@ -25840,7 +25840,7 @@ function scripts.aura_bandersnatch_spines.update(this, store)
             local d = E:create_entity("damage")
 
             d.damage_type = a.damage_type
-            d.value = math.ceil(U.frandom(a.damage_min, a.damage_max))
+            d.value = U.frandom(a.damage_min, a.damage_max)
             d.target_id = target.id
             d.source_id = this.id
 
@@ -25910,8 +25910,8 @@ function scripts.aura_razorboar_rage.update(this, store)
         local h = te.health
         local hp_lost_factor = (h.hp_max - h.hp) / h.hp_max * this.damage_hp_factor
 
-        ma.damage_min = math.floor(ini_damage_min * (1 + hp_lost_factor))
-        ma.damage_max = math.floor(ini_damage_max * (1 + hp_lost_factor))
+        ma.damage_min = ini_damage_min * (1 + hp_lost_factor)
+        ma.damage_max = ini_damage_max * (1 + hp_lost_factor)
 
         coroutine.yield()
     end
@@ -26077,7 +26077,7 @@ function scripts.mod_blood_elves.insert(this, store)
     end
 
     local pred_damage = U.predict_damage(target, source_damage)
-    local actual_damage = math.ceil(this.damage_factor * pred_damage)
+    local actual_damage = this.damage_factor * pred_damage
 
     this.dps.damage_min = actual_damage
     this.dps.damage_max = actual_damage

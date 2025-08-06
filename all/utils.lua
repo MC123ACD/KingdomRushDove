@@ -1458,9 +1458,9 @@ function U.predict_damage(entity, damage)
 
     if band(d.damage_type, bor(DAMAGE_INSTAKILL, DAMAGE_EAT)) ~= 0 then
         if e.health.damage_factor > 1 then
-            return math.ceil(e.health.hp_max * (1 - e.health.instakill_resistance) * e.health.damage_factor)
+            return e.health.hp_max * (1 - e.health.instakill_resistance) * e.health.damage_factor
         else
-            return math.ceil(e.health.hp_max * (1 - e.health.instakill_resistance))
+            return e.health.hp_max * (1 - e.health.instakill_resistance)
         end
     end
 
@@ -1511,7 +1511,7 @@ function U.predict_damage(entity, damage)
 
     rounded_damage = km.round(rounded_damage * e.health.damage_factor)
 
-    local actual_damage = math.floor(rounded_damage * km.clamp(0, 1, 1 - protection))
+    local actual_damage = rounded_damage * km.clamp(0, 1, 1 - protection)
 
     if band(d.damage_type, DAMAGE_NO_KILL) ~= 0 and e.health and actual_damage >= e.health.hp then
         actual_damage = e.health.hp - 1

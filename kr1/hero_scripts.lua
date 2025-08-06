@@ -809,7 +809,7 @@ return function(scripts)
                                     d.damage_type = a_l.damage_type
                                     d.value = a_l.damage_max
                                 end
-                                d.value = math.ceil(d.value * this.unit.damage_factor)
+                                d.value = d.value * this.unit.damage_factor
                                 queue_damage(store, d)
 
                                 if d.damage_type ~= DAMAGE_INSTAKILL and a_l.hit_fx and target.unit.blood_color then
@@ -1061,10 +1061,10 @@ return function(scripts)
         update = function(this, store, script)
             local m = this.modifier
             local target = store.entities[m.target_id]
-            local total_damage = math.ceil(math.random(this.damage_min, this.damage_max) * m.damage_factor)
+            local total_damage = math.random(this.damage_min, this.damage_max) * m.damage_factor
             local final_damage = km.clamp(0, total_damage, total_damage - target.health.hp)
             local steps = math.floor(m.duration / this.damage_every)
-            local step_damage = math.ceil((total_damage - final_damage) / steps)
+            local step_damage = (total_damage - final_damage) / steps
             local step = 0
             local last_ts = m.ts
             local tick_steps, cycle_damage, d
@@ -4048,7 +4048,7 @@ return function(scripts)
                     d.damage_type = this.damage_type
                     d.source_id = this.id
                     d.target_id = target.id
-                    d.value = math.ceil(math.random(this.damage_min, this.damage_max) * this.damage_factor)
+                    d.value = math.random(this.damage_min, this.damage_max) * this.damage_factor
                     queue_damage(store, d)
                 end
             end
@@ -4194,13 +4194,13 @@ return function(scripts)
                 local il = E:get_template(a.entity)
                 il.level = hl
                 il.health.hp_max = ls.hp_max[s.level] * s.health_factor
-                il.melee.attacks[1].damage_min = math.floor(ls.melee_damage_min[s.level] * s.damage_factor)
-                il.melee.attacks[1].damage_max = math.floor(ls.melee_damage_max[s.level] * s.damage_factor)
+                il.melee.attacks[1].damage_min = ls.melee_damage_min[s.level] * s.damage_factor
+                il.melee.attacks[1].damage_max = ls.melee_damage_max[s.level] * s.damage_factor
                 local ira = il.ranged.attacks[1]
                 local ib = E:get_template(ira.bullet)
 
-                ib.bullet.damage_min = math.floor(ls.ranged_damage_min[s.level] * s.damage_factor)
-                ib.bullet.damage_max = math.floor(ls.ranged_damage_max[s.level] * s.damage_factor)
+                ib.bullet.damage_min = ls.ranged_damage_min[s.level] * s.damage_factor
+                ib.bullet.damage_max = ls.ranged_damage_max[s.level] * s.damage_factor
                 il.timed_attacks = il.timed_attacks or {}
                 il.timed_attacks.list = il.timed_attacks.list or {}
                 il.timed_attacks.list[1] = table.deepclone(this.timed_attacks.list[2])
@@ -4406,10 +4406,10 @@ return function(scripts)
             d.source_id = this.id
             d.target_id = target.id
             d.damage_type = DAMAGE_TRUE
-            d.value = math.ceil(source.unit.damage_factor *
-                                    (math.random(this.damage_min, this.damage_max) + source.damage_buff))
+            d.value = source.unit.damage_factor *
+                                    (math.random(this.damage_min, this.damage_max) + source.damage_buff)
 
-            local predicted_damage = math.ceil(d.value * target.health.damage_factor)
+            local predicted_damage = d.value * target.health.damage_factor
 
             if math.random() < this.instakill_chance then
                 if (band(target.vis.flags, F_BOSS) ~= 0) or target.health.hp - predicted_damage > this.instakill_min_hp then
@@ -4567,7 +4567,7 @@ return function(scripts)
 
                     d.source_id = this.id
                     d.target_id = t.id
-                    d.value = math.ceil((attack.damage + this.damage_buff) * this.unit.damage_factor)
+                    d.value = (attack.damage + this.damage_buff) * this.unit.damage_factor
                     d.damage_type = attack.damage_type
 
                     queue_damage(store, d)
@@ -7328,8 +7328,8 @@ return function(scripts)
 
                             update_porcupine(attack, target)
 
-                            d.value = math.ceil((b.bullet.damage_min + b.bullet.damage_max + 2 * attack.level *
-                                                    (b.bullet.damage_inc or 0)) * 0.5)
+                            d.value = (b.bullet.damage_min + b.bullet.damage_max + 2 * attack.level *
+                                                    (b.bullet.damage_inc or 0)) * 0.5
                             pred_shots = math.ceil(target.health.hp / U.predict_damage(target, d))
 
                             log.paranoid("+++ pred_shots:%s d.value:%s target.hp:%s", pred_shots, d.value,
@@ -8147,12 +8147,12 @@ return function(scripts)
 
     function scripts.hero_lynn.fn_damage_melee(this, store, attack, target)
         local skill = this.hero.skills.hexfury
-        local value = math.ceil(this.unit.damage_factor *
-                                    (math.random(attack.damage_min, attack.damage_max + this.damage_buff)))
+        local value = this.unit.damage_factor *
+                                    (math.random(attack.damage_min, attack.damage_max + this.damage_buff))
         local mods = {"mod_lynn_curse", "mod_lynn_despair", "mod_lynn_ultimate", "mod_lynn_weakening"}
 
         if skill.level > 0 and U.has_modifier_in_list(store, target, mods) then
-            value = value + math.ceil(this.unit.damage_factor * skill.extra_damage)
+            value = value + this.unit.damage_factor * skill.extra_damage
 
             log.debug(" fn_damage_melee LYNN: +++ adding extra damage %s", skill.extra_damage)
         end
@@ -9828,7 +9828,7 @@ return function(scripts)
 
                 local d = E:create_entity("damage")
 
-                d.value = math.ceil(this.damage / #targets)
+                d.value = this.damage / #targets
                 d.damage_type = this.damage_type
                 d.target_id = target.id
                 d.source_id = this.id
@@ -10665,7 +10665,7 @@ return function(scripts)
                 local d = E:create_entity("damage")
 
                 d.damage_type = b.damage_type
-                d.value = math.ceil(U.frandom(b.damage_min, b.damage_max)) * b.damage_factor
+                d.value = U.frandom(b.damage_min, b.damage_max) * b.damage_factor
                 d.source_id = this.id
                 d.target_id = target.id
 

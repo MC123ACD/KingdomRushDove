@@ -455,9 +455,9 @@ local function create_bullet_damage(bullet, target_id, source_id)
         end
     end
 
-    local value = math.ceil(U.frandom(vmin, vmax))
+    local value = U.frandom(vmin, vmax)
 
-    d.value = math.max(1, math.ceil(bullet.damage_factor * value))
+    d.value = math.max(1, bullet.damage_factor * value)
     d.target_id = target_id
     d.source_id = source_id
     d.xp_gain_factor = bullet.xp_gain_factor
@@ -496,7 +496,7 @@ local function create_attack_damage(a, target_id, this)
         d.value = d.value + this.damage_buff
     end
     if this.unit and this.unit.damage_factor then
-        d.value = math.ceil(d.value * this.unit.damage_factor)
+        d.value = d.value * this.unit.damage_factor
     end
     d.damage_type = a.damage_type
     d.target_id = target_id
@@ -1876,8 +1876,8 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
                     d.source_id = this.id
                     d.target_id = e.id
                     d.damage_type = attack.damage_type
-                    d.value = math.ceil((math.random(attack.damage_min, attack.damage_max) + this.damage_buff) *
-                                            this.unit.damage_factor)
+                    d.value = (math.random(attack.damage_min, attack.damage_max) + this.damage_buff) *
+                                            this.unit.damage_factor
                     d.track_kills = this.track_kills ~= nil
                     d.track_damage = attack.track_damage
                     d.xp_gain_factor = attack.xp_gain_factor
@@ -1933,8 +1933,8 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
                     d.value = attack.fn_damage(this, store, attack, target)
                 else
                     d.damage_type = attack.damage_type
-                    d.value = math.ceil(this.unit.damage_factor *
-                                            (math.random(attack.damage_min, attack.damage_max) + this.damage_buff))
+                    d.value = this.unit.damage_factor *
+                                            (math.random(attack.damage_min, attack.damage_max) + this.damage_buff)
                 end
 
                 d.source_id = this.id
@@ -2070,8 +2070,8 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
                 d.value = attack.fn_damage(this, store, attack, target) + this.damage_buff
             elseif attack.damage_min then
                 d.damage_type = attack.damage_type
-                d.value = math.ceil(this.unit.damage_factor *
-                                        (math.random(attack.damage_min, attack.damage_max) + this.damage_buff))
+                d.value = this.unit.damage_factor *
+                                        (math.random(attack.damage_min, attack.damage_max) + this.damage_buff)
             end
 
             queue_damage(store, d)
@@ -3404,7 +3404,7 @@ local function y_enemy_melee_attacks(store, this, target)
                             queue_damage(store, d)
                         elseif ma.damage_min then
                             d.damage_type = ma.damage_type
-                            d.value = math.ceil(this.unit.damage_factor * math.random(ma.damage_min, ma.damage_max))
+                            d.value = this.unit.damage_factor * math.random(ma.damage_min, ma.damage_max)
 
                             queue_damage(store, d)
                         end
@@ -3441,7 +3441,7 @@ local function y_enemy_melee_attacks(store, this, target)
                                 d.source_id = this.id
                                 d.target_id = e.id
                                 d.damage_type = ma.damage_type
-                                d.value = math.ceil(this.unit.damage_factor * math.random(ma.damage_min, ma.damage_max))
+                                d.value = this.unit.damage_factor * math.random(ma.damage_min, ma.damage_max)
                                 d.pop = ma.pop
                                 d.pop_chance = ma.pop_chance
                                 d.pop_conds = ma.pop_conds
