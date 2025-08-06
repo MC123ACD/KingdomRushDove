@@ -6888,7 +6888,7 @@ function scripts.power_fireball_control.update(this, store, script)
             end)
             if #enemies > 0 then
                 local target = table.random(enemies)
-                local predicted_time = (start_y - target.pos.y) / (target.motion.speed.y - 13 * FPS)
+                local predicted_time = (start_y - target.pos.y) / (target.motion.speed.y + 13 * FPS)
                 local target_current_node = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni)
                 local node_advance = math.ceil((predicted_time * target.motion.real_speed + V.dist(target.pos.x, target.pos.y, target_current_node.x, target_current_node.y)) / P.average_node_dist)
                 local predicted_node_id = target.nav_path.ni + node_advance
