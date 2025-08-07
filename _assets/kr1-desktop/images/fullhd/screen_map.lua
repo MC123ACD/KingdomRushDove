@@ -584,6 +584,294 @@ return {
         f_quad = {1285, 1295, 71, 70},
         alias = {}
     },
+    Disabled_Upgrades_Icons_0031 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1230,
+			1755,
+			71,
+			71
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0031 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1386,
+			1598,
+			71,
+			71
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0032 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1386,
+			1829,
+			71,
+			71
+		},
+		alias = {}
+	},
+    Disabled_Upgrades_Icons_0032 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1309,
+			1290,
+			71,
+			71
+		},
+		alias = {}
+	},
+    Disabled_Upgrades_Icons_0033 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1393,
+			1122,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0033 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1241,
+			1350,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0034 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1241,
+			1654,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Disabled_Upgrades_Icons_0034 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1697,
+			1122,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Disabled_Upgrades_Icons_0035 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1165,
+			1350,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0035 = {
+		a_name = "screen_map-8.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			6,
+			4,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1393,
+			1274,
+			70,
+			70
+		},
+		alias = {}
+	},
+    Disabled_Upgrades_Icons_0036 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1694,
+			1367,
+			71,
+			71
+		},
+		alias = {}
+	},
+    Upgrades_Icons_0036 = {
+		a_name = "screen_map-13.png",
+		size = {
+			76,
+			78
+		},
+		trim = {
+			2,
+			5,
+			3,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1540,
+			1598,
+			71,
+			71
+		},
+		alias = {}
+	},
     Upgrades_Icons_Bought = {
         a_name = "screen_map-2.png",
         size = {76, 78},

@@ -852,55 +852,64 @@ function sys.game_upgrades:init(store)
 end
 
 function sys.game_upgrades:on_insert(entity, store)
-    -- local mage_tower_types = {"mage", "archmage", "necromancer"}
-    -- local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
-    -- local u = UP:get_upgrade("mage_brilliance")
+    local mage_towers = UP:mage_towers()
+    local mage_bullet_names = UP:mage_tower_bolts()
+    local u = UP:get_upgrade("mage_brilliance")
 
-    -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-    --     local existing_towers = table.filter(store.towers, function(_, e)
-    --         return e.tower and table.contains(mage_tower_types, e.tower.type)
-    --     end)
+    if u and entity.tower and table.contains(mage_towers, entity.template_name) then
+        local existing_towers = table.filter(store.towers, function(_, e)
+            return table.contains(mage_towers, e.template_name)
+        end)
+        local dps = E:get_template("mod_ray_arcane").dps
 
-    --     if #existing_towers == 0 then
-    --         for _, bn in pairs(mage_bullet_names) do
-    --             local b = E:get_template(bn).bullet
+        if #existing_towers == 0 then
+            for _, bn in pairs(mage_bullet_names) do
+                local b = E:get_template(bn).bullet
 
-    --             b._orig_damage_min = b.damage_min
-    --             b._orig_damage_max = b.damage_max
-    --         end
-    --     else
-    --         local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
+                b._orig_damage_min = b.damage_min
+                b._orig_damage_max = b.damage_max
+            end
+            dps._orig_damage_min = dps.damage_min
+            dps._orig_damage_max = dps.damage_max
+        else
+            local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
 
-    --         for _, bn in pairs(mage_bullet_names) do
-    --             local b = E:get_template(bn).bullet
+            for _, bn in pairs(mage_bullet_names) do
+                local b = E:get_template(bn).bullet
 
-    --             b.damage_min = math.ceil(b._orig_damage_min * f)
-    --             b.damage_max = math.ceil(b._orig_damage_max * f)
-    --         end
-    --     end
-    -- end
+                b.damage_min = math.ceil(b._orig_damage_min * f)
+                b.damage_max = math.ceil(b._orig_damage_max * f)
+            end
+            dps.damage_min = math.ceil(dps._orig_damage_min * f)
+            dps.damage_max = math.ceil(dps._orig_damage_max * f)
+        end
+    end
 
     return true
 end
 
 function sys.game_upgrades:on_remove(entity, store)
-    -- local mage_tower_types = {"mage", "archmage", "necromancer"}
-    -- local mage_bullet_names = {"bolt_1", "bolt_2", "bolt_3", "bolt_archmage", "bolt_necromancer"}
-    -- local u = UP:get_upgrade("mage_brilliance")
+    local mage_towers = UP:mage_towers()
+    local mage_bullet_names = UP:mage_tower_bolts()
 
-    -- if u and entity.tower and table.contains(mage_tower_types, entity.tower.type) then
-    --     local existing_towers = table.filter(store.towers, function(_, e)
-    --         return e.tower and table.contains(mage_tower_types, e.tower.type)
-    --     end)
-    --     local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers - 1)]
+    local u = UP:get_upgrade("mage_brilliance")
 
-    --     for _, bn in pairs(mage_bullet_names) do
-    --         local b = E:get_template(bn).bullet
+    if u and entity.tower and table.contains(mage_towers, entity.template_name) then
+        local existing_towers = table.filter(store.towers, function(_, e)
+            return table.contains(mage_towers, e.template_name)
+        end)
+        local dps = E:get_template("mod_ray_arcane").dps
+        local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
 
-    --         b.damage_min = math.ceil(b._orig_damage_min * f)
-    --         b.damage_max = math.ceil(b._orig_damage_max * f)
-    --     end
-    -- end
+        for _, bn in pairs(mage_bullet_names) do
+            local b = E:get_template(bn).bullet
+
+            b.damage_min = math.ceil(b._orig_damage_min * f)
+            b.damage_max = math.ceil(b._orig_damage_max * f)
+        end
+        dps.damage_min = math.ceil(dps._orig_damage_min * f)
+        dps.damage_max = math.ceil(dps._orig_damage_max * f)
+    end
 
     return true
 end

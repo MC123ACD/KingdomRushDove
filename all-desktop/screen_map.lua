@@ -3153,7 +3153,7 @@ function UpgradesView:initialize(sw, sh)
     for i, k in ipairs(UPGR.display_order) do
         local b = KImageView:new("YellowBar")
 
-        b.anchor = IS_KR3 and v(6, 376) or v(6, 372)
+        b.anchor = v(6, 376)
         b.pos = bar_positions[i]
 
         self.back:add_child(b)
@@ -3169,18 +3169,20 @@ function UpgradesView:initialize(sw, sh)
 
     local start_y = 520
     local separation_y = 80
-    local x_offsets = {115, 237, 355, 477, 598, 718}
-
+    -- local x_offsets = {115, 237, 355, 477, 598, 718}
+    local x_offsets = {121, 243, 361, 483, 604, 724}
     for key, value in pairs(UPGR.list) do
         local class_ind = table.keyforobject(UPGR.display_order, value.class)
         local icon_index = value.icon
         local icon_name = string.format("Upgrades_Icons_%04i", icon_index)
 
-        self.upgrade_buttons[key] = UpgradeButtons:new(icon_name, value, key)
+        self.upgrade_buttons[key] = UpgradeButtons:new(icon_name, value, key, 0.83)
 
         local _button = self.upgrade_buttons[key]
 
-        _button.pos = v(x_offsets[class_ind], start_y - value.level * separation_y)
+        _button.pos = v(x_offsets[class_ind], start_y - value.level * separation_y * 0.83)
+        -- _button.size.x = _button.size.x * 0.5
+        -- _button.size.y = _button.size.y * 0.5
 
         self.back:add_child(_button)
     end
@@ -3345,7 +3347,7 @@ function UpgradesView:set_bought_levels(new_bought_list)
     end
 
     for key, value in pairs(new_bought_list) do
-        self.upgrade_bars[key].scale = v(1, 0.2 * value)
+        self.upgrade_bars[key].scale = v(1, 0.2 * value * 0.83)
     end
 
     self.spent_stars = 0
@@ -3459,49 +3461,64 @@ end
 
 UpgradeButtons = class("UpgradeButtons", KImageView)
 
-function UpgradeButtons:initialize(sprite, data_values, my_id)
-    KImageView.initialize(self, sprite)
+function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
+    scale = scale or 1
+
+    KImageView.initialize(self, sprite, nil, scale)
+    self.size.x = self.size.x * scale
+    self.size.y = self.size.y * scale
 
     self.my_id = my_id
-    self.disabled_image = KImageView:new("Disabled_" .. sprite)
-
+    self.disabled_image = KImageView:new("Disabled_" .. sprite, nil ,scale)
+    self.disabled_image.size.x = self.disabled_image.size.x * scale
+    self.disabled_image.size.y = self.disabled_image.size.y * scale
     self:add_child(self.disabled_image)
 
     self.data_values = data_values
-    self.over_circle = KImageView:new("Upgrades_Icons_over")
+    self.over_circle = KImageView:new("Upgrades_Icons_over", nil ,scale)
+    self.over_circle.size.x = self.over_circle.size.x * scale
+    self.over_circle.size.y = self.over_circle.size.y * scale
     self.over_circle.anchor = v(self.over_circle.size.x / 2, self.over_circle.size.y / 2)
     self.over_circle.pos = v(self.size.x / 2, self.size.y / 2)
     self.over_circle.propagate_on_click = true
 
     self:add_child(self.over_circle)
 
-    self.bought_circle = KImageView:new("Upgrades_Icons_Bought")
+    self.bought_circle = KImageView:new("Upgrades_Icons_Bought", nil, scale)
+    self.bought_circle.size.x = self.bought_circle.size.x * scale
+    self.bought_circle.size.y = self.bought_circle.size.y * scale
     self.bought_circle.anchor = v(self.bought_circle.size.x / 2, self.bought_circle.size.y / 2)
     self.bought_circle.pos = v(self.size.x / 2, self.size.y / 2)
 
     self:add_child(self.bought_circle)
 
-    self.cost_panel = KImageView:new("Upgrades_Icons_PriceTag")
+    self.cost_panel = KImageView:new("Upgrades_Icons_PriceTag", nil, scale)
+    self.cost_panel.size.x = self.cost_panel.size.x * scale
+    self.cost_panel.size.y = self.cost_panel.size.y * scale
     self.cost_panel.pos = v(35, 55)
 
     self:add_child(self.cost_panel)
 
-    local price_value = KImageView:new("Upgrades_Icons_PriceTag_Nm_000" .. data_values.price)
-
+    local price_value = KImageView:new("Upgrades_Icons_PriceTag_Nm_000" .. data_values.price, nil, scale)
+    price_value.size.x = price_value.size.x * scale
+    price_value.size.y = price_value.size.y * scale
     price_value.anchor = v(price_value.size.x / 2, price_value.size.y / 2)
-    price_value.pos = v(self.cost_panel.size.x / 2 + 4, self.cost_panel.size.y / 2)
+    price_value.pos = v(self.cost_panel.size.x / 2 + 4 * scale, self.cost_panel.size.y / 2)
 
     self.cost_panel:add_child(price_value)
 
-    self.disabled_cost_panel = KImageView:new("Disabled_Upgrades_Icons_PriceTag")
+    self.disabled_cost_panel = KImageView:new("Disabled_Upgrades_Icons_PriceTag", nil ,scale)
+    self.disabled_cost_panel.size.x = self.disabled_cost_panel.size.x * scale
+    self.disabled_cost_panel.size.y = self.disabled_cost_panel.size.y * scale
     self.disabled_cost_panel.pos = v(35, 55)
 
     self:add_child(self.disabled_cost_panel)
 
-    local disabled_price_value = KImageView:new("Disabled_Upgrades_Icons_PriceTag_Nm_000" .. data_values.price)
-
+    local disabled_price_value = KImageView:new("Disabled_Upgrades_Icons_PriceTag_Nm_000" .. data_values.price, nil, scale)
+    disabled_price_value.size.x = disabled_price_value.size.x * scale
+    disabled_price_value.size.y = disabled_price_value.size.y * scale
     disabled_price_value.anchor = v(disabled_price_value.size.x / 2, disabled_price_value.size.y / 2)
-    disabled_price_value.pos = v(self.cost_panel.size.x / 2 + 4, self.cost_panel.size.y / 2)
+    disabled_price_value.pos = v(self.cost_panel.size.x / 2 + 4*scale, self.cost_panel.size.y / 2)
 
     self.disabled_cost_panel:add_child(disabled_price_value)
 
