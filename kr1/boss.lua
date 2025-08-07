@@ -1489,7 +1489,7 @@ local function boss()
     tt.unit.show_blood_pool = false
     tt.unit.size = UNIT_SIZE_LARGE
     tt.vis.bans_at_home = bor(F_RANGED, F_SKELETON, F_MOD, F_BLOCK, F_LETHAL, F_FREEZE)
-    tt.vis.bans_in_battlefield = bor(F_SKELETON, F_BLOOD, F_POISON, F_LETHAL, F_FREEZE)
+    tt.vis.bans_in_battlefield = bor(F_SKELETON, F_POISON, F_LETHAL, F_FREEZE)
     tt.vis.bans_in_pieces = F_ALL
     tt.vis.bans = tt.vis.bans_at_home
     tt.vis.flags = bor(F_ENEMY, F_BOSS)
@@ -1581,7 +1581,7 @@ local function boss()
     E:add_comps(tt, "melee")
     anchor_y = 0.19
     image_y = 66
-    tt.enemy.gold = 5
+    tt.enemy.gold = 6
     tt.enemy.melee_slot = vec_2(26, 0)
     tt.health.armor = 0
     tt.health.hp_max = 450
@@ -1647,7 +1647,7 @@ local function boss()
     tt.unit.hide_after_death = true
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = F_ALL
-    tt.vis.bans_walking = bor(F_SKELETON, F_BLOOD, F_EAT, F_POISON, F_TWISTER, F_POLYMORPH, F_TELEPORT)
+    tt.vis.bans_walking = bor(F_SKELETON, F_EAT, F_POISON, F_TWISTER, F_POLYMORPH, F_TELEPORT)
     tt.piece_respawn_delay = fts(35) + 3
     tt.piece_respawn_delay_repeating = fts(35)
 
