@@ -1037,7 +1037,7 @@ boss.vis.flags = bor(F_ENEMY, F_BOSS)
 boss.info.fn = scripts.enemy_basic.get_info
 boss.ui.click_rect = r(-20, -5, 40, 90)
 boss.health.armor_resilience = 0.5
-
+boss.silence_cast_count = -1
 
 tt = E:register_t("mega_spawner")
 E:add_comps(tt, "main_script", "editor", "editor_script")

@@ -325,7 +325,7 @@ function upgrades:arrows()
     return {"arrow_1", "arrow_2", "arrow_3", "arrow_ranger", "shotgun_musketeer", "shotgun_musketeer_sniper",
             "arrow_crossbow", "axe_totem", "dwarf_shotgun", "pirate_watchtower_shotgun", "arrow_arcane",
             "arrow_arcane_slumber", "arrow_silver", "arrow_silver_long", "arrow_silver_sentence",
-            "arrow_silver_sentence_long", "arrow_silver_mark", "arrow_silver_mark_long"}
+            "arrow_silver_sentence_long", "arrow_silver_mark", "arrow_silver_mark_long", "arrow_hero_elves_archer","arrow_hero_alleria"}
 end
 
 function upgrades:barrack_soldiers()

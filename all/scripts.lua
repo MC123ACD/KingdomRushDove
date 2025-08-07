@@ -5292,8 +5292,10 @@ scripts.cast_silence = function(target, store)
     else
         target.silence_cast_count = target.silence_cast_count + 1
     end
-    target.enemy.can_do_magic = false
-    target.enemy.can_accept_magic = false
+    if target.silence_cast_count > 0 then
+        target.enemy.can_do_magic = false
+        target.enemy.can_accept_magic = false
+    end
 end
 
 scripts.remove_silence = function(target, store)
