@@ -16,7 +16,7 @@ GS.difficulty_enemy_hp_max_factor = {
 	1.3,
     1.65,
     1.65,
-    1.95
+    2
 }
 GS.difficulty_enemy_speed_factor = {
 	1.20,
