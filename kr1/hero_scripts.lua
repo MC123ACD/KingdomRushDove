@@ -2100,7 +2100,7 @@ return function(scripts)
             if not target or not target.tower then
                 log.error("error removing mod_denas_tower %s", this.id)
 
-                return false
+                return true
             end
             SU.remove_tower_cooldown_buff(target, this.cooldown_factor)
             SU.remove_tower_range_buff(target, this.range_factor, true)

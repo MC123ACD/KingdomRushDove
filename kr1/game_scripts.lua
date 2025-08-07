@@ -6117,7 +6117,7 @@ function scripts.aura_ranger_thorn.update(this, store)
 		local owner = store.entities[a.source_id]
 
 		if not owner then
-			log.error("aura_ranger_thorn has no parent tower. removing")
+			-- log.error("aura_ranger_thorn has no parent tower. removing")
 
 			break
 		end
@@ -31751,12 +31751,12 @@ function scripts.malik_slave_controller.update(this, store)
     S:queue("ElvesMalikHammer")
     U.y_animation_play(free_seq, nil, nil, store.tick_ts)
 
-    local hero = LU.insert_hero(store, "hero_baby_malik", this.hero_spawn_pos)
+    LU.insert_hero(store, "hero_baby_malik", this.hero_spawn_pos)
 
-    hero.nav_grid.ignore_waypoints = true
-    hero.nav_rally.new = true
-    hero.nav_rally.pos = V.v(575, 557)
-    hero.nav_rally.center = V.v(575, 557)
+    -- hero.nav_grid.ignore_waypoints = true
+    -- hero.nav_rally.new = true
+    -- hero.nav_rally.pos = V.v(575, 557)
+    -- hero.nav_rally.center = V.v(575, 557)
 
     coroutine.yield()
 
