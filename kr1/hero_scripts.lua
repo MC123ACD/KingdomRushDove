@@ -18677,7 +18677,7 @@ return function(scripts)
                 skill = this.hero.skills.inner_beast
 
                 if not this.is_transformed and ready_to_use_skill(a, store) and this.health.hp <= this.health.hp_max *
-                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown and this.soldier.target_id and store.entities[this.soldier.target_id] and not store.entities[this.soldier.target_id].health.dead then
+                    skill.trigger_hp and store.tick_ts - last_ts > a.min_cooldown and this.soldier.target_id and store.entities[this.soldier.target_id] and not store.entities[this.soldier.target_id].health.dead and this.motion.arrived then
                     y_transform_in()
                 end
 
