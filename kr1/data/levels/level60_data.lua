@@ -4,7 +4,7 @@ return {
 	locked_hero = false,
 	show_comic_idx = 3,
 	level_terrain_type = 3,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	custom_spawn_pos = {
 		x = 46,
 		y = 251

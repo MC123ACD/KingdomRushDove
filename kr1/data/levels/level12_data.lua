@@ -3,7 +3,7 @@
 return {
 	locked_hero = false,
 	level_terrain_type = 3,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	entities_list = {
 		{
 			template = "decal_background",
@@ -477,13 +477,13 @@ return {
 	},
 	level_mode_overrides = {
 		{
-			max_upgrade_level = 5
+			max_upgrade_level = 6
 		},
 		{
-			max_upgrade_level = 5
+			max_upgrade_level = 6
 		},
 		{
-			max_upgrade_level = 5,
+			max_upgrade_level = 6,
 			locked_towers = {
 				"tower_build_engineer"
 			}

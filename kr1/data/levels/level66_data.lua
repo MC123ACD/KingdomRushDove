@@ -3,7 +3,7 @@
 return {
 	locked_hero = false,
 	level_terrain_type = 1,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	custom_spawn_pos = {
 		x = 180,
 		y = 356

@@ -46,13 +46,13 @@ function level:init(store)
 	self.locked_powers = {}
 
 	if store.level_mode == GAME_MODE_CAMPAIGN then
-		self.max_upgrade_level = 5
+		self.max_upgrade_level = 6
 		self.locked_towers = {}
 	elseif store.level_mode == GAME_MODE_HEROIC then
-		self.max_upgrade_level = 4
+		self.max_upgrade_level = 5
 		self.locked_towers = {}
 	elseif store.level_mode == GAME_MODE_IRON then
-		self.max_upgrade_level = 4
+		self.max_upgrade_level = 5
 		self.locked_towers = {
 			"tower_build_archer",
 			"tower_build_barrack",

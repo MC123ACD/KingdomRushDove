@@ -27,15 +27,15 @@ function level:init(store)
 	store.level_terrain_type = TERRAIN_STYLE_DESERT
 
 	if store.level_mode == GAME_MODE_CAMPAIGN then
-		self.max_upgrade_level = 5
+		self.max_upgrade_level = 6
 		self.locked_towers = {
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
-		self.max_upgrade_level = 3
+		self.max_upgrade_level = 4
 		self.locked_towers = {
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
-		self.max_upgrade_level = 3
+		self.max_upgrade_level = 4
 		self.locked_towers = {
 			"tower_build_archer",
 			"tower_build_barrack",

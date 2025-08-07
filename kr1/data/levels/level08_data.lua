@@ -3,7 +3,7 @@
 return {
 	level_terrain_type = 1,
 	locked_hero = false,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	custom_spawn_pos = {
 		x = 170,
 		y = 371
@@ -395,19 +395,19 @@ return {
 	},
 	level_mode_overrides = {
 		{
+			max_upgrade_level = 6,
+			locked_towers = {
+			}
+		},
+		{
+			locked_hero = true,
 			max_upgrade_level = 5,
 			locked_towers = {
 			}
 		},
 		{
 			locked_hero = true,
-			max_upgrade_level = 4,
-			locked_towers = {
-			}
-		},
-		{
-			locked_hero = true,
-			max_upgrade_level = 4,
+			max_upgrade_level = 5,
 			locked_towers = {
 				"tower_build_archer",
 				"tower_build_mage",

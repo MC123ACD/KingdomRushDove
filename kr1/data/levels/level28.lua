@@ -27,7 +27,7 @@ function level:init(store)
 	self.locations = LU.load_locations(store, self)
 
 	if store.level_mode == GAME_MODE_CAMPAIGN then
-		self.max_upgrade_level = 5
+		self.max_upgrade_level = 6
 		self.locked_towers = {
 			"tower_archer_3",
 			"tower_barrack_3",
@@ -36,7 +36,7 @@ function level:init(store)
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = true
-		self.max_upgrade_level = 2
+		self.max_upgrade_level = 3
 		self.locked_towers = {
 			"tower_archer_3",
 			"tower_barrack_3",
@@ -45,7 +45,7 @@ function level:init(store)
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = true
-		self.max_upgrade_level = 2
+		self.max_upgrade_level = 3
 		self.locked_towers = {
 			"tower_build_archer",
 			"tower_barrack_3",

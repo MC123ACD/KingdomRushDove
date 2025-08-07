@@ -6,7 +6,7 @@ end
 return {
 	locked_hero = false,
 	level_terrain_type = 2,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	entities_list = {
 		{
 			template = "aura_waterfall_entrance",
@@ -1173,17 +1173,17 @@ return {
 	},
 	level_mode_overrides = {
 		{
+			max_upgrade_level = 6,
+			locked_towers = {
+			}
+		},
+		{
 			max_upgrade_level = 5,
 			locked_towers = {
 			}
 		},
 		{
-			max_upgrade_level = 4,
-			locked_towers = {
-			}
-		},
-		{
-			max_upgrade_level = 4,
+			max_upgrade_level = 5,
 			locked_towers = {
 				"tower_build_barrack",
 				"tower_build_mage",

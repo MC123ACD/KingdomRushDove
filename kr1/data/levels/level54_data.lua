@@ -3,7 +3,7 @@
 return {
 	locked_hero = false,
 	level_terrain_type = 1,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	entities_list = {
 		{
 			template = "background_sounds",
@@ -365,17 +365,17 @@ return {
 	invalid_path_ranges = {},
 	level_mode_overrides = {
 		{
-			max_upgrade_level = 5,
+			max_upgrade_level = 6,
 			locked_towers = {
 			}
 		},
 		{
-			max_upgrade_level = 3,
+			max_upgrade_level = 4,
 			locked_towers = {
 			}
 		},
 		{
-			max_upgrade_level = 3,
+			max_upgrade_level = 4,
 			locked_towers = {
 				"tower_build_archer",
 				"tower_build_barrack",

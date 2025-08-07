@@ -38,7 +38,7 @@ function level:init(store)
 	store.level_terrain_type = TERRAIN_STYLE_HALLOWEEN
 	self.locations = LU.load_locations(store, self)
 	self.locked_hero = false
-	self.max_upgrade_level = 5
+	self.max_upgrade_level = 6
 	self.locked_towers = {}
 	self.locked_powers = {}
 

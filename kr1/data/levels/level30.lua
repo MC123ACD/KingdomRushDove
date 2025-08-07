@@ -26,17 +26,17 @@ level.required_textures = {
 
 function level:init(store)
 	if store.level_mode == GAME_MODE_CAMPAIGN then
-		self.max_upgrade_level = 5
+		self.max_upgrade_level = 6
 		self.locked_towers = {
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = true
-		self.max_upgrade_level = 2
+		self.max_upgrade_level = 3
 		self.locked_towers = {
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = true
-		self.max_upgrade_level = 2
+		self.max_upgrade_level = 3
 		self.locked_towers = {
 			"tower_build_engineer",
 			"tower_build_mage",

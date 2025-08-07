@@ -4,7 +4,7 @@ return {
 	show_comic_idx = 4,
 	locked_hero = false,
 	level_terrain_type = 3,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	entities_list = {
 		{
 			portal_tag = 4,

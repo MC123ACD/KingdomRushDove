@@ -41,7 +41,7 @@ function level:init(store)
 	self.locations = LU.load_locations(store, self)
 	self.locked_hero = false
 	self.locked_powers = {}
-	self.max_upgrade_level = 5
+	self.max_upgrade_level = 6
 	self.locked_towers = {}
 
 	if store.level_mode == GAME_MODE_IRON then

@@ -13,10 +13,10 @@ GS.difficulty_soldier_hp_max_factor = {
     1
 }
 GS.difficulty_enemy_hp_max_factor = {
-	1.2,
-    1.5,
-    1.5,
-    1.8
+	1.3,
+    1.65,
+    1.65,
+    1.95
 }
 GS.difficulty_enemy_speed_factor = {
 	1.20,

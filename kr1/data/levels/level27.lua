@@ -39,7 +39,7 @@ function level:init(store)
 			-- true
 		}
 		self.locked_hero = false
-		self.max_upgrade_level = 5
+		self.max_upgrade_level = 6
 		self.locked_towers = {
 			"tower_archer_2",
 			"tower_barrack_2",
@@ -48,7 +48,7 @@ function level:init(store)
 		}
 	elseif store.level_mode == GAME_MODE_HEROIC then
 		self.locked_hero = true
-		self.max_upgrade_level = 1
+		self.max_upgrade_level = 2
 		self.locked_towers = {
 			"tower_archer_2",
 			"tower_barrack_2",
@@ -57,7 +57,7 @@ function level:init(store)
 		}
 	elseif store.level_mode == GAME_MODE_IRON then
 		self.locked_hero = true
-		self.max_upgrade_level = 1
+		self.max_upgrade_level = 2
 		self.locked_towers = {
 			"tower_barrack_2",
 			"tower_build_archer",

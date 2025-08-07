@@ -6883,19 +6883,28 @@ function scripts.power_fireball_control.update(this, store, script)
 
         if i <= this.cataclysm_count then
             local dest
-            local enemies = table.filter(store.entities, function (k, v)
-                return v.enemy and not v.health.dead and band(v.vis.bans, F_RANGED) == 0
-            end)
-            if #enemies > 0 then
-                local target = table.random(enemies)
-                local predicted_time = (start_y - target.pos.y) / (target.motion.speed.y + 13 * FPS)
-                local target_current_node = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni)
-                local node_advance = math.ceil((predicted_time * target.motion.real_speed + V.dist(target.pos.x, target.pos.y, target_current_node.x, target_current_node.y)) / P.average_node_dist)
-                local predicted_node_id = target.nav_path.ni + node_advance
-                if predicted_node_id > #P.paths[target.nav_path.pi][target.nav_path.spi] then
-                    predicted_node_id = #P.paths[target.nav_path.pi][target.nav_path.spi]
+
+            local u = UP:get_upgrade("rain_armaggedon")
+
+            if u then
+                local enemies = table.filter(store.entities, function(k, v)
+                    return v.enemy and not v.health.dead and band(v.vis.bans, F_RANGED) == 0
+                end)
+                if #enemies > 0 then
+                    local target = table.random(enemies)
+                    local predicted_time = (start_y - target.pos.y) / (target.motion.speed.y + 13 * FPS)
+                    local target_current_node = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni)
+                    local node_advance = math.ceil((predicted_time * target.motion.real_speed +
+                                                    V.dist(target.pos.x, target.pos.y, target_current_node.x, target_current_node.y)) /
+                                                    P.average_node_dist)
+                    local predicted_node_id = target.nav_path.ni + node_advance
+                    if predicted_node_id > #P.paths[target.nav_path.pi][target.nav_path.spi] then
+                        predicted_node_id = #P.paths[target.nav_path.pi][target.nav_path.spi]
+                    end
+                    dest = P:node_pos(target.nav_path.pi, target.nav_path.spi, predicted_node_id)
+                else
+                    dest = P:get_random_position(10, bor(TERRAIN_LAND, TERRAIN_WATER))
                 end
-                dest = P:node_pos(target.nav_path.pi, target.nav_path.spi, predicted_node_id)
             else
                 dest = P:get_random_position(10, bor(TERRAIN_LAND, TERRAIN_WATER))
             end

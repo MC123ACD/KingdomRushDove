@@ -3759,7 +3759,7 @@ function EncyclopediaView:show()
     E:load()
     UPGR:set_levels(user_data.upgrades)
     DI:set_level(screen_map.user_data.difficulty)
-    UPGR:patch_templates(5)
+    UPGR:patch_templates(6)
     DI:patch_templates()
     self:load_towers()
 

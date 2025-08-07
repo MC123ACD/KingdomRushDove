@@ -4,7 +4,7 @@ return {
 	level_terrain_type = 1,
 	locked_hero = false,
 	show_comic_idx = 1,
-	max_upgrade_level = 5,
+	max_upgrade_level = 6,
 	custom_spawn_pos = {
 		x = 170,
 		y = 371
@@ -577,7 +577,7 @@ return {
 	invalid_path_ranges = {},
 	level_mode_overrides = {
 		{
-			max_upgrade_level = 5,
+			max_upgrade_level = 6,
 			locked_powers = {
 				true,
 				true,
@@ -591,7 +591,7 @@ return {
 			}
 		},
 		{
-			max_upgrade_level = 1,
+			max_upgrade_level = 2,
 			locked_powers = {
 				[3] = true
 			},
@@ -603,7 +603,7 @@ return {
 			}
 		},
 		{
-			max_upgrade_level = 1,
+			max_upgrade_level = 2,
 			locked_powers = {
 				[3] = true
 			},
