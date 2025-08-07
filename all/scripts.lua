@@ -6234,16 +6234,6 @@ function scripts.mod_polymorph.insert(this, store, script)
 
     if pm.transfer_speed_factor then
         U.update_max_speed(e, pm.transfer_speed_factor * target.motion.max_speed)
-        local has, mods = U.has_modifier_types(store, target, MOD_TYPE_FAST, MOD_TYPE_SLOW)
-        if has then
-            for _, m in pairs(mods) do
-                if m.fast then
-                    U.speed_div(e, m.fast.factor)
-                elseif m.slow then
-                    U.speed_div(e, m.slow.factor)
-                end
-            end
-        end
     end
 
     queue_insert(store, e)

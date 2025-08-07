@@ -33,7 +33,7 @@ game.required_sounds = {"common", "ElvesTowerTaunts", "ElvesCommonSounds"}
 game.simulation_systems = {"level", "wave_spawn", "mod_lifecycle", "main_script", "timed", "tween", "health",
                            "count_groups", "hero_xp_tracking", "pops", "goal_line", "tower_upgrade", "game_upgrades",
                            "texts", "particle_system", "render", "sound_events", "seen_tracker"}
-
+-- performance_monitor
 function game:init(screen_w, screen_h, done_callback)
     self.dash_start_offset = 0
     self.screen_w = screen_w
