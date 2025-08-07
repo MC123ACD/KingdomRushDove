@@ -2528,23 +2528,23 @@ end
 function perf.save_report(store)
     local report = perf.generate_report(store)
 
-    -- 确保目录存在
-    local success = love.filesystem.createDirectory("reports")
-    if not success then
-        log.error("无法创建reports目录")
-        print(report) -- 如果无法创建目录，至少输出到控制台
-        return
-    end
+    -- -- 确保目录存在
+    -- local success = love.filesystem.createDirectory("reports")
+    -- if not success then
+    --     log.error("无法创建reports目录")
+    --     print(report) -- 如果无法创建目录，至少输出到控制台
+    --     return
+    -- end
 
-    local filename = "reports/performance_" .. os.date("%Y%m%d_%H%M%S") .. ".txt"
-    local success, errorMessage = love.filesystem.write(filename, report)
+    -- local filename = "reports/performance_" .. os.date("%Y%m%d_%H%M%S") .. ".txt"
+    -- local success, errorMessage = love.filesystem.write(filename, report)
 
-    if success then
-        log.info("性能报告已保存: %s", filename)
-        log.info("文件路径: %s", love.filesystem.getSaveDirectory() .. "/" .. filename)
-    else
-        log.error("保存性能报告失败: %s", errorMessage or "未知错误")
-    end
+    -- if success then
+    --     log.info("性能报告已保存: %s", filename)
+    --     log.info("文件路径: %s", love.filesystem.getSaveDirectory() .. "/" .. filename)
+    -- else
+    --     log.error("保存性能报告失败: %s", errorMessage or "未知错误")
+    -- end
 
     print(report) -- 同时输出到控制台
 end

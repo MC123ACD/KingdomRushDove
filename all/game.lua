@@ -249,7 +249,6 @@ function game:update(dt)
     if DEBUG then
         self:update_debug(dt)
     end
-
     -- if self.DBG_TIME_MULT then
     -- 	for i = 1, self.DBG_TIME_MULT do
     -- 		self.simulation:update(dt)

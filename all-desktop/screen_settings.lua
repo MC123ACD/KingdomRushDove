@@ -267,10 +267,10 @@ function screen_settings:init(sw, sh, params, done_callback)
 			"Full HD",
 			"fullhd"
 		},
-		{
-			"HD",
-			"ipad"
-		}
+		-- {
+		-- 	"HD",
+		-- 	"ipad"
+		-- }
 	}) do
 		sl_tex:add_item(r[1], r[2])
 	end
@@ -299,6 +299,14 @@ function screen_settings:init(sw, sh, params, done_callback)
 	sl_fps.pos = v(sw / 2 + m, y)
 
 	for _, r in pairs({
+        {
+            "144",
+            144
+        },
+        {
+            "120",
+            120
+        },
 		{
 			"60",
 			60
