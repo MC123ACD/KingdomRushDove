@@ -3495,7 +3495,7 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     self.cost_panel = KImageView:new("Upgrades_Icons_PriceTag", nil, scale)
     self.cost_panel.size.x = self.cost_panel.size.x * scale
     self.cost_panel.size.y = self.cost_panel.size.y * scale
-    self.cost_panel.pos = v(35, 55)
+    self.cost_panel.pos = v(35 * scale, 55 * scale)
 
     self:add_child(self.cost_panel)
 
@@ -3510,7 +3510,7 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     self.disabled_cost_panel = KImageView:new("Disabled_Upgrades_Icons_PriceTag", nil ,scale)
     self.disabled_cost_panel.size.x = self.disabled_cost_panel.size.x * scale
     self.disabled_cost_panel.size.y = self.disabled_cost_panel.size.y * scale
-    self.disabled_cost_panel.pos = v(35, 55)
+    self.disabled_cost_panel.pos = v(35 * scale, 55 * scale)
 
     self:add_child(self.disabled_cost_panel)
 
@@ -3518,7 +3518,7 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     disabled_price_value.size.x = disabled_price_value.size.x * scale
     disabled_price_value.size.y = disabled_price_value.size.y * scale
     disabled_price_value.anchor = v(disabled_price_value.size.x / 2, disabled_price_value.size.y / 2)
-    disabled_price_value.pos = v(self.cost_panel.size.x / 2 + 4*scale, self.cost_panel.size.y / 2)
+    disabled_price_value.pos = v(self.cost_panel.size.x / 2 + 4 * scale, self.cost_panel.size.y / 2)
 
     self.disabled_cost_panel:add_child(disabled_price_value)
 
@@ -3784,7 +3784,7 @@ function EncyclopediaView:load_towers()
         self.towers:add_child(self.over_sprite)
         self:detail_tower(1)
 
-        self.select_sprite.pos = v(50, 150)
+        self.select_sprite.pos = v(50, 120)
         self.select_sprite.hidden = false
 
         return
@@ -3824,7 +3824,7 @@ function EncyclopediaView:load_towers()
     self.towers:add_child(right_deco)
     self.over_sprite = KImageView:new("encyclopedia_tower_thumbs_0022")
     self.select_sprite = KImageView:new("encyclopedia_tower_thumbs_0023")
-    self.select_sprite.pos = v(50, 150)
+    self.select_sprite.pos = v(50, 120)
     self.select_sprite.hidden = false
     local tower_count = #screen_map.tower_data
     for i = 1, tower_count do

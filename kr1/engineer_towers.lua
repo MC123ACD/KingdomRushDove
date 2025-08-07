@@ -194,8 +194,8 @@ local function engineer_towers()
     tt.attacks.list[1].cooldown = 2.2
     tt.attacks.list[1].node_prediction = fts(18)
     tt.attacks.list[1].range = 165
-    -- tt.attacks.list[1].shoot_time = fts(48)
-    tt.attacks.list[1].shoot_time = fts(36)
+    tt.attacks.list[1].shoot_time = fts(48)
+    -- tt.attacks.list[1].shoot_time = fts(24)
     tt.attacks.list[1].sound_shoot = "TeslaAttack"
     tt.attacks.list[2] = CC("aura_attack")
     tt.attacks.list[2].aura = "aura_tesla_overcharge"

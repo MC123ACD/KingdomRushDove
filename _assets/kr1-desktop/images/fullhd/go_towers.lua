@@ -2532,7 +2532,7 @@ local kr1_data = {
 			127
 		},
 		alias = {
-			"artillery_lvl4_tesla_0002"
+			"artillery_lvl4_tesla_0002",
 		}
 	},
 	artillery_lvl4_tesla_0003 = {
