@@ -298,7 +298,7 @@ end
 function mu.apply_params(params, game_name, game_target, game_platform)
 	DRAW_FPS = tonumber(params.fps)
 	TICK_LENGTH = 1 / DRAW_FPS
-    log.error("DRAW_FPS: %s, TICK_LENGTH: %s", DRAW_FPS, TICK_LENGTH)
+
 	if params.level or params.screen then
 		params.skip_settings_dialog = true
 	end
