@@ -6213,7 +6213,7 @@ local function heroes()
     tt.bullet.flight_time = fts(15)
     tt.bullet.pop = {"pop_archer"}
     tt.bullet.hide_radius = 1
-    tt.bullet.xp_gain_factor = 3
+    tt.bullet.xp_gain_factor = 2.8
 
     tt = E:register_t("hero_elves_archer_ultimate")
     E:add_comps(tt, "pos", "main_script")
