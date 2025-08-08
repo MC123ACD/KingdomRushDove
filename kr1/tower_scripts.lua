@@ -1890,6 +1890,18 @@ local function register_mage(scripts)
             local function wizard_ready()
                 return store.tick_ts - last_ts > a.min_cooldown * this.tower.cooldown_factor
             end
+            local function update_base_damage()
+                ray_damage_min = ray_mod.dps.damage_min
+                ray_damage_max = ray_mod.dps.damage_max
+
+                if pow_d.level == 1 then
+                    base_damage = ray_damage_min
+                elseif pow_d.level == 2 then
+                    base_damage = (ray_damage_min + ray_damage_max) * 0.5
+                elseif pow_d.level == 3 then
+                    base_damage = ray_damage_max
+                end
+            end
             local function wizard_attack(attack, enemy, pred_pos)
                 attack.ts = last_ts
                 local b
@@ -1902,6 +1914,7 @@ local function register_mage(scripts)
                     b.aura.level = pow_t.level
                 else
                     if attack == ad then
+                        update_base_damage()
                         local exact_upper_damage = upper_damage * this.tower.damage_factor
                         local exact_base_damage = base_damage * this.tower.damage_factor
                         local base_time = a.min_cooldown + 2.25 - pow_d.level * 0.75
@@ -1932,11 +1945,11 @@ local function register_mage(scripts)
                         pow_d.changed = nil
                         if pow_d.level == 1 then
                             ad.ts = store.tick_ts
-                            base_damage = ray_damage_min
-                        elseif pow_d.level == 2 then
-                            base_damage = (ray_damage_min + ray_damage_max) * 0.5
-                        else
-                            base_damage = ray_damage_max
+                        --     base_damage = ray_damage_min
+                        -- elseif pow_d.level == 2 then
+                        --     base_damage = (ray_damage_min + ray_damage_max) * 0.5
+                        -- else
+                        --     base_damage = ray_damage_max
                         end
                         upper_damage = pow_d.upper_damage[pow_d.level]
                         ad.cooldown = pow_d.cooldown_base + pow_d.cooldown_inc * pow_d.level
@@ -1999,7 +2012,7 @@ local function register_mage(scripts)
                     this.decalmod_disintegrate_ready = true
                 elseif this.decalmod_disintegrate_ready then
                     local mods = table.filter(store.modifiers, function(_, e)
-                        return e.modifier and e.modifier.source_id == this.id and e.template_name ==
+                        return e.modifier.source_id == this.id and e.template_name ==
                                    "decalmod_arcane_wizard_disintegrate_ready"
                     end)
 
