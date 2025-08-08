@@ -715,7 +715,8 @@ local function archer_towers()
     tt.powers.slumber.price_inc = 75
     tt.powers.slumber.enc_icon = 1
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_%04i"
+    -- tt.render.sprites[1].name = "terrains_%04i"
+    tt.render.sprites[1].name = "terrain_archer_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
@@ -891,7 +892,8 @@ local function archer_towers()
     tt.powers.mark.price_inc = 150
     tt.powers.mark.enc_icon = 4
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_%04i"
+    -- tt.render.sprites[1].name = "terrains_%04i"
+    tt.render.sprites[1].name = "terrain_archer_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false

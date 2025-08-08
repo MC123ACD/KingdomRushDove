@@ -839,7 +839,8 @@ local function mage_towers()
     tt.powers.sentinel.ts = 0
     tt.powers.sentinel.cooldown = 0.5
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_%04i"
+    -- tt.render.sprites[1].name = "terrains_%04i"
+    tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
@@ -1071,7 +1072,8 @@ local function mage_towers()
     tt.powers.ward.target_count = {1, 3, 5}
     tt.powers.ward.enc_icon = 17
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_%04i"
+    -- tt.render.sprites[1].name = "terrains_%04i"
+    tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
@@ -1210,7 +1212,8 @@ local function mage_towers()
     tt.powers.improve_shot.price_inc = 200
     tt.powers.improve_shot.max_level = 2
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_0002"
+    -- tt.render.sprites[1].name = "terrains_0002"
+    tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false

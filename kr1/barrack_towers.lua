@@ -1295,7 +1295,8 @@ local function barrack_towers()
     tt.powers.blade_mail = CC("power")
     tt.powers.blade_mail.price_base = 135
     tt.powers.blade_mail.price_inc = 135
-    tt.render.sprites[1].name = "terrains_0003"
+    -- tt.render.sprites[1].name = "terrains_0003"
+    tt.render.sprites[1].name = "terrain_barrack_%04i"
     tt.render.sprites[2].name = "mercenaryDraw_tower_layer1_0001"
     tt.render.sprites[2].offset = vec_2(0, 29)
     tt.render.sprites[3].prefix = "tower_drow_door"
@@ -1401,7 +1402,8 @@ local function barrack_towers()
     tt.editor.props = table.append(tt.editor.props, {{"barrack.rally_pos", PT_COORDS}}, true)
     tt.info.i18n_key = "ELVES_EWOK_TOWER"
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_0001"
+    -- tt.render.sprites[1].name = "terrains_0001"
+    tt.render.sprites[1].name = "terrain_barrack_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false

@@ -944,7 +944,8 @@ local function engineer_towers()
     tt.powers.fiery_nuts.attack_idx = 2
     tt.powers.fiery_nuts.enc_icon = 15
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrains_%04i"
+    -- tt.render.sprites[1].name = "terrains_%04i"
+    tt.render.sprites[1].name = "terrain_artillery_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
 
     for i = 2, 10 do

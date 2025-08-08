@@ -3901,102 +3901,102 @@ local kr3 = {
         f_quad = {207, 477, 154, 95},
         alias = {}
     },
-    terrains_0001 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {961, 802, 115, 65},
-        alias = {}
-    },
-    terrains_0001_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {10, 0, 8, 0},
-        a_size = {2048, 1024},
-        f_quad = {676, 511, 136, 87},
-        alias = {}
-    },
-    terrains_0002 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {961, 873, 115, 65},
-        alias = {}
-    },
-    terrains_0002_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {10, 0, 8, 0},
-        a_size = {2048, 1024},
-        f_quad = {676, 604, 136, 87},
-        alias = {}
-    },
-    terrains_0003 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {961, 944, 115, 65},
-        alias = {}
-    },
-    terrains_0003_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {8, 1, 8, 1},
-        a_size = {2048, 1024},
-        f_quad = {676, 6, 138, 85},
-        alias = {}
-    },
-    terrains_0004 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {1094, 6, 115, 65},
-        alias = {}
-    },
-    terrains_0004_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {9, 0, 8, 0},
-        a_size = {2048, 1024},
-        f_quad = {676, 345, 137, 87},
-        alias = {}
-    },
-    terrains_0005 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {1215, 6, 115, 65},
-        alias = {}
-    },
-    terrains_0005_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {10, 0, 8, 0},
-        a_size = {2048, 1024},
-        f_quad = {676, 697, 136, 87},
-        alias = {}
-    },
-    terrains_0006 = {
-        a_name = "go_decals-4.png",
-        size = {115, 65},
-        trim = {0, 0, 0, 0},
-        a_size = {2048, 1024},
-        f_quad = {1336, 6, 115, 65},
-        alias = {}
-    },
-    terrains_0006_over = {
-        a_name = "go_decals-4.png",
-        size = {154, 87},
-        trim = {9, 0, 9, 0},
-        a_size = {2048, 1024},
-        f_quad = {676, 790, 136, 87},
-        alias = {}
-    },
+    -- terrains_0001 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {961, 802, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0001_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {10, 0, 8, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 511, 136, 87},
+    --     alias = {}
+    -- },
+    -- terrains_0002 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {961, 873, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0002_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {10, 0, 8, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 604, 136, 87},
+    --     alias = {}
+    -- },
+    -- terrains_0003 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {961, 944, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0003_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {8, 1, 8, 1},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 6, 138, 85},
+    --     alias = {}
+    -- },
+    -- terrains_0004 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {1094, 6, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0004_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {9, 0, 8, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 345, 137, 87},
+    --     alias = {}
+    -- },
+    -- terrains_0005 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {1215, 6, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0005_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {10, 0, 8, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 697, 136, 87},
+    --     alias = {}
+    -- },
+    -- terrains_0006 = {
+    --     a_name = "go_decals-4.png",
+    --     size = {115, 65},
+    --     trim = {0, 0, 0, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {1336, 6, 115, 65},
+    --     alias = {}
+    -- },
+    -- terrains_0006_over = {
+    --     a_name = "go_decals-4.png",
+    --     size = {154, 87},
+    --     trim = {9, 0, 9, 0},
+    --     a_size = {2048, 1024},
+    --     f_quad = {676, 790, 136, 87},
+    --     alias = {}
+    -- },
     twilight_evoker_aura = {
         a_name = "go_decals-4.png",
         size = {121, 62},
