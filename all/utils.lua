@@ -1474,6 +1474,14 @@ function U.predict_damage(entity, damage)
         return armor * (2 - armor)
     end
 
+    local function calc_mixed_protection(armor, magic_armor)
+        if magic_armor > armor then
+            return armor
+        else
+            return (magic_armor + armor) * 0.5
+        end
+    end
+
     if band(d.damage_type, DAMAGE_POISON) ~= 0 then
         protection = e.health.poison_armor
     elseif band(d.damage_type, DAMAGE_TRUE) ~= 0 then
@@ -1493,7 +1501,7 @@ function U.predict_damage(entity, damage)
     elseif band(d.damage_type, DAMAGE_STAB) ~= 0 then
         protection = calc_stab_protection(e.health.armor - d.reduce_armor)
     elseif band(d.damage_type, DAMAGE_MIXED) ~= 0 then
-        protection = (e.health.armor - d.reduce_armor + e.health.magic_armor - d.reduce_magic_armor) * 0.5
+        protection = calc_mixed_protection(e.health.armor - d.reduce_armor, e.health.magic_armor - d.reduce_magic_armor)
     elseif d.damage_type == DAMAGE_NONE then
         protection = 1
     end
@@ -1511,7 +1519,7 @@ function U.predict_damage(entity, damage)
 
     rounded_damage = km.round(rounded_damage * e.health.damage_factor)
 
-    local actual_damage = rounded_damage * km.clamp(0, 1, 1 - protection)
+    local actual_damage = math.ceil(rounded_damage * km.clamp(0, 1, 1 - protection))
 
     if band(d.damage_type, DAMAGE_NO_KILL) ~= 0 and e.health and actual_damage >= e.health.hp then
         actual_damage = e.health.hp - 1
