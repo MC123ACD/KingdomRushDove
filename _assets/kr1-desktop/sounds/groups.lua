@@ -202,7 +202,8 @@ local kr2 = {
     },
     HalloweenSounds = {
         files = {"halloween_abominationexplosion.ogg", "halloween_werewolf_alfawolf.ogg",
-                 "halloween_werewolf_minormoans.ogg", "halloween_werewolf_transformation.ogg", "moon_test_4.ogg"}
+                 "halloween_werewolf_minormoans.ogg", "halloween_werewolf_transformation.ogg"}
+                --  moon_test_4.ogg
     },
     HeroAlien = {
         files = {"alien_taunt_confirm_1.ogg", "alien_taunt_confirm_2.ogg", "alien_taunt_confirm_3.ogg",

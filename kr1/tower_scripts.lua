@@ -174,7 +174,22 @@ local function register_archer(scripts)
                 b.bullet.target_id = enemy.id
                 b.bullet.level = level
                 b.bullet.damage_factor = this.tower.damage_factor
-                b.bullet.mods = pow_p.level > 0 and pow_p.mods
+                if pow_p.level > 0 then
+                    if not b.bullet.mods then
+                        b.bullet.mods = pow_p.level > 0 and pow_p.mods
+                    else
+                        b.bullet.mods = table.append(b.bullet.mods, pow_p.mods)
+                    end
+                    if b.bullet.mod then
+                        if type(b.bullet.mod) == "table" then
+                            b.bullet.mods = table.append(b.bullet.mods, b.bullet.mod)
+                            b.bullet.mod = nil
+                        else
+                            table.insert(b.bullet.mods, b.bullet.mod)
+                            b.bullet.mod = nil
+                        end
+                    end
+                end
 
                 apply_precision(b)
 

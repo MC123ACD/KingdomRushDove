@@ -2573,12 +2573,12 @@ local kr2 = {
         source_group = "SPECIALS",
         files = {"HeadlessHorseman-03a_WET.ogg"}
     },
-    HWPreMoon = {
-        loop = false,
-        gain = 1,
-        source_group = "GUI",
-        files = {"moon_test_4.ogg"}
-    },
+    -- HWPreMoon = {
+    --     loop = false,
+    --     gain = 1,
+    --     source_group = "GUI",
+    --     files = {"moon_test_4.ogg"}
+    -- },
     HWVampiressAreaAttack = {
         loop = false,
         gain = 1,
