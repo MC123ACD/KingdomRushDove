@@ -19,6 +19,8 @@ return {
     hero_5 = {"r"},
     -- 援军调集键位，默认为 "f"
     reinforce = {"f"},
+    -- 非援军的可调集单位(如大恶魔)的调集键位，默认为 "e"
+    reinforce_other = {"e"},
     -- 下一波键位，默认为 "w" 或 "return"(回车)
     next_wave = {"w", "return"},
     -- 1/2 倍速键位，默认为 "4"

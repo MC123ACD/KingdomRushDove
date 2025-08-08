@@ -66,6 +66,7 @@ game_gui.ref_h = GUI_REF_H
 game_gui.ref_w = GUI_REF_W
 game_gui.ref_res = TEXTURE_SIZE_ALIAS.ipad
 game_gui.selected_controables = {}
+
 local function wid(name)
     return game_gui.window:ci(name)
 end
@@ -393,9 +394,17 @@ function game_gui:init(w, h, game)
 
     local settings = storage:load_settings()
     self.key_shortcuts = LU.eval_file("patches/keyset_custom.lua")
+    local default_key_shortcuts = LU.eval_file("patches/keyset_default.lua")
     if not self.key_shortcuts then
-        self.key_shortcuts = LU.eval_file("patches/keyset_default.lua")
+        self.key_shortcuts = default_key_shortcuts
+    else
+        for k, v in pairs(default_key_shortcuts) do
+            if not self.key_shortcuts[k] then
+                self.key_shortcuts[k] = v
+            end
+        end
     end
+
     self.pause_on_switch = settings.pause_on_switch
     -- self.key_shortcuts = {}
     -- self.key_shortcuts.pow_1 = settings.key_pow_1 or KEYPRESS_1
@@ -1028,7 +1037,18 @@ function game_gui:keypressed(key, isrepeat)
             self:deselect_controables()
         else
             for _, e in pairs(self.game.simulation.store.soldiers) do
-                if e.controable and not e.health.dead and not e.ban_global_control then
+                if e.controable and not e.health.dead and not e.controable_other then
+                    self:select_controable(e)
+                end
+            end
+            self:set_mode(GUI_MODE_RALLY_CONTROABLES)
+        end
+    elseif table.contains(ks.reinforce_other, key) then
+        if #self.selected_controables > 0 then
+            self:deselect_controables()
+        else
+            for _, e in pairs(self.game.simulation.store.soldiers) do
+                if e.controable and not e.health.dead and e.controable_other then
                     self:select_controable(e)
                 end
             end

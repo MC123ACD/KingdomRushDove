@@ -7430,7 +7430,7 @@ local function heroes()
     tt.health.hp_max = 200
     tt.health_bar.offset = vec_2(0, 40)
     tt.controable = true
-    tt.ban_global_control = true
+    tt.controable_other = true
     tt.info.portrait = "kr3_portraits_sc_0059"
     tt.info.random_name_count = 15
     tt.info.random_name_format = "ELVES_SOLDIER_IMPERIAL_%i_NAME"
@@ -9813,7 +9813,7 @@ local function heroes()
     tt = E:register_t("soldier_hero_hunter_ultimate", "soldier_militia")
     E:add_comps(tt, "nav_grid", "ranged", "reinforcement", "tween")
     tt.controable = true
-    tt.ban_global_control = true
+    tt.controable_other = true
     tt.is_kr5 = true
     b = balance.heroes.hero_hunter
     tt.health_bar.offset = vec_2(0, 50)
@@ -10925,7 +10925,7 @@ local function heroes()
     b = balance.heroes.hero_raelyn
     tt.is_kr5 = true
     tt.controable = true
-    tt.ban_global_control = true
+    tt.controable_other = true
     tt.health_bar.offset = vec_2(0, 50)
     tt.info.i18n_key = "HERO_RAELYN_ULTIMATE_ENTITY"
     tt.info.enc_icon = 12
