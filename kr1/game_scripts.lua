@@ -226,14 +226,21 @@ function scripts.twister.update(this, store, script)
 							table.insert(picked_enemies, enemy)
 							SU.remove_modifiers(store, enemy)
 							SU.remove_auras(store, enemy)
-							queue_remove(store, enemy)
+                            U.sprites_hide(enemy, nil, nil, true)
+                            SU.stun_inc(enemy)
+                            scripts.cast_silence(enemy, store)
+							-- queue_remove(store, enemy)
 
-							enemy.health.dead = true
-							enemy.health.last_damage_types = DAMAGE_EAT
-							enemy.main_script.co = nil
-							enemy.main_script.runs = 0
+							-- enemy.health.dead = true
+							-- enemy.health.last_damage_types = DAMAGE_EAT
+							-- enemy.main_script.co = nil
+							-- enemy.main_script.runs = 0
 
 							U.unblock_all(store, enemy)
+
+                            if enemy.health_bar then
+                                enemy.health_bar.hidden = true
+                            end
 
 							if enemy.ui then
 								enemy.ui.can_click = false
@@ -242,6 +249,9 @@ function scripts.twister.update(this, store, script)
 							if enemy.count_group then
 								enemy.count_group.in_limbo = true
 							end
+
+                            enemy.vis_bans_before_twister = enemy.vis.bans
+                            enemy.vis.bans = F_ALL
 						end
 					end
 				end
@@ -261,16 +271,25 @@ function scripts.twister.update(this, store, script)
 		enemy.nav_path.pi = np.pi
 		enemy.nav_path.ni = km.clamp(1, #P:path(np.pi) - 1, math.random(-3, 3) + np.ni)
 		enemy.pos = P:node_pos(enemy.nav_path.pi, enemy.nav_path.spi, enemy.nav_path.ni)
-		enemy.main_script.runs = 1
-		enemy.health.dead = false
+		-- enemy.main_script.runs = 1
+		-- enemy.health.dead = false
 
 		if enemy.ui then
 			enemy.ui.can_click = true
 		end
 
-		enemy.motion.forced_waypoint = nil
+        if enemy.health_bar then
+            enemy.health_bar.hidden = nil
+        end
 
-		queue_insert(store, enemy)
+        enemy.vis.bans = enemy.vis_bans_before_twister
+
+        SU.stun_dec(enemy)
+        scripts.remove_silence(enemy, store)
+        U.sprites_show(enemy, nil, nil, true)
+		-- enemy.motion.forced_waypoint = nil
+
+		-- queue_insert(store, enemy)
 	end
 
 	coroutine.yield()

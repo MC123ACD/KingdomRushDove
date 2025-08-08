@@ -324,7 +324,7 @@ return function(scripts)
     scripts.arrow_multishot_hero_alleria = {
         insert = function(this, store)
             if this.extra_arrows > 0 then
-                local _, targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range,
+                local _, targets = U.find_foremost_enemy(store.enemies, this.bullet.to, 0, this.extra_arrows_range,nil,
                     F_RANGED, F_NONE)
 
                 if targets then
