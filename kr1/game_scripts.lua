@@ -6614,7 +6614,7 @@ function scripts.aura_10yr_bomb.update(this, store)
 	local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.min_nodes, a.max_nodes, nil, a.vis_flags, a.vis_bans)
 
 	if not target_info or #target_info < a.min_count then
-		log.error("aura_10yr_bomb could not find valid enemies in the hero paths")
+		-- log.error("aura_10yr_bomb could not find valid enemies in the hero paths")
 	else
 		target = target_info[1].enemy
 		origin = target_info[1].origin

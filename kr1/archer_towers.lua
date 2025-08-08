@@ -153,8 +153,10 @@ local function archer_towers()
     tower_crossbow.attacks.list[3].fly_cooldown = 10
     tower_crossbow.attacks.list[3].range = 128
     tower_crossbow.attacks.list[3].range_inc = 32
-    tower_crossbow.render.sprites[1].name = "terrain_specials_%04i"
-    tower_crossbow.render.sprites[1].offset = vec_2(0, 7)
+    -- tower_crossbow.render.sprites[1].name = "terrain_specials_%04i"
+    tower_crossbow.render.sprites[1].name = "terrain_archer_%04i"
+    -- tower_crossbow.render.sprites[1].offset = vec_2(0, 7)
+    tower_crossbow.render.sprites[1].offset = vec_2(0, 14)
     tower_crossbow.render.sprites[2].name = "CossbowHunter_tower"
     tower_crossbow.render.sprites[2].offset = vec_2(0, 33)
     tower_crossbow.render.sprites[3].prefix = "shootercrossbow"
@@ -265,8 +267,10 @@ local function archer_towers()
     tower_totem.attacks.list[3].bullet = "totem_silence"
     tower_totem.attacks.list[3].cooldown = 8
     tower_totem.attacks.list[3].vis_bans = bor(F_CLIFF)
-    tower_totem.render.sprites[1].name = "terrain_specials_%04i"
-    tower_totem.render.sprites[1].offset = vec_2(0, 6)
+    -- tower_totem.render.sprites[1].name = "terrain_specials_%04i"
+    tower_totem.render.sprites[1].name = "terrain_archer_%04i"
+    -- tower_totem.render.sprites[1].offset = vec_2(0, 6)
+    tower_totem.render.sprites[1].offset = vec_2(0, 12)
     tower_totem.render.sprites[2].name = "TotemTower"
     tower_totem.render.sprites[2].offset = vec_2(0, 37)
     tower_totem.render.sprites[3].prefix = "shootertotem"
@@ -540,7 +544,8 @@ local function archer_towers()
     tt.powers.extra_damage.price_base = 175
     tt.powers.extra_damage.price_inc = 175
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrain_specials_%04i"
+    -- tt.render.sprites[1].name = "terrain_specials_%04i"
+    tt.render.sprites[1].name = "terrain_archer_%04i"
     tt.render.sprites[1].offset = vec_2(0, 9)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false

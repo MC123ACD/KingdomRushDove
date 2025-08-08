@@ -529,7 +529,8 @@ local function barrack_towers()
     tower_templar.powers.blood.enc_icon = 26
     tower_templar.barrack.soldier_type = "soldier_templar"
     tower_templar.barrack.rally_range = 160
-    tower_templar.render.sprites[1].name = "terrain_specials_%04i"
+    -- tower_templar.render.sprites[1].name = "terrain_specials_%04i"
+    tower_templar.render.sprites[1].name = "terrain_barrack_%04i"
     tower_templar.render.sprites[1].offset = vec_2(0, 8)
     tower_templar.render.sprites[2].name = "tower_templars_layer1_0001"
     tower_templar.render.sprites[2].offset = vec_2(0, 34)
@@ -635,8 +636,10 @@ local function barrack_towers()
     tower_assassin.powers.counter.enc_icon = 23
     tower_assassin.barrack.soldier_type = "soldier_assassin"
     tower_assassin.barrack.rally_range = 165
-    tower_assassin.render.sprites[1].name = "terrain_specials_%04i"
-    tower_assassin.render.sprites[1].offset = vec_2(0, 8)
+    -- tower_assassin.render.sprites[1].name = "terrain_specials_%04i"
+    tower_assassin.render.sprites[1].name = "terrain_barrack_%04i"
+    -- tower_assassin.render.sprites[1].offset = vec_2(0, 8)
+    tower_assassin.render.sprites[1].offset = vec_2(0, 11)
     tower_assassin.render.sprites[2].name = "tower_assasins_layer1_0005"
     tower_assassin.render.sprites[2].offset = vec_2(0, 30)
     tower_assassin.render.sprites[3].prefix = "towerassassin_door"

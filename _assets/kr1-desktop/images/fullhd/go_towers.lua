@@ -92684,246 +92684,246 @@ local kr2_data = {
 		},
 		alias = {}
 	},
-	terrain_specials_0004 = {
-		a_name = "go_towers-3.png",
-		size = {
-			141,
-			65
-		},
-		trim = {
-			1,
-			0,
-			0,
-			0
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			203,
-			1956,
-			140,
-			65
-		},
-		alias = {}
-	},
-	terrain_specials_0004_over = {
-		a_name = "go_towers-3.png",
-		size = {
-			189,
-			87
-		},
-		trim = {
-			15,
-			0,
-			14,
-			0
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			705,
-			122,
-			160,
-			87
-		},
-		alias = {}
-	},
-	terrain_specials_0005 = {
-		a_name = "go_towers-3.png",
-		size = {
-			141,
-			65
-		},
-		trim = {
-			3,
-			0,
-			7,
-			4
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			1639,
-			364,
-			131,
-			61
-		},
-		alias = {}
-	},
-	terrain_specials_0005_over = {
-		a_name = "go_towers-3.png",
-		size = {
-			189,
-			87
-		},
-		trim = {
-			17,
-			0,
-			20,
-			4
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			1361,
-			122,
-			152,
-			83
-		},
-		alias = {}
-	},
-	terrain_specials_0006 = {
-		a_name = "go_towers-3.png",
-		size = {
-			141,
-			65
-		},
-		trim = {
-			1,
-			0,
-			0,
-			0
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			364,
-			1270,
-			140,
-			65
-		},
-		alias = {}
-	},
-	terrain_specials_0006_over = {
-		a_name = "go_towers-3.png",
-		size = {
-			189,
-			87
-		},
-		trim = {
-			15,
-			0,
-			14,
-			1
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			871,
-			122,
-			160,
-			86
-		},
-		alias = {}
-	},
-	terrain_specials_0007 = {
-		a_name = "go_towers-3.png",
-		size = {
-			141,
-			65
-		},
-		trim = {
-			1,
-			0,
-			3,
-			0
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			364,
-			1728,
-			137,
-			65
-		},
-		alias = {}
-	},
-	terrain_specials_0007_over = {
-		a_name = "go_towers-3.png",
-		size = {
-			189,
-			87
-		},
-		trim = {
-			15,
-			0,
-			17,
-			0
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			1037,
-			122,
-			157,
-			87
-		},
-		alias = {}
-	},
-	terrain_specials_0008 = {
-		a_name = "go_towers-3.png",
-		size = {
-			141,
-			65
-		},
-		trim = {
-			6,
-			0,
-			4,
-			2
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			1502,
-			364,
-			131,
-			63
-		},
-		alias = {}
-	},
-	terrain_specials_0008_over = {
-		a_name = "go_towers-3.png",
-		size = {
-			189,
-			87
-		},
-		trim = {
-			20,
-			0,
-			18,
-			2
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			1519,
-			122,
-			151,
-			85
-		},
-		alias = {}
-	},
+	-- terrain_specials_0004 = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		141,
+	-- 		65
+	-- 	},
+	-- 	trim = {
+	-- 		1,
+	-- 		0,
+	-- 		0,
+	-- 		0
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		203,
+	-- 		1956,
+	-- 		140,
+	-- 		65
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0004_over = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		189,
+	-- 		87
+	-- 	},
+	-- 	trim = {
+	-- 		15,
+	-- 		0,
+	-- 		14,
+	-- 		0
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		705,
+	-- 		122,
+	-- 		160,
+	-- 		87
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0005 = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		141,
+	-- 		65
+	-- 	},
+	-- 	trim = {
+	-- 		3,
+	-- 		0,
+	-- 		7,
+	-- 		4
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		1639,
+	-- 		364,
+	-- 		131,
+	-- 		61
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0005_over = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		189,
+	-- 		87
+	-- 	},
+	-- 	trim = {
+	-- 		17,
+	-- 		0,
+	-- 		20,
+	-- 		4
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		1361,
+	-- 		122,
+	-- 		152,
+	-- 		83
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0006 = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		141,
+	-- 		65
+	-- 	},
+	-- 	trim = {
+	-- 		1,
+	-- 		0,
+	-- 		0,
+	-- 		0
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		364,
+	-- 		1270,
+	-- 		140,
+	-- 		65
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0006_over = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		189,
+	-- 		87
+	-- 	},
+	-- 	trim = {
+	-- 		15,
+	-- 		0,
+	-- 		14,
+	-- 		1
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		871,
+	-- 		122,
+	-- 		160,
+	-- 		86
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0007 = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		141,
+	-- 		65
+	-- 	},
+	-- 	trim = {
+	-- 		1,
+	-- 		0,
+	-- 		3,
+	-- 		0
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		364,
+	-- 		1728,
+	-- 		137,
+	-- 		65
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0007_over = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		189,
+	-- 		87
+	-- 	},
+	-- 	trim = {
+	-- 		15,
+	-- 		0,
+	-- 		17,
+	-- 		0
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		1037,
+	-- 		122,
+	-- 		157,
+	-- 		87
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0008 = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		141,
+	-- 		65
+	-- 	},
+	-- 	trim = {
+	-- 		6,
+	-- 		0,
+	-- 		4,
+	-- 		2
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		1502,
+	-- 		364,
+	-- 		131,
+	-- 		63
+	-- 	},
+	-- 	alias = {}
+	-- },
+	-- terrain_specials_0008_over = {
+	-- 	a_name = "go_towers-3.png",
+	-- 	size = {
+	-- 		189,
+	-- 		87
+	-- 	},
+	-- 	trim = {
+	-- 		20,
+	-- 		0,
+	-- 		18,
+	-- 		2
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		1519,
+	-- 		122,
+	-- 		151,
+	-- 		85
+	-- 	},
+	-- 	alias = {}
+	-- },
 	tower_assasins_layer1_0005 = {
 		a_name = "go_towers-3.png",
 		size = {
