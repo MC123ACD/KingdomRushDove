@@ -1794,7 +1794,7 @@ local function heroes()
     tt.bullet.damage_max = 60
     tt.bullet.damage_flags = F_AREA
     tt.render.sprites[1].name = "fireball_proyectile"
-    tt.main_script.update = scripts.power_fireball.update
+    tt.main_script.update = scripts.power_fireball_10yr.update
     tt.scorch_earth = false
     tt.sound_events.insert = "FireballRelease"
     tt.sound_events.hit = "FireballHit"
