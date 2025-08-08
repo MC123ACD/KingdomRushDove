@@ -398,8 +398,8 @@ local function engineer_towers()
     tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0012"
     tt.info.enc_icon = 13
     tt.powers.missile = E:clone_c("power")
-    tt.powers.missile.price_base = 300
-    tt.powers.missile.price_inc = 250
+    tt.powers.missile.price_base = 250
+    tt.powers.missile.price_inc = 275
     tt.powers.missile.max_level = 3
     tt.powers.missile.enc_icon = 38
     tt.powers.oil = E:clone_c("power")

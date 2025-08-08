@@ -108,7 +108,7 @@ upgrades.list = {
     barrack_el_enchanted_armor = {
         class = "barracks",
         factor = 0.9,
-        magical_armor_inc = 0.1,
+        magic_armor_inc = 0.1,
         icon = 32,
         price = 4,
         level = 6
@@ -505,10 +505,10 @@ function upgrades:patch_templates(max_level)
     u = self:get_upgrade("barrack_el_enchanted_armor")
 
     if u then
-        for _, t in pairs(E:filter_templates("soldiers")) do
+        for _, t in pairs(E:filter_templates("soldier")) do
             if t.health and not t.hero then
                 t.health.damage_factor = u.factor
-                t.health.magical_armor = t.health.magical_armor + u.magical_armor_inc
+                t.health.magic_armor = t.health.magic_armor + u.magic_armor_inc
             end
         end
     end
