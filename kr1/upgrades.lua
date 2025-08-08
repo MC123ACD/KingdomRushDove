@@ -108,6 +108,7 @@ upgrades.list = {
     barrack_el_enchanted_armor = {
         class = "barracks",
         factor = 0.9,
+        magical_armor_inc = 0.1,
         icon = 32,
         price = 4,
         level = 6
@@ -153,7 +154,7 @@ upgrades.list = {
         icon = 33,
         price = 4,
         level = 6,
-        damage_factors = {1.1, 1.12, 1.14, 1.16, 1.18, 1.21, 1.24, 1.27, 1.3, 1.31, 1.32, 1.33, 1.34, 1.35}
+        damage_factors = {1.1, 1.12, 1.14, 1.16, 1.18, 1.2, 1.22, 1.24, 1.26, 1.28, 1.29, 1.30, 1.31, 1.32}
     },
     engineer_concentrated_fire = {
         damage_factor = 1.25,
@@ -190,7 +191,8 @@ upgrades.list = {
         icon = DP(27, 20)
     },
     engineer_gnomish_tinkering = {
-        cooldown_factor = 0.9,
+        cooldown_factor_electric = 0.9,
+        cooldown_factor = 0.88,
         class = "engineers",
         icon = 34,
         price = 4,
@@ -506,6 +508,7 @@ function upgrades:patch_templates(max_level)
         for _, t in pairs(E:filter_templates("soldiers")) do
             if t.health and not t.hero then
                 t.health.damage_factor = u.factor
+                t.health.magical_armor = t.health.magical_armor + u.magical_armor_inc
             end
         end
     end
@@ -644,7 +647,7 @@ function upgrades:patch_templates(max_level)
     if u then
         for _, a in pairs({T("tower_dwaarp").attacks.list[2], T("tower_dwaarp").attacks.list[3],
                            T("soldier_mecha").attacks.list[2], T("soldier_mecha").attacks.list[3],
-                        T("tower_tesla").attacks.list[1], T("tower_frankenstein").attacks.list[1],T("druid_shooter_sylvan").attacks.list[1],T("tower_entwood").attacks.list[3],T("tower_entwood").attacks.list[2]}, T("tower_dwaarp").attacks.list[3]) do
+                        T("druid_shooter_sylvan").attacks.list[1],T("tower_entwood").attacks.list[3],T("tower_entwood").attacks.list[2]}, T("tower_dwaarp").attacks.list[3]) do
             a.cooldown = a.cooldown * u.cooldown_factor
         end
         local at
@@ -663,6 +666,10 @@ function upgrades:patch_templates(max_level)
         at.cooldown_dec = at.cooldown_dec * u.cooldown_factor
         at = T("tower_dwaarp").attacks.list[3]
         at.cooldown_inc = at.cooldown_inc * u.cooldown_factor
+        at = T("tower_frankenstein").attacks.list[1]
+        at.cooldown = at.cooldown * u.cooldown_factor_electric
+        at = T("tower_tesla").attacks.list[1]
+        at.cooldown = at.cooldown * u.cooldown_factor_electric
     end
 
     T("power_fireball_control").user_power.level = self.levels.rain
