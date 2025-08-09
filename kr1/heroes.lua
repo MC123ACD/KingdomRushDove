@@ -11432,7 +11432,7 @@ local function heroes()
     tt.health_bar.draw_order = -1
     tt.health_bar.offset = vec_2(0, 170)
     tt.health_bar.sort_y_offset = -171
-    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
+    tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
     tt.health_bar.z = Z_FLYING_HEROES
     tt.hero.fn_level_up = scripts.hero_dragon_gem.level_up
     tt.hero.use_custom_spawn_point = true
