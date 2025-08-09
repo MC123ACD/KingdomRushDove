@@ -2422,6 +2422,11 @@ tt.min_delay = 20
 tt.max_delay = 25
 tt.sounds = {"JungleAmbienceSound"}
 
+tt = E:register_t("background_sounds_underground", "background_sounds")
+tt.min_delay = 15
+tt.max_delay = 20
+tt.sounds = {"UndergroundAmbienceSound"}
+
 tt = E:register_t("tower_holder_blocked")
 E:add_comps(tt, "tower", "tower_holder", "pos", "render", "ui", "sound_events")
 tt.tower.level = 1
