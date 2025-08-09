@@ -654,7 +654,8 @@ function screen_map:init(w, h, done_callback)
 
     local encyclopedia = EncyclopediaView:new(sw, sh)
 
-    encyclopedia.pos = v(0, 0)
+    -- encyclopedia.pos = v(0, 0)
+    encyclopedia.pos = v(-sw*0.1, -sh*0.1)
     self.encyclopedia = encyclopedia
 
     self.window:add_child(encyclopedia)
@@ -3639,7 +3640,7 @@ EncyclopediaView = class("EncyclopediaView", PopUpView)
 
 function EncyclopediaView:initialize(sw, sh)
     PopUpView.initialize(self, V.v(sw, sh))
-
+    self.scale = vec_1(1.2)
     self.back = KView:new(V.v(sw, sh))
     self.back.pos = v(0, 0)
     self.back.anchor = v(sw / 2, sh / 2)
