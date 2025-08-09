@@ -1906,7 +1906,11 @@ function HeroPortrait:initialize(hero_entity)
     self.disabled_tint_color = {200, 200, 200, 255}
     self.hero_id = hero_entity.id
     self.portrait_image_name = hero_entity.info.hero_portrait
-    if hero_entity.is_kr5 then
+    if hero_entity.template_name == "hero_dragon_gem" then
+        self.portrait = KImageView:new(self.portrait_image_name, nil, 0.45)
+        -- self.portrait.pos.y = self.portrait.pos.y
+        self.portrait.pos.x = self.portrait.pos.x + 5
+    elseif hero_entity.is_kr5 then
         self.portrait = KImageView:new(self.portrait_image_name, nil, 0.51)
         self.portrait.pos.y = self.portrait.pos.y - 10
     else
