@@ -19,6 +19,21 @@ local gms = {
 	[GAME_MODE_ENDLESS] = "endless"
 }
 
+function wave_db:patch_waves(criket)
+    self.db.groups = {}
+    criket.delay = FPS * criket.delay
+    for _, spawn in pairs(criket.spawns) do
+        spawn.interval = FPS * spawn.interval
+        spawn.interval_next = FPS * spawn.interval_next
+    end
+    self.db.groups[1] = {
+        interval = 0,
+        waves = {
+            criket
+        }
+    }
+end
+
 function wave_db:load(level_name, game_mode)
 	self.game_mode = game_mode
 

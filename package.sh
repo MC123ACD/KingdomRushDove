@@ -46,6 +46,7 @@ zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/strings/zh-Hans.lua"
 zip "$OUTPUT_ZIP" "./存档位置.lnk"
 zip "$OUTPUT_ZIP" "./patches/default.lua"
 zip "$OUTPUT_ZIP" "./patches/keyset_default.lua"
+zip "$OUTPUT_ZIP" "./patches/criket_template.lua"
 
 # 记录 commit hash 文件
 COMMIT_FILE="last_build_commit.txt"

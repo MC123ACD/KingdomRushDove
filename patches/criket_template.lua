@@ -1,0 +1,21 @@
+-- 这是一个编辑斗蛐蛐出怪的样例文件
+-- 你可以在同一文件夹中创建一个名为 criket.lua 的新文件来定义你的斗蛐蛐波次
+-- 本文件不会生效
+return {
+    on = true, -- 启用斗蛐蛐,
+    path_index = 1, -- 设置主路径为 1
+    delay = 0, -- 开始出怪前的延迟，单位为秒
+    spawns = {{
+        max = 100,
+        creep = "enemy_goblin", -- 选择敌人为小哥布林
+        fixed_sub_path = 0,
+        interval = 0.1, -- 每隔 0.1 秒出一个小哥布林
+        interval_next = 5 -- 本小波出完后，过 5 秒出下一波
+    }, {
+        max = 50,
+        creep = "enemy_fat_orc", -- 选择敌人为小兽人
+        fixed_sub_path = 0,
+        interval = 0.2, -- 每隔 0.2 秒出一个小兽人
+        interval_next = 0
+    }}
+}

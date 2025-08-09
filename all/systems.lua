@@ -61,6 +61,9 @@ function sys.level:init(store)
         P:reverse_all_paths()
     end
     W:load(store.level_name, store.level_mode)
+    if store.patches.criket and store.patches.criket.on then
+        W:patch_waves(store.patches.criket)
+    end
     A:load()
     E:load()
 
@@ -90,6 +93,9 @@ function sys.level:init(store)
     store.level.co = nil
     store.level.run_complete = nil
     store.player_gold = math.ceil(W:initial_gold() * store.patches.gold_multiplier)
+    if store.patches.criket and store.patches.criket.on then
+        store.player_gold = 50000
+    end
 
     if slot.locked_towers then
         for _, tower in pairs(slot.locked_towers) do
@@ -102,8 +108,9 @@ function sys.level:init(store)
     for _, unlock_tower in pairs(store.level.unlock_towers) do
         table.removeobject(store.level.locked_towers, unlock_tower)
     end
-
-    if store.level_mode == GAME_MODE_CAMPAIGN then
+    if store.patches.criket and store.patches.criket.on then
+        store.lives = 1000
+    elseif store.level_mode == GAME_MODE_CAMPAIGN then
         store.lives = 20
     elseif store.level_mode == GAME_MODE_HEROIC then
         store.lives = 1

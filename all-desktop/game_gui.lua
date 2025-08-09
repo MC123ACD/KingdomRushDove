@@ -459,7 +459,7 @@ function game_gui:init(w, h, game)
     towermenu.hidden = true
 
     local criketmenu = CriketMenu:new()
-    criketmenu.hidden = false
+    criketmenu.hidden = true
 
     local towertooltip = TowerMenuTooltip:new()
 
@@ -1079,8 +1079,10 @@ function game_gui:keypressed(key, isrepeat)
         if not self.next_wave_button:is_disabled() then
             game_gui.game.store.send_next_wave = true
         end
-    elseif table.contains(ks.criket, key) then
+    elseif table.contains(ks.criket_open, key) then
         self.criketmenu:show()
+    elseif table.contains(ks.criket_close, key) then
+        self.criketmenu:hide()
     -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
     --     table.contains(table.keys(ks.all_items), key) then
     --     local bb = self.bag_button

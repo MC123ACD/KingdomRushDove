@@ -488,7 +488,7 @@ function director:queue_load_item_named(name, force_reload)
         if not game.store.patches or not game.store.patches.custom_config_enabled then
             game.store.patches = LU.eval_file("patches/default.lua")
         end
-
+        game.store.patches.criket = LU.eval_file("patches/criket.lua")
 		self:load_texture_groups(replace_locale(game.required_textures), self.params.texture_size, game.ref_res, true, "game")
 		self:load_texture_groups(replace_locale(game.store.level.required_textures), self.params.texture_size, game.ref_res, true, "game")
 		self:load_texture_groups(replace_locale(game_gui.required_textures), self.params.texture_size, game_gui.ref_res, true, "game_gui")
