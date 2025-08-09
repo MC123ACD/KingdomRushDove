@@ -2429,187 +2429,187 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
--- 在文件开头添加性能监控模块
-local perf = {}
-perf.timers = {}
-perf.frame_times = {}
-perf.system_times = {}
-perf.max_samples = 300 -- 保存最近300帧数据
-perf.report_interval = 5 -- 每5秒输出一次报告
+-- -- 在文件开头添加性能监控模块
+-- local perf = {}
+-- perf.timers = {}
+-- perf.frame_times = {}
+-- perf.system_times = {}
+-- perf.max_samples = 300 -- 保存最近300帧数据
+-- perf.report_interval = 5 -- 每5秒输出一次报告
 
--- 性能计时器函数
-function perf.start_timer(name)
-    perf.timers[name] = love.timer.getTime()
-end
+-- -- 性能计时器函数
+-- function perf.start_timer(name)
+--     perf.timers[name] = love.timer.getTime()
+-- end
 
-function perf.end_timer(name)
-    if perf.timers[name] then
-        local elapsed = love.timer.getTime() - perf.timers[name]
-        perf.system_times[name] = perf.system_times[name] or {}
-        table.insert(perf.system_times[name], elapsed)
+-- function perf.end_timer(name)
+--     if perf.timers[name] then
+--         local elapsed = love.timer.getTime() - perf.timers[name]
+--         perf.system_times[name] = perf.system_times[name] or {}
+--         table.insert(perf.system_times[name], elapsed)
 
-        -- 保持样本数量在限制内
-        if #perf.system_times[name] > perf.max_samples then
-            table.remove(perf.system_times[name], 1)
-        end
+--         -- 保持样本数量在限制内
+--         if #perf.system_times[name] > perf.max_samples then
+--             table.remove(perf.system_times[name], 1)
+--         end
 
-        perf.timers[name] = nil
-        return elapsed
-    end
-    return 0
-end
+--         perf.timers[name] = nil
+--         return elapsed
+--     end
+--     return 0
+-- end
 
--- 生成性能报告
-function perf.generate_report(store)
-    local report = {"=== 性能报告 ==="}
+-- -- 生成性能报告
+-- function perf.generate_report(store)
+--     local report = {"=== 性能报告 ==="}
 
-    -- 整体帧时间
-    if #perf.frame_times > 0 then
-        local total_time = 0
-        local max_time = 0
-        for _, time in ipairs(perf.frame_times) do
-            total_time = total_time + time
-            max_time = math.max(max_time, time)
-        end
-        local avg_time = total_time / #perf.frame_times
-        local fps = 1 / avg_time
+--     -- 整体帧时间
+--     if #perf.frame_times > 0 then
+--         local total_time = 0
+--         local max_time = 0
+--         for _, time in ipairs(perf.frame_times) do
+--             total_time = total_time + time
+--             max_time = math.max(max_time, time)
+--         end
+--         local avg_time = total_time / #perf.frame_times
+--         local fps = 1 / avg_time
 
-        table.insert(report, string.format("平均FPS: %.1f (%.3fms/帧)", fps, avg_time * 1000))
-        table.insert(report, string.format("最慢帧: %.3fms", max_time * 1000))
-    end
+--         table.insert(report, string.format("平均FPS: %.1f (%.3fms/帧)", fps, avg_time * 1000))
+--         table.insert(report, string.format("最慢帧: %.3fms", max_time * 1000))
+--     end
 
-    -- 各系统耗时
-    local system_stats = {}
-    for name, times in pairs(perf.system_times) do
-        if #times > 0 then
-            local total = 0
-            local max_val = 0
-            for _, time in ipairs(times) do
-                total = total + time
-                max_val = math.max(max_val, time)
-            end
-            local avg = total / #times
-            system_stats[name] = {
-                avg = avg,
-                max = max_val,
-                total = total
-            }
-        end
-    end
+--     -- 各系统耗时
+--     local system_stats = {}
+--     for name, times in pairs(perf.system_times) do
+--         if #times > 0 then
+--             local total = 0
+--             local max_val = 0
+--             for _, time in ipairs(times) do
+--                 total = total + time
+--                 max_val = math.max(max_val, time)
+--             end
+--             local avg = total / #times
+--             system_stats[name] = {
+--                 avg = avg,
+--                 max = max_val,
+--                 total = total
+--             }
+--         end
+--     end
 
-    -- 按平均耗时排序
-    local sorted_systems = {}
-    for name, stats in pairs(system_stats) do
-        table.insert(sorted_systems, {
-            name = name,
-            stats = stats
-        })
-    end
-    table.sort(sorted_systems, function(a, b)
-        return a.stats.avg > b.stats.avg
-    end)
+--     -- 按平均耗时排序
+--     local sorted_systems = {}
+--     for name, stats in pairs(system_stats) do
+--         table.insert(sorted_systems, {
+--             name = name,
+--             stats = stats
+--         })
+--     end
+--     table.sort(sorted_systems, function(a, b)
+--         return a.stats.avg > b.stats.avg
+--     end)
 
-    table.insert(report, "\n各系统耗时 (平均/最大/总计 ms):")
-    for _, item in ipairs(sorted_systems) do
-        local name = item.name
-        local stats = item.stats
-        table.insert(report, string.format("  %s: %.3f/%.3f/%.1f", name, stats.avg * 1000, stats.max * 1000,
-            stats.total * 1000))
-    end
+--     table.insert(report, "\n各系统耗时 (平均/最大/总计 ms):")
+--     for _, item in ipairs(sorted_systems) do
+--         local name = item.name
+--         local stats = item.stats
+--         table.insert(report, string.format("  %s: %.3f/%.3f/%.1f", name, stats.avg * 1000, stats.max * 1000,
+--             stats.total * 1000))
+--     end
 
-    -- 实体统计
-    table.insert(report, "\n实体统计:")
-    table.insert(report, string.format("  总实体数: %d", #store.entities))
-    table.insert(report, string.format("  渲染帧数: %d", #store.render_frames))
+--     -- 实体统计
+--     table.insert(report, "\n实体统计:")
+--     table.insert(report, string.format("  总实体数: %d", #store.entities))
+--     table.insert(report, string.format("  渲染帧数: %d", #store.render_frames))
 
-    return table.concat(report, "\n")
-end
+--     return table.concat(report, "\n")
+-- end
 
-function perf.save_report(store)
-    local report = perf.generate_report(store)
+-- function perf.save_report(store)
+--     local report = perf.generate_report(store)
 
-    -- -- 确保目录存在
-    -- local success = love.filesystem.createDirectory("reports")
-    -- if not success then
-    --     log.error("无法创建reports目录")
-    --     print(report) -- 如果无法创建目录，至少输出到控制台
-    --     return
-    -- end
+--     -- -- 确保目录存在
+--     -- local success = love.filesystem.createDirectory("reports")
+--     -- if not success then
+--     --     log.error("无法创建reports目录")
+--     --     print(report) -- 如果无法创建目录，至少输出到控制台
+--     --     return
+--     -- end
 
-    -- local filename = "reports/performance_" .. os.date("%Y%m%d_%H%M%S") .. ".txt"
-    -- local success, errorMessage = love.filesystem.write(filename, report)
+--     -- local filename = "reports/performance_" .. os.date("%Y%m%d_%H%M%S") .. ".txt"
+--     -- local success, errorMessage = love.filesystem.write(filename, report)
 
-    -- if success then
-    --     log.info("性能报告已保存: %s", filename)
-    --     log.info("文件路径: %s", love.filesystem.getSaveDirectory() .. "/" .. filename)
-    -- else
-    --     log.error("保存性能报告失败: %s", errorMessage or "未知错误")
-    -- end
+--     -- if success then
+--     --     log.info("性能报告已保存: %s", filename)
+--     --     log.info("文件路径: %s", love.filesystem.getSaveDirectory() .. "/" .. filename)
+--     -- else
+--     --     log.error("保存性能报告失败: %s", errorMessage or "未知错误")
+--     -- end
 
-    print(report) -- 同时输出到控制台
-end
+--     print(report) -- 同时输出到控制台
+-- end
 
 
--- 在主更新循环中添加性能监控
-local function create_monitored_system(original_sys)
-    local monitored = {}
-    for k, v in pairs(original_sys) do
-        monitored[k] = v
-    end
+-- -- 在主更新循环中添加性能监控
+-- local function create_monitored_system(original_sys)
+--     local monitored = {}
+--     for k, v in pairs(original_sys) do
+--         monitored[k] = v
+--     end
 
-    -- 包装update函数
-    if original_sys.on_update then
-        monitored.on_update = function(self, dt, ts, store)
-            perf.start_timer(self.name or "unknown_system")
-            local result = original_sys.on_update(self, dt, ts, store)
-            perf.end_timer(self.name or "unknown_system")
-            return result
-        end
-    end
+--     -- 包装update函数
+--     if original_sys.on_update then
+--         monitored.on_update = function(self, dt, ts, store)
+--             perf.start_timer(self.name or "unknown_system")
+--             local result = original_sys.on_update(self, dt, ts, store)
+--             perf.end_timer(self.name or "unknown_system")
+--             return result
+--         end
+--     end
 
-    return monitored
-end
+--     return monitored
+-- end
 
--- 添加帧时间监控系统
-sys.performance_monitor = {}
-sys.performance_monitor.name = "performance_monitor"
+-- -- 添加帧时间监控系统
+-- sys.performance_monitor = {}
+-- sys.performance_monitor.name = "performance_monitor"
 
-function sys.performance_monitor:init(store)
-    self.last_frame_time = love.timer.getTime()
-    self.last_report_time = love.timer.getTime()
-end
+-- function sys.performance_monitor:init(store)
+--     self.last_frame_time = love.timer.getTime()
+--     self.last_report_time = love.timer.getTime()
+-- end
 
-function sys.performance_monitor:on_update(dt, ts, store)
-    local current_time = love.timer.getTime()
-    local frame_time = current_time - self.last_frame_time
+-- function sys.performance_monitor:on_update(dt, ts, store)
+--     local current_time = love.timer.getTime()
+--     local frame_time = current_time - self.last_frame_time
 
-    -- 记录帧时间
-    table.insert(perf.frame_times, frame_time)
-    if #perf.frame_times > perf.max_samples then
-        table.remove(perf.frame_times, 1)
-    end
+--     -- 记录帧时间
+--     table.insert(perf.frame_times, frame_time)
+--     if #perf.frame_times > perf.max_samples then
+--         table.remove(perf.frame_times, 1)
+--     end
 
-    -- 定期输出报告
-    if current_time - self.last_report_time > perf.report_interval then
-        perf.save_report(store)
-        self.last_report_time = current_time
-    end
+--     -- 定期输出报告
+--     if current_time - self.last_report_time > perf.report_interval then
+--         perf.save_report(store)
+--         self.last_report_time = current_time
+--     end
 
-    self.last_frame_time = current_time
-end
+--     self.last_frame_time = current_time
+-- end
 
--- 包装所有现有系统以添加性能监控
-local original_systems = {}
-for name, system in pairs(sys) do
-    if type(system) == "table" and system.on_update then
-        original_systems[name] = system
-        sys[name] = create_monitored_system(system)
-    end
-end
+-- -- 包装所有现有系统以添加性能监控
+-- local original_systems = {}
+-- for name, system in pairs(sys) do
+--     if type(system) == "table" and system.on_update then
+--         original_systems[name] = system
+--         sys[name] = create_monitored_system(system)
+--     end
+-- end
 
--- 添加手动触发性能报告的函数（可以在游戏中调用）
-function sys.trigger_performance_report()
-    perf.save_report()
-end
+-- -- 添加手动触发性能报告的函数（可以在游戏中调用）
+-- function sys.trigger_performance_report()
+--     perf.save_report()
+-- end
 
 return sys
