@@ -20467,7 +20467,7 @@ function scripts.decal_hero_dragon_gem_floor_impact_shard.update(this, store)
     U.y_animation_wait(this)
     U.animation_start(this, "idle", nil, store.tick_ts, 1)
 
-    local targets = U.find_enemies_in_range(store.entities, this.pos, 0, this.damage_range, 0,
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.damage_range, 0,
         bit.bor(F_FLYING, F_CLIFF))
 
     if targets then

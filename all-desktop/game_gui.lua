@@ -1908,7 +1908,6 @@ function HeroPortrait:initialize(hero_entity)
     self.portrait_image_name = hero_entity.info.hero_portrait
     if hero_entity.template_name == "hero_dragon_gem" then
         self.portrait = KImageView:new(self.portrait_image_name, nil, 0.45)
-        -- self.portrait.pos.y = self.portrait.pos.y
         self.portrait.pos.x = self.portrait.pos.x + 5
     elseif hero_entity.is_kr5 then
         self.portrait = KImageView:new(self.portrait_image_name, nil, 0.51)
