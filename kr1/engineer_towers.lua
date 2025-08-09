@@ -38,7 +38,7 @@ local function engineer_towers()
     tt.powers.missile.attack_idx = 2
     tt.powers.cluster = CC("power")
     tt.powers.cluster.price_base = 200
-    tt.powers.cluster.price_inc = 200
+    tt.powers.cluster.price_inc = 225
     tt.powers.cluster.cooldown_dec = 3.5
     tt.powers.cluster.fragment_count_base = 2
     tt.powers.cluster.fragment_count_inc = 2

@@ -664,6 +664,8 @@ function upgrades:patch_templates(max_level)
         at.cooldown_mixed_dec = at.cooldown_mixed_dec * u.cooldown_factor
         at = T("tower_bfg").powers.cluster
         at.cooldown_dec = at.cooldown_dec * u.cooldown_factor
+        at = T("tower_bfg").attacks
+        at.min_cooldown = at.min_cooldown * u.cooldown_factor
         at = T("tower_dwaarp").attacks.list[3]
         at.cooldown_inc = at.cooldown_inc * u.cooldown_factor
         at = T("tower_frankenstein").attacks.list[1]
