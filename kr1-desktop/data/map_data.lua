@@ -1446,6 +1446,16 @@ return {
         icon = 55,
         stats = {5, 5, 5, 6},
         is_kr5 = true
+    },
+    {
+        portrait = 4,
+        thumb = 56,
+        name = "hero_dragon_gem",
+        available_level = 1,
+        starting_level = 1,
+        icon = 56,
+        stats = {7, 6, 5, 5},
+        is_kr5 = true
     }
 },
     level_data = {{

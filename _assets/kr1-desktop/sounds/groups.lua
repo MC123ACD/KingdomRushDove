@@ -1171,7 +1171,11 @@ local kr5 =  {
                  "kra_sfx_heroes_kosmyr_crystalAvalanch_cast_var1_v1.ogg",
                  "kra_sfx_heroes_kosmyr_crystalAvalanch_cast_var2_v1.ogg",
                  "kra_sfx_heroes_kosmyr_crystalAvalanch_cast_var3_v1.ogg",
-                 "kra_sfx_heroes_kosmyr_crystalAvalanch_cast_var4_v1.ogg"}
+                 "kra_sfx_heroes_kosmyr_crystalAvalanch_cast_var4_v1.ogg",
+                 "kra_sfx_tower_arcaneWizard_basicAttack_var1_v1.ogg",
+                 "kra_sfx_tower_arcaneWizard_basicAttack_var2_v1.ogg",
+                 "kra_sfx_tower_arcaneWizard_basicAttack_var3_v1.ogg"
+                }
     },
     hero_bird = {
         files = {"kr_voice_broden_select_b.ogg", "kr_voice_broden_taunt01_c.ogg", "kr_voice_broden_taunt02_a.ogg",

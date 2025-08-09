@@ -3659,59 +3659,47 @@ local heroes = {
 			0
 		},
 		hp_max = {
-			300,
-			330,
-			360,
 			390,
-			420,
-			450,
-			480,
-			510,
-			545,
-			580
-		},
-		regen_health = {
-			24,
-			26,
-			29,
-			31,
-			34,
-			36,
-			38,
-			41,
-			43,
-			46
+			429,
+			468,
+			507,
+			546,
+			585,
+			624,
+			663,
+			707,
+			754
 		},
 		basic_ranged_shot = {
 			max_range = 220,
 			damage_range = 75,
 			cooldown = 2,
 			min_range = 50,
-			xp_gain_factor = 1.82,
+			xp_gain_factor = 1.45,
 			damage_type = DAMAGE_PHYSICAL,
 			damage_max = {
-				18,
-				23,
-				26,
-				30,
-				34,
-				37,
-				41,
+				21,
+				29,
+				33,
+				39,
 				44,
-				49,
-				55
+				48,
+				53,
+				57,
+				63,
+				71
 			},
 			damage_min = {
-				13,
-				15,
-				18,
-				20,
-				22,
-				25,
-				27,
-				30,
+				16,
+				19,
+				23,
+				26,
+				28,
 				32,
-				35
+				35,
+				39,
+				41,
+				45
 			}
 		},
 		stun = {
@@ -3729,9 +3717,9 @@ local heroes = {
 				16
 			},
 			xp_gain = {
-				16,
-				32,
-				48
+				128,
+				256,
+				384
 			}
 		},
 		floor_impact = {
@@ -3747,29 +3735,29 @@ local heroes = {
 				25
 			},
 			xp_gain = {
-				25,
-				50,
-				75
+				200,
+				400,
+				600
 			},
 			damage_type = DAMAGE_PHYSICAL,
 			damage_min = {
-				24,
-				48,
-				72
+				31,
+				62,
+				93
 			},
 			damage_max = {
-				36,
-				72,
-				108
+				46,
+				93,
+				140
 			}
 		},
 		crystal_instakill = {
 			max_range = 200,
 			damage_range = 100,
 			hp_max = {
-				200,
-				400,
-				800
+				260,
+				520,
+				1040
 			},
 			cooldown = {
 				35,
@@ -3777,19 +3765,19 @@ local heroes = {
 				35
 			},
 			xp_gain = {
-				35,
-				70,
-				105
+				280,
+				560,
+				840
 			},
 			damage_aoe_min = {
-				32,
-				76,
-				96
+				41,
+				98,
+				124
 			},
 			damage_aoe_max = {
-				32,
-				76,
-				96
+				41,
+				98,
+				124
 			},
 			s_damage = {
 				32,
@@ -3810,9 +3798,9 @@ local heroes = {
 				20
 			},
 			xp_gain = {
-				20,
-				40,
-				60
+				160,
+			    320,
+				480
 			},
 			duration = {
 				6,
@@ -3820,14 +3808,14 @@ local heroes = {
 				10
 			},
 			damage_min = {
-				8,
-				16,
-				25
+				10,
+				20,
+				32
 			},
 			damage_max = {
-				8,
-				16,
-				25
+				10,
+				20,
+				32
 			},
 			s_damage = {
 				8,
@@ -3847,16 +3835,16 @@ local heroes = {
 			random_ni_spread = 30,
 			distance_between_shards = 10,
 			damage_max = {
-				72,
-				108,
-				132,
-				156
+				93,
+				140,
+				171,
+				202
 			},
 			damage_min = {
-				48,
-				72,
-				88,
-				104
+				62,
+				93,
+				114,
+				135
 			},
 			damage_type = DAMAGE_TRUE,
 			cooldown = {

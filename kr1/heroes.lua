@@ -11324,6 +11324,437 @@ local function heroes()
     tt.main_script.update = scripts.hero_venom_ultimate.update
     tt.sound = "HeroVenomRenewCreepingDeathCast"
 
+    tt = E:register_t("decal_hero_dragon_gem_floor_impact_shard", "decal_scripted")
+
+E:add_comps(tt, "sound_events")
+
+b = balance.heroes.hero_dragon_gem.floor_impact
+tt.render.sprites[1].prefix = "hero_evil_dragon_shards"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].loop = false
+tt.damage_min = nil
+tt.damage_max = nil
+tt.main_script.update = scripts.decal_hero_dragon_gem_floor_impact_shard.update
+tt.damage_time = fts(5)
+tt.duration_time = fts(10)
+tt.damage_range = b.damage_range
+tt.damage_type = b.damage_type
+tt.sound_events.insert = "HeroDragonGemPrismaticShardRipple"
+tt = E:register_t("decal_hero_dragon_gem_ultimate_shard", "decal_scripted")
+
+E:add_comps(tt, "tween", "sound_events")
+
+b = balance.heroes.hero_dragon_gem.ultimate
+tt.render.sprites[1].name = "hero_evil_dragon_ultimate_crystal_b"
+tt.render.sprites[1].animated = false
+tt.render.sprites[1].loop = false
+tt.damage_min = nil
+tt.damage_max = nil
+tt.main_script.update = scripts.decal_hero_dragon_gem_ultimate_shard.update
+tt.damage_time = fts(1)
+tt.damage_range = b.damage_range
+tt.damage_type = b.damage_type
+tt.bullet = "bullet_hero_dragon_gem_ultimate_shard"
+tt.fx_on_arrival = {"fx_hero_dragon_gem_ultimate_shard_arrival_1", "fx_hero_dragon_gem_ultimate_shard_arrival_2"}
+tt.floor_decal = "decal_hero_dragon_gem_floor_decal"
+tt.tween.props[1].keys = {{0, 255}, {3, 0}}
+tt.tween.disabled = true
+tt.tween_remove = false
+tt.sound_events.insert = "HeroDragonGemUltimateCast"
+
+tt = E:register_t("hero_dragon_gem", "hero5")
+E:add_comps(tt, "ranged", "timed_attacks", "tween")
+b = balance.heroes.hero_dragon_gem
+tt.hero.level_stats.armor = b.armor
+tt.hero.level_stats.hp_max = b.hp_max
+tt.hero.level_stats.melee_damage_max = {1, 2, 4, 4, 5, 6, 7, 8, 9, 10}
+tt.hero.level_stats.melee_damage_min = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+tt.hero.level_stats.ranged_damage_min = b.basic_ranged_shot.damage_min
+tt.hero.level_stats.ranged_damage_max = b.basic_ranged_shot.damage_max
+tt.hero.skills.stun = E:clone_c("hero_skill")
+tt.hero.skills.stun.duration = b.stun.duration
+tt.hero.skills.stun.cooldown = b.stun.cooldown
+tt.hero.skills.stun.xp_gain = b.stun.xp_gain
+tt.hero.skills.stun.xp_level_steps = {
+    [2] = 1,
+    [5] = 2,
+    [8] = 3
+}
+tt.hero.skills.floor_impact = E:clone_c("hero_skill")
+tt.hero.skills.floor_impact.cooldown = b.floor_impact.cooldown
+tt.hero.skills.floor_impact.damage_min = b.floor_impact.damage_min
+tt.hero.skills.floor_impact.damage_max = b.floor_impact.damage_max
+tt.hero.skills.floor_impact.xp_gain = b.floor_impact.xp_gain
+tt.hero.skills.floor_impact.xp_level_steps = {
+    [3] = 1,
+    [6] = 2,
+    [9] = 3
+}
+tt.hero.skills.crystal_instakill = E:clone_c("hero_skill")
+tt.hero.skills.crystal_instakill.cooldown = b.crystal_instakill.cooldown
+tt.hero.skills.crystal_instakill.damage_min = b.crystal_instakill.damage_aoe_min
+tt.hero.skills.crystal_instakill.damage_max = b.crystal_instakill.damage_aoe_max
+tt.hero.skills.crystal_instakill.hp_max = b.crystal_instakill.hp_max
+tt.hero.skills.crystal_instakill.xp_gain = b.crystal_instakill.xp_gain
+tt.hero.skills.crystal_instakill.xp_level_steps = {
+    [4] = 1,
+    [7] = 2,
+    [10] = 3
+}
+tt.hero.skills.crystal_totem = E:clone_c("hero_skill")
+tt.hero.skills.crystal_totem.cooldown = b.crystal_totem.cooldown
+tt.hero.skills.crystal_totem.duration = b.crystal_totem.duration
+tt.hero.skills.crystal_totem.damage_min = b.crystal_totem.damage_min
+tt.hero.skills.crystal_totem.damage_max = b.crystal_totem.damage_max
+tt.hero.skills.crystal_totem.xp_gain = b.crystal_totem.xp_gain
+tt.hero.skills.crystal_totem.xp_level_steps = {
+    [2] = 1,
+    [5] = 2,
+    [8] = 3
+}
+tt.hero.skills.ultimate = E:clone_c("hero_skill")
+tt.hero.skills.ultimate.controller_name = "hero_dragon_gem_ultimate"
+tt.hero.skills.ultimate.damage_min = b.ultimate.damage_min
+tt.hero.skills.ultimate.damage_max = b.ultimate.damage_max
+tt.hero.skills.ultimate.max_shards = b.ultimate.max_shards
+tt.hero.skills.ultimate.cooldown = b.ultimate.cooldown
+tt.hero.skills.ultimate.xp_gain_factor = 36
+tt.hero.skills.ultimate.xp_level_steps = {
+    [1] = 1,
+    [4] = 2,
+    [7] = 3,
+    [10] = 4
+}
+tt.flight_height = 80
+tt.health.dead_lifetime = 15
+tt.health_bar.draw_order = -1
+tt.health_bar.offset = vec_2(0, 170)
+tt.health_bar.sort_y_offset = -171
+tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
+tt.health_bar.z = Z_FLYING_HEROES
+tt.hero.fn_level_up = scripts.hero_dragon_gem.level_up
+tt.hero.use_custom_spawn_point = true
+tt.idle_flip.cooldown = 10
+tt.info.hero_portrait = "hero_portraits_0011"
+tt.info.i18n_key = "HERO_DRAGON_GEM"
+tt.info.portrait = "portraits_hero" .. "_0011"
+tt.main_script.insert = scripts.hero_dragon_gem.insert
+tt.main_script.update = scripts.hero_dragon_gem.update
+tt.motion.max_speed = b.speed
+tt.nav_rally.requires_node_nearby = false
+tt.nav_grid.ignore_waypoints = true
+tt.all_except_flying_nowalk = bor(TERRAIN_NONE, TERRAIN_LAND, TERRAIN_WATER, TERRAIN_CLIFF, TERRAIN_NOWALK,
+    TERRAIN_SHALLOW, TERRAIN_FAERIE, TERRAIN_ICE)
+tt.nav_grid.valid_terrains = tt.all_except_flying_nowalk
+tt.nav_grid.valid_terrains_dest = tt.all_except_flying_nowalk
+-- tt.drag_line_origin_offset = vec_2(0, tt.flight_height)
+tt.render.sprites[1].offset.y = tt.flight_height
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].prefix = "hero_evil_dragon_hero"
+tt.render.sprites[1].name = "respawn"
+tt.render.sprites[1].angles.walk = {"walk"}
+tt.render.sprites[1].z = Z_FLYING_HEROES
+tt.render.sprites[2] = E:clone_c("sprite")
+tt.render.sprites[2].animated = false
+tt.render.sprites[2].name = "hero_lumenir_hero_shadow"
+tt.render.sprites[2].offset = vec_2(0, 0)
+tt.render.sprites[2].z = Z_DECALS + 1
+tt.soldier.melee_slot_offset = vec_2(0, 0)
+tt.sound_events.change_rally_point = "HeroDragonGemTaunt"
+tt.sound_events.death = "HeroDragonGemDeath"
+tt.sound_events.respawn = "HeroDragonGemTauntIntro"
+tt.sound_events.hero_room_select = "HeroDragonGemTauntSelect"
+tt.ui.click_rect = r(-37, tt.flight_height - 20, 75, 75)
+tt.unit.hit_offset = vec_2(0, tt.flight_height + 10)
+tt.unit.mod_offset = vec_2(0, tt.flight_height + 10)
+tt.unit.death_animation = "death_dragon"
+tt.unit.hide_after_death = false
+tt.hero.tombstone_concurrent_with_death = true
+tt.hero.tombstone_show_time = fts(1)
+tt.hero.tombstone_decal = "decal_hero_dragon_gem_crystal_tomb"
+tt.hero.tombstone_force_over_path = true
+tt.hero.tombstone_respawn_animation = "respawn_crystals"
+tt.hero.respawn_animation = "respawn_dragon"
+tt.vis.bans = bor(tt.vis.bans, F_EAT, F_NET, F_POISON, F_MOD)
+tt.vis.flags = bor(tt.vis.flags, F_FLYING)
+tt.passive_charge = {}
+tt.passive_charge.distance_to_charge = b.passive_charge.distance_threshold
+tt.passive_charge.mod = "mod_hero_dragon_gem_passive_charge"
+tt.passive_charge.shots_amount = b.passive_charge.shots_amount
+tt.ranged.attacks[1] = E:clone_c("bullet_attack")
+tt.ranged.attacks[1].bullet = "bolt_hero_dragon_gem_attack"
+tt.ranged.attacks[1].bullet_start_offset = {vec_2(46, tt.flight_height - 23), vec_2(50, tt.flight_height - 23)}
+tt.ranged.attacks[1].cooldown = 1
+tt.ranged.attacks[1].min_range = b.basic_ranged_shot.min_range
+tt.ranged.attacks[1].max_range = b.basic_ranged_shot.max_range
+tt.ranged.attacks[1].shoot_time = fts(14)
+tt.ranged.attacks[1].sync_animation = true
+tt.ranged.attacks[1].animation = "attack"
+tt.ranged.attacks[1].start_sound = "HeroDragonGemBasicAttackCast"
+tt.ranged.attacks[1].vis_bans = bor(F_NIGHTMARE)
+tt.ranged.attacks[1].ignore_offset = vec_2(0, tt.flight_height + 10)
+tt.ranged.attacks[1].radius = 100
+tt.ranged.attacks[1].basic_attack = true
+tt.ranged.attacks[2] = E:clone_c("aura_attack")
+tt.ranged.attacks[2].disabled = true
+tt.ranged.attacks[2].animation = "breath"
+tt.ranged.attacks[2].shoot_time = fts(12)
+tt.ranged.attacks[2].min_targets = b.stun.min_targets
+tt.ranged.attacks[2].min_range = 0
+tt.ranged.attacks[2].max_range = b.stun.range
+tt.ranged.attacks[2].sync_animation = true
+tt.ranged.attacks[2].xp_from_skill = "stun"
+tt.ranged.attacks[2].vis_flags = bor(F_RANGED, F_ENEMY)
+tt.ranged.attacks[2].vis_bans = F_FLYING
+tt.ranged.attacks[2].bullet = "ray_hero_dragon_gem_stun"
+tt.ranged.attacks[2].range_nodes_max = 30
+tt.ranged.attacks[2].range_nodes_min = 20
+tt.ranged.attacks[2].bullet_start_offset = {vec_2(46, tt.flight_height - 23), vec_2(50, tt.flight_height - 23)}
+tt.ranged.attacks[2].sound = "HeroDragonGemParalyzingBreathCast"
+tt.ranged.attacks[3] = E:clone_c("aura_attack")
+tt.ranged.attacks[3].disabled = true
+tt.ranged.attacks[3].mod = "mod_hero_lumenir_sword_hit"
+tt.ranged.attacks[3].min_nodes = 20
+tt.ranged.attacks[3].cooldown = nil
+tt.ranged.attacks[3].fall_time = fts(24)
+tt.ranged.attacks[3].sync_animation = true
+tt.ranged.attacks[3].animation = "shards"
+tt.ranged.attacks[3].vis_flags = bor(F_RANGED)
+tt.ranged.attacks[3].vis_bans = bor(F_FLYING, F_NIGHTMARE, F_CLIFF)
+tt.ranged.attacks[3].range = b.floor_impact.range
+tt.ranged.attacks[3].xp_from_skill = "floor_impact"
+tt.ranged.attacks[3].range_nodes_max = b.floor_impact.max_nodes_trigger
+tt.ranged.attacks[3].range_nodes_min = b.floor_impact.min_nodes_trigger
+tt.ranged.attacks[3].min_targets = b.floor_impact.min_targets
+tt.ranged.attacks[3].entity = "decal_hero_dragon_gem_floor_impact_shard"
+tt.ranged.attacks[3].floor_decal = "decal_hero_dragon_gem_floor_decal"
+tt.ranged.attacks[3].shards = b.floor_impact.shards
+tt.ranged.attacks[3].nodes_between_shards = b.floor_impact.nodes_between_shards
+tt.ranged.attacks[3].initial_offset = 4
+tt.ranged.attacks[3].distance_to_start_node = 20
+tt.ranged.attacks[3].controller = "controller_hero_dragon_gem_skill_floor_impact_spawner"
+tt.ranged.attacks[3].sound = "HeroDragonGemPrismaticShardCast"
+tt.ranged.attacks[4] = E:clone_c("mod_attack")
+tt.ranged.attacks[4].disabled = true
+tt.ranged.attacks[4].cooldown = nil
+tt.ranged.attacks[4].shoot_time = fts(15)
+tt.ranged.attacks[4].sync_animation = true
+tt.ranged.attacks[4].mod = "mod_hero_dragon_gem_crystal_instakill"
+tt.ranged.attacks[4].animation = "red_death"
+tt.ranged.attacks[4].max_range = b.crystal_instakill.max_range
+tt.ranged.attacks[4].hp_max = nil
+tt.ranged.attacks[4].vis_flags = bor(F_RANGED, F_MOD)
+tt.ranged.attacks[4].vis_bans = bor(F_BOSS, F_FLYING, F_CLIFF)
+tt.ranged.attacks[4].xp_from_skill = "crystal_instakill"
+tt.ranged.attacks[4].sound = "HeroDragonGemRedDeathCast"
+tt.ranged.attacks[4].sound_args = {
+    delay = fts(11)
+}
+tt.ranged.attacks[5] = E:clone_c("bullet_attack")
+tt.ranged.attacks[5].disabled = true
+tt.ranged.attacks[5].cooldown = nil
+tt.ranged.attacks[5].animation = "conduit"
+tt.ranged.attacks[5].sync_animation = true
+tt.ranged.attacks[5].bullet = "bullet_hero_dragon_gem_crystal_totem"
+tt.ranged.attacks[5].bullet_start_offset = vec_2(0, tt.flight_height + 20)
+tt.ranged.attacks[5].shoot_time = fts(12)
+tt.ranged.attacks[5].min_targets = b.crystal_totem.min_targets
+tt.ranged.attacks[5].max_range_trigger = b.crystal_totem.max_range_trigger
+tt.ranged.attacks[5].vis_flags = bor(F_RANGED)
+tt.ranged.attacks[5].vis_bans = bor(F_FLYING)
+tt.ranged.attacks[5].xp_from_skill = "crystal_totem"
+tt.ranged.attacks[5].nodes_prediction = 10
+tt.ranged.attacks[5].sound = "HeroDragonGemPowerConduitCast"
+tt.tween.disabled = true
+tt.tween.remove = false
+tt.tween.props[1].sprite_id = 2
+tt.tween.props[1].name = "alpha"
+tt.tween.props[1].keys = {{0, 0}, {0.5, 255}}
+tt.ultimate = {
+    ts = 0,
+    cooldown = 36,
+    disabled = true
+}
+
+tt = E:register_t("hero_dragon_gem_ultimate")
+b = balance.heroes.hero_dragon_gem.ultimate
+E:add_comps(tt, "pos", "main_script", "sound_events")
+tt.main_script.update = scripts.hero_dragon_gem_ultimate.update
+tt.range = b.range
+tt.spawn_delay = fts(5)
+tt.vis_flags = bor(F_RANGED)
+tt.vis_bans = F_NONE
+tt.decal = "decal_hero_dragon_gem_ultimate_shard"
+tt.max_shards = b.max_shards
+tt.prediction_nodes = fts(15)
+tt.distance_between_shards = b.distance_between_shards
+tt.random_ni_spread = b.random_ni_spread
+
+tt = E:register_t("bolt_hero_dragon_gem_attack", "bolt")
+E:add_comps(tt, "force_motion")
+b = balance.heroes.hero_dragon_gem.basic_ranged_shot
+tt.bullet.damage_type = b.damage_type
+tt.bullet.hit_fx = nil
+tt.bullet.hit_fx_floor = "fx_hero_dragon_gem_bolt_hit"
+tt.bullet.hit_fx_flying = "fx_hero_dragon_gem_bolt_hit_flying"
+tt.bullet.particles_name = "ps_bolt_hero_dragon_gem_attack"
+tt.bullet.max_speed = 600
+tt.bullet.align_with_trajectory = true
+tt.bullet.min_speed = 600
+tt.bullet.xp_gain_factor = b.xp_gain_factor
+tt.bullet.use_unit_damage_factor = true
+tt.bullet.ignore_hit_offset = true
+tt.bullet.payload = {"decal_hero_dragon_gem_floor_decal", "decal_hero_dragon_gem_floor_circle"}
+tt.bullet.pop_chance = 0
+tt.force_motion.a_step = 5
+tt.force_motion.max_a = 3000
+tt.force_motion.max_v = 600
+tt.render.sprites[1].prefix = "hero_evil_dragon_attack_projectile"
+tt.render.sprites[1].z = Z_FLYING_HEROES
+tt.render.sprites[1].scale = vec_1(0.7)
+tt.main_script.update = scripts.bolt_hero_dragon_gem_attack.update
+tt.damage_range = b.damage_range
+tt.sound_hit = "HeroDragonGemBasicAttackImpact"
+
+tt = E:register_t("ray_hero_dragon_gem_stun", "bullet")
+b = balance.heroes.hero_dragon_gem
+tt.bullet.damage_type = DAMAGE_NONE
+tt.bullet.damage_min = nil
+tt.bullet.damage_max = nil
+tt.bullet.hit_time = fts(0)
+tt.bullet.ignore_hit_offset = true
+tt.bullet.hit_payload = "aura_hero_dragon_gem_skill_stun"
+tt.hit_fx_only_no_target = true
+tt.image_width = 165.5
+tt.main_script.update = scripts.ray5_simple.update
+tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+tt.render.sprites[1].name = "hero_evil_dragon_breath_idle"
+tt.render.sprites[1].loop = false
+tt.render.sprites[1].scale = vec_1(0.7)
+tt.sound_events.insert = "TowerArcaneWizardBasicAttack"
+tt.track_target = false
+tt.ray_duration = fts(42)
+
+tt = E:register_t("bullet_hero_dragon_gem_crystal_totem", "bomb")
+tt.bullet.flight_time = fts(30)
+tt.bullet.align_with_trajectory = true
+tt.bullet.ignore_hit_offset = true
+tt.bullet.pop = nil
+tt.bullet.rotation_speed = nil
+tt.bullet.hit_payload = "aura_hero_dragon_gem_crystal_totem"
+tt.render.sprites[1].scale = vec_1(0.7)
+tt.sound_events.hit = nil
+tt.sound_events.insert = nil
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].name = "hero_evil_dragon_conduit_projectile_idle"
+tt.bullet.hit_decal = nil
+tt.bullet.hit_fx = nil
+tt.bullet.damage_type = DAMAGE_EXPLOSION
+tt.bullet.damage_min = 0
+tt.bullet.damage_max = 0
+tt.bullet.g = -0.8 / (fts(1) * fts(1))
+
+tt = E:register_t("bullet_hero_dragon_gem_ultimate_shard", "bullet")
+tt.main_script.update = scripts.bullet_hero_dragon_gem_ultimate_shard.update
+tt.bullet.arrive_decal = "decal_bullet_hero_dragon_gem_ultimate_shard"
+tt.bullet.max_speed = 900
+tt.render.sprites[1].name = "hero_evil_dragon_ultimate_projectile"
+tt.render.sprites[1].animated = false
+
+tt = E:register_t("aura_hero_dragon_gem_skill_stun", "aura")
+b = balance.heroes.hero_dragon_gem.stun
+tt.aura.mod = "mod_hero_dragon_gem_skill_stun"
+tt.aura.radius = b.stun_radius
+tt.aura.vis_flags = bor(F_AREA)
+tt.aura.vis_bans = bor(F_FLYING, F_FRIEND)
+tt.surround_fx = "fx_hero_dragon_gem_skill_stun"
+tt.aura.duration = fts(1)
+tt.main_script.insert = scripts.aura_apply_mod.insert
+tt.main_script.update = scripts.aura_hero_dragon_gem_skill_stun.update
+
+tt = E:register_t("aura_hero_dragon_gem_crystal_totem", "aura")
+b = balance.heroes.hero_dragon_gem.crystal_totem
+E:add_comps(tt, "render", "tween")
+tt.aura.mod = "mod_hero_dragon_gem_crystal_totem_slow"
+tt.aura.radius = b.aura_radius
+tt.aura.vis_bans = bor(F_FRIEND)
+tt.aura.vis_flags = F_RANGED
+tt.aura.cycle_time = b.trigger_every
+tt.aura.duration = nil
+tt.render.sprites[1].prefix = "hero_evil_dragon_conduit"
+tt.render.sprites[1].animated = true
+tt.render.sprites[1].loop = true
+tt.render.sprites[1].scale = vec_2(0.7, 0.7)
+tt.main_script.insert = scripts.aura_apply_mod.insert
+tt.main_script.update = scripts.aura_hero_dragon_gem_crystal_totem.update
+tt.damage_range = b.aura_radius
+-- tt.damage_bans = bor(F_FLYING)
+tt.damage_min = nil
+tt.damage_max = nil
+tt.damage_type = DAMAGE_MAGICAL
+tt.tween.props[1].keys = {{0, 255}, {fts(15), 0}}
+tt.tween.disabled = true
+tt.floor_decal = "decal_hero_dragon_gem_floor_circle_totem"
+tt.pulse_sound = "HeroDragonGemPowerConduitCrystal"
+
+tt = E:register_t("mod_hero_dragon_gem_skill_stun", "mod_stun")
+
+E:add_comps(tt, "render")
+
+tt.modifier.duration = nil
+tt.render.sprites[1].prefix = "hero_evil_dragon_breath_crystal"
+tt.render.sprites[1].anchor = vec_2(0.5, 0.5)
+tt.render.sprites[1].size_names = {"small", "medium", "big"}
+tt.render.sprites[1].draw_order = DO_MOD_FX
+tt.modifier.animation_phases = true
+tt = E:register_t("mod_hero_dragon_gem_crystal_instakill", "modifier")
+b = balance.heroes.hero_dragon_gem.crystal_instakill
+
+E:add_comps(tt, "render")
+
+tt.modifier.duration = fts(30)
+tt.modifier.animation_phases = true
+tt.main_script.insert = scripts.mod_stun.insert
+tt.main_script.update = scripts.mod_hero_dragon_gem_crystal_instakill.update
+tt.main_script.remove = scripts.mod_stun.remove
+tt.explode_fx = "decal_hero_dragon_gem_floor_circle"
+tt.explode_sound = "HeroDragonGemRedDeathExplosion"
+tt.render.sprites[1].prefix = "hero_evil_dragon_red_death_crystal"
+tt.render.sprites[1].name = "start"
+tt.render.sprites[1].z = Z_OBJECTS
+tt.render.sprites[1].draw_order = DO_MOD_FX
+tt.explode_time = b.explode_time
+tt.damage_type = bor(DAMAGE_DISINTEGRATE, DAMAGE_INSTAKILL, DAMAGE_NO_SPAWNS)
+tt.damage_aoe_min = nil
+tt.damage_aoe_max = nil
+tt.damage_type_aoe = DAMAGE_PHYSICAL
+tt.damage_range = b.damage_range
+tt.damage_aoe_bans = bor(F_FLYING, F_CLIFF)
+tt = E:register_t("mod_hero_dragon_gem_crystal_totem_slow", "mod_slow")
+b = balance.heroes.hero_dragon_gem.crystal_totem
+tt.slow.factor = b.slow_factor
+tt.modifier.duration = b.slow_duration
+tt = E:register_t("mod_hero_dragon_gem_passive_charge", "modifier")
+b = balance.heroes.hero_dragon_gem.passive_charge
+
+E:add_comps(tt, "render")
+
+tt.main_script.insert = scripts.mod_damage_factors.insert
+tt.main_script.remove = scripts.mod_damage_factors.remove
+tt.main_script.update = scripts.mod_hero_dragon_gem_passive_charge.update
+tt.inflicted_damage_factor = b.damage_factor
+tt.modifier.duration = 1e+99
+tt.modifier.use_mod_offset = true
+tt.render.sprites[1].prefix = "hero_evil_dragon_passive"
+tt.render.sprites[1].name = "loop"
+tt.render.sprites[1].z = Z_FLYING_HEROES + 1
+
+tt = E:register_t("controller_hero_dragon_gem_skill_floor_impact_spawner")
+
+E:add_comps(tt, "main_script")
+
+tt.main_script.update = scripts.controller_hero_dragon_gem_skill_floor_impact_spawner.update
+
 end
 
 return heroes

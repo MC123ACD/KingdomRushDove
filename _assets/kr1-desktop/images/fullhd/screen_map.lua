@@ -2179,43 +2179,9 @@ return {
 		},
 		alias = {}
 	},
-	hero_room_portraits_small_thumb_hero_dragon_gem_0001 = {
-		a_name = "room_hero-1.dds",
-		size = {
-			155,
-			152
-		},
-		trim = {
-			0,
-			0,
-			0,
-			0
-		},
-		a_size = {
-			4096,
-			4096
-		},
-		f_quad = {
-			3274,
-			322,
-			155,
-			152
-		},
-		alias = {}
-	},
     -- 安雅小头像
 	heroroom_thumbs_0052 = {
 		a_name = "room_hero-1.dds",
-		-- size = {
-		-- 	155,
-		-- 	152
-		-- },
-		-- trim = {
-		-- 	0,
-		-- 	0,
-		-- 	0,
-		-- 	0
-		-- },
         size = {84, 84},
         trim = {18, 16, 18, 14},
 		a_size = {
@@ -2278,6 +2244,22 @@ return {
 		},
 		alias = {}
 	},
+    heroroom_thumbs_0056 = {
+		a_name = "room_hero-1.dds",
+        size = {84, 84},
+        trim = {18, 16, 18, 14},
+		a_size = {
+			4096,
+			4096
+		},
+		f_quad = {
+			3274,
+			322,
+			155,
+			152
+		},
+		alias = {}
+	},
     mapButtons_portrait_hero_0052 = {
         a_name = "gui_portraits-6.dds",
         size = {280, 260},
@@ -2309,6 +2291,14 @@ return {
         a_size = {2048, 2048},
         f_quad = {882, 229, 178, 179},
         alias = {"hero_portraits_0008"}
+    },
+    mapButtons_portrait_hero_0056 = {
+        a_name = "gui_portraits-6.dds",
+        size = {280, 260},
+        trim = {39, 9, 37, 15},
+        a_size = {2048, 2048},
+        f_quad = {271, 723, 204, 236},
+        alias = {"hero_portraits_0011"}
     },
 	hero_room_portraits_small_thumb_hero_lumenir_0001 = {
 		a_name = "room_hero-1.dds",

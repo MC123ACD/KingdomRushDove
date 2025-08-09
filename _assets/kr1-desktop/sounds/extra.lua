@@ -2231,6 +2231,9 @@ local kr5_groups = {
     hero_raelyn = {
         alias = "hero_raelyn"
     },
+    hero_dragon_gem = {
+        alias = "hero_dragon_gem"
+    }
 }
 
 local merge_conflict_tables = require("script_utils").merge_conflict_tables
