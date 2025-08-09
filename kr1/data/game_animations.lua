@@ -34582,12 +34582,22 @@ local kr5_a = {
 		to = 281,
 		from = 229
 	},
+    hero_evil_dragon_hero_death = {
+		prefix = "hero_evil_dragon_hero",
+		to = 281,
+		from = 229
+	},
 	hero_evil_dragon_hero_death_crystals = {
 		prefix = "hero_evil_dragon_hero",
 		to = 340,
 		from = 282
 	},
 	hero_evil_dragon_hero_respawn_dragon = {
+		prefix = "hero_evil_dragon_hero",
+		to = 391,
+		from = 341
+	},
+    hero_evil_dragon_hero_respawn = {
 		prefix = "hero_evil_dragon_hero",
 		to = 391,
 		from = 341

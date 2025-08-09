@@ -949,6 +949,7 @@ local function barrack_towers()
     tt.tower.level = 1
     tt.tower.price = 195
     tt.barrack.max_soldiers = 4
+    tt.mercenary = true
     tt.info.fn = function()
         local tpl = E:get_template("tower_barrack_pirates")
         return scripts.tower_barrack.get_info(tpl)

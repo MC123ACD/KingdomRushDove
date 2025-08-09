@@ -458,6 +458,9 @@ function game_gui:init(w, h, game)
 
     towermenu.hidden = true
 
+    local criketmenu = CriketMenu:new()
+    criketmenu.hidden = false
+
     local towertooltip = TowerMenuTooltip:new()
 
     towertooltip.hidden = true
@@ -730,6 +733,7 @@ function game_gui:init(w, h, game)
     layer_gui_game:add_child(rangedrange)
     layer_gui_game:add_child(towertooltip)
     layer_gui_game:add_child(towermenu)
+    layer_gui_game:add_child(criketmenu)
     layer_gui_game:add_child(incoming_tooltip)
 
     if IS_KR1 or IS_KR2 then
@@ -760,6 +764,7 @@ function game_gui:init(w, h, game)
 
     self.pickview = pickview
     self.towermenu = towermenu
+    self.criketmenu = criketmenu
     self.towertooltip = towertooltip
     self.rallyrange = rallyrange
     self.tower_range = tower_range
@@ -1074,6 +1079,8 @@ function game_gui:keypressed(key, isrepeat)
         if not self.next_wave_button:is_disabled() then
             game_gui.game.store.send_next_wave = true
         end
+    elseif table.contains(ks.criket, key) then
+        self.criketmenu:show()
     -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
     --     table.contains(table.keys(ks.all_items), key) then
     --     local bb = self.bag_button
@@ -6138,6 +6145,257 @@ function RangeCircle:initialize(sprite_name)
     self.actual_radius = v(tl.size.x, tl.size.y)
 end
 
+CriketMenuButton = class("CriketMenuButton", KView)
+function CriketMenuButton:initialize(item)
+    CriketMenuButton.super.initialize(self)
+
+    self.item_image = item.image
+
+    local b = KImageView:new(item.image)
+
+    b.pos = v(0, 0)
+    b.propagate_on_click = true
+    b.disabled_tint_color = nil
+    self.button = b
+
+    self:add_child(b)
+
+    local halo = KImageView:new(item.halo)
+
+    if item.is_kr3 then
+        halo.pos = v(math.floor(-0.5 * (halo.size.x - b.size.x)), math.floor(-0.5 * (halo.size.y - b.size.y)))
+    elseif item.halo == "glow_ico_sell" then
+        halo.pos = v(-2.5, -3.5)
+    else
+        halo.pos = v(-5, -4)
+        halo.scale = v(1.08, 1.06)
+    end
+
+    halo.propagate_on_click = true
+    halo.hidden = true
+    self.halo = halo
+
+    self:add_child(halo, 1)
+
+    if table.contains({"tw_upgrade", "tw_buy_soldier", "tw_buy_attack"}, item.action) and item.is_kr3 then
+        local bo = KImageView:new("kr3_main_icons_over")
+
+        bo.pos = v(math.floor(-0.5 * (bo.size.x - b.size.x)), math.floor(-0.5 * (bo.size.y - b.size.y)))
+        bo.propagate_on_click = true
+        bo.disabled_tint_color = nil
+
+        self:add_child(bo)
+    end
+
+    local ufx = KImageView:new("effect_powerbuy_0001")
+
+    ufx.animation = {
+        to = 23,
+        prefix = "effect_powerbuy",
+        from = 1
+    }
+    ufx.pos = v(4, -4)
+    ufx.hidden = true
+    ufx.propagate_on_click = true
+    self.ufx = ufx
+
+    self:add_child(ufx)
+
+    self.size = V.vclone(b.size)
+end
+
+CriketMenu = class("CriketMenu", KImageView)
+
+function CriketMenu:initialize()
+    CriketMenu.super.initialize(self, "gui_ring")
+    self.can_drag = false
+    self.propagate_on_click = true
+    self.propagate_on_down = true
+    self.propagate_on_up = true
+    self.propagate_on_enter = true
+    self.anchor = v(self.size.x / 2, self.size.y / 2)
+    self.clip = false
+end
+
+local criket_menu = require("kr1.data.criket_menu_data")
+function CriketMenu:calculate_button_position(item_index)
+    local circle_volume = 6
+    local radius_mod = 65
+    local radius = radius_mod -- 默认半径
+    while item_index > circle_volume do
+        item_index = item_index - circle_volume
+        radius = radius + radius_mod -- 每圈增加80像素的半径
+        circle_volume = circle_volume + 6 -- 每圈增加6个按钮
+    end
+
+    -- 计算每个按钮之间的角度间隔
+    local angle_step = (2 * math.pi) / circle_volume
+
+    -- 计算当前按钮的角度（从顶部开始，顺时针）
+    local angle = (item_index - 1) * angle_step - math.pi / 2
+
+    -- 计算相对于圆心的位置
+    local x = math.cos(angle) * radius
+    local y = math.sin(angle) * radius
+
+    -- 返回相对于菜单中心的位置
+    return V.v(self.size.x / 2 + x, self.size.y / 2 + y)
+end
+function CriketMenu:show()
+    self:remove_children()
+    for index, item in pairs(criket_menu) do
+        local b = CriketMenuButton:new(item)
+        b.pos = self:calculate_button_position(index)
+        b.pos.x, b.pos.y = b.pos.x - b.size.x / 2, b.pos.y - b.size.y / 2
+        b.item_props = item
+
+        local stm = self
+
+        if item.action == "tw_none" then
+            b:disable()
+        else
+            function b.on_click(this, button, x, y)
+                log.debug("CLICK")
+
+                if not self.tweening and not this.click_disabled then
+                    stm:button_callback(this, item)
+                end
+            end
+
+            function b.on_enter(this, drag_view)
+                if not self.tweening then
+                    stm:button_enter(this)
+                end
+            end
+
+            function b.on_exit(this, drag_view)
+                stm:button_exit(this)
+            end
+        end
+
+        self:add_child(b)
+    end
+
+    self.pos = v(game_gui.sw * 0.5, game_gui.sh * 0.5)
+    self.scale = v(0.6, 0.6)
+    self.alpha = 0
+    self.hidden = false
+    self.tweening = true
+    self.tweeners = {timer:tween(0.12, self.scale, {
+        x = 1,
+        y = 1
+    }, "out-quad"), timer:tween(0.12, self, {
+        alpha = 1
+    }, "out-quad", function()
+        self.tweening = nil
+        self.tweeners = {}
+    end)}
+
+    S:queue("GUIQuickMenuOpen")
+end
+
+function CriketMenu:hide()
+    if self.tweeners then
+        for _, t in pairs(self.tweeners) do
+            timer:cancel(t)
+        end
+    end
+
+    self.tweening = true
+    self.tweeners = {timer:tween(0.12, self, {
+        alpha = 0
+    }, "out-quad"), timer:tween(0.12, self.scale, {
+        x = 0.6,
+        y = 0.6
+    }, "out-quad", function()
+        self.hidden = true
+        self.tweening = false
+        self.tweeners = {}
+    end)}
+end
+
+function CriketMenu:update(dt)
+    CriketMenu.super.update(self, dt)
+
+    if self.hidden then
+        return
+    end
+
+    local store = game_gui.game.store
+
+    for _, c in pairs(self.children) do
+        if c:isInstanceOf(CriketMenuButton) and c.item_props then
+            if c.item_props.action == "tw_upgrade" then
+                local nt = E:get_template(c.item_props.action_arg)
+
+                if nt.build_name then
+                    nt = E:get_template(nt.build_name)
+                end
+            end
+        end
+    end
+end
+
+function CriketMenu:button_enter(button)
+    if button.halo then
+        button.halo.hidden = false
+    end
+end
+
+function CriketMenu:button_exit(button)
+    if button.halo then
+        button.halo.hidden = true
+    end
+end
+
+function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
+    if item.action == "tw_upgrade" then
+        for k, v in pairs(game_gui.game.store.towers) do
+           local new_tower = E:create_entity(item.action_arg)
+           new_tower.pos = V.vclone(v.pos)
+           new_tower.tower.holder_id = v.tower.holder_id
+           new_tower.tower.flip_x = v.tower.flip_x
+           if v.tower.default_rally_pos then
+                new_tower.tower.default_rally_pos = V.vclone(v.tower.default_rally_pos)
+           end
+           if v.tower.terrain_style then
+                new_tower.tower.terrain_style = v.tower.terrain_style
+                new_tower.render.sprites[1].name = string.format(new_tower.render.sprites[1].name, v.tower.terrain_style)
+           end
+
+           if new_tower.ui and v.ui then
+                new_tower.ui.nav_mesh_id = v.ui.nav_mesh_id
+           end
+           queue_remove(game_gui.game.store, v)
+           queue_insert(game_gui.game.store, new_tower)
+           game_gui.game.store.towers[k] = new_tower
+           if new_tower.powers then
+                for _, p in pairs(new_tower.powers) do
+                    p.level = p.max_level
+                    p.changed = true
+                end
+           end
+           if new_tower.template_name == "tower_sunray" then
+                new_tower.powers.manual.level = 0
+                new_tower.powers.manual.changed = nil
+                new_tower.powers.auto.level = 1
+                new_tower.powers.auto.changed = true
+           end
+           if new_tower.barrack then
+                new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
+           end
+           if new_tower.mercenary then
+                for i = 1, new_tower.barrack.max_soldiers do
+                    new_tower.barrack.soldiers[i] = E:create_entity(new_tower.barrack.soldier_type)
+                    new_tower.barrack.soldiers[i].health.dead = true
+                    new_tower.barrack.soldiers[i].id = -1
+                end
+           end
+        end
+    end
+    self:hide()
+end
+
 TowerMenu = class("TowerMenu", KImageView)
 
 function TowerMenu:initialize()
@@ -6551,7 +6809,6 @@ function TowerMenu:button_callback(button, item, entity, mouse_button, x, y)
         self:hide()
     elseif item.action == "tw_upgrade" or item.action == "tw_unblock" then
         entity.tower.upgrade_to = item.action_arg
-
         signal.emit("tower-built")
         game_gui:deselect_entity()
     elseif item.action == "upgrade_power" then

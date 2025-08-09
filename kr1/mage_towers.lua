@@ -66,6 +66,7 @@ local function mage_towers()
     tt.render.sprites[4].ts = -10
     tt.render.sprites[4].offset = vec_2(-1, 90)
     tt.main_script.update = scripts.tower_arcane_wizard.update
+    tt.main_script.remove = scripts.tower_arcane_wizard.remove
     tt.sound_events.insert = "MageArcaneTaunt"
     tt.attacks.range = 200
     tt.attacks.min_cooldown = 1.5

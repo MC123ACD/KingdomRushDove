@@ -641,10 +641,10 @@ function screen_map:init(w, h, done_callback)
 
     wid("map_counters_stars").text = string.format("%s/%s", screen_map.total_stars, GS.max_stars)
 
-
+    local upgrades_view_scale = 1
     local upgrades = UpgradesView:new(sw, sh)
-
-    upgrades.pos = v(0, 0)
+    upgrades.scale = vec_1(upgrades_view_scale)
+    upgrades.pos = v((1-upgrades_view_scale)*0.5*sw, (1-upgrades_view_scale)*0.5*sh)
 
     self.window:add_child(upgrades)
 

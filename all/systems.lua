@@ -876,9 +876,16 @@ function sys.game_upgrades:on_insert(entity, store)
 
             for _, bn in pairs(mage_bullet_names) do
                 local b = E:get_template(bn).bullet
-
+                if not b._orig_damage_min then
+                    b._orig_damage_min = b.damage_min
+                    b._orig_damage_max = b.damage_max
+                end
                 b.damage_min = math.ceil(b._orig_damage_min * f)
                 b.damage_max = math.ceil(b._orig_damage_max * f)
+            end
+            if not dps._orig_damage_min then
+                dps._orig_damage_min = dps.damage_min
+                dps._orig_damage_max = dps.damage_max
             end
             dps.damage_min = math.ceil(dps._orig_damage_min * f)
             dps.damage_max = math.ceil(dps._orig_damage_max * f)

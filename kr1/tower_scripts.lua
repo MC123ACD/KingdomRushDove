@@ -1841,6 +1841,18 @@ local function register_mage(scripts)
 
             return o
         end,
+        remove = function(this, store)
+           local mods = table.filter(store.modifiers, function(_, e)
+                return e.modifier.source_id == this.id and e.template_name == "decalmod_arcane_wizard_disintegrate_ready"
+            end)
+            if mods then
+                for _, m in pairs(mods) do
+                    queue_remove(store, m)
+                end
+            end
+
+            return true
+        end,
         update = function(this, store)
             local tower_sid = 2
             local shooter_sid = 3
