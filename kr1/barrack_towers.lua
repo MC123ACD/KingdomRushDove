@@ -573,6 +573,7 @@ local function barrack_towers()
     tt.melee.attacks[2].damage_min = 30
     tt.melee.attacks[2].damage_inc = 20
     tt.melee.attacks[2].disabled = true
+    tt.melee.attacks[2].damage_type = DAMAGE_RUDE
     tt.melee.attacks[2].hit_time = fts(20)
     tt.melee.attacks[2].mod = "mod_blood"
     tt.melee.attacks[2].pop = nil

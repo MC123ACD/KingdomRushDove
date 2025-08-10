@@ -26100,7 +26100,7 @@ function scripts.mod_blood_elves.insert(this, store)
 
     this.dps.damage_min = actual_damage
     this.dps.damage_max = actual_damage
-
+    this.modifier.damage_factor = 1
     log.debug("mod_blood_elves:%s source_damage:%s actual_damage:%s", this.id, source_damage.value, actual_damage)
 
     return true

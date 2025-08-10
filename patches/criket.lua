@@ -7,9 +7,9 @@ return {
     spawns = {
         {
             max = 50,
-            creep = "enemy_yeti", -- 选择敌人为小哥布林
+            creep = "enemy_slayer", -- 选择敌人为小哥布林
             fixed_sub_path = 0,
-            interval = 0.5, -- 每隔 0.1 秒出一个小哥布林
+            interval = 0.7, -- 每隔 0.1 秒出一个小哥布林
             interval_next = 5 -- 本小波出完后，过 5 秒出下一波
         },
     }
