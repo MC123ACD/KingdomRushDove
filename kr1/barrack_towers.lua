@@ -513,7 +513,7 @@ local function barrack_towers()
     tower_templar.tower.type = "templar"
     tower_templar.tower.price = 185
     tower_templar.powers.holygrail = E:clone_c("power")
-    tower_templar.powers.holygrail.price_base = 250
+    tower_templar.powers.holygrail.price_base = 225
     tower_templar.powers.holygrail.price_inc = 150
     tower_templar.powers.holygrail.name = "HOLY"
     tower_templar.powers.holygrail.enc_icon = 25
@@ -523,7 +523,7 @@ local function barrack_towers()
     tower_templar.powers.extralife.name = "TOUGHNESS"
     tower_templar.powers.extralife.enc_icon = 27
     tower_templar.powers.blood = E:clone_c("power")
-    tower_templar.powers.blood.price_base = 250
+    tower_templar.powers.blood.price_base = 225
     tower_templar.powers.blood.price_inc = 150
     tower_templar.powers.blood.name = "ARTERIAL"
     tower_templar.powers.blood.enc_icon = 26
@@ -568,7 +568,7 @@ local function barrack_towers()
     end
     tt.melee.attacks[2] = E:clone_c("melee_attack")
     tt.melee.attacks[2].animation = "blood"
-    tt.melee.attacks[2].chance = 0.2
+    tt.melee.attacks[2].chance = 0.25
     tt.melee.attacks[2].damage_max = 40
     tt.melee.attacks[2].damage_min = 30
     tt.melee.attacks[2].damage_inc = 20
