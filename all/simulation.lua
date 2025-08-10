@@ -174,19 +174,18 @@ function simulation:insert_entity(e)
 	d.entities[e.id] = e
     if e.enemy then
         d.enemies[e.id] = e  -- 优化分类索引
-        if d.level_difficulty == DIFFICULTY_IMPOSSIBLE and d.wave_group_number > 6 then
-            if d.wave_group_number <= 15 then
-                e.health.hp_max = e.health.hp_max * (1 + (d.wave_group_number - 6) * 0.0167)
-            else
-                e.health.hp_max = e.health.hp_max * 1.15
+        if e.health.hp == e.health.hp_max then
+            if d.level_difficulty == DIFFICULTY_IMPOSSIBLE and d.wave_group_number > 6 then
+                if d.wave_group_number <= 15 then
+                    e.health.hp_max = e.health.hp_max * (1 + (d.wave_group_number - 6) * 0.0167)
+                else
+                    e.health.hp_max = e.health.hp_max * 1.15
+                end
             end
-        end
-
-        e.health.hp_max = d.patches.enemy_health_multiplier * e.health.hp_max
-        if e.health.hp > 0 then
+            e.health.hp_max = d.patches.enemy_health_multiplier * e.health.hp_max
             e.health.hp = e.health.hp_max
+            e.enemy.gold = math.ceil(e.enemy.gold * d.patches.enemy_gold_multiplier)
         end
-        e.enemy.gold = math.ceil(e.enemy.gold * d.patches.enemy_gold_multiplier)
     elseif e.soldier and e.health then
         d.soldiers[e.id] = e
     elseif e.modifier then

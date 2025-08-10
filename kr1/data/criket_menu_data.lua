@@ -1,5 +1,5 @@
 return {
-{
+    {
         check = "main_icons_0019",
         action_arg = "tower_ranger",
         action = "tw_upgrade",
