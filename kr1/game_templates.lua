@@ -1325,7 +1325,7 @@ tt.aura.damage_max = 100
 tt.aura.damage_type = DAMAGE_PHYSICAL
 tt.aura.radius = 65
 tt.aura.track_source = true
-tt.aura.vis_bans = bor(F_ENEMY)
+tt.aura.vis_bans = bor(F_ENEMY, F_FLYING)
 tt.aura.vis_flags = bor(F_RANGED)
 tt = RT("aura_elder_shaman_healing", "aura")
 
