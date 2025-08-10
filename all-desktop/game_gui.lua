@@ -1060,17 +1060,11 @@ function game_gui:keypressed(key, isrepeat)
             self:set_mode(GUI_MODE_RALLY_CONTROABLES)
         end
     elseif table.contains(ks.slow, key) then
-        if self.game.simulation.store.speed_factor ~= 0.5 then
-            self.game.simulation.store.speed_factor = 0.5
-        else
-            self.game.simulation.store.speed_factor = 1
-        end
+        self.game.simulation.store.speed_factor = self.game.simulation.store.speed_factor * 0.5
     elseif table.contains(ks.quick, key) then
-        if self.game.simulation.store.speed_factor ~= 2 then
-            self.game.simulation.store.speed_factor = 2
-        else
-            self.game.simulation.store.speed_factor = 1
-        end
+        self.game.simulation.store.speed_factor = self.game.simulation.store.speed_factor * 2
+    elseif table.contains(ks.normal, key) then
+        self.game.simulation.store.speed_factor = 1
     -- elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
     --     if self.bag_button and not self.bag_button:is_disabled() then
     --         self.bag_button:on_click()
@@ -6384,7 +6378,20 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
                 new_tower.powers.auto.changed = true
            end
            if new_tower.barrack then
-                new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
+                if game_gui.game.store.patches.criket and game_gui.game.store.patches.criket.on then
+                    local path_index = game_gui.game.store.patches.criket.path_index
+                    local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, nil, true)
+                    if #nodes > 0 then
+                        if U.is_inside_ellipse(P:node_pos(nodes[1][1],nodes[1][2],nodes[1][3]),new_tower.pos, new_tower.barrack.rally_range) then
+                            new_tower.barrack.rally_pos = P:node_pos(nodes[1][1], nodes[1][2], nodes[1][3])
+                        else
+                            new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
+                        end
+
+                    end
+                else
+                    new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
+                end
            end
            if new_tower.mercenary then
                 for i = 1, new_tower.barrack.max_soldiers do

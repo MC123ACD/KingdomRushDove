@@ -2739,24 +2739,28 @@ local function register_mage(scripts)
                         pow_m.changed = nil
 
                         log.debug("pow_m:%s", getdump(pow_m))
-                        if pow_m.level > 1 then
-                            local egg_sid = egg_sids[pow_m.level - 1]
-                            local egg_s = this.render.sprites[egg_sid]
+                        for i = 1, pow_m.level do
+                            if i > #this.dragons then
+                                if i > 1 then
+                                    local egg_sid = egg_sids[i - 1]
+                                    local egg_s = this.render.sprites[egg_sid]
 
-                            U.animation_start(this, "open", nil, store.tick_ts, false, egg_sid)
-                            U.y_wait(store, fts(5))
+                                    U.animation_start(this, "open", nil, store.tick_ts, false, egg_sid)
+                                    U.y_wait(store, fts(5))
+                                end
+
+                                local o = pow_m.idle_offsets[pow_m.level]
+                                local e = E:create_entity("faerie_dragon")
+
+                                e.idle_pos = 0
+                                e.pos.x, e.pos.y = this.pos.x + o.x, this.pos.y + o.y
+                                e.owner = this
+                                e.idle_pos = V.vclone(e.pos)
+
+                                queue_insert(store, e)
+                                table.insert(this.dragons, e)
+                            end
                         end
-
-                        local o = pow_m.idle_offsets[pow_m.level]
-                        local e = E:create_entity("faerie_dragon")
-
-                        e.idle_pos = 0
-                        e.pos.x, e.pos.y = this.pos.x + o.x, this.pos.y + o.y
-                        e.owner = this
-                        e.idle_pos = V.vclone(e.pos)
-
-                        queue_insert(store, e)
-                        table.insert(this.dragons, e)
                     end
 
                     if pow_i.changed then
@@ -4402,8 +4406,9 @@ local function register_barrack(scripts)
 
     function scripts.tower_baby_ashbite.update(this, store)
         local b = this.barrack
-
-        this.barrack.rally_pos = V.v(this.pos.x + b.respawn_offset.x, this.pos.y + b.respawn_offset.y)
+        if not this.barrack.rally_pos then
+            this.barrack.rally_pos = V.v(this.pos.x + b.respawn_offset.x, this.pos.y + b.respawn_offset.y)
+        end
 
         if #b.soldiers == 0 then
             local s = E:create_entity(b.soldier_type)
