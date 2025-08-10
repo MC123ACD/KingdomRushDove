@@ -1880,7 +1880,19 @@ return {
             level = 5
         },
         iron = {"archers", "druids"}
-    }},
+    },
+    -- 额外
+    {
+        upgrades = {
+            heroe = true,
+            level = 5
+        },
+        iron = {
+            "archers",
+            "artillery"
+        }
+    }
+},
     tower_data = {{
     --     name = "tower_archer_1"
     -- }, {

@@ -2749,7 +2749,7 @@ local function register_mage(scripts)
                                     U.y_wait(store, fts(5))
                                 end
 
-                                local o = pow_m.idle_offsets[pow_m.level]
+                                local o = pow_m.idle_offsets[i]
                                 local e = E:create_entity("faerie_dragon")
 
                                 e.idle_pos = 0

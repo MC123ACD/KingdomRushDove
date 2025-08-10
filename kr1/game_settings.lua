@@ -89,7 +89,7 @@ GS.main_campaign_levels1 = 12
 GS.last_level = 26
 GS.last_level1 = 26
 GS.last_level2 = 48
-GS.last_level3 = 70
+GS.last_level3 = 71
 GS.endless_levels_count = 1
 GS.level_ranges = {
 	{
@@ -128,7 +128,7 @@ GS.level_ranges1 = {{1, 12}, {13}, {14}, {
     15,
     22,
     list = true
-}, {16, 17}, {18, 19}, {20, 21}, {23, 26}}
+}, {16, 17}, {18, 19}, {20, 21}, {23, 26},{71}}
 GS.level_ranges2 = {{27, 41}, {42, 44}, {45, 47}, {
     48
 }}

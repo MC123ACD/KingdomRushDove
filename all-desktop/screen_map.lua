@@ -36,8 +36,8 @@ local IS_KR3 = KR_GAME == "kr3"
 
 screen_map = {}
 screen_map.required_sounds = {"common", "music_screen_map"}
-screen_map.required_textures = {"screen_map", "screen_map_animations","screen_map_animations2", "view_options", "achievements", "encyclopedia",
-                                "encyclopedia_thumbs", "gui_shop", "gui_shop_bg"}
+screen_map.required_textures = {"screen_map", "screen_map_animations", "screen_map_animations2", "view_options",
+                                "achievements", "encyclopedia", "encyclopedia_thumbs", "gui_shop", "gui_shop_bg"}
 
 if IS_KR1 then
     table.insert(screen_map.required_textures, "screen_map_hero_room")
@@ -644,7 +644,7 @@ function screen_map:init(w, h, done_callback)
     local upgrades_view_scale = 1
     local upgrades = UpgradesView:new(sw, sh)
     upgrades.scale = vec_1(upgrades_view_scale)
-    upgrades.pos = v((1-upgrades_view_scale)*0.5*sw, (1-upgrades_view_scale)*0.5*sh)
+    upgrades.pos = v((1 - upgrades_view_scale) * 0.5 * sw, (1 - upgrades_view_scale) * 0.5 * sh)
 
     self.window:add_child(upgrades)
 
@@ -655,7 +655,7 @@ function screen_map:init(w, h, done_callback)
     local encyclopedia = EncyclopediaView:new(sw, sh)
 
     -- encyclopedia.pos = v(0, 0)
-    encyclopedia.pos = v(-sw*0.1, -sh*0.1)
+    encyclopedia.pos = v(-sw * 0.1, -sh * 0.1)
     self.encyclopedia = encyclopedia
 
     self.window:add_child(encyclopedia)
@@ -1587,8 +1587,7 @@ function MapView:show_flags(num)
         self.show_flags_in_progress = true
 
         local ud = screen_map.unlock_data
-
-        for i = 1, max_level do
+        local function show_flag1(i, jnum, extra)
             local level = levels[i + jnum]
 
             if not level then
@@ -1624,8 +1623,12 @@ function MapView:show_flags(num)
                         end
                     end
                 end
-
-                local flag = LevelFlagView:new(i)
+                local flag
+                if not extra then
+                    flag = LevelFlagView:new(i)
+                else
+                    flag = LevelFlagView:new(i + jnum)
+                end
 
                 flag:set_data(level)
                 self.flags_layer:add_child(flag)
@@ -1678,41 +1681,48 @@ function MapView:show_flags(num)
                     wing.hidden = ud.heroic_level == i + jnum
                 end
 
-                if screen_map.is_premium then
-                    for lid, f in pairs(screen_map.map_points.endless_flags) do
-                        if f.unlocks_at_level == i then
-                            local flag = EndlessLevelFlagView:new(lid)
+                -- if screen_map.is_premium then
+                --     for lid, f in pairs(screen_map.map_points.endless_flags) do
+                --         if f.unlocks_at_level == i then
+                --             local flag = EndlessLevelFlagView:new(lid)
 
-                            flag.pos = V.vclone(f.pos)
-                            self.flags[lid] = flag
+                --             flag.pos = V.vclone(f.pos)
+                --             self.flags[lid] = flag
 
-                            self.flags_layer:add_child(flag)
+                --             self.flags_layer:add_child(flag)
 
-                            if f.show_balloon and (DBG_SHOW_BALLOONS or not screen_map.user_data.seen[f.show_balloon]) then
-                                local t = KImageView:new_from_table(
-                                    kui_db:get_table("screen_map_balloon_endless", {
-                                        CJK = CJK
-                                    }))
+                --             if f.show_balloon and (DBG_SHOW_BALLOONS or not screen_map.user_data.seen[f.show_balloon]) then
+                --                 local t = KImageView:new_from_table(
+                --                     kui_db:get_table("screen_map_balloon_endless", {
+                --                         CJK = CJK
+                --                     }))
 
-                                t.pos = V.v(flag.pos.x, flag.pos.y - 40)
+                --                 t.pos = V.v(flag.pos.x, flag.pos.y - 40)
 
-                                self:add_child(t)
+                --                 self:add_child(t)
 
-                                screen_map.endlessTip = t
-                            end
-                        end
-                    end
-                end
+                --                 screen_map.endlessTip = t
+                --             end
+                --         end
+                --     end
+                -- end
             end
+
         end
 
+        for i = 1, max_level do
+            show_flag1(i, jnum)
+        end
+        if num == 1 then
+            show_flag1(27, 44, true)
+        end
         wait(1)
 
         while not screen_map.difficulty_view.hidden do
             wait(0.5)
         end
 
-        for i = 1, max_level do
+        local function show_flag2(i, jnum)
             local level = levels[i + jnum]
 
             if not level then
@@ -1821,6 +1831,13 @@ function MapView:show_flags(num)
                     flag:enable()
                 end
             end
+
+        end
+        for i = 1, max_level do
+            show_flag2(i, jnum)
+        end
+        if num == 1 then
+            show_flag2(27, 44)
         end
 
         self.show_flags_in_progress = nil
@@ -3470,13 +3487,13 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     self.size.y = self.size.y * scale
 
     self.my_id = my_id
-    self.disabled_image = KImageView:new("Disabled_" .. sprite, nil ,scale)
+    self.disabled_image = KImageView:new("Disabled_" .. sprite, nil, scale)
     self.disabled_image.size.x = self.disabled_image.size.x * scale
     self.disabled_image.size.y = self.disabled_image.size.y * scale
     self:add_child(self.disabled_image)
 
     self.data_values = data_values
-    self.over_circle = KImageView:new("Upgrades_Icons_over", nil ,scale)
+    self.over_circle = KImageView:new("Upgrades_Icons_over", nil, scale)
     self.over_circle.size.x = self.over_circle.size.x * scale
     self.over_circle.size.y = self.over_circle.size.y * scale
     self.over_circle.anchor = v(self.over_circle.size.x / 2, self.over_circle.size.y / 2)
@@ -3508,14 +3525,15 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
 
     self.cost_panel:add_child(price_value)
 
-    self.disabled_cost_panel = KImageView:new("Disabled_Upgrades_Icons_PriceTag", nil ,scale)
+    self.disabled_cost_panel = KImageView:new("Disabled_Upgrades_Icons_PriceTag", nil, scale)
     self.disabled_cost_panel.size.x = self.disabled_cost_panel.size.x * scale
     self.disabled_cost_panel.size.y = self.disabled_cost_panel.size.y * scale
     self.disabled_cost_panel.pos = v(35 * scale, 55 * scale)
 
     self:add_child(self.disabled_cost_panel)
 
-    local disabled_price_value = KImageView:new("Disabled_Upgrades_Icons_PriceTag_Nm_000" .. data_values.price, nil, scale)
+    local disabled_price_value = KImageView:new("Disabled_Upgrades_Icons_PriceTag_Nm_000" .. data_values.price, nil,
+        scale)
     disabled_price_value.size.x = disabled_price_value.size.x * scale
     disabled_price_value.size.y = disabled_price_value.size.y * scale
     disabled_price_value.anchor = v(disabled_price_value.size.x / 2, disabled_price_value.size.y / 2)
@@ -3962,8 +3980,7 @@ function EncyclopediaView:detail_tower(index)
     else
         tower_fmt = GS.encyclopedia_tower_fmt3
     end
-    local portrait =
-        KImageView:new(string.format(tower_fmt, screen_map.tower_data[index].icon))
+    local portrait = KImageView:new(string.format(tower_fmt, screen_map.tower_data[index].icon))
 
     portrait.anchor = v(portrait.size.x / 2, portrait.size.y / 2)
     portrait.pos = v(300, 175)
@@ -4750,7 +4767,8 @@ function HeroRoomViewKR1:initialize(size)
     self.hover_image = KImageView("heroroom_thumbs_0008")
     self.check_image_1.scale = V.vv(thumb_scale_3)
     self.check_image_2.scale = V.vv(thumb_scale_3)
-    self.check_image_1.anchor.x = self.check_image_1.anchor.x + single_hero_thumb_x_size - self.check_image_1.size.x * 0.06
+    self.check_image_1.anchor.x = self.check_image_1.anchor.x + single_hero_thumb_x_size - self.check_image_1.size.x *
+                                      0.06
     self.border_image.scale = V.vv(thumb_scale_3)
     self.hover_image.scale = V.vv(thumb_scale_3)
     self.check_image_1.hidden = true
@@ -4812,8 +4830,7 @@ function HeroRoomViewKR1:initialize(size)
                 screen_map.hero_icon_portrait.image_scale = 1
             end
 
-            screen_map.
-            hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
+            screen_map.hero_icon_portrait:set_image(string.format("mapButtons_portrait_hero_%04i", hd.icon))
         else
             screen_map.hero_icon_portrait:set_image("mapButtons_portrait_hero_0010")
         end
@@ -5378,8 +5395,8 @@ function DifficultyView:initialize(sw, sh)
     --             _("DIFFICULTY_SELECTION_IMPOSSIBLE_LOCKED_DESCRIPTION")})
     -- end
     if impo then
-        table.insert(b_texts, {_("LEVEL_SELECT_DIFFICULTY_IMPOSSIBLE"),
-            _("DIFFICULTY_SELECTION_IMPOSSIBLE_DESCRIPTION")})
+        table.insert(b_texts,
+            {_("LEVEL_SELECT_DIFFICULTY_IMPOSSIBLE"), _("DIFFICULTY_SELECTION_IMPOSSIBLE_DESCRIPTION")})
     end
 
     for i, set in pairs(b_texts) do
