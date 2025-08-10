@@ -1,7 +1,7 @@
 -- 这个文件用于斗蛐蛐中编辑出怪
 
 return {
-    on = false, -- 启用斗蛐蛐,
+    on = true, -- 启用斗蛐蛐,
     path_index = 1, -- 设置主路径为 1
     delay = 0, -- 开始出怪前的延迟，单位为秒
     spawns = {

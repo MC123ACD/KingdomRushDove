@@ -3876,8 +3876,11 @@ local function register_engineer(scripts)
             local mecha = E:create_entity("soldier_mecha")
 
             mecha.pos.x, mecha.pos.y = this.pos.x, this.pos.y + 16
-            mecha.nav_rally.pos.x, mecha.nav_rally.pos.y = this.tower.default_rally_pos.x,
-                this.tower.default_rally_pos.y
+            if not this.barrack.rally_pos then
+                this.barrack.rally_pos = V.vclone(this.tower.default_rally_pos)
+            end
+            mecha.nav_rally.pos.x, mecha.nav_rally.pos.y = this.barrack.rally_pos.x,
+                this.barrack.rally_pos.y
             mecha.nav_rally.new = true
             mecha.owner = this
 
