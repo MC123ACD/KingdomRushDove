@@ -21,11 +21,15 @@ local gms = {
 
 function wave_db:patch_waves(criket)
     self.db.groups = {}
-    criket.delay = FPS * criket.delay
-    for _, spawn in pairs(criket.spawns) do
-        spawn.interval = FPS * spawn.interval
-        spawn.interval_next = FPS * spawn.interval_next
+    if not criket.fps_transformed then
+        criket.fps_transformed = true
+        criket.delay = FPS * criket.delay
+        for _, spawn in pairs(criket.spawns) do
+            spawn.interval = FPS * spawn.interval
+            spawn.interval_next = FPS * spawn.interval_next
+        end
     end
+
     self.db.groups[1] = {
         interval = 0,
         waves = {
