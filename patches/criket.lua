@@ -6,8 +6,8 @@ return {
     delay = 0, -- 开始出怪前的延迟，单位为秒
     spawns = {
         {
-            max = 50,
-            creep = "enemy_slayer", -- 选择敌人为小哥布林
+            max = 30,
+            creep = "enemy_troll_brute", -- 选择敌人为小哥布林
             fixed_sub_path = 0,
             interval = 0.7, -- 每隔 0.1 秒出一个小哥布林
             interval_next = 5 -- 本小波出完后，过 5 秒出下一波

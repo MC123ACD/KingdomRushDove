@@ -5308,9 +5308,11 @@ end
 scripts.cast_silence = function(target, store)
     if not target.silence_cast_count then
         target.silence_cast_count = 1
-        target.silence_ts = store.tick_ts
     else
         target.silence_cast_count = target.silence_cast_count + 1
+    end
+    if target.silence_cast_count == 1 then
+        target.silence_ts = store.tick_ts
     end
     if target.silence_cast_count > 0 then
         target.enemy.can_do_magic = false
@@ -5325,7 +5327,7 @@ scripts.remove_silence = function(target, store)
             if target.health.dead then
                 target.enemy.can_do_magic = false
                 target.enemy.can_accept_magic = false
-            elseif target.silence_cast_count < 1 then
+            elseif target.silence_cast_count < 1 and not target.enemy.can_do_magic then
                 target.enemy.can_do_magic = true
                 target.enemy.can_accept_magic = true
                 local duration = store.ts - target.silence_ts
