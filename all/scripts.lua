@@ -3415,6 +3415,26 @@ function scripts.shotgun.update(this, store, script)
 
         queue_damage(store, d)
 
+        local mods
+        if b.mod then
+            mods = type(b.mod) == "table" and b.mod or {b.mod}
+        elseif b.mods then
+            mods = b.mods
+        end
+        if mods then
+            for _, mod_name in pairs(mods) do
+
+                local mod = E:create_entity(mod_name)
+
+                mod.modifier.source_id = this.id
+                mod.modifier.target_id = target.id
+                mod.modifier.level = b.level
+                mod.modifier.source_damage = d
+                mod.modifier.damage_factor = b.damage_factor
+                queue_insert(store, mod)
+            end
+        end
+
         if b.hit_blood_fx and target.unit.blood_color ~= BLOOD_NONE then
             local sfx = E:create_entity(b.hit_blood_fx)
 
