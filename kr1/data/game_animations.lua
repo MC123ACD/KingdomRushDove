@@ -3222,6 +3222,11 @@ local kr1_a = {
         to = 24,
         from = 1
     },
+    eb_kingpin_walkingDown = {
+        prefix = "BossBandit",
+        to = 24,
+        from = 1
+    },
     eb_ulgukhai_attack = {
         prefix = "TrollBoss",
         to = 98,

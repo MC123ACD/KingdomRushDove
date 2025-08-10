@@ -436,20 +436,20 @@ return {
     level_mode_overrides = {
         {
             locked_towers = {},
-            max_upgrade_level = 5
+            max_upgrade_level = 6
         },
         {
             locked_towers = {},
-            max_upgrade_level = 5
+            max_upgrade_level = 6
         },
         {
             locked_towers = {},
-            max_upgrade_level = 5
+            max_upgrade_level = 6
         }
     },
     level_terrain_type = 1,
     locked_hero = false,
-    max_upgrade_level = 5,
+    max_upgrade_level = 6,
     nav_mesh = {
         nil,
         nil,
@@ -550,7 +550,7 @@ return {
         [55] = {}
     },
     required_sounds = {
-        "music_stage07"
+        "music_stage09"
     },
     required_textures = {
         "go_enemies_ice",
