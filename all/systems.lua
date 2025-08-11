@@ -230,8 +230,15 @@ function sys.level:on_update(dt, ts, store)
             storage:save_slot(slot, nil, true)
         elseif store.level.run_complete and store.waves_finished and not LU.has_alive_enemies(store) then
             if store.patches.criket and store.patches.criket.on then
+                if not store.criket_wait_start_time then
+                    store.criket_wait_start_time = store.tick_ts
+                end
+                if store.tick_ts - store.criket_wait_start_time < 2 then
+                    return
+                end
                 simulation:init(store, game.simulation_systems)
                 signal.emit("game-start", store)
+                store.criket_wait_start_time = nil
                 return
             end
             log.info("++++ VICTORY ++++")
