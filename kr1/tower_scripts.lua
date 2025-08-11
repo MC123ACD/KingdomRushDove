@@ -2298,7 +2298,7 @@ local function register_mage(scripts)
                             ta.vis_flags, ta.vis_bans, function(e)
                                 return P:is_node_valid(e.nav_path.pi, e.nav_path.ni, NF_TWISTER) and e.nav_path.ni >
                                            P:get_start_node(e.nav_path.pi) + ta.nodes_limit and e.nav_path.ni <
-                                           P:get_end_node(e.nav_path.pi) - ta.nodes_limit
+                                           P:get_end_node(e.nav_path.pi) - ta.nodes_limit and (not e.enemy.counts.twister or e.enemy.counts.twister < E:get_template("twister").max_times_applied)
                             end)
 
                         if not target then
