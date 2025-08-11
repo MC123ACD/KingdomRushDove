@@ -614,8 +614,8 @@ local function archer_towers()
     tt.powers.reduce_cooldown.price_inc = 40
     tt.powers.reduce_cooldown.values = {2.2, 1.5, 1}
     tt.powers.parrot = E:clone_c("power")
-    tt.powers.parrot.price_base = 300
-    tt.powers.parrot.price_inc = 300
+    tt.powers.parrot.price_base = 250
+    tt.powers.parrot.price_inc = 250
     tt.powers.parrot.max_level = 3
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "pirateTower"
@@ -697,7 +697,7 @@ local function archer_towers()
     tt.sound_events.insert = nil
 
     tt = E:register_t("mod_pirate_watchtower_bomb", "mod_stun")
-    tt.modifier.duration = 0.4
+    tt.modifier.duration = 0.3
 
     tt = E:register_t("tower_arcane", "tower")
     E:add_comps(tt, "attacks", "powers")
