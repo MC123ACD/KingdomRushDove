@@ -489,8 +489,21 @@ function director:queue_load_item_named(name, force_reload)
             game.store.patches = LU.eval_file("patches/default.lua")
         end
         game.store.patches.criket = LU.eval_file("patches/criket.lua")
+        if game.store.patches.criket and game.store.patches.criket.on then
+            local criket_template = LU.eval_file("patches/criket_template.lua")
+            if criket_template then
+                for k, v in pairs(criket_template) do
+                    if not game.store.patches.criket[k] then
+                        game.store.patches.criket[k] = v
+                    end
+                end
+            end
+            self:load_texture_groups(replace_locale(game.store.patches.criket.required_textures), self.params.texture_size,
+    game.ref_res, true, "game")
+        end
 		self:load_texture_groups(replace_locale(game.required_textures), self.params.texture_size, game.ref_res, true, "game")
 		self:load_texture_groups(replace_locale(game.store.level.required_textures), self.params.texture_size, game.ref_res, true, "game")
+
 		self:load_texture_groups(replace_locale(game_gui.required_textures), self.params.texture_size, game_gui.ref_res, true, "game_gui")
 		self:load_sound_groups(game.required_sounds)
 		self:load_sound_groups(game.store.level.required_sounds)
