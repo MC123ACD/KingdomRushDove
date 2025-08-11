@@ -28,6 +28,7 @@ return {
         "go_enemies_blackburn",
         "go_enemies_desert",
         "go_enemies_elven_woods",
+        "go_enemies_faerie_grove",
         "go_enemies_forgotten_treasures",
         "go_enemies_grass",
         "go_enemies_halloween",

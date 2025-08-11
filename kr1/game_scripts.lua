@@ -14013,15 +14013,15 @@ function scripts.spell_djinn.insert(this, store, script)
     local d = E:create_entity("damage")
     if instakill then
         d.damage_type = DAMAGE_EAT
+        target.vis.bans = F_POLYMORPH
     else
         d.value = damage_spell
         d.damage_type = DAMAGE_TRUE
     end
+
     d.source_id = this.id
     d.target_id = target.id
     queue_damage(store, d)
-
-    target.vis.bans = F_POLYMORPH
 
     local fx = E:create_entity("fx")
     fx.pos = V.vclone(target.pos)

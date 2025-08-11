@@ -620,7 +620,6 @@ mod_ban.modifier.duration = 6
 mod_ban.modifier.ban_vis = 0
 
 local mod_shock_and_awe = E:register_t("mod_shock_and_awe", "mod_stun")
-
 local mod_lava = E:register_t("mod_lava", "modifier")
 E:add_comps(mod_lava, "dps", "render")
 mod_lava.modifier.duration = 2
@@ -637,10 +636,9 @@ mod_lava.render.sprites[1].draw_order = 2
 mod_lava.render.sprites[1].loop = true
 mod_lava.main_script.insert = scripts.mod_dps.insert
 mod_lava.main_script.update = scripts.mod_dps.update
+
 tt = E:register_t("mod_track_target_fx", "modifier")
-
 E:add_comps(tt, "render")
-
 tt.main_script.insert = scripts.mod_track_target.insert
 tt.main_script.update = scripts.mod_track_target.update
 tt = E:register_t("mod_damage", "modifier")

@@ -2,20 +2,24 @@
 
 return {
     on = true, -- 启用斗蛐蛐,
-    path_index = 1, -- 设置主路径为 1
+    path_index = 5, -- 设置主路径为 1
     delay = 0, -- 开始出怪前的延迟，单位为秒
     spawns = {
         {
-            max = 30,
-            creep = "enemy_troll_brute", -- 选择敌人为小哥布林
+            max = 200,
+            creep = "enemy_dark_knight", -- 选择敌人为小哥布林
+            creep_aux = "enemy_shaman",
+            max_same = 2,
             fixed_sub_path = 0,
-            interval = 0.7, -- 每隔 0.1 秒出一个小哥布林
+            interval = 0.4, -- 每隔 0.1 秒出一个小哥布林
             interval_next = 5 -- 本小波出完后，过 5 秒出下一波
         },
     },
     required_textures = {"go_enemies_acaroth", "go_enemies_ancient_metropolis", "go_enemies_bandits",
                      "go_enemies_bittering_rancor", "go_enemies_blackburn", "go_enemies_desert",
-                     "go_enemies_elven_woods", "go_enemies_forgotten_treasures", "go_enemies_grass",
+                     "go_enemies_elven_woods",
+                     "go_enemies_faerie_grove",
+                     "go_enemies_forgotten_treasures", "go_enemies_grass",
                      "go_enemies_halloween", "go_enemies_hulking_rage", "go_enemies_ice", "go_enemies_jungle",
                      "go_enemies_mactans_malicia", "go_enemies_rising_tides", "go_enemies_rotten",
                      "go_enemies_sarelgaz", "go_enemies_storm", "go_enemies_torment", "go_enemies_underground",

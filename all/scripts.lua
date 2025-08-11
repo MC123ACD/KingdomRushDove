@@ -2386,8 +2386,8 @@ function scripts.bomb.update(this, store, script)
         end
 
         if b.hide_radius then
-            this.render.sprites[1].hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or
-                                                V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
+            this.render.sprites[1].hidden = V.dist2(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius^2 or
+                                                V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius^2
         end
     end
 
