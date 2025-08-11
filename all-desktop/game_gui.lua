@@ -1280,6 +1280,9 @@ function game_gui:show_wave_flags(group)
 
     local store = self.game.store
     local flags_positions = store.level.locations.entrances
+    if not flags_positions then
+        return
+    end
 
     for _, w in pairs(group.waves) do
         local item = flags_positions[w.path_index]

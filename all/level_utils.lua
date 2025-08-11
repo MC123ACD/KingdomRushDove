@@ -57,6 +57,7 @@ function LU.eval_set_prop(e, prop_name, value)
 end
 
 function LU.load_level(store, name)
+    log.error("load_level %s", name)
 	local level
 	local fn = KR_PATH_GAME .. "/data/levels/" .. name .. ".lua"
 

@@ -229,6 +229,11 @@ function sys.level:on_update(dt, ts, store)
             signal.emit("game-defeat-after", store)
             storage:save_slot(slot, nil, true)
         elseif store.level.run_complete and store.waves_finished and not LU.has_alive_enemies(store) then
+            if store.patches.criket and store.patches.criket.on then
+                simulation:init(store, game.simulation_systems)
+                signal.emit("game-start", store)
+                return
+            end
             log.info("++++ VICTORY ++++")
 
             local stars = 1
