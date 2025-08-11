@@ -111,14 +111,16 @@ function scripts.aura_totem.update(this, store, script)
 			return not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and band(e.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
 		end)
 
+        local mods = this.aura.mods or {this.aura.mod}
+
 		for _, enemy in pairs(enemies) do
-			local new_mod = E:create_entity(this.aura.mod)
-
-			new_mod.modifier.level = this.aura.level
-			new_mod.modifier.target_id = enemy.id
-			new_mod.modifier.source_id = this.id
-
-			queue_insert(store, new_mod)
+            for _, mod in pairs(mods) do
+                local new_mod = E:create_entity(mod)
+                new_mod.modifier.level = this.aura.level
+                new_mod.modifier.target_id = enemy.id
+                new_mod.modifier.source_id = this.id
+    			queue_insert(store, new_mod)
+            end
 		end
 
 		last_hit_ts = store.tick_ts

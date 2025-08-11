@@ -895,7 +895,7 @@ local function barrack_towers()
     tt.timed_attacks.list[2].spell = "shock_djinn"
     tt.timed_attacks.list[2].max_range = 160
     tt.timed_attacks.list[2].cooldown = 10
-    tt.timed_attacks.list[2].vis_flags = F_POLYMORPH
+    tt.timed_attacks.list[2].vis_flags = bor(F_STUN, F_MOD)
     tt.timed_attacks.list[2].vis_bans = bor(F_BOSS, F_FLYING)
     tt.timed_attacks.list[2].cast_time = fts(9)
     tt.timed_attacks.list[2].power_name = "djshock"
@@ -1052,8 +1052,8 @@ local function barrack_towers()
 
     tt = E:register_t("mod_molotov_big", "mod_lava")
     tt.modifier.duration = 2
-    tt.dps.damage_min = 5
-    tt.dps.damage_max = 5
+    tt.dps.damage_min = 6
+    tt.dps.damage_max = 6
     tt.dps.damage_inc = 2
     tt.dps.damage_every = 0.5
     tt.modifier.vis_flags = bor(F_MOD, F_BURN)

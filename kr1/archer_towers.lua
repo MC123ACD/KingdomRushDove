@@ -243,7 +243,7 @@ local function archer_towers()
     tower_totem.tower.type = "totem"
     tower_totem.tower.price = 210
     tower_totem.powers.weakness = E:clone_c("power")
-    tower_totem.powers.weakness.price_base = 200
+    tower_totem.powers.weakness.price_base = 225
     tower_totem.powers.weakness.price_inc = 200
     tower_totem.powers.weakness.enc_icon = 30
     tower_totem.powers.weakness.attack_idx = 2
@@ -302,6 +302,7 @@ local function archer_towers()
     axe_totem.bullet.miss_decal = "TotemAxe_0002"
     axe_totem.bullet.damage_min = 25
     axe_totem.bullet.damage_max = 40
+    axe_totem.bullet.damage_type = DAMAGE_RUDE
     axe_totem.bullet.pop = {"pop_thunk"}
     axe_totem.bullet.pop_chance = 1
     axe_totem.bullet.pop_conds = DR_KILL
@@ -371,7 +372,7 @@ local function archer_towers()
     totem_silence.tween.props[2].loop = true
 
     local totem_weakness = E:register_t("totem_weakness", "totem_silence")
-    totem_weakness.aura.mod = "mod_weakness_totem"
+    totem_weakness.aura.mods = {"mod_weakness_totem", "mod_totem_fire"}
     totem_weakness.aura.duration = 0
     totem_weakness.aura.duration_inc = 3
     totem_weakness.aura.vis_bans = 0
@@ -381,6 +382,15 @@ local function archer_towers()
     totem_weakness.render.sprites[3].anchor = vec_2(0.45, 0.17)
     totem_weakness.sound_events.insert = "TotemWeakness"
 
+    tt = E:register_t("mod_totem_fire", "mod_lava")
+    tt.modifier.duration = 3
+    tt.dps.damage_min = 1
+    tt.dps.damage_max = 1
+    tt.dps.damage_inc = 1
+    tt.dps.damage_type = DAMAGE_TRUE
+    tt.dps.damage_every = 0.5
+    tt.render.sprites[1].color = {255, 100, 100}
+    tt.render.sprites[1].alpha = 150
     -- 火枪
     tt = RT("tower_musketeer", "tower_archer_1")
     AC(tt, "attacks", "powers")
