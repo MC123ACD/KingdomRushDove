@@ -881,7 +881,7 @@ function sys.game_upgrades:on_insert(entity, store)
             return table.contains(mage_towers, e.template_name)
         end)
         local dps = E:get_template("mod_ray_arcane").dps
-
+        local bullet_ray_high_elven = E:get_template("ray_high_elven_sentinel").bullet
         if #existing_towers == 0 then
             for _, bn in pairs(mage_bullet_names) do
                 local b = E:get_template(bn).bullet
@@ -891,6 +891,8 @@ function sys.game_upgrades:on_insert(entity, store)
             end
             dps._orig_damage_min = dps.damage_min
             dps._orig_damage_max = dps.damage_max
+            bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
+            bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
         else
             local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
 
@@ -909,6 +911,12 @@ function sys.game_upgrades:on_insert(entity, store)
             end
             dps.damage_min = math.ceil(dps._orig_damage_min * f)
             dps.damage_max = math.ceil(dps._orig_damage_max * f)
+            if not bullet_ray_high_elven._orig_damage_min then
+                bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
+                bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
+            end
+            bullet_ray_high_elven.damage_min = math.ceil(bullet_ray_high_elven._orig_damage_min * f)
+            bullet_ray_high_elven.damage_max = math.ceil(bullet_ray_high_elven._orig_damage_max * f)
         end
     end
 
