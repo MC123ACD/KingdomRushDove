@@ -241,7 +241,7 @@ local function archer_towers()
     tower_totem.info.portrait = (IS_PHONE and "portraits_towers_" or "kr2_info_portraits_towers_") .. "0010"
     tower_totem.info.enc_icon = 18
     tower_totem.tower.type = "totem"
-    tower_totem.tower.price = 210
+    tower_totem.tower.price = 215
     tower_totem.powers.weakness = E:clone_c("power")
     tower_totem.powers.weakness.price_base = 225
     tower_totem.powers.weakness.price_inc = 200
@@ -948,7 +948,7 @@ local function archer_towers()
     tt.bullet.hit_fx = "fx_arrow_silver_sentence_hit"
     tt.bullet.flight_time_min = fts(4)
     tt.bullet.flight_time_factor = fts(0.01)
-    tt.bullet.damage_type = bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_PHYSICAL)
+    tt.bullet.damage_type = bor(DAMAGE_FX_NOT_EXPLODE, DAMAGE_PHYSICAL, DAMAGE_IGNORE_SHIELD)
     tt.bullet.damage_max = 60
     tt.bullet.damage_min = 45
     tt.bullet.pop = {"pop_headshot"}
