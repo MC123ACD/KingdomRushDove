@@ -244,10 +244,10 @@ function sys.level:on_update(dt, ts, store)
                 -- store.criket_wait_start_time = nil
                 -- return
                 local stars = 3
-                if store.lives < -5 then
-                    stars = 2
-                elseif store.lives < -10 then
+                if store.lives < -10 then
                     stars = 1
+                elseif store.lives < -5 then
+                    stars = 2
                 end
                 store.patches.criket.time_cost = store.tick_ts - store.last_wave_ts
                 store.game_outcome = {
