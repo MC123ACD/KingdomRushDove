@@ -4199,7 +4199,13 @@ end
 function VictoryView:show()
     local criket = game_gui.game.store.patches.criket
     if criket and criket.on then
-        self.ct.text = string.format("%s损 %.1f秒", tostring(-game_gui.game.store.lives), tostring(criket.time_cost))
+        local lives
+        if game_gui.game.store.lives < 0 then
+            lives = -game_gui.game.store.lives
+        else
+            lives = game_gui.game.store.lives
+        end
+        self.ct.text = string.format("%s损 %.1f秒", tostring(lives), tostring(criket.time_cost))
         self.ct.font_size = 40
     end
     game_gui.overlay:show()

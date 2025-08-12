@@ -238,6 +238,9 @@ local function register_archer(scripts)
                             local idle_an, idle_af = shot_animation(aa, shooter_idx, enemy)
 
                             U.y_wait(store, aa.shoot_time)
+                            if enemy.health.dead then
+                                U.refind_foremost_enemy(enemy, store.enemies, aa.vis_flags, aa.vis_bans)
+                            end
 
                             shot_bullet(aa, shooter_idx, enemy, pow_p.level)
 
@@ -347,7 +350,7 @@ local function register_archer(scripts)
                             if (ax.chance == 1 or math.random() < ax.chance) and
                                 ready_to_use_power(pow_sn, ax, store, this.tower.cooldown_factor) then
                                 local enemy = U.find_biggest_enemy(store.enemies, tpos(this), 0, ax.range, false,
-                                    ax.vis_flags)
+                                    ax.vis_flags, ax.vis_bans)
 
                                 if not enemy then
                                     break
@@ -376,9 +379,12 @@ local function register_archer(scripts)
                                 shot_animation(ax, seeker_idx, enemy, ax.animation_seeker)
                                 U.y_wait(store, ax.shoot_time)
 
-                                if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= ax.range then
-                                    shot_bullet(ax, shooter_idx, ai, enemy, pow_sn.level)
+                                if enemy.health.dead then
+                                    U.refind_foremost_enemy(enemy, store.enemies, ax.vis_flags, ax.vis_bans)
                                 end
+
+                                shot_bullet(ax, shooter_idx, ai, enemy, pow_sn.level)
+
                                 U.y_animation_wait(this, shooter_sids[shooter_idx])
                                 queue_remove(store, m)
                             end
@@ -750,27 +756,28 @@ local function register_archer(scripts)
 
                             local torigin = tpos(this)
 
-                            if V.dist(torigin.x, torigin.y, enemy.pos.x, enemy.pos.y) <= a.range then
-                                local b1 = E:create_entity(aa.bullet)
-                                b1.pos.x, b1.pos.y = this.pos.x + start_offset.x, this.pos.y + start_offset.y
-                                b1.bullet.from = V.vclone(b1.pos)
-                                b1.bullet.to = V.v(enemy.pos.x + enemy.unit.hit_offset.x,
-                                    enemy.pos.y + enemy.unit.hit_offset.y)
-                                b1.bullet.target_id = enemy.id
-                                b1.bullet.damage_factor = this.tower.damage_factor
-
-                                if pow_e.level > 0 then
-                                    local crit_chance = aa.critical_chance + pow_e.level * aa.critical_chance_inc
-                                    if crit_chance > math.random() then
-                                        b1.bullet.damage_factor = b1.bullet.damage_factor * 2
-                                        b1.bullet.pop = {"pop_crit"}
-                                        b1.bullet.pop_conds = DR_DAMAGE
-                                    end
-                                end
-
-                                apply_precision(b1)
-                                queue_insert(store, b1)
+                            if enemy.health.dead then
+                                U.refind_foremost_enemy(enemy, store.enemies, aa.vis_flags, aa.vis_bans)
                             end
+                            local b1 = E:create_entity(aa.bullet)
+                            b1.pos.x, b1.pos.y = this.pos.x + start_offset.x, this.pos.y + start_offset.y
+                            b1.bullet.from = V.vclone(b1.pos)
+                            b1.bullet.to = V.v(enemy.pos.x + enemy.unit.hit_offset.x,
+                                enemy.pos.y + enemy.unit.hit_offset.y)
+                            b1.bullet.target_id = enemy.id
+                            b1.bullet.damage_factor = this.tower.damage_factor
+
+                            if pow_e.level > 0 then
+                                local crit_chance = aa.critical_chance + pow_e.level * aa.critical_chance_inc
+                                if crit_chance > math.random() then
+                                    b1.bullet.damage_factor = b1.bullet.damage_factor * 2
+                                    b1.bullet.pop = {"pop_crit"}
+                                    b1.bullet.pop_conds = DR_DAMAGE
+                                end
+                            end
+
+                            apply_precision(b1)
+                            queue_insert(store, b1)
 
                             while not U.animation_finished(this, shooter_sid) do
                                 coroutine.yield()
@@ -893,6 +900,10 @@ local function register_archer(scripts)
                                 coroutine.yield()
                             end
 
+                            if enemy.health.dead then
+                                U.refind_foremost_enemy(enemy, store.enemies, aa.vis_flags, aa.vis_bans)
+                            end
+
                             local b1 = E:create_entity(aa.bullet)
 
                             b1.pos.x, b1.pos.y = this.pos.x + start_offset.x, this.pos.y + start_offset.y
@@ -1004,6 +1015,10 @@ local function register_archer(scripts)
 
                             while store.tick_ts - a.ts < a.shoot_time do
                                 coroutine.yield()
+                            end
+
+                            if enemy.health.dead then
+                                U.refind_foremost_enemy(enemy, store.enemies, a.vis_flags, a.vis_bans)
                             end
 
                             local b1 = E:create_entity(a.bullet)
@@ -1166,16 +1181,18 @@ local function register_archer(scripts)
                                 shooter_idx = km.zmod(shooter_idx + 1, #shooter_sids)
                                 enemy = enemies[km.zmod(shooter_idx, #enemies)]
 
-                                if V.dist(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range then
-                                    if enemy.health and enemy.health.magic_armor > 0 then
-                                        sa.ts = sa.ts - 0.3
-                                    end
-                                    if math.random() < this.attacks.list[3].chance and band(enemy.vis.bans, F_STUN) == 0 and
-                                        band(enemy.vis.flags, F_BOSS) == 0 then
-                                        shot_bullet(this.attacks.list[3], shooter_idx, enemy, this.powers.slumber.level)
-                                    else
-                                        shot_bullet(aa, shooter_idx, enemy, 0)
-                                    end
+                                if enemy.health.dead then
+                                    U.refind_foremost_enemy(enemy, store.enemies, aa.vis_flags, aa.vis_bans)
+                                end
+
+                                if enemy.health and enemy.health.magic_armor > 0 then
+                                    sa.ts = sa.ts - 0.3
+                                end
+                                if math.random() < this.attacks.list[3].chance and band(enemy.vis.bans, F_STUN) == 0 and
+                                    band(enemy.vis.flags, F_BOSS) == 0 then
+                                    shot_bullet(this.attacks.list[3], shooter_idx, enemy, this.powers.slumber.level)
+                                else
+                                    shot_bullet(aa, shooter_idx, enemy, 0)
                                 end
 
                                 if i == 1 then
@@ -1233,6 +1250,10 @@ local function register_archer(scripts)
                 local shoot_time = attack.shoot_times[lidx]
 
                 U.y_wait(store, shoot_time)
+
+                if enemy.health.dead then
+                    U.refind_foremost_enemy(enemy, store.enemies, attack.vis_flags, attack.vis_bans)
+                end
 
                 if V.dist2(tpos(this).x, tpos(this).y, enemy.pos.x, enemy.pos.y) <= a.range * a.range then
                     local boffset = attack.bullet_start_offsets[lidx][ai]

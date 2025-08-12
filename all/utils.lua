@@ -945,6 +945,14 @@ function U.find_biggest_enemy(entities, origin, min_range, max_range, prediction
     end
 end
 
+function U.refind_foremost_enemy(last_enemy, enemies, flags, bans, filter_func, min_override_flags)
+    local new_enemy = U.find_foremost_enemy(enemies, last_enemy.pos, 0, 50, nil, flags, bans, filter_func,
+        min_override_flags)
+    if new_enemy then
+        last_enemy = new_enemy
+    end
+end
+
 -- return target, targets, target_predicted_pos
 function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, max_range, prediction_time, flags, bans,
     filter_func, min_override_flags, cover_range)
