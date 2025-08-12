@@ -185,7 +185,13 @@ end
 local function game_victory_handler(store)
     game_gui:deselect_all()
     game_gui:disable_keys()
-    timer:after(2, function()
+    local wait_time
+    if store.patches.criket and store.patches.criket.on then
+        wait_time = 0.5
+    else
+        wait_time = 2
+    end
+    timer:after(wait_time, function()
         game_gui:victory()
     end)
 end
@@ -4080,7 +4086,7 @@ function VictoryView:initialize(level_mode)
     ct.font_size = 78
     ct.colors.text = {76, 56, 23}
     ct.max_angle = math.pi / 6
-
+    self.ct = ct
     v_badge:add_child(ct)
 
     local v_stars = KImageView:new("victoryStars_0001")
@@ -4191,6 +4197,11 @@ function VictoryView:initialize(level_mode)
 end
 
 function VictoryView:show()
+    local criket = game_gui.game.store.patches.criket
+    if criket and criket.on then
+        self.ct.text = string.format("%s损 %.1f秒", tostring(-game_gui.game.store.lives), tostring(criket.time_cost))
+        self.ct.font_size = 40
+    end
     game_gui.overlay:show()
 
     self.hidden = false
@@ -4241,14 +4252,14 @@ function VictoryView:show()
 
         wait(animation.to / FPS)
 
-        if game_gui.is_premium then
-            self:ci("gems_label").text = gems
-            gv.hidden = false
 
-            timer:tween(0.4, gv.pos, {
-                x = gv.shown_x
-            }, "out-elastic")
-            S:queue("InAppExtraGold")
+        if criket and criket.on and criket.tower_name then
+            local tower_icon = KImageView:new(E:get_template(criket.tower_name).info.portrait)
+            tower_icon.anchor = V.v(tower_icon.size.x / 2, tower_icon.size.y / 2)
+            tower_icon.pos = V.v(400, 120)
+            tower_icon.scale = V.v(1.2, 1.2)
+            tower_icon.hidden = false
+            self:add_child(tower_icon)
         end
 
         c_chain.pos.y = 0
@@ -6351,6 +6362,7 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
     if item.action == "tw_upgrade" then
         for k, v in pairs(game_gui.game.store.towers) do
            local new_tower = E:create_entity(item.action_arg)
+           game_gui.game.store.patches.criket.tower_name = new_tower.template_name
            new_tower.pos = V.vclone(v.pos)
            new_tower.tower.holder_id = v.tower.holder_id
            new_tower.tower.flip_x = v.tower.flip_x

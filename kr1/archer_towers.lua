@@ -243,7 +243,7 @@ local function archer_towers()
     tower_totem.tower.type = "totem"
     tower_totem.tower.price = 215
     tower_totem.powers.weakness = E:clone_c("power")
-    tower_totem.powers.weakness.price_base = 225
+    tower_totem.powers.weakness.price_base = 200
     tower_totem.powers.weakness.price_inc = 200
     tower_totem.powers.weakness.enc_icon = 30
     tower_totem.powers.weakness.attack_idx = 2
