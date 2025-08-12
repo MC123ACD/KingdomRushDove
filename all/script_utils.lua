@@ -152,13 +152,13 @@ local function unit_dodges(store, this, ranged_attack, attack, source)
     end
 
     this.dodge.last_check_ts = store.tick_ts
-
+    local is_special_attack = ranged_attack or (attack and attack.type == "area")
     if not this.unit.is_stunned and (not this.enemy or this.enemy.can_do_magic) and
         (not ranged_attack or this.dodge.ranged) and
         (not this.dodge.cooldown or store.tick_ts - this.dodge.ts > this.dodge.cooldown) and
         (not attack or not attack.damage_type or band(attack.damage_type, DAMAGE_NO_DODGE) == 0) and
-        ((not ranged_attack and math.random() <= this.dodge.chance) or
-            (ranged_attack and math.random() <= 0.6 * this.dodge.chance)) and
+        ((not is_special_attack and math.random() <= this.dodge.chance) or
+            (is_special_attack and math.random() <= 0.6 * this.dodge.chance))   and
         (not this.dodge.can_dodge or this.dodge.can_dodge(store, this, ranged_attack, attack, source)) then
         this.dodge.last_doge_ts = store.tick_ts
         this.dodge.last_attack = attack
