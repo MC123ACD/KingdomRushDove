@@ -4207,7 +4207,16 @@ function VictoryView:show()
         end
         self.ct.text = string.format("%s损 %.1f秒", tostring(lives), tostring(criket.time_cost))
         self.ct.font_size = 40
+        if criket.tower_name then
+            local tower_icon = KImageView:new(E:get_template(criket.tower_name).info.portrait)
+            tower_icon.anchor = V.v(tower_icon.size.x / 2, tower_icon.size.y / 2)
+            tower_icon.pos = V.v(400, 120)
+            tower_icon.scale = V.v(1.2, 1.2)
+            tower_icon.hidden = false
+            self:add_child(tower_icon)
+        end
     end
+
     game_gui.overlay:show()
 
     self.hidden = false
@@ -4257,16 +4266,6 @@ function VictoryView:show()
         end
 
         wait(animation.to / FPS)
-
-
-        if criket and criket.on and criket.tower_name then
-            local tower_icon = KImageView:new(E:get_template(criket.tower_name).info.portrait)
-            tower_icon.anchor = V.v(tower_icon.size.x / 2, tower_icon.size.y / 2)
-            tower_icon.pos = V.v(400, 120)
-            tower_icon.scale = V.v(1.2, 1.2)
-            tower_icon.hidden = false
-            self:add_child(tower_icon)
-        end
 
         c_chain.pos.y = 0
 

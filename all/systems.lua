@@ -249,7 +249,7 @@ function sys.level:on_update(dt, ts, store)
                 elseif store.lives < -5 then
                     stars = 2
                 end
-                store.patches.criket.time_cost = store.tick_ts - store.last_wave_ts
+                store.patches.criket.time_cost = store.tick_ts - store.patches.criket.start_time
                 store.game_outcome = {
                     victory = true,
                     lives_left = store.lives,
@@ -474,6 +474,9 @@ function sys.wave_spawn:init(store)
                 signal.emit("early-wave-called", group, store.early_wave_reward, remaining_secs, score_reward)
             else
                 store.early_wave_reward = 0
+                if store.patches.criket then
+                    store.patches.criket.start_time = store.tick_ts
+                end
             end
 
             if store.level_mode == GAME_MODE_ENDLESS and i > 1 then
