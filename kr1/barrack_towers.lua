@@ -704,6 +704,9 @@ local function barrack_towers()
     tt.melee.attacks[3].disabled = true
     tt.melee.attacks[3].hit_time = fts(15)
     tt.melee.attacks[3].instakill = true
+    tt.melee.attacks[3].side_effect = function(this, store, attack, target)
+        scripts.heal(this, this.health.hp_max)
+    end
     tt.melee.attacks[3].pop = {"pop_instakill"}
     tt.melee.attacks[3].power_name = "sneak"
     tt.melee.attacks[3].forced_cooldown = true
@@ -914,6 +917,7 @@ local function barrack_towers()
     tt.fx_options = {"fx_djinn_frog", "fx_djinn_chest", "fx_djinn_harp"}
     tt.spell.damage_base = 250
     tt.spell.damage_inc = 250
+    tt.invalid_rate = 0.2
 
     tt = E:register_t("fx_djinn_frog", "fx")
     tt.render.sprites[1].name = "fx_djinn_frog"
