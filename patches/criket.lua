@@ -29,7 +29,7 @@ return {
         --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
         -- }
         {
-            max = 50,
+            max = 20,
             creep = "enemy_soldier_barbarian",
             creep_aux = "enemy_soldier_paladin",
             max_same = 1,
@@ -38,12 +38,32 @@ return {
             interval_next = 0.4 -- 每隔 1 秒出一个小兽人
         },
         {
-            max = 50,
-            creep = "enemy_soldier_barbarian",
+            max = 20,
+            creep = "enemy_soldier_templar",
+            creep_aux = "enemy_soldier_assassin",
+            max_same = 1,
             fixed_sub_path = 0,
             interval = 0.2,
             interval_next = 0.4 -- 每隔 1 秒出一个小兽人
         },
+        {
+            max = 20,
+            creep = "enemy_soldier_djinn",
+            creep_aux = "enemy_soldier_elemental",
+            max_same = 1,
+            interval = 0.2,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+        {
+            max = 20,
+            creep = "enemy_soldier_amazona",
+            creep_aux = "enemy_soldier_elf",
+            max_same = 1,
+            fixed_sub_path = 0,
+            interval = 0.2,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+
         -- {
         --     max = 30,
         --     creep = "enemy_soldier_djinn",

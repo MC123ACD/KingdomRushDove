@@ -7,7 +7,7 @@ local image_y = nil
 local tt = nil
 local log = require("klua.log"):new("soldier_enemies")
 local signal = require("hump.signal")
-
+local km = require("klua.macros")
 package.loaded.scripts = nil
 local scripts = require("scripts")
 require("templates")
@@ -87,6 +87,67 @@ end
 local function CC(comp_name)
     return E:clone_c(comp_name)
 end
+
+local function soldier_enemy_revive(store, this)
+    if not this.revive or this.revive.disabled or this.unit.is_stunned or
+        band(this.health.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_EAT)) ~= 0 then
+        return false
+    end
+
+    local r = this.revive
+    local chance = r.chance + r.protect
+
+    if math.random() < chance then
+        local r = this.revive
+        r.protect = r.protect * 0.5
+        if r.remove_modifiers then
+            SU.remove_modifiers(store, this)
+        end
+
+        this.health.ignore_damage = true
+        this.health.dead = false
+        this.health_bar.hidden = false
+
+        if r.fx then
+            local fx = E:create_entity(r.fx)
+
+            fx.pos = this.pos
+            fx.render.sprites[1].ts = store.tick_ts
+
+            queue_insert(store, fx)
+        end
+
+        if r.animation then
+            S:queue(r.sound)
+            U.animation_start(this, r.animation, nil, store.tick_ts, false)
+
+            r.ts = store.tick_ts
+
+            while store.tick_ts - r.ts < r.hit_time do
+                coroutine.yield()
+            end
+        end
+
+        r.revive_count = (r.revive_count or 0) + 1
+
+        signal.emit("entity-revived", this, r.revive_count)
+
+        this.health.hp = km.clamp(0, this.health.hp_max, this.health.hp + this.health.hp_max * r.health_recover)
+
+        if r.animation then
+            while not U.animation_finished(this) do
+                coroutine.yield()
+            end
+        end
+
+        this.health.ignore_damage = false
+
+        return true
+    end
+
+    return false
+end
+
 
 local function soldier_enemy_do_timed_action(store, this, action)
     local action_done = false
@@ -298,7 +359,7 @@ local function soldier_enemy_update(this, store, script)
     ::label_25_0::
 
     while true do
-        if this.health.dead and not SU.y_soldier_revive(store, this) then
+        if this.health.dead and not soldier_enemy_revive(store, this) then
             SU.y_enemy_death(store, this)
             return
         end
@@ -405,6 +466,9 @@ for _, t in pairs(E:filter_templates("soldier")) do
             tt.enemy.melee_slot = v(t.soldier.melee_slot_offset.x, t.soldier.melee_slot_offset.y)
             if not tt.info.i18n_key then
                 tt.info.i18n_key = string.upper(t.template_name)
+            end
+            if tt.sound_events then
+                tt.sound_events.insert = nil
             end
             -- log.error("registered soldier enemy: %s", tt.template_name)
             tt.vis.flags = bor(U.flag_clear(tt.vis.flags, F_FRIEND), F_ENEMY)

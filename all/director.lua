@@ -485,8 +485,15 @@ function director:queue_load_item_named(name, force_reload)
 		game.store.texture_size = self.params.texture_size
 		game.store.level = LU.load_level(game.store, game.store.level_name)
         game.store.patches = LU.eval_file("patches/config.lua")
+        local default_patch = LU.eval_file("patches/default.lua")
         if not game.store.patches or not game.store.patches.custom_config_enabled then
-            game.store.patches = LU.eval_file("patches/default.lua")
+            game.store.patches = default_patch
+        else
+            for k, v in pairs(default_patch) do
+                if not game.store.patches[k] then
+                    game.store.patches[k] = v
+                end
+            end
         end
         game.store.patches.criket = LU.eval_file("patches/criket.lua")
         if game.store.patches.criket and game.store.patches.criket.on then
