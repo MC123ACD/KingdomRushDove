@@ -6190,12 +6190,11 @@ for i, s in ipairs({1.06, 1.02, 1.11, 1.05, 1.14, 1.08, 1.116, 1.1, 1.18, 1.13, 
 end
 
 tt = E:register_t("mod_ward", "modifier")
-
 E:add_comps(tt, "render", "tween")
-
 tt.main_script.insert = scripts.mod_silence.insert
 tt.main_script.remove = scripts.mod_silence.remove
 tt.main_script.update = scripts.mod_track_target.update
+tt.modifier.allows_duplicates = true
 tt.modifier.duration = 10
 tt.modifier.use_mod_offset = false
 tt.modifier.remove_banned = true
@@ -9882,5 +9881,5 @@ tt.tween.remove = true
 tt = E:register_t("decal_hero_dragon_gem_floor_circle_totem", "decal_hero_dragon_gem_floor_circle")
 tt.tween.props[2].keys = {{0, vec_2(0.175, 0.175)}, {fts(6), vec_2(0.315, 0.315)}, {fts(13), vec_2(0.35, 0.35)}}
 
-package.loaded.soldier_enemies = nil
-require("soldier_enemies")
+-- package.loaded.soldier_enemies = nil
+-- require("soldier_enemies")

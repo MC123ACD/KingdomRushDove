@@ -23,6 +23,9 @@ return {
     -- 路线是否倒转，默认为 false
     reverse_path = false,
 
+    -- 血条是否显示，默认为 true
+    show_health_bar = true,
+
     -- 启动自定义配置开关，默认为 true。如果需要恢复默认配置，可以将它变为 false
     custom_config_enabled = false
 }

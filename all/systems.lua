@@ -1968,7 +1968,7 @@ function sys.render:on_insert(entity, store)
         end
     end
 
-    if entity.health_bar then
+    if store.patches.show_health_bar and entity.health_bar then
         local hb = entity.health_bar
         local fk = hb.black_bar_hp and {} or nil
 
@@ -2081,7 +2081,7 @@ function sys.render:on_remove(entity, store)
         end
     end
 
-    if entity.health_bar then
+    if store.patches.show_health_bar and entity.health_bar then
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
 
@@ -2168,7 +2168,7 @@ function sys.render:on_update(dt, ts, store)
             end
         end
 
-        if e.health_bar then
+        if store.patches.show_health_bar and e.health_bar then
             local hb = e.health_bar
             local fb = hb.frames[1]
             local ff = hb.frames[2]
