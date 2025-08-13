@@ -1550,7 +1550,8 @@ function scripts.tower_archer.update(this, store, script)
                     coroutine.yield()
                 end
 
-                enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, at.range, false, a.vis_flags, a.vis_bans)
+                enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, at.range, false,
+                    a.vis_flags, a.vis_bans)
 
                 if enemy then
                     last_target_pos = enemy.pos
@@ -2386,8 +2387,8 @@ function scripts.bomb.update(this, store, script)
         end
 
         if b.hide_radius then
-            this.render.sprites[1].hidden = V.dist2(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius^2 or
-                                                V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius^2
+            this.render.sprites[1].hidden = V.dist2(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius ^ 2 or
+                                                V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius ^ 2
         end
     end
 
@@ -6160,26 +6161,27 @@ function scripts.mod_teleport.update(this, store)
         U.y_wait(store, this.delay_end)
     end
 
-    if target.ui then
-        target.ui.can_click = true
-    end
+    if target.health and not target.health.dead then
+        if target.ui then
+            target.ui.can_click = true
+        end
 
-    if target.health_bar then
-        target.health_bar.hidden = health_bar_hidden
-    end
+        if target.health_bar then
+            target.health_bar.hidden = health_bar_hidden
+        end
+        U.sprites_show(target, nil, nil, true)
+        SU.show_modifiers(store, target, true)
+        SU.show_auras(store, target, true)
 
-    U.sprites_show(target, nil, nil, true)
-    SU.show_modifiers(store, target, true)
-    SU.show_auras(store, target, true)
+        local nn, new = P:next_entity_node(target, store.tick_length)
 
-    local nn, new = P:next_entity_node(target, store.tick_length)
+        if nn then
+            local vx, vy = V.sub(nn.x, nn.y, target.pos.x, target.pos.y)
+            local v_angle = V.angleTo(vx, vy)
 
-    if nn then
-        local vx, vy = V.sub(nn.x, nn.y, target.pos.x, target.pos.y)
-        local v_angle = V.angleTo(vx, vy)
-
-        if target.heading then
-            target.heading.angle = v_angle
+            if target.heading then
+                target.heading.angle = v_angle
+            end
         end
     end
 
@@ -6602,10 +6604,10 @@ function scripts.mega_spawner.update(this, store)
 
                                         local this_delay = c_delay + U.frandom(0, delay_var) + int_delay
                                         for j = 1, store.patches.enemy_count_multiplier do
-                                            table.insert(spawn_queue, {this_delay / j, template, point, spi, custom_data})
+                                            table.insert(spawn_queue,
+                                                {this_delay / j, template, point, spi, custom_data})
 
                                         end
-
 
                                     end
                                 end
@@ -6907,15 +6909,16 @@ function scripts.power_fireball_control.update(this, store, script)
                 if #enemies > 0 then
                     local target = table.random(enemies)
                     local predicted_time
-                    if target.unit.is_stunned or #target.enemy.blockers > 0 or (target.motion.speed.x == 0 and target.motion.speed.y == 0) then
+                    if target.unit.is_stunned or #target.enemy.blockers > 0 or
+                        (target.motion.speed.x == 0 and target.motion.speed.y == 0) then
                         predicted_time = 0
                     else
                         predicted_time = (start_y - target.pos.y) / (target.motion.speed.y + 13 * FPS)
                     end
                     local target_current_node = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni)
                     local node_advance = math.ceil((predicted_time * target.motion.real_speed +
-                                                    V.dist(target.pos.x, target.pos.y, target_current_node.x, target_current_node.y)) /
-                                                    P.average_node_dist)
+                                                       V.dist(target.pos.x, target.pos.y, target_current_node.x,
+                            target_current_node.y)) / P.average_node_dist)
                     local predicted_node_id = target.nav_path.ni + node_advance
                     if predicted_node_id > #P.paths[target.nav_path.pi][target.nav_path.spi] then
                         predicted_node_id = #P.paths[target.nav_path.pi][target.nav_path.spi]

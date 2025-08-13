@@ -9881,3 +9881,6 @@ tt.tween.props[2].sprite_id = 1
 tt.tween.remove = true
 tt = E:register_t("decal_hero_dragon_gem_floor_circle_totem", "decal_hero_dragon_gem_floor_circle")
 tt.tween.props[2].keys = {{0, vec_2(0.175, 0.175)}, {fts(6), vec_2(0.315, 0.315)}, {fts(13), vec_2(0.35, 0.35)}}
+
+package.loaded.soldier_enemies = nil
+require("soldier_enemies")

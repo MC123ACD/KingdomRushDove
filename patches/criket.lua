@@ -29,12 +29,63 @@ return {
         --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
         -- }
         {
-            max = 30,
-            creep = "enemy_troll_brute",
+            max = 50,
+            creep = "enemy_soldier_barbarian",
+            creep_aux = "enemy_soldier_paladin",
+            max_same = 1,
             fixed_sub_path = 0,
-            interval = 1,
+            interval = 0.2,
             interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        }
+        },
+        {
+            max = 50,
+            creep = "enemy_soldier_barbarian",
+            fixed_sub_path = 0,
+            interval = 0.2,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+        -- {
+        --     max = 30,
+        --     creep = "enemy_soldier_djinn",
+        --     fixed_sub_path = 0,
+        --     interval = 0.1,
+        --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        -- },
+        -- {
+        --     max = 10,
+        --     creep = "enemy_soldier_assassin",
+        --     fixed_sub_path = 0,
+        --     interval = 0.1,
+        --     interval_next = 0.4
+        -- },
+        -- {
+        --     max = 10,
+        --     creep = "enemy_soldier_elemental",
+        --     fixed_sub_path = 0,
+        --     interval = 1,
+        --     interval_next = 0.4
+        -- },
+        -- {
+        --     max = 10,
+        --     creep = "enemy_soldier_dwarf",
+        --     fixed_sub_path = 0,
+        --     interval = 0.1,
+        --     interval_next = 0.4
+        -- },
+        -- {
+        --     max = 10,
+        --     creep = "enemy_soldier_death_rider",
+        --     fixed_sub_path = 0,
+        --     interval = 0.1,
+        --     interval_next = 0.4
+        -- },
+        -- {
+        --     max = 10,
+        --     creep = "enemy_soldier_elf",
+        --     fixed_sub_path = 0,
+        --     interval = 0.1,
+        --     interval_next = 0.4
+        -- },
     },
     required_textures = {"go_enemies_acaroth", "go_enemies_ancient_metropolis", "go_enemies_bandits",
                      "go_enemies_bittering_rancor", "go_enemies_blackburn", "go_enemies_desert",
