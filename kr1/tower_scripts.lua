@@ -1692,7 +1692,7 @@ local function register_mage(scripts)
                         if pow_s.level == 3 then
                             range = pow_s.max_range
                         else
-                            range = pow_s.range + pow_s.range_inc
+                            range = pow_s.range_base + pow_s.range_inc * (pow_s.level + 1)
                         end
                         local targets = table.filter(store.towers, function(_, e)
                             return e ~= this and not table.contains(modded_ids, e.id) and

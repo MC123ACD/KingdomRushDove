@@ -134,8 +134,8 @@ local function archer_towers()
     tower_crossbow.attacks.list[1].cooldown = 0.5
     tower_crossbow.attacks.list[1].shoot_time = fts(8)
     tower_crossbow.attacks.list[1].bullet_start_offset = {vec_2(-11, 60), vec_2(11, 60)}
-    tower_crossbow.attacks.list[1].critical_chance = 0.1
-    tower_crossbow.attacks.list[1].critical_chance_inc = 0.05
+    tower_crossbow.attacks.list[1].critical_chance = 0.12
+    tower_crossbow.attacks.list[1].critical_chance_inc = 0.06
     tower_crossbow.attacks.list[2] = E:clone_c("bullet_attack")
     tower_crossbow.attacks.list[2].bullet = "multishot_crossbow"
     tower_crossbow.attacks.list[2].cooldown = 6
