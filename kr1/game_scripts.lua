@@ -26556,9 +26556,15 @@ function scripts.mod_pixie_pickpocket.insert(this, store)
     fx.pos.x, fx.pos.y = target.pos.x, target.pos.y
     fx.render.sprites[1].ts = store.tick_ts
 
+    local damage = E:create_entity("damage")
+    damage.value = math.random(m.damage_min, m.damage_max) * m.damage_factor
+    damage.damage_type = m.damage_type
+    damage.source_id = this.id
+    damage.target_id = target.id
+    queue_damage(store, damage)
+
     queue_insert(store, fx)
     queue_remove(store, this)
-
     return true
 end
 
@@ -30489,178 +30495,6 @@ function scripts.nav_faerie.update(this, store)
     end
 
     queue_remove(store, this)
-end
-
-scripts.tower_pixie = {}
-
-function scripts.tower_pixie.get_info(this)
-    return {
-        desc = "ELVES_TOWER_PIXIE_DESCRIPTION",
-        type = STATS_TYPE_TEXT
-    }
-end
-
-function scripts.tower_pixie.update(this, store)
-    local a = this.attacks
-
-    a.ts = store.tick_ts
-
-    local pow_c = this.powers.cream
-    local pow_t = this.powers.total
-    local pixies = {}
-    local enemy_cooldowns = {}
-
-    local function spawn_pixie()
-        local e = E:create_entity("decal_pixie")
-        local po = pow_c.idle_offsets[#pixies + 1]
-
-        e.idle_pos = po
-        e.pos.x, e.pos.y = this.pos.x + po.x, this.pos.y + po.y
-        e.owner = this
-
-        table.insert(pixies, e)
-        queue_insert(store, e)
-    end
-
-    spawn_pixie()
-
-    while true do
-        if this.tower.blocked then
-            -- block empty
-        else
-            if pow_c.changed and #pixies < 3 then
-                pow_c.changed = nil
-
-                spawn_pixie()
-            end
-
-            if pow_t.changed then
-                pow_t.changed = nil
-
-                for i, ch in ipairs(pow_t.chances) do
-                    a.list[i].chance = ch[pow_t.level]
-                end
-            end
-
-            for k, v in pairs(enemy_cooldowns) do
-                if v <= store.tick_ts then
-                    enemy_cooldowns[k] = nil
-                end
-            end
-
-            if store.tick_ts - a.ts > a.cooldown then
-                for _, pixie in pairs(pixies) do
-                    local target, attack
-                    local rnd, acc = math.random(), 0
-
-                    if pixie.target or store.tick_ts - pixie.attack_ts <= a.pixie_cooldown then
-                        -- block empty
-                    else
-                        for ii, aa in ipairs(a.list) do
-                            if aa.chance > 0 and rnd <= aa.chance + acc then
-                                attack = aa
-
-                                break
-                            else
-                                acc = acc + aa.chance
-                            end
-                        end
-
-                        if not attack then
-                            -- block empty
-                        else
-                            target = U.find_random_enemy(store.enemies, this.pos, 0, a.range, attack.vis_flags,
-                                attack.vis_bans, function(e)
-                                    return not table.contains(a.excluded_templates, e.template_name) and
-                                               not enemy_cooldowns[e.id] and
-                                               (not attack.check_gold_bag or e.enemy.gold_bag > 0)
-                                end)
-
-                            if not target then
-                                -- block empty
-                            else
-                                enemy_cooldowns[target.id] = store.tick_ts + a.enemy_cooldown
-                                pixie.attack_ts = store.tick_ts
-                                pixie.target_id = target.id
-                                pixie.attack = attack
-                                pixie.attack_level = pow_t.level
-                                a.ts = store.tick_ts
-
-                                break
-                            end
-                        end
-                    end
-                end
-            end
-        end
-
-        coroutine.yield()
-    end
-end
-
-scripts.decal_pixie = {}
-
-function scripts.decal_pixie.update(this, store)
-    local iflip = this.idle_flip
-    local a, o, e, slot_pos, slot_flip, enemy_flip
-
-    U.y_animation_play(this, "teleportIn", slot_flip, store.tick_ts)
-
-    while true do
-        if this.target_id ~= nil then
-            local target = store.entities[this.target_id]
-
-            if not target or target.health.dead then
-                -- block empty
-            else
-                a = this.attack
-
-                U.y_animation_play(this, "teleportOut", nil, store.tick_ts)
-                U.y_wait(store, 0.5)
-                SU.stun_inc(target)
-
-                slot_pos, slot_flip, enemy_flip = U.melee_slot_position(this, target, 1)
-                this.pos.x, this.pos.y = slot_pos.x, slot_pos.y
-
-                U.y_animation_play(this, "teleportIn", slot_flip, store.tick_ts)
-                U.animation_start(this, a.animation, nil, store.tick_ts, false)
-                U.y_wait(store, 0.3)
-
-                if a.type == "mod" then
-                    e = E:create_entity(a.mod)
-                    e.modifier.source_id = this.id
-                    e.modifier.target_id = target.id
-                    e.modifier.level = this.attack_level
-                else
-                    e = E:create_entity(a.bullet)
-                    e.bullet.source_id = this.id
-                    e.bullet.target_id = target.id
-                    e.bullet.from = V.v(this.pos.x + a.bullet_start_offset.x, this.pos.y + a.bullet_start_offset.y)
-                    e.bullet.to = V.v(target.pos.x, target.pos.y)
-                    e.bullet.hit_fx = e.bullet.hit_fx .. (target.unit.size >= UNIT_SIZE_MEDIUM and "big" or "small")
-                    e.pos = V.vclone(e.bullet.from)
-                end
-
-                queue_insert(store, e)
-                U.y_animation_wait(this)
-                U.y_animation_play(this, "teleportOut", nil, store.tick_ts)
-                SU.stun_dec(target)
-
-                o = this.idle_pos
-                this.pos.x, this.pos.y = this.owner.pos.x + o.x, this.owner.pos.y + o.y
-
-                U.y_animation_play(this, "teleportIn", slot_flip, store.tick_ts)
-            end
-
-            this.target_id = nil
-        elseif store.tick_ts - iflip.ts > iflip.cooldown then
-            U.animation_start(this, table.random(iflip.animations), math.random() < 0.5, store.tick_ts, iflip.loop)
-
-            iflip.ts = store.tick_ts
-        end
-
-        coroutine.yield()
-    end
 end
 
 scripts.decal_drow_queen_portal = {}

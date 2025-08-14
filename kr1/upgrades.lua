@@ -352,7 +352,7 @@ end
 
 function upgrades:mage_towers()
     return {"tower_mage_1", "tower_mage_2", "tower_mage_3", "tower_arcane_wizard", "tower_sorcerer", "tower_sunray",
-            "tower_archmage", "tower_necromancer", "tower_high_elven", "tower_wild_magus", "tower_faerie_dragon"}
+            "tower_archmage", "tower_necromancer", "tower_high_elven", "tower_wild_magus", "tower_faerie_dragon", "tower_pixie"}
 end
 
 function upgrades:mage_tower_bolts()
@@ -567,6 +567,8 @@ function upgrades:patch_templates(max_level)
 
         T("mod_ray_arcane").dps.damage_min = math.ceil(T("mod_ray_arcane").dps.damage_min * u.damage_factor)
         T("mod_ray_arcane").dps.damage_max = math.ceil(T("mod_ray_arcane").dps.damage_max * u.damage_factor)
+        T("mod_pixie_pickpocket").modifier.damage_min = math.ceil(T("mod_pixie_pickpocket").modifier.damage_min * u.damage_factor)
+        T("mod_pixie_pickpocket").modifier.damage_max = math.ceil(T("mod_pixie_pickpocket").modifier.damage_max * u.damage_factor)
     end
 
     u = self:get_upgrade("mage_slow_curse")

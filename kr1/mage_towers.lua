@@ -143,7 +143,8 @@ local function mage_towers()
     tt.tween.props[1].loop = true
     tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(1, 1)}, {1, vec_2(1, 1)}}
 
-    for i, p in ipairs({vec_2(22, 45),vec_2(31,40), vec_2(40, 35),vec_2(49,32.5), vec_2(58, 30),vec_2(67.5,32.5), vec_2(77, 35),vec_2(86,40), vec_2(95, 45)}) do
+    for i, p in ipairs({vec_2(22, 45), vec_2(31, 40), vec_2(40, 35), vec_2(49, 32.5), vec_2(58, 30), vec_2(67.5, 32.5),
+                        vec_2(77, 35), vec_2(86, 40), vec_2(95, 45)}) do
         tt.render.sprites[i] = E:clone_c("sprite")
         tt.render.sprites[i].prefix = "crossbow_eagle_buff"
         tt.render.sprites[i].name = "idle"
@@ -154,11 +155,10 @@ local function mage_towers()
 
     -- tt.render.sprites[1].offset = vec_1(0)
     for _, sprite in ipairs(tt.render.sprites) do
-        sprite.offset.y = sprite.offset.y + 10  -- 向上平移 10 单位
-        sprite.color = {120,0,255}
+        sprite.offset.y = sprite.offset.y + 10 -- 向上平移 10 单位
+        sprite.color = {120, 0, 255}
         -- sprite.scale = vec_2(1.2, 1.2)  -- 放大 20%
     end
-
 
     tt = RT("tower_sorcerer", "tower_mage_1")
     AC(tt, "attacks", "powers", "barrack")
@@ -380,8 +380,8 @@ local function mage_towers()
     tower_archmage.attacks.list[1].cooldown = 1.1
     tower_archmage.attacks.list[1].shoot_time = fts(19)
     tower_archmage.attacks.list[1].max_stored_bullets = 5
-    tower_archmage.attacks.list[1].storage_offsets = {
-    vec_2(3, 81), vec_2(-8.5, 58), vec_2(13.5, 56), vec_2(-20, 69.5), vec_2(24, 68.5)}
+    tower_archmage.attacks.list[1].storage_offsets = {vec_2(3, 81), vec_2(-8.5, 58), vec_2(13.5, 56), vec_2(-20, 69.5),
+                                                      vec_2(24, 68.5)}
     tower_archmage.attacks.list[1].payload_chance = 0.4
     tower_archmage.attacks.list[1].payload_bullet = "bolt_blast"
     tower_archmage.attacks.list[1].repetition_rate = 0.27
@@ -1315,6 +1315,136 @@ local function mage_towers()
     tt.modifier.duration = 1.25
     tt = E:register_t("mod_faerie_dragon_l2", "mod_faerie_dragon")
     tt.modifier.duration = 1.5
+
+    tt = E:register_t("tower_pixie", "tower")
+    E:add_comps(tt, "powers", "attacks")
+    -- 秒杀
+    tt.pixies = {}
+    tt.attacks.list[1] = E:clone_c("bullet_attack")
+    tt.attacks.list[1].animation = "shoot"
+    tt.attacks.list[1].bullet_start_offset = vec_2(10, 11)
+    tt.attacks.list[1].bullet = "bullet_pixie_instakill"
+    tt.attacks.list[1].vis_bans = bor(F_FLYING, F_BOSS)
+    tt.attacks.list[1].vis_flags = bor(F_RANGED, F_STUN, F_INSTAKILL)
+    tt.attacks.list[1].chance = 0
+    -- 毒素
+    tt.attacks.list[2] = table.deepclone(tt.attacks.list[1])
+    tt.attacks.list[2].animation = "shoot"
+    tt.attacks.list[2].bullet = "bullet_pixie_poison"
+    tt.attacks.list[2].vis_flags = bor(F_RANGED, F_STUN, F_POISON)
+    tt.attacks.list[2].chance = 0
+    -- 变形
+    tt.attacks.list[3] = E:clone_c("mod_attack")
+    tt.attacks.list[3].animation = "attack"
+    tt.attacks.list[3].mod = "mod_pixie_polymorph"
+    tt.attacks.list[3].vis_bans = bor(F_FLYING, F_BOSS)
+    tt.attacks.list[3].vis_flags = bor(F_RANGED, F_STUN, F_POLYMORPH, F_INSTAKILL)
+    tt.attacks.list[3].chance = 0.1
+    -- 偷钱
+    tt.attacks.list[4] = E:clone_c("mod_attack")
+    tt.attacks.list[4].animation = "harvester"
+    tt.attacks.list[4].mod = "mod_pixie_pickpocket"
+    tt.attacks.list[4].vis_bans = F_FLYING
+    tt.attacks.list[4].vis_flags = bor(F_RANGED, F_STUN)
+    tt.attacks.list[4].chance = 0.9
+    tt.attacks.list[4].check_gold_bag = true
+    -- 传送
+    tt.attacks.list[5] = E:clone_c("mod_attack")
+    tt.attacks.list[5].animation = "attack"
+    tt.attacks.list[5].mod = "mod_pixie_teleport"
+    tt.attacks.list[5].vis_bans = bor(F_FLYING, F_BOSS)
+    tt.attacks.list[5].vis_flags = bor(F_RANGED, F_STUN, F_TELEPORT)
+    tt.attacks.list[5].chance = 0
+    -- tt.attacks.hide_range = true
+    tt.attacks.range = 190
+    tt.attacks.cooldown = fts(10)
+    tt.attacks.enemy_cooldown = 3
+    tt.attacks.pixie_cooldown = 5
+    tt.attacks.excluded_templates = {"enemy_rabbit"}
+    tt.info.i18n_key = "ELVES_TOWER_PIXIE"
+    tt.info.fn = scripts.tower_pixie.get_info
+    tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr3_info_portraits_towers_") .. "0017"
+    tt.main_script.update = scripts.tower_pixie.update
+    tt.main_script.remove = scripts.tower_pixie.remove
+    tt.powers.cream = E:clone_c("power")
+    tt.powers.cream.price_base = 250
+    tt.powers.cream.price_inc = 250
+    tt.powers.cream.max_level = 2
+    tt.powers.cream.idle_offsets = {vec_2(-18, -1), vec_2(21, -3), vec_2(5, -9)}
+    tt.powers.total = E:clone_c("power")
+    tt.powers.total.price_base = 200
+    tt.powers.total.price_inc = 200
+    tt.powers.total.max_level = 3
+    tt.powers.total.chances = {{0, 0, 0.08}, {0.2, 0.1, 0.2}, {0.08, 0.08, 0.08}, {0.72, 0.62, 0.54}, {0, 0.2, 0.1}}
+    tt.render.sprites[1].animated = false
+    tt.render.sprites[1].name = "terrain_mage_%04i"
+    tt.render.sprites[1].offset = vec_2(0, 10)
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].animated = false
+    tt.render.sprites[2].name = "pixie_tower"
+    tt.render.sprites[2].offset = vec_2(0, 15)
+    tt.render.sprites[2].sort_y_offset = 15
+    tt.sound_events.insert = "ElvesGnomeNew"
+    tt.tower.menu_offset = vec_2(0, 6)
+    tt.tower.price = 250
+    tt.tower.type = "pixie"
+
+    tt = E:register_t("bullet_pixie_instakill", "arrow")
+    tt.bullet.flight_time = fts(12)
+    tt.bullet.rotation_speed = 45 * FPS * math.pi / 180
+    tt.bullet.damage_type = bor(DAMAGE_INSTAKILL, DAMAGE_NO_SPAWNS)
+    tt.bullet.ignore_hit_offset = true
+    tt.bullet.hit_blood_fx = nil
+    tt.bullet.hit_fx = "fx_bullet_pixie_instakill_hit_"
+    tt.bullet.pop = nil
+    tt.render.sprites[1].name = "pixie_mushroom"
+    tt.render.sprites[1].animated = false
+    tt.sound_events.insert = "ElvesGnomeDesintegrate"
+
+    tt = E:register_t("bullet_pixie_poison", "bullet_pixie_instakill")
+    tt.bullet.mod = "mod_pixie_poison"
+    tt.bullet.damage_type = DAMAGE_NONE
+    tt.bullet.hit_fx = "fx_bullet_pixie_poison_hit_"
+    tt.render.sprites[1].name = "pixie_bottle"
+    tt.sound_events.insert = nil
+
+    tt = E:register_t("mod_pixie_poison", "mod_poison")
+    tt.dps.damage_every = fts(8)
+    tt.dps.damage_max = 10
+    tt.dps.damage_min = 10
+    tt.dps.kill = true
+    tt.modifier.duration = 3
+    tt.allows_duplicates = true
+
+    tt = E:register_t("mod_pixie_polymorph", "mod_polymorph")
+    tt.polymorph.custom_entity_names.default = "enemy_rabbit"
+    tt.polymorph.hit_fx_sizes = {"fx_mod_pixie_polymorph_small", "fx_mod_pixie_polymorph_big",
+                                 "fx_mod_pixie_polymorph_big"}
+
+    tt = E:register_t("mod_pixie_pickpocket", "modifier")
+    E:add_comps(tt, "pickpocket")
+    tt.modifier.damage_max = 100
+    tt.modifier.damage_min = 80
+    tt.modifier.level = 0
+    tt.modifier.damage_type = DAMAGE_MAGICAL
+    tt.main_script.insert = scripts.mod_pixie_pickpocket.insert
+    tt.pickpocket.steal_min = {
+        [0] = 1,
+        2,
+        3,
+        4
+    }
+    tt.pickpocket.steal_max = {
+        [0] = 3,
+        4,
+        5,
+        6
+    }
+    tt.pickpocket.fx = "fx_coin_jump"
+    tt.pickpocket.pop = {"pop_faerie_steal"}
+
+
+
 end
 
 return mage_towers

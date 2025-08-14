@@ -166,6 +166,16 @@ return {
         tt_title = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_NAME"),
         tt_desc = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_DESCRIPTION"),
         is_kr3 = true
+    },{
+        check = "kr3_main_icons_0019",
+        action_arg = "tower_pixie",
+        action = "tw_upgrade",
+        image = "kr3_special_icons_0122",
+        place = 15,
+        halo = "glow_ico_main",
+        tt_title = _("ELVES_TOWER_PIXIE_NAME"),
+        tt_desc = _("ELVES_TOWER_PIXIE_DESCRIPTION"),
+        is_kr3 = true
     }, {
         check = "ico_sell_0002",
         action = "tw_sell",

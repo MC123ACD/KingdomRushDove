@@ -1101,6 +1101,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_pixie"},
 	nav_mesh = {
 		{
 			3,

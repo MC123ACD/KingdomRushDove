@@ -1495,7 +1495,7 @@ function scripts.tower_common.get_info(this)
     local cooldown
 
     if this.attacks and this.attacks.list[1].cooldown then
-        cooldown = this.attacks.list[1].cooldown
+        cooldown = this.attacks.list[1].cooldown * this.tower.cooldown_factor
     end
 
     return {

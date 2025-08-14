@@ -179905,7 +179905,2824 @@ local kr3_data = {
 			17
 		},
 		alias = {}
-	}
+	},
+    	pixie_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1797,
+			1336,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0002",
+			"pixie_0061",
+			"pixie_0087"
+		}
+	},
+	pixie_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1831,
+			1336,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0062"
+		}
+	},
+	pixie_0004 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1865,
+			1336,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1899,
+			1336,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0006",
+			"pixie_0009",
+			"pixie_0010",
+			"pixie_0013",
+			"pixie_0014"
+		}
+	},
+	pixie_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1933,
+			1336,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0008",
+			"pixie_0011",
+			"pixie_0012",
+			"pixie_0015",
+			"pixie_0016"
+		}
+	},
+	pixie_0017 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1967,
+			1336,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0018 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			2001,
+			1336,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0019 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1762,
+			1383,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0020",
+			"pixie_0040"
+		}
+	},
+	pixie_0021 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			33,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			281,
+			2020,
+			31,
+			25
+		},
+		alias = {
+			"pixie_0089"
+		}
+	},
+	pixie_0022 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			16,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			336,
+			1139,
+			35,
+			24
+		},
+		alias = {
+			"pixie_0023"
+		}
+	},
+	pixie_0024 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			15,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1140,
+			230,
+			36,
+			24
+		},
+		alias = {
+			"pixie_0025",
+			"pixie_0026"
+		}
+	},
+	pixie_0027 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			17,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			328,
+			1435,
+			34,
+			24
+		},
+		alias = {
+			"pixie_0028",
+			"pixie_0029",
+			"pixie_0033",
+			"pixie_0034"
+		}
+	},
+	pixie_0030 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			15,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			261,
+			1142,
+			36,
+			24
+		},
+		alias = {
+			"pixie_0031",
+			"pixie_0032",
+			"pixie_0035",
+			"pixie_0036",
+			"pixie_0037"
+		}
+	},
+	pixie_0038 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			20,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1323,
+			629,
+			31,
+			24
+		},
+		alias = {}
+	},
+	pixie_0039 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			33,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			923,
+			626,
+			31,
+			25
+		},
+		alias = {}
+	},
+	pixie_0041 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1796,
+			1383,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0042 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1830,
+			1383,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0056",
+			"pixie_0057",
+			"pixie_0058",
+			"pixie_0059",
+			"pixie_0060"
+		}
+	},
+	pixie_0043 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			33,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			960,
+			626,
+			31,
+			25
+		},
+		alias = {}
+	},
+	pixie_0044 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			167,
+			2020,
+			32,
+			24
+		},
+		alias = {
+			"pixie_0045",
+			"pixie_0046"
+		}
+	},
+	pixie_0047 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			12,
+			11,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1343,
+			1683,
+			40,
+			46
+		},
+		alias = {}
+	},
+	pixie_0048 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			2,
+			14,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1392,
+			1383,
+			37,
+			56
+		},
+		alias = {
+			"pixie_0049"
+		}
+	},
+	pixie_0050 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			14,
+			5,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1991,
+			1278,
+			46,
+			44
+		},
+		alias = {
+			"pixie_0051"
+		}
+	},
+	pixie_0052 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			14,
+			16,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1392,
+			1709,
+			35,
+			44
+		},
+		alias = {
+			"pixie_0053"
+		}
+	},
+	pixie_0054 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			34,
+			21,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1973,
+			710,
+			29,
+			24
+		},
+		alias = {}
+	},
+	pixie_0055 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			34,
+			21,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			2018,
+			711,
+			29,
+			24
+		},
+		alias = {}
+	},
+	pixie_0063 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			33,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			997,
+			626,
+			31,
+			25
+		},
+		alias = {}
+	},
+	pixie_0064 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			34,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1360,
+			629,
+			31,
+			24
+		},
+		alias = {}
+	},
+	pixie_0065 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			19,
+			21,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1468,
+			1519,
+			26,
+			39
+		},
+		alias = {}
+	},
+	pixie_0066 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			13,
+			17,
+			21,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1694,
+			1383,
+			28,
+			43
+		},
+		alias = {}
+	},
+	pixie_0067 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			13,
+			16,
+			21,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1728,
+			1383,
+			28,
+			43
+		},
+		alias = {}
+	},
+	pixie_0068 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			14,
+			16,
+			21,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1435,
+			1592,
+			27,
+			43
+		},
+		alias = {}
+	},
+	pixie_0069 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			14,
+			16,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			348,
+			929,
+			29,
+			42
+		},
+		alias = {}
+	},
+	pixie_0070 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			17,
+			21,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1468,
+			1472,
+			26,
+			41
+		},
+		alias = {}
+	},
+	pixie_0071 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			17,
+			23,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1468,
+			1564,
+			24,
+			41
+		},
+		alias = {}
+	},
+	pixie_0072 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			19,
+			17,
+			19,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1468,
+			1611,
+			24,
+			39
+		},
+		alias = {}
+	},
+	pixie_0073 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			19,
+			34,
+			22,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			314,
+			627,
+			21,
+			21
+		},
+		alias = {}
+	},
+	pixie_0074 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			0,
+			0,
+			60,
+			60
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			495,
+			253,
+			2,
+			2
+		},
+		alias = {}
+	},
+	pixie_0075 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			19,
+			31,
+			20,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1035,
+			791,
+			23,
+			25
+		},
+		alias = {}
+	},
+	pixie_0076 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			26,
+			36,
+			27,
+			16
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			856,
+			244,
+			9,
+			10
+		},
+		alias = {}
+	},
+	pixie_0077 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			23,
+			30,
+			23,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1498,
+			611,
+			16,
+			25
+		},
+		alias = {}
+	},
+	pixie_0078 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			18,
+			28,
+			18,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1900,
+			788,
+			26,
+			34
+		},
+		alias = {}
+	},
+	pixie_0079 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			13,
+			25,
+			14,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1576,
+			1336,
+			35,
+			37
+		},
+		alias = {}
+	},
+	pixie_0080 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			10,
+			26,
+			11,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1443,
+			1336,
+			41,
+			36
+		},
+		alias = {}
+	},
+	pixie_0081 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			28,
+			16,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			343,
+			1268,
+			34,
+			32
+		},
+		alias = {}
+	},
+	pixie_0082 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			28,
+			16,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1860,
+			788,
+			34,
+			32
+		},
+		alias = {}
+	},
+	pixie_0083 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			28,
+			16,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1932,
+			788,
+			34,
+			32
+		},
+		alias = {}
+	},
+	pixie_0084 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			28,
+			16,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1274,
+			876,
+			34,
+			32
+		},
+		alias = {}
+	},
+	pixie_0085 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			28,
+			16,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1345,
+			875,
+			34,
+			32
+		},
+		alias = {}
+	},
+	pixie_0086 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1864,
+			1383,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0088 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1898,
+			1383,
+			28,
+			27
+		},
+		alias = {
+			"pixie_0100"
+		}
+	},
+	pixie_0090 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			205,
+			2020,
+			32,
+			24
+		},
+		alias = {
+			"pixie_0091",
+			"pixie_0092"
+		}
+	},
+	pixie_0093 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			34,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			243,
+			2020,
+			32,
+			24
+		},
+		alias = {}
+	},
+	pixie_0094 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			32,
+			14,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			176,
+			1142,
+			37,
+			26
+		},
+		alias = {
+			"pixie_0095"
+		}
+	},
+	pixie_0096 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			11,
+			32,
+			15,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			219,
+			1142,
+			36,
+			26
+		},
+		alias = {
+			"pixie_0097"
+		}
+	},
+	pixie_0098 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			12,
+			33,
+			20,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1275,
+			351,
+			30,
+			25
+		},
+		alias = {
+			"pixie_0099"
+		}
+	},
+	pixie_0101 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			31,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1932,
+			1383,
+			28,
+			27
+		},
+		alias = {}
+	},
+	pixie_0102 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			27,
+			20,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1468,
+			1435,
+			27,
+			31
+		},
+		alias = {}
+	},
+	pixie_0103 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			25,
+			19,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1695,
+			1336,
+			28,
+			33
+		},
+		alias = {}
+	},
+	pixie_0104 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			27,
+			18,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			348,
+			1015,
+			29,
+			31
+		},
+		alias = {}
+	},
+	pixie_0105 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			29,
+			18,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1938,
+			710,
+			29,
+			29
+		},
+		alias = {}
+	},
+	pixie_0106 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			62,
+			62
+		},
+		trim = {
+			15,
+			34,
+			18,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1232,
+			1110,
+			29,
+			24
+		},
+		alias = {
+			"pixie_0107"
+		}
+	},
+	pixie_bottle = {
+		a_name = "go_stage59-1.png",
+		size = {
+			11,
+			14
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			2036,
+			233,
+			11,
+			14
+		},
+		alias = {}
+	},
+	pixie_bottleHit_big_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			13,
+			23,
+			13,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1617,
+			1336,
+			33,
+			34
+		},
+		alias = {
+			"pixie_bottleHit_big_0002"
+		}
+	},
+	pixie_bottleHit_big_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			6,
+			16,
+			6,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1886,
+			1278,
+			47,
+			42
+		},
+		alias = {
+			"pixie_bottleHit_big_0004"
+		}
+	},
+	pixie_bottleHit_big_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			3,
+			10,
+			2,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1919,
+			984,
+			54,
+			48
+		},
+		alias = {
+			"pixie_bottleHit_big_0006"
+		}
+	},
+	pixie_bottleHit_big_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			3,
+			9,
+			2,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1859,
+			984,
+			54,
+			49
+		},
+		alias = {
+			"pixie_bottleHit_big_0008"
+		}
+	},
+	pixie_bottleHit_big_0009 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			2,
+			8,
+			3,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1979,
+			984,
+			54,
+			48
+		},
+		alias = {
+			"pixie_bottleHit_big_0010"
+		}
+	},
+	pixie_bottleHit_big_0011 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			3,
+			5,
+			3,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1170,
+			1404,
+			53,
+			50
+		},
+		alias = {
+			"pixie_bottleHit_big_0012"
+		}
+	},
+	pixie_bottleHit_big_0013 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			6,
+			3,
+			6,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1674,
+			1278,
+			47,
+			50
+		},
+		alias = {
+			"pixie_bottleHit_big_0014"
+		}
+	},
+	pixie_bottleHit_big_0015 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			59,
+			59
+		},
+		trim = {
+			9,
+			1,
+			6,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			2004,
+			746,
+			44,
+			49
+		},
+		alias = {
+			"pixie_bottleHit_big_0016"
+		}
+	},
+	pixie_bottleHit_small_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			10,
+			18,
+			11,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1501,
+			1435,
+			27,
+			29
+		},
+		alias = {
+			"pixie_bottleHit_small_0002"
+		}
+	},
+	pixie_bottleHit_small_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			4,
+			13,
+			4,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1788,
+			788,
+			40,
+			34
+		},
+		alias = {
+			"pixie_bottleHit_small_0004"
+		}
+	},
+	pixie_bottleHit_small_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			1,
+			8,
+			1,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			1971,
+			46,
+			40
+		},
+		alias = {
+			"pixie_bottleHit_small_0006"
+		}
+	},
+	pixie_bottleHit_small_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			1,
+			6,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			1877,
+			46,
+			41
+		},
+		alias = {
+			"pixie_bottleHit_small_0008"
+		}
+	},
+	pixie_bottleHit_small_0009 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			1,
+			6,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			1924,
+			46,
+			41
+		},
+		alias = {
+			"pixie_bottleHit_small_0010"
+		}
+	},
+	pixie_bottleHit_small_0011 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			1,
+			4,
+			2,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1343,
+			1336,
+			45,
+			41
+		},
+		alias = {
+			"pixie_bottleHit_small_0012"
+		}
+	},
+	pixie_bottleHit_small_0013 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			4,
+			1,
+			4,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1343,
+			1839,
+			40,
+			43
+		},
+		alias = {
+			"pixie_bottleHit_small_0014"
+		}
+	},
+	pixie_bottleHit_small_0015 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			48,
+			48
+		},
+		trim = {
+			6,
+			0,
+			5,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1490,
+			1336,
+			37,
+			41
+		},
+		alias = {
+			"pixie_bottleHit_small_0016"
+		}
+	},
+	pixie_hitFx_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			28,
+			28
+		},
+		trim = {
+			7,
+			7,
+			6,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			6,
+			2033,
+			15,
+			15
+		},
+		alias = {
+			"pixie_hitFx_0002"
+		}
+	},
+	pixie_hitFx_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			28,
+			28
+		},
+		trim = {
+			2,
+			2,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			303,
+			1142,
+			25,
+			25
+		},
+		alias = {
+			"pixie_hitFx_0004"
+		}
+	},
+	pixie_hitFx_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			28,
+			28
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			2017,
+			28,
+			28
+		},
+		alias = {
+			"pixie_hitFx_0006"
+		}
+	},
+	pixie_hitFx_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			28,
+			28
+		},
+		trim = {
+			0,
+			0,
+			0,
+			0
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1763,
+			1336,
+			28,
+			28
+		},
+		alias = {
+			"pixie_hitFx_0008"
+		}
+	},
+	pixie_hitFx_0009 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			28,
+			28
+		},
+		trim = {
+			6,
+			8,
+			7,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			184,
+			910,
+			15,
+			12
+		},
+		alias = {
+			"pixie_hitFx_0010"
+		}
+	},
+	pixie_mushroom = {
+		a_name = "go_stage59-1.png",
+		size = {
+			20,
+			20
+		},
+		trim = {
+			1,
+			1,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1182,
+			230,
+			18,
+			18
+		},
+		alias = {}
+	},
+	pixie_mushroomHit_big_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			28,
+			69,
+			21,
+			8
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			652,
+			232,
+			66,
+			19
+		},
+		alias = {}
+	},
+	pixie_mushroomHit_big_0002 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			21,
+			38,
+			18,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1856,
+			659,
+			76,
+			54
+		},
+		alias = {
+			"pixie_mushroomHit_big_0003"
+		}
+	},
+	pixie_mushroomHit_big_0004 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			20,
+			26,
+			11,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1422,
+			659,
+			84,
+			66
+		},
+		alias = {
+			"pixie_mushroomHit_big_0005"
+		}
+	},
+	pixie_mushroomHit_big_0006 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			11,
+			11,
+			5,
+			4
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			659,
+			99,
+			81
+		},
+		alias = {
+			"pixie_mushroomHit_big_0007"
+		}
+	},
+	pixie_mushroomHit_big_0008 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			16,
+			3,
+			10,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1028,
+			89,
+			90
+		},
+		alias = {
+			"pixie_mushroomHit_big_0009"
+		}
+	},
+	pixie_mushroomHit_big_0010 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			15,
+			1,
+			11,
+			3
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			930,
+			89,
+			92
+		},
+		alias = {
+			"pixie_mushroomHit_big_0011"
+		}
+	},
+	pixie_mushroomHit_big_0012 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			20,
+			1,
+			12,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1492,
+			83,
+			88
+		},
+		alias = {
+			"pixie_mushroomHit_big_0013"
+		}
+	},
+	pixie_mushroomHit_big_0014 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			21,
+			1,
+			14,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1678,
+			80,
+			88
+		},
+		alias = {
+			"pixie_mushroomHit_big_0015"
+		}
+	},
+	pixie_mushroomHit_big_0016 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			22,
+			2,
+			17,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1860,
+			76,
+			87
+		},
+		alias = {}
+	},
+	pixie_mushroomHit_big_0017 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			115,
+			96
+		},
+		trim = {
+			44,
+			75,
+			44,
+			7
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			225,
+			627,
+			27,
+			14
+		},
+		alias = {}
+	},
+	pixie_polymorph_smoke_big_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			42,
+			38,
+			39,
+			22
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1394,
+			1336,
+			43,
+			38
+		},
+		alias = {}
+	},
+	pixie_polymorph_smoke_big_0002 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			37,
+			24,
+			34,
+			17
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1170,
+			1341,
+			53,
+			57
+		},
+		alias = {
+			"pixie_polymorph_smoke_big_0003"
+		}
+	},
+	pixie_polymorph_smoke_big_0004 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			26,
+			8,
+			25,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1953,
+			73,
+			77
+		},
+		alias = {
+			"pixie_polymorph_smoke_big_0005"
+		}
+	},
+	pixie_polymorph_smoke_big_0006 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			20,
+			4,
+			18,
+			12
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			1310,
+			86,
+			82
+		},
+		alias = {
+			"pixie_polymorph_smoke_big_0007"
+		}
+	},
+	pixie_polymorph_smoke_big_0008 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			20,
+			3,
+			14,
+			10
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			839,
+			90,
+			85
+		},
+		alias = {
+			"pixie_polymorph_smoke_big_0009"
+		}
+	},
+	pixie_polymorph_smoke_big_0010 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			18,
+			2,
+			14,
+			9
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			667,
+			746,
+			92,
+			87
+		},
+		alias = {
+			"pixie_polymorph_smoke_big_0011"
+		}
+	},
+	pixie_teleport_big_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			41,
+			27,
+			37,
+			24
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1939,
+			1278,
+			46,
+			47
+		},
+		alias = {
+			"pixie_teleport_big_0002"
+		}
+	},
+	pixie_teleport_big_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			34,
+			16,
+			30,
+			20
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1250,
+			915,
+			60,
+			62
+		},
+		alias = {
+			"pixie_teleport_big_0004"
+		}
+	},
+	pixie_teleport_big_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			30,
+			8,
+			27,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			846,
+			746,
+			67,
+			77
+		},
+		alias = {
+			"pixie_teleport_big_0006"
+		}
+	},
+	pixie_teleport_big_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			27,
+			11,
+			25,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			765,
+			939,
+			72,
+			74
+		},
+		alias = {
+			"pixie_teleport_big_0008"
+		}
+	},
+	pixie_teleport_big_0009 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			124,
+			98
+		},
+		trim = {
+			28,
+			13,
+			26,
+			20
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1977,
+			577,
+			70,
+			65
+		},
+		alias = {
+			"pixie_teleport_big_0010"
+		}
+	},
+	pixie_teleport_small_0001 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			87,
+			65
+		},
+		trim = {
+			27,
+			18,
+			27,
+			13
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1656,
+			1336,
+			33,
+			34
+		},
+		alias = {
+			"pixie_teleport_small_0002"
+		}
+	},
+	pixie_teleport_small_0003 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			87,
+			65
+		},
+		trim = {
+			22,
+			10,
+			22,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1343,
+			1383,
+			43,
+			44
+		},
+		alias = {
+			"pixie_teleport_small_0004"
+		}
+	},
+	pixie_teleport_small_0005 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			87,
+			65
+		},
+		trim = {
+			20,
+			4,
+			20,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			1816,
+			47,
+			55
+		},
+		alias = {
+			"pixie_teleport_small_0006"
+		}
+	},
+	pixie_teleport_small_0007 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			87,
+			65
+		},
+		trim = {
+			18,
+			7,
+			19,
+			5
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1287,
+			1625,
+			50,
+			53
+		},
+		alias = {
+			"pixie_teleport_small_0008"
+		}
+	},
+	pixie_teleport_small_0009 = {
+		a_name = "go_stage59-1.png",
+		size = {
+			87,
+			65
+		},
+		trim = {
+			18,
+			8,
+			19,
+			10
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1401,
+			1278,
+			50,
+			47
+		},
+		alias = {
+			"pixie_teleport_small_0010"
+		}
+	},
+    pixie_tower = {
+		a_name = "go_stage59-1.png",
+		size = {
+			127,
+			113
+		},
+		trim = {
+			4,
+			6,
+			3,
+			6
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1928,
+			6,
+			120,
+			101
+		},
+		alias = {}
+	},
 }
 
 local merge_conflict_tables = require("script_utils").merge_conflict_tables

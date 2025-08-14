@@ -5712,23 +5712,7 @@ tt.bullet.align_with_trajectory = true
 tt.initial_impulse = 12000
 tt.initial_impulse_duration = 0.15
 tt.upgrades_disabled = true
-tt = E:register_t("bullet_pixie_instakill", "arrow")
-tt.bullet.flight_time = fts(12)
-tt.bullet.rotation_speed = 45 * FPS * math.pi / 180
-tt.bullet.damage_type = bor(DAMAGE_EAT, DAMAGE_NO_SPAWNS)
-tt.bullet.ignore_hit_offset = true
-tt.bullet.hit_blood_fx = nil
-tt.bullet.hit_fx = "fx_bullet_pixie_instakill_hit_"
-tt.bullet.pop = nil
-tt.render.sprites[1].name = "pixie_mushroom"
-tt.render.sprites[1].animated = false
-tt.sound_events.insert = "ElvesGnomeDesintegrate"
-tt = E:register_t("bullet_pixie_poison", "bullet_pixie_instakill")
-tt.bullet.mod = "mod_pixie_poison"
-tt.bullet.damage_type = DAMAGE_NONE
-tt.bullet.hit_fx = "fx_bullet_pixie_poison_hit_"
-tt.render.sprites[1].name = "pixie_bottle"
-tt.sound_events.insert = nil
+
 tt = E:register_t("ray_crystal_arcane", "bullet")
 tt.bullet.damage_type = DAMAGE_NONE
 tt.bullet.mod = "mod_ray_crystal_arcane"
@@ -6978,9 +6962,7 @@ for i = 1, 5 do
 end
 
 tt = RT("mod_shield_ainyl", "modifier")
-
 AC(tt, "render")
-
 tt.modifier.duration = nil
 tt.main_script.insert = scripts.mod_damage_factors.insert
 tt.main_script.remove = scripts.mod_damage_factors.remove
@@ -6990,44 +6972,16 @@ tt.render.sprites[1].prefix = "ainyl_shield"
 tt.render.sprites[1].size_names = {"small", "big", "big"}
 tt.render.sprites[1].name = "small"
 tt.render.sprites[1].anchor.y = 0.4
-tt = E:register_t("mod_pixie_poison", "mod_poison")
-tt.dps.damage_every = fts(8)
-tt.dps.damage_max = 10
-tt.dps.damage_min = 10
-tt.modifier.duration = 3
-tt = E:register_t("mod_pixie_polymorph", "mod_polymorph")
-tt.polymorph.custom_entity_names.default = "enemy_rabbit"
-tt.polymorph.hit_fx_sizes = {"fx_mod_pixie_polymorph_small", "fx_mod_pixie_polymorph_big", "fx_mod_pixie_polymorph_big"}
-tt = E:register_t("mod_pixie_pickpocket", "modifier")
 
-E:add_comps(tt, "pickpocket")
-
-tt.modifier.level = 0
-tt.main_script.insert = scripts.mod_pixie_pickpocket.insert
-tt.pickpocket.steal_min = {
-    [0] = 1,
-    2,
-    3,
-    4
-}
-tt.pickpocket.steal_max = {
-    [0] = 3,
-    4,
-    5,
-    6
-}
-tt.pickpocket.fx = "fx_coin_jump"
-tt.pickpocket.pop = {"pop_faerie_steal"}
 tt = E:register_t("mod_pixie_teleport", "mod_teleport_mage")
-
 E:add_comps(tt, "sound_events")
-
 tt.max_times_applied = nil
 tt.hold_time = fts(10)
 tt.nodes_offset = -50
 tt.fx_start = "fx_mod_pixie_teleport"
 tt.fx_end = "fx_mod_pixie_teleport"
 tt.sound_events.insert = "ElvesGnomeTeleport"
+
 tt = E:register_t("mod_ray_crystal_arcane", "modifier")
 
 E:add_comps(tt, "dps")
@@ -8588,77 +8542,10 @@ tt.render.sprites[1].name = "simon_gnome_fx"
 tt = E:register_t("simon_gnome_sign", "fx")
 tt.render.sprites[1].name = "simon_gnome_sign"
 tt.render.sprites[1].offset = vec_2(30, 15)
-tt = E:register_t("tower_pixie", "tower")
 
-E:add_comps(tt, "powers", "attacks")
 
-tt.attacks.list[1] = E:clone_c("bullet_attack")
-tt.attacks.list[1].animation = "shoot"
-tt.attacks.list[1].bullet_start_offset = vec_2(10, 11)
-tt.attacks.list[1].bullet = "bullet_pixie_instakill"
-tt.attacks.list[1].vis_bans = bor(F_FLYING, F_BOSS)
-tt.attacks.list[1].vis_flags = bor(F_RANGED, F_STUN, F_INSTAKILL)
-tt.attacks.list[1].chance = 0
-tt.attacks.list[2] = table.deepclone(tt.attacks.list[1])
-tt.attacks.list[2].animation = "shoot"
-tt.attacks.list[2].bullet = "bullet_pixie_poison"
-tt.attacks.list[2].vis_flags = bor(F_RANGED, F_STUN, F_POISON)
-tt.attacks.list[2].chance = 0
-tt.attacks.list[3] = E:clone_c("mod_attack")
-tt.attacks.list[3].animation = "attack"
-tt.attacks.list[3].mod = "mod_pixie_polymorph"
-tt.attacks.list[3].vis_bans = bor(F_FLYING, F_BOSS)
-tt.attacks.list[3].vis_flags = bor(F_RANGED, F_STUN, F_POLYMORPH)
-tt.attacks.list[3].chance = 0.1
-tt.attacks.list[4] = E:clone_c("mod_attack")
-tt.attacks.list[4].animation = "harvester"
-tt.attacks.list[4].mod = "mod_pixie_pickpocket"
-tt.attacks.list[4].vis_bans = bor(F_FLYING, F_BOSS)
-tt.attacks.list[4].vis_flags = bor(F_RANGED, F_STUN)
-tt.attacks.list[4].chance = 0.9
-tt.attacks.list[4].check_gold_bag = true
-tt.attacks.list[5] = E:clone_c("mod_attack")
-tt.attacks.list[5].animation = "attack"
-tt.attacks.list[5].mod = "mod_pixie_teleport"
-tt.attacks.list[5].vis_bans = bor(F_FLYING, F_BOSS)
-tt.attacks.list[5].vis_flags = bor(F_RANGED, F_STUN, F_TELEPORT)
-tt.attacks.list[5].chance = 0
-tt.attacks.hide_range = true
-tt.attacks.range = 190
-tt.attacks.cooldown = fts(10)
-tt.attacks.enemy_cooldown = 3
-tt.attacks.pixie_cooldown = 5
-tt.attacks.excluded_templates = {"enemy_rabbit"}
-tt.info.i18n_key = "ELVES_TOWER_PIXIE"
-tt.info.fn = scripts.tower_pixie.get_info
-tt.info.portrait = (IS_PHONE and "portraits_towers_" or "kr3_info_portraits_towers_") .. "0017"
-tt.main_script.update = scripts.tower_pixie.update
-tt.powers.cream = E:clone_c("power")
-tt.powers.cream.price_base = 250
-tt.powers.cream.price_inc = 250
-tt.powers.cream.max_level = 2
-tt.powers.cream.idle_offsets = {vec_2(-18, -1), vec_2(21, -3), vec_2(5, -9)}
-tt.powers.total = E:clone_c("power")
-tt.powers.total.price_base = 200
-tt.powers.total.price_inc = 200
-tt.powers.total.max_level = 3
-tt.powers.total.chances = {{0, 0, 0.1}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1}, {0.7, 0.6, 0.5}, {0, 0.2, 0.1}}
-tt.render.sprites[1].animated = false
-tt.render.sprites[1].name = "terrain_mage_%04i"
-tt.render.sprites[1].offset = vec_2(0, 10)
-tt.render.sprites[2] = E:clone_c("sprite")
-tt.render.sprites[2].animated = false
-tt.render.sprites[2].name = "pixie_tower"
-tt.render.sprites[2].offset = vec_2(0, 15)
-tt.render.sprites[2].sort_y_offset = 15
-tt.sound_events.insert = nil
-tt.tower.menu_offset = vec_2(0, 6)
-tt.tower.price = 0
-tt.tower.type = "pixie"
 tt = E:register_t("decal_pixie", "decal_scripted")
-
 E:add_comps(tt, "idle_flip", "soldier", "unit")
-
 tt.idle_flip.animations = {"idle", "scratch"}
 tt.idle_flip.cooldown = fts(90)
 tt.idle_flip.loop = false
@@ -8671,10 +8558,9 @@ tt.attack_ts = 0
 tt.target_id = nil
 tt.attack = nil
 tt.attack_level = nil
+
 tt = E:register_t("decal_drow_queen_portal", "decal_scripted")
-
 E:add_comps(tt, "editor", "tween")
-
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].name = "stage11_portal_0001"
 tt.render.sprites[1].z = Z_DECALS
