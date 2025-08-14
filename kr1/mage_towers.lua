@@ -950,8 +950,8 @@ local function mage_towers()
     tt = E:register_t("bolt_high_elven_weak", "bolt_elves")
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
-    tt.bullet.damage_max = 3
-    tt.bullet.damage_min = 2
+    tt.bullet.damage_max = 5
+    tt.bullet.damage_min = 4
     tt.bullet.hit_fx = "fx_bolt_high_elven_weak_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
     tt.bullet.pop = {"pop_mage"}
@@ -964,8 +964,8 @@ local function mage_towers()
     tt.alter_reality_chance = 0.03
     tt.alter_reality_mod = "mod_teleport_high_elven"
     tt.bullet.align_with_trajectory = true
-    tt.bullet.damage_max = 25
-    tt.bullet.damage_min = 14
+    tt.bullet.damage_max = 26
+    tt.bullet.damage_min = 15
     tt.bullet.hit_fx = "fx_bolt_high_elven_strong_hit"
     tt.bullet.particles_name = "ps_bolt_high_elven"
     tt.bullet.pop = {"pop_high_elven"}
@@ -982,8 +982,8 @@ local function mage_towers()
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].anchor = vec_2(0, 0.5)
     tt.bullet.mod = "mod_ray_high_elven_sentinel_hit"
-    tt.bullet.damage_min = 9
-    tt.bullet.damage_max = 16
+    tt.bullet.damage_min = 10
+    tt.bullet.damage_max = 17
     tt.bullet.damage_type = DAMAGE_MAGICAL
     tt.bullet.hit_time = fts(4)
     tt.sound_events.insert = "TowerHighMageSentinelShot"

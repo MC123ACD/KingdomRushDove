@@ -9538,7 +9538,7 @@ function scripts.enemy_sniper.update(this, store)
                         ranged._sniper_id = nil
                     end
 
-                    targets = U.find_soldiers_in_range(store.soldiers, this.pos, ra.min_range, ra.max_range,
+                    local targets = U.find_soldiers_in_range(store.soldiers, this.pos, ra.min_range, ra.max_range,
                         ra.vis_flags, ra.vis_bans)
 
                     if not targets then

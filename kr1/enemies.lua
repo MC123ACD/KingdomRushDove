@@ -4373,13 +4373,14 @@ local function enemies()
     tt.ranged.attacks[1].range_var = 100
     tt.ranged.attacks[1].animations = {"ranged_start", "ranged_loop", "ranged_end"}
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(14, ady(21)), vec_2(10, ady(34)), vec_2(8, ady(10))}
+
     tt = E:register_t("bolt_sniper", "bolt_enemy")
     tt.render.sprites[1].prefix = "bolt_sniper"
     tt.bullet.align_with_trajectory = true
     tt.bullet.damage_max = 100
     tt.bullet.damage_min = 100
     tt.bullet.max_speed = 30 * FPS
-    tt.bullet.damage_type = bor(DAMAGE_TRUE)
+    tt.bullet.damage_type = DAMAGE_TRUE
     tt.bullet.max_track_distance = 50
     tt.sound_events.insert = "SaurianSniperBullet"
 
