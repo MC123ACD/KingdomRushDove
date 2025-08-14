@@ -17739,13 +17739,15 @@ return function(scripts)
         S:queue(this.out_sfx)
         U.y_animation_wait(this)
 
-        if not target.health.dead and target.health_bar then
-            target.health_bar.hidden = nil
+        if not target.health.dead then
+            if target.health_bar then
+                target.health_bar.hidden = nil
+            end
+            U.sprites_show(target, nil, nil, true)
+            SU.show_modifiers(store, target, true, this)
+            SU.show_auras(store, target, true)
         end
 
-        U.sprites_show(target, nil, nil, true)
-        SU.show_modifiers(store, target, true, this)
-        SU.show_auras(store, target, true)
         queue_remove(store, es)
 
         this._decal_timelapse = nil

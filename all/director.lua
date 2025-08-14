@@ -490,7 +490,7 @@ function director:queue_load_item_named(name, force_reload)
             game.store.patches = default_patch
         else
             for k, v in pairs(default_patch) do
-                if not game.store.patches[k] then
+                if game.store.patches[k] == nil then
                     game.store.patches[k] = v
                 end
             end
@@ -500,7 +500,7 @@ function director:queue_load_item_named(name, force_reload)
             local criket_template = LU.eval_file("patches/criket_template.lua")
             if criket_template then
                 for k, v in pairs(criket_template) do
-                    if not game.store.patches.criket[k] then
+                    if game.store.patches.criket[k] == nil then
                         game.store.patches.criket[k] = v
                     end
                 end
