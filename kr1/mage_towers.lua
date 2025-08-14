@@ -1382,7 +1382,7 @@ local function mage_towers()
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
     tt.render.sprites[2].name = "pixie_tower"
-    tt.render.sprites[2].offset = vec_2(0, 15)
+    tt.render.sprites[2].offset = vec_2(0, 28)
     tt.render.sprites[2].sort_y_offset = 15
     tt.sound_events.insert = "ElvesGnomeNew"
     tt.tower.menu_offset = vec_2(0, 6)
