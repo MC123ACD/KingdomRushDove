@@ -525,6 +525,17 @@ function upgrades:patch_templates(max_level)
 
     u = self:get_upgrade("mage_arcane_shatter")
 
+    local function add_mods(b, mods)
+        if b.mod then
+            table.insert(mods, b.mod)
+        end
+        if b.mods then
+            table.append(mods, b.mods)
+        end
+        b.mod = nil
+        b.mods = mods
+    end
+
     if u then
         for _, n in pairs(self:bolts()) do
 
@@ -536,17 +547,9 @@ function upgrades:patch_templates(max_level)
                 mods = {u.mod_little}
             end
 
-            if b.mod then
-                table.insert(mods, b.mod)
-            end
-
-            if b.mods then
-                table.append(mods, b.mods)
-            end
-
-            b.mod = nil
-            b.mods = mods
+            add_mods(b, mods)
         end
+        add_mods(T("tower_pixie").attacks.list[4], {u.mod_normal})
     end
 
     u = self:get_upgrade("mage_hermetic_study")
@@ -577,18 +580,9 @@ function upgrades:patch_templates(max_level)
         for _, n in pairs(self:bolts()) do
             local mods = {u.mod}
             local b = T(n).bullet
-
-            if b.mod then
-                table.insert(mods, b.mod)
-            end
-
-            if b.mods then
-                table.append(mods, b.mods)
-            end
-
-            b.mod = nil
-            b.mods = mods
+            add_mods(b, mods)
         end
+        add_mods(T("tower_pixie").attacks.list[4], {u.mod})
     end
 
     local engineer_towers = self:engineer_towers()

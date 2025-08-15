@@ -1336,14 +1336,14 @@ local function mage_towers()
     -- 变形
     tt.attacks.list[3] = E:clone_c("mod_attack")
     tt.attacks.list[3].animation = "attack"
-    tt.attacks.list[3].mod = "mod_pixie_polymorph"
+    tt.attacks.list[3].mods = {"mod_pixie_polymorph"}
     tt.attacks.list[3].vis_bans = bor(F_FLYING, F_BOSS)
     tt.attacks.list[3].vis_flags = bor(F_RANGED, F_STUN, F_POLYMORPH, F_INSTAKILL)
     tt.attacks.list[3].chance = 0.1
     -- 偷钱
     tt.attacks.list[4] = E:clone_c("mod_attack")
     tt.attacks.list[4].animation = "harvester"
-    tt.attacks.list[4].mod = "mod_pixie_pickpocket"
+    tt.attacks.list[4].mods = {"mod_pixie_pickpocket"}
     tt.attacks.list[4].vis_bans = F_FLYING
     tt.attacks.list[4].vis_flags = bor(F_RANGED, F_STUN)
     tt.attacks.list[4].chance = 0.9
@@ -1351,7 +1351,7 @@ local function mage_towers()
     -- 传送
     tt.attacks.list[5] = E:clone_c("mod_attack")
     tt.attacks.list[5].animation = "attack"
-    tt.attacks.list[5].mod = "mod_pixie_teleport"
+    tt.attacks.list[5].mods = {"mod_pixie_teleport"}
     tt.attacks.list[5].vis_bans = bor(F_FLYING, F_BOSS)
     tt.attacks.list[5].vis_flags = bor(F_RANGED, F_STUN, F_TELEPORT)
     tt.attacks.list[5].chance = 0

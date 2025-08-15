@@ -3209,11 +3209,14 @@ local function register_mage(scripts)
                     -- U.y_wait(store, 0.3)
 
                     if a.type == "mod" then
-                        e = E:create_entity(a.mod)
-                        e.modifier.source_id = this.id
-                        e.modifier.target_id = target.id
-                        e.modifier.level = this.attack_level
-                        e.modifier.damage_factor = this.owner.tower.damage_factor
+                        for _, m in pairs(a.mods) do
+                            e = E:create_entity(m)
+                            e.modifier.source_id = this.id
+                            e.modifier.target_id = target.id
+                            e.modifier.level = this.attack_level
+                            e.modifier.damage_factor = this.owner.tower.damage_factor
+                            queue_insert(store, e)
+                        end
                     else
                         e = E:create_entity(a.bullet)
                         e.bullet.source_id = this.id
@@ -3223,9 +3226,9 @@ local function register_mage(scripts)
                         e.bullet.hit_fx = e.bullet.hit_fx .. (target.unit.size >= UNIT_SIZE_MEDIUM and "big" or "small")
                         e.bullet.damage_factor = this.owner.tower.damage_factor
                         e.pos = V.vclone(e.bullet.from)
+                        queue_insert(store, e)
                     end
 
-                    queue_insert(store, e)
                     U.y_animation_wait(this)
                     U.y_animation_play(this, "teleportOut", nil, store.tick_ts)
                     SU.stun_dec(target)
