@@ -1375,7 +1375,7 @@ local function mage_towers()
     tt.powers.total.price_base = 200
     tt.powers.total.price_inc = 200
     tt.powers.total.max_level = 3
-    tt.powers.total.chances = {{0, 0, 0.08}, {0.2, 0.1, 0.2}, {0.08, 0.08, 0.08}, {0.72, 0.62, 0.54}, {0, 0.2, 0.1}}
+    tt.powers.total.chances = {{0, 0, 0.1}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1}, {0.7, 0.6, 0.5}, {0, 0.2, 0.1}}
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)

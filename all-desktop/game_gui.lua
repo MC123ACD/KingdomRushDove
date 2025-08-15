@@ -6400,14 +6400,18 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
            if new_tower.barrack then
                 if game_gui.game.store.patches.criket and game_gui.game.store.patches.criket.on then
                     local path_index = game_gui.game.store.patches.criket.path_index
-                    local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, {1, 2, 3}, true)
-                    if #nodes > 0 then
-                        if U.is_inside_ellipse(P:node_pos(nodes[1][1],nodes[1][2],nodes[1][3]),new_tower.pos, new_tower.barrack.rally_range) then
-                            new_tower.barrack.rally_pos = P:node_pos(nodes[1][1], nodes[1][2], nodes[1][3])
-                        else
-                            new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
-                        end
+                    -- local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, {1}, true)
+                    local nodes = P.paths[path_index][1]
 
+                    local i = 1
+
+                    while i <= #nodes and not U.is_inside_ellipse(nodes[i], new_tower.pos, new_tower.barrack.rally_range) do
+                        i = i + 1
+                    end
+                    if i > #nodes then
+                        new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
+                    else
+                        new_tower.barrack.rally_pos = V.vclone(nodes[i - 1])
                     end
                 else
                     new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
