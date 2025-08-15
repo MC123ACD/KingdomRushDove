@@ -1372,7 +1372,7 @@ local function mage_towers()
     tt.powers.cream.max_level = 2
     tt.powers.cream.idle_offsets = {vec_2(-18, -1), vec_2(21, -3), vec_2(5, -9)}
     tt.powers.total = E:clone_c("power")
-    tt.powers.total.price_base = 200
+    tt.powers.total.price_base = 100
     tt.powers.total.price_inc = 200
     tt.powers.total.max_level = 3
     tt.powers.total.chances = {{0, 0, 0.1}, {0.2, 0.1, 0.2}, {0.1, 0.1, 0.1}, {0.7, 0.6, 0.5}, {0, 0.2, 0.1}}
