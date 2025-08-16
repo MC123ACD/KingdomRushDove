@@ -1,33 +1,47 @@
 -- 这个文件用于斗蛐蛐中编辑出怪
 
 return {
-    on = false, -- 启用斗蛐蛐,
-    path_index = 5, -- 设置主路径为 1
+    on = true, -- 启用斗蛐蛐,
+    path_index = 1, -- 设置主路径为 1
     delay = 0, -- 开始出怪前的延迟，单位为秒
     spawns = {
         {
-            max = 60,
-            creep = "enemy_demon_mage", -- 选择敌人为小哥布林
-            creep_aux = "enemy_demon_flareon",
+            max = 30,
+            creep = "enemy_cannibal",
+            -- creep_aux = "enemy_cannibal_volcano_normal",
+            -- max_same = 2,
+            fixed_sub_path = 0,
+            interval = 0.6,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+        {
+            max = 16,
+            creep = "enemy_shaman_magic",
+            creep_aux = "enemy_shaman_shield",
             max_same = 2,
             fixed_sub_path = 0,
-            interval = 0.4, -- 每隔 0.1 秒出一个小哥布林
+            interval = 0.6,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+        {
+            max = 16,
+            creep = "enemy_shaman_necro",
+            creep_aux = "enemy_hunter",
+            max_same = 2,
+            fixed_sub_path = 0,
+            interval = 0.6,
+            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        },
+        {
+            max = 16,
+            creep = "enemy_shaman_priest", -- 选择敌人为小哥布林
+            creep_aux = "enemy_shaman",
+            max_same = 2,
+            fixed_sub_path = 0,
+            interval = 0.6, -- 每隔 0.1 秒出一个小哥布林
             interval_next = 0.4 -- 本小波出完后，过 5 秒出下一波
         },
-        {
-            max = 20,
-            creep = "enemy_demon",
-            fixed_sub_path = 0,
-            interval = 0.5,
-            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        },
-        {
-            max = 20,
-            creep = "enemy_demon_wolf",
-            fixed_sub_path = 0,
-            interval = 1,
-            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        }
+
         -- {
         --     max = 20,
         --     creep = "enemy_soldier_barbarian",

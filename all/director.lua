@@ -6,6 +6,7 @@ local signal = require("hump.signal")
 
 require("klua.dump")
 
+local mod = require("mod")
 local features = require("features")
 local i18n = require("i18n")
 local V = require("klua.vector")
@@ -156,6 +157,7 @@ function director:init(params)
 			love.mouse.setCursor(self.cursor_up)
 		end
 	end
+	mod:init()
 end
 
 function director:quit()

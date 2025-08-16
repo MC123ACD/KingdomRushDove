@@ -55,7 +55,8 @@ function editor:init(screen_w, screen_h, done_callback)
 	self.screen_w = screen_w
 	self.screen_h = screen_h
 	self.done_callback = done_callback
-	self.game_scale = self.ref_h / TEXTURE_SIZE_ALIAS[self.args.texture_size]
+	--self.game_scale = self.ref_h / TEXTURE_SIZE_ALIAS[self.args.texture_size]
+	self.game_scale = self.ref_h / TEXTURE_SIZE_ALIAS["ipad"]
 	self.game_scale = self.game_scale / (tsf and tsf.game_editor or 1)
 	self.game_ref_origin = V.v((screen_w - self.ref_w * self.game_scale) / 2, (screen_h - self.ref_h * self.game_scale) / 2)
 
@@ -330,8 +331,8 @@ function editor:draw()
 					G.setColor(0, 0, 200, 200)
 				end
 
-				G.rectangle("fill", e.pos.x - 1, e.pos.y - 4, 2, 8)
-				G.rectangle("fill", e.pos.x - 4, e.pos.y - 1, 8, 2)
+				G.rectangle("fill", e.pos.x - 2, e.pos.y - 8, 4, 16)
+				G.rectangle("fill", e.pos.x - 8, e.pos.y - 2, 16, 4)
 
 				if self.entities_selected and table.contains(self.entities_selected, e.id) and e.render and e.render.frames and e.render.frames[1] then
 					local f = e.render.frames[1]

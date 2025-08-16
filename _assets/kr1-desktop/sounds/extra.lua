@@ -93,6 +93,9 @@ local kr1_groups = {
     music_stage71 = {
         sounds = {"MusicBattlePrep_71", "MusicBattle_71", "MusicBossFight"}
     },
+    music_stage1000 = {
+        sounds = {"MusicBattlePrep_01", "MusicBattle_01"}
+    },
     common = {
         append = true,
         sounds = {"MeleeSword", "swamp_thing_bomb_shot", "swamp_thing_bomb_explosion", "DeathEplosionShort",
@@ -387,6 +390,13 @@ local kr1_sounds = {
         stream = true,
         files = {"MusicBattlePreparationsMountain.ogg"}
     },
+    MusicBattlePrep_1000 = {
+        source_group = "MUSIC",
+        gain = 0.8,
+        loop = true,
+        stream = true,
+        files = {"MusicBattlePreparationsForest.ogg"}
+    },
     MusicBattle_01 = {
         source_group = "MUSIC",
         gain = 0.7,
@@ -575,6 +585,13 @@ local kr1_sounds = {
         loop = true,
         stream = true,
         files = {"MusicBattleUnderAttackMountain.ogg"}
+    },
+    MusicBattle_1000 = {
+        source_group = "MUSIC",
+        gain = 0.7,
+        loop = true,
+        stream = true,
+        files = {"MusicBattleUnderAttackForest1.ogg"}
     },
     SasquashRally = {
         loop = false,

@@ -1,6 +1,8 @@
 -- chunkname: @./_assets/kr1-desktop/strings/zh-Hans.lua
 
 local kr1 = {
+    LEVEL_1000_TITLE = "斗蛐蛐专用关卡1",
+    LEVEL_1000_HISTORY = "注二号路径为下面的直线",
     CREDITS_TITLE_16 = "质量检验与测试",
     ACHIEVEMENT_ENERGY_NETWORK_DESCRIPTION = "在任意关卡建造4个特斯拉塔。",
     ACHIEVEMENT_CANNON_FODDER_DESCRIPTION = "让 1000 名士兵慷慨就义。",

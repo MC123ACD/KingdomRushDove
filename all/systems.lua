@@ -405,8 +405,8 @@ function sys.wave_spawn:init(store)
         store.gems_per_wave = 0
         store.wave_group_total = 0
     else
-        store.gems_per_wave = math.floor(
-            GS.gems_per_level[store.level_idx] * GS.gems_factor_per_mode[store.level_mode] / W:waves_count())
+        -- store.gems_per_wave = math.floor(
+        --     GS.gems_per_level[store.level_idx] * GS.gems_factor_per_mode[store.level_mode] / W:waves_count())
         store.wave_group_total = W:groups_count()
     end
 
@@ -1977,7 +1977,7 @@ function sys.render:on_insert(entity, store)
         end
     end
 
-    if store.patches.show_health_bar and entity.health_bar then
+    if store.patches and store.patches.show_health_bar and entity.health_bar then
         local hb = entity.health_bar
         local fk = hb.black_bar_hp and {} or nil
 
@@ -2090,7 +2090,7 @@ function sys.render:on_remove(entity, store)
         end
     end
 
-    if store.patches.show_health_bar and entity.health_bar then
+    if store.patches and store.patches.show_health_bar and entity.health_bar then
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
 
@@ -2177,7 +2177,7 @@ function sys.render:on_update(dt, ts, store)
             end
         end
 
-        if store.patches.show_health_bar and e.health_bar then
+        if store.patches and store.patches.show_health_bar and e.health_bar then
             local hb = e.health_bar
             local fb = hb.frames[1]
             local ff = hb.frames[2]

@@ -6411,6 +6411,9 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
                     if i > #nodes then
                         new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
                     else
+                        if i == 1 then
+                            i = 2
+                        end
                         new_tower.barrack.rally_pos = V.vclone(nodes[i - 1])
                     end
                 else
