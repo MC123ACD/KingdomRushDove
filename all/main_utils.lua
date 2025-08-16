@@ -298,6 +298,14 @@ end
 function mu.apply_params(params, game_name, game_target, game_platform)
 	DRAW_FPS = tonumber(params.fps)
 	TICK_LENGTH = 1 / DRAW_FPS
+    WAIT_FRAMES = 1
+    if DRAW_FPS then
+        if DRAW_FPS == 60 then
+            WAIT_FRAMES = 2
+        elseif DRAW_FPS >= 120 then
+            WAIT_FRAMES = 4
+        end
+    end
 
 	if params.level or params.screen then
 		params.skip_settings_dialog = true

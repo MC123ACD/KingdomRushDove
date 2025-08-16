@@ -15,6 +15,14 @@ require("constants")
 
 local U = {}
 
+local function wait_when_not_found()
+    local wait_frames = WAIT_FRAMES
+    while wait_frames > 0 do
+        wait_frames = wait_frames - 1
+        coroutine.yield()
+    end
+end
+
 -- 返回从 from 到 to 的随机数
 function U.frandom(from, to)
     return math.random() * (to - from) + from
@@ -686,6 +694,7 @@ function U.find_soldiers_in_range(entities, origin, min_range, max_range, flags,
     end)
 
     if not soldiers or #soldiers == 0 then
+        wait_when_not_found()
         return nil
     else
         return soldiers
@@ -731,6 +740,7 @@ function U.find_targets_in_range(entities, origin, min_range, max_range, flags, 
     end)
 
     if not targets or #targets == 0 then
+        wait_when_not_found()
         return nil
     else
         return targets
@@ -750,6 +760,7 @@ function U.find_first_target(entities, origin, min_range, max_range, flags, bans
         end
     end
 
+    wait_when_not_found()
     return nil
 end
 
@@ -765,6 +776,7 @@ function U.find_random_target(entities, origin, min_range, max_range, flags, ban
     end)
 
     if not targets or #targets == 0 then
+        wait_when_not_found()
         return nil
     else
         local idx = math.random(1, #targets)
@@ -786,6 +798,7 @@ function U.find_random_enemy(entities, origin, min_range, max_range, flags, bans
     end)
 
     if not enemies or #enemies == 0 then
+        wait_when_not_found()
         return nil
     else
         local idx = math.random(1, #enemies)
@@ -828,6 +841,7 @@ function U.find_random_enemy_with_pos(entities, origin, min_range, max_range, pr
     end
 
     if not enemies or #enemies == 0 then
+        wait_when_not_found()
         return nil, nil
     else
         local idx = math.random(1, #enemies)
@@ -845,6 +859,7 @@ function U.find_enemies_in_range(entities, origin, min_range, max_range, flags, 
     end)
 
     if #enemies == 0 then
+        wait_when_not_found()
         return nil
     else
         return enemies
@@ -883,6 +898,7 @@ function U.find_enemies_in_paths(entities, origin, min_node_range, max_node_rang
     end
 
     if not result or #result == 0 then
+        wait_when_not_found()
         return nil
     else
         table.sort(result, function(e1, e2)
@@ -941,6 +957,7 @@ function U.find_biggest_enemy(entities, origin, min_range, max_range, prediction
     if biggest_enemy then
         return biggest_enemy, biggest_enemy.__ffe_pos
     else
+        wait_when_not_found()
         return nil, nil
     end
 end
@@ -997,6 +1014,7 @@ function U.find_foremost_enemy_with_max_coverage(entities, origin, min_range, ma
     end
 
     if not enemies or #enemies == 0 then
+        wait_when_not_found()
         return nil, nil
     else
         U.sort_foremost_enemies(enemies)
@@ -1064,6 +1082,7 @@ function U.find_foremost_enemy_with_flying_preference(entities, origin, min_rang
     end
 
     if not enemies or #enemies == 0 then
+        wait_when_not_found()
         return nil, nil
     else
         U.sort_foremost_enemies_with_flying_preference(enemies)
@@ -1116,6 +1135,7 @@ function U.find_foremost_enemy(entities, origin, min_range, max_range, predictio
     end
 
     if not enemies or #enemies == 0 then
+        wait_when_not_found()
         return nil, nil
     else
         U.sort_foremost_enemies(enemies)
@@ -1134,6 +1154,7 @@ function U.find_towers_in_range(entities, origin, attack, filter_func)
     end)
 
     if not towers or #towers == 0 then
+        wait_when_not_found()
         return nil
     else
         return towers

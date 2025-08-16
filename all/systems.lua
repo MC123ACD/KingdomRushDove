@@ -172,7 +172,8 @@ function sys.level:on_update(dt, ts, store)
             signal.emit("wave-notification", "view", "TIP_UPGRADES")
         elseif store.level_mode == GAME_MODE_ENDLESS then
             signal.emit("wave-notification", "view", "TIP_SURVIVAL")
-        elseif KR_GAME == "kr1" and store.selected_hero and #store.selected_hero ~= 0 and not U.is_seen(store, "TIP_HEROES") then
+        elseif KR_GAME == "kr1" and store.selected_hero and #store.selected_hero ~= 0 and
+            not U.is_seen(store, "TIP_HEROES") then
             signal.emit("wave-notification", "icon", "TIP_HEROES")
         elseif KR_GAME == "kr1" and store.level_mode == GAME_MODE_CAMPAIGN and store.level_idx >= 13 and
             U.count_stars(slot) < 50 and not U.is_seen(store, "TIP_ELITE") then
@@ -1088,7 +1089,7 @@ function sys.health:on_update(dt, ts, store)
                         h.hp = 0
                     elseif band(d.damage_type, DAMAGE_ARMOR) ~= 0 then
 
-                        d.value = d.value * (1- e.health.armor_resilience)
+                        d.value = d.value * (1 - e.health.armor_resilience)
 
                         SU.armor_dec(e, d.value)
                         d.damage_result = bor(d.damage_result, DR_ARMOR)
@@ -1193,7 +1194,6 @@ function sys.health:on_update(dt, ts, store)
 
             signal.emit("got-enemy-gold", e, e.enemy.gold)
 
-
             -- if e.enemy and e.enemy.gems > 0 then
             --     store.gems_collected = store.gems_collected + e.enemy.gems
 
@@ -1220,35 +1220,34 @@ function sys.health:on_update(dt, ts, store)
             h.last_damage_types = 0
         end
 
-        if h.dead and not h.ignore_delete_after and
-            (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+        if h.dead and not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
     end
 
     for _, e in pairs(store.soldiers) do
-    local h = e.health
+        local h = e.health
 
-    if h.hp <= 0 and not h.dead and not h.ignore_damage then
-        h.hp = 0
-        h.dead = true
-        h.death_ts = store.tick_ts
-        h.delete_after = store.tick_ts + h.dead_lifetime
+        if h.hp <= 0 and not h.dead and not h.ignore_damage then
+            h.hp = 0
+            h.dead = true
+            h.death_ts = store.tick_ts
+            h.delete_after = store.tick_ts + h.dead_lifetime
 
-        if e.health_bar then
-            e.health_bar.hidden = true
+            if e.health_bar then
+                e.health_bar.hidden = true
+            end
+        end
+
+        if not h.dead then
+            h.last_damage_types = 0
+        end
+
+        if h.dead and not e.hero and not h.ignore_delete_after and
+            (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+            queue_remove(store, e)
         end
     end
-
-    if not h.dead then
-        h.last_damage_types = 0
-    end
-
-    if h.dead and not e.hero and not h.ignore_delete_after and
-        (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
-        queue_remove(store, e)
-    end
-end
 
 end
 
@@ -2294,7 +2293,7 @@ function sys.render:on_update(dt, ts, store)
     -- insertsort(store.render_frames)
 
     local function sort_frames_optimized(frames)
-    table.sort(frames, function(f1, f2)
+        table.sort(frames, function(f1, f2)
             if f1.z ~= f2.z then
                 return f1.z < f2.z
             end
@@ -2521,178 +2520,179 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
+local performance_monitor_enabled = false
+if performance_monitor_enabled then
+    -- 在文件开头添加性能监控模块
+    local perf = {}
+    perf.timers = {}
+    perf.frame_times = {}
+    perf.system_times = {}
+    perf.max_samples = 300 -- 保存最近300帧数据
+    perf.report_interval = 5 -- 每5秒输出一次报告
 
--- 在文件开头添加性能监控模块
--- local perf = {}
--- perf.timers = {}
--- perf.frame_times = {}
--- perf.system_times = {}
--- perf.max_samples = 300 -- 保存最近300帧数据
--- perf.report_interval = 5 -- 每5秒输出一次报告
+    -- 性能计时器函数
+    function perf.start_timer(name)
+        perf.timers[name] = love.timer.getTime()
+    end
 
--- -- 性能计时器函数
--- function perf.start_timer(name)
---     perf.timers[name] = love.timer.getTime()
--- end
+    function perf.end_timer(name)
+        if perf.timers[name] then
+            local elapsed = love.timer.getTime() - perf.timers[name]
+            perf.system_times[name] = perf.system_times[name] or {}
+            table.insert(perf.system_times[name], elapsed)
 
--- function perf.end_timer(name)
---     if perf.timers[name] then
---         local elapsed = love.timer.getTime() - perf.timers[name]
---         perf.system_times[name] = perf.system_times[name] or {}
---         table.insert(perf.system_times[name], elapsed)
+            -- 保持样本数量在限制内
+            if #perf.system_times[name] > perf.max_samples then
+                table.remove(perf.system_times[name], 1)
+            end
 
---         -- 保持样本数量在限制内
---         if #perf.system_times[name] > perf.max_samples then
---             table.remove(perf.system_times[name], 1)
---         end
+            perf.timers[name] = nil
+            return elapsed
+        end
+        return 0
+    end
 
---         perf.timers[name] = nil
---         return elapsed
---     end
---     return 0
--- end
+    -- 生成性能报告
+    function perf.generate_report(store)
+        local report = {"=== 性能报告 ==="}
 
--- -- 生成性能报告
--- function perf.generate_report(store)
---     local report = {"=== 性能报告 ==="}
+        -- 整体帧率信息
+        if #perf.frame_times > 0 then
+            local total_time = 0
+            for _, time in ipairs(perf.frame_times) do
+                total_time = total_time + time
+            end
+            local fps = #perf.frame_times / total_time
+            table.insert(report, string.format("平均FPS: %.1f", fps))
+        end
 
---     -- 整体帧率信息
---     if #perf.frame_times > 0 then
---         local total_time = 0
---         for _, time in ipairs(perf.frame_times) do
---             total_time = total_time + time
---         end
---         local fps = #perf.frame_times / total_time
---         table.insert(report, string.format("平均FPS: %.1f", fps))
---     end
+        -- 计算各系统在这段时间内的总开销
+        local system_costs = {}
+        for name, times in pairs(perf.system_times) do
+            if #times > 0 then
+                local total_cost = 0
+                for _, time in ipairs(times) do
+                    total_cost = total_cost + time
+                end
+                if total_cost > 0 then
+                    system_costs[name] = {
+                        total = total_cost * 1000, -- 转换为毫秒
+                        calls = #times
+                    }
+                end
+            end
+        end
 
---     -- 计算各系统在这段时间内的总开销
---     local system_costs = {}
---     for name, times in pairs(perf.system_times) do
---         if #times > 0 then
---             local total_cost = 0
---             for _, time in ipairs(times) do
---                 total_cost = total_cost + time
---             end
---             if total_cost > 0 then
---                 system_costs[name] = {
---                     total = total_cost * 1000, -- 转换为毫秒
---                     calls = #times
---                 }
---             end
---         end
---     end
+        -- 按总开销排序
+        local sorted_costs = {}
+        for name, data in pairs(system_costs) do
+            table.insert(sorted_costs, {
+                name = name,
+                total = data.total,
+                calls = data.calls
+            })
+        end
 
---     -- 按总开销排序
---     local sorted_costs = {}
---     for name, data in pairs(system_costs) do
---         table.insert(sorted_costs, {
---             name = name,
---             total = data.total,
---             calls = data.calls
---         })
---     end
+        table.sort(sorted_costs, function(a, b)
+            return a.total > b.total
+        end)
 
---     table.sort(sorted_costs, function(a, b)
---         return a.total > b.total
---     end)
+        -- 输出排序后的结果
+        table.insert(report, "\n系统开销排行 (总耗时ms/调用次数):")
+        for i, item in ipairs(sorted_costs) do
+            table.insert(report, string.format("%2d. %s: %.1fms (%d次)", i, item.name, item.total, item.calls))
 
---     -- 输出排序后的结果
---     table.insert(report, "\n系统开销排行 (总耗时ms/调用次数):")
---     for i, item in ipairs(sorted_costs) do
---         table.insert(report, string.format("%2d. %s: %.1fms (%d次)", i, item.name, item.total, item.calls))
+            -- 只显示前15个最耗时的
+            if i >= 15 then
+                table.insert(report, "    ...")
+                break
+            end
+        end
 
---         -- 只显示前15个最耗时的
---         if i >= 15 then
---             table.insert(report, "    ...")
---             break
---         end
---     end
+        -- 简单的实体统计
+        if store then
+            table.insert(report, string.format("\n实体数: %d | 渲染帧: %d", #store.entities, #store.render_frames))
+        end
 
---     -- 简单的实体统计
---     if store then
---         table.insert(report, string.format("\n实体数: %d | 渲染帧: %d", #store.entities, #store.render_frames))
---     end
+        return table.concat(report, "\n")
+    end
 
---     return table.concat(report, "\n")
--- end
+    function perf.save_report(store)
+        local report = perf.generate_report(store)
+        print(report)
+    end
 
--- function perf.save_report(store)
---     local report = perf.generate_report(store)
---     print(report)
--- end
+    -- 需要监控的系统方法列表
+    local MONITORED_METHODS = {"on_update", "on_insert", "on_remove", "on_queue", "on_dequeue"}
 
--- -- 需要监控的系统方法列表
--- local MONITORED_METHODS = {"on_update", "on_insert", "on_remove", "on_queue", "on_dequeue"}
+    -- 包装系统方法以添加性能监控
+    local function create_monitored_system(original_sys)
+        local monitored = {}
+        for k, v in pairs(original_sys) do
+            monitored[k] = v
+        end
 
--- -- 包装系统方法以添加性能监控
--- local function create_monitored_system(original_sys)
---     local monitored = {}
---     for k, v in pairs(original_sys) do
---         monitored[k] = v
---     end
+        -- 为每个需要监控的方法添加包装
+        for _, method_name in ipairs(MONITORED_METHODS) do
+            if original_sys[method_name] then
+                local original_method = original_sys[method_name]
+                local timer_name = (original_sys.name or "unknown") .. "." .. method_name
 
---     -- 为每个需要监控的方法添加包装
---     for _, method_name in ipairs(MONITORED_METHODS) do
---         if original_sys[method_name] then
---             local original_method = original_sys[method_name]
---             local timer_name = (original_sys.name or "unknown") .. "." .. method_name
+                monitored[method_name] = function(self, ...)
+                    perf.start_timer(timer_name)
+                    local result = original_method(self, ...)
+                    perf.end_timer(timer_name)
+                    return result
+                end
+            end
+        end
 
---             monitored[method_name] = function(self, ...)
---                 perf.start_timer(timer_name)
---                 local result = original_method(self, ...)
---                 perf.end_timer(timer_name)
---                 return result
---             end
---         end
---     end
+        return monitored
+    end
 
---     return monitored
--- end
+    -- 添加帧时间监控系统
+    sys.performance_monitor = {}
+    sys.performance_monitor.name = "performance_monitor"
 
--- -- 添加帧时间监控系统
--- sys.performance_monitor = {}
--- sys.performance_monitor.name = "performance_monitor"
+    function sys.performance_monitor:init(store)
+        self.last_frame_time = love.timer.getTime()
+        self.last_report_time = love.timer.getTime()
+    end
 
--- function sys.performance_monitor:init(store)
---     self.last_frame_time = love.timer.getTime()
---     self.last_report_time = love.timer.getTime()
--- end
+    function sys.performance_monitor:on_update(dt, ts, store)
+        local current_time = love.timer.getTime()
+        local frame_time = current_time - self.last_frame_time
 
--- function sys.performance_monitor:on_update(dt, ts, store)
---     local current_time = love.timer.getTime()
---     local frame_time = current_time - self.last_frame_time
+        -- 记录帧时间
+        table.insert(perf.frame_times, frame_time)
+        if #perf.frame_times > perf.max_samples then
+            table.remove(perf.frame_times, 1)
+        end
 
---     -- 记录帧时间
---     table.insert(perf.frame_times, frame_time)
---     if #perf.frame_times > perf.max_samples then
---         table.remove(perf.frame_times, 1)
---     end
+        -- 定期输出报告
+        if current_time - self.last_report_time > perf.report_interval then
+            perf.save_report(store)
+            self.last_report_time = current_time
+        end
 
---     -- 定期输出报告
---     if current_time - self.last_report_time > perf.report_interval then
---         perf.save_report(store)
---         self.last_report_time = current_time
---     end
+        self.last_frame_time = current_time
+    end
 
---     self.last_frame_time = current_time
--- end
+    -- 包装所有现有系统以添加性能监控
+    local original_systems = {}
+    for name, system in pairs(sys) do
+        if type(system) == "table" and system.name then
+            original_systems[name] = system
+            sys[name] = create_monitored_system(system)
+        end
+    end
 
--- -- 包装所有现有系统以添加性能监控
--- local original_systems = {}
--- for name, system in pairs(sys) do
---     if type(system) == "table" and system.name then
---         original_systems[name] = system
---         sys[name] = create_monitored_system(system)
---     end
--- end
+    -- 添加手动触发性能报告的函数（可以在游戏中调用）
+    function sys.trigger_performance_report(store)
+        perf.save_report(store)
+    end
 
--- -- 添加手动触发性能报告的函数（可以在游戏中调用）
--- function sys.trigger_performance_report(store)
---     perf.save_report(store)
--- end
+end
 
 return sys
-
-
 
