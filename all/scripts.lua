@@ -2392,51 +2392,50 @@ function scripts.bomb.update(this, store, script)
         end
     end
 
-    local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
-                   U.is_inside_ellipse(v.pos, b.to, dradius)
-    end)
+    for _, enemy in pairs(store.enemies) do
+        if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
+            0 and U.is_inside_ellipse(enemy.pos, b.to, dradius) then
+            local d = E:create_entity("damage")
 
-    for _, enemy in pairs(enemies) do
-        local d = E:create_entity("damage")
+            d.damage_type = b.damage_type
+            d.reduce_armor = b.reduce_armor
+            d.reduce_magic_armor = b.reduce_magic_armor
 
-        d.damage_type = b.damage_type
-        d.reduce_armor = b.reduce_armor
-        d.reduce_magic_armor = b.reduce_magic_armor
+            if this.up_alchemical_powder_chance and math.random() < this.up_alchemical_powder_chance or
+                UP:get_upgrade("engineer_efficiency") then
+                d.value = dmax
+            else
+                local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, b.to, dradius)
 
-        if this.up_alchemical_powder_chance and math.random() < this.up_alchemical_powder_chance or
-            UP:get_upgrade("engineer_efficiency") then
-            d.value = dmax
-        else
-            local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, b.to, dradius)
+                d.value = dmax - (dmax - dmin) * dist_factor
+            end
 
-            d.value = dmax - (dmax - dmin) * dist_factor
-        end
+            d.value = b.damage_factor * d.value
+            d.source_id = this.id
+            d.target_id = enemy.id
 
-        d.value = b.damage_factor * d.value
-        d.source_id = this.id
-        d.target_id = enemy.id
+            queue_damage(store, d)
+            log.paranoid("bomb id:%s, radius:%s, enemy id:%s, dist:%s, damage:%s damage_type:%x", this.id, dradius,
+                enemy.id, V.dist(enemy.pos.x, enemy.pos.y, b.to.x, b.to.y), d.value, d.damage_type)
 
-        queue_damage(store, d)
-        log.paranoid("bomb id:%s, radius:%s, enemy id:%s, dist:%s, damage:%s damage_type:%x", this.id, dradius,
-            enemy.id, V.dist(enemy.pos.x, enemy.pos.y, b.to.x, b.to.y), d.value, d.damage_type)
+            if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
+                band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() <
+                this.up_shock_and_awe_chance then
+                local mod = E:create_entity("mod_shock_and_awe")
 
-        if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
-            band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() < this.up_shock_and_awe_chance then
-            local mod = E:create_entity("mod_shock_and_awe")
+                mod.modifier.target_id = enemy.id
 
-            mod.modifier.target_id = enemy.id
-
-            queue_insert(store, mod)
-        end
-
-        if b.mod then
-            local mod = E:create_entity(b.mod)
-
-            mod.modifier.target_id = enemy.id
-            mod.modifier.source_id = this.id
-            if U.flags_pass(enemy.vis, mod.modifier) then
                 queue_insert(store, mod)
+            end
+
+            if b.mod then
+                local mod = E:create_entity(b.mod)
+
+                mod.modifier.target_id = enemy.id
+                mod.modifier.source_id = this.id
+                if U.flags_pass(enemy.vis, mod.modifier) then
+                    queue_insert(store, mod)
+                end
             end
         end
     end
@@ -2733,54 +2732,53 @@ function scripts.missile.update(this, store, script)
     end
 
     if b.damage_radius and b.damage_radius > 0 then
-        local enemies = table.filter(store.enemies, function(k, v)
-            return
-                not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
-                    U.is_inside_ellipse(V.v(v.pos.x + v.unit.hit_offset.x, v.pos.y + v.unit.hit_offset.y), b.to,
-                        b.damage_radius)
-        end)
         -- local alchemical_powder = UP:get_upgrade("engineer_alchemical_powder")
         -- local alchemical_powder_on = alchemical_powder and math.random() < alchemical_powder.chance
         -- local shock_and_awe = UP:get_upgrade("engineer_shock_and_awe")
 
-        for _, enemy in pairs(enemies) do
-            local enemy_pos = V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y)
-            local d = E:create_entity("damage")
+        for _, enemy in pairs(store.enemies) do
+            if enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
+                0 and
+                U.is_inside_ellipse(V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y),
+                    b.to, b.damage_radius) then
+                local enemy_pos = V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y)
+                local d = E:create_entity("damage")
 
-            d.source_id = this.id
-            d.target_id = enemy.id
-            d.damage_type = b.damage_type
-            d.reduce_armor = b.reduce_armor
-            d.reduce_magic_armor = b.reduce_magic_armor
+                d.source_id = this.id
+                d.target_id = enemy.id
+                d.damage_type = b.damage_type
+                d.reduce_armor = b.reduce_armor
+                d.reduce_magic_armor = b.reduce_magic_armor
 
-            if UP:get_upgrade("engineer_efficiency") then
-                d.value = b.damage_max
-            else
-                local dist_factor = U.dist_factor_inside_ellipse(enemy_pos, this.pos, b.damage_radius)
+                if UP:get_upgrade("engineer_efficiency") then
+                    d.value = b.damage_max
+                else
+                    local dist_factor = U.dist_factor_inside_ellipse(enemy_pos, this.pos, b.damage_radius)
 
-                d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
+                    d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
+                end
+
+                d.value = b.damage_factor * d.value
+
+                queue_damage(store, d)
+
+                if b.mod then
+                    local mod = E:create_entity(b.mod)
+
+                    mod.modifier.target_id = enemy.id
+
+                    queue_insert(store, mod)
+                end
+
+                -- if shock_and_awe and band(enemy.vis.bans, F_STUN) == 0 and
+                --     band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() < shock_and_awe.chance then
+                --     local mod = E:create_entity("mod_shock_and_awe")
+
+                --     mod.modifier.target_id = enemy.id
+
+                --     queue_insert(store, mod)
+                -- end
             end
-
-            d.value = b.damage_factor * d.value
-
-            queue_damage(store, d)
-
-            if b.mod then
-                local mod = E:create_entity(b.mod)
-
-                mod.modifier.target_id = enemy.id
-
-                queue_insert(store, mod)
-            end
-
-            -- if shock_and_awe and band(enemy.vis.bans, F_STUN) == 0 and
-            --     band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() < shock_and_awe.chance then
-            --     local mod = E:create_entity("mod_shock_and_awe")
-
-            --     mod.modifier.target_id = enemy.id
-
-            --     queue_insert(store, mod)
-            -- end
         end
     elseif target then
         local d = SU.create_bullet_damage(b, target.id, this.id)
@@ -3303,22 +3301,21 @@ function scripts.bolt_blast.update(this, store, script)
 
     U.animation_start(this, "hit", nil, store.tick_ts, 1)
 
-    local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
-                   U.is_inside_ellipse(v.pos, explode_pos, dradius)
-    end)
     local d_value = U.frandom(dmin, dmax)
 
-    for _, enemy in pairs(enemies) do
-        local d = E:create_entity("damage")
+    for _, v in pairs(store.enemies) do
+        if not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
+            U.is_inside_ellipse(v.pos, explode_pos, dradius) then
+            local d = E:create_entity("damage")
 
-        d.source_id = this.id
-        d.target_id = enemy.id
-        d.value = d_value
-        d.damage_type = b.damage_type
-        d.track_damage = true
+            d.source_id = this.id
+            d.target_id = v.id
+            d.value = d_value
+            d.damage_type = b.damage_type
+            d.track_damage = true
 
-        queue_damage(store, d)
+            queue_damage(store, d)
+        end
     end
 
     while not U.animation_finished(this) do
@@ -4336,42 +4333,40 @@ function scripts.tunnel.update(this, store, script)
     tu.length = length
 
     while true do
-        local enemies = table.filter(store.enemies, function(_, e)
-            return e and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
-                       e.nav_path.pi == tu.pick_pi and e.nav_path.ni >= tu.pick_ni
-        end)
+        for _, e in pairs(store.enemies) do
+            if e and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and e.nav_path.pi ==
+                tu.pick_pi and e.nav_path.ni >= tu.pick_ni then
+                if tu.pick_fx then
+                    local fx = E:create_entity(tu.pick_fx)
 
-        for _, enemy in pairs(enemies) do
-            if tu.pick_fx then
-                local fx = E:create_entity(tu.pick_fx)
+                    fx.pos = V.v(e.pos.x, e.pos.y)
+                    fx.render.sprites[1].ts = store.tick_ts
 
-                fx.pos = V.v(enemy.pos.x, enemy.pos.y)
-                fx.render.sprites[1].ts = store.tick_ts
+                    queue_insert(store, fx)
+                end
 
-                queue_insert(store, fx)
-            end
+                local release_ts = store.tick_ts + length / (tu.speed_factor * e.motion.real_speed)
 
-            local release_ts = store.tick_ts + length / (tu.speed_factor * enemy.motion.real_speed)
+                log.debug("tunnel %s picked %s", this.id, e.id)
+                table.insert(picked_enemies, {
+                    release_ts = release_ts,
+                    entity = e
+                })
+                SU.remove_modifiers(store, e)
+                SU.remove_auras(store, e)
+                queue_remove(store, e)
+                U.unblock_all(store, e)
 
-            log.debug("tunnel %s picked %s", this.id, enemy.id)
-            table.insert(picked_enemies, {
-                release_ts = release_ts,
-                entity = enemy
-            })
-            SU.remove_modifiers(store, enemy)
-            SU.remove_auras(store, enemy)
-            queue_remove(store, enemy)
-            U.unblock_all(store, enemy)
+                if e.ui then
+                    e.ui.can_click = false
+                end
 
-            if enemy.ui then
-                enemy.ui.can_click = false
-            end
+                e.main_script.co = nil
+                e.main_script.runs = 0
 
-            enemy.main_script.co = nil
-            enemy.main_script.runs = 0
-
-            if enemy.count_group then
-                enemy.count_group.in_limbo = true
+                if e.count_group then
+                    e.count_group.in_limbo = true
+                end
             end
         end
 
