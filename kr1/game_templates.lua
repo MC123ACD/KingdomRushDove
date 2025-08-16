@@ -7884,7 +7884,7 @@ tt.tween.props[2].keys = {{0}, {0.3}}
 tt.achievement = "GEORGE_FALL"
 tt = E:register_t("decal_tree_ewok", "decal_scripted")
 
-E:add_comps(tt, "motion", "nav_path", "ranged", "unit", "health")
+E:add_comps(tt, "motion", "nav_path", "ranged", "unit")
 
 tt.main_script.update = scripts.decal_tree_ewok.update
 tt.render.sprites[1].anchor.y = 0.08333333333333333

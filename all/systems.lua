@@ -1176,7 +1176,7 @@ function sys.health:on_update(dt, ts, store)
         end
     end
 
-    for _, e in E:filter_iter(store.entities, "health") do
+    for _, e in pairs(store.enemies) do
         local h = e.health
 
         if h.hp <= 0 and not h.dead and not h.ignore_damage then
@@ -1189,43 +1189,67 @@ function sys.health:on_update(dt, ts, store)
                 e.health_bar.hidden = true
             end
 
-            if e.enemy then
-                store.player_gold = store.player_gold + e.enemy.gold
+            store.player_gold = store.player_gold + e.enemy.gold
 
-                signal.emit("got-enemy-gold", e, e.enemy.gold)
-            end
+            signal.emit("got-enemy-gold", e, e.enemy.gold)
 
-            if e.enemy and e.enemy.gems > 0 then
-                store.gems_collected = store.gems_collected + e.enemy.gems
 
-                signal.emit("show-gems-reward", e, e.enemy.gems)
-            end
+            -- if e.enemy and e.enemy.gems > 0 then
+            --     store.gems_collected = store.gems_collected + e.enemy.gems
 
-            if e.enemy and store.level_mode == GAME_MODE_ENDLESS then
-                local conf = W:get_endless_score_config()
-                local score = (1 + math.max(h.armor, h.magic_armor)) * h.hp_max * conf.scoreEnemyMultiplier
+            --     signal.emit("show-gems-reward", e, e.enemy.gems)
+            -- end
 
-                if e.motion then
-                    score = score * e.motion.real_speed / FPS
-                end
+            -- if e.enemy and store.level_mode == GAME_MODE_ENDLESS then
+            --     local conf = W:get_endless_score_config()
+            --     local score = (1 + math.max(h.armor, h.magic_armor)) * h.hp_max * conf.scoreEnemyMultiplier
 
-                score = km.round(score)
-                store.player_score = store.player_score + score
+            --     if e.motion then
+            --         score = score * e.motion.real_speed / FPS
+            --     end
 
-                log.debug("ENDLESS: kill score %s (%s)%s - armor:%s magic_armor:%s hp_max:%s speed:%s", score, e.id,
-                    e.template_name, h.armor, h.magic_armor, h.hp_max, e.motion and e.motion.real_speed or 0)
-            end
+            --     score = km.round(score)
+            --     store.player_score = store.player_score + score
+
+            --     log.debug("ENDLESS: kill score %s (%s)%s - armor:%s magic_armor:%s hp_max:%s speed:%s", score, e.id,
+            --         e.template_name, h.armor, h.magic_armor, h.hp_max, e.motion and e.motion.real_speed or 0)
+            -- end
         end
 
         if not h.dead then
             h.last_damage_types = 0
         end
 
-        if h.dead and not e.hero and not h.ignore_delete_after and
+        if h.dead and not h.ignore_delete_after and
             (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
     end
+
+    for _, e in pairs(store.soldiers) do
+    local h = e.health
+
+    if h.hp <= 0 and not h.dead and not h.ignore_damage then
+        h.hp = 0
+        h.dead = true
+        h.death_ts = store.tick_ts
+        h.delete_after = store.tick_ts + h.dead_lifetime
+
+        if e.health_bar then
+            e.health_bar.hidden = true
+        end
+    end
+
+    if not h.dead then
+        h.last_damage_types = 0
+    end
+
+    if h.dead and not e.hero and not h.ignore_delete_after and
+        (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+        queue_remove(store, e)
+    end
+end
+
 end
 
 sys.count_groups = {}
@@ -1714,7 +1738,7 @@ function sys.particle_system:on_update(dt, ts, store)
         end
     end
 
-    for _, e in E:filter_iter(store.entities, "particle_system") do
+    for _, e in pairs(store.particle_systems) do
         local s = e.particle_system
         local tl = store.tick_length
         local to_remove = {}

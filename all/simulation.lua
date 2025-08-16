@@ -27,7 +27,7 @@ function simulation:init(store, system_names)
     d.modifiers = {}
     d.towers = {}
     d.auras = {}
-
+    d.particle_systems = {}
 	d.pending_inserts = {}
 	d.pending_removals = {}
 	d.entity_count = 0
@@ -196,6 +196,10 @@ function simulation:insert_entity(e)
     elseif e.aura then
         d.auras[e.id] = e
     end
+    if e.particle_system then
+        d.particle_systems[e.id] = e
+    end
+
     if e.motion and e.motion.max_speed ~= 0 then
         e.motion.real_speed = e.motion.max_speed
     end
@@ -234,7 +238,10 @@ function simulation:remove_entity(e)
     elseif e.aura then
         d.auras[e.id] = nil
     end
-
+    if e.particle_system then
+        d.particle_systems[e.id] = nil
+    end
+    
 	d.entity_count = d.entity_count - 1
 
 	log.debug("entity (%s) %s removed", e.id, e.template_name)

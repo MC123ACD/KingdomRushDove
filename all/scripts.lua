@@ -2737,7 +2737,7 @@ function scripts.missile.update(this, store, script)
         -- local shock_and_awe = UP:get_upgrade("engineer_shock_and_awe")
 
         for _, enemy in pairs(store.enemies) do
-            if enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
+            if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
                 0 and
                 U.is_inside_ellipse(V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y),
                     b.to, b.damage_radius) then
