@@ -5930,7 +5930,7 @@ function scripts.ray_tesla.update(this, store)
                 local bounce_target, bounce_targets = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
 					return (not table.contains(this.seen_targets, v.id)) and (v.enemy or v.template_name == "hero_thor")
 				end)
-                if  bounce_targets then
+                if bounce_targets then
                     if this.bounces + 1 >= this.max_bounces then
                         for _, t in pairs(bounce_targets) do
                             if t.template_name == "hero_thor" then
@@ -6283,7 +6283,7 @@ end
 scripts.aura_slow_bolin = {}
 
 function scripts.aura_slow_bolin.update(this, store)
-	last_hit_ts = store.tick_ts - this.aura.cycle_time
+	local last_hit_ts = store.tick_ts - this.aura.cycle_time
 
 	while true do
 		if this.interrupt then

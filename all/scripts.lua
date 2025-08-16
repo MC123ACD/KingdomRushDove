@@ -4099,7 +4099,17 @@ function scripts.aura_apply_mod.update(this, store, script)
             last_hit_ts = store.tick_ts
             cycles_count = cycles_count + 1
 
-            local targets = table.filter(store.entities, function(k, v)
+            local entities
+
+            if band(this.aura.vis_bans, F_ENEMY) ~= 0 then
+                entities = store.soldiers
+            elseif band(this.aura.vis_bans, F_FRIEND) ~= 0 then
+                entities = store.enemies
+            else
+                entities = store.entities
+            end
+
+            local targets = table.filter(entities, function(k, v)
                 return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
@@ -4182,6 +4192,15 @@ function scripts.aura_apply_damage.update(this, store, script)
         if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
             cycles_count = cycles_count + 1
             last_hit_ts = store.tick_ts
+
+            local entities
+            if band(this.aura.vis_bans, F_ENEMY) ~= 0 then
+                entities = store.soldiers
+            elseif band(this.aura.vis_bans, F_FRIEND) ~= 0 then
+                entities = store.enemies
+            else
+                entities = store.entities
+            end
 
             local targets = table.filter(store.entities, function(k, v)
                 return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
