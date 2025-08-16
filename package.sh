@@ -50,6 +50,7 @@ zip "$OUTPUT_ZIP" "./patches/criket_template.lua"
 
 # tmp usage
 zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/images/fullhd/go_stage71_bg-1.png"
+zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/images/fullhd/go_stage1000_bg-1.png"
 
 # 记录 commit hash 文件
 COMMIT_FILE="last_build_commit.txt"

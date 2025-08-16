@@ -1283,7 +1283,9 @@ return {
         [163] = {},
         [165] = {}
     },
-    required_sounds = {},
+    required_sounds = {
+        "music_stage1000"
+    },
     required_textures = {
         "go_stage1000_bg",
 		"go_enemies_grass"
