@@ -2739,8 +2739,8 @@ function scripts.missile.update(this, store, script)
                     U.is_inside_ellipse(V.v(v.pos.x + v.unit.hit_offset.x, v.pos.y + v.unit.hit_offset.y), b.to,
                         b.damage_radius)
         end)
-        local alchemical_powder = UP:get_upgrade("engineer_alchemical_powder")
-        local alchemical_powder_on = alchemical_powder and math.random() < alchemical_powder.chance
+        -- local alchemical_powder = UP:get_upgrade("engineer_alchemical_powder")
+        -- local alchemical_powder_on = alchemical_powder and math.random() < alchemical_powder.chance
         -- local shock_and_awe = UP:get_upgrade("engineer_shock_and_awe")
 
         for _, enemy in pairs(enemies) do
@@ -2753,7 +2753,7 @@ function scripts.missile.update(this, store, script)
             d.reduce_armor = b.reduce_armor
             d.reduce_magic_armor = b.reduce_magic_armor
 
-            if alchemical_powder_on then
+            if UP:get_upgrade("engineer_efficiency") then
                 d.value = b.damage_max
             else
                 local dist_factor = U.dist_factor_inside_ellipse(enemy_pos, this.pos, b.damage_radius)
