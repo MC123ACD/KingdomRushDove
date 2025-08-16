@@ -2560,7 +2560,6 @@ return {
             tt_desc = _("ELVES_TOWER_PIXIE_UPGRADE1_DESCRIPTION_2")
         }},
         is_kr3 = true
-
     }, {
         check = "special_icons_0020",
         action_arg = "total",
@@ -2581,7 +2580,12 @@ return {
             tt_desc = _("ELVES_TOWER_PIXIE_UPGRADE2_DESCRIPTION_3")
         }},
         is_kr3 = true
-
+    },{
+        check = "ico_sell_0002",
+        action = "tw_sell",
+        halo = "glow_ico_sell",
+        image = "ico_sell_0001",
+        place = 9
     }}},
     baby_black_dragon = {{{
         check = "main_icons_0019",
