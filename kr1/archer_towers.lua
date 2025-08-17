@@ -149,7 +149,7 @@ local function archer_towers()
     tower_crossbow.attacks.list[2].bullet_start_offset = {vec_2(-11, 60), vec_2(11, 60)}
     tower_crossbow.attacks.list[3] = E:clone_c("mod_attack")
     tower_crossbow.attacks.list[3].mod = "mod_crossbow_eagle"
-    tower_crossbow.attacks.list[3].cooldown = 0.5
+    tower_crossbow.attacks.list[3].cooldown = 1
     tower_crossbow.attacks.list[3].fly_cooldown = 10
     tower_crossbow.attacks.list[3].range = 128
     tower_crossbow.attacks.list[3].range_inc = 32

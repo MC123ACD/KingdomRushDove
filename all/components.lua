@@ -525,6 +525,7 @@ soldier.target_id = nil
 -- soldier.max_targets = nil
 -- soldier.target_ids = nil
 soldier.courage_ts = 0
+soldier.guard_time = fts(1)
 
 local reinforcement = E:register_c("reinforcement")
 

@@ -825,7 +825,6 @@ local function mage_towers()
     tt.attacks.list[2].vis_flags = bor(F_RANGED)
     tt.attacks.list[2].vis_bans = bor(F_BOSS)
     tt.attacks.list[2].sound = "TowerHighMageTimecast"
-    tt.attacks.list[3] = E:clone_c("custom_attack")
     tt.powers.timelapse = E:clone_c("power")
     tt.powers.timelapse.attack_idx = 2
     tt.powers.timelapse.price_base = 225
@@ -842,7 +841,7 @@ local function mage_towers()
     tt.powers.sentinel.max_range = 240
     tt.powers.sentinel.enc_icon = 19
     tt.powers.sentinel.ts = 0
-    tt.powers.sentinel.cooldown = 0.5
+    tt.powers.sentinel.cooldown = 1
     tt.render.sprites[1].animated = false
     -- tt.render.sprites[1].name = "terrains_%04i"
     tt.render.sprites[1].name = "terrain_mage_%04i"

@@ -1459,6 +1459,7 @@ local function y_soldier_ranged_attacks(store, this)
     local target, attack, pred_pos = soldier_pick_ranged_target_and_attack(store, this)
 
     if not target then
+        U.y_wait(store, this.soldier.guard_time)
         return false, A_NO_TARGET
     end
 
@@ -2362,6 +2363,7 @@ local function y_soldier_melee_block_and_attacks(store, this)
     local target = soldier_pick_melee_target(store, this)
 
     if not target then
+        U.y_wait(store, this.soldier.guard_time)
         return false, A_NO_TARGET
     end
 

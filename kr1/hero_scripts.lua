@@ -2598,7 +2598,6 @@ return function(scripts)
                 if this.unit.is_stunned then
                     SU.soldier_idle(store, this)
                 else
-                    SU.soldier_courage_upgrade(store, this)
 
                     while this.nav_rally.new do
                         this.nav_grid.waypoints = GR:find_waypoints(this.pos, nil, this.nav_rally.pos,
@@ -4093,7 +4092,6 @@ return function(scripts)
                 if this.unit.is_stunned then
                     SU.soldier_idle(store, this)
                 else
-                    SU.soldier_courage_upgrade(store, this)
                     -- enable arcane rain attack
                     if ready_to_use_skill(arcane_rain, store) then
                         local target = U.find_random_enemy(store.enemies, this.pos, arcane_rain.min_range,
@@ -17220,7 +17218,6 @@ return function(scripts)
             if this.unit.is_stunned then
                 SU.soldier_idle(store, this)
             else
-                SU.soldier_courage_upgrade(store, this)
 
                 if this.melee then
                     brk, stam = SU.y_soldier_melee_block_and_attacks(store, this)

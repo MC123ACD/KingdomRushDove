@@ -43,7 +43,7 @@ function simulation:init(store, system_names)
 
 	for _, name in pairs(system_names) do
 		if not S[name] then
-			log.error("System named %s not found", name)
+			-- log.error("System named %s not found", name)
 		else
 			table.insert(systems_order, S[name])
 		end
