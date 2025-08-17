@@ -861,37 +861,6 @@ function game:draw_game()
         self.path_canvas = nil
     end
 
-    -- if self.shown_path then
-    --     local node_size = 4
-    --     local point_size = 3
-
-    --     G.push()
-    --     G.translate(rox, roy)
-    --     G.scale(gs, gs)
-
-    --     self.path_canvas = G.newCanvas()
-
-    --     G.setCanvas(self.path_canvas)
-    --     for pi, p in ipairs(P.paths) do
-    --         if pi == self.shown_path then
-    --             for _, sp in pairs(p) do
-    --                 for ni, o in ipairs(sp) do
-    --                     if ni % 3 == 0 then
-    --                         G.setColor(255, 0, 0, 200)
-    --                         G.circle("fill", o.x, REF_H - o.y, node_size, 6)
-    --                     end
-    --                 end
-    --             end
-    --         end
-    --     end
-    --     G.setLineWidth(1)
-    --     G.setColor(255, 255, 255, 255)
-    --     G.setCanvas()
-    --     G.pop()
-    -- elseif not self.shown_path then
-    --     self.path_canvas = nil
-    -- end
-
     if self.DBG_DRAW_PATHS and not self.path_canvas then
         local node_size = 2
         local point_size = 3

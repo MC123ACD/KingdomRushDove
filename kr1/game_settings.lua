@@ -4,7 +4,7 @@ local GS = {}
 GS.soldier_regen_factor = 0.2
 GS.gameplay_tips_count = 21
 GS.early_wave_reward_per_second = 1
-GS.max_stars = 350
+GS.max_stars = 353
 GS.max_difficulty = DIFFICULTY_IMPOSSIBLE
 GS.difficulty_soldier_hp_max_factor = {
 	1,

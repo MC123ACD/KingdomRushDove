@@ -241,7 +241,7 @@ function simulation:remove_entity(e)
     if e.particle_system then
         d.particle_systems[e.id] = nil
     end
-    
+
 	d.entity_count = d.entity_count - 1
 
 	log.debug("entity (%s) %s removed", e.id, e.template_name)

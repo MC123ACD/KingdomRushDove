@@ -45,6 +45,10 @@ local function fts(v)
     return v / FPS
 end
 
+local function mark_remove_for_frame(f)
+    f.marked_to_remove = true
+end
+
 local sys = {}
 
 sys.level = {}
@@ -908,50 +912,36 @@ function sys.game_upgrades:on_insert(entity, store)
         local dps = E:get_template("mod_ray_arcane").dps
         local bullet_ray_high_elven = E:get_template("ray_high_elven_sentinel").bullet
         local modifier_pixie = E:get_template("mod_pixie_pickpocket").modifier
-        -- if #existing_towers == 0 then
-            -- for _, bn in pairs(mage_bullet_names) do
-            --     local b = E:get_template(bn).bullet
+        local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
 
-            --     b._orig_damage_min = b.damage_min
-            --     b._orig_damage_max = b.damage_max
-            -- end
-            -- dps._orig_damage_min = dps.damage_min
-            -- dps._orig_damage_max = dps.damage_max
-            -- bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
-            -- bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
-            -- modifier_pixie._orig_damage_max = modifier_pixie.damage_max
-            -- modifier_pixie._orig_damage_min = modifier_pixie.damage_min
-        -- else
-            local f = u.damage_factors[km.clamp(1, #u.damage_factors, #existing_towers + 1)]
+        for _, bn in pairs(mage_bullet_names) do
+            local b = E:get_template(bn).bullet
+            if not b._orig_damage_min then
+                b._orig_damage_min = b.damage_min
+                b._orig_damage_max = b.damage_max
+            end
+            b.damage_min = math.ceil(b._orig_damage_min * f)
+            b.damage_max = math.ceil(b._orig_damage_max * f)
+        end
+        if not dps._orig_damage_min then
+            dps._orig_damage_min = dps.damage_min
+            dps._orig_damage_max = dps.damage_max
+        end
+        dps.damage_min = math.ceil(dps._orig_damage_min * f)
+        dps.damage_max = math.ceil(dps._orig_damage_max * f)
+        if not bullet_ray_high_elven._orig_damage_min then
+            bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
+            bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
+        end
+        bullet_ray_high_elven.damage_min = math.ceil(bullet_ray_high_elven._orig_damage_min * f)
+        bullet_ray_high_elven.damage_max = math.ceil(bullet_ray_high_elven._orig_damage_max * f)
+        if not modifier_pixie._orig_damage_min then
+            modifier_pixie._orig_damage_min = modifier_pixie.damage_min
+            modifier_pixie._orig_damage_max = modifier_pixie.damage_max
+        end
+        modifier_pixie.damage_min = math.ceil(modifier_pixie._orig_damage_min * f)
+        modifier_pixie.damage_max = math.ceil(modifier_pixie._orig_damage_max * f)
 
-            for _, bn in pairs(mage_bullet_names) do
-                local b = E:get_template(bn).bullet
-                if not b._orig_damage_min then
-                    b._orig_damage_min = b.damage_min
-                    b._orig_damage_max = b.damage_max
-                end
-                b.damage_min = math.ceil(b._orig_damage_min * f)
-                b.damage_max = math.ceil(b._orig_damage_max * f)
-            end
-            if not dps._orig_damage_min then
-                dps._orig_damage_min = dps.damage_min
-                dps._orig_damage_max = dps.damage_max
-            end
-            dps.damage_min = math.ceil(dps._orig_damage_min * f)
-            dps.damage_max = math.ceil(dps._orig_damage_max * f)
-            if not bullet_ray_high_elven._orig_damage_min then
-                bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
-                bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
-            end
-            bullet_ray_high_elven.damage_min = math.ceil(bullet_ray_high_elven._orig_damage_min * f)
-            bullet_ray_high_elven.damage_max = math.ceil(bullet_ray_high_elven._orig_damage_max * f)
-            if not modifier_pixie._orig_damage_min then
-                modifier_pixie._orig_damage_min = modifier_pixie.damage_min
-                modifier_pixie._orig_damage_max = modifier_pixie.damage_max
-            end
-            modifier_pixie.damage_min = math.ceil(modifier_pixie._orig_damage_min * f)
-            modifier_pixie.damage_max = math.ceil(modifier_pixie._orig_damage_max * f)
-        -- end
     end
 
     return true
@@ -1644,7 +1634,8 @@ function sys.particle_system:on_remove(entity, store)
             local p = entity.particle_system.particles[i]
 
             table.removeobject(s.particles, p)
-            table.removeobject(store.render_frames, p.f)
+            -- table.removeobject(store.render_frames, p.f)
+            mark_remove_for_frame(p.f)
         end
     end
 
@@ -1927,7 +1918,8 @@ function sys.particle_system:on_update(dt, ts, store)
 
         for _, p in pairs(to_remove) do
             table.removeobject(s.particles, p)
-            table.removeobject(store.render_frames, p.f)
+            -- table.removeobject(store.render_frames, p.f)
+            mark_remove_for_frame(p.f)
         end
 
         if s.source_lifetime and ts - s.ts > s.source_lifetime then
@@ -1939,192 +1931,6 @@ function sys.particle_system:on_update(dt, ts, store)
         end
     end
 end
-
--- -- 优化后的 particle system
--- function sys.particle_system:on_update(dt, ts, store)
---     -- 缓存常用函数和值
---     local math_floor = math.floor
---     local math_random = math.random
---     local table_insert = table.insert
---     local U_frandom = U.frandom
-
---     -- 重用对象池
---     local function get_pooled_particle()
---         if self.particle_pool and #self.particle_pool > 0 then
---             return table.remove(self.particle_pool)
---         else
---             return new_particle(0)
---         end
---     end
-
---     local function get_pooled_frame()
---         if self.frame_pool and #self.frame_pool > 0 then
---             return table.remove(self.frame_pool)
---         else
---             return new_frame(0, 0, 0, false)
---         end
---     end
-
---     local function return_to_pool(particle, frame)
---         -- 重置对象而不是创建新的
---         self.particle_pool = self.particle_pool or {}
---         self.frame_pool = self.frame_pool or {}
-
---         table_insert(self.particle_pool, particle)
---         table_insert(self.frame_pool, frame)
---     end
-
---     -- 批量处理粒子系统
---     for _, e in pairs(store.particle_systems) do
---         local s = e.particle_system
---         local particles = s.particles
---         local particle_count = #particles
-
---         if particle_count == 0 and not s.emit then
---             goto next_system
---         end
-
---         -- 预分配移除列表
---         local remove_indices = {}
---         local remove_count = 0
-
---         -- 单次遍历处理所有粒子
---         for i = 1, particle_count do
---             local p = particles[i]
---             local tp = ts - p.last_ts
---             local phase = (ts - p.ts) / p.lifetime
-
---             if phase >= 1 then
---                 remove_count = remove_count + 1
---                 remove_indices[remove_count] = i
---             else
---                 if phase < 0 then
---                     phase = 0
---                 end
-
---                 local f = p.f
---                 p.last_ts = ts
-
---                 -- 批量更新位置
---                 p.pos.x = p.pos.x + p.speed.x * tp
---                 p.pos.y = p.pos.y + p.speed.y * tp
---                 f.pos.x, f.pos.y = p.pos.x, p.pos.y
-
---                 -- 批量更新旋转
---                 p.r = p.r + p.spin * tp
---                 f.r = p.r
-
---                 -- 优化插值计算 - 预计算或缓存
---                 if s._cached_scales_x and s._last_phase == phase then
---                     f.scale.x = s._cached_scale_x * p.scale_factor.x
---                     f.scale.y = s._cached_scale_y * p.scale_factor.y
---                     f.alpha = s._cached_alpha
---                 else
---                     local scale_x = phase_interp(s.scales_x, phase, 1)
---                     local scale_y = phase_interp(s.scales_y, phase, 1)
---                     local alpha = phase_interp(s.alphas, phase, 255)
-
---                     f.scale.x = scale_x * p.scale_factor.x
---                     f.scale.y = scale_y * p.scale_factor.y
---                     f.alpha = alpha
-
---                     -- 缓存结果
---                     s._cached_scale_x = scale_x
---                     s._cached_scale_y = scale_y
---                     s._cached_alpha = alpha
---                     s._last_phase = phase
---                 end
-
---                 -- 优化sprite/纹理选择
---                 if not p._cached_fn then
---                     if s.animated then
---                         local to = ts - p.ts
---                         if s.animation_fps then
---                             to = to * s.animation_fps / FPS
---                         end
-
---                         if p.name_idx then
---                             p._cached_fn = A:fn(s.names[p.name_idx], to, s.loop)
---                         else
---                             p._cached_fn = A:fn(s.name, to, s.loop)
---                         end
---                     else
---                         p._cached_fn = p.name_idx and s.names[p.name_idx] or s.name
---                     end
---                 end
-
---                 f.ss = I:s(p._cached_fn)
---             end
---         end
-
---         -- 批量删除过期粒子（从后往前删除）
---         for i = remove_count, 1, -1 do
---             local idx = remove_indices[i]
---             local p = particles[idx]
-
---             -- 从 render_frames 中移除
---             for j = #store.render_frames, 1, -1 do
---                 if store.render_frames[j] == p.f then
---                     table.remove(store.render_frames, j)
---                     break
---                 end
---             end
-
---             -- 返回对象池
---             return_to_pool(p, p.f)
-
---             -- 从粒子数组中移除
---             table.remove(particles, idx)
---         end
-
---         -- 发射新粒子的逻辑...（类似优化）
-
---         ::next_system::
---     end
--- end
-
--- -- 优化插值函数
--- local function phase_interp_optimized(values, phase, default)
---     if not values or #values == 0 then
---         return default
---     end
-
---     if #values == 1 then
---         return values[1]
---     end
-
---     -- 预计算插值参数
---     local intervals = #values - 1
---     local scaled_phase = phase * intervals
---     local interval = math.floor(scaled_phase)
---     local interval_phase = scaled_phase - interval
-
---     -- 边界检查
---     if interval >= intervals then
---         return values[#values]
---     end
---     if interval < 0 then
---         return values[1]
---     end
-
---     local a = values[interval + 1]
---     local b = values[interval + 2]
-
---     if type(a) == "table" then
---         -- 重用结果表
---         local out = self._interp_result_cache or {}
---         for i = 1, #a do
---             out[i] = a[i] + (b[i] - a[i]) * interval_phase
---         end
---         self._interp_result_cache = out
---         return out
---     elseif type(a) == "boolean" then
---         return a
---     else
---         return a + (b - a) * interval_phase
---     end
--- end
-
 
 sys.render = {}
 sys.render.name = "render"
@@ -2183,7 +1989,8 @@ function sys.render:on_insert(entity, store)
             end
 
             if entity.render.frames[i] then
-                table.removeobject(store.render_frames, entity.render.frames[i])
+                -- table.removeobject(store.render_frames, entity.render.frames[i])
+                mark_remove_for_frame(entity.render.frames[i])
             end
 
             entity.render.frames[i] = f
@@ -2275,7 +2082,8 @@ function sys.render:on_insert(entity, store)
         ff.offset.x = ff.offset.x - hbsize.x * ff.ss.ref_scale / 2
 
         for i = #hb.frames, 1, -1 do
-            table.removeobject(store.render_frames, hb.frames[i])
+            -- table.removeobject(store.render_frames, hb.frames[i])
+            mark_remove_for_frame(hb.frames[i])
         end
 
         hb.frames[1] = fb
@@ -2299,7 +2107,8 @@ function sys.render:on_remove(entity, store)
         for i = #entity.render.frames, 1, -1 do
             local f = entity.render.frames[i]
 
-            table.removeobject(store.render_frames, f)
+            -- table.removeobject(store.render_frames, f)
+            mark_remove_for_frame(f)
 
             entity.render.frames[i] = nil
         end
@@ -2309,8 +2118,8 @@ function sys.render:on_remove(entity, store)
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
 
-            table.removeobject(store.render_frames, f)
-
+            -- table.removeobject(store.render_frames, f)
+            mark_remove_for_frame(f)
             entity.health_bar.frames[i] = nil
         end
     end
@@ -2439,53 +2248,13 @@ function sys.render:on_update(dt, ts, store)
         end
     end
 
-    -- local function insertsort(a)
-    --     local len = #a
-
-    --     for i = 2, len do
-    --         local f1_lte_f2
-    --         local f1 = a[i]
-    --         local y1 = f1.sort_y or (f1.sort_y_offset and f1.sort_y_offset or 0) + f1.pos.y
-
-    --         for j = i - 1, 0, -1 do
-    --             if j == 0 then
-    --                 a[j + 1] = f1
-
-    --                 break
-    --             end
-
-    --             local f2 = a[j]
-    --             local y2 = f2.sort_y or (f2.sort_y_offset and f2.sort_y_offset or 0) + f2.pos.y
-
-    --             if f1.z == f2.z then
-    --                 if y1 == y2 then
-    --                     if f1.draw_order == f2.draw_order then
-    --                         f1_lte_f2 = f1.pos.x < f2.pos.x
-    --                     else
-    --                         f1_lte_f2 = f1.draw_order < f2.draw_order
-    --                     end
-    --                 else
-    --                     f1_lte_f2 = y2 < y1
-    --                 end
-    --             else
-    --                 f1_lte_f2 = f1.z < f2.z
-    --             end
-
-    --             if f1_lte_f2 then
-    --                 a[j + 1] = a[j]
-    --             else
-    --                 a[j + 1] = f1
-
-    --                 break
-    --             end
-    --         end
-    --     end
-    -- end
-
-    -- insertsort(store.render_frames)
-
     local function sort_frames_optimized(frames)
         table.sort(frames, function(f1, f2)
+            if f1.marked_to_remove and not f2.marked_to_remove then
+                return false
+            elseif not f1.marked_to_remove and f2.marked_to_remove then
+                return true
+            end
             if f1.z ~= f2.z then
                 return f1.z < f2.z
             end
@@ -2506,6 +2275,16 @@ function sys.render:on_update(dt, ts, store)
 
     -- 替换最后一行
     sort_frames_optimized(store.render_frames)
+
+    for i = #store.render_frames, 1, -1 do
+        local f = store.render_frames[i]
+
+        if f.marked_to_remove then
+            table.remove(store.render_frames, i)
+        else
+            break
+        end
+    end
 end
 
 sys.sound_events = {}
@@ -2712,7 +2491,7 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
-local performance_monitor_enabled = true
+local performance_monitor_enabled = false
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}

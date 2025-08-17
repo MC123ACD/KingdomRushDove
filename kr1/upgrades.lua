@@ -154,7 +154,7 @@ upgrades.list = {
         icon = 33,
         price = 4,
         level = 6,
-        damage_factors = {1.1, 1.12, 1.14, 1.16, 1.18, 1.2, 1.22, 1.24, 1.26, 1.28, 1.29, 1.30, 1.31, 1.32}
+        damage_factors = {1.1, 1.12, 1.14, 1.16, 1.18, 1.2, 1.22, 1.24, 1.26, 1.28, 1.29, 1.30, 1.31, 1.32, 1.33, 1.34, 1.35}
     },
     engineer_concentrated_fire = {
         damage_factor = 1.25,
