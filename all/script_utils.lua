@@ -2455,7 +2455,7 @@ local function soldier_regen(store, this)
         this.regen.health = math.ceil(this.health.hp_max * GS.soldier_regen_factor)
     end
     if store.tick_ts - this.regen.last_hit_ts > this.regen.last_hit_standoff_time then
-        this.regen.ts_counter = this.regen.ts_counter + store.tick_length
+        this.regen.ts_counter = this.regen.ts_counter + store.tick_length + this.soldier.guard_time
 
         if this.regen.ts_counter > this.regen.cooldown then
             if this.health.hp < this.health.hp_max then
