@@ -8521,7 +8521,7 @@ local function heroes()
     tt.bullet.hit_fx = "fx_knife_catha_hit"
     tt.bullet.miss_decal = nil
     tt.bullet.mod = nil
-    tt.bullet.xp_gain_factor = 3.9
+    tt.bullet.xp_gain_factor = 4
 
     tt = RT("hero_lilith", "hero")
     E:add_comps(tt, "melee", "ranged", "timed_attacks", "revive")
