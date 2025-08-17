@@ -32,7 +32,8 @@ game.required_sounds = {"common", "ElvesTowerTaunts", "ElvesCommonSounds"}
 
 game.simulation_systems = {"level", "wave_spawn", "mod_lifecycle", "main_script", "timed", "tween", "health",
                            "count_groups", "hero_xp_tracking", "pops", "goal_line", "tower_upgrade", "game_upgrades",
-                           "texts", "particle_system", "render", "sound_events", "seen_tracker"}
+                           "texts", "particle_system", "render", "sound_events", "seen_tracker","performance_monitor"}
+
 -- performance_monitor
 function game:init(screen_w, screen_h, done_callback)
     self.dash_start_offset = 0
@@ -761,7 +762,7 @@ function game:draw_game()
         local path_data = {}
         local total_length = 0
         self.dash_start_offset = self.dash_start_offset or 0
-        self.dash_start_offset = (self.dash_start_offset + 0.4) % (dash_length + gap_length)
+        self.dash_start_offset = (self.dash_start_offset + 0.4 * 120 / DRAW_FPS) % (dash_length + gap_length)
         -- self.path_lines[self.shown_path] 记录了这个路径上各个子路径展平成直线后各个顶点在直线上的坐标。
         if not self.path_lines[self.shown_path] then
             self.path_lines[self.shown_path] = {}

@@ -1613,6 +1613,8 @@ function scripts.tower_archer.update(this, store, script)
                 an, af = U.animation_name_facing_point(this, "idle", last_target_pos, shooter_sid, start_offset)
 
                 U.animation_start(this, an, af, store.tick_ts, -1, shooter_sid)
+            else
+                -- U.y_wait(store, this.tower.guard_time)
             end
 
             if store.tick_ts - a.ts > this.tower.long_idle_cooldown then
@@ -1724,6 +1726,8 @@ function scripts.tower_mage.update(this, store, script)
                     aa.bullet_start_offset[1])
 
                 U.animation_start(this, an, nil, store.tick_ts, -1, shooter_sid)
+            else
+                -- U.y_wait(store, this.tower.guard_time)
             end
 
             if store.tick_ts - aa.ts > this.tower.long_idle_cooldown then
@@ -1787,6 +1791,8 @@ function scripts.tower_engineer.update(this, store, script)
                 while not U.animation_finished(this, 2) do
                     coroutine.yield()
                 end
+            else
+                -- U.y_wait(store, this.tower.guard_time)
             end
 
             for i = 2, 8 do

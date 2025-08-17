@@ -16,11 +16,11 @@ require("constants")
 local U = {}
 
 local function wait_when_not_found()
-    local wait_frames = WAIT_FRAMES
-    while wait_frames > 0 do
-        wait_frames = wait_frames - 1
-        coroutine.yield()
-    end
+    -- local wait_frames = WAIT_FRAMES
+    -- while wait_frames > 0 do
+    --     wait_frames = wait_frames - 1
+    --     coroutine.yield()
+    -- end
 end
 
 -- 返回从 from 到 to 的随机数
