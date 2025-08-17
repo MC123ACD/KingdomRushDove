@@ -8445,14 +8445,14 @@ local function heroes()
     tt.ranged.attacks[1] = CC("bullet_attack")
     tt.ranged.attacks[1].max_range = 175
     tt.ranged.attacks[1].min_range = 20
-    tt.ranged.attacks[1].cooldown = 1
+    tt.ranged.attacks[1].cooldown = 0.95
     tt.ranged.attacks[1].bullet = "knife_catha"
     tt.ranged.attacks[1].bullet_start_offset = {vec_2(9, 27)}
     tt.ranged.attacks[1].shoot_time = fts(7)
     tt.timed_attacks.list[1] = CC("bullet_attack")
     tt.timed_attacks.list[1].animation = "explode"
     tt.timed_attacks.list[1].bullet = "catha_fury"
-    tt.timed_attacks.list[1].cooldown = 10
+    tt.timed_attacks.list[1].cooldown = 9.5
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].max_range = 150
     tt.timed_attacks.list[1].min_range = 40
@@ -8463,7 +8463,7 @@ local function heroes()
     tt.timed_attacks.list[2] = CC("mod_attack")
     tt.timed_attacks.list[2].animation = "cloudSpell"
     tt.timed_attacks.list[2].mod = "mod_catha_soul"
-    tt.timed_attacks.list[2].cooldown = 12
+    tt.timed_attacks.list[2].cooldown = 11.4
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].max_range = 100
     tt.timed_attacks.list[2].max_count = 3
@@ -8475,7 +8475,7 @@ local function heroes()
     tt.timed_attacks.list[2].max_hp_factor = 0.7
     tt.timed_attacks.list[3] = CC("spawn_attack")
     tt.timed_attacks.list[3].animation = "cloneSpell"
-    tt.timed_attacks.list[3].cooldown = 16
+    tt.timed_attacks.list[3].cooldown = 15.2
     tt.timed_attacks.list[3].disabled = true
     tt.timed_attacks.list[3].entity = "soldier_catha"
     tt.timed_attacks.list[3].entity_offsets = {vec_2(30, 30), vec_2(-30, -30), vec_2(30, -30), vec_2(-30, 30)}
