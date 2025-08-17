@@ -1264,7 +1264,7 @@ local function heroes()
     tt.timed_attacks.list[1].animation = "iceStorm"
     tt.timed_attacks.list[1].bullet = "elora_ice_spike"
     tt.timed_attacks.list[1].cast_time = fts(24)
-    tt.timed_attacks.list[1].cooldown = 10 + fts(39)
+    tt.timed_attacks.list[1].cooldown = 10 + fts(30)
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].max_range = nil
     tt.timed_attacks.list[1].min_range = 38.4
@@ -1277,7 +1277,7 @@ local function heroes()
     tt.timed_attacks.list[2].animation = "chill"
     tt.timed_attacks.list[2].bullet = "aura_chill_elora"
     tt.timed_attacks.list[2].cast_time = fts(18)
-    tt.timed_attacks.list[2].cooldown = 8 + fts(28)
+    tt.timed_attacks.list[2].cooldown = 8 + fts(20)
     tt.timed_attacks.list[2].disabled = true
     tt.timed_attacks.list[2].max_range = nil
     tt.timed_attacks.list[2].min_range = 19.2
@@ -1725,7 +1725,7 @@ local function heroes()
     tt.melee.attacks[3].xp_from_skill = "buffed"
     tt.timed_attacks.list[1] = CC("custom_attack")
     tt.timed_attacks.list[1].animations = {"power_rain_start", "power_rain_loop", "power_rain_end"}
-    tt.timed_attacks.list[1].cooldown = 25
+    tt.timed_attacks.list[1].cooldown = 23
     tt.timed_attacks.list[1].entity = "aura_10yr_fireball"
     tt.timed_attacks.list[1].disabled = true
     tt.timed_attacks.list[1].sound_start = "TenShiRainOfFireStart"
