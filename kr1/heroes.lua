@@ -8356,7 +8356,7 @@ local function heroes()
     tt.hero.level_stats.ranged_damage_min = {4, 5, 6, 6, 7, 8, 8, 9, 10, 11}
     tt.hero.level_stats.ranged_damage_max = {8, 9, 10, 12, 13, 14, 16, 17, 18, 20}
     tt.hero.skills.soul = E:clone_c("hero_skill")
-    tt.hero.skills.soul.xp_gain_factor = 70
+    tt.hero.skills.soul.xp_gain_factor = 75
     tt.hero.skills.soul.heal_hp = {50, 100, 150}
     tt.hero.skills.soul.xp_level_steps = {
         [1] = 1,
@@ -8366,7 +8366,7 @@ local function heroes()
     tt.hero.skills.tale = E:clone_c("hero_skill")
     tt.hero.skills.tale.max_count = {2, 3, 4}
     tt.hero.skills.tale.hp_max = {30, 40, 50}
-    tt.hero.skills.tale.xp_gain_factor = 70
+    tt.hero.skills.tale.xp_gain_factor = 75
     tt.hero.skills.tale.xp_gain_factor = 0
     tt.hero.skills.tale.xp_level_steps = {
         [2] = 1,
@@ -8377,7 +8377,7 @@ local function heroes()
     tt.hero.skills.fury.count = {2, 3, 4}
     tt.hero.skills.fury.damage_min = {10, 12, 18}
     tt.hero.skills.fury.damage_max = {30, 40, 50}
-    tt.hero.skills.fury.xp_gain_factor = 30
+    tt.hero.skills.fury.xp_gain_factor = 32
     tt.hero.skills.fury.xp_level_steps = {
         [3] = 1,
         [6] = 2,
@@ -8404,7 +8404,7 @@ local function heroes()
         [7] = 3,
         [10] = 4
     }
-    tt.hero.skills.ultimate.xp_gain_factor = 20
+    tt.hero.skills.ultimate.xp_gain_factor = 25
     tt.health.dead_lifetime = 15
     tt.health_bar.offset = vec_2(0, 45)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
