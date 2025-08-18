@@ -507,8 +507,7 @@ function director:queue_load_item_named(name, force_reload)
                     end
                 end
             end
-            self:load_texture_groups(replace_locale(game.store.patches.criket.required_textures), self.params.texture_size,
-    game.ref_res, true, "game")
+            self:load_texture_groups(replace_locale(game.store.patches.criket.required_textures), self.params.texture_size, game.ref_res, true, "game")
         end
 		self:load_texture_groups(replace_locale(game.required_textures), self.params.texture_size, game.ref_res, true, "game")
 		self:load_texture_groups(replace_locale(game.store.level.required_textures), self.params.texture_size, game.ref_res, true, "game")

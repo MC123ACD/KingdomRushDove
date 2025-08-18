@@ -1334,7 +1334,7 @@ function scripts.soldier_barrack.update(this, store, script)
             end
         end
 
-        if this.cloak then
+        if this.cloak and this.soldier.target_id then
             this.vis.flags = band(this.vis.flags, bnot(this.cloak.flags))
             this.vis.bans = band(this.vis.bans, bnot(this.cloak.bans))
             this.render.sprites[1].alpha = 255

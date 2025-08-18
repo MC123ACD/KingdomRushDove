@@ -5181,17 +5181,18 @@ return function(scripts)
                         skill = this.hero.skills.surge_of_flame
 
                         if sta ~= A_NO_TARGET and not a.disabled and store.tick_ts - a.ts >= a.cooldown then
-                            local target = U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
-                                a.vis_bans, function(e)
+                            local function find_surge_target()
+                                return U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans, function(e)
                                     if not e.nav_path or not e.nav_path.pi then
                                         return false
                                     end
 
                                     local ps, pe = P:get_visible_start_node(e.nav_path.pi), P:get_visible_end_node(e.nav_path.pi)
 
-                                    return (#e.enemy.blockers or 0) == 0 and e.nav_path.ni > ps + a.nodes_margin and e.nav_path.ni <
-                                            pe - a.nodes_margin
+                                    return (#e.enemy.blockers or 0) == 0 and e.nav_path.ni > ps + a.nodes_margin and e.nav_path.ni < pe - a.nodes_margin
                                 end)
+                            end
+                            local target = find_surge_target()
 
                             if not target then
                                 -- block empty
@@ -5221,7 +5222,11 @@ return function(scripts)
                                         U.walk(this, store.tick_length, nil, true)
                                         coroutine.yield()
                                     end
-
+                                    local m = E:create_entity(this.melee.attacks[2].mod)
+                                    m.modifier.source_id = this.id
+                                    m.modifier.target_id = target.id
+                                    m.modifier.damage_factor = this.unit.damage_factor
+                                    queue_insert(store, m)
                                     this.nav_rally.center = V.vclone(this.pos)
                                     this.nav_rally.pos = V.vclone(this.pos)
                                     U.speed_div(this, a.speed_factor)
@@ -5238,8 +5243,17 @@ return function(scripts)
                                 local last_target_id = this.soldier.target_id
                                 surge(target)
                                 target = store.entities[last_target_id]
-                                if skill.level > 2 and target and not target.health.dead then
-                                    surge(target)
+                                if skill.level > 2 then
+                                    if target and not target.health.dead then
+                                        surge(target)
+                                    end
+                                    while target and target.health.dead do
+                                        target = find_surge_target()
+                                        if not target then
+                                            break
+                                        end
+                                        surge(target)
+                                    end
                                 end
                                 surge_end()
                                 goto label_71_0
