@@ -2057,7 +2057,7 @@ function scripts.hero_elora.update(this, store)
 							b.render.sprites[2].name = b.render.sprites[2].name .. b.spike_idx
 							b.delay = delay
 							b.bullet.source_id = this.id
-
+                            b.bullet.damage_factor = this.unit.damage_factor
 							queue_insert(store, b)
 
 							delay = delay + U.frandom(0.05, 0.1)
@@ -2131,22 +2131,31 @@ function scripts.hero_elora.update(this, store)
 				end
 			end
 
+            if this.soldier.target_id then
+                brk, sta = SU.y_soldier_ranged_attacks(store, this)
+                if brk then
+                    goto label_61_0
+                end
+            end
+
 			brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
 			if brk or sta ~= A_NO_TARGET then
-				-- block empty
-			else
-				brk, sta = SU.y_soldier_ranged_attacks(store, this)
+				goto label_61_0
+            end
 
-				if brk then
-					-- block empty
-				elseif SU.soldier_go_back_step(store, this) then
-					-- block empty
-				else
-					SU.soldier_idle(store, this)
-					SU.soldier_regen(store, this)
-				end
-			end
+            brk, sta = SU.y_soldier_ranged_attacks(store, this)
+
+            if brk then
+                goto label_61_0
+            end
+
+            if SU.soldier_go_back_step(store, this) then
+                goto label_61_0
+            end
+
+            SU.soldier_idle(store, this)
+            SU.soldier_regen(store, this)
 		end
 
 		::label_61_0::
