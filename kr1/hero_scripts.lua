@@ -3967,22 +3967,31 @@ return function(scripts)
                         end
                     end
 
+                    if this.soldier.target_id then
+                        brk, sta = SU.y_soldier_ranged_attacks(store, this)
+                        if brk then
+                            goto label_365_0
+                        end
+                    end
+
                     brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
                     if brk or U.is_blocked_valid(store, this) then
-                        -- block empty
-                    else
-                        brk, sta = SU.y_soldier_ranged_attacks(store, this)
-
-                        if brk then
-                            -- block empty
-                        elseif SU.soldier_go_back_step(store, this) then
-                            -- block empty
-                        else
-                            SU.soldier_idle(store, this)
-                            SU.soldier_regen(store, this)
-                        end
+                        goto label_365_0
                     end
+
+                    brk, sta = SU.y_soldier_ranged_attacks(store, this)
+
+                    if brk then
+                        goto label_365_0
+                    end
+
+                    if SU.soldier_go_back_step(store, this) then
+                        goto label_365_0
+                    end
+
+                    SU.soldier_idle(store, this)
+                    SU.soldier_regen(store, this)
                 end
                 ::label_365_0::
                 coroutine.yield()
