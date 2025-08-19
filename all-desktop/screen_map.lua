@@ -4744,7 +4744,7 @@ function HeroRoomViewKR1:initialize(size)
     local thumb_scale_1 = 0.385 * thumb_scale
     local thumb_scale_2 = 0.217 * thumb_scale
     local thumb_scale_3 = 0.5 * thumb_scale
-
+    local thumb_scale_4 = 0.295 * thumb_scale
     for i, d in ipairs(screen_map.hero_data) do
         local tpos = V.v((i - 1) % 10 * 37.5, math.floor((i - 1) / 10) * 38.5)
 
@@ -4754,6 +4754,10 @@ function HeroRoomViewKR1:initialize(size)
             v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_1)
             v2.size.x = v2.size.x / thumb_scale_1 * 0.5
             v2.size.y = v2.size.y / thumb_scale_1 * 0.5
+        elseif d.thumb >= 52 then
+            v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_4)
+            v2.size.x = v2.size.x / thumb_scale_4 * 0.5
+            v2.size.y = v2.size.y / thumb_scale_4 * 0.5
         elseif d.thumb >= 17 then
             v2 = KImageView:new(string.format("heroroom_thumbs_%04d", d.thumb), nil, thumb_scale_2)
             v2.size.x = v2.size.x / thumb_scale_2 * 0.5
@@ -4849,9 +4853,9 @@ function HeroRoomViewKR1:initialize(size)
         if selected_name and get_hero_index(selected_name) then
             local hd = screen_map.hero_data[get_hero_index(selected_name)]
             if hd.is_kr5 then
-                screen_map.hero_icon_portrait.image_scale = 0.4
-                screen_map.hero_icon_portrait.pos.x = 60
-                screen_map.hero_icon_portrait.pos.y = 20
+                screen_map.hero_icon_portrait.image_scale = 1
+                screen_map.hero_icon_portrait.pos.x = KR5_HERO_ICON_PORTRAIT_X
+                screen_map.hero_icon_portrait.pos.y = KR5_HERO_ICON_PORTRAIT_Y
             else
                 screen_map.hero_icon_portrait.pos.x = 0
                 screen_map.hero_icon_portrait.pos.y = 0
@@ -4976,9 +4980,9 @@ function HeroRoomViewKR1:select_hero(name, silent)
     end
 
     if hd.is_kr5 then
-        screen_map.hero_icon_portrait.image_scale = 0.4
-        screen_map.hero_icon_portrait.pos.x = 60
-        screen_map.hero_icon_portrait.pos.y = 20
+        screen_map.hero_icon_portrait.image_scale = 1
+        screen_map.hero_icon_portrait.pos.x = KR5_HERO_ICON_PORTRAIT_X
+        screen_map.hero_icon_portrait.pos.y = KR5_HERO_ICON_PORTRAIT_Y
     else
         screen_map.hero_icon_portrait.pos.x = 0
         screen_map.hero_icon_portrait.pos.y = 0

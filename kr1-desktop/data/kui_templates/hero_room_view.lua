@@ -1378,8 +1378,8 @@ local hero_room_view = {
 									class = "KImageView"
 								},
 							},
-                            pos = v(230, 150),
-                            scale = v(0.45,0.45)
+                            pos = v(220, 140),
+                            scale = v(0.67,0.67)
 						},
                         {
 							id = "portrait_hero_space_elf",
@@ -1395,8 +1395,8 @@ local hero_room_view = {
 									class = "KImageView"
 								},
 							},
-                            pos = v(230, 150),
-                            scale = v(0.45,0.45)
+                            pos = v(220, 140),
+                            scale = v(0.67,0.67)
 						},
                         {
 							id = "portrait_hero_raelyn",
@@ -1412,8 +1412,8 @@ local hero_room_view = {
 									class = "KImageView"
 								},
 							},
-                            pos = v(230, 150),
-                            scale = v(0.45,0.45)
+                            pos = v(220, 140),
+                            scale = v(0.67,0.67)
 						},
                         {
 							id = "portrait_hero_venom",
@@ -1429,8 +1429,8 @@ local hero_room_view = {
 									class = "KImageView"
 								},
 							},
-                            pos = v(230, 150),
-                            scale = v(0.45,0.45)
+                            pos = v(220, 140),
+                            scale = v(0.67,0.67)
 						},
                         {
 							id = "portrait_hero_dragon_gem",
@@ -1446,8 +1446,8 @@ local hero_room_view = {
 									class = "KImageView"
 								},
 							},
-                            pos = v(230, 150),
-                            scale = v(0.45,0.45)
+                            pos = v(220, 140),
+                            scale = v(0.67,0.67)
 						},
 						{
 							id = "portrait_hero_name_label",
