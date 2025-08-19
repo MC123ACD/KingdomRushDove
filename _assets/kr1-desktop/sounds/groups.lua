@@ -51,7 +51,7 @@ local kr1 = {
     },
     HeroRobot = {
         files = {"Hacksaw-02c.ogg", "Hacksaw-03a.ogg", "Hacksaw-04a.ogg", "Hacksaw-Death01c.ogg", "Level_up.ogg",
-                 "inferno_lumberjack_drill.ogg", "inferno_lumberjack_shootSaw.ogg"}
+                 "inferno_lumberjack_drill.ogg", "inferno_lumberjack_shootSaw.ogg","hero_alien_disc_bounce.ogg","hero_alien_disc_throw.ogg"}
     },
     HeroSamurai = {
         files = {"Level_up.ogg", "Oni-01c.ogg", "Oni-02c.ogg", "Oni-04a.ogg", "Oni-Death01a.ogg",
