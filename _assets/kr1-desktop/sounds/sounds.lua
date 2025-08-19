@@ -8948,6 +8948,430 @@ local kr5 = {
                  "kra_sfx_heroes_broden_birdsOfPrey_gryphonAttack_var3_v1.ogg",
                  "kra_sfx_heroes_broden_birdsOfPrey_gryphonAttack_var4_v1.ogg"}
     },
+    HeroWitchTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_stregi_select_b.ogg", "kr_voice_stregi_taunt-01_a.ogg", "kr_voice_stregi_taunt-02_d.ogg",
+                 "kr_voice_stregi_taunt-03_c.ogg"}
+    },
+    HeroWitchTauntIntro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_stregi_select_b.ogg"}
+    },
+    HeroWitchTauntSelect = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_stregi_select_b.ogg"}
+    },
+    HeroWitchDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_stregi_death_b.ogg"}
+    },
+    HeroWitchBasicAttackCast = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.7,
+        delay = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_basicAttack_cast_var1_v1.ogg",
+                 "kra_sfx_heroes_stregi_basicAttack_cast_var2_v1.ogg",
+                 "kra_sfx_heroes_stregi_basicAttack_cast_var3_v1.ogg"}
+    },
+    HeroWitchDazzlingDecoyCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_dazzlingDecoy_cast_v1.ogg"}
+    },
+    HeroWitchDazzlingDecoyExplosion = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_dazzlingDecoy_explosion_v1.ogg"}
+    },
+    HeroWitchNightFuriesCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_nightFuries_cast_v1.ogg"}
+    },
+    HeroWitchVeggiefyIn = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_veggiefy_in_v1.ogg"}
+    },
+    HeroWitchVeggiefyOut = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_veggiefy_out_v1.ogg"}
+    },
+    HeroWitchSquishNSquashCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_squishNSquash_cast_v1.ogg"}
+    },
+    HeroWitchSquishNSquashImpact = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_squishNSquash_impact_v1.ogg"}
+    },
+    HeroDragonBoneUltimateIn = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_drowsyReturn_in_v1.ogg"}
+    },
+    HeroDragonBoneUltimateOut = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_drowsyReturn_out_v1.ogg"}
+    },
+    HeroDragonBoneTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_bonehart_select_c.ogg", "kr_voice_bonehart_taunt-01_b.ogg",
+                 "kr_voice_bonehart_taunt-02_a.ogg", "kr_voice_bonehart_taunt-03_c.ogg"}
+    },
+    HeroDragonBoneTauntIntro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_bonehart_select_c.ogg"}
+    },
+    HeroDragonBoneTauntSelect = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_bonehart_select_c.ogg"}
+    },
+    HeroDragonBoneDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_bonehart_death_a.ogg"}
+    },
+    HeroDragonBoneBasicAttackCast = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_basicAttack_cast_var1.ogg",
+                 "kra_sfx_heroes_bonehart_basicAttack_cast_var2.ogg",
+                 "kra_sfx_heroes_bonehart_basicAttack_cast_var3.ogg"}
+    },
+    HeroDragonBoneBasicAttackImpact = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_basicAttack_impact_var1.ogg",
+                 "kra_sfx_heroes_bonehart_basicAttack_impact_var2.ogg",
+                 "kra_sfx_heroes_bonehart_basicAttack_impact_var3.ogg"}
+    },
+    HeroDragonBoneDiseaseNovaCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_diseaseNova_cast_v1.ogg"}
+    },
+    HeroDragonBonePlagueCloudCast = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_plagueCloud_cast_v1.ogg"}
+    },
+    HeroDragonBoneSpineRainCast = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_spineRain_cast_v1.ogg"}
+    },
+    HeroDragonBoneSpineRainImpact = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.3,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_spineRain_impact_var1_v1.ogg",
+                 "kra_sfx_heroes_bonehart_spineRain_impact_var2_v1.ogg",
+                 "kra_sfx_heroes_bonehart_spineRain_impact_var3_v1.ogg"}
+    },
+    HeroDragonBoneSpreadingBurstCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_spreadingBurst_cast_v1.ogg"}
+    },
+    HeroDragonBoneSpreadingBurstImpact = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_spreadingBurst_impact_var1_v1.ogg",
+                 "kra_sfx_heroes_bonehart_spreadingBurst_impact_var2_v1.ogg",
+                 "kra_sfx_heroes_bonehart_spreadingBurst_impact_var3_v1.ogg"}
+    },
+    HeroDragonBoneUltimateCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_bonehart_raiseDrakes_cast_op2_v1.ogg"}
+    },
+    HeroDragonArbDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_silvara_death_c.ogg"}
+    },
+    HeroDragonArbTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_silvara_move2_a.ogg", "kr_voice_silvara_move3_b.ogg", "kr_voice_silvara_move4_b.ogg"}
+    },
+    HeroDragonArbTauntIntro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_silvara_move2_a.ogg"}
+    },
+    HeroDragonArbTauntSelect = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_silvara_move2_a.ogg"}
+    },
+    HeroDragonArbArboreansHit = {
+        loop = false,
+        gain = 0.4,
+        mode = "random",
+        delay = 0.333,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_hero_spawned_unit_shield_hit_var1_v1.ogg",
+                 "kra_sfx_crocs_hero_spawned_unit_shield_hit_var2_v1.ogg",
+                 "kra_sfx_crocs_hero_spawned_unit_shield_hit_var3_v1.ogg"}
+    },
+    HeroDragonArbAttackSplints = {
+        loop = false,
+        mode = "random",
+        gain = 0.23,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_hero_throws_spikes_var1_v1.ogg", "kra_sfx_crocs_hero_throws_spikes_var2_v1.ogg",
+                 "kra_sfx_crocs_hero_throws_spikes_var3_v1.ogg", "kra_sfx_crocs_hero_throws_spikes_var4_v1.ogg",
+                 "kra_sfx_crocs_hero_throws_spikes_var4_v1.ogg", "kra_sfx_crocs_hero_throws_spikes_var4_v1.ogg",
+                 "kra_sfx_crocs_hero_throws_spikes_var4_v1.ogg"}
+    },
+    HeroDragonArbUltimate = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_hero_ultimate_blue_v1.ogg"}
+    },
+    HeroKratoaTaunt = {
+        loop = false,
+        gain = 0.6,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_kratoa_taunt-select_c.ogg", "kr_voice_kratoa_taunt02_b.ogg", "kr_voice_kratoa_taunt03_b.ogg",
+                 "kr_voice_kratoa_taunt04_c.ogg"}
+    },
+    HeroKratoaTauntIntro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_kratoa_taunt04_c.ogg"}
+    },
+    HeroKratoaTauntSelect = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_kratoa_taunt-select_c.ogg"}
+    },
+    HeroKratoaDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_kratoa_death_b.ogg"}
+    },
+    HeroKratoaBasicAttack = {
+        loop = false,
+        gain = 0.6,
+        mode = "random",
+        delay = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_basicAttack_cast_var1_v1.ogg",
+                 "kra_sfx_heroes_kratoa_basicAttack_cast_var2_v1.ogg",
+                 "kra_sfx_heroes_kratoa_basicAttack_cast_var3_v1.ogg"}
+    },
+    HeroKratoaTemperTantrum = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 0.4,
+        files = {"kra_sfx_heroes_temperTantrum_cast_v1.ogg"}
+    },
+    HeroKratoaHotheaded = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_hotheaded_cast_v1.ogg"}
+    },
+    HeroKratoaDoubleTroubleCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_doubleTrouble_cast_op1_v1.ogg"}
+    },
+    HeroKratoaDoubleTroubleImpact = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_doubleTrouble_impact_v1.ogg"}
+    },
+    HeroKratoaWildEruption = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 0.5,
+        files = {"kra_sfx_heroes_wildEruption_cast_v1.ogg"}
+    },
+    HeroKratoaRageOutburstCast = {
+        ignore = 0.5,
+        gain = 0.7,
+        loop = false,
+        mode = "random",
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_rageOutburst_cast_var2_v1.ogg",
+                 "kra_sfx_heroes_kratoa_rageOutburst_cast_var2_v1.ogg",
+                 "kra_sfx_heroes_kratoa_rageOutburst_cast_var3_v1.ogg"}
+    },
+    HeroKratoaRageOutburstImpact = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_rageOutburst_impact_var2_v1.ogg",
+                 "kra_sfx_heroes_kratoa_rageOutburst_impact_var2_v1.ogg",
+                 "kra_sfx_heroes_kratoa_rageOutburst_impact_var3_v1.ogg"}
+    },
+    HeroKratoaRageOutburstDeath = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_kratoa_rageOutburst_death_v1.ogg"}
+    },
+    HeroSpiderTunnelingIn = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_tunneling_in_v1.ogg"}
+    },
+    HeroSpiderTunnelingOut = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_tunneling_out_v1.ogg"}
+    },
+    HeroSpiderTunnelingAppear = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_tunneling_appear_v1.ogg"}
+    },
+    HeroSpiderGlobalCocoons = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_global_cocoons_v1.ogg"}
+    },
+    HeroSpiderGlobalSpawn = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_global_spawn_v1.ogg"}
+    },
+    HeroSpiderSupremeHunter = {
+        loop = false,
+        gain = 0.38,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_supremehunter_fullSeq_v1.ogg"}
+    },
+    HeroSpiderAreaDamage = {
+        source_group = "SFX",
+        gain = 0.45,
+        loop = false,
+        delay = 0.8,
+        files = {"kra_sfx_spiders_heroe_areadamage_v1.ogg"}
+    },
+    HeroSpiderBasicAttack = {
+        loop = false,
+        gain = 0.4,
+        mode = "random",
+        delay = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_melee_op1_var1_v1.ogg", "kra_sfx_spiders_heroe_melee_op1_var2_v1.ogg",
+                 "kra_sfx_spiders_heroe_melee_op1_var3_v1.ogg"}
+    },
+    HeroSpiderInstakill = {
+        source_group = "SFX",
+        gain = 0.6,
+        loop = false,
+        delay = 0.3,
+        files = {"kra_sfx_spiders_heroe_instakill_v1.ogg"}
+    },
+    HeroSpiderAttackRanged = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_heroe_range_var1_v1.ogg", "kra_sfx_spiders_heroe_range_var2_v1.ogg",
+                 "kra_sfx_spiders_heroe_range_var3_v1.ogg"}
+    },
+    HeroSpiderTaunt = {
+        loop = false,
+        gain = 0.6,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_spydyr_01a.ogg", "kr_voice_spydyr_03b.ogg", "kr_voice_spydyr_04d.ogg",
+                 "kr_voice_spydyr_taunt-select_b.ogg"}
+    },
+    HeroSpiderTauntIntro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_spydyr_01a.ogg"}
+    },
+    HeroSpiderTauntSelect = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_spydyr_taunt-select_b.ogg"}
+    },
+    HeroSpiderDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_spydyr_death_b.ogg"}
+    },
     TowerRoyalArchersTaunt = {
         loop = false,
         gain = 0.7,
@@ -9884,6 +10308,306 @@ local kr5 = {
         files = {"kra_sfx_tower_eldrictchChannelers_mutationHex_cast_var1_v1.ogg",
                  "kra_sfx_tower_eldrictchChannelers_mutationHex_cast_var3_v1.ogg"}
     },
+    TowerDarkElfTaunt = {
+        loop = false,
+        gain = 0.8,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_twilightlongbows_taunt-01_a.ogg", "kr_voice_twilightlongbows_taunt-02_b.ogg",
+                 "kr_voice_twilightlongbows_select_b.ogg"}
+    },
+    TowerDarkElfTauntSelect = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_twilightlongbows_select_b.ogg"}
+    },
+    TowerDarkElfSkillATaunt = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_twilightlongbows_skill-a_g.ogg"}
+    },
+    TowerDarkElfSkillBTaunt = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_twilightlongbows_skill-b_d.ogg"}
+    },
+    TowerDarkElfUnitTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        source_group = "TAUNTS",
+        files = {"kr_voice_twilightlongbows_skill-a_g.ogg"}
+    },
+    TowerDarkElfBasicAttackCast = {
+        loop = false,
+        mode = "random",
+        gain = 0.6,
+        source_group = "SFX",
+        interruptible = true,
+        files = {"kra_sfx_tower_twlightLongbows_basicAttack_cast-noCharge_var1_v1.ogg",
+                 "kra_sfx_tower_twlightLongbows_basicAttack_cast-noCharge_var2_v1.ogg",
+                 "kra_sfx_tower_twlightLongbows_basicAttack_cast-noCharge_var3_v1.ogg"}
+    },
+    TowerDarkElfSupportBladesSpawn = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_tower_twlightLongbows_supportBlades_spawn_v1.ogg"}
+    },
+    TowerDarkElfThrillOfTheHuntCast = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        delay = 0.7,
+        files = {"kra_sfx_tower_twlightLongbows_thrillOfTheHunt_cast-travelOnly_v1.ogg"}
+    },
+    TowerWeirdwoodBasicAttackCast = {
+        loop = false,
+        mode = "random",
+        gain = 0.6,
+        source_group = "SFX",
+        interruptible = true,
+        files = {"kra_sfx_stage17_weirdwood_basicAttack_throw_var1_v1.ogg",
+                 "kra_sfx_stage17_weirdwood_basicAttack_throw_var2_v1.ogg",
+                 "kra_sfx_stage17_weirdwood_basicAttack_throw_var3_v1.ogg"}
+    },
+    TowerWeirdwoodBasicAttackHit = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_weirdwood_basicAttack_explosion_v1.ogg"}
+    },
+    TowerWeirdwoodTransform = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_weirdwood_deathwoodTransform_v1.ogg"}
+    },
+    TowerWeirdwoodCorruption = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_weirdwood_leavesFall_v1.ogg"}
+    },
+    TowerElvenBarrackUnitTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_elvenmercenaries_taunt-01_c.ogg", "kr_voice_elvenmercenaries_taunt-02_b.ogg"}
+    },
+    TowerHermitToadTaunt = {
+        loop = false,
+        gain = 0.8,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_build_a.ogg", "kr_voice_boghermit_build2_b.ogg", "kr_voice_boghermit_build3_c.ogg"}
+    },
+    TowerHermitToadTauntSelect = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_build_a.ogg"}
+    },
+    TowerHermitToadSkillATaunt = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_power1_c.ogg"}
+    },
+    TowerHermitToadSkillBTaunt = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_power2_c.ogg"}
+    },
+    TowerHermitToadSwitchToArtillery = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_switchtoartillery_c.ogg"}
+    },
+    TowerHermitToadSwitchToMage = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_boghermit_switchtomage_c.ogg"}
+    },
+    TowerHermitToadShootMagic = {
+        loop = false,
+        gain = 0.25,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_pipe_shoot_magic_var1_v1.ogg"}
+    },
+    TowerHermitToadShootEngineer = {
+        loop = false,
+        gain = 0.25,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_pipe_shoot_water_var3_v1.ogg"}
+    },
+    TowerHermitToadShootEngineerImpact = {
+        loop = false,
+        gain = 0.25,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_pipe_shoot_water_impact_var3_v1.ogg"}
+    },
+    TowerHermitToadBackToPond = {
+        loop = false,
+        gain = 0.35,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_stomp_path_backToPond_v1.ogg"}
+    },
+    TowerHermitToadJump = {
+        loop = false,
+        gain = 0.35,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_stomp_path_jumpOut_v1.ogg"}
+    },
+    TowerHermitToadFall = {
+        loop = false,
+        gain = 0.35,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_stomp_path_v1.ogg"}
+    },
+    TowerHermitToadTongue = {
+        loop = false,
+        gain = 0.35,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tower_tonge_shoot_v1.ogg"}
+    },
+    TowerDwarfTaunt = {
+        loop = false,
+        gain = 0.8,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_cannoneersquad_taunt-select_e.ogg", "kr_voice_cannoneersquad_taunt02_b.ogg",
+                 "kr_voice_cannoneersquad_taunt03_c.ogg"}
+    },
+    TowerDwarfTauntSelect = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_cannoneersquad_taunt-select_e.ogg"}
+    },
+    TowerDwarfSkillATaunt = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_cannoneersquad_skill-a_c.ogg"}
+    },
+    TowerDwarfSkillBTaunt = {
+        loop = false,
+        gain = 0.8,
+        source_group = "TAUNTS",
+        files = {"kr_voice_cannoneersquad_skill-b_c.ogg"}
+    },
+    TowerDwarfBasicAttack = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_towers_cannoneers_basicAttack_var1_v1.ogg",
+                 "kra_sfx_towers_cannoneers_basicAttack_var2_v1.ogg",
+                 "kra_sfx_towers_cannoneers_basicAttack_var3_v1.ogg"}
+    },
+    TowerDwarfIncendiaryAmmo = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_towers_cannoneers_incendiaryAmmo_impact_var1_v1.ogg",
+                 "kra_sfx_towers_cannoneers_incendiaryAmmo_impact_var2_v1.ogg",
+                 "kra_sfx_towers_cannoneers_incendiaryAmmo_impact_var3_v1.ogg"}
+    },
+    TowerDwarfIncendiaryJump = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        delay = 0.4,
+        files = {"kra_sfx_towers_cannoneers_jump_cast_v1.ogg"}
+    },
+    TowerDwarfUnitDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_towers_cannoneers_death_var1.ogg", "kra_sfx_towers_cannoneers_death_var2.ogg",
+                 "kra_sfx_towers_cannoneers_death_var3.ogg"}
+    },
+    TowerSparkingGeodeRay = {
+        loop = false,
+        mode = "random",
+        gain = 0.23,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_tower_heode_ray_var1_v1.ogg", "kra_sfx_spiders_tower_heode_ray_var2_v1.ogg",
+                 "kra_sfx_spiders_tower_heode_ray_var3_v1.ogg", "kra_sfx_spiders_tower_heode_ray_var4_v1.ogg",
+                 "kra_sfx_spiders_tower_heode_ray_var5_v1.ogg"}
+    },
+    TowerSparkingGeodeCristalizeBolt = {
+        loop = false,
+        mode = "random",
+        gain = 0.45,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_tower_heode_cristalize_bolt_var1_v1.ogg",
+                 "kra_sfx_spiders_tower_heode_cristalize_bolt_var2_v1.ogg",
+                 "kra_sfx_spiders_tower_heode_cristalize_bolt_var3_v1.ogg"}
+    },
+    TowerSparkingGeodeCristalizeCast = {
+        loop = false,
+        gain = 0.45,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_tower_heode_cristalize_cast_var3_v1.ogg"}
+    },
+    TowerSparkingGeodeSpikeCast = {
+        loop = false,
+        gain = 0.45,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_tower_heode_spike_cast_v1.ogg"}
+    },
+    TowerSparkingGeodeSpikeLoop = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_tower_heode_spike_sparksLOOP_v1.ogg"}
+    },
+    TowerSparkingGeodeTaunt = {
+        loop = false,
+        gain = 0.7,
+        ignore = 1,
+        mode = "sequence",
+        source_group = "TAUNTS",
+        files = {"kr_voice_surgecolossus_taunt-select_c.ogg", "kr_voice_surgecolossus_04c.ogg",
+                 "kr_voice_surgecolossus_05c.ogg"}
+    },
+    TowerSparkingGeodeTauntSelect = {
+        loop = false,
+        mode = "sequence",
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_surgecolossus_taunt-select_c.ogg"}
+    },
+    TowerSparkingGeodeSkillATaunt = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_surgecolossus_03c.ogg"}
+    },
+    TowerSparkingGeodeSkillBTaunt = {
+        loop = false,
+        gain = 0.7,
+        source_group = "TAUNTS",
+        files = {"kr_voice_surgecolossus_02c.ogg"}
+    },
     ReinforcementTaunt = {
         loop = false,
         gain = 0.6,
@@ -10272,6 +10996,532 @@ local kr5 = {
         files = {"kra_sfx_enemy_sheep_death_var1_v1.ogg", "kra_sfx_enemy_sheep_death_var2_v1.ogg",
                  "kra_sfx_enemy_sheep_death_var3_v1.ogg"}
     },
+    EnemyCorruptedElfSpawn = {
+        ignore = 1,
+        gain = 0.6,
+        loop = false,
+        mode = "random",
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_corruptedRanger_spawn_var1_v1.ogg", "kra_sfx_enemy_corruptedRanger_spawn_var2_v1.ogg",
+                 "kra_sfx_enemy_corruptedRanger_spawn_var3_v1.ogg"}
+    },
+    EnemyCorruptedElfDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_corruptedRanger_death_var1_v2.ogg", "kra_sfx_enemy_corruptedRanger_death_var2_v2.ogg",
+                 "kra_sfx_enemy_corruptedRanger_death_var3_v2.ogg"}
+    },
+    EnemySpecterRushAnticipation = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_specter_interact_cast_var1_v2.ogg", "kra_sfx_enemy_specter_interact_cast_var2_v2.ogg",
+                 "kra_sfx_enemy_specter_interact_cast_var3_v2.ogg"}
+    },
+    EnemySpecterRush = {
+        loop = false,
+        mode = "random",
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_specter_interact_cast_op2_var-003.ogg",
+                 "kra_sfx_enemy_specter_interact_cast_op2_var-004.ogg",
+                 "kra_sfx_enemy_specter_interact_cast_var-005.ogg"}
+    },
+    EnemySpecterCorruption = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_weirdwood_specterImpact_v1.ogg"}
+    },
+    EnemySpecterDeath = {
+        ignore = 0.5,
+        gain = 0.8,
+        loop = false,
+        mode = "random",
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_specter_death_var1_v2.ogg", "kra_sfx_enemy_specter_death_var2_v2.ogg",
+                 "kra_sfx_enemy_specter_death_var3_v2.ogg", "kra_sfx_enemy_specter_death_var4_v2.ogg",
+                 "kra_sfx_enemy_specter_death_var5_v2.ogg", "kra_sfx_enemy_specter_death_var6_v2.ogg"}
+    },
+    EnemyDustCryptidDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_dustCryptid_death_v1.ogg"}
+    },
+    EnemyBaneWolfDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_baneWolf_death_var1_v1.ogg", "kra_sfx_enemy_baneWolf_death_var2_v1.ogg",
+                 "kra_sfx_enemy_baneWolf_death_var3_v1.ogg"}
+    },
+    EnemyDeathwoodRangedAttackCast = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemies_deathwood_rangedAttack_cast_var1_v1.ogg",
+                 "kra_sfx_enemies_deathwood_rangedAttack_cast_var2_v1.ogg",
+                 "kra_sfx_enemies_deathwood_rangedAttack_cast_var3_v1.ogg"}
+    },
+    EnemyDeathwoodRangedAttackImpact = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemies_deathwood_rangedAttack_impact_var1_v1.ogg",
+                 "kra_sfx_enemies_deathwood_rangedAttack_impact_var2_v1.ogg",
+                 "kra_sfx_enemies_deathwood_rangedAttack_impact_var3_v1.ogg"}
+    },
+    EnemyDeathwoodDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_deathwood_death_op1_v1.ogg"}
+    },
+    EnemyAnimatedArmorDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_animatedArmor_death_v1.ogg"}
+    },
+    EnemyAnimatedArmorRevive = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_animatedArmor_revive_v1.ogg"}
+    },
+    EnemyRevenantSoulcallerAttackCast = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_soulcaller_attack_cast_v1.ogg"}
+    },
+    EnemyRevenantSoulcallerBlockTowerIn = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_soulcaller_towerBlock_in_v1.ogg"}
+    },
+    EnemyRevenantSoulcallerBlockTowerOut = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_soulcaller_towerBlock_out_v1.ogg"}
+    },
+    EnemyRevenantSoulcallerDeath = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_soulcaller_death_v1.ogg"}
+    },
+    EnemyRevenantHarvesterClone = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        delay = 0.2,
+        files = {"kra_sfx_enemy_harvester_duplicate_v1.ogg"}
+    },
+    EnemyRevenantHarvesterDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_harvester_death_var1_v1.ogg", "kra_sfx_enemy_harvester_death_var2_v1.ogg",
+                 "kra_sfx_enemy_harvester_death_var3_v1.ogg"}
+    },
+    EnemyPumpkinDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_heroes_stregi_veggiefy_death_var1_v1.ogg", "kra_sfx_heroes_stregi_veggiefy_death_var2_v1.ogg",
+                 "kra_sfx_heroes_stregi_veggiefy_death_var3_v1.ogg"}
+    },
+    EnemyDarksteelHammererDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelHammerer_death_var1_v1.ogg",
+                 "kra_sfx_enemy_darksteelHammerer_death_var2_v1.ogg"}
+    },
+    EnemyDarksteelShielderDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelShielder_death_var1_v1.ogg",
+                 "kra_sfx_enemy_darksteelShielder_death_var2_v1.ogg"}
+    },
+    EnemyCommonCloneDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelHammerer_death_var1_v1.ogg",
+                 "kra_sfx_enemy_darksteelHammerer_death_var2_v1.ogg"}
+    },
+    EnemyRollingSentryDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_rollingSentry_death_var1_v1.ogg", "kra_sfx_enemy_rollingSentry_death_var2_v1.ogg"}
+    },
+    EnemyRollingSentryAttack = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        ignore = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_rollingSentry_attack_op1_var1_v1.ogg",
+                 "kra_sfx_enemy_rollingSentry_attack_op1_var2_v1.ogg"}
+    },
+    EnemyScrapSpeedsterDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.3,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_scrapSpeedster_death_var1_v1.ogg", "kra_sfx_enemy_scrapSpeedster_death_var3_v1.ogg"}
+    },
+    EnemyBruteWelderDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_bruteWelder_death_var1_v1.ogg", "kra_sfx_enemy_bruteWelder_death_var2_v1.ogg"}
+    },
+    EnemyBruteWelderDeathImpact = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_bruteWelder_deathImpact_v1.ogg"}
+    },
+    EnemyDarksteelFistDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelFist_death_var1_v1.ogg", "kra_sfx_enemy_darksteelFist_death_var2_v1.ogg",
+                 "kra_sfx_enemy_darksteelFist_death_var3_v1.ogg"}
+    },
+    EnemyDarksteelFistStun = {
+        loop = false,
+        gain = 0.5,
+        mode = "random",
+        delay = 0.1,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelFist_stun_op1_v1.ogg", "kra_sfx_enemy_darksteelFist_stun_op2_v1.ogg"}
+    },
+    EnemyMadTinkererDeath = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_madTinkerer_death_var1_v1.ogg"}
+    },
+    EnemyMadTinkererRayCast = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_madTinkerer_rayCast_v1.ogg"}
+    },
+    EnemyMadTinkererSummon = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 0.5,
+        files = {"kra_sfx_enemy_madTinkerer_summon_v1.ogg"}
+    },
+    EnemyScrapDroneDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_scrapDrone_death_v1.ogg", "kra_sfx_enemy_scrapDrone_death_v1.ogg"}
+    },
+    EnemyDarksteelAnvilDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelAnvil_death_var1_v1.ogg", "kra_sfx_enemy_darksteelAnvil_death_var3_v1.ogg",
+                 "kra_sfx_enemy_darksteelAnvil_death_var4_v1.ogg"}
+    },
+    EnemyDarksteelAnvilBeat = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 1.2,
+        files = {"kra_sfx_enemy_darksteelAnvil_beat_SHORT_v2.ogg"}
+    },
+    EnemyDarksteelHulkDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelHulk_death_var2_v1.ogg", "kra_sfx_enemy_darksteelHulk_death_var3_v1.ogg"}
+    },
+    EnemyDarksteelHulkCharge = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelHulk_charge_op1_v1.ogg"}
+    },
+    EnemyDarksteelGuardianAttack = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelGuardian_attack_var1_v1.ogg",
+                 "kra_sfx_enemy_darksteelGuardian_attack_var2_v1.ogg",
+                 "kra_sfx_enemy_darksteelGuardian_attack_var3_v1.ogg"}
+    },
+    EnemyDarksteelGuardianDeath = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelGuardian_death_oneShot_v1.ogg"}
+    },
+    EnemyDarksteelGuardianActivation = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_stage23_darksteelGuardian_activation_v1.ogg"}
+    },
+    EnemyDarksteelGuardianRock = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 0.3,
+        files = {"kra_sfx_stage23_darksteelGuardian_rockBreak_v1.ogg"}
+    },
+    EnemyDarksteelEnrage = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_enemy_darksteelGuardian_enrage_cast_v1.ogg"}
+    },
+    EnemyDarksteelRageAttack = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 0.25,
+        files = {"kra_sfx_enemy_darksteelGuardian_enrage_attack_v1.ogg"}
+    },
+    EnemyCrokinderDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_crokinder_death_var1_v1.ogg"}
+    },
+    EnemyCrokinderEvolve = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_crokinder_transform_var3_v1.ogg"}
+    },
+    EnemyCrocBasicMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        delay = 0.2666,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_gator_melee_var1_v1.ogg", "kra_sfx_crocs_gator_melee_var2_v1.ogg",
+                 "kra_sfx_crocs_gator_melee_var3_v1.ogg"}
+    },
+    EnemyKillertileMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_killertile_bitemelee_v1.ogg"}
+    },
+    EnemyQuickfeetMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        delay = 0.2666,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_quickfeet_melee_var1_v1.ogg", "kra_sfx_crocs_quickfeet_melee_var2_v1.ogg",
+                 "kra_sfx_crocs_quickfeet_melee_var3_v1.ogg"}
+    },
+    EnemyQuickfeetRanged = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_quickfeet_throw_chicken_leg_and_throwup_v1.ogg"}
+    },
+    EnemyCrocsBasicEvolve = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_quickfeet_throw_chicken_leg_eat_and_grow_v1.ogg"}
+    },
+    EnemyCrocsRangedShot = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_lizardshot_range_var1_v1.ogg", "kra_sfx_crocs_lizardshot_range_var2_v1.ogg",
+                 "kra_sfx_crocs_lizardshot_range_var3_v1.ogg"}
+    },
+    EnemyCrocsRangedMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        delay = 0.2666,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_lizardshot_melee_var1_v1.ogg", "kra_sfx_crocs_lizardshot_melee_var2_v1.ogg",
+                 "kra_sfx_crocs_lizardshot_melee_var3_v1.ogg"}
+    },
+    EnemyNestingGatorMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        delay = 0.2666,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_nesting_gator_melee_var1_v1.ogg", "kra_sfx_crocs_nesting_gator_melee_var2_v1.ogg",
+                 "kra_sfx_crocs_nesting_gator_melee_var3_v1.ogg"}
+    },
+    EnemyNestingGatorAbility = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_nesting_gator_spawn_op1_v1.ogg"}
+    },
+    EnemyCrocShamanShot = {
+        loop = false,
+        mode = "random",
+        gain = 0.15,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_wise_range_cast_var1_v1.ogg"}
+    },
+    EnemyCrocTankSpin = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        delay = 0.3333,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tank_spin_op2_v1.ogg"}
+    },
+    EnemyCultbroodDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_cultbrood_death_var1_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_cultbrood_death_var2_v1.ogg"}
+    },
+    EnemyCultbroodMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 0.466,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_cultbrood_melee_var1_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_cultbrood_melee_var2_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_cultbrood_melee_var3_v1.ogg"}
+    },
+    EnemyDrainbroodMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 0.33,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_drainbrood_melee_var1_v1ogg",
+                 "kra_sfx_spiders_enemy_spider_drainbrood_melee_var2_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_drainbrood_melee_var3_v1.ogg"}
+    },
+    EnemyGlarenwardenDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 0.3,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_glarenwarden_death_v1.ogg"}
+    },
+    EnemyGlarenwardenMelee = {
+        loop = false,
+        mode = "random",
+        gain = 0.3,
+        delay = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_glarenwarden_melee_var1_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_glarenwarden_melee_var2_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_glarenwarden_melee_var3_v1.ogg"}
+    },
+    EnemySpiderPriestTransform = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 0.9,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_priest_transform_v1.ogg"}
+    },
+    EnemySpiderSisterRange = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_sister_range_var1_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_sister_range_var2_v1.ogg",
+                 "kra_sfx_spiders_enemy_spider_sister_range_var3_v1.ogg"}
+    },
+    EnemySpiderSisterSpawn = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 0.3,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_enemy_spider_sister_spawn_v1.ogg"}
+    },
+    EnemySpidersMechanicSpawnerInflate = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_mechanic_spawner_prev_v1.ogg"}
+    },
+    EnemySpidersMechanicSpawnerExplode = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        delay = 4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_mechanic_spawner_explode_v1.ogg"}
+    },
+    EnemySpidersMechanicSpawnerRegenerate = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_mechanic_spawner_regenerate_v1.ogg"}
+    },
+    EnemySpidersMechanicTowerSpiderDeath = {
+        loop = false,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_mechanic_spider_death_v1.ogg"}
+    },
+    EnemySpidersMechanicTowerSpiderWorkingLoop = {
+        loop = true,
+        mode = "random",
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_mechanic_spider_working_LOOP_v1.ogg"}
+    },
     Terrain1AmbienceSoundBirds = {
         loop = false,
         mode = "random",
@@ -10343,6 +11593,30 @@ local kr5 = {
         source_group = "SFX",
         files = {"kra_sfx_terrain3Ambient_gutural_var2_v1.ogg", "kra_sfx_terrain3Ambient_gutural_var3_v1.ogg",
                  "kra_sfx_terrain3Ambient_gutural_var5_v1.ogg"}
+    },
+    Terrain4AmbienceSoundWind = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_update1Ambient_wind_var1.ogg", "kra_sfx_update1Ambient_wind_var2.ogg",
+                 "kra_sfx_update1Ambient_wind_var3.ogg", "kra_sfx_update1Ambient_wind_var4.ogg"}
+    },
+    Terrain6AmbienceSoundWindRocks = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_dlc1Ambient_windRocks_var1_v1.ogg", "kra_sfx_dlc1Ambient_windRocks_var2_v1.ogg",
+                 "kra_sfx_dlc1Ambient_windRocks_var3_v1.ogg"}
+    },
+    Terrain6AmbienceSoundForge = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_dlc1Ambient_forge_var1_v1.ogg", "kra_sfx_dlc1Ambient_forge_var2_v1.ogg",
+                 "kra_sfx_dlc1Ambient_forge_var3_v1.ogg"}
     },
     Stage01ArboreanSageAppear = {
         loop = false,
@@ -11315,6 +12589,826 @@ local kr5 = {
         delay = 0.5,
         files = {"kra_sfx_stage16_bossFight_overseerDefeat_fullSeq_v2.ogg"}
     },
+    Stage17VinesOut = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_rootSoulcaller_cast.ogg"}
+    },
+    Stage17RootSoulcallerIn = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage17_rootSoulcaller_in.ogg"}
+    },
+    Stage17RootSoulcallerOut = {
+        source_group = "SFX",
+        gain = 0.8,
+        loop = false,
+        delay = 0.25,
+        files = {"kra_sfx_stage17_rootSoulcaller_out.ogg"}
+    },
+    Stage18EridanInOut = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage18_eridan_in-out_v2.ogg"}
+    },
+    Stage18EridanInstakill = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage18_eridan_instakill_v2.ogg"}
+    },
+    Stage18LampBreak = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage18_lamp_break_op1_v1.ogg"}
+    },
+    Stage18CuckooIn = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        delay = 0.2,
+        files = {"kra_sfx_easterEgg_stage18Sheepy_tap-OPEN_v1.ogg"}
+    },
+    Stage18CuckooOut = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        delay = 0.6,
+        files = {"kra_sfx_easterEgg_stage18Sheepy_tap-CLOSE_v1.ogg"}
+    },
+    Stage19NaviraEnter = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_enter_v1.ogg"}
+    },
+    Stage19NaviraFireballSpawn = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_fireball_spawn_var1_v1.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_spawn_var2_v1.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_spawn_var3_v1.ogg"}
+    },
+    Stage19NaviraFireballCast = {
+        loop = false,
+        mode = "random",
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_fireball_cast_var1_v1.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_cast_var2_v1.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_cast_var3_v1.ogg"}
+    },
+    Stage19NaviraFireballHit = {
+        loop = false,
+        mode = "random",
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_fireball_impact_var1_v2.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_impact_var2_v2.ogg",
+                 "kra_sfx_stage19_bossFight_navira_fireball_impact_var3_v2.ogg"}
+    },
+    Stage19NaviraHandsDown = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_statue_handsDown_v1.ogg"}
+    },
+    Stage19NaviraHandsUp = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 4.9,
+        files = {"kra_sfx_stage19_bossFight_statue_handsUp_v1.ogg"}
+    },
+    Stage19NaviraTornadoIn = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_tornado_transformIn_op1_v1.ogg"}
+    },
+    Stage19NaviraTornadoOut = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_tornado_transformOut_v1.ogg"}
+    },
+    Stage19NaviraDeath = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_bossFight_navira_death_v1.ogg"}
+    },
+    Stage19Statue12 = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_statueGame_tap12_v1.ogg"}
+    },
+    Stage19Statue3 = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage19_statueGame_tap3_v1.ogg"}
+    },
+    Stage20TreeWakeup = {
+        loop = false,
+        mode = "random",
+        gain = 0.8,
+        delay = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_tree_wakeup_op1_v1.ogg", "kra_sfx_crocs_tree_wakeup_op2_v1.ogg",
+                 "kra_sfx_crocs_tree_wakeup_op3_v1.ogg"}
+    },
+    Stage20TreeHeadScratch = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.833,
+        files = {"kra_sfx_crocs_head_scratch_v1.ogg"}
+    },
+    Stage20TreeHitFloor = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_trunk_hit_floor_v1.ogg"}
+    },
+    Stage20TreeHitFloorRepeat = {
+        loop = false,
+        mode = "random",
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_tower_logBounce_var1_v1.ogg", "kra_sfx_tower_logBounce_var2_v1.ogg",
+                 "kra_sfx_tower_logBounce_var3_v1.ogg"}
+    },
+    Stage20BeesFly = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_bee_flying_v1.ogg"}
+    },
+    Stage20BeesThrow = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_bee_hit_floor_THROW_v1.ogg"}
+    },
+    Stage20BeesImpact = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_bee_hit_floor_IMPACT_v1.ogg"}
+    },
+    Stage20HouseImpact = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_arboreans_house_hit_var1_v1.ogg", "kra_sfx_crocs_arboreans_house_hit_var2_v1.ogg",
+                 "kra_sfx_crocs_arboreans_house_hit_var3_v1.ogg"}
+    },
+    Stage20HouseDestroyed = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_arboreans_house_destroy_v1.ogg"}
+    },
+    Stage21JuanchoEngineFail = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.333,
+        files = {"kra_sfx_crocs_juancho_engine_fail_v1.ogg"}
+    },
+    Stage21JuanchoEngineSuccess = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.333,
+        files = {"kra_sfx_crocs_juancho_engine_sucess_v1.ogg"}
+    },
+    Stage22AbominorAcidHit = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_acid_hit_floor_var1_v1.ogg",
+                 "kra_sfx_crocs_abominor_acid_hit_floor_var2_v1.ogg",
+                 "kra_sfx_crocs_abominor_acid_hit_floor_var3_v1.ogg"}
+    },
+    Stage22AbominorCatchArm = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_catch_arm_again_v1.ogg"}
+    },
+    Stage22AbominorDeath = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_death_v1.ogg"}
+    },
+    Stage22AbominorEatEnemy = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_eat_enemy_op2_v1.ogg"}
+    },
+    Stage22AbominorEatTower = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_eat_tower_eat_v1.ogg"}
+    },
+    Stage22AbominorEatTowerV2 = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_release_eatTower_v2.ogg"}
+    },
+    Stage22AbominorEatTowerFistRemove = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_eat_tower_fistRemove_v1.ogg"}
+    },
+    Stage22AbominorFireballHit = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_fireball_hit_floor_var1_v1.ogg",
+                 "kra_sfx_crocs_abominor_fireball_hit_floor_var2_v1.ogg",
+                 "kra_sfx_crocs_abominor_fireball_hit_floor_var3_v1.ogg"}
+    },
+    Stage22AbominorMeleeHit = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_hit_enemy_var1_v1.ogg", "kra_sfx_crocs_abominor_hit_enemy_var2_v1.ogg",
+                 "kra_sfx_crocs_abominor_hit_enemy_var3_v1.ogg"}
+    },
+    Stage22AbominorReleaseArm = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_release_arm_v1.ogg"}
+    },
+    Stage22AbominorReleaseArmEatTowerOneshot = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_release_arm-eatTower_v2.ogg"}
+    },
+    Stage22AbominorScreamTransformation = {
+        loop = false,
+        gain = 0.733,
+        source_group = "SFX",
+        delay = 0.9,
+        files = {"kra_sfx_crocs_abominor_grow_v1.ogg"}
+    },
+    Stage22AbominorSetFree = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_crocs_abominor_set_free_v1.ogg"}
+    },
+    Stage22AbominorShootAcid = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.0666,
+        files = {"kra_sfx_crocs_abominor_shoot_acid_throw_v1.ogg"}
+    },
+    Stage22AbominorShootFireball = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.0333,
+        files = {"kra_sfx_crocs_abominor_shoot_fireball_v1.ogg"}
+    },
+    Stage22AbominorSpitEggs = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.15,
+        files = {"kra_sfx_crocs_abominor_spit_eggs_var1_v1.ogg"}
+    },
+    Stage22AbominorFallToPath = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.0666,
+        files = {"kra_sfx_crocs_abominor_stones_hit_floor_oneShot_v1.ogg"}
+    },
+    Stage22TowerRestore = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 0,
+        files = {"kra_sfx_crocs_magic_tower_restore_op1_v1.ogg"}
+    },
+    Stage23BootOpen = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage23_automatonFoot_open_v1.ogg"}
+    },
+    Stage23BootClose = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage23_automatonFoot_close_v1.ogg"}
+    },
+    Stage23TruckOneShot = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_truck_oneShot_v1.ogg"}
+    },
+    Stage23TruckTap3 = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_truck_tap3_full_v1.ogg"}
+    },
+    Stage24UpgradeStationIn = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_upgradeStation_in_op2_v1.ogg"}
+    },
+    Stage24UpgradeStationOut = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_upgradeStation_out_v1.ogg"}
+    },
+    Stage24UpgradeStationTransform = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_upgradeStation_transform_v1.ogg"}
+    },
+    Stage24MachinistEnter = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_machinist_enter_op1_v1.ogg"}
+    },
+    Stage24MachinistExit = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_machinist_exit_v1.ogg"}
+    },
+    Stage24MachinistLever1 = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 0.3,
+        files = {"kra_sfx_stage24_machinist_lever_1_v1.ogg"}
+    },
+    Stage24MachinistLever2 = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 0.1,
+        files = {"kra_sfx_stage24_machinist_lever_2_v1.ogg"}
+    },
+    Stage24MachinistLever3 = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 0.1,
+        files = {"kra_sfx_stage24_machinist_lever_3_v1.ogg"}
+    },
+    Stage24FactoryTurnOnStart = {
+        loop = false,
+        gain = 0.2,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_factory_turnOn_start_v1.ogg"}
+    },
+    Stage24FactoryTurnOnEnd = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        delay = 0.7,
+        files = {"kra_sfx_stage24_factory_turnOn_end_v1.ogg"}
+    },
+    Stage24FactoryTurnOff = {
+        loop = false,
+        gain = 0.4,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_factory_turnOff_v1.ogg"}
+    },
+    Stage24Outro = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_outro_v1.ogg"}
+    },
+    Stage24BFMachinistCannonCastShot = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_bossFight_machinist_cannon_cast_shot_v1.ogg"}
+    },
+    Stage24BFMachinistCannonImpact = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage24_bossFight_machinist_cannon_impact_v1.ogg"}
+    },
+    Stage25TorsoOpen = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_torso_open_v1.ogg"}
+    },
+    Stage25TorsoOperateLever1 = {
+        loop = false,
+        gain = 0.9,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_torso_operate_lever1_v1.ogg"}
+    },
+    Stage25TorsoOperateLever2 = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_torso_operate_lever2_v1.ogg"}
+    },
+    Stage25TorsoClose = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_torso_close_v1.ogg"}
+    },
+    Stage25FistSlam = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_fist_slam_v1.ogg"}
+    },
+    Stage25TorsoButton = {
+        loop = false,
+        gain = 0.9,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_torso_button_v1.ogg"}
+    },
+    Stage25MissileLaunch = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_missile_launch_v1.ogg"}
+    },
+    Stage25MissileImpact = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_missile_impact_v1.ogg"}
+    },
+    Stage25IntroCrash = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_intro_crash_v1.ogg"}
+    },
+    Stage25IntroCrashFinalExplosion = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_intro_crash-finalExplosion_v1.ogg"}
+    },
+    Stage25Outro = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage25_outro_v1.ogg"}
+    },
+    Stage25SolidSnakeTap12 = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_solidSnake_tap12_v1.ogg"}
+    },
+    Stage25SolidSnakeTap3 = {
+        loop = false,
+        gain = 0.9,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_solidSnake_tap3-MG_v1.ogg"}
+    },
+    Stage26Chain = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        delay = 1,
+        files = {"kra_sfx_stage26_grymbeardChainPull_short.ogg"}
+    },
+    Stage26FistSpawnerHand = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_fistSpawner_HAND_var1_v1.ogg", "kra_sfx_stage26_fistSpawner_HAND_var2_v1.ogg",
+                 "kra_sfx_stage26_fistSpawner_HAND_var3_v1.ogg"}
+    },
+    Stage26FistSpawnerBoothFrontDoorOpen = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_fistSpawner_BoothFrontDoorOpen_v1.ogg"}
+    },
+    Stage26FistSpawnerBoothFrontDoorClose = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_fistSpawner_BoothFrontDoorClose_v1.ogg"}
+    },
+    Stage26CloneSpawnerIn = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_cloneSpawner_IN.ogg"}
+    },
+    Stage26CloneSpawnerOut = {
+        loop = false,
+        gain = 0.6,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_cloneSpawner_OUT.ogg"}
+    },
+    Stage26HulkSpawnerShotTransform = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_hulkSpawner_shot-transform_oneShot_v1.ogg"}
+    },
+    Stage26PreBFCinematic = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.5,
+        files = {"kra_sfx_stage26_preBFCinematic_v1.ogg"}
+    },
+    Stage26BFGrymbeardDamaged = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_bossFight_grymbeard_damaged_v1.ogg"}
+    },
+    Stage26Outro = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage26_outro_v2.ogg"}
+    },
+    Stage26MewtwoTap12 = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_mewtwo_tap12_v1.ogg"}
+    },
+    Stage26MewtwoTap3 = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_mewtwo_tap3_v1.ogg"}
+    },
+    Stage26MewtwoFlightFullSequence = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_mewtwo_flight_fullSeq_v1.ogg"}
+    },
+    Stage27Intro = {
+        loop = false,
+        gain = 0.5,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_intro_v1.ogg"}
+    },
+    Stage27PlatformUp = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_platformUp_v1.ogg"}
+    },
+    Stage27PlatformDown = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_platformDown_v1.ogg"}
+    },
+    Stage27PlatformDestroyChains = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_platformDestroy_chains_v1.ogg"}
+    },
+    Stage27PlatformDestroyHeadImpacts = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_platformDestroy_headImpacts_v1.ogg"}
+    },
+    Stage27CloneCannonOneShot = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        delay = 0.5,
+        files = {"kra_sfx_stage27_cloneCannon_oneShot_shot-retreat_v1.ogg"}
+    },
+    Stage27CloneCannonAlarm = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_cloneCannon_alarm_v1.ogg"}
+    },
+    Stage27HeadOpen = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        delay = 0.3,
+        files = {"kra_sfx_stage27_headOpen_v1.ogg"}
+    },
+    Stage27HeadClose = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_headClose_v1.ogg"}
+    },
+    Stage27HeadMove = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        delay = 0.5,
+        files = {"kra_sfx_stage27_headFireblast_move_v1.ogg"}
+    },
+    Stage27HeadReturn = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_headFireblast_move-returntocenter_v1.ogg"}
+    },
+    Stage27HeadFireblastCharge = {
+        source_group = "SFX",
+        gain = 0.9,
+        loop = false,
+        interruptible = true,
+        files = {"kra_sfx_stage27_headFireblast_charge_v1.ogg"}
+    },
+    Stage27HeadFireblastRelease = {
+        source_group = "SFX",
+        gain = 1,
+        loop = false,
+        interruptible = true,
+        files = {"kra_sfx_stage27_headFireblast_release_v1.ogg"}
+    },
+    Stage27HeadFireblastCancelTap = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_headFireblast_cancelTap_v1.ogg"}
+    },
+    Stage27HeadFireblastInterrupt = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_headFireblast_interrupt_v1.ogg"}
+    },
+    Stage27PreBossfightCinematic = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_preBossFightCinematic_v1.ogg"}
+    },
+    Stage27BFGrymbeardDeath = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_bossFight_grymbeard_death_v1.ogg"}
+    },
+    Stage27BFGrymbeardMeleeAttack = {
+        loop = false,
+        gain = 0.8,
+        mode = "random",
+        delay = 0.9,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_bossFight_grymbeard_meleeAttack_var1_v1.ogg",
+                 "kra_sfx_stage27_bossFight_grymbeard_meleeAttack_var2_v1.ogg",
+                 "kra_sfx_stage27_bossFight_grymbeard_meleeAttack_var3_v1.ogg"}
+    },
+    Stage27BFGrymbeardRangedAttackCast = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_bossFight_grymbeard_rangedAttack_cast_v1.ogg"}
+    },
+    Stage27BFGrymbeardRangedAttackImpact = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_bossFight_grymbeard_rangedAttack_impact_v1.ogg"}
+    },
+    Stage27BFRobotScrapCast = {
+        loop = false,
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_stage27_bossFight_robotScrap_cast_v1.ogg"}
+    },
+    Stage27BeamWorkersTap1 = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx-easterEgg_beamWorkers_tap1_v1.ogg"}
+    },
+    Stage27BeamWorkersTap2 = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx-easterEgg_beamWorkers_tap2_v1.ogg"}
+    },
+    Stage27BeamWorkersTap3 = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx-easterEgg_beamWorkers_tap3_v1.ogg"}
+    },
+    Stage30BossfightCinematic = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_cinematic_op1_v1.ogg"}
+    },
+    Stage30BossfightClawOpen = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_claw_open_v1.ogg"}
+    },
+    Stage30BossfightClawClose = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_claw_close_v1.ogg"}
+    },
+    Stage30BossfightRange = {
+        loop = false,
+        mode = "random",
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_range_var1_v1.ogg", "kra_sfx_spiders_bossfight_range_var2_v1.ogg",
+                 "kra_sfx_spiders_bossfight_range_var3_v1.ogg"}
+    },
+    Stage30BossfightSpit = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_spit_v1.ogg"}
+    },
+    Stage30BossfightJump = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_jump_v1.ogg"}
+    },
+    Stage30BossfightFall = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_fall_v1.ogg"}
+    },
+    Stage30BossfightDead = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_dead_v1.ogg"}
+    },
+    Stage30BossfightDrainLoopStart = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_drain_charge_loop-start_v1.ogg"}
+    },
+    Stage30BossfightDrainLoop = {
+        loop = true,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_drain_charge_loop_v1.ogg"}
+    },
+    Stage30BossfightDrainExecute = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_drain_execute_v1.ogg"}
+    },
+    Stage30BossfightBuffCharge = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_spiders_bossfight_buff_charge_v1.ogg"}
+    },
     Terrain3GlareOnSmall1 = {
         loop = false,
         gain = 1,
@@ -11339,6 +13433,33 @@ local kr5 = {
         source_group = "SFX",
         delay = 0.75,
         files = {"kra_sfx_terrain3_glare_off_v1.ogg"}
+    },
+    Terrain4CheshireCatIn = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_cheshireCat_appear_v1.ogg"}
+    },
+    Terrain4CheshireCatOut = {
+        loop = false,
+        gain = 0.7,
+        source_group = "SFX",
+        delay = 1.4,
+        files = {"kra_sfx_easterEgg_cheshireCat_disappear_v1.ogg"}
+    },
+    Terrain4HowlingTree = {
+        loop = false,
+        mode = "random",
+        gain = 1,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_howlingTree_var1_v1.ogg", "kra_sfx_easterEgg_howlingTree_var2_v1.ogg",
+                 "kra_sfx_easterEgg_howlingTree_var3_v1.ogg"}
+    },
+    Terrain6ExodiaPart = {
+        loop = false,
+        gain = 0.8,
+        source_group = "SFX",
+        files = {"kra_sfx_easterEgg_exodiaPart_v1.ogg"}
     },
     ItemsClusterBombCast = {
         loop = false,
@@ -11636,7 +13757,7 @@ local kr5 = {
         gain = 0.3,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t2_preparation1_vN.ogg"}
+        files = {"kr5_bgmusic_t2_preparation2_v2.ogg"}
     },
     MusicBattlePrep_09 = {
         source_group = "MUSIC",
@@ -11650,7 +13771,7 @@ local kr5 = {
         gain = 0.3,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t2_preparation1_vN.ogg"}
+        files = {"kr5_bgmusic_t2_preparation2_v2.ogg"}
     },
     MusicBattlePrep_11 = {
         source_group = "MUSIC",
@@ -11699,42 +13820,98 @@ local kr5 = {
         gain = 0.5,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update1_bgmusic_preparation1_v3.ogg"}
     },
     MusicBattlePrep_18 = {
         source_group = "MUSIC",
         gain = 0.6,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update1_bgmusic_preparation1_v3.ogg"}
     },
     MusicBattlePrep_19 = {
         source_group = "MUSIC",
         gain = 0.6,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update1_bgmusic_preparation1_v3.ogg"}
     },
     MusicBattlePrep_20 = {
         source_group = "MUSIC",
         gain = 0.6,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update2_bgmusic_preparation1_v1.ogg"}
     },
     MusicBattlePrep_21 = {
         source_group = "MUSIC",
         gain = 0.5,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update2_bgmusic_preparation1_v1.ogg"}
     },
     MusicBattlePrep_22 = {
         source_group = "MUSIC",
         gain = 0.3,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_preparation1_v1.ogg"}
+        files = {"kr5_update2_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_23 = {
+        source_group = "MUSIC",
+        gain = 0.3,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_24 = {
+        source_group = "MUSIC",
+        gain = 0.3,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_preparation2_v2.ogg"}
+    },
+    MusicBattlePrep_25 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_26 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_preparation2_v2.ogg"}
+    },
+    MusicBattlePrep_27 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_28 = {
+        source_group = "MUSIC",
+        gain = 0.6,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_29 = {
+        source_group = "MUSIC",
+        gain = 0.5,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_preparation1_v1.ogg"}
+    },
+    MusicBattlePrep_30 = {
+        source_group = "MUSIC",
+        gain = 0.3,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_preparation1_v1.ogg"}
     },
     MusicBattlePrep_81 = {
         source_group = "MUSIC",
@@ -11804,7 +13981,7 @@ local kr5 = {
         gain = 0.25,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t2_battle1_v1.ogg"}
+        files = {"kr5_bgmusic_t2_battle2_v2.ogg"}
     },
     MusicBattle_09 = {
         source_group = "MUSIC",
@@ -11818,7 +13995,7 @@ local kr5 = {
         gain = 0.25,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t2_battle1_v1.ogg"}
+        files = {"kr5_bgmusic_t2_battle2_v2.ogg"}
     },
     MusicBattle_11 = {
         source_group = "MUSIC",
@@ -11864,45 +14041,101 @@ local kr5 = {
     },
     MusicBattle_17 = {
         source_group = "MUSIC",
-        gain = 0.2,
+        gain = 0.4,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update1_bgmusic_battle1_v2.ogg"}
     },
     MusicBattle_18 = {
         source_group = "MUSIC",
-        gain = 0.2,
+        gain = 0.4,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update1_bgmusic_battle1_v2.ogg"}
     },
     MusicBattle_19 = {
         source_group = "MUSIC",
-        gain = 0.2,
+        gain = 0.4,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update1_bgmusic_battle1_v2.ogg"}
     },
     MusicBattle_20 = {
         source_group = "MUSIC",
         gain = 0.2,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update2_bgmusic_battle1_v1.ogg"}
     },
     MusicBattle_21 = {
         source_group = "MUSIC",
         gain = 0.2,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update2_bgmusic_battle1_v1.ogg"}
     },
     MusicBattle_22 = {
         source_group = "MUSIC",
         gain = 0.3,
         loop = true,
         stream = true,
-        files = {"kr5_bgmusic_t3_battle2_v1"}
+        files = {"kr5_update2_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_23 = {
+        source_group = "MUSIC",
+        gain = 0.25,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_24 = {
+        source_group = "MUSIC",
+        gain = 0.3,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_battle2_v1.ogg"}
+    },
+    MusicBattle_25 = {
+        source_group = "MUSIC",
+        gain = 0.25,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_26 = {
+        source_group = "MUSIC",
+        gain = 0.3,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_battle2_v1.ogg"}
+    },
+    MusicBattle_27 = {
+        source_group = "MUSIC",
+        gain = 0.25,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_28 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_29 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_battle1_v1.ogg"}
+    },
+    MusicBattle_30 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_battle1_v1.ogg"}
     },
     MusicBattle_81 = {
         source_group = "MUSIC",
@@ -11946,17 +14179,39 @@ local kr5 = {
         stream = true,
         files = {"kr5_bgmusic_t3_boss2_v1.ogg"}
     },
+    MusicBossFight_19 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update1_bgmusic_bossBattle_v2.ogg"}
+    },
+    MusicBossFight_22 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update2_bgmusic_bossBattle_v1.ogg"}
+    },
+    MusicBossFight_27 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_dlc1_bgmusic_bossBattle_v1.ogg"}
+    },
+    MusicBossFight_30 = {
+        source_group = "MUSIC",
+        gain = 0.4,
+        loop = true,
+        stream = true,
+        files = {"kr5_update3_bgmusic_bossBattle_v1.ogg"}
+    },
     MusicEndVictory = {
         source_group = "MUSIC",
         gain = 0.7,
         stream = true,
         files = {"kr5_bgmusic_t3_boss_victory.ogg"}
-    },
-    MusicEndCredits = {
-        source_group = "MUSIC",
-        gain = 0.7,
-        stream = true,
-        files = {"kro_bgmusic_creditos[master].ogg"}
     },
     MusicSuspense = {
         source_group = "MUSIC",
@@ -11965,6 +14220,7 @@ local kr5 = {
         files = {"MusicSuspense.ogg"}
     }
 }
+
 
 
 local merge_conflict_tables = require("script_utils").merge_conflict_tables

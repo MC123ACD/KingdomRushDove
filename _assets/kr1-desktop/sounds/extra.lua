@@ -2255,21 +2255,6 @@ local kr3_sounds = {
     }
 }
 
-local kr5_groups = {
-    hero_hunter = {
-        alias = "hero_hunter"
-    },
-    hero_space_elf = {
-        alias = "hero_space_elf"
-    },
-    hero_raelyn = {
-        alias = "hero_raelyn"
-    },
-    hero_dragon_gem = {
-        alias = "hero_dragon_gem"
-    }
-}
-
 local merge_conflict_tables = require("script_utils").merge_conflict_tables
 
 local sounds = merge_conflict_tables(kr1_sounds, kr2_sounds)
