@@ -529,7 +529,6 @@ local function barrack_towers()
     tower_templar.powers.blood.enc_icon = 26
     tower_templar.barrack.soldier_type = "soldier_templar"
     tower_templar.barrack.rally_range = 160
-    -- tower_templar.render.sprites[1].name = "terrain_specials_%04i"
     tower_templar.render.sprites[1].name = "terrain_barrack_%04i"
     tower_templar.render.sprites[1].offset = vec_2(0, 8)
     tower_templar.render.sprites[2].name = "tower_templars_layer1_0001"
@@ -637,9 +636,7 @@ local function barrack_towers()
     tower_assassin.powers.counter.enc_icon = 23
     tower_assassin.barrack.soldier_type = "soldier_assassin"
     tower_assassin.barrack.rally_range = 165
-    -- tower_assassin.render.sprites[1].name = "terrain_specials_%04i"
     tower_assassin.render.sprites[1].name = "terrain_barrack_%04i"
-    -- tower_assassin.render.sprites[1].offset = vec_2(0, 8)
     tower_assassin.render.sprites[1].offset = vec_2(0, 11)
     tower_assassin.render.sprites[2].name = "tower_assasins_layer1_0005"
     tower_assassin.render.sprites[2].offset = vec_2(0, 30)
@@ -749,8 +746,8 @@ local function barrack_towers()
     tt.powers.hammer = E:clone_c("power")
     tt.powers.hammer.price_base = 100
     tt.powers.hammer.price_inc = 100
-    tt.render.sprites[1].name = "terrain_specials_%04i"
-    tt.render.sprites[1].offset = vec_2(0, 8)
+    tt.render.sprites[1].name = "terrain_barrack_%04i"
+    tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2].name = "DwarfHall_0001"
     tt.render.sprites[2].offset = vec_2(0, 30)
     tt.render.sprites[2].hidden = true
@@ -1304,7 +1301,6 @@ local function barrack_towers()
     tt.powers.blade_mail = CC("power")
     tt.powers.blade_mail.price_base = 135
     tt.powers.blade_mail.price_inc = 135
-    -- tt.render.sprites[1].name = "terrains_0003"
     tt.render.sprites[1].name = "terrain_barrack_%04i"
     tt.render.sprites[2].name = "mercenaryDraw_tower_layer1_0001"
     tt.render.sprites[2].offset = vec_2(0, 29)
@@ -1411,7 +1407,6 @@ local function barrack_towers()
     tt.editor.props = table.append(tt.editor.props, {{"barrack.rally_pos", PT_COORDS}}, true)
     tt.info.i18n_key = "ELVES_EWOK_TOWER"
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrains_0001"
     tt.render.sprites[1].name = "terrain_barrack_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")

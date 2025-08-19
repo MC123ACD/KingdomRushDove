@@ -45,8 +45,8 @@ local function engineer_towers()
     tt.powers.cluster.enc_icon = 18
     tt.powers.cluster.attack_idx = 3
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrain_artillery_bfg_%04i"
-    tt.render.sprites[1].offset = vec_2(0, 15)
+    tt.render.sprites[1].name = "terrain_artillery_%04i"
+    tt.render.sprites[1].offset = vec_2(0, 16)
     tt.render.sprites[2] = CC("sprite")
     tt.render.sprites[2].prefix = "tower_bfg"
     tt.render.sprites[2].name = "idle"
@@ -176,7 +176,7 @@ local function engineer_towers()
     tt.powers.overcharge.price_inc = 125
     tt.powers.overcharge.enc_icon = 10
     tt.render.sprites[1].animated = false
-    tt.render.sprites[1].name = "terrain_artillery_tesla_%04i"
+    tt.render.sprites[1].name = "terrain_artillery_%04i"
     tt.render.sprites[1].offset = vec_2(0, 15)
     tt.render.sprites[2] = CC("sprite")
     tt.render.sprites[2].prefix = "tower_tesla"
@@ -284,7 +284,6 @@ local function engineer_towers()
     tower_dwaarp.main_script.insert = scripts.tower_dwaarp.insert
     tower_dwaarp.main_script.update = scripts.tower_dwaarp.update
     tower_dwaarp.render.sprites[1].animated = false
-    -- tower_dwaarp.render.sprites[1].name = "terrain_specials_%04i"
     tower_dwaarp.render.sprites[1].name = "terrain_artillery_%04i"
     tower_dwaarp.render.sprites[1].offset = vec_2(0, 12)
     tower_dwaarp.render.sprites[2] = E:clone_c("sprite")
@@ -413,7 +412,6 @@ local function engineer_towers()
     tt.barrack.soldier_type = "soldier_mecha"
     tt.barrack.rally_range = 175
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrain_specials_%04i"
     tt.render.sprites[1].name = "terrain_artillery_%04i"
     tt.render.sprites[1].offset = vec_2(0, 6)
 
@@ -578,7 +576,6 @@ local function engineer_towers()
     tt.attacks.list[1].sound = "TeslaAttack"
     tt.attacks.list[1].node_prediction = fts(11.5)
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrain_specials_%04i"
     tt.render.sprites[1].name = "terrain_artillery_%04i"
     tt.render.sprites[1].offset = vec_2(0, 13)
     tt.render.sprites[2] = E:clone_c("sprite")
@@ -947,7 +944,6 @@ local function engineer_towers()
     tt.powers.fiery_nuts.attack_idx = 2
     tt.powers.fiery_nuts.enc_icon = 15
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrains_%04i"
     tt.render.sprites[1].name = "terrain_artillery_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
 

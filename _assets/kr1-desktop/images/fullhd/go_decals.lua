@@ -640,134 +640,134 @@ local kr1 = {
         f_quad = {738, 104, 138, 90},
         alias = {}
     },
-    terrain_archer_musketeer_0001 = {
-        a_name = "go_decals-1.png",
-        size = {135, 81},
-        trim = {6, 9, 6, 4},
-        a_size = {1024, 1024},
-        f_quad = {300, 611, 123, 68},
-        alias = {}
-    },
-    terrain_archer_musketeer_0001_over = {
-        a_name = "go_decals-1.png",
-        size = {181, 109},
-        trim = {18, 11, 18, 6},
-        a_size = {1024, 1024},
-        f_quad = {6, 190, 145, 92},
-        alias = {}
-    },
-    terrain_archer_musketeer_0002 = {
-        a_name = "go_decals-1.png",
-        size = {135, 81},
-        trim = {6, 9, 6, 4},
-        a_size = {1024, 1024},
-        f_quad = {300, 685, 123, 68},
-        alias = {}
-    },
-    terrain_archer_musketeer_0002_over = {
-        a_name = "go_decals-1.png",
-        size = {181, 109},
-        trim = {18, 11, 18, 6},
-        a_size = {1024, 1024},
-        f_quad = {6, 288, 145, 92},
-        alias = {}
-    },
-    terrain_archer_musketeer_0003 = {
-        a_name = "go_decals-1.png",
-        size = {135, 81},
-        trim = {5, 6, 6, 8},
-        a_size = {1024, 1024},
-        f_quad = {839, 282, 124, 67},
-        alias = {}
-    },
-    terrain_archer_musketeer_0003_over = {
-        a_name = "go_decals-1.png",
-        size = {181, 109},
-        trim = {17, 9, 18, 10},
-        a_size = {1024, 1024},
-        f_quad = {806, 6, 146, 90},
-        alias = {}
-    },
-    terrain_archer_musketeer_0008 = {
-        a_name = "go_decals-1.png",
-        size = {135, 81},
-        trim = {3, 10, 1, 9},
-        a_size = {1024, 1024},
-        f_quad = {723, 201, 131, 62},
-        alias = {}
-    },
-    terrain_archer_musketeer_0008_over = {
-        a_name = "go_decals-1.png",
-        size = {181, 109},
-        trim = {13, 9, 12, 8},
-        a_size = {1024, 1024},
-        f_quad = {6, 6, 156, 92},
-        alias = {}
-    },
-    terrain_archer_ranger_0001 = {
-        a_name = "go_decals-1.png",
-        size = {129, 72},
-        trim = {5, 8, 6, 6},
-        a_size = {1024, 1024},
-        f_quad = {561, 369, 118, 58},
-        alias = {}
-    },
-    terrain_archer_ranger_0001_over = {
-        a_name = "go_decals-1.png",
-        size = {173, 96},
-        trim = {17, 8, 17, 6},
-        a_size = {1024, 1024},
-        f_quad = {304, 104, 139, 82},
-        alias = {}
-    },
-    terrain_archer_ranger_0002 = {
-        a_name = "go_decals-1.png",
-        size = {129, 72},
-        trim = {5, 8, 6, 6},
-        a_size = {1024, 1024},
-        f_quad = {685, 369, 118, 58},
-        alias = {}
-    },
-    terrain_archer_ranger_0002_over = {
-        a_name = "go_decals-1.png",
-        size = {173, 96},
-        trim = {17, 8, 17, 6},
-        a_size = {1024, 1024},
-        f_quad = {449, 104, 139, 82},
-        alias = {}
-    },
-    terrain_archer_ranger_0003 = {
-        a_name = "go_decals-1.png",
-        size = {129, 72},
-        trim = {9, 5, 7, 4},
-        a_size = {1024, 1024},
-        f_quad = {677, 596, 113, 63},
-        alias = {}
-    },
-    terrain_archer_ranger_0003_over = {
-        a_name = "go_decals-1.png",
-        size = {173, 96},
-        trim = {19, 7, 18, 4},
-        a_size = {1024, 1024},
-        f_quad = {158, 282, 136, 85},
-        alias = {}
-    },
-    terrain_archer_ranger_0008 = {
-        a_name = "go_decals-1.png",
-        size = {129, 72},
-        trim = {9, 5, 9, 4},
-        a_size = {1024, 1024},
-        f_quad = {676, 738, 111, 63},
-        alias = {}
-    },
-    terrain_archer_ranger_0008_over = {
-        a_name = "go_decals-1.png",
-        size = {173, 96},
-        trim = {17, 3, 18, 2},
-        a_size = {1024, 1024},
-        f_quad = {594, 104, 138, 91},
-        alias = {}
-    },
+    -- terrain_archer_musketeer_0001 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {135, 81},
+    --     trim = {6, 9, 6, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {300, 611, 123, 68},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0001_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {181, 109},
+    --     trim = {18, 11, 18, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 190, 145, 92},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0002 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {135, 81},
+    --     trim = {6, 9, 6, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {300, 685, 123, 68},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0002_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {181, 109},
+    --     trim = {18, 11, 18, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 288, 145, 92},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0003 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {135, 81},
+    --     trim = {5, 6, 6, 8},
+    --     a_size = {1024, 1024},
+    --     f_quad = {839, 282, 124, 67},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0003_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {181, 109},
+    --     trim = {17, 9, 18, 10},
+    --     a_size = {1024, 1024},
+    --     f_quad = {806, 6, 146, 90},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0008 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {135, 81},
+    --     trim = {3, 10, 1, 9},
+    --     a_size = {1024, 1024},
+    --     f_quad = {723, 201, 131, 62},
+    --     alias = {}
+    -- },
+    -- terrain_archer_musketeer_0008_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {181, 109},
+    --     trim = {13, 9, 12, 8},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 6, 156, 92},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0001 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {129, 72},
+    --     trim = {5, 8, 6, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {561, 369, 118, 58},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0001_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {173, 96},
+    --     trim = {17, 8, 17, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {304, 104, 139, 82},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0002 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {129, 72},
+    --     trim = {5, 8, 6, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {685, 369, 118, 58},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0002_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {173, 96},
+    --     trim = {17, 8, 17, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {449, 104, 139, 82},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0003 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {129, 72},
+    --     trim = {9, 5, 7, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {677, 596, 113, 63},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0003_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {173, 96},
+    --     trim = {19, 7, 18, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {158, 282, 136, 85},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0008 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {129, 72},
+    --     trim = {9, 5, 9, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {676, 738, 111, 63},
+    --     alias = {}
+    -- },
+    -- terrain_archer_ranger_0008_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {173, 96},
+    --     trim = {17, 3, 18, 2},
+    --     a_size = {1024, 1024},
+    --     f_quad = {594, 104, 138, 91},
+    --     alias = {}
+    -- },
     terrain_artillery_0001 = {
         a_name = "go_decals-1.png",
         size = {129, 70},
@@ -832,134 +832,134 @@ local kr1 = {
         f_quad = {158, 887, 132, 79},
         alias = {}
     },
-    terrain_artillery_bfg_0001 = {
-        a_name = "go_decals-1.png",
-        size = {143, 70},
-        trim = {5, 6, 3, 5},
-        a_size = {1024, 1024},
-        f_quad = {301, 201, 135, 59},
-        alias = {}
-    },
-    terrain_artillery_bfg_0001_over = {
-        a_name = "go_decals-1.png",
-        size = {192, 94},
-        trim = {20, 6, 17, 6},
-        a_size = {1024, 1024},
-        f_quad = {168, 6, 155, 82},
-        alias = {}
-    },
-    terrain_artillery_bfg_0002 = {
-        a_name = "go_decals-1.png",
-        size = {143, 70},
-        trim = {5, 6, 3, 5},
-        a_size = {1024, 1024},
-        f_quad = {442, 201, 135, 59},
-        alias = {}
-    },
-    terrain_artillery_bfg_0002_over = {
-        a_name = "go_decals-1.png",
-        size = {192, 94},
-        trim = {20, 6, 17, 6},
-        a_size = {1024, 1024},
-        f_quad = {329, 6, 155, 82},
-        alias = {}
-    },
-    terrain_artillery_bfg_0003 = {
-        a_name = "go_decals-1.png",
-        size = {143, 70},
-        trim = {5, 5, 14, 6},
-        a_size = {1024, 1024},
-        f_quad = {300, 546, 124, 59},
-        alias = {}
-    },
-    terrain_artillery_bfg_0003_over = {
-        a_name = "go_decals-1.png",
-        size = {192, 94},
-        trim = {21, 6, 27, 6},
-        a_size = {1024, 1024},
-        f_quad = {6, 386, 144, 82},
-        alias = {}
-    },
-    terrain_artillery_bfg_0008 = {
-        a_name = "go_decals-1.png",
-        size = {143, 70},
-        trim = {15, 4, 15, 4},
-        a_size = {1024, 1024},
-        f_quad = {796, 596, 113, 62},
-        alias = {}
-    },
-    terrain_artillery_bfg_0008_over = {
-        a_name = "go_decals-1.png",
-        size = {192, 94},
-        trim = {26, 1, 25, 1},
-        a_size = {1024, 1024},
-        f_quad = {6, 654, 141, 92},
-        alias = {}
-    },
-    terrain_artillery_tesla_0001 = {
-        a_name = "go_decals-1.png",
-        size = {132, 72},
-        trim = {5, 10, 7, 6},
-        a_size = {1024, 1024},
-        f_quad = {300, 891, 120, 56},
-        alias = {}
-    },
-    terrain_artillery_tesla_0001_over = {
-        a_name = "go_decals-1.png",
-        size = {177, 96},
-        trim = {17, 10, 19, 6},
-        a_size = {1024, 1024},
-        f_quad = {6, 839, 141, 80},
-        alias = {}
-    },
-    terrain_artillery_tesla_0002 = {
-        a_name = "go_decals-1.png",
-        size = {132, 72},
-        trim = {5, 10, 7, 6},
-        a_size = {1024, 1024},
-        f_quad = {300, 953, 120, 56},
-        alias = {}
-    },
-    terrain_artillery_tesla_0002_over = {
-        a_name = "go_decals-1.png",
-        size = {177, 96},
-        trim = {17, 10, 19, 6},
-        a_size = {1024, 1024},
-        f_quad = {6, 925, 141, 80},
-        alias = {}
-    },
-    terrain_artillery_tesla_0003 = {
-        a_name = "go_decals-1.png",
-        size = {132, 72},
-        trim = {5, 5, 8, 8},
-        a_size = {1024, 1024},
-        f_quad = {436, 369, 119, 59},
-        alias = {}
-    },
-    terrain_artillery_tesla_0003_over = {
-        a_name = "go_decals-1.png",
-        size = {177, 96},
-        trim = {16, 7, 20, 8},
-        a_size = {1024, 1024},
-        f_quad = {6, 752, 141, 81},
-        alias = {}
-    },
-    terrain_artillery_tesla_0008 = {
-        a_name = "go_decals-1.png",
-        size = {132, 72},
-        trim = {9, 4, 10, 6},
-        a_size = {1024, 1024},
-        f_quad = {557, 775, 113, 62},
-        alias = {}
-    },
-    terrain_artillery_tesla_0008_over = {
-        a_name = "go_decals-1.png",
-        size = {177, 96},
-        trim = {18, 2, 19, 3},
-        a_size = {1024, 1024},
-        f_quad = {158, 104, 140, 91},
-        alias = {}
-    },
+    -- terrain_artillery_bfg_0001 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {143, 70},
+    --     trim = {5, 6, 3, 5},
+    --     a_size = {1024, 1024},
+    --     f_quad = {301, 201, 135, 59},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0001_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {192, 94},
+    --     trim = {20, 6, 17, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {168, 6, 155, 82},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0002 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {143, 70},
+    --     trim = {5, 6, 3, 5},
+    --     a_size = {1024, 1024},
+    --     f_quad = {442, 201, 135, 59},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0002_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {192, 94},
+    --     trim = {20, 6, 17, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {329, 6, 155, 82},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0003 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {143, 70},
+    --     trim = {5, 5, 14, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {300, 546, 124, 59},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0003_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {192, 94},
+    --     trim = {21, 6, 27, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 386, 144, 82},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0008 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {143, 70},
+    --     trim = {15, 4, 15, 4},
+    --     a_size = {1024, 1024},
+    --     f_quad = {796, 596, 113, 62},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_bfg_0008_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {192, 94},
+    --     trim = {26, 1, 25, 1},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 654, 141, 92},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0001 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {132, 72},
+    --     trim = {5, 10, 7, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {300, 891, 120, 56},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0001_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {177, 96},
+    --     trim = {17, 10, 19, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 839, 141, 80},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0002 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {132, 72},
+    --     trim = {5, 10, 7, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {300, 953, 120, 56},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0002_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {177, 96},
+    --     trim = {17, 10, 19, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 925, 141, 80},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0003 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {132, 72},
+    --     trim = {5, 5, 8, 8},
+    --     a_size = {1024, 1024},
+    --     f_quad = {436, 369, 119, 59},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0003_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {177, 96},
+    --     trim = {16, 7, 20, 8},
+    --     a_size = {1024, 1024},
+    --     f_quad = {6, 752, 141, 81},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0008 = {
+    --     a_name = "go_decals-1.png",
+    --     size = {132, 72},
+    --     trim = {9, 4, 10, 6},
+    --     a_size = {1024, 1024},
+    --     f_quad = {557, 775, 113, 62},
+    --     alias = {}
+    -- },
+    -- terrain_artillery_tesla_0008_over = {
+    --     a_name = "go_decals-1.png",
+    --     size = {177, 96},
+    --     trim = {18, 2, 19, 3},
+    --     a_size = {1024, 1024},
+    --     f_quad = {158, 104, 140, 91},
+    --     alias = {}
+    -- },
     terrain_barrack_0001 = {
         a_name = "go_decals-1.png",
         size = {123, 72},

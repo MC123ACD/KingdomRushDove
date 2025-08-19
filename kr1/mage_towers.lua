@@ -355,9 +355,7 @@ local function mage_towers()
     tower_archmage.main_script.remove = scripts.tower_archmage.remove
     tower_archmage.main_script.update = scripts.tower_archmage.update
     tower_archmage.render.sprites[1].animated = false
-    -- tower_archmage.render.sprites[1].name = "terrain_specials_%04i"
     tower_archmage.render.sprites[1].name = "terrain_mage_%04i"
-    -- tower_archmage.render.sprites[1].offset = vec_2(0, 9)
     tower_archmage.render.sprites[1].offset = vec_2(0, 11)
     tower_archmage.render.sprites[2] = E:clone_c("sprite")
     tower_archmage.render.sprites[2].animated = false
@@ -504,10 +502,8 @@ local function mage_towers()
     tower_necromancer.auras.list[1] = E:clone_c("aura_attack")
     tower_necromancer.auras.list[1].name = "necromancer_aura"
     tower_necromancer.auras.list[1].cooldown = 0
-    -- tower_necromancer.render.sprites[1].name = "terrain_specials_%04i"
     tower_necromancer.render.sprites[1].name = "terrain_mage_%04i"
     tower_necromancer.render.sprites[1].animated = false
-    -- tower_necromancer.render.sprites[1].offset = vec_2(0, 7)
     tower_necromancer.render.sprites[1].offset = vec_2(0, 9)
     tower_necromancer.render.sprites[2] = E:clone_c("sprite")
     tower_necromancer.render.sprites[2].name = "NecromancerTower"
@@ -843,7 +839,6 @@ local function mage_towers()
     tt.powers.sentinel.ts = 0
     tt.powers.sentinel.cooldown = 1
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrains_%04i"
     tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
@@ -1076,7 +1071,6 @@ local function mage_towers()
     tt.powers.ward.target_count = {1, 3, 5}
     tt.powers.ward.enc_icon = 17
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrains_%04i"
     tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
@@ -1216,7 +1210,6 @@ local function mage_towers()
     tt.powers.improve_shot.price_inc = 200
     tt.powers.improve_shot.max_level = 2
     tt.render.sprites[1].animated = false
-    -- tt.render.sprites[1].name = "terrains_0002"
     tt.render.sprites[1].name = "terrain_mage_%04i"
     tt.render.sprites[1].offset = vec_2(0, 10)
     tt.render.sprites[2] = E:clone_c("sprite")
