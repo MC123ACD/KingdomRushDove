@@ -256,13 +256,10 @@ local spell = E:register_t("spell")
 E:add_comps(spell, "spell", "main_script")
 
 local bullet = E:register_t("bullet")
-
 E:add_comps(bullet, "bullet", "pos", "render", "sound_events", "main_script")
-
 bullet.render.sprites[1].z = Z_BULLETS
 
 local arrow = E:register_t("arrow", "bullet")
-
 arrow.bullet.hit_distance = 22
 arrow.bullet.hit_blood_fx = "fx_blood_splat"
 arrow.bullet.miss_decal = "decal_arrow"

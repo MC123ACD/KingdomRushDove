@@ -36706,6 +36706,4 @@ return {
         f_quad = {1847, 126, 107, 93},
         alias = {"webspitterSpider_web-f_0016"}
     }
-
-
 }

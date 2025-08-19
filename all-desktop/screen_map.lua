@@ -1635,7 +1635,11 @@ function MapView:show_flags(num)
                 flag:set_data(level)
                 self.flags_layer:add_child(flag)
 
-                self.flags[i] = flag
+                if extra or custom then
+                    self.flags[i + jnum] = flag
+                else
+                    self.flags[i] = flag
+                end
                 flag.pos = flag_pos
 
                 flag:set_mode("nostar")
@@ -1674,7 +1678,11 @@ function MapView:show_flags(num)
 
                     self.flags_layer:add_child(wing)
 
-                    self.wings[i] = wing
+                    if extra or custom then
+                        self.wings[i+jnum] = wing
+                    else
+                        self.wings[i] = wing
+                    end
 
                     wing:order_below(flag)
 
@@ -1730,7 +1738,7 @@ function MapView:show_flags(num)
             wait(0.5)
         end
 
-        local function show_flag2(i, jnum)
+        local function show_flag2(i, jnum, extra)
             local level = levels[i + jnum]
 
             if not level then
@@ -1738,8 +1746,14 @@ function MapView:show_flags(num)
             else
                 local points_data = screen_map.map_points.points[i]
                 -- local flag_pos = screen_map.map_points.flags[i].pos
-                local flag = self.flags[i]
-                local wing = self.wings[i]
+                local flag, wing
+                if extra then
+                    flag = self.flags[i+jnum]
+                    wing = self.wings[i+jnum]
+                else
+                    flag = self.flags[i]
+                    wing = self.wings[i]
+                end
 
                 if flag and ud.show_stars_level == i + jnum then
                     flag:disable(false)
@@ -1843,8 +1857,15 @@ function MapView:show_flags(num)
         for i = 1, max_level do
             show_flag2(i, jnum)
         end
-        if num == 1 then
-            show_flag2(27, 44)
+        if GS["extra_level" .. num] then
+            for i = 1, GS["extra_level" .. num] do
+                show_flag2(i, GS["extra_level" .. num .. "_from"], true)
+            end
+        end
+        if GS["custom_level" .. num] then
+            for i = 1, GS["custom_level" .. num] do
+                show_flag2(i, GS["custom_level" .. num .. "_from"], true)
+            end
         end
 
         self.show_flags_in_progress = nil
