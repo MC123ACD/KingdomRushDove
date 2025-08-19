@@ -10935,15 +10935,23 @@ return function(scripts)
                     end
                 end
 
-                brk, sta = SU.y_soldier_ranged_attacks(store, this)
+                if this.soldier.target_id then
+                    brk, sta = SU.y_soldier_ranged_attacks(store, this)
 
-                if brk then
-                    goto label_90_0
+                    if brk then
+                        goto label_90_0
+                    end
                 end
 
                 brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
                 if brk or sta ~= A_NO_TARGET then
+                    goto label_90_0
+                end
+
+                brk, sta = SU.y_soldier_ranged_attacks(store, this)
+
+                if brk then
                     goto label_90_0
                 end
 
