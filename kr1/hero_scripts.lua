@@ -5150,6 +5150,13 @@ return function(scripts)
 
             queue_insert(store, ps)
 
+            local function apply_fire(target)
+                local m = E:create_entity(this.melee.attacks[2].mod)
+                m.modifier.source_id = this.id
+                m.modifier.target_id = target.id
+                m.modifier.damage_factor = this.unit.damage_factor
+                queue_insert(store, m)
+            end
             while true do
                 ps.particle_system.emit = false
 
@@ -5215,18 +5222,14 @@ return function(scripts)
                                     local aura = E:create_entity(a.aura)
 
                                     aura.aura.source_id = this.id
-
+                                    aura.aura.damage_factor = this.unit.damage_factor
                                     queue_insert(store, aura)
 
                                     while not this.motion.arrived do
                                         U.walk(this, store.tick_length, nil, true)
                                         coroutine.yield()
                                     end
-                                    local m = E:create_entity(this.melee.attacks[2].mod)
-                                    m.modifier.source_id = this.id
-                                    m.modifier.target_id = target.id
-                                    m.modifier.damage_factor = this.unit.damage_factor
-                                    queue_insert(store, m)
+                                    apply_fire(target)
                                     this.nav_rally.center = V.vclone(this.pos)
                                     this.nav_rally.pos = V.vclone(this.pos)
                                     U.speed_div(this, a.speed_factor)
@@ -5312,9 +5315,13 @@ return function(scripts)
                                         d.damage_type = a.damage_type
                                         d.source_id = this.id
                                         d.target_id = t.id
-                                        d.value = math.random(a.damage_min, a.damage_max)
+                                        d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
 
                                         queue_damage(store, d)
+
+                                        if math.random() < this.melee.attacks[2].chance * 0.5 then
+                                            apply_fire(t)
+                                        end
                                     end
                                 end
 
