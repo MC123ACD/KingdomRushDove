@@ -5180,7 +5180,7 @@ local function heroes()
     }
     tt.hero.skills.burrow = E:clone_c("hero_skill")
     tt.hero.skills.burrow.extra_speed = {22, 28, 35, 41}
-    tt.hero.skills.burrow.damage = {30, 45, 60, 75}
+    tt.hero.skills.burrow.damage = {32, 48, 64, 80}
     tt.hero.skills.burrow.xp_level_steps = {
         [1] = 1,
         [4] = 2,
