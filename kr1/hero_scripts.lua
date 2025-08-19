@@ -12022,22 +12022,10 @@ return function(scripts)
             m.modifier.duration = s.duration[s.level]
             this.melee.attacks[1].mod = "mod_catha_curse"
 
-            local b = E:get_template("catha_fury")
-
-            b.bullet.mod = "mod_catha_curse"
-
-            local b = E:get_template("knife_catha")
-
-            b.bullet.mod = "mod_catha_curse"
-
             local m = E:get_template("mod_soldier_catha_curse")
 
             m.chance = s.chance[s.level] * s.chance_factor_tale
             m.modifier.duration = s.duration[s.level]
-
-            local b = E:get_template("knife_soldier_catha")
-
-            b.bullet.mod = "mod_soldier_catha_curse"
         end)
         upgrade_skill(this, "ultimate", function(this, s)
             this.ultimate.disabled = nil

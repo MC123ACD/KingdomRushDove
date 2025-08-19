@@ -8520,7 +8520,7 @@ local function heroes()
     tt.bullet.flight_time = fts(9)
     tt.bullet.hit_fx = "fx_knife_catha_hit"
     tt.bullet.miss_decal = nil
-    tt.bullet.mod = nil
+    tt.bullet.mod = "mod_catha_curse"
     tt.bullet.xp_gain_factor = 4
 
     tt = RT("hero_lilith", "hero")

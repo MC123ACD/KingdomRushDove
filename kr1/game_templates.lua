@@ -5387,7 +5387,7 @@ tt.bullet.damage_min = nil
 tt.bullet.damage_type = DAMAGE_MAGICAL
 tt.bullet.max_speed = 240
 tt.bullet.min_speed = 210
-tt.bullet.mod = nil
+tt.bullet.mod = "mod_catha_curse"
 tt.lead_time = fts(12)
 tt.main_script.insert = scripts.bullet_illusion.insert
 tt.main_script.update = scripts.bullet_illusion.update
@@ -5399,6 +5399,8 @@ tt.sound_events.hit = "ElvesHeroCathaFuryHit"
 
 tt = RT("knife_soldier_catha", "knife_catha")
 tt.bullet.xp_gain_factor = nil
+tt.bullet.mod = "mod_soldier_catha_curse"
+
 tt = RT("fireball_veznan_demon", "bullet")
 tt.bullet.damage_type = DAMAGE_TRUE
 tt.bullet.damage_radius = 40
