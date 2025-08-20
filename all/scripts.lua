@@ -6159,6 +6159,8 @@ function scripts.mod_teleport.update(this, store)
 
     local npos = P:node_pos(target.nav_path)
 
+    U.unblock_all(store, target)
+
     target.pos.x, target.pos.y = npos.x, npos.y
 
     local fx = E:create_entity(this.fx_end)

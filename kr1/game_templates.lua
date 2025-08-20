@@ -9769,5 +9769,74 @@ tt.tween.remove = true
 tt = E:register_t("decal_hero_dragon_gem_floor_circle_totem", "decal_hero_dragon_gem_floor_circle")
 tt.tween.props[2].keys = {{0, vec_2(0.175, 0.175)}, {fts(6), vec_2(0.315, 0.315)}, {fts(13), vec_2(0.35, 0.35)}}
 
+tt = E:register_t("ps_hero_witch_ranged_basic_trail")
+E:add_comps(tt, "pos", "particle_system")
+tt.particle_system.name = "hero_witch_ranged_attack_particle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 60
+tt.particle_system.particle_lifetime = {fts(5), fts(8)}
+tt.particle_system.emit_rotation_spread = math.pi / 2
+
+tt = E:register_t("ps_hero_witch_spark_1")
+E:add_comps(tt, "pos", "particle_system", "main_script")
+tt.particle_system.name = "hero_witch_walk_particle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 10
+tt.particle_system.particle_lifetime = {fts(25), fts(30)}
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.emit_area_spread = vec_2(2, 1)
+tt.particle_system.emit_direction = 2 * math.pi / 3
+tt.particle_system.emit_speed = {10, 10}
+tt.particle_system.anchor = vec_2(0.5, 0.5)
+tt.particle_system.emit_offset = vec_2(-15, 0)
+tt.particle_system.z = Z_OBJECTS
+tt.particle_system.animation_fps = 15
+tt.particle_system.sort_y_offset = -40
+tt.main_script.update = scripts.ps_hero_mecha_smoke.update
+tt.emit_direction_sides = {2 * math.pi / 3, math.pi / 3}
+
+tt = E:register_t("ps_bullet_hero_witch_skill_polymorph")
+E:add_comps(tt, "pos", "particle_system")
+tt.particle_system.name = "hero_witch_skill_1_particle_idle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 60
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.emit_area_spread = vec_2(8, 8)
+tt.particle_system.scales_y = {1, 1.5}
+tt.particle_system.scales_x = {1, 1.5}
+tt.particle_system.anchor = vec_2(0.5, 0.5)
+tt.particle_system.emit_offset = vec_2(0, 0)
+tt.particle_system.z = Z_BULLET_PARTICLES
+tt.particle_system.particle_lifetime = {fts(8), fts(8)}
+tt.emit_offset_relative = vec_2(-15, 0)
+
+tt = E:register_t("fx_hero_witch_basic_ranged_hit", "fx")
+tt.render.sprites[1].name = "hero_witch_ranged_attack_hit"
+tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
+
+tt = E:register_t("fx_hero_witch_ultimate", "fx")
+tt.render.sprites[1].name = "hero_witch_ultimate_teleport_fx"
+tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
+
+tt = E:register_t("fx_hero_witch_skill_path_aoe_in", "fx")
+tt.render.sprites[1].name = "hero_witch_skill_4_potion_in_layer1_in"
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
+tt.render.sprites[2] = E:clone_c("sprite")
+tt.render.sprites[2].name = "hero_witch_skill_4_potion_in_layer2_in"
+tt.render.sprites[2].loop = false
+tt.render.sprites[2].z = Z_EFFECTS
+tt.render.sprites[2].scale = vec_1(KR5_SCALE_FACTOR)
+tt = E:register_t("fx_hero_witch_skill_polymorph", "fx")
+tt.render.sprites[1].name = "hero_witch_skill_1_hit_run"
+tt.render.sprites[1].z = Z_OBJECTS_COVERS
+tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
+tt = E:register_t("decal_hero_witch_ultimate", "decal_timed")
+tt.render.sprites[1].name = "hero_witch_ultimate_teleport_decal"
+tt.render.sprites[1].z = Z_DECALS
+tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
 -- package.loaded.soldier_enemies = nil
 -- require("soldier_enemies")

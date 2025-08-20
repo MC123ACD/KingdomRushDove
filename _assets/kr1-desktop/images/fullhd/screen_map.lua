@@ -2477,16 +2477,8 @@ return {
 	},
 	hero_room_portraits_small_thumb_hero_witch_0001 = {
 		a_name = "room_hero-1.png",
-		size = {
-			110,
-			108
-		},
-		trim = {
-			0,
-			0,
-			0,
-			0
-		},
+        size = {84, 84},
+        trim = {18, 16, 18, 14},
 		a_size = {
 			2048,
 			2048
@@ -2497,7 +2489,7 @@ return {
 			110,
 			108
 		},
-		alias = {}
+		alias = {"heroroom_thumbs_0057"}
 	},
     heroroom_tooltip_coin = {
         a_name = "screen_map-1.png",
@@ -3586,6 +3578,30 @@ return {
 			119
 		},
 		alias = {"hero_portraits_0011"}
+	},
+    mapButtons_portrait_hero_0057 = {
+		a_name = "gui_portraits-6.png",
+		size = {
+			140,
+			130
+		},
+		trim = {
+			13,
+			19,
+			14,
+			11
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			6,
+			981,
+			113,
+			100
+		},
+		alias = {"hero_portraits_0014"}
 	},
     mapButtons_portrait_hero_points = {
         a_name = "screen_map-1.png",

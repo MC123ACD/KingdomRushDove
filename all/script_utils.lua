@@ -322,7 +322,7 @@ local function do_death_spawns(store, this)
         queue_insert(store, fx)
     end
 
-    if not this.enemy.can_do_magic then
+    if this.enemy and not this.enemy.can_do_magic then
         return
     end
 

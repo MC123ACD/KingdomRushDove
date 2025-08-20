@@ -1812,6 +1812,30 @@ function U.update_max_speed(entity, max_speed)
     entity.motion.real_speed = U.real_max_speed(entity)
 end
 
-
+-- 用于传送索敌，返回传送目标
+function U.find_teleport_moment(store, center, range, trigger_count)
+    local enemy_count = 0
+    local enemy_hp_max = 0
+    local soldier_count = 0
+    local target = nil
+    for _, e in pairs(store.enemies) do
+        if not e.pending_removal and not e.health.dead and U.is_inside_ellipse(e.pos, center, range) then
+            enemy_count = enemy_count + 1
+            target = e
+            if e.health.hp > enemy_hp_max then
+                enemy_hp_max = e.health.hp
+            end
+        end
+    end
+    for _, s in pairs(store.soldiers) do
+        if not s.pending_removal and not s.health.dead and U.is_inside_ellipse(s.pos, center, range) then
+            soldier_count = soldier_count + 1
+        end
+    end
+    if ((enemy_count >= trigger_count) or (enemy_hp_max >= BIG_ENEMY_HP)) and enemy_count > soldier_count then
+        return target
+    end
+    return nil
+end
 
 return U

@@ -608,7 +608,7 @@ function image_db:add_image(name, image, group, scale)
 	local name_scale = string.format("%s-%.6f", group, scale)
 	local w, h = image:getDimensions()
 
-	v = {}
+	local v = {}
 	v.size = {
 		w,
 		h

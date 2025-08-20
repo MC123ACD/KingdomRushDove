@@ -1023,6 +1023,9 @@ enemy.ui.click_rect = IS_PHONE_OR_TABLET and r(-25, -10, 50, 50) or r(-10, -5, 2
 enemy.sound_events.death = "DeathHuman"
 enemy.sound_events.death_by_explosion = "DeathEplosion"
 
+local enemy_KR5 = E:register_t("enemy_KR5", "enemy")
+enemy_KR5.is_kr5 = true
+enemy_KR5.render.sprites[1].scale = vv(KR5_SCALE_FACTOR)
 
 local boss = E:register_t("boss", "unit")
 

@@ -2,12 +2,12 @@
 
 require("klua.table")
 require("i18n")
-local scripts = require("scripts")
+require("scripts")
 local AC = require("achievements")
 require("game_scripts_utils")
 -------------------------------------------
-require("hero_scripts")(scripts)
-require("tower_scripts")(scripts)
+local scripts = require("tower_scripts")
+-- require("tower_scripts")(scripts)
 -------------------------------------------
 scripts.mod_high_elven = {
     insert = function(this, store, script)
@@ -31804,6 +31804,26 @@ function scripts.ray5_simple.update(this, store)
     end
 
     queue_remove(store, this)
+end
+
+scripts.ps_hero_mecha_smoke = {}
+
+function scripts.ps_hero_mecha_smoke.update(this, store)
+    local source_sprite = store.entities[this.particle_system.track_id].render.sprites[1]
+
+    while true do
+        if source_sprite.flip_x then
+            this.particle_system.emit_offset.x = math.abs(this.particle_system.emit_offset.x)
+            this.particle_system.emit_direction = this.emit_direction_sides[2]
+        else
+            this.particle_system.emit_offset.x = -math.abs(this.particle_system.emit_offset.x)
+            this.particle_system.emit_direction = this.emit_direction_sides[1]
+        end
+
+        coroutine.yield()
+    end
+
+    return true
 end
 
 return scripts
