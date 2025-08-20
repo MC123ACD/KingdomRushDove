@@ -4859,6 +4859,404 @@ scripts.hero_dracolich = {
         this.health.hp = this.health.hp_max
     end
 }
+function scripts.hero_dracolich.insert(this, store)
+    this.hero.fn_level_up(this, store)
+
+    this.ranged.order = U.attack_order(this.ranged.attacks)
+
+    return true
+end
+
+function scripts.hero_dracolich.update(this, store)
+    local h = this.health
+    local he = this.hero
+    local a, skill, force_idle_ts
+
+    local function skeleton_glow_fx()
+        local fx = E:create_entity("fx_dracolich_skeleton_glow")
+
+        fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+        fx.render.sprites[1].ts = store.tick_ts
+        fx.render.sprites[1].flip_x = this.render.sprites[1].flip_x
+        fx.render.sprites[1].anchor.y = this.render.sprites[1].anchor.y
+
+        queue_insert(store, fx)
+    end
+
+    U.y_animation_play(this, "respawn", nil, store.tick_ts, 1)
+
+    this.health_bar.hidden = false
+    force_idle_ts = true
+
+    while true do
+        if h.dead then
+            SU.y_hero_death_and_respawn(store, this)
+
+            force_idle_ts = true
+        end
+
+        while this.nav_rally.new do
+            SU.y_hero_new_rally(store, this)
+        end
+
+        if SU.hero_level_up(store, this) then
+            U.y_animation_play(this, "levelup", nil, store.tick_ts, 1)
+        end
+
+        a = this.timed_attacks.list[1]
+        skill = this.hero.skills.bonegolem
+
+        if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+            local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range * 1.5, a.vis_flags,
+                a.vis_bans, function(v)
+                    local offset = P:predict_enemy_node_advance(v, a.spawn_time)
+                    local ppos = P:node_pos(v.nav_path.pi, v.nav_path.spi, v.nav_path.ni + offset)
+
+                    return P:is_node_valid(v.nav_path.pi, v.nav_path.ni + offset, NF_RALLY) and
+                               GR:cell_is_only(ppos.x, ppos.y, TERRAIN_LAND)
+                end)
+            local spawn_pos
+
+            if target then
+                local offset = P:predict_enemy_node_advance(target, a.spawn_time)
+
+                spawn_pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + offset)
+            else
+                local positions = P:get_all_valid_pos(this.pos.x, this.pos.y, a.min_range, a.max_range, TERRAIN_LAND,
+                    nil, NF_RALLY)
+
+                spawn_pos = table.random(positions)
+            end
+
+            if not spawn_pos then
+                SU.delay_attack(store, a, 0.4)
+            else
+                S:queue(a.sound)
+                U.animation_start(this, "golem", nil, store.tick_ts)
+                skeleton_glow_fx()
+                U.y_wait(store, a.spawn_time)
+
+                local e = E:create_entity(a.entity)
+
+                e.pos = V.vclone(spawn_pos)
+                e.nav_rally.pos = V.vclone(spawn_pos)
+                e.nav_rally.center = V.vclone(spawn_pos)
+                e.render.sprites[1].flip_x = math.random() < 0.5
+
+                queue_insert(store, e)
+
+                e.owner = this
+
+                U.y_animation_wait(this)
+
+                force_idle_ts = true
+                a.ts = store.tick_ts
+
+                SU.hero_gain_xp_from_skill(this, skill)
+
+                goto label_407_1
+            end
+        end
+
+        a = this.timed_attacks.list[2]
+        skill = this.hero.skills.spinerain
+
+        if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+            local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                a.vis_bans)
+
+            if not target then
+                SU.delay_attack(store, a, 0.4)
+            else
+                local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
+                local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {pi}, nil, nil, NF_RALLY)
+
+                if #nodes < 1 then
+                    SU.delay_attack(store, a, 0.4)
+                else
+                    local s_pi, s_spi, s_ni = unpack(nodes[1])
+                    local flip = target.pos.x < this.pos.x
+
+                    U.animation_start(this, "spinerain", flip, store.tick_ts)
+                    skeleton_glow_fx()
+                    U.y_wait(store, a.spawn_time)
+
+                    local delay = 0
+                    local n_step = ni < s_ni and -2 or 2
+
+                    ni = km.clamp(1, #P:path(s_pi), ni < s_ni and ni + 6 or ni)
+
+                    for i = 1, skill.count[skill.level] do
+                        local e = E:create_entity(a.entity)
+
+                        e.pos = P:node_pos(pi, spi, ni)
+                        e.render.sprites[1].prefix = e.render.sprites[1].prefix .. math.random(1, 3)
+                        e.render.sprites[1].flip_x = not flip
+                        e.delay = delay
+                        e.bullet.source_id = this.id
+
+                        queue_insert(store, e)
+
+                        delay = delay + fts(U.frandom(1, 3))
+                        ni = ni + n_step
+                        spi = km.zmod(spi + math.random(1, 2), 3)
+                    end
+
+                    U.y_animation_wait(this)
+
+                    force_idle_ts = true
+                    a.ts = store.tick_ts
+
+                    SU.hero_gain_xp_from_skill(this, skill)
+
+                    goto label_407_1
+                end
+            end
+        end
+
+        a = this.timed_attacks.list[3]
+        skill = this.hero.skills.diseasenova
+
+        if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+            local targets = U.find_enemies_in_range(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                a.vis_bans)
+
+            if not targets or #targets < a.min_count then
+                SU.delay_attack(store, a, 0.4)
+            else
+                local start_ts = store.tick_ts
+
+                this.health_bar.hidden = true
+                this.health.ignore_damage = true
+
+                U.animation_start(this, "nova", nil, store.tick_ts)
+                S:queue(a.sound, {
+                    delay = fts(10)
+                })
+                U.y_wait(store, a.hit_time)
+
+                for _, target in pairs(targets) do
+                    local d = E:create_entity("damage")
+
+                    d.damage_type = a.damage_type
+                    d.source_id = this.id
+                    d.target_id = target.id
+                    d.value = math.random(a.damage_min, a.damage_max)
+
+                    queue_damage(store, d)
+
+                    if a.mod then
+                        local m = E:create_entity(a.mod)
+
+                        m.modifier.source_id = this.id
+                        m.modifier.target_id = target.id
+                        m.modifier.xp_dest_id = this.id
+
+                        queue_insert(store, m)
+                    end
+                end
+
+                local fi, fo = 10, 35
+
+                for i = 1, 6 do
+                    local rx, ry = V.rotate(2 * math.pi * i / 6, 1, 0)
+                    local fx = E:create_entity("fx_dracolich_nova_cloud")
+
+                    fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                    fx.tween.props[2].keys = {{0, V.v(rx * fi, ry * fi)}, {fts(20), V.v(rx * fo, ry * fo)}}
+                    fx.tween.ts = store.tick_ts
+
+                    queue_insert(store, fx)
+                end
+
+                local fx = E:create_entity("fx_dracolich_nova_explosion")
+
+                fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                fx.render.sprites[1].ts = store.tick_ts
+
+                queue_insert(store, fx)
+
+                local fx = E:create_entity("fx_dracolich_nova_decal")
+
+                fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                fx.render.sprites[1].ts = store.tick_ts
+
+                queue_insert(store, fx)
+                U.y_animation_wait(this)
+
+                this.render.sprites[1].hidden = true
+
+                U.y_wait(store, a.respawn_delay)
+
+                this.render.sprites[1].hidden = nil
+
+                S:queue(a.respawn_sound)
+                U.y_animation_play(this, "respawn", nil, store.tick_ts)
+
+                this.health_bar.hidden = false
+                this.health.ignore_damage = false
+                force_idle_ts = true
+                a.ts = store.tick_ts
+
+                SU.hero_gain_xp_from_skill(this, skill)
+            end
+        end
+
+        a = this.timed_attacks.list[4]
+        skill = this.hero.skills.plaguecarrier
+
+        if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+            local targets_info = U.find_enemies_in_paths(store.enemies, this.pos, a.range_nodes_min, a.range_nodes_max,
+                nil, a.vis_flags, a.vis_bans)
+
+            if not targets_info then
+                SU.delay_attack(store, a, 0.4)
+            else
+                local target
+
+                for _, ti in pairs(targets_info) do
+                    if GR:cell_is(ti.enemy.pos.x, ti.enemy.pos.y, TERRAIN_LAND) then
+                        target = ti.enemy
+
+                        break
+                    end
+                end
+
+                if not target then
+                    SU.delay_attack(store, a, 0.4)
+                else
+                    local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
+                    local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {pi}, nil, nil, NF_RALLY)
+
+                    if #nodes < 1 then
+                        SU.delay_attack(store, a, 0.4)
+                    else
+                        local s_pi, s_spi, s_ni = unpack(nodes[1])
+                        local dir = ni < s_ni and -1 or 1
+                        local offset = math.random(a.range_nodes_min, a.range_nodes_min + 5)
+
+                        s_ni = km.clamp(1, #P:path(s_pi), s_ni + (dir > 0 and offset or -offset))
+
+                        local flip = P:node_pos(s_pi, s_spi, s_ni, true).x < this.pos.x
+
+                        S:queue(a.sound)
+                        U.animation_start(this, "plague", flip, store.tick_ts)
+                        U.y_wait(store, a.spawn_time)
+
+                        local delay = 0
+
+                        for i = 1, a.count do
+                            local e = E:create_entity(a.entity)
+
+                            e.pos.x, e.pos.y = this.pos.x + (flip and -1 or 1) * a.spawn_offset.x,
+                                this.pos.y + a.spawn_offset.y
+                            e.nav_path.pi = s_pi
+                            e.nav_path.spi = math.random(1, 3)
+                            e.nav_path.ni = s_ni
+                            e.nav_path.dir = dir
+                            e.delay = delay
+                            e.aura.source_id = this.id
+
+                            queue_insert(store, e)
+
+                            delay = delay + fts(U.frandom(1, 3))
+                        end
+
+                        U.y_animation_wait(this)
+
+                        force_idle_ts = true
+                        a.ts = store.tick_ts
+
+                        SU.hero_gain_xp_from_skill(this, skill)
+
+                        goto label_407_1
+                    end
+                end
+            end
+        end
+
+        for _, i in pairs(this.ranged.order) do
+            local a = this.ranged.attacks[i]
+
+            if a.disabled then
+                -- block empty
+            elseif a.sync_animation and not this.render.sprites[1].sync_flag then
+                -- block empty
+            elseif store.tick_ts - a.ts < a.cooldown then
+                -- block empty
+            elseif math.random() > a.chance then
+                -- block empty
+            else
+                local origin = V.v(this.pos.x, this.pos.y + a.bullet_start_offset[1].y)
+                local bullet_t = E:get_template(a.bullet)
+                local bullet_speed = bullet_t.bullet.min_speed
+                local flight_time = bullet_t.bullet.flight_time
+                local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    a.vis_bans)
+
+                if target then
+                    local start_ts = store.tick_ts
+                    local b, emit_fx, emit_ps, emit_ts
+                    local dist = V.dist(origin.x, origin.y, target.pos.x, target.pos.y)
+                    local node_offset = P:predict_enemy_node_advance(target, dist / bullet_speed)
+                    local t_pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + node_offset)
+                    local an, af, ai = U.animation_name_facing_point(this, a.animation, t_pos)
+
+                    U.animation_start(this, an, af, store.tick_ts)
+
+                    while store.tick_ts - start_ts < a.shoot_time do
+                        if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
+                            goto label_407_0
+                        end
+
+                        coroutine.yield()
+                    end
+
+                    S:queue(a.sound)
+
+                    b = E:create_entity(a.bullet)
+                    b.bullet.target_id = target.id
+                    b.bullet.source_id = this.id
+                    b.pos = V.vclone(this.pos)
+                    b.pos.x = b.pos.x + (af and -1 or 1) * a.bullet_start_offset[ai].x
+                    b.pos.y = b.pos.y + a.bullet_start_offset[ai].y
+                    b.bullet.from = V.vclone(b.pos)
+                    b.bullet.to = V.v(t_pos.x, t_pos.y)
+
+                    queue_insert(store, b)
+
+                    a.ts = start_ts
+
+                    while not U.animation_finished(this) do
+                        if this.unit.is_stunned or this.health.dead or this.nav_rally and this.nav_rally.new then
+                            goto label_407_0
+                        end
+
+                        coroutine.yield()
+                    end
+
+                    force_idle_ts = true
+
+                    ::label_407_0::
+
+                    goto label_407_1
+                elseif i == 1 and this.motion.arrived then
+                    U.y_wait(store, this.soldier.guard_time)
+                end
+            end
+        end
+
+        SU.soldier_idle(store, this, force_idle_ts)
+        SU.soldier_regen(store, this)
+
+        force_idle_ts = nil
+
+        ::label_407_1::
+
+        coroutine.yield()
+    end
+end
+
 -- 黑棘船长
 scripts.hero_pirate = {
     level_up = function(this, store)
@@ -13450,6 +13848,8 @@ function scripts.hero_faustus.update(this, store)
                     end
 
                     goto label_112_1
+                elseif i == 1 and this.motion.arrived then
+                    U.y_wait(store, this.soldier.guard_time)
                 end
             end
         end
@@ -14766,6 +15166,8 @@ function scripts.hero_dragon.update(this, store)
                     end
 
                     goto label_383_1
+                elseif i == 1 and this.motion.arrived then
+                    U.y_wait(store, this.soldier.guard_time)
                 end
             end
         end
