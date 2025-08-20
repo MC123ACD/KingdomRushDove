@@ -21971,8 +21971,8 @@ function scripts.hero_witch.update(this, store)
             skill = this.hero.skills.path_aoe
 
             if ready_to_use_skill(a, store) and store.tick_ts - last_ts > a.min_cooldown then
-                local target, targets, pred_pos = U.find_foremost_enemy(store.enemies, this.pos, 0, a.max_range,
-                    a.node_prediction, a.vis_flags, a.vis_bans)
+                local target, targets, pred_pos = U.find_foremost_enemy_with_max_coverage(store.enemies, this.pos, 0, a.max_range,
+                    a.node_prediction, a.vis_flags, a.vis_bans,nil,nil,E:get_template("aura_hero_witch_path_aoe").aura.radius)
 
                 if not targets or #targets < a.min_targets or not pred_pos then
                     SU.delay_attack(store, a, fts(10))
