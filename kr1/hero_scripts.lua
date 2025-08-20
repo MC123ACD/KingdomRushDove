@@ -22071,7 +22071,7 @@ function scripts.hero_witch.update(this, store)
 
                     if not enemy then
                         SU.delay_attack(store, basic_ranged, fts(10))
-                    elseif enemy then
+                    else
                         local start_ts = store.tick_ts
                         local enemy_id = enemy.id
 

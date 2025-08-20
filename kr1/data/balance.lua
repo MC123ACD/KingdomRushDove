@@ -1622,8 +1622,8 @@ local heroes = {
             damage_type = DAMAGE_MAGICAL
         },
         disengage = {
-            min_distance_from_end = 300,
-            distance = 160,
+            min_distance_from_end = 270,
+            distance = 130,
             hp_to_trigger = 0.4,
             cooldown = {12, 12, 12},
             xp_gain = {160, 320, 480},
