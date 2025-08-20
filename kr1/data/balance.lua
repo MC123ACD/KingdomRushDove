@@ -1619,7 +1619,7 @@ local heroes = {
             damage_min = {65, 104, 156},
             damage_max = {65, 104, 156},
             s_damage = {50, 80, 120},
-            damage_type = DAMAGE_MAGICAL
+            damage_type = DAMAGE_MAGICAL_EXPLOSION
         },
         disengage = {
             min_distance_from_end = 270,
