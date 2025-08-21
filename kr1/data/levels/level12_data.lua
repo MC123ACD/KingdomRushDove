@@ -489,6 +489,7 @@ return {
 			}
 		}
 	},
+    unlock_towers = {"tower_tricannon_lvl4"},
 	nav_mesh = {
 		{
 			nil,

@@ -112,6 +112,7 @@ return {
         "tower_druid",
         "tower_entwood",
         "tower_baby_ashbite",
-        "tower_pixie"
+        "tower_pixie",
+        "tower_tricannon_lvl4"
     }
 }
