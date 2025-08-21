@@ -21573,7 +21573,213 @@ local kr3 = {}
 for key, value in pairs(origin_kr3) do
     kr3["kr3_" .. key] = value
 end
+local origin_kr5 = {
+    	main_icons_0004 = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			2,
+			2,
+			2,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1027,
+			1129,
+			56,
+			56
+		},
+		alias = {}
+	},
+	main_icons_0004_disabled = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			2,
+			2,
+			2,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1027,
+			1191,
+			56,
+			56
+		},
+		alias = {}
+	},
+	main_icons_0004_disabled_turn_off = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			2,
+			2,
+			2,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1027,
+			1253,
+			56,
+			56
+		},
+		alias = {}
+	},
+	main_icons_0004_turn_off = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			2,
+			2,
+			2,
+			2
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			1027,
+			1315,
+			56,
+			56
+		},
+		alias = {}
+	},
+    	special_icons_0007 = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			1,
+			1,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			775,
+			1206,
+			58,
+			58
+		},
+		alias = {
+			"special_icons_0007_turn_off"
+		}
+	},
+	special_icons_0007_disabled = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			1,
+			1,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			775,
+			1270,
+			58,
+			58
+		},
+		alias = {
+			"special_icons_0007_disabled_turn_off"
+		}
+	},
+	special_icons_0008 = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			1,
+			1,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			775,
+			1334,
+			58,
+			58
+		},
+		alias = {
+			"special_icons_0008_turn_off"
+		}
+	},
+	special_icons_0008_disabled = {
+		a_name = "gui_common-5.png",
+		size = {
+			60,
+			60
+		},
+		trim = {
+			1,
+			1,
+			1,
+			1
+		},
+		a_size = {
+			2048,
+			2048
+		},
+		f_quad = {
+			775,
+			1398,
+			58,
+			58
+		},
+		alias = {
+			"special_icons_0008_disabled_turn_off"
+		}
+	},
+}
+local kr5 = {}
+for key, value in pairs(origin_kr5) do
+    kr5["kr5_" .. key] = value
+end
 
 local merge_tables = require("script_utils").merge_tables
 
-return merge_tables(kr1, kr3)
+return merge_tables(merge_tables(kr1, kr3), kr5)

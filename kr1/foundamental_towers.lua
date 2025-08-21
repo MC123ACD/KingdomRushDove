@@ -194,7 +194,7 @@ local function foundamental_towers()
     tt.info.enc_icon = 12
     tt.tower.level = 3
     tt.tower.price = 320
-    tt.attacks.range = 179.20000000000002
+    tt.attacks.range = 180
     tt.attacks.list[1].bullet = "bomb_black"
     tt.attacks.list[1].cooldown = 3
     tt.attacks.list[1].shoot_time = fts(12)

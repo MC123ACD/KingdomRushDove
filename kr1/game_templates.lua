@@ -9838,5 +9838,38 @@ tt = E:register_t("decal_hero_witch_ultimate", "decal_timed")
 tt.render.sprites[1].name = "hero_witch_ultimate_teleport_decal"
 tt.render.sprites[1].z = Z_DECALS
 tt.render.sprites[1].scale = vec_1(KR5_SCALE_FACTOR)
+
+tt = E:register_t("tower_tricannon_bomb_4_trail")
+E:add_comps(tt, "pos", "particle_system")
+tt.particle_system.name = "tricannon_tower_lvl4_particle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 70
+tt.particle_system.animation_fps = 15
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.emit_area_spread = vec_2(2, 2)
+tt.particle_system.z = Z_BULLET_PARTICLES
+
+tt = E:register_t("tower_tricannon_bomb_4_bombardment_trail")
+E:add_comps(tt, "pos", "particle_system")
+tt.particle_system.name = "tricannon_tower_lvl4_particle"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 60
+tt.particle_system.animation_fps = 25
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.emit_area_spread = vec_2(2, 2)
+tt.particle_system.z = Z_BULLET_PARTICLES
+
+tt = E:register_t("tower_tricannon_bomb_4_overheated_trail")
+E:add_comps(tt, "pos", "particle_system")
+tt.particle_system.name = "tricannon_tower_lvl4_particle_overheat"
+tt.particle_system.animated = true
+tt.particle_system.loop = false
+tt.particle_system.emission_rate = 70
+tt.particle_system.emit_rotation_spread = math.pi * 2
+tt.particle_system.emit_area_spread = vec_2(3, 3)
+tt.particle_system.z = Z_BULLET_PARTICLES
+
 -- package.loaded.soldier_enemies = nil
 -- require("soldier_enemies")

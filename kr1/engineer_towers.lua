@@ -773,7 +773,7 @@ local function engineer_towers()
     tt.powers.sylvan.enc_icon = 13
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_artillery_%04i"
-    tt.render.sprites[1].offset = vec_2(0, 26)
+    tt.render.sprites[1].offset = vec_2(0, 18)
     tt.render.sprites[2] = E:clone_c("sprite")
     tt.render.sprites[2].animated = false
     tt.render.sprites[2].name = "artillery_base_0005"
@@ -1048,6 +1048,202 @@ local function engineer_towers()
     tt.render.sprites[1].name = "small"
     tt.render.sprites[1].size_names = {"small", "medium", "large"}
     tt.render.sprites[1].draw_order = 10
+
+    local balance = require("kr1.data.balance")
+    local b = balance.towers.tricannon
+    tt = E:register_t("tower_tricannon_lvl4", "tower")
+    E:add_comps(tt, "attacks", "powers", "vis")
+    image_y = 120
+    tt.is_kr5 = true
+    tt.tower.type = "tricannon"
+    tt.tower.level = 1
+    tt.tower.price = b.price[4]
+    tt.tower.size = TOWER_SIZE_LARGE
+    tt.tower.menu_offset = vec_2(0, 24)
+    tt.info.enc_icon = 13
+    tt.info.i18n_key = "TOWER_TRICANNON_4"
+    tt.info.portrait = "portraits_towers_0004"
+    tt.powers.bombardment = E:clone_c("power")
+    tt.powers.bombardment.price_base = b.bombardment.price[1]
+    tt.powers.bombardment.price_inc = b.bombardment.price[2]
+    tt.powers.bombardment.enc_icon = 7
+    tt.powers.bombardment.cooldown = b.bombardment.cooldown
+    tt.powers.bombardment.damage_min = b.bombardment.damage_min
+    tt.powers.bombardment.damage_max = b.bombardment.damage_max
+    tt.powers.bombardment.bomb_amount = b.bombardment.bomb_amount
+    tt.powers.overheat = CC("power")
+    tt.powers.overheat.price_base = b.overheat.price[1]
+    tt.powers.overheat.price_inc = b.overheat.price[2]
+    tt.powers.overheat.enc_icon = 8
+    tt.powers.overheat.cooldown = b.overheat.cooldown
+    tt.powers.overheat.duration = b.overheat.duration
+    tt.main_script.update = scripts.tower_tricannon.update
+    tt.main_script.remove = scripts.tower_tricannon.remove
+    tt.sound_events.insert = "TowerTricannonTaunt"
+    tt.sound_events.tower_room_select = "TowerTricannonTauntSelect"
+    tt.attacks.min_cooldown = b.shared_min_cooldown
+    tt.attacks.range = b.basic_attack.range[4]
+    tt.attacks.attack_delay_on_spawn = fts(5)
+    tt.attacks.list[1] = CC("bullet_attack")
+    tt.attacks.list[1].bullet = "tower_tricannon_bomb_4"
+    tt.attacks.list[1].bomb_amount = b.basic_attack.bomb_amount[4]
+    tt.attacks.list[1].bullet_start_offset = {vec_2(14, 71), vec_2(-14, 71), vec_2(0, 62)}
+    tt.attacks.list[1].cooldown = b.basic_attack.cooldown
+    tt.attacks.list[1].node_prediction = fts(25)
+    tt.attacks.list[1].range = b.basic_attack.range[4]
+    tt.attacks.list[1].shoot_time = fts(48)
+    tt.attacks.list[1].vis_bans = bor(F_FLYING, F_NIGHTMARE, F_CLIFF)
+    tt.attacks.list[1].time_between_bombs = b.basic_attack.time_between_bombs
+    tt.attacks.list[1].random_x_to_dest = 30
+    tt.attacks.list[1].random_y_to_dest = 20
+    tt.attacks.list[1].sound = "TowerTricannonBasicAttackFire"
+    tt.attacks.list[2] = table.deepclone(tt.attacks.list[1])
+    tt.attacks.list[2].bullet = "tower_tricannon_bomb_bombardment_bomb"
+    tt.attacks.list[2].bullet_start_offset = {vec_2(0, 71)}
+    tt.attacks.list[2].cooldown = nil
+    tt.attacks.list[2].bomb_amount = nil
+    tt.attacks.list[2].node_prediction = fts(25)
+    tt.attacks.list[2].range = b.bombardment.range
+    tt.attacks.list[2].vis_flags = bor(F_MOD, F_RANGED)
+    tt.attacks.list[2].time_between_bombs_min = 3
+    tt.attacks.list[2].time_between_bombs_max = 9
+    tt.attacks.list[2].spread = b.bombardment.spread
+    tt.attacks.list[2].node_skip = b.bombardment.node_skip
+    tt.attacks.list[2].animation_start = "skill1"
+    tt.attacks.list[2].animation_loop = "loop"
+    tt.attacks.list[2].animation_end = "loop_end"
+    tt.attacks.list[2].shoot_time = fts(45)
+    tt.attacks.list[2].sounds = {"TowerTricannonBombardmentLvl1", "TowerTricannonBombardmentLvl2",
+                                 "TowerTricannonBombardmentLvl3"}
+    tt.attacks.list[3] = table.deepclone(tt.attacks.list[1])
+    tt.attacks.list[3].cooldown = nil
+    tt.attacks.list[3].duration = nil
+    tt.attacks.list[3].animation_charge = "skill_2_charge"
+    tt.attacks.list[3].animation_idle = "skill_2_idle"
+    tt.attacks.list[3].animation_shoot = "skill_2_attack"
+    tt.attacks.list[3].animation_end = "skill_2_fade_out"
+    tt.attacks.list[3].sound = "TowerTricannonOverheat"
+    tt.render.sprites[1].animated = false
+    tt.render.sprites[1].name = "terrain_artillery_%04i"
+    tt.render.sprites[1].offset = vec_2(0, 10)
+
+    for i = 2, 11 do
+        tt.render.sprites[i] = E:clone_c("sprite")
+        tt.render.sprites[i].prefix = "tricannon_tower_lvl4_tower_layer" .. i - 1
+        tt.render.sprites[i].name = "idle"
+        tt.render.sprites[i].group = "layers"
+        tt.render.sprites[i].scale = vec_1(1.26)
+    end
+
+    tt.ui.click_rect = r(-45, -3, 90, 78)
+
+    tt = RT("decalmod_tricannon_overheat", "modifier")
+    E:add_comps(tt, "render", "tween")
+    tt.main_script.insert = scripts.mod_tower_decal.insert
+    tt.main_script.remove = scripts.mod_tower_decal.remove
+    tt.tween.remove = false
+    tt.tween.props[1].name = "scale"
+    tt.tween.props[1].loop = true
+    tt.tween.props[1].keys = {{0, vec_2(1, 1)}, {0.5, vec_2(1, 1)}, {1, vec_2(1, 1)}}
+
+    for i, p in ipairs({vec_2(22, 45), vec_2(31, 40), vec_2(40, 35), vec_2(49, 32.5), vec_2(58, 30), vec_2(67.5, 32.5),
+                        vec_2(77, 35), vec_2(86, 40), vec_2(95, 45)}) do
+        tt.render.sprites[i] = E:clone_c("sprite")
+        tt.render.sprites[i].prefix = "crossbow_eagle_buff"
+        tt.render.sprites[i].name = "idle"
+        tt.render.sprites[i].anchor.y = 0.21
+        tt.render.sprites[i].offset = vec_2(p.x - 58, p.y - 27)
+        tt.render.sprites[i].ts = math.random()
+    end
+
+    -- tt.render.sprites[1].offset = vec_1(0)
+    for _, sprite in ipairs(tt.render.sprites) do
+        sprite.offset.y = sprite.offset.y + 5 -- 向上平移 10 单位
+        sprite.color = {255, 100, 50}
+        -- sprite.scale = vec_2(1.2, 1.2)  -- 放大 20%
+    end
+
+    tt = E:register_t("tower_tricannon_overheat_scorch_aura", "aura")
+    E:add_comps(tt, "render", "tween")
+    tt.aura.mod = "tower_tricannon_overheat_scorch_aura_mod"
+    tt.aura.duration = b.overheat.decal.duration
+    tt.aura.cycle_time = 0.3
+    tt.aura.radius = b.overheat.decal.radius
+    tt.aura.vis_bans = bor(F_FRIEND, F_FLYING)
+    tt.aura.vis_flags = bor(F_MOD)
+    tt.main_script.insert = scripts.aura_apply_mod.insert
+    tt.main_script.update = scripts.aura_apply_mod.update
+    tt.render.sprites[1].name = "tricannon_tower_fissure_decal"
+    tt.render.sprites[1].animated = false
+    tt.render.sprites[1].z = Z_DECALS
+    tt.render.sprites[1].sort_y_offset = 2
+    tt.render.sprites[2] = E:clone_c("sprite")
+    tt.render.sprites[2].name = "tricannon_tower_overheat_fire_fx"
+    tt.render.sprites[2].z = Z_DECALS
+    tt.tween.remove = false
+    tt.tween.props[1].keys = {{0, 0}, {fts(10), 255}, {"this.aura.duration-0.5", 255}, {"this.aura.duration", 0}}
+    tt.tween.props[1].loop = false
+    tt.tween.props[1].sprite_id = 1
+    tt.tween.props[2] = E:clone_c("tween_prop")
+    tt.tween.props[2].sprite_id = 2
+    tt.tween.props[2].loop = true
+    tt.tween.props[2].keys = {{0, 0}, {0.5, 255}, {1, 0}}
+
+    tt = E:register_t("tower_tricannon_overheat_scorch_aura_mod", "modifier")
+    E:add_comps(tt, "dps", "render")
+    tt.modifier.duration = b.overheat.decal.effect.duration
+    tt.dps.damage_min = b.overheat.decal.effect.damage
+    tt.dps.damage_max = b.overheat.decal.effect.damage
+    tt.dps.damage_type = DAMAGE_TRUE
+    tt.dps.damage_every = b.overheat.decal.effect.damage_every
+    tt.render.sprites[1].size_names = {"small", "medium", "large"}
+    tt.render.sprites[1].prefix = "fire"
+    tt.render.sprites[1].name = "small"
+    tt.render.sprites[1].draw_order = 2
+    tt.render.sprites[1].loop = true
+    tt.main_script.insert = scripts.mod_dps.insert
+    tt.main_script.update = scripts.mod_dps.update
+
+    tt = E:register_t("tower_tricannon_bomb", "bomb")
+
+    local b = balance.towers.tricannon
+
+    tt.bullet.damage_max = nil
+    tt.bullet.damage_min = nil
+    tt.bullet.damage_radius = b.basic_attack.damage_radius
+    tt.bullet.flight_time = fts(31)
+    tt.bullet.hit_fx = "fx_explosion_small"
+    tt.bullet.pop_chance = 0.2
+    tt.sound_events.hit_water = nil
+    tt.sound_events.hit = "TowerTricannonBasicAttackImpact"
+    tt.render.sprites[1].animated = false
+    tt = E:register_t("tower_tricannon_bomb_4", "tower_tricannon_bomb")
+    tt.bullet.damage_max = b.basic_attack.damage_max[4]
+    tt.bullet.damage_min = b.basic_attack.damage_min[4]
+    tt.bullet.align_with_trajectory = true
+    tt.bullet.particles_name = "tower_tricannon_bomb_4_trail"
+    tt.render.sprites[1].name = "tricannon_tower_lvl4_bomb"
+    tt = E:register_t("tower_tricannon_bomb_overheated", "tower_tricannon_bomb_4")
+    tt.bullet.hit_payload = "tower_tricannon_overheat_scorch_aura"
+    tt.render.sprites[1].name = "tricannon_tower_lvl4_bomb_overheat"
+    tt.bullet.particles_name = "tower_tricannon_bomb_4_overheated_trail"
+    tt.bullet.flight_time = fts(28)
+    tt.bullet.g = -1.5 / (fts(1) * fts(1))
+    tt = E:register_t("tower_tricannon_bomb_bombardment_bomb", "bomb")
+    tt.bullet.damage_max = nil
+    tt.bullet.damage_min = nil
+    tt.bullet.damage_max_config = b.bombardment.damage_max
+    tt.bullet.damage_min_config = b.bombardment.damage_min
+    tt.bullet.damage_radius = b.bombardment.damage_radius
+    tt.bullet.flight_time = fts(26)
+    tt.bullet.g = -1.4 / (fts(1) * fts(1))
+    tt.bullet.hit_fx = "fx_explosion_small"
+    tt.bullet.pop = nil
+    tt.bullet.align_with_trajectory = true
+    tt.render.sprites[1].name = "tricannon_tower_lvl4_bomb"
+    tt.render.sprites[1].animated = false
+    tt.sound_events.hit = "TowerTricannonBasicAttackImpact"
+    tt.bullet.particles_name = "tower_tricannon_bomb_4_bombardment_trail"
 
 end
 

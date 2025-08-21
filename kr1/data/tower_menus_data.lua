@@ -156,7 +156,7 @@ return {
         tt_title = _("TOWER_MAGE_WILD_MAGUS_NAME"),
         tt_desc = _("TOWER_MAGE_WILD_MAGUS_DESCRIPTION"),
         is_kr3 = true
-    },{
+    }, {
         check = "kr3_main_icons_0019",
         action_arg = "tower_faerie_dragon",
         action = "tw_upgrade",
@@ -166,7 +166,7 @@ return {
         tt_title = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_NAME"),
         tt_desc = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_DESCRIPTION"),
         is_kr3 = true
-    },{
+    }, {
         check = "kr3_main_icons_0019",
         action_arg = "tower_pixie",
         action = "tw_upgrade",
@@ -277,6 +277,16 @@ return {
         place = 13,
         tt_title = _("TOWER_ENTWOOD_NAME"),
         tt_desc = _("TOWER_ENTWOOD_DESCRIPTION"),
+        is_kr3 = true
+    }, {
+        check = "main_icons_0019",
+        halo = "glow_ico_main",
+        action_arg = "tower_tricannon_lvl4",
+        action = "tw_upgrade",
+        image = "kr5_main_icons_0004",
+        tt_title = _("三管加农炮"),
+        tt_desc = _("TOWER_TRICANNON_1_DESCRIPTION"),
+        place = 14,
         is_kr3 = true
     }, {
         check = "ico_sell_0002",
@@ -539,7 +549,7 @@ return {
         tt_title = _("TOWER_FOREST_KEEPERS_NAME"),
         tt_desc = _("TOWER_FOREST_KEEPERS_DESCRIPTION"),
         is_kr3 = true
-    },{
+    }, {
         check = "kr3_main_icons_0019",
         action_arg = "tower_drow",
         action = "tw_upgrade",
@@ -549,7 +559,7 @@ return {
         tt_title = _("ELVES_TOWER_SPECIAL_DROW_NAME"),
         tt_desc = _("ELVES_TOWER_SPECIAL_DROW_DESCRIPTION"),
         is_kr3 = true
-    },{
+    }, {
         check = "kr3_main_icons_0019",
         action_arg = "tower_ewok",
         action = "tw_upgrade",
@@ -559,7 +569,7 @@ return {
         tt_title = _("ELVES_EWOK_NAME"),
         tt_desc = _("ELVES_EWOK_DESCRIPTION"),
         is_kr3 = true
-    },{
+    }, {
         check = "main_icons_0019",
         action_arg = "tower_baby_ashbite",
         action = "tw_upgrade",
@@ -2445,12 +2455,12 @@ return {
         }, {
             tt_title = _("大树护甲Ⅱ"),
             tt_desc = _("进一步提升伊渥克士兵的护甲")
-        },{
+        }, {
             tt_title = _("大树护甲Ⅲ"),
             tt_desc = _("进一步提升伊渥克士兵的护甲")
         }},
         is_kr3 = true
-    },{
+    }, {
         check = "special_icons_0020",
         action_arg = "shield",
         action = "upgrade_power",
@@ -2467,7 +2477,7 @@ return {
             tt_desc = _("提升伊渥克士兵盾牌格挡的时间和恢复效果")
         }},
         is_kr3 = true
-    },{
+    }, {
         check = "kr3_special_icons_0020",
         action_arg = "tear",
         action = "upgrade_power",
@@ -2492,7 +2502,7 @@ return {
         image = "sub_icons_0001",
         action = "tw_rally",
         place = 8
-    },{
+    }, {
         check = "ico_sell_0002",
         action = "tw_sell",
         halo = "glow_ico_sell",
@@ -2514,7 +2524,7 @@ return {
         }, {
             tt_title = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_UPGRADE_MORE_DRAGONS_NAME_2"),
             tt_desc = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_UPGRADE_MORE_DRAGONS_SMALL_DESCRIPTION_2")
-        },{
+        }, {
             tt_title = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_UPGRADE_MORE_DRAGONS_NAME_3"),
             tt_desc = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_UPGRADE_MORE_DRAGONS_SMALL_DESCRIPTION_3")
         }},
@@ -2536,7 +2546,7 @@ return {
             tt_desc = _("ELVES_TOWER_SPECIAL_FAERIE_DRAGONS_UPGRADE_IMPROVE_SHOT_SMALL_DESCRIPTION_2")
         }},
         is_kr3 = true
-    },{
+    }, {
         check = "ico_sell_0002",
         action = "tw_sell",
         halo = "glow_ico_sell",
@@ -2580,7 +2590,7 @@ return {
             tt_desc = _("ELVES_TOWER_PIXIE_UPGRADE2_DESCRIPTION_3")
         }},
         is_kr3 = true
-    },{
+    }, {
         check = "ico_sell_0002",
         action = "tw_sell",
         halo = "glow_ico_sell",
@@ -2650,7 +2660,7 @@ return {
         image = "sub_icons_0001",
         action = "tw_rally",
         place = 8
-    },{
+    }, {
         check = "ico_sell_0002",
         action = "tw_sell",
         halo = "glow_ico_sell",
@@ -2725,7 +2735,7 @@ return {
         image = "sub_icons_0001",
         action = "tw_rally",
         place = 8
-    },{
+    }, {
         check = "ico_sell_0002",
         action = "tw_sell",
         halo = "glow_ico_sell",
@@ -2761,5 +2771,72 @@ return {
             tt_desc = _("ELVES_TOWER_BASTION_RAZOR_EDGE_SMALL_DESCRIPTION_2")
         }},
         is_kr3 = true
-    }}}
+    }}},
+    tricannon = {
+        {
+			{
+				check = "special_icons_0020",
+				action_arg = "bombardment",
+				action = "upgrade_power",
+				image = "kr5_special_icons_0007",
+				place = 6,
+				halo = "glow_ico_special",
+				sounds = {
+					"TowerTricannonSkillATaunt"
+				},
+				tt_phrase = _("TOWER_TRICANNON_4_BOMBARDMENT_NOTE"),
+				tt_list = {
+					{
+						tt_title = _("TOWER_TRICANNON_4_BOMBARDMENT_1_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_BOMBARDMENT_1_DESCRIPTION")
+					},
+					{
+						tt_title = _("TOWER_TRICANNON_4_BOMBARDMENT_2_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_BOMBARDMENT_2_DESCRIPTION")
+					},
+					{
+						tt_title = _("TOWER_TRICANNON_4_BOMBARDMENT_3_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_BOMBARDMENT_3_DESCRIPTION")
+					}
+				},
+                is_kr3 = true,
+                is_kr5 = true
+			},
+			{
+				check = "special_icons_0020",
+				action_arg = "overheat",
+				action = "upgrade_power",
+				image = "kr5_special_icons_0008",
+				place = 7,
+				halo = "glow_ico_special",
+				sounds = {
+					"TowerTricannonSkillBTaunt"
+				},
+				tt_phrase = _("TOWER_TRICANNON_4_OVERHEAT_NOTE"),
+				tt_list = {
+					{
+						tt_title = _("TOWER_TRICANNON_4_OVERHEAT_1_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_OVERHEAT_1_DESCRIPTION")
+					},
+					{
+						tt_title = _("TOWER_TRICANNON_4_OVERHEAT_2_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_OVERHEAT_2_DESCRIPTION")
+					},
+					{
+						tt_title = _("TOWER_TRICANNON_4_OVERHEAT_3_NAME"),
+						tt_desc = _("TOWER_TRICANNON_4_OVERHEAT_3_DESCRIPTION")
+					}
+				},
+                is_kr3 = true,
+                is_kr5 = true
+			},
+			{
+                check = "ico_sell_0002",
+                action = "tw_sell",
+                halo = "glow_ico_sell",
+                image = "ico_sell_0001",
+                place = 9
+            }
+		}
+    }
 }

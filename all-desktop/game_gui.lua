@@ -7191,7 +7191,12 @@ function TowerMenuButton:initialize(item, entity)
     self.item_image = item.image
 
     local b = KImageView:new(item.image)
-
+    if item.is_kr5 then
+        local kr5_scale = 56.177 / 42.667
+        b.size.x = b.size.x * kr5_scale
+        b.size.y = b.size.y * kr5_scale
+        b.image_scale = kr5_scale * b.image_scale
+    end
     b.pos = v(0, 0)
     b.propagate_on_click = true
     b.disabled_tint_color = nil

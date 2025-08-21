@@ -369,17 +369,17 @@ end
 
 function upgrades:engineer_towers()
     return {"tower_engineer_1", "tower_engineer_2", "tower_engineer_3", "tower_bfg", "tower_tesla", "tower_dwaarp",
-            "tower_mech", "tower_frankenstein", "tower_druid", "tower_entwood"}
+            "tower_mech", "tower_frankenstein", "tower_druid", "tower_entwood","tower_tricannon_lvl4"}
 end
 
 function upgrades:engineer_bombs()
     return {"bomb", "bomb_dynamite", "bomb_black", "bomb_bfg", "bomb_mecha", "rock_druid", "rock_entwood",
-            "rock_firey_nut"}
+            "rock_firey_nut","tower_tricannon_bomb_4","tower_tricannon_bomb_overheated"}
 end
 
 function upgrades:engineer_advanced_towers()
     return {"tower_bfg", "tower_tesla", "tower_dwaarp", "tower_mech", "tower_frankenstein", "tower_druid",
-            "tower_entwood"}
+            "tower_entwood","tower_tricannon_lvl4"}
 end
 function upgrades:patch_templates(max_level)
     if max_level then
@@ -617,6 +617,8 @@ function upgrades:patch_templates(max_level)
         T("tower_bfg").attacks.list[2].range_base =
             math.ceil(T("tower_bfg").attacks.list[2].range_base * u.range_factor)
         T("tower_tesla").attacks.list[1].range = math.ceil(T("tower_tesla").attacks.list[1].range * u.range_factor)
+        T("tower_tricannon_lvl4").attacks.list[1].range = math.ceil(T("tower_tricannon_lvl4").attacks.list[1].range * u.range_factor)
+        T("tower_tricannon_lvl4").attacks.list[2].range = math.ceil(T("tower_tricannon_lvl4").attacks.list[2].range * u.range_factor)
     end
 
     u = self:get_upgrade("engineer_field_logistics")
@@ -668,6 +670,14 @@ function upgrades:patch_templates(max_level)
         at.cooldown = at.cooldown * u.cooldown_factor_electric
         at = T("tower_tesla").attacks.list[1]
         at.cooldown = at.cooldown * u.cooldown_factor_electric
+        at = T("tower_tricannon_lvl4").powers.bombardment
+        at.cooldown[1] = at.cooldown[1] * u.cooldown_factor
+        at.cooldown[2] = at.cooldown[2] * u.cooldown_factor
+        at.cooldown[3] = at.cooldown[3] * u.cooldown_factor
+        at = T("tower_tricannon_lvl4").powers.overheat
+        at.cooldown[1] = at.cooldown[1] * u.cooldown_factor
+        at.cooldown[2] = at.cooldown[2] * u.cooldown_factor
+        at.cooldown[3] = at.cooldown[3] * u.cooldown_factor
     end
 
     T("power_fireball_control").user_power.level = self.levels.rain

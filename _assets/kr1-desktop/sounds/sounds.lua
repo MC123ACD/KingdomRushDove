@@ -9515,7 +9515,7 @@ local kr5 = {
     TowerTricannonBasicAttackFire = {
         loop = false,
         mode = "random",
-        gain = 0.5,
+        gain = 0.8,
         source_group = "SFX",
         files = {"kra_sfx_tower_tricannon_basicAttack_var1_v1.ogg", "kra_sfx_tower_tricannon_basicAttack_var2_v1.ogg",
                  "kra_sfx_tower_tricannon_basicAttack_var3_v1.ogg"}
@@ -9523,7 +9523,7 @@ local kr5 = {
     TowerTricannonBasicAttackImpact = {
         loop = false,
         mode = "random",
-        gain = 0.5,
+        gain = 0.8,
         source_group = "SFX",
         files = {"kra_sfx_tower_tricannon_basicAttack_impact-single_var1_v1.ogg",
                  "kra_sfx_tower_tricannon_basicAttack_impact-single_var2_v1.ogg",
@@ -9531,19 +9531,19 @@ local kr5 = {
     },
     TowerTricannonBombardmentLvl1 = {
         loop = false,
-        gain = 0.5,
+        gain = 0.7,
         source_group = "SFX",
         files = {"kra_sfx_tower_tricannon_skill_bombardment_lvl1_v1.ogg"}
     },
     TowerTricannonBombardmentLvl2 = {
         loop = false,
-        gain = 0.5,
+        gain = 0.7,
         source_group = "SFX",
         files = {"kra_sfx_tower_tricannon_skill_bombardment_lvl2_v1.ogg"}
     },
     TowerTricannonBombardmentLvl3 = {
         loop = false,
-        gain = 0.5,
+        gain = 0.7,
         source_group = "SFX",
         files = {"kra_sfx_tower_tricannon_skill_bombardment_lvl3_v1.ogg"}
     },

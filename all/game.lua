@@ -24,7 +24,7 @@ local bit = require("bit")
 require("constants")
 
 game = {}
-game.required_textures = {"go_decals", "go_enemies_common", "go_towers"}
+game.required_textures = {"go_decals", "go_enemies_common", "go_towers","go_towers_tricannon"}
 game.ref_h = REF_H
 game.ref_w = REF_W
 game.ref_res = TEXTURE_SIZE_ALIAS.ipad

@@ -2783,7 +2783,7 @@ local towers = {
     },
     tricannon = {
         shared_min_cooldown = 3,
-        price = {140, 200, 280, 360},
+        price = {140, 200, 280, 400},
         stats = {
             cooldown = 2,
             range = 4,
@@ -2793,8 +2793,8 @@ local towers = {
             damage_radius = 45,
             cooldown = 3,
             bomb_amount = {3, 3, 3, 3},
-            damage_min = {3, 8, 16, 26},
-            damage_max = {5, 12, 24, 40},
+            damage_min = {3, 8, 16, 24},
+            damage_max = {5, 12, 24, 36},
             range = {180, 180, 180, 180},
             time_between_bombs = fts(1)
         },

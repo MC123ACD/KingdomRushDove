@@ -13936,13 +13936,6 @@ return function()
     tt.sound_events.hit = "TowerTricannonBasicAttackImpact"
     tt.bullet.particles_name = "tower_tricannon_bomb_4_bombardment_trail"
 
-    function tt.main_script.insert(this, store, script)
-        this.bullet.damage_max = this.bullet.damage_max_config[this.bullet.level]
-        this.bullet.damage_min = this.bullet.damage_min_config[this.bullet.level]
-
-        return scripts.bomb.insert(this, store, script)
-    end
-
     tt = E:register_t("tower_tricannon_bombardment_overheated_bomb", "tower_tricannon_bomb_bombardment_bomb")
     tt.bullet.hit_payload = "tower_tricannon_overheat_scorch_aura"
     tt.render.sprites[1].name = "tricannon_tower_lvl4_bomb_overheat"
