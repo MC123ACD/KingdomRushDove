@@ -668,12 +668,16 @@ function sys.mod_lifecycle:on_insert(entity, store)
         end
     end
 
+    if this.modifier.allows_duplicates then
+        return true
+    end
     for _, m in pairs(modifiers) do
         if m.template_name == this.template_name then
-            if this.modifier.level == m.modifier.level and this.modifier.allows_duplicates then
-                log.paranoid("adding a duplicate modifier (%s)-%s", this.id, this.template_name)
-
-                return true
+            if this.modifier.level == m.modifier.level and this.modifier.max_duplicates then
+                this.modifier.max_duplicates = this.modifier.max_duplicates - 1
+                if this.modifier.max_duplicates < 0 then
+                    return false
+                end
             elseif this.modifier.level > m.modifier.level and this.modifier.replaces_lower then
                 log.paranoid("replacing existing modifier (%s)-%s with (%s)-%s", m.id, m.template_name, this.id,
                     this.template_name)

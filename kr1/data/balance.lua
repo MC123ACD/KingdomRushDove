@@ -2805,8 +2805,8 @@ local towers = {
             cooldown = {15, 15, 15},
             damage_min = {24, 32, 40},
             damage_max = {48, 64, 80},
-            spread = {20, 20, 20},
-            node_skip = {11, 6, 4}
+            spread = {20, 20, 18},
+            node_skip = {11, 6, 3}
         },
         overheat = {
             price = {150, 150, 150},

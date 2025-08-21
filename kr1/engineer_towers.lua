@@ -1105,8 +1105,8 @@ local function engineer_towers()
     tt.attacks.list[2].node_prediction = fts(25)
     tt.attacks.list[2].range = b.bombardment.range
     tt.attacks.list[2].vis_flags = bor(F_MOD, F_RANGED)
-    tt.attacks.list[2].time_between_bombs_min = 2
-    tt.attacks.list[2].time_between_bombs_max = 4
+    tt.attacks.list[2].time_between_bombs_min = 3
+    tt.attacks.list[2].time_between_bombs_max = 5
     tt.attacks.list[2].spread = b.bombardment.spread
     tt.attacks.list[2].node_skip = b.bombardment.node_skip
     tt.attacks.list[2].animation_start = "skill1"
@@ -1201,6 +1201,7 @@ local function engineer_towers()
     tt.render.sprites[1].name = "small"
     tt.render.sprites[1].draw_order = 2
     tt.render.sprites[1].loop = true
+    tt.modifier.max_duplicates = 5
     tt.main_script.insert = scripts.mod_dps.insert
     tt.main_script.update = scripts.mod_dps.update
 

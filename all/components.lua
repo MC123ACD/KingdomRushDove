@@ -957,6 +957,7 @@ modifier.ban_types = nil
 modifier.vis_bans = 0
 modifier.vis_flags = 0
 modifier.allows_duplicates = nil
+modifier.max_duplicates = nil
 modifier.replaces_lower = true
 modifier.resets_same = true
 modifier.resets_same_tween = nil
