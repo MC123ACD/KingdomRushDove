@@ -1079,10 +1079,12 @@ function game_gui:keypressed(key, isrepeat)
         if not self.next_wave_button:is_disabled() then
             game_gui.game.store.send_next_wave = true
         end
-    elseif table.contains(ks.criket_open, key) then
-        self.criketmenu:show()
-    elseif table.contains(ks.criket_close, key) then
-        self.criketmenu:hide()
+    elseif table.contains(ks.criket_toggle, key) then
+        if self.criketmenu.hidden then
+            self.criketmenu:show()
+        else
+            self.criketmenu:hide()
+        end
     -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
     --     table.contains(table.keys(ks.all_items), key) then
     --     local bb = self.bag_button
