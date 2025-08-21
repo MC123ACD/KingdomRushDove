@@ -98,7 +98,7 @@ function sys.level:init(store)
     store.level.run_complete = nil
     store.player_gold = math.ceil(W:initial_gold() * store.patches.gold_multiplier)
     if store.patches.criket and store.patches.criket.on then
-        store.player_gold = 50000
+        store.player_gold = store.patches.criket.cash
     end
 
     if slot.locked_towers then
