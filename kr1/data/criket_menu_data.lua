@@ -273,6 +273,16 @@ return {
         is_kr3 = true
     },{
         check = "main_icons_0019",
+        halo = "glow_ico_main",
+        action_arg = "tower_tricannon_lvl4",
+        action = "tw_upgrade",
+        image = "kr5_main_icons_0004",
+        tt_title = _("三管加农炮"),
+        tt_desc = _("TOWER_TRICANNON_1_DESCRIPTION"),
+        place = 14,
+        is_kr3 = true
+    },{
+        check = "main_icons_0019",
         action_arg = "tower_arcane_wizard",
         action = "tw_upgrade",
         halo = "glow_ico_main",
@@ -300,6 +310,15 @@ return {
         tt_desc = _("巫师能借助日光之塔瓦解敌人，并炼制成金，提取力量。")
     }, {
         check = "main_icons_0019",
+        action_arg = "tower_archmage",
+        action = "tw_upgrade",
+        halo = "glow_ico_main",
+        image = "main_icons_0022",
+        place = 12,
+        tt_title = _("TOWER_ARCHMAGE_NAME"),
+        tt_desc = _("TOWER_ARCHMAGE_DESCRIPTION")
+    }, {
+        check = "main_icons_0019",
         action_arg = "tower_necromancer",
         action = "tw_upgrade",
         halo = "glow_ico_main",
@@ -309,25 +328,6 @@ return {
         tt_desc = _("TOWER_NECROMANCER_DESCRIPTION")
     }, {
         check = "kr3_main_icons_0019",
-        action_arg = "tower_high_elven",
-        action = "tw_upgrade",
-        halo = "glow_ico_main",
-        image = "kr3_main_icons_0107",
-        place = 11,
-        tt_title = _("TOWER_MAGE_HIGH_ELVEN_NAME"),
-        tt_desc = _("TOWER_MAGE_HIGH_ELVEN_DESCRIPTION"),
-        is_kr3 = true
-    }, {
-        check = "main_icons_0019",
-        action_arg = "tower_archmage",
-        action = "tw_upgrade",
-        halo = "glow_ico_main",
-        image = "main_icons_0022",
-        place = 12,
-        tt_title = _("TOWER_ARCHMAGE_NAME"),
-        tt_desc = _("TOWER_ARCHMAGE_DESCRIPTION")
-    }, {
-        check = "kr3_main_icons_0019",
         action_arg = "tower_wild_magus",
         action = "tw_upgrade",
         halo = "glow_ico_main",
@@ -335,6 +335,16 @@ return {
         place = 13,
         tt_title = _("TOWER_MAGE_WILD_MAGUS_NAME"),
         tt_desc = _("TOWER_MAGE_WILD_MAGUS_DESCRIPTION"),
+        is_kr3 = true
+    },{
+        check = "kr3_main_icons_0019",
+        action_arg = "tower_high_elven",
+        action = "tw_upgrade",
+        halo = "glow_ico_main",
+        image = "kr3_main_icons_0107",
+        place = 11,
+        tt_title = _("TOWER_MAGE_HIGH_ELVEN_NAME"),
+        tt_desc = _("TOWER_MAGE_HIGH_ELVEN_DESCRIPTION"),
         is_kr3 = true
     },{
         check = "kr3_main_icons_0019",
