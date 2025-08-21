@@ -3513,7 +3513,7 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     KImageView.initialize(self, sprite, nil, scale)
     self.size.x = self.size.x * scale
     self.size.y = self.size.y * scale
-
+    self._scale = scale
     self.my_id = my_id
     self.disabled_image = KImageView:new("Disabled_" .. sprite, nil, scale)
     self.disabled_image.size.x = self.disabled_image.size.x * scale
@@ -3620,7 +3620,8 @@ function UpgradeButtons:on_click(button, x, y)
         screen_map.upgrades:upgrade_bought(self.data_values.class, self.data_values.level, self.data_values.price)
 
         self.explotion = KImageView:new()
-        self.explotion.pos = v(-17.5, -17.5)
+        -- -17.5
+        self.explotion.pos = v(-22, -22)
         self.explotion.animation = {
             to = 18,
             prefix = "Upgrades_Icons_buyFx",
