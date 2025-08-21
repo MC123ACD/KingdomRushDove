@@ -2783,7 +2783,7 @@ local towers = {
     },
     tricannon = {
         shared_min_cooldown = 3,
-        price = {140, 200, 280, 400},
+        price = {140, 200, 280, 380},
         stats = {
             cooldown = 2,
             range = 4,
@@ -2801,12 +2801,12 @@ local towers = {
         bombardment = {
             range = 180,
             damage_radius = 50,
-            price = {250, 200, 200},
+            price = {200, 250, 250},
             cooldown = {15, 15, 15},
             damage_min = {24, 32, 40},
             damage_max = {48, 64, 80},
-            spread = {20, 20, 18},
-            node_skip = {11, 6, 3}
+            spread = {20, 20, 21},
+            node_skip = {10, 4, 3}
         },
         overheat = {
             price = {150, 150, 150},
