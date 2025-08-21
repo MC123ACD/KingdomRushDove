@@ -3597,7 +3597,7 @@ local function heroes()
         [9] = 3
     }
     tt.hero.skills.reignoffire = E:clone_c("hero_skill")
-    tt.hero.skills.reignoffire.dps = {13, 24, 35}
+    tt.hero.skills.reignoffire.dps = {5, 8, 12}
     tt.hero.skills.reignoffire.xp_level_steps = {
         [1] = 1,
         [4] = 2,
@@ -3770,6 +3770,7 @@ local function heroes()
     tt = E:register_t("mod_dragon_reign", "modifier")
     E:add_comps(tt, "dps", "render")
     tt.modifier.duration = 3
+    tt.modifier.max_duplicates = 3
     tt.dps.damage_min = nil
     tt.dps.damage_max = nil
     tt.dps.damage_type = DAMAGE_TRUE

@@ -1167,7 +1167,7 @@ local function engineer_towers()
     E:add_comps(tt, "render", "tween")
     tt.aura.mod = "tower_tricannon_overheat_scorch_aura_mod"
     tt.aura.duration = b.overheat.decal.duration
-    tt.aura.cycle_time = 0.3
+    tt.aura.cycle_time = 0.5
     tt.aura.radius = b.overheat.decal.radius
     tt.aura.vis_bans = bor(F_FRIEND, F_FLYING)
     tt.aura.vis_flags = bor(F_MOD)

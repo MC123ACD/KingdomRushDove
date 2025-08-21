@@ -671,10 +671,12 @@ function sys.mod_lifecycle:on_insert(entity, store)
     if this.modifier.allows_duplicates then
         return true
     end
+    local duplicates = {}
     for _, m in pairs(modifiers) do
         if m.template_name == this.template_name then
             if this.modifier.level == m.modifier.level and this.modifier.max_duplicates then
                 this.modifier.max_duplicates = this.modifier.max_duplicates - 1
+                table.insert(duplicates, m)
                 if this.modifier.max_duplicates < 0 then
                     return false
                 end
@@ -701,6 +703,19 @@ function sys.mod_lifecycle:on_insert(entity, store)
                 return false
             else
                 return false
+            end
+        end
+    end
+
+    if #duplicates > 0 then
+        for _, d in pairs(duplicates) do
+            if d.dps then
+                d.dps.fx = nil
+            end
+            if d.render then
+                for i = 1, #d.render.sprites do
+                    d.render.sprites[i].hidden = true
+                end
             end
         end
     end
