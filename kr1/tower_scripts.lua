@@ -5288,9 +5288,9 @@ function scripts.tower_tricannon.update(this, store, script)
                             U.animation_start_group(this, aa.animation_end, nil, store.tick_ts, false, "layers")
                             U.y_animation_wait_group(this, "layers")
 
-                            if ao and ao.cooldown and store.tick_ts - ao.ts > ao.cooldown then
-                                ao.ts = store.tick_ts - (ao.cooldown - a.min_cooldown)
-                            end
+                            -- if ao and ao.cooldown and store.tick_ts - ao.ts > ao.cooldown then
+                            --     ao.ts = store.tick_ts - (ao.cooldown - a.min_cooldown)
+                            -- end
                         elseif aa == ao then
                             aa.ts = store.tick_ts
                             aa.active = true
