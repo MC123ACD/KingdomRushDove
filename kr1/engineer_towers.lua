@@ -172,8 +172,8 @@ local function engineer_towers()
     tt.powers.bolt.enc_icon = 11
     tt.powers.bolt.name = "CHARGED_BOLT"
     tt.powers.overcharge = CC("power")
-    tt.powers.overcharge.price_base = 200
-    tt.powers.overcharge.price_inc = 125
+    tt.powers.overcharge.price_base = 145
+    tt.powers.overcharge.price_inc = 145
     tt.powers.overcharge.enc_icon = 10
     tt.render.sprites[1].animated = false
     tt.render.sprites[1].name = "terrain_artillery_%04i"
