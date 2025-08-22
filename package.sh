@@ -41,9 +41,10 @@ else
     find . -name "*.lua" -type f ! -path "./_assets/kr1-desktop/strings/*" ! -path "./lib/*" | zip "$OUTPUT_ZIP" -@
 fi
 
-zip "$OUTPUT_ZIP" "./必读说明.md"
+# zip "$OUTPUT_ZIP" "./必读说明.md"
 zip "$OUTPUT_ZIP" "./_assets/kr1-desktop/strings/zh-Hans.lua"
 zip "$OUTPUT_ZIP" "./存档位置.lnk"
+zip "$OUTPUT_ZIP" "./游玩必读说明，务必阅读.url"
 zip "$OUTPUT_ZIP" "./patches/default.lua"
 zip "$OUTPUT_ZIP" "./patches/keyset_default.lua"
 zip "$OUTPUT_ZIP" "./patches/criket_template.lua"

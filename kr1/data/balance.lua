@@ -2809,17 +2809,17 @@ local towers = {
             node_skip = {10, 4, 3}
         },
         overheat = {
-            price = {160, 160, 160},
+            price = {200, 200, 200},
             cooldown = {30, 25, 20},
             duration = {6, 10, 12},
             decal = {
                 duration = 3,
                 radius = 40,
                 effect = {
-                    damage_every = 0.25,
+                    damage_every = 0.2,
                     duration = 3,
-                    damage = 3,
-                    s_damage = 12
+                    damage = 2,
+                    s_damage = 10
                 }
             }
         }
