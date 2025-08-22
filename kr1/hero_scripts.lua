@@ -20266,7 +20266,7 @@ function scripts.hero_dragon_gem.update(this, store)
 
     while true do
         if h.dead then
-            SU.y_hero_death_and_respawn(store, this)
+            y_hero_death_and_respawn_hero_dragon_gem(store, this)
             U.animation_start(this, this.idle_flip.last_animation, nil, store.tick_ts, this.idle_flip.loop, nil, true)
         end
 
