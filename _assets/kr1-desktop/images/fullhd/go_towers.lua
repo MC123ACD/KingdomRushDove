@@ -3285,108 +3285,108 @@ local kr1_data = {
 			"artillery_lvl4_tesla_0058"
 		}
 	},
-	artillery_lvl4_tesla_0059 = {
-		a_name = "go_towers-1.png",
-		size = {
-			155,
-			136
-		},
-		trim = {
-			0,
-			6,
-			17,
-			3
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			334,
-			1555,
-			138,
-			127
-		},
-		alias = {
-			"artillery_lvl4_tesla_0060"
-		}
-	},
-	artillery_lvl4_tesla_0061 = {
-		a_name = "go_towers-1.png",
-		size = {
-			155,
-			136
-		},
-		trim = {
-			0,
-			6,
-			17,
-			3
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			334,
-			1688,
-			138,
-			127
-		},
-		alias = {
-			"artillery_lvl4_tesla_0062"
-		}
-	},
-	artillery_lvl4_tesla_0063 = {
-		a_name = "go_towers-1.png",
-		size = {
-			155,
-			136
-		},
-		trim = {
-			0,
-			6,
-			17,
-			3
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			334,
-			1821,
-			138,
-			127
-		},
-		alias = {
-			"artillery_lvl4_tesla_0064"
-		}
-	},
-	artillery_lvl4_tesla_0065 = {
-		a_name = "go_towers-1.png",
-		size = {
-			155,
-			136
-		},
-		trim = {
-			0,
-			6,
-			17,
-			3
-		},
-		a_size = {
-			2048,
-			2048
-		},
-		f_quad = {
-			487,
-			483,
-			138,
-			127
-		},
-		alias = {}
-	},
+	-- artillery_lvl4_tesla_0059 = {
+	-- 	a_name = "go_towers-1.png",
+	-- 	size = {
+	-- 		155,
+	-- 		136
+	-- 	},
+	-- 	trim = {
+	-- 		0,
+	-- 		6,
+	-- 		17,
+	-- 		3
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		334,
+	-- 		1555,
+	-- 		138,
+	-- 		127
+	-- 	},
+	-- 	alias = {
+	-- 		"artillery_lvl4_tesla_0060"
+	-- 	}
+	-- },
+	-- artillery_lvl4_tesla_0061 = {
+	-- 	a_name = "go_towers-1.png",
+	-- 	size = {
+	-- 		155,
+	-- 		136
+	-- 	},
+	-- 	trim = {
+	-- 		0,
+	-- 		6,
+	-- 		17,
+	-- 		3
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		334,
+	-- 		1688,
+	-- 		138,
+	-- 		127
+	-- 	},
+	-- 	alias = {
+	-- 		"artillery_lvl4_tesla_0062"
+	-- 	}
+	-- },
+	-- artillery_lvl4_tesla_0063 = {
+	-- 	a_name = "go_towers-1.png",
+	-- 	size = {
+	-- 		155,
+	-- 		136
+	-- 	},
+	-- 	trim = {
+	-- 		0,
+	-- 		6,
+	-- 		17,
+	-- 		3
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		334,
+	-- 		1821,
+	-- 		138,
+	-- 		127
+	-- 	},
+	-- 	alias = {
+	-- 		"artillery_lvl4_tesla_0064"
+	-- 	}
+	-- },
+	-- artillery_lvl4_tesla_0065 = {
+	-- 	a_name = "go_towers-1.png",
+	-- 	size = {
+	-- 		155,
+	-- 		136
+	-- 	},
+	-- 	trim = {
+	-- 		0,
+	-- 		6,
+	-- 		17,
+	-- 		3
+	-- 	},
+	-- 	a_size = {
+	-- 		2048,
+	-- 		2048
+	-- 	},
+	-- 	f_quad = {
+	-- 		487,
+	-- 		483,
+	-- 		138,
+	-- 		127
+	-- 	},
+	-- 	alias = {}
+	-- },
 	barbarian_axe_0001 = {
 		a_name = "go_towers-2.png",
 		size = {

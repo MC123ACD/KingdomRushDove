@@ -4122,10 +4122,12 @@ scripts.tower_tesla = {
                         end
 
                         U.y_animation_wait(this, tower_sid)
+                        goto continue
                     end
                 end
 
                 U.animation_start(this, "idle", nil, store.tick_ts)
+                ::continue::
                 coroutine.yield()
             end
         end

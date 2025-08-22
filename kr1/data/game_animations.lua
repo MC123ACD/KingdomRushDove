@@ -4690,7 +4690,7 @@ local kr1_a = {
     },
     tower_tesla_shoot = {
         prefix = "artillery_lvl4_tesla",
-        to = 65,
+        to = 58,
         from = 1
     },
     ray_tesla = {
