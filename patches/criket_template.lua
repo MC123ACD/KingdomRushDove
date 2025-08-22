@@ -1,13 +1,11 @@
---[[
-这是一个编辑斗蛐蛐出怪的样例文件
-你可以在同一文件夹中创建一个名为 criket.lua 的新文件来定义你的斗蛐蛐波次
-若你的 criket 缺少一些设置将会使用本文件的设置
---]]
+-- 这是一个编辑斗蛐蛐出怪的样例文件
+-- 你可以在同一文件夹中创建一个名为 criket.lua 的新文件来定义你的斗蛐蛐波次
+-- 若你的 criket 缺少一些设置将会使用本文件的设置
 return {
     on = true, -- 启用斗蛐蛐,
     cash = 50000, -- 初始金币
     groups = {{ -- 第 1 组出怪
-        path_index = 1, -- 设置出怪路径为 1
+        path_index = 1, -- 设置出怪路径为 1（至少为 1）
         delay = 5, -- 开始出这组怪的延迟，单位为秒
         spawns = {{ -- 出怪 1
             creep = "enemy_goblin", -- 选择出怪：哥布林
@@ -31,12 +29,6 @@ return {
             interval = 0.1, -- 每隔 0.1 秒出一个哥布林
             fixed_sub_path = 0, -- 子路径，0 为随机
             interval_next = 5 -- 出完后，过 5 秒出下一怪
-        }, { -- 出怪 2
-            creep = "enemy_fat_orc", -- 选择出怪：兽人
-            max = 50, -- 总数量
-            interval = 0.2, -- 每隔 0.2 秒出一个兽人
-            fixed_sub_path = 0, -- 子路径，0 为随机
-            interval_next = 0
         }}
     }},
     required_textures = { -- 启用的贴图列表
