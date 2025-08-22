@@ -670,6 +670,8 @@ function upgrades:patch_templates(max_level)
         at.cooldown = at.cooldown * u.cooldown_factor_electric
         at = T("tower_tesla").attacks.list[1]
         at.cooldown = at.cooldown * u.cooldown_factor_electric
+        at = T("tower_tesla").attacks
+        at.min_cooldown = at.min_cooldown * u.cooldown_factor_electric
         at = T("tower_tricannon_lvl4").powers.bombardment
         at.cooldown[1] = at.cooldown[1] * u.cooldown_factor
         at.cooldown[2] = at.cooldown[2] * u.cooldown_factor
