@@ -80,7 +80,7 @@ local function mage_towers()
     tt.attacks.list[2] = table.deepclone(tt.attacks.list[1])
     tt.attacks.list[2].bullet = "ray_arcane_disintegrate"
     tt.attacks.list[2].cooldown = 20
-    tt.attacks.list[2].vis_flags = bor(F_DISINTEGRATED)
+    tt.attacks.list[2].vis_flags = bor(F_RANGED, F_DISINTEGRATED)
     tt.attacks.list[2].vis_bans = 0
     tt.attacks.list[3] = CC("aura_attack")
     tt.attacks.list[3].animation = "teleport"

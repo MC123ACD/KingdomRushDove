@@ -491,15 +491,15 @@ return {
 							interval_next = 100,
 							max = 8
 						},
-                        {
-							interval = 26,
-							max_same = 0,
-							fixed_sub_path = 0,
-							creep = "eb_elora",
-							path = 1,
-							interval_next = 100,
-							max = 1
-						},
+                        -- {
+						-- 	interval = 26,
+						-- 	max_same = 0,
+						-- 	fixed_sub_path = 0,
+						-- 	creep = "eb_elora",
+						-- 	path = 1,
+						-- 	interval_next = 100,
+						-- 	max = 1
+						-- },
 						{
 							interval = 256,
 							max_same = 0,

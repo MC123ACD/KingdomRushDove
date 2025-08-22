@@ -6404,7 +6404,7 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
            end
            if new_tower.barrack then
                 if game_gui.game.store.patches.criket and game_gui.game.store.patches.criket.on then
-                    local path_index = game_gui.game.store.patches.criket.path_index
+                    local path_index = game_gui.game.store.patches.criket.groups[1].path_index
                     -- local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, {1}, true)
                     local nodes = P.paths[path_index][1]
 

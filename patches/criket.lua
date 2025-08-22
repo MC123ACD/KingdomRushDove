@@ -5,7 +5,8 @@ return {
     groups = {{
         path_index = 5, -- 设置主路径为 1
         delay = 0, -- 开始出怪前的延迟，单位为秒
-        spawns = { -- {
+        spawns = {
+        -- {
         --     max = 30,
         --     creep = "enemy_troll_brute",
         --     -- creep_aux = "enemy_cannibal_volcano_normal",
@@ -15,38 +16,44 @@ return {
         --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
         -- },
         {
-            max = 30,
-            creep = "enemy_cannibal",
-            -- creep_aux = "enemy_cannibal_volcano_normal",
-            -- max_same = 2,
+            max = 50,
+            creep = "eb_gerald",    
             fixed_sub_path = 0,
-            interval = 0.6,
-            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        }, {
-            max = 16,
-            creep = "enemy_shaman_magic",
-            creep_aux = "enemy_shaman_shield",
-            max_same = 2,
-            fixed_sub_path = 0,
-            interval = 0.6,
-            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        }, {
-            max = 16,
-            creep = "enemy_shaman_necro",
-            creep_aux = "enemy_hunter",
-            max_same = 2,
-            fixed_sub_path = 0,
-            interval = 0.6,
-            interval_next = 0.4 -- 每隔 1 秒出一个小兽人
-        }, {
-            max = 16,
-            creep = "enemy_shaman_priest", -- 选择敌人为小哥布林
-            creep_aux = "enemy_shaman",
-            max_same = 2,
-            fixed_sub_path = 0,
-            interval = 0.6, -- 每隔 0.1 秒出一个小哥布林
-            interval_next = 0.4 -- 本小波出完后，过 5 秒出下一波
+            interval = 0.1,
+            interval_next = 0.1
         } -- {
+        --     max = 30,
+        --     creep = "enemy_cannibal",
+        --     -- creep_aux = "enemy_cannibal_volcano_normal",
+        --     -- max_same = 2,
+        --     fixed_sub_path = 0,
+        --     interval = 0.6,
+        --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        -- }, {
+        --     max = 16,
+        --     creep = "enemy_shaman_magic",
+        --     creep_aux = "enemy_shaman_shield",
+        --     max_same = 2,
+        --     fixed_sub_path = 0,
+        --     interval = 0.6,
+        --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        -- }, {
+        --     max = 16,
+        --     creep = "enemy_shaman_necro",
+        --     creep_aux = "enemy_hunter",
+        --     max_same = 2,
+        --     fixed_sub_path = 0,
+        --     interval = 0.6,
+        --     interval_next = 0.4 -- 每隔 1 秒出一个小兽人
+        -- }, {
+        --     max = 16,
+        --     creep = "enemy_shaman_priest", -- 选择敌人为小哥布林
+        --     creep_aux = "enemy_shaman",
+        --     max_same = 2,
+        --     fixed_sub_path = 0,
+        --     interval = 0.6, -- 每隔 0.1 秒出一个小哥布林
+        --     interval_next = 0.4 -- 本小波出完后，过 5 秒出下一波
+        -- } -- {
         --     max = 20,
         --     creep = "enemy_soldier_barbarian",
         --     creep_aux = "enemy_soldier_paladin",
@@ -132,7 +139,8 @@ return {
                          "go_enemies_grass", "go_enemies_halloween", "go_enemies_hulking_rage", "go_enemies_ice",
                          "go_enemies_jungle", "go_enemies_mactans_malicia", "go_enemies_rising_tides",
                          "go_enemies_rotten", "go_enemies_sarelgaz", "go_enemies_storm", "go_enemies_torment",
-                         "go_enemies_underground", "go_enemies_wastelands"}
+                         "go_enemies_underground", "go_enemies_wastelands", "go_hero_gerald"},
+    required_sounds = {"hero_gerald"}
 }
 
 -- 一个示例的斗蛐蛐文件：

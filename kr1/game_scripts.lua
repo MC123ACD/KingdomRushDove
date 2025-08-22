@@ -17663,7 +17663,7 @@ function scripts.soldier_forest.update(this, store)
 
                 if brk or sta == A_DONE then
                     goto label_56_3
-                elseif sta == A_IN_COOLDOWN then
+                elseif sta == A_IN_COOLDOWN or this.motion.arrived then
                     goto label_56_2
                 end
             end

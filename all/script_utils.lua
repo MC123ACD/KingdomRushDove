@@ -2256,6 +2256,8 @@ local function soldier_pick_melee_target(store, this)
 end
 
 -- 士兵 block 目标，并移动到 melee_slot 对应位置
+-- 还在走的话，返回 true
+-- 到达 slot_pos 时，返回 false
 local function soldier_move_to_slot_step(store, this, target)
     U.block_enemy(store, this, target)
 

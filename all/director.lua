@@ -352,6 +352,13 @@ function director:unload_item(item)
             end
         end
 
+        local criket = game.store.patches.criket
+        if criket and criket.on then
+            for _, group in pairs(criket.required_sounds) do
+                S:unload_group(group)
+            end
+        end
+
         game:destroy()
 
         game.store = nil
@@ -533,6 +540,7 @@ function director:queue_load_item_named(name, force_reload)
 
             self:load_texture_groups(replace_locale(criket.required_textures), self.params.texture_size, game.ref_res,
                 true, "game")
+            self:load_sound_groups(criket.required_sounds)
         end
 
         self:load_texture_groups(replace_locale(game.required_textures), self.params.texture_size, game.ref_res, true,
@@ -616,6 +624,9 @@ function director:unload_texture_groups(groups, texture_size, ref_height, item_n
 end
 
 function director:load_texture_groups(groups, texture_size, ref_height, queue, item_name)
+    if not groups then
+        return
+    end
     local scale = 1
 
     for _, group in pairs(groups) do

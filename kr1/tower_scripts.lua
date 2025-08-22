@@ -2069,15 +2069,16 @@ scripts.tower_arcane_wizard = {
                     local enemy, _ = find_target(ad)
                     if not enemy then
                         U.y_wait(store, this.tower.guard_time)
-                        goto continue
+                        goto continue_attack
                     end
                     start_animations(ad, enemy)
                     enemy, _ = find_target(ad)
                     if not enemy then
-                        goto continue
+                        goto continue_attack
                     end
                     wizard_attack(ad, enemy)
                 end
+                ::continue_attack::
                 if ready_to_attack(ar, store, this.tower.cooldown_factor) and wizard_ready() then
                     local enemy, _ = find_target(ar)
                     if not enemy then

@@ -24,6 +24,8 @@ require("barrack_towers")()
 require("enemies")()
 require("heroes")()
 require("boss")()
+package.loaded.hero_boss = nil
+require("hero_boss")
 -- require("game_templates_5")()
 ----------
 
