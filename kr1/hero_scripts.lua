@@ -20150,7 +20150,7 @@ function scripts.hero_dragon_gem.update(this, store)
         local dead_lifetime = h.dead_lifetime
 
         U.unblock_target(store, this)
-        if band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE_BOSS)) ~= 0 then
+        if band(h.last_damage_types, bor(DAMAGE_DISINTEGRATE)) ~= 0 then
             this.unit.hide_after_death = true
 
             local fx = E:create_entity("fx_soldier_desintegrate")

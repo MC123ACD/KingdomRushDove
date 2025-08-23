@@ -1320,10 +1320,11 @@ local function mage_towers()
     tt.attacks.list[4].vis_flags = bor(F_RANGED, F_INSTAKILL)
     tt.attacks.list[4].chance = 0
     -- 毒素
-    tt.attacks.list[2] = table.deepclone(tt.attacks.list[1])
+    tt.attacks.list[2] = table.deepclone(tt.attacks.list[4])
     tt.attacks.list[2].animation = "shoot"
     tt.attacks.list[2].bullet = "bullet_pixie_poison"
     tt.attacks.list[2].vis_flags = bor(F_RANGED,F_MOD, F_POISON)
+    tt.attacks.list[2].vis_bans = F_FLYING
     tt.attacks.list[2].chance = 0
     -- 变形
     tt.attacks.list[5] = E:clone_c("mod_attack")
