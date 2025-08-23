@@ -495,8 +495,8 @@ function director:queue_load_item_named(name, force_reload)
         game.store.texture_size = self.params.texture_size
         game.store.level = LU.load_level(game.store, game.store.level_name)
 
-        storage:load_config(game.store)
-        storage:load_criket(game.store)
+        game.store.config = storage:load_config()
+        game.store.criket = storage:load_criket()
 
         local criket = game.store.criket
         if criket and criket.on then

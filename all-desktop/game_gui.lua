@@ -399,8 +399,7 @@ function game_gui:init(w, h, game)
     self.is_premium = PS.services.iap and PS.services.iap:is_premium()
 
     local settings = storage:load_settings()
-    storage:load_keyset(self)
-    self.key_shortcuts = LU.eval_file("patches/keyset_custom.lua")
+    self.key_shortcuts = storage:load_keyset()
 
     self.pause_on_switch = settings.pause_on_switch
     -- self.key_shortcuts = {}

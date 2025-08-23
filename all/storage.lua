@@ -78,17 +78,16 @@ function storage:load_lua(filename, force_load)
     return data_table
 end
 
-function storage:load_config(store)
-    store.config = self:load_lua("config.lua")
-    local config = store.config
+function storage:load_config()
+    local config = self:load_lua("config.lua")
     local default_patch = require("patches.default")
     if not config then
         log.error("config.lua not found, using default.lua instead")
-        store.config = default_patch
-        self:save_config(store)
+        config = default_patch
+        self:save_config(config)
     elseif not config.custom_config_enabled then
         log.error("config.custom_config_enable is false, using default.lua instead")
-        store.config = default_patch
+        config = default_patch
     else
         for k, v in pairs(default_patch) do
             if config[k] == nil then
@@ -96,18 +95,18 @@ function storage:load_config(store)
             end
         end
     end
+    return config
 end
 
-function storage:load_criket(store)
-    store.criket = self:load_lua("criket.lua")
+function storage:load_criket()
+    local criket = self:load_lua("criket.lua")
 
-    if not store.criket then
+    if not criket then
         local criket_template = require("patches.criket_template")
-        store.criket = criket_template
-        self:save_criket(store)
+        criket = criket_template
+        self:save_criket(criket)
     end
 
-    local criket = store.criket
     if criket.on then
         local criket_template = require("patches.criket_template")
         if #criket.groups <= 0 then -- 若没有出怪组则使用模板的出怪组
@@ -139,39 +138,41 @@ function storage:load_criket(store)
             end
         end
     end
+    return criket
 end
 
-function storage:load_keyset(game_gui)
-    game_gui.key_shortcuts = self:load_lua("keyset.lua")
+function storage:load_keyset()
+    local key_shortcuts = self:load_lua("keyset.lua")
     local default_key_shortcuts = require("patches.keyset_default")
-    if not game_gui.key_shortcuts then
-        game_gui.key_shortcuts = default_key_shortcuts
-        self:save_keyset(game_gui)
+    if not key_shortcuts then
+        key_shortcuts = default_key_shortcuts
+        self:save_keyset(key_shortcuts)
     else
         for k, v in pairs(default_key_shortcuts) do
-            if not game_gui.key_shortcuts[k] then
-                game_gui.key_shortcuts[k] = v
+            if not key_shortcuts[k] then
+                key_shortcuts[k] = v
             end
         end
     end
+    return key_shortcuts
 end
 
-function storage:save_keyset(game_gui)
-    local success = self:write_lua("keyset.lua")
+function storage:save_keyset(key_shortcuts)
+    local success = self:write_lua("keyset.lua", key_shortcuts, true)
     if not success then
         log.error("Error saving keyset.lua")
     end
 end
 
-function storage:save_config(store)
-    local success = self:write_lua("config.lua", store.config, true)
+function storage:save_config(config)
+    local success = self:write_lua("config.lua", config, true)
     if not success then
         log.error("Error saving config.lua")
     end
 end
 
-function storage:save_criket(store)
-    local success = self:write_lua("criket.lua", store.criket, true)
+function storage:save_criket(criket)
+    local success = self:write_lua("criket.lua", criket, true)
     if not success then
         log.error("Error saving criket.lua")
     end

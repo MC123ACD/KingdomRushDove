@@ -693,6 +693,14 @@ function screen_map:init(w, h, done_callback)
 
     self.window:add_child(self.achievements)
 
+    self.config_panel_view = ConfigPanelView:new(sw, sh)
+    self.config_panel_view.pos = v(0, 0)
+    self.window:add_child(self.config_panel_view)
+
+    self.criket_panel_view = CriketPanelView:new(sw, sh)
+    self.criket_panel_view.pos = v(0, 0)
+    self.window:add_child(self.criket_panel_view)
+
     if self.is_premium then
         local sv = KView:new(V.v(sw, sh))
 
@@ -811,25 +819,45 @@ function screen_map:draw()
 end
 
 function screen_map:keypressed(key, isrepeat)
-    if key == "escape" then
+    local function hide_others()
         if self.level_select and not self.level_select.hidden then
             self.level_select:hide()
+            return true
         elseif not self.hero_room.hidden then
             self.hero_room:hide()
+            return true
         elseif not self.upgrades.hidden then
             self.upgrades:hide()
+            return true
         elseif not self.encyclopedia.hidden then
             self.encyclopedia:hide()
+            return true
         elseif not self.achievements.hidden then
             self.achievements:hide()
+            return true
         elseif not self.difficulty_view.hidden then
             -- block empty
+            return true
         elseif not self.option_panel.hidden then
             self.option_panel:hide()
+            return true
         elseif self.shop_view and not self.shop_view.hidden then
             self.shop_view:hide()
-        else
+            return true
+        end
+        return false
+    end
+    if key == "escape" then
+        if not hide_others() then
             self.option_panel:show()
+        end
+    elseif key == "f1" then
+        if not hide_others() then
+            self.config_panel_view:show()
+        end
+    elseif key == "f2" then
+        if not hide_others() then
+            self.criket_panel_view:show()
         end
     end
 
@@ -5699,6 +5727,313 @@ function AchievementsPageButton:deselect()
     if not self:is_disabled() then
         self:set_image(self.default_image_name)
     end
+end
+
+BooleanToggleItem = class("BooleanToggleItem", KButton)
+
+function BooleanToggleItem:initialize(key_text, initial_value, size)
+    size = size or V.v(300, 40)
+    KButton.initialize(self, size)  -- 改为 KButton.initialize
+
+    self.key = key_text
+    self.value = initial_value or false
+    self.on_change_callback = nil
+
+    -- 移除背景，KButton 自己会处理
+    -- self.background = KView:new(self.size)
+    -- self.background.colors.background = {0, 0, 0, 0}
+    -- self:add_child(self.background)
+
+    -- 键名标签
+    self.key_label = GGLabel:new(V.v(self.size.x - 80, self.size.y))
+    self.key_label.pos = V.v(10, 0)
+    self.key_label.font_name = "body"
+    self.key_label.font_size = 16
+    self.key_label.text = key_text
+    self.key_label.text_align = "left"
+    self.key_label.vertical_align = "middle"
+    self.key_label.colors.text = {200, 200, 200, 255}
+    self.key_label.colors.text_default = {200, 200, 200, 255}
+    self.key_label.colors.text_hover = {255, 255, 255, 255}
+    self.key_label.propagate_on_click = true
+
+    self:add_child(self.key_label)
+
+    -- 值标签
+    self.value_label = GGLabel:new(V.v(60, self.size.y))
+    self.value_label.pos = V.v(self.size.x - 70, 0)
+    self.value_label.font_name = "body"
+    self.value_label.font_size = 16
+    self.value_label.text_align = "center"
+    self.value_label.vertical_align = "middle"
+    self.value_label.colors.text_yes = {100, 255, 100, 255}
+    self.value_label.colors.text_no = {255, 100, 100, 255}
+    self.value_label.colors.text_yes_hover = {150, 255, 150, 255}
+    self.value_label.colors.text_no_hover = {255, 150, 150, 255}
+    self.value_label.propagate_on_click = true
+
+    self:add_child(self.value_label)
+
+    -- 设置初始状态
+    self:update_display()
+end
+
+function BooleanToggleItem:update_display()
+    if self.value then
+        self.value_label.text = _("是")
+        self.value_label.colors.text = {100, 255, 100, 255}
+    else
+        self.value_label.text = _("否")
+        self.value_label.colors.text = {255, 100, 100, 255}
+    end
+
+    -- 强制重绘
+    if self.value_label.redraw then
+        self.value_label:redraw()
+    end
+end
+
+function BooleanToggleItem:on_enter()
+    -- 悬浮高亮效果
+    self.colors.background = {50, 50, 50, 100}
+    self.key_label.colors.text = self.key_label.colors.text_hover
+
+    if self.value then
+        self.value_label.colors.text = {150, 255, 150, 255}
+    else
+        self.value_label.colors.text = {255, 150, 150, 255}
+    end
+
+    if self.value_label.redraw then
+        self.value_label:redraw()
+    end
+end
+
+function BooleanToggleItem:on_exit()
+    -- 取消高亮效果
+    self.colors.background = {0, 0, 0, 0}
+    self.key_label.colors.text = self.key_label.colors.text_default
+    self:update_display()
+end
+
+function BooleanToggleItem:on_click()
+    S:queue("GUIButtonCommon")
+    self:toggle()
+end
+
+function BooleanToggleItem:toggle()
+    self.value = not self.value
+    self:update_display()
+
+    if self.on_change_callback then
+        self.on_change_callback(self.key, self.value)
+    end
+end
+
+-- 布尔值切换组类 - 管理多个布尔值项
+BooleanToggleGroup = class("BooleanToggleGroup", KView)
+
+function BooleanToggleGroup:initialize(size)
+    size = size or V.v(400, 300)
+    KView.initialize(self, size)
+    self.key_label_map = {}
+    self.items = {}
+    self.item_height = 45
+    self.padding = V.v(10, 10) -- 修正：使用向量表示水平和垂直内边距
+    self.data = {}
+end
+
+function BooleanToggleGroup:set_key_label_map(map)
+    self.key_label_map = map
+end
+
+function BooleanToggleGroup:add_item(key, initial_value)
+    local item_count = 0
+    for _ in pairs(self.items) do
+        item_count = item_count + 1
+    end
+
+    local item_y = self.padding.y + item_count * self.item_height
+
+    local item = BooleanToggleItem:new(self.key_label_map[key] or key, initial_value, V.v(self.size.x - 2 * self.padding.x, 40))
+    item.pos = V.v(self.padding.x, item_y)
+    item.on_change_callback = function(label, value)
+        self.data[table.keyforobject(self.key_label_map, label) or label] = value
+    end
+
+    self:add_child(item)
+
+    self.items[key] = item
+    self.data[key] = initial_value
+
+    return item
+end
+
+
+function BooleanToggleGroup:set_value(key, value)
+    if self.items[key] then
+        self.items[key]:set_value(value)
+        self.data[key] = value
+    end
+end
+
+function BooleanToggleGroup:get_value(key)
+    return self.data[key]
+end
+
+function BooleanToggleGroup:get_all_data()
+    return self.data
+end
+
+function BooleanToggleGroup:set_all_data(data)
+    self.data = data
+    self.items = {}
+    for key, value in pairs(data) do
+        if type(value) == "boolean" then
+            self:add_item(key, value)
+        end
+    end
+end
+
+function BooleanToggleGroup:set_on_data_change_callback(callback)
+    self.on_data_change_callback = callback
+end
+
+ConfigPanelView = class("ConfigPanelView", PopUpView)
+
+function ConfigPanelView:initialize(sw, sh)
+    PopUpView.initialize(self, V.v(sw, sh))
+
+    self.back = KImageView:new("options_bg_notxt")
+    self.pos = v(0, 0)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2 - 50)
+
+    self:add_child(self.back)
+
+    self.back.alpha = 1
+    -- 添加标题
+    local header = GGPanelHeader:new(_("自定义配置"), 242)
+    header.pos = V.v(240, CJK(41, 39, nil, 39) - (IS_KR3 and 19 or 0))
+    self.back:add_child(header)
+
+    -- 创建配置组
+    self.config_group = BooleanToggleGroup:new(V.v(400, 300))
+    self.config_group.pos = V.v(self.back.size.x / 2 - 200, 120)
+    self.config_group:set_key_label_map({
+        hero_full_level_at_start = "英雄开局满级",
+        reverse_path = "路线倒转",
+        show_health_bar = "显示血条",
+        custom_config_enabled = "启用自定义配置",
+    })
+
+    -- 设置数据改变回调
+    self.config_group:set_on_data_change_callback(function(key, value, all_data)
+    end)
+
+    self.back:add_child(self.config_group)
+
+    -- 添加底部按钮
+    local mx = 150
+    local y = 420
+
+    local b = GGOptionsButton:new(_("BUTTON_DONE"))
+    b.anchor.x = b.size.x / 2
+    b.pos = V.v(self.back.size.x / 2, y)
+
+    function b.on_click()
+        S:queue("GUIButtonCommon")
+        local config = storage:load_config()
+        for k, v in pairs(self.config_group:get_all_data()) do
+            config[k] = v
+        end
+        storage:save_config(config)
+        self:hide()
+    end
+
+    self.done_button = b
+    self.back:add_child(b)
+end
+
+function ConfigPanelView:load_config()
+    local config = storage:load_config()
+    self.config_group:set_all_data(config)
+end
+
+function ConfigPanelView:show()
+    ConfigPanelView.super.show(self)
+    self:load_config()
+end
+
+function ConfigPanelView:hide()
+    ConfigPanelView.super.hide(self)
+end
+
+CriketPanelView = class("CriketPanelView", PopUpView)
+
+function CriketPanelView:initialize(sw, sh)
+    PopUpView.initialize(self, V.v(sw, sh))
+
+    self.back = KImageView:new("options_bg_notxt")
+    self.pos = v(0, 0)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2 - 50)
+
+    self:add_child(self.back)
+
+    self.back.alpha = 1
+    -- 添加标题
+    local header = GGPanelHeader:new(_("斗蛐蛐配置"), 242)
+    header.pos = V.v(240, CJK(41, 39, nil, 39) - (IS_KR3 and 19 or 0))
+    self.back:add_child(header)
+
+    -- 创建配置组
+    self.criket_group = BooleanToggleGroup:new(V.v(400, 300))
+    self.criket_group.pos = V.v(self.back.size.x / 2 - 200, 120)
+    self.criket_group:set_key_label_map({
+        on = "启用斗蛐蛐",
+    })
+
+    -- 设置数据改变回调
+    self.criket_group:set_on_data_change_callback(function(key, value, all_data)
+    end)
+
+    self.back:add_child(self.criket_group)
+
+    -- 添加底部按钮
+    local mx = 150
+    local y = 420
+
+    local b = GGOptionsButton:new(_("BUTTON_DONE"))
+    b.anchor.x = b.size.x / 2
+    b.pos = V.v(self.back.size.x / 2, y)
+
+    function b.on_click()
+        S:queue("GUIButtonCommon")
+        local criket = storage:load_criket()
+        for k, v in pairs(self.criket_group:get_all_data()) do
+            criket[k] = v
+        end
+        storage:save_criket(criket)
+        self:hide()
+    end
+
+    self.done_button = b
+    self.back:add_child(b)
+end
+
+function CriketPanelView:load_criket()
+    local criket = storage:load_criket()
+    self.criket_group:set_all_data(criket)
+end
+
+function CriketPanelView:show()
+    CriketPanelView.super.show(self)
+    self:load_criket()
+end
+
+function CriketPanelView:hide()
+    CriketPanelView.super.hide(self)
 end
 
 return screen_map
