@@ -465,7 +465,7 @@ function LU.insert_hero(store, name, pos)
         store.main_hero = hero
         hero.hero.xp = 0
         hero.hero.level = 1
-        if store.patches.hero_full_level_at_start and hero.hero.fn_level_up then
+        if store.config.hero_full_level_at_start and hero.hero.fn_level_up then
             if hero.hero.fn_level_up then
                 for i = 1, 10 do
                     hero.hero.level = i
@@ -475,7 +475,7 @@ function LU.insert_hero(store, name, pos)
                 hero.hero.level = 10
             end
         end
-        hero.unit.damage_factor = store.patches.hero_damage_multiplier
+        hero.unit.damage_factor = store.config.hero_damage_multiplier
         LU.queue_insert(store, hero)
         signal.emit("hero-added", hero)
     end

@@ -6535,7 +6535,7 @@ function scripts.mega_spawner.update(this, store)
 
                                 break
                             end
-                            for i = 1, store.patches.enemy_count_multiplier do
+                            for i = 1, store.config.enemy_count_multiplier do
                                 table.insert(spawn_queue, {
                                     c_delay / i,
                                     template,
@@ -6568,7 +6568,7 @@ function scripts.mega_spawner.update(this, store)
                                         }
                                         local spi = p_subpath and p_subpath > 0 and p_subpath or math.random(1, 3)
 
-                                        for i = 1, store.patches.enemy_count_multiplier do
+                                        for i = 1, store.config.enemy_count_multiplier do
                                             table.insert(spawn_queue, {c_delay / i, p_template, point, spi, {
                                                 pack = custom_data.spawnPackId
                                             }})
@@ -6594,7 +6594,7 @@ function scripts.mega_spawner.update(this, store)
                                     local point_id = table.random(point_ids)
                                     local point = this.spawner_points[point_id]
                                     local spi = subpath and subpath > 0 and subpath or math.random(1, 3)
-                                    for j = 1, store.patches.enemy_count_multiplier do
+                                    for j = 1, store.config.enemy_count_multiplier do
                                         table.insert(spawn_queue, {c_delay / j, template, point, spi, custom_data})
                                     end
 
@@ -6625,7 +6625,7 @@ function scripts.mega_spawner.update(this, store)
                                         int_delay = int_delay + U.frandom(int_min, int_max)
 
                                         local this_delay = c_delay + U.frandom(0, delay_var) + int_delay
-                                        for j = 1, store.patches.enemy_count_multiplier do
+                                        for j = 1, store.config.enemy_count_multiplier do
                                             table.insert(spawn_queue,
                                                 {this_delay / j, template, point, spi, custom_data})
 

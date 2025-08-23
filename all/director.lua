@@ -352,12 +352,13 @@ function director:unload_item(item)
             end
         end
 
-        local criket = game.store.patches.criket
+        local criket = game.store.criket
         if criket and criket.on then
             for _, group in pairs(criket.required_sounds) do
                 S:unload_group(group)
             end
         end
+
 
         game:destroy()
 
@@ -493,51 +494,12 @@ function director:queue_load_item_named(name, force_reload)
         game.store.screen_scale = self:get_texture_scale("game", REF_H)
         game.store.texture_size = self.params.texture_size
         game.store.level = LU.load_level(game.store, game.store.level_name)
-        game.store.patches = LU.eval_file("patches/config.lua")
-        local default_patch = LU.eval_file("patches/default.lua")
-        if not game.store.patches or not game.store.patches.custom_config_enabled then
-            game.store.patches = default_patch
-        else
-            for k, v in pairs(default_patch) do
-                if game.store.patches[k] == nil then
-                    game.store.patches[k] = v
-                end
-            end
-        end
-        game.store.patches.criket = LU.eval_file("patches/criket.lua")
-        local criket = game.store.patches.criket
+
+        storage:load_config(game.store)
+        storage:load_criket(game.store)
+
+        local criket = game.store.criket
         if criket and criket.on then
-            local criket_template = LU.eval_file("patches/criket_template.lua")
-
-            if #criket.groups <= 0 then -- 若没有出怪组则使用模板的出怪组
-                criket.groups = criket_template.groups
-            else
-                local ct_groups = criket_template.groups[1]
-                local ct_spawns = ct_groups.spawns[1]
-
-                for _, group in pairs(criket.groups) do
-                    for ctg_k, ctg_v in pairs(ct_groups) do
-                        if not group[ctg_k] then -- 若出怪组不存在模板出怪组的键则向其增加模板的对应键
-                            group[ctg_k] = ctg_v
-                        else
-                            local criket_spawns = group.spawns
-
-                            if #criket_spawns <= 0 then -- 若没有出任何怪则使用模板的怪物
-                                criket_spawns = ct_spawns
-                            else
-                                for ct_k, ct_v in pairs(ct_spawns) do
-                                    for _, spawn in pairs(criket_spawns) do
-                                        if not spawn[ct_k] then
-                                            spawn[ct_k] = ct_v
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-
             self:load_texture_groups(replace_locale(criket.required_textures), self.params.texture_size, game.ref_res,
                 true, "game")
             self:load_sound_groups(criket.required_sounds)

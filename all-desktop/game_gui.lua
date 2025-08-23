@@ -186,7 +186,7 @@ local function game_victory_handler(store)
     game_gui:deselect_all()
     game_gui:disable_keys()
     local wait_time
-    if store.patches.criket and store.patches.criket.on then
+    if store.criket and store.criket.on then
         wait_time = 0.5
     else
         wait_time = 2
@@ -399,17 +399,8 @@ function game_gui:init(w, h, game)
     self.is_premium = PS.services.iap and PS.services.iap:is_premium()
 
     local settings = storage:load_settings()
+    storage:load_keyset(self)
     self.key_shortcuts = LU.eval_file("patches/keyset_custom.lua")
-    local default_key_shortcuts = LU.eval_file("patches/keyset_default.lua")
-    if not self.key_shortcuts then
-        self.key_shortcuts = default_key_shortcuts
-    else
-        for k, v in pairs(default_key_shortcuts) do
-            if not self.key_shortcuts[k] then
-                self.key_shortcuts[k] = v
-            end
-        end
-    end
 
     self.pause_on_switch = settings.pause_on_switch
     -- self.key_shortcuts = {}
@@ -4202,7 +4193,7 @@ function VictoryView:initialize(level_mode)
 end
 
 function VictoryView:show()
-    local criket = game_gui.game.store.patches.criket
+    local criket = game_gui.game.store.criket
     if criket and criket.on then
         local lives
         if game_gui.game.store.lives < 0 then
@@ -6372,7 +6363,7 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
     if item.action == "tw_upgrade" then
         for k, v in pairs(game_gui.game.store.towers) do
            local new_tower = E:create_entity(item.action_arg)
-           game_gui.game.store.patches.criket.tower_name = new_tower.template_name
+           game_gui.game.store.criket.tower_name = new_tower.template_name
            new_tower.pos = V.vclone(v.pos)
            new_tower.tower.holder_id = v.tower.holder_id
            new_tower.tower.flip_x = v.tower.flip_x
@@ -6403,8 +6394,8 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
                 new_tower.powers.auto.changed = true
            end
            if new_tower.barrack then
-                if game_gui.game.store.patches.criket and game_gui.game.store.patches.criket.on then
-                    local path_index = game_gui.game.store.patches.criket.groups[1].path_index
+                if game_gui.game.store.criket and game_gui.game.store.criket.on then
+                    local path_index = game_gui.game.store.criket.groups[1].path_index
                     -- local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, {1}, true)
                     local nodes = P.paths[path_index][1]
 

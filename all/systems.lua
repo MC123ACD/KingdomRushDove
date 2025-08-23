@@ -61,12 +61,12 @@ function sys.level:init(store)
     DI:set_level(store.level_difficulty)
     GR:load(store.level_name)
     P:load(store.level_name, store.visible_coords)
-    if store.patches.reverse_path then
+    if store.config.reverse_path then
         P:reverse_all_paths()
     end
     W:load(store.level_name, store.level_mode)
-    if store.patches.criket and store.patches.criket.on then
-        W:patch_waves(store.patches.criket)
+    if store.criket and store.criket.on then
+        W:patch_waves(store.criket)
     end
     A:load()
     E:load()
@@ -96,9 +96,9 @@ function sys.level:init(store)
 
     store.level.co = nil
     store.level.run_complete = nil
-    store.player_gold = math.ceil(W:initial_gold() * store.patches.gold_multiplier)
-    if store.patches.criket and store.patches.criket.on then
-        store.player_gold = store.patches.criket.cash
+    store.player_gold = math.ceil(W:initial_gold() * store.config.gold_multiplier)
+    if store.criket and store.criket.on then
+        store.player_gold = store.criket.cash
     end
 
     if slot.locked_towers then
@@ -112,7 +112,7 @@ function sys.level:init(store)
     for _, unlock_tower in pairs(store.level.unlock_towers) do
         table.removeobject(store.level.locked_towers, unlock_tower)
     end
-    if store.patches.criket and store.patches.criket.on then
+    if store.criket and store.criket.on then
         store.lives = 0
     elseif store.level_mode == GAME_MODE_CAMPAIGN then
         store.lives = 20
@@ -191,7 +191,7 @@ function sys.level:on_update(dt, ts, store)
 
     if not store.game_outcome then
 
-        if store.lives < 1 and (not store.patches.criket or not store.patches.criket.on) then
+        if store.lives < 1 and (not store.criket or not store.criket.on) then
             log.info("++++ DEFEAT ++++")
 
             store.game_outcome = {
@@ -234,7 +234,7 @@ function sys.level:on_update(dt, ts, store)
             signal.emit("game-defeat-after", store)
             storage:save_slot(slot, nil, true)
         elseif store.level.run_complete and store.waves_finished and not LU.has_alive_enemies(store) then
-            if store.patches.criket and store.patches.criket.on then
+            if store.criket and store.criket.on then
                 -- if not store.criket_wait_start_time then
                 --     store.criket_wait_start_time = store.tick_ts
                 -- end
@@ -254,7 +254,7 @@ function sys.level:on_update(dt, ts, store)
                 elseif store.lives < -5 then
                     stars = 2
                 end
-                store.patches.criket.time_cost = store.tick_ts - store.patches.criket.start_time
+                store.criket.time_cost = store.tick_ts - store.criket.start_time
                 store.game_outcome = {
                     victory = true,
                     lives_left = store.lives,
@@ -320,7 +320,7 @@ local function spawner(store, wave, group_id)
     local last_spawn_ts = 0
 
     for i = 1, #spawns do
-        for count = 1, store.patches.enemy_count_multiplier do
+        for count = 1, store.config.enemy_count_multiplier do
             local current_count = 0
             local current_creep
             local s = spawns[i]
@@ -337,7 +337,7 @@ local function spawner(store, wave, group_id)
             end
 
             for j = 1, s.max do
-                U.y_wait(store, fts(s.interval or 0) / store.patches.enemy_count_multiplier)
+                U.y_wait(store, fts(s.interval or 0) / store.config.enemy_count_multiplier)
 
                 if not current_creep then
                     current_creep = s.creep
@@ -363,7 +363,7 @@ local function spawner(store, wave, group_id)
             end
 
             if s.max == 0 then
-                U.y_wait(store, fts(s.interval or 0) / store.patches.enemy_count_multiplier)
+                U.y_wait(store, fts(s.interval or 0) / store.config.enemy_count_multiplier)
             end
 
             local oes = s.on_end_signal
@@ -388,7 +388,7 @@ local function spawner(store, wave, group_id)
                         interval_next = interval_next * 0.75
                     end
                 end
-                U.y_wait(store, fts(interval_next) / store.patches.enemy_count_multiplier)
+                U.y_wait(store, fts(interval_next) / store.config.enemy_count_multiplier)
             end
         end
     end
@@ -479,8 +479,8 @@ function sys.wave_spawn:init(store)
                 signal.emit("early-wave-called", group, store.early_wave_reward, remaining_secs, score_reward)
             else
                 store.early_wave_reward = 0
-                if store.patches.criket then
-                    store.patches.criket.start_time = store.tick_ts
+                if store.criket then
+                    store.criket.start_time = store.tick_ts
                 end
             end
 
@@ -2018,7 +2018,7 @@ function sys.render:on_insert(entity, store)
         end
     end
 
-    if store.patches and store.patches.show_health_bar and entity.health_bar then
+    if store.config and store.config.show_health_bar and entity.health_bar then
         local hb = entity.health_bar
         local fk = hb.black_bar_hp and {} or nil
 
@@ -2133,7 +2133,7 @@ function sys.render:on_remove(entity, store)
         end
     end
 
-    if store.patches and store.patches.show_health_bar and entity.health_bar then
+    if store.config and store.config.show_health_bar and entity.health_bar then
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
 
@@ -2220,7 +2220,7 @@ function sys.render:on_update(dt, ts, store)
             end
         end
 
-        if store.patches and store.patches.show_health_bar and e.health_bar then
+        if store.config and store.config.show_health_bar and e.health_bar then
             local hb = e.health_bar
             local fb = hb.frames[1]
             local ff = hb.frames[2]

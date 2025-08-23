@@ -802,7 +802,7 @@ local function hero_level_up(store, this)
         expected_level_multiplier = 0.1 * (store.level_idx - 48)
     end
     local difficulty_multiplier = GS.hero_xp_gain_per_difficulty_mode[store.level_difficulty]
-    local net_xp = h.xp_queued * expected_level_multiplier * difficulty_multiplier * store.patches.hero_xp_gain_multiplier
+    local net_xp = h.xp_queued * expected_level_multiplier * difficulty_multiplier * store.config.hero_xp_gain_multiplier
 
     log_xp.debug("XP+: (%s)%s xp:%07.2f + net_xp:%6.2f = %8.2f | net_xp = xp_queued:%s * exp_lvl_mul:%s * diff_mul:%s",
         this.id, this.template_name, h.xp, km.round(net_xp), h.xp + km.round(net_xp), h.xp_queued,
