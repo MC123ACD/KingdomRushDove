@@ -3213,7 +3213,7 @@ function scripts.tower_pixie.update(this, store)
                         -- block empty
                     else
                         for ii, aa in ipairs(a.list) do
-                            if aa.chance > 0 and rnd <= aa.chance + acc then
+                            if aa.chance > 0 and rnd <= aa.chance / (1 - acc) then
                                 attack = aa
 
                                 break
