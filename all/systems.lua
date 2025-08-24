@@ -157,7 +157,8 @@ function sys.level:init(store)
                 tower.tower.flip_x = tower_data.flip_x
                 if tower_data.terrain_style then
                     tower.tower.terrain_style = tower_data.terrain_style
-                    tower.render.sprites[1].name = string.format(tower.render.sprites[1].name, tower.tower.terrain_style)
+                    tower.render.sprites[1].name =
+                        string.format(tower.render.sprites[1].name, tower.tower.terrain_style)
                 end
 
                 -- 恢复技能等级
@@ -622,15 +623,42 @@ function sys.wave_spawn:force_next_wave(store)
 end
 
 function sys.wave_spawn:on_insert(entity, store)
-    -- if store.level_mode == GAME_MODE_ENDLESS and (entity.enemy or entity.endless) and
-    --     not entity._entity_progression_done then
-    --     -- W:set_entity_progression(entity, store.wave_group_number)
-
-    --     -- entity._entity_progression_done = true
-    -- end
-    if store.level_mode_override == GAME_MODE_ENDLESS and entity.enemy and not entity._endless_strengthened then
-        entity._endless_strengthened = true
-        W:endless_strengthen_enemy(entity)
+    if store.level_mode_override == GAME_MODE_ENDLESS then
+        if not entity._endless_strengthened then
+            entity._endless_strengthened = true
+            if entity.enemy then
+                if entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * self.endless.enemy_health_factor)
+                    entity.health.hp = entity.health.hp_max
+                    entity.health.damage_factor = entity.health.damage_factor * self.endless.enemy_health_damage_factor
+                end
+                if entity.unit.damage_factor then
+                    entity.unit.damage_factor = entity.unit.damage_factor * self.endless.enemy_damage_factor
+                end
+                if entity.motion.max_speed then
+                    entity.motion.max_speed = entity.motion.max_speed * self.endless.enemy_speed_factor
+                end
+            elseif entity.soldier then
+                if entity.health and entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * self.endless.soldier_health_factor)
+                    entity.health.hp = entity.health.hp_max
+                    -- entity.health.damage_factor = entity.health.damage_factor * self.endless.soldier_health_damage_factor
+                end
+                if entity.unit then
+                    entity.unit.damage_factor = entity.unit.damage_factor * self.endless.soldier_damage_factor
+                end
+                if entity.cooldown_factor then
+                    entity.cooldown_factor = entity.cooldown_factor * self.endless.soldier_cooldown_factor
+                end
+                if entity.hero then
+                    entity.unit.damage_factor = entity.unit.damage_factor * self.endless.hero_damage_factor
+                    entity.cooldown_factor = entity.cooldown_factor * self.endless.hero_cooldown_factor
+                end
+            elseif entity.tower then
+                entity.tower.damage_factor = entity.tower.damage_factor * self.endless.tower_damage_factor
+                entity.tower.cooldown_factor = entity.tower.cooldown_factor * self.endless.tower_cooldown_factor
+            end
+        end
     end
     return true
 end

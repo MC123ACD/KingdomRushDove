@@ -105,29 +105,8 @@ function wave_db:load(level_name, game_mode, endless)
         local storage = require("all.storage")
         local endless_history = storage:load_endless(level_name)
         if endless_history then
-            local friend_buff = require("kr1.data.endless").friend_buff
-
             wave_db.endless = endless_history
             wave_db.endless.load_from_history = true
-            for _, s in pairs(E:filter_templates("soldier")) do
-                if s.health and s.health.hp_max then
-                    s.health.hp_max = s.health.hp_max * (endless_history.soldier_health_factor or 1)
-                end
-                if s.unit.damage_factor then
-                    s.unit.damage_factor = s.unit.damage_factor * (endless_history.soldier_health_factor or 1)
-                end
-                if s.cooldown_factor then
-                    s.cooldown_factor = s.cooldown_factor * (endless_history.soldier_cooldown_factor or 1)
-                end
-            end
-            for _, t in pairs(E:filter_templates("tower")) do
-                t.tower.damage_factor = t.tower.damage_factor + ((endless_history.tower_damage_factor or 1) - 1)
-                t.tower.cooldown_factor = t.tower.cooldown_factor * (endless_history.tower_cooldown_factor or 1)
-            end
-            for _, h in pairs(E:filter_templates("hero")) do
-                h.unit.damage_factor = h.unit.damage_factor * (endless_history.hero_damage_factor or 1)
-                h.cooldown_factor = h.cooldown_factor * (endless_history.hero_cooldown_factor or 1)
-            end
         else
             wave_db.endless = {
                 enemy_list = {},
@@ -192,20 +171,6 @@ function wave_db:load(level_name, game_mode, endless)
                 end
             end
         end
-    end
-end
-
-function wave_db:endless_strengthen_enemy(entity)
-    if entity.health.hp_max then
-        entity.health.hp_max = math.ceil(entity.health.hp_max * self.endless.enemy_health_factor)
-        entity.health.hp = entity.health.hp_max
-        entity.health.damage_factor = entity.health.damage_factor * self.endless.enemy_health_damage_factor
-    end
-    if entity.unit.damage_factor then
-        entity.unit.damage_factor = entity.unit.damage_factor * self.endless.enemy_damage_factor
-    end
-    if entity.motion.max_speed then
-        entity.motion.max_speed = entity.motion.max_speed * self.endless.enemy_speed_factor
     end
 end
 
@@ -320,141 +285,6 @@ function wave_db:get_endless_boss_config(i)
 
     return out
 end
-
--- function wave_db:get_endless_group(i)
---     local db = self.db
-
---     if not db.vars then
---         db.vars = {
---             dif_idx = 1,
---             next_dif_uses = 0,
---             used_waves = {},
---             first_entity_wave = {}
---         }
---     end
-
---     local paths_order = {}
-
---     for _, v in pairs(table.random_order(db.pathConfig)) do
---         local rv, rvi = table.random(v)
-
---         table.insert(paths_order, rv + 1)
---     end
-
---     local waves_per_load = 10
---     local used_waves = db.vars.used_waves
---     local dif_idx = db.vars.dif_idx
---     local dif_max = #db.difficulties
---     local dif = db.difficulties[dif_idx]
---     local dif_next = db.difficulties[km.clamp(1, dif_max, dif_idx + 1)]
---     local max_paths = dif.max_paths
---     local boss_waves_count = i % waves_per_load ~= 0 and 0 or #dif.bossWaves
---     local multipath_chance = i == 1 and 0 or (dif.multiple_paths_chance + dif.multiple_paths_chance_increment * i) / 100
---     local next_dif_chances = db.chancesToUseNextDifficulty
---     local next_dif_uses = db.vars.next_dif_uses
---     local o_group = {
---         waves = {}
---     }
---     local wave_interval = 0
-
---     for pi = 1, max_paths do
---         if pi > 1 and boss_waves_count == 0 and multipath_chance < math.random() then
---             -- block empty
---         else
---             local cycle_index = km.zmod(i, waves_per_load)
---             local waves
-
---             if boss_waves_count > 0 then
---                 waves = dif.bossWaves
---                 boss_waves_count = boss_waves_count - 1
---             else
---                 local next_dif_chance = next_dif_chances[cycle_index - waves_per_load + #next_dif_chances] or 0
-
---                 next_dif_chance = next_dif_chance * math.pow(0.5, next_dif_uses)
-
---                 log.paranoid("  ENDLESS NORMAL WAVE. next_dif_chance:%s next_dif_uses:%s  chances:%s", next_dif_chance,
---                     next_dif_uses, getfulldump(next_dif_chances))
-
---                 if next_dif_chance > math.random() then
---                     next_dif_uses = next_dif_uses + 1
---                     waves = dif_next.waves
---                     cycle_index = 1
---                 else
---                     waves = dif.waves
---                 end
---             end
-
---             local candidate_waves = table.filter(waves, function(k, v)
---                 return not table.contains(used_waves, v)
---             end)
-
---             if #candidate_waves == 0 then
---                 candidate_waves = waves
---                 used_waves = {}
---             end
-
---             local wave = table.random(candidate_waves)
-
---             table.insert(used_waves, wave)
-
---             wave_interval = math.max(wave_interval, wave.next_wave_interval)
-
---             local o_wave = {
---                 delay = 0,
---                 spawns = {}
---             }
---             local has_some_flying = false
-
---             for _, spawn in pairs(wave.spawns) do
---                 local o_spawn = {
---                     creep = spawn.creep,
---                     creep_aux = spawn.creep_aux,
---                     max_same = spawn.max_same,
---                     max = spawn.cant + (spawn.cant_cicle == 0 and 0 or spawn.cant_increment *
---                         math.floor(math.min(cycle_index, waves_per_load) / spawn.cant_cicle)),
---                     interval = spawn.interval,
---                     interval_next = spawn.interval_next,
---                     fixed_sub_path = spawn.use_fixed_path,
---                     path = spawn.path + 1
---                 }
-
---                 table.insert(o_wave.spawns, o_spawn)
-
---                 local tpl = E:get_template(spawn.creep)
-
---                 if tpl and bit.band(tpl.vis.flags, F_FLYING) ~= 0 then
---                     has_some_flying = true
---                 end
-
---                 log.paranoid(
---                     "   ENDLESS SPAWN index:%03i - max:%03i creep:%s  maxSame:%i interval:%i interval_next:%i path:%i cycle_index:%i",
---                     i, o_spawn.max, o_spawn.creep, o_spawn.max_same, o_spawn.interval, o_spawn.interval_next,
---                     o_spawn.path, cycle_index)
---             end
-
---             o_wave.path_index = paths_order[km.zmod(pi, #paths_order)]
---             o_wave.some_flying = has_some_flying
-
---             table.insert(o_group.waves, o_wave)
---         end
---     end
-
---     o_group.interval = wave_interval == 0 and 100 or wave_interval
-
---     if i > 0 and i % waves_per_load == 0 then
---         dif_idx = km.clamp(1, dif_max, dif_idx + 1)
---         next_dif_uses = 0
---         used_waves = {}
---     end
-
---     db.vars.dif_idx = dif_idx
---     db.vars.next_dif_uses = next_dif_uses
---     db.vars.used_waves = used_waves
-
---     log.paranoid("group %s:\n %s", i, getfulldump(o_group))
-
---     return o_group
--- end
 
 function wave_db:get_endless_group(i)
     local group = {}

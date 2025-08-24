@@ -7998,11 +7998,7 @@ function EndlessSelectRewardView:save()
                 s.health.hp = s.health.hp_max
             end
         end
-        for _, s in pairs(E:filter_templates("soldier")) do
-            if s.health and s.health.hp_max then
-                s.health.hp_max = s.health.hp_max * friend_buff.health_factor
-            end
-        end
+
         W.endless.soldier_health_factor = W.endless.soldier_health_factor * friend_buff.health_factor
     elseif key == "soldier_damage" then
         for _, s in pairs(store.soldiers) do
@@ -8010,11 +8006,7 @@ function EndlessSelectRewardView:save()
                 s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
             end
         end
-        for _, s in pairs(E:filter_templates("soldier")) do
-            if s.unit.damage_factor then
-                s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
-            end
-        end
+
         W.endless.soldier_damage_factor = W.endless.soldier_damage_factor * friend_buff.soldier_damage_factor
 
     elseif key == "soldier_cooldown" then
@@ -8023,29 +8015,21 @@ function EndlessSelectRewardView:save()
                 s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
             end
         end
-        for _, s in pairs(E:filter_templates("soldier")) do
-            if s.cooldown_factor then
-                s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
-            end
-        end
+
         W.endless.soldier_cooldown_factor = W.endless.soldier_cooldown_factor * friend_buff.soldier_cooldown_factor
 
     elseif key == "tower_damage" then
         for _, t in pairs(store.towers) do
             script_utils.insert_tower_damage_factor_buff(t, friend_buff.tower_damage_factor)
         end
-        for _, t in pairs(E:filter_templates("tower")) do
-            t.tower.damage_factor = t.tower.damage_factor + friend_buff.tower_damage_factor
-        end
+
         W.endless.tower_damage_factor = W.endless.tower_damage_factor + friend_buff.tower_damage_factor
 
     elseif key == "tower_cooldown" then
         for _, t in pairs(store.towers) do
             script_utils.insert_tower_cooldown_buff(t, friend_buff.tower_cooldown_factor)
         end
-        for _, t in pairs(E:filter_templates("tower")) do
-            t.tower.cooldown_factor = t.tower.cooldown_factor * friend_buff.tower_cooldown_factor
-        end
+
         W.endless.tower_cooldown_factor = W.endless.tower_cooldown_factor * friend_buff.tower_cooldown_factor
     elseif key == "hero_damage" then
         for _, h in pairs(store.soldiers) do
@@ -8053,9 +8037,7 @@ function EndlessSelectRewardView:save()
                 h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
             end
         end
-        for _, h in pairs(E:filter_templates("hero")) do
-            h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
-        end
+
         W.endless.hero_damage_factor = W.endless.hero_damage_factor * friend_buff.hero_damage_factor
     elseif key == "hero_cooldown" then
         for _, h in pairs(store.soldiers) do
@@ -8063,9 +8045,7 @@ function EndlessSelectRewardView:save()
                 h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
             end
         end
-        for _, h in pairs(E:filter_templates("hero")) do
-            h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
-        end
+
         W.endless.hero_cooldown_factor = W.endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
     end
 
