@@ -102,6 +102,31 @@ local function next_wave_ready_handler(group)
 
         game_gui:show_balloon("TB_WAVE")
     end
+    if game_gui.game.store.level_mode == GAME_MODE_ENDLESS then
+        game_gui.endless_select_reward_view:show()
+        local tmp = {
+            "health",
+            "damage",
+            "speed",
+            "health_damage_factor",
+            "lives"
+        }
+        local endless = game_gui.game.store.endless
+        local enemy_buff = require("kr1.data.endless").enemy_buff
+        local key = table.random(tmp)
+        if key == "health" then
+            endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
+        elseif key == "damage" then
+            endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
+        elseif key == "speed" then
+            endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
+        elseif key == "health_damage_factor" then
+            endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
+        elseif key == "lives" then
+        endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
+        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+        end
+    end
 end
 
 local function next_wave_sent_handler(group)
@@ -439,6 +464,7 @@ function game_gui:init(w, h, game)
     local window = KWindow:new(V.v(sw, sh))
 
     self.window = window
+    window.timer = timer
     window.scale.x, window.scale.y = scale, scale
     window.colors.background = {0, 0, 0, 0}
     window.font_scale = scale
@@ -547,7 +573,8 @@ function game_gui:init(w, h, game)
 
     local defeatview
 
-    if self.game.simulation.store.level_mode == GAME_MODE_ENDLESS then
+    -- if self.game.simulation.store.level_mode == GAME_MODE_ENDLESS then
+    if false then -- TODO: endless模式的胜利界面还没做完，先用普通模式的
         defeatview = KView:new_from_table(kui_db:get_table("game_gui_defeat_view", {
             SW = self.sw,
             SH = self.sh
@@ -654,6 +681,10 @@ function game_gui:init(w, h, game)
 
     defeatview.hidden = true
 
+    local endless_select_reward_view = EndlessSelectRewardView:new(sw, sh)
+    endless_select_reward_view.hidden = true
+    endless_select_reward_view.pos = v(0, 0)
+
     local overlay = OverlayView:new(sw, sh)
 
     overlay.hidden = true
@@ -747,6 +778,7 @@ function game_gui:init(w, h, game)
     layer_gui_top:add_child(overlay)
     layer_gui_top:add_child(notiview)
     layer_gui_top:add_child(pauseview)
+    layer_gui_top:add_child(endless_select_reward_view)
     layer_gui_top:add_child(victoryview)
     layer_gui_top:add_child(defeatview)
     layer_gui_top:add_child(comic_transition)
@@ -758,6 +790,7 @@ function game_gui:init(w, h, game)
     window:add_child(pickview)
     window:add_child(layer_gui)
 
+    self.endless_select_reward_view = endless_select_reward_view
     self.pickview = pickview
     self.towermenu = towermenu
     self.criketmenu = criketmenu
@@ -3478,7 +3511,8 @@ end
 HudCountersView = class("HudCountersView", KImageView)
 
 function HudCountersView:initialize(level_mode)
-    HudCountersView.super.initialize(self, level_mode == GAME_MODE_ENDLESS and "top_left_endless" or "top_left")
+    -- HudCountersView.super.initialize(self, level_mode == GAME_MODE_ENDLESS and "top_left_endless" or "top_left")
+    HudCountersView.super.initialize(self, "top_left")
 
     self.level_mode = level_mode
     self.heart_x = 70
@@ -3533,64 +3567,64 @@ function HudCountersView:initialize(level_mode)
     self.lbl_wave = lbl_wave
     self.gold_gnome = gold_gnome
 
-    if level_mode == GAME_MODE_ENDLESS then
-        local lbl_score = GGLabel:new(V.v(56, 28))
+    -- if level_mode == GAME_MODE_ENDLESS then
+    --     local lbl_score = GGLabel:new(V.v(56, 28))
 
-        lbl_score.pos = v(289, 38)
-        lbl_score.text_align = "left"
-        lbl_score.vertical_align = "middle"
-        lbl_score.font_name = "hud"
-        lbl_score.font_size = 12
-        lbl_score.fit_step = 0.25
-        lbl_score.fit_size = true
-        lbl_score.fit_lines = 1
-        lbl_score.colors.text = {255, 255, 255}
-        lbl_score.colors.background = DEBUG_BACKGROUND_COLOR
+    --     lbl_score.pos = v(289, 38)
+    --     lbl_score.text_align = "left"
+    --     lbl_score.vertical_align = "middle"
+    --     lbl_score.font_name = "hud"
+    --     lbl_score.font_size = 12
+    --     lbl_score.fit_step = 0.25
+    --     lbl_score.fit_size = true
+    --     lbl_score.fit_lines = 1
+    --     lbl_score.colors.text = {255, 255, 255}
+    --     lbl_score.colors.background = DEBUG_BACKGROUND_COLOR
 
-        self:add_child(lbl_score)
+    --     self:add_child(lbl_score)
 
-        self.lbl_score = lbl_score
+    --     self.lbl_score = lbl_score
 
-        local bonus_fx = KImageView:new("hud_bonusFx_0001")
+    --     local bonus_fx = KImageView:new("hud_bonusFx_0001")
 
-        bonus_fx.animation = {
-            to = 16,
-            prefix = "hud_bonusFx"
-        }
-        bonus_fx.pos = V.v(270, 7)
-        bonus_fx.hidden = true
+    --     bonus_fx.animation = {
+    --         to = 16,
+    --         prefix = "hud_bonusFx"
+    --     }
+    --     bonus_fx.pos = V.v(270, 7)
+    --     bonus_fx.hidden = true
 
-        self:add_child(bonus_fx)
+    --     self:add_child(bonus_fx)
 
-        self.bonus_fx = bonus_fx
+    --     self.bonus_fx = bonus_fx
 
-        local lbl_bonus = GGShaderLabel:new(V.v(42, 18))
+    --     local lbl_bonus = GGShaderLabel:new(V.v(42, 18))
 
-        lbl_bonus.r = km.deg2rad(7)
-        lbl_bonus.text = "+9999"
-        lbl_bonus.pos = V.v(28, 40)
-        lbl_bonus.fit_lines = 1
-        lbl_bonus.vertical_align = "middle"
-        lbl_bonus.font_name = "numbers_bold"
-        lbl_bonus.font_size = 17
-        lbl_bonus.colors = {
-            text = {255, 255, 255, 255},
-            background = {0, 0, 0, 0}
-        }
-        lbl_bonus.shaders = {"p_outline", "p_glow"}
-        lbl_bonus.shader_margin = 8
-        lbl_bonus.shader_args = {{
-            thickness = 0.75,
-            outline_color = {0, 0.4980392156862745, 0.7058823529411765, 1}
-        }, {
-            thickness = 0.5,
-            glow_color = {0, 0.4980392156862745, 0.7058823529411765, 1}
-        }}
+    --     lbl_bonus.r = km.deg2rad(7)
+    --     lbl_bonus.text = "+9999"
+    --     lbl_bonus.pos = V.v(28, 40)
+    --     lbl_bonus.fit_lines = 1
+    --     lbl_bonus.vertical_align = "middle"
+    --     lbl_bonus.font_name = "numbers_bold"
+    --     lbl_bonus.font_size = 17
+    --     lbl_bonus.colors = {
+    --         text = {255, 255, 255, 255},
+    --         background = {0, 0, 0, 0}
+    --     }
+    --     lbl_bonus.shaders = {"p_outline", "p_glow"}
+    --     lbl_bonus.shader_margin = 8
+    --     lbl_bonus.shader_args = {{
+    --         thickness = 0.75,
+    --         outline_color = {0, 0.4980392156862745, 0.7058823529411765, 1}
+    --     }, {
+    --         thickness = 0.5,
+    --         glow_color = {0, 0.4980392156862745, 0.7058823529411765, 1}
+    --     }}
 
-        bonus_fx:add_child(lbl_bonus)
+    --     bonus_fx:add_child(lbl_bonus)
 
-        self.lbl_bonus = lbl_bonus
-    end
+    --     self.lbl_bonus = lbl_bonus
+    -- end
 end
 
 function HudCountersView:update(dt)
@@ -3603,7 +3637,7 @@ function HudCountersView:update(dt)
 
     if self.level_mode == GAME_MODE_ENDLESS then
         self.lbl_wave.text = string.format("%d", store.wave_group_number)
-        self.lbl_score.text = string.format("%d", store.player_score)
+        -- self.lbl_score.text = string.format("%d", store.player_score)
     else
         self.lbl_wave.text = string.format(_("MENU_HUD_WAVES"), store.wave_group_number, store.wave_group_total)
     end
@@ -7615,6 +7649,349 @@ function ItemRewardParticles:draw()
     G.draw(self.ps, 0, 0)
     G.setBlendMode("alpha")
     ItemRewardParticles.super.draw(self)
+end
+
+SelectItem = class("SelectItem", KButton)
+
+function SelectItem:initialize(key_text, size)
+    size = size or V.v(300, 40)
+    KButton.initialize(self, size) -- 改为 KButton.initialize
+
+    self.key = key_text
+    self.on_change_callback = nil
+
+    -- 键名标签
+    self.key_label = GGLabel:new(V.v(self.size.x - 80, self.size.y))
+    self.key_label.pos = V.v(10, 0)
+    self.key_label.font_name = "body"
+    self.key_label.font_size = 16
+    self.key_label.text = key_text
+    self.key_label.text_align = "left"
+    self.key_label.vertical_align = "middle"
+    self.key_label.colors.text = {200, 200, 200, 255}
+    self.key_label.colors.text_default = {200, 200, 200, 255}
+    self.key_label.colors.text_hover = {255, 255, 255, 255}
+    self.key_label.propagate_on_click = true
+
+    self:add_child(self.key_label)
+    -- 设置初始状态
+    self.value = false
+    self:update_display()
+end
+
+function SelectItem:update_display()
+    if self.value then
+        self.colors.background = {30, 30, 30, 150}
+        self.key_label.colors.text = self.key_label.colors.text_hover
+    else
+        self.colors.background = {0, 0, 0, 0}
+        self.key_label.colors.text = self.key_label.colors.text_default
+    end
+end
+
+function SelectItem:on_enter()
+    -- 悬浮高亮效果
+    self.colors.background = {50, 50, 50, 100}
+    self.key_label.colors.text = self.key_label.colors.text_hover
+end
+
+function SelectItem:on_exit()
+    -- 取消高亮效果
+    self.colors.background = {0, 0, 0, 0}
+    self.key_label.colors.text = self.key_label.colors.text_default
+    self:update_display()
+end
+
+function SelectItem:on_click()
+    S:queue("GUIButtonCommon")
+    self:toggle()
+end
+
+function SelectItem:toggle()
+    self.value = not self.value
+    self:update_display()
+
+    if self.on_change_callback then
+        self.on_change_callback(self.key, self.value)
+    end
+end
+
+function SelectItem:set_false()
+    self.value = false
+    self:update_display()
+end
+
+-- 布尔值切换组类 - 管理多个布尔值项
+SelectGroup = class("SelectGroup", KView)
+
+function SelectGroup:initialize(size)
+    size = size or V.v(400, 300)
+    KView.initialize(self, size)
+    self.key_label_map = {}
+    self.items = {}
+    self.item_height = 45
+    self.padding = V.v(10, 10) -- 修正：使用向量表示水平和垂直内边距
+    self.data = {}
+end
+
+function SelectGroup:set_key_label_map(map)
+    self.key_label_map = map
+end
+
+function SelectGroup:add_item(key, initial_value)
+    local item_count = 0
+    for _ in pairs(self.items) do
+        item_count = item_count + 1
+    end
+
+    local item_y = self.padding.y + item_count * self.item_height
+
+    local item = SelectItem:new(self.key_label_map[key] or key, initial_value,
+        V.v(self.size.x - 2 * self.padding.x, 40))
+    item.pos = V.v(self.padding.x, item_y)
+    item.on_change_callback = function(label, value)
+        local key = table.keyforobject(self.key_label_map, label) or label
+        self.data[key] = value
+        for k,v in pairs(self.data) do
+            if k ~= key then
+                self.data[k] = false
+                if self.items[k] then
+                    self.items[k]:set_false()
+                end
+            end
+        end
+    end
+
+    self:add_child(item)
+
+    self.items[key] = item
+    self.data[key] = initial_value
+
+    return item
+end
+
+-- function SelectGroup:set_value(key, value)
+--     if self.items[key] then
+--         self.items[key]:set_value(value)
+--         self.data[key] = value
+--         for k, v in pairs(self.data) do
+--             if k ~= key then
+--                 self.data[k] = false
+--                 if self.items[k] then
+--                     self.items[k]:set_value(false)
+--                 end
+--             end
+--         end
+--     end
+-- end
+
+function SelectGroup:get_value(key)
+    return self.data[key]
+end
+
+function SelectGroup:get_all_data()
+    return self.data
+end
+
+function SelectGroup:set_all_data(data)
+    self.data = data
+    for key, item in pairs(self.items) do
+        self:remove_child(item)
+    end
+    self.items = {}
+    for key, value in pairs(data) do
+        if type(value) == "boolean" then
+            self:add_item(key, value)
+        end
+    end
+end
+
+function SelectGroup:set_on_data_change_callback(callback)
+    self.on_data_change_callback = callback
+end
+
+SelectPanelView = class("SelectPanelView", PopUpView)
+function SelectPanelView:initialize(sw, sh, title)
+    PopUpView.initialize(self, V.v(sw, sh))
+
+    self.back = KImageView:new("options_bg_notxt")
+    self.pos = v(0, 0)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2 - 50)
+    self.header = title
+    self:add_child(self.back)
+
+    self.back.alpha = 1
+    -- 添加标题
+    local header = GGPanelHeader:new(self.header, 242)
+    header.pos = V.v(135, 28)
+    self.back:add_child(header)
+
+    -- 创建配置组
+    self.data_group = SelectGroup:new(V.v(400, 300))
+    self.data_group.pos = V.v(self.back.size.x / 2 - 200, 120)
+
+    -- 设置数据改变回调
+    self.data_group:set_on_data_change_callback(function(key, value, all_data)
+    end)
+
+    self.back:add_child(self.data_group)
+
+    -- 添加底部按钮
+    local mx = 150
+    local y = 420
+
+    local b = GGOptionsButton:new(_("BUTTON_DONE"))
+    b.anchor.x = b.size.x / 2
+    b.pos = V.v(self.back.size.x / 2, y)
+
+    function b.on_click()
+        S:queue("GUIButtonCommon")
+        self:save()
+        self:hide()
+    end
+
+    self.done_button = b
+    self.back:add_child(b)
+end
+
+function SelectPanelView:set_key_label_map(map)
+    self.data_group:set_key_label_map(map)
+end
+function SelectPanelView:load()
+    log.error("SelectPanelView:load not implemented")
+end
+
+function SelectPanelView:save()
+    log.error("SelectPanelView:save not implemented")
+end
+
+function SelectPanelView:show()
+    self:load()
+    SelectPanelView.super.show(self)
+end
+
+function SelectPanelView:hide()
+    SelectPanelView.super.hide(self)
+end
+
+EndlessSelectRewardView = class("EndlessSelectRewardView", SelectPanelView)
+function EndlessSelectRewardView:initialize(sw, sh)
+    SelectPanelView.initialize(self, sw, sh, "选择奖励")
+    self:set_key_label_map({
+        health = _("ENDLESS_MODE_REWARD_HEALTH"),
+        soldier_damage = _("ENDLESS_MODE_REWARD_SOLDIER_DAMAGE"),
+        soldier_cooldown = _("ENDLESS_MODE_REWARD_SOLDIER_COOLDOWN"),
+        tower_damage = _("ENDLESS_MODE_REWARD_TOWER_DAMAGE"),
+        tower_cooldown = _("ENDLESS_MODE_REWARD_TOWER_COOLDOWN"),
+    })
+end
+
+function EndlessSelectRewardView:load()
+    local data = {
+        "health",
+        "soldier_damage",
+        "soldier_cooldown",
+        "tower_damage",
+        "tower_cooldown",
+    }
+    -- 随机选择两个
+    local selected = {}
+    local count = 0  -- 手动计数
+    while count < 2 do
+        local choice = data[math.random(1, #data)]
+        if selected[choice] == nil then
+            selected[choice] = false
+            count = count + 1  -- 增加计数
+        end
+    end
+
+    self.data_group:set_all_data(selected)
+
+    game_gui:disable_keys()
+    game_gui:deselect_all()
+    S:pause()
+    game_gui.game.store.paused = true
+
+    game_gui.overlay:show()
+end
+
+function EndlessSelectRewardView:save()
+    local friend_buff = require("kr1.data.endless").friend_buff
+    local key
+    for k, v in pairs(self.data_group:get_all_data()) do
+        if v then
+            key = k
+            break
+        end
+    end
+    local script_utils = require("all.script_utils")
+
+    local store = game_gui.game.store
+    local W = store
+    if key == "health" then
+        for _, s in pairs(store.soldiers) do
+            if s.health then
+                s.health.hp_max = s.health.hp_max * friend_buff.health_factor
+                s.health.hp = s.health.hp_max
+            end
+        end
+        for _, s in pairs(E:filter_templates("soldier")) do
+            if s.health then
+                s.health.hp_max = s.health.hp_max * friend_buff.health_factor
+            end
+        end
+        W.endless.soldier_health_factor = W.endless.soldier_health_factor * friend_buff.health_factor
+    end
+    if key == "soldier_damage" then
+        for _, s in pairs(store.soldiers) do
+            if s.unit then
+                s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
+            end
+        end
+        for _, s in pairs(E:filter_templates("soldier")) do
+            if s.unit.damage_factor then
+                s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
+            end
+        end
+        W.endless.soldier_damage_factor = W.endless.soldier_damage_factor * friend_buff.soldier_damage_factor
+    end
+    if key == "soldier_cooldown" then
+        for _, s in pairs(store.soldiers) do
+            if s.cooldown_factor then
+                s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
+            end
+        end
+        for _, s in pairs(E:filter_templates("soldier")) do
+            if s.cooldown_factor then
+                s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
+            end
+        end
+        W.endless.soldier_cooldown_factor = W.endless.soldier_cooldown_factor * friend_buff.soldier_cooldown_factor
+    end
+    if key == "tower_damage" then
+        for _, t in pairs(store.towers) do
+            script_utils.insert_tower_damage_factor_buff(t, friend_buff.tower_damage_factor)
+        end
+        for _, t in pairs(E:filter_templates("tower")) do
+            t.tower.damage_factor = t.tower.damage_factor + friend_buff.tower_damage_factor
+        end
+        W.endless.tower_damage_factor = W.endless.tower_damage_factor + friend_buff.tower_damage_factor
+    end
+    if key == "tower_cooldown" then
+        for _, t in pairs(store.towers) do
+            script_utils.insert_tower_cooldown_buff(t, friend_buff.tower_cooldown_factor)
+        end
+        for _, t in pairs(E:filter_templates("tower")) do
+            t.tower.cooldown_factor = t.tower.cooldown_factor * friend_buff.tower_cooldown_factor
+        end
+        W.endless.tower_cooldown_factor = W.endless.tower_cooldown_factor * friend_buff.tower_cooldown_factor
+    end
+
+    game_gui:enable_keys()
+    S:resume()
+    game_gui.game.store.paused = false
+    game_gui.overlay:hide()
 end
 
 return game_gui

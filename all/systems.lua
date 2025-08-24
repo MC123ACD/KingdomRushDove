@@ -85,7 +85,6 @@ function sys.level:init(store)
 
     if store.level.data then
         store.level.locations = {}
-
         LU.insert_entities(store, store.level.data.entities_list)
         LU.insert_invalid_path_ranges(store, store.level.data.invalid_path_ranges)
     end
@@ -121,7 +120,9 @@ function sys.level:init(store)
     elseif store.level_mode == GAME_MODE_IRON then
         store.lives = 1
     elseif store.level_mode == GAME_MODE_ENDLESS then
-        store.lives = W:initial_lives() or 10
+        store.lives = 20
+        store.player_gold = store.player_gold + W.endless.extra_cash
+        store.endless = W.endless
     end
 
     store.gems_collected = 0
@@ -235,19 +236,6 @@ function sys.level:on_update(dt, ts, store)
             storage:save_slot(slot, nil, true)
         elseif store.level.run_complete and store.waves_finished and not LU.has_alive_enemies(store) then
             if store.criket and store.criket.on then
-                -- if not store.criket_wait_start_time then
-                --     store.criket_wait_start_time = store.tick_ts
-                -- end
-                -- if store.tick_ts - store.criket_wait_start_time < 2 then
-                --     return
-                -- end
-                -- for _, e in pairs(store.entities) do
-                --     queue_remove(store, e)
-                -- end
-                -- simulation:init(store, game.simulation_systems)
-                -- signal.emit("game-start", store)
-                -- store.criket_wait_start_time = nil
-                -- return
                 local stars = 3
                 if store.lives < -10 then
                     stars = 1
@@ -456,7 +444,8 @@ function sys.wave_spawn:init(store)
                 local score_reward
                 local remaining_secs = km.round(fts(group.interval) - (store.tick_ts - store.last_wave_ts))
 
-                if store.level_mode == GAME_MODE_ENDLESS then
+                if store.level_mode == -1 then
+                -- if store.level_mode == GAME_MODE_ENDLESS then
                     store.early_wave_reward = math.ceil(remaining_secs * GS.early_wave_reward_per_second *
                                                             W:get_endless_early_wave_reward_factor())
 
@@ -484,24 +473,24 @@ function sys.wave_spawn:init(store)
                 end
             end
 
-            if store.level_mode == GAME_MODE_ENDLESS and i > 1 then
-                local conf = W:get_endless_score_config()
-                local reward = (i - 1) * conf.scorePerWave
+            -- if store.level_mode == GAME_MODE_ENDLESS and i > 1 then
+            --     local conf = W:get_endless_score_config()
+            --     local reward = (i - 1) * conf.scorePerWave
 
-                store.player_score = store.player_score + reward
+            --     store.player_score = store.player_score + reward
 
-                local gems = GS.endless_gems_for_wave * (i - 1)
+            --     local gems = GS.endless_gems_for_wave * (i - 1)
 
-                store.gems_collected = store.gems_collected + gems
+            --     store.gems_collected = store.gems_collected + gems
 
-                log.debug("ENDLESS: wave %s reward:%s gems:%s", i, reward, gems)
-            end
+            --     log.debug("ENDLESS: wave %s reward:%s gems:%s", i, reward, gems)
+            -- end
 
             store.send_next_wave = false
             store.current_wave_group = group
 
             signal.emit("next-wave-sent", group)
-            log.debug("GEMS:_wave_idx:%s", gems_wave_idx)
+            -- log.debug("GEMS:_wave_idx:%s", gems_wave_idx)
 
             for j, wave in pairs(group.waves) do
                 wave.group_idx = i
@@ -555,13 +544,16 @@ function sys.wave_spawn:force_next_wave(store)
 end
 
 function sys.wave_spawn:on_insert(entity, store)
-    if store.level_mode == GAME_MODE_ENDLESS and (entity.enemy or entity.endless) and
-        not entity._entity_progression_done then
-        W:set_entity_progression(entity, store.wave_group_number)
+    -- if store.level_mode == GAME_MODE_ENDLESS and (entity.enemy or entity.endless) and
+    --     not entity._entity_progression_done then
+    --     -- W:set_entity_progression(entity, store.wave_group_number)
 
-        entity._entity_progression_done = true
+    --     -- entity._entity_progression_done = true
+    -- end
+    if store.level_mode == GAME_MODE_ENDLESS and entity.enemy and not entity._endless_strengthened then
+        entity._endless_strengthened = true
+        W:endless_strengthen_enemy(entity)
     end
-
     return true
 end
 

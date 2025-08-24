@@ -496,6 +496,9 @@ function director:queue_load_item_named(name, force_reload)
         game.store.level = LU.load_level(game.store, game.store.level_name)
 
         game.store.config = storage:load_config()
+        if game.store.config.endless then
+            game.store.level_mode = GAME_MODE_ENDLESS
+        end
         game.store.criket = storage:load_criket()
 
         local criket = game.store.criket

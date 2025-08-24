@@ -292,7 +292,8 @@ function mu.default_params(params, game_name, game_target, game_platform)
 		params.locale = nil
 	end
 
-	d("locale", features.default_locale or "en")
+	-- d("locale", features.default_locale or "en")
+    d("locale", features.default_locale or "zh-Hans") -- 默认中文
 end
 
 function mu.apply_params(params, game_name, game_target, game_platform)

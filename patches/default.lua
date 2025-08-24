@@ -28,4 +28,7 @@ return {
 
     -- 启动自定义配置开关，默认为 true。如果需要恢复默认配置，可以将它变为 false
     custom_config_enabled = true,
+
+    -- 启动无尽模式开关，默认为 false
+    endless = false
 }

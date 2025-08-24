@@ -1,8 +1,14 @@
 -- chunkname: @./_assets/kr1-desktop/strings/zh-Hans.lua
 local balance = require("kr1.data.balance")
+local endless = require("kr1.data.endless")
 local kr1 = {
     LEVEL_1000_TITLE = "斗蛐蛐专用关卡1",
     LEVEL_1000_HISTORY = "注二号路径为下面的直线",
+    ENDLESS_MODE_REWARD_HEALTH = string.format("友方单位生命值提升%d%%", endless.friend_buff.s_health_factor),
+    ENDLESS_MODE_REWARD_SOLDIER_DAMAGE = string.format("友方士兵伤害提升%d%%",endless.friend_buff.s_soldier_damage_factor),
+    ENDLESS_MODE_REWARD_SOLDIER_COOLDOWN = string.format("友方士兵攻速提升%d%%", endless.friend_buff.s_soldier_cooldown_factor),
+    ENDLESS_MODE_REWARD_TOWER_DAMAGE = string.format("防御塔伤害增加%d%%",endless.friend_buff.s_tower_damage_factor),
+    ENDLESS_MODE_REWARD_TOWER_COOLDOWN = string.format("防御塔攻速提升%d%%", endless.friend_buff.s_tower_cooldown_factor),
     CREDITS_TITLE_16 = "质量检验与测试",
     ACHIEVEMENT_ENERGY_NETWORK_DESCRIPTION = "在任意关卡建造4个特斯拉塔。",
     ACHIEVEMENT_CANNON_FODDER_DESCRIPTION = "让 1000 名士兵慷慨就义。",

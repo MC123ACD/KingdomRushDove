@@ -204,6 +204,7 @@ function LU.load_data(store)
 	local data = LU.eval_file(fn)
 
 	if not data then
+        log.error("Level data file %s could not be loaded", fn)
 		return nil
 	end
 
@@ -294,7 +295,7 @@ function LU.insert_entities(store, items, store_back_references)
                     end
 				end
 
-				if e.editor and e.editor.game_mode ~= 0 and e.editor.game_mode ~= store.level_mode then
+				if e.editor and e.editor.game_mode ~= 0 and ((store.level_mode ~= GAME_MODE_ENDLESS and e.editor.game_mode ~= store.level_mode) or store.level_mode == GAME_MODE_ENDLESS and e.editor.game_mode ~= GAME_MODE_CAMPAIGN) then
 					log.debug("skipping item %s. game mode mismatch", e.template_name)
 				else
 					if e.tower and e.tower.terrain_style then
@@ -465,7 +466,7 @@ function LU.insert_hero(store, name, pos)
         store.main_hero = hero
         hero.hero.xp = 0
         hero.hero.level = 1
-        if store.config.hero_full_level_at_start and hero.hero.fn_level_up then
+        if (store.config.hero_full_level_at_start or store.level_mode == GAME_MODE_ENDLESS) and hero.hero.fn_level_up then
             if hero.hero.fn_level_up then
                 for i = 1, 10 do
                     hero.hero.level = i

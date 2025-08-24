@@ -5870,12 +5870,12 @@ function BooleanToggleGroup:add_item(key, initial_value)
 end
 
 
-function BooleanToggleGroup:set_value(key, value)
-    if self.items[key] then
-        self.items[key]:set_value(value)
-        self.data[key] = value
-    end
-end
+-- function BooleanToggleGroup:set_value(key, value)
+--     if self.items[key] then
+--         self.items[key]:set_value(value)
+--         self.data[key] = value
+--     end
+-- end
 
 function BooleanToggleGroup:get_value(key)
     return self.data[key]
@@ -5953,6 +5953,9 @@ end
 function BooleanPanelView:load()
     log.error("BooleanPanelView:load not implemented")
 end
+function BooleanPanelView:save()
+    log.error("BooleanPanelView:save not implemented")
+end
 
 function BooleanPanelView:show()
     self:load()
@@ -5971,6 +5974,7 @@ function ConfigPanelView:initialize(sw, sh)
         reverse_path = "路线倒转",
         show_health_bar = "显示血条",
         custom_config_enabled = "启用自定义配置",
+        endless = "开启无尽模式"
     })
 end
 function ConfigPanelView:load()
