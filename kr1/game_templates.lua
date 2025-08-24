@@ -9873,5 +9873,6 @@ tt.particle_system.emit_rotation_spread = math.pi * 2
 tt.particle_system.emit_area_spread = vec_2(3, 3)
 tt.particle_system.z = Z_BULLET_PARTICLES
 
+tt = E:register_t("mod_endless_archer_insight", "mod_health_damage_factor_inc")
 -- package.loaded.soldier_enemies = nil
 -- require("soldier_enemies")

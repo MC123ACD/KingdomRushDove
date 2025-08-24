@@ -196,6 +196,19 @@ function sys.level:init(store)
                 ::continue::
             end
         end
+        local EU = require("kr1.endless_utils")
+        if endless_data.upgrade_levels.archer_bleed > 0 then
+            EU.patch_archer_bleed(endless_data.upgrade_levels.archer_bleed)
+        end
+        if endless_data.upgrade_levels.archer_multishot > 0 then
+            EU.patch_archer_multishot(endless_data.upgrade_levels.archer_multishot)
+        end
+        if endless_data.upgrade_levels.archer_insight > 0 then
+            EU.patch_archer_insight(endless_data.upgrade_levels.archer_insight)
+        end
+        if endless_data.upgrade_levels.archer_critical > 0 then
+            EU.patch_archer_critical(endless_data.upgrade_levels.archer_critical)
+        end
     end
 
     store.gems_collected = 0

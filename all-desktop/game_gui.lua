@@ -7944,27 +7944,54 @@ EndlessSelectRewardView = class("EndlessSelectRewardView", SelectPanelView)
 function EndlessSelectRewardView:initialize(sw, sh)
     SelectPanelView.initialize(self, sw, sh, "选择奖励")
     self:set_key_label_map({
-        health = _("ENDLESS_MODE_REWARD_HEALTH"),
-        soldier_damage = _("ENDLESS_MODE_REWARD_SOLDIER_DAMAGE"),
-        soldier_cooldown = _("ENDLESS_MODE_REWARD_SOLDIER_COOLDOWN"),
-        tower_damage = _("ENDLESS_MODE_REWARD_TOWER_DAMAGE"),
-        tower_cooldown = _("ENDLESS_MODE_REWARD_TOWER_COOLDOWN"),
-        hero_damage = _("ENDLESS_MODE_REWARD_HERO_DAMAGE"),
-        hero_cooldown = _("ENDLESS_MODE_REWARD_HERO_COOLDOWN")
+        health = _("ENDLESS_REWARD_HEALTH"),
+        soldier_damage = _("ENDLESS_REWARD_SOLDIER_DAMAGE"),
+        soldier_cooldown = _("ENDLESS_REWARD_SOLDIER_COOLDOWN"),
+        tower_damage = _("ENDLESS_REWARD_TOWER_DAMAGE"),
+        tower_cooldown = _("ENDLESS_REWARD_TOWER_COOLDOWN"),
+        hero_damage = _("ENDLESS_REWARD_HERO_DAMAGE"),
+        hero_cooldown = _("ENDLESS_REWARD_HERO_COOLDOWN"),
+        archer_bleed = _("ENDLESS_REWARD_ARCHER_BLEED"),
+        archer_multishot = _("ENDLESS_REWARD_ARCHER_MULTISHOT"),
+        archer_insight = _("ENDLESS_REWARD_ARCHER_INSIGHT"),
+        archer_critical = _("ENDLESS_REWARD_ARCHER_CRITICAL")
     })
+    self.upgrade_options = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown", "hero_damage",
+                  "hero_cooldown", "archer_bleed","archer_multishot","archer_insight","archer_critical"}
+    self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
+
+    self.upgrade.max_levels = {
+        health = 15,
+        soldier_damage = 15,
+        soldier_cooldown = 5,
+        tower_damage = 15,
+        tower_cooldown = 5,
+        hero_damage = 15,
+        hero_cooldown = 4,
+        archer_bleed = 5,
+        archer_multishot = 2,
+        archer_insight = 3,
+        archer_critical = 4
+    }
 end
 
 function EndlessSelectRewardView:load()
-    local data = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown", "hero_damage",
-                  "hero_cooldown"}
     -- 随机选择两个
     local selected = {}
     local count = 0 -- 手动计数
     while count < 2 do
-        local choice = data[math.random(1, #data)]
+        local choice = self.upgrade_options[math.random(1, #self.upgrade_options)]
         if selected[choice] == nil then
             selected[choice] = false
             count = count + 1 -- 增加计数
+            self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
+            game_gui.game.store.endless.upgrade_levels[choice] = self.upgrade_levels[choice]
+            if self.upgrade_levels[choice] >= self.upgrade.max_levels[choice] then
+                table.removeobject(self.upgrade_options, choice)
+            end
+        end
+        if #self.upgrade_options <= 1 then
+            break
         end
     end
 
@@ -7988,7 +8015,7 @@ function EndlessSelectRewardView:save()
         end
     end
     local script_utils = require("all.script_utils")
-
+    local EU = require("kr1.endless_utils")
     local store = game_gui.game.store
     local W = store
     if key == "health" then
@@ -8008,7 +8035,6 @@ function EndlessSelectRewardView:save()
         end
 
         W.endless.soldier_damage_factor = W.endless.soldier_damage_factor * friend_buff.soldier_damage_factor
-
     elseif key == "soldier_cooldown" then
         for _, s in pairs(store.soldiers) do
             if s.cooldown_factor then
@@ -8047,6 +8073,14 @@ function EndlessSelectRewardView:save()
         end
 
         W.endless.hero_cooldown_factor = W.endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
+    elseif key == "archer_bleed" then
+        EU.patch_archer_bleed(self.upgrade_levels[key])
+    elseif key == "archer_multishot" then
+        EU.patch_archer_multishot(self.upgrade_levels[key])
+    elseif key == "archer_insight" then
+        EU.patch_archer_insight(self.upgrade_levels[key])
+    elseif key == "archer_critical" then
+        EU.patch_archer_critical(self.upgrade_levels[key])
     end
 
     game_gui:enable_keys()

@@ -130,7 +130,20 @@ function wave_db:load(level_name, game_mode, endless)
                 std_waves_count = 0,
                 spawn_count_per_wave = 0,
                 lives_cost_per_wave = 0,
-                load_from_history = false
+                load_from_history = false,
+                upgrade_levels = {
+                    health = 0,
+                    soldier_damage = 0,
+                    soldier_cooldown = 0,
+                    tower_damage = 0,
+                    tower_cooldown = 0,
+                    hero_damage = 0,
+                    hero_cooldown = 0,
+                    archer_bleed = 0,
+                    archer_multishot = 0,
+                    archer_insight = 0,
+                    archer_trick = 0
+                }
             }
             local endless = wave_db.endless
             local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)

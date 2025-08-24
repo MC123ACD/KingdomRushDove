@@ -2331,6 +2331,52 @@ function scripts.arrow.update(this, store, script)
     queue_remove(store, this)
 end
 
+scripts.arrow_endless_multishot = {}
+
+function scripts.arrow_endless_multishot.insert(this, store, script)
+    if this._endless_multishot > 0 then
+        local targets = U.find_enemies_in_range(store.enemies, this.bullet.to, 0, 100, this.bullet.vis_flags,
+            this.bullet.vis_bans)
+        if targets then
+            for i = 1, this._endless_multishot do
+                local target = targets[km.zmod(i, #targets)]
+                if target then
+                    local b = E:clone_entity(this)
+                    b._endless_multishot = 0
+                    b.bullet.flight_time = this.bullet.flight_time + U.frandom(-0.1, 0.1)
+                    b.bullet.from = V.vclone(this.bullet.from)
+                    b.bullet.to.x = target.pos.x + target.unit.hit_offset.x + target.motion.speed.x * b.bullet.flight_time
+                    b.bullet.to.y = target.pos.y + target.unit.hit_offset.y + target.motion.speed.y * b.bullet.flight_time
+                    b.bullet.target_id = target.id
+                    b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time,
+                        b.bullet.g)
+                    if b.bullet.rotation_speed then
+                        b.bullet.rotation_speed = b.bullet.rotation_speed * (b.bullet.to.x > b.bullet.from.x and -1 or 1)
+                        if b.bullet.rotation_speed > 0 then
+                            b.render.sprites[1].flip_x = not b.render.sprites[1].flip_x
+                        end
+                    end
+                    if b.bullet.hide_radius then
+                        b.render.sprites[1].hidden = true
+                    end
+                    queue_insert(store, b)
+                end
+            end
+        end
+    end
+end
+
+function scripts.mod_health_damage_factor_inc.insert(this, store, script)
+    if this.modifier.target_id then
+        local target = store.entities[this.modifier.target_id]
+
+        if target and target.health then
+            target.health.damage_factor = target.health.damage_factor * (1 + this.modifier.health_damage_factor_inc)
+        end
+    end
+
+    return false
+end
 scripts.bomb = {}
 
 function scripts.bomb.insert(this, store, script)

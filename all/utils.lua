@@ -1838,4 +1838,24 @@ function U.find_teleport_moment(store, center, range, trigger_count)
     return nil
 end
 
+function U.function_append(f1, f2)
+    return function(...)
+        if f1(...) then
+            return f2(...)
+        else
+            return false
+        end
+    end
+end
+
+function U.append_mod(entity, mod_name)
+    if entity.mod then
+        entity.mods = {entity.mod, mod_name}
+        entity.mod = nil
+    else
+        entity.mods = entity.mods or {}
+        table.insert(entity.mods, mod_name)
+    end
+end
+
 return U

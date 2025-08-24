@@ -14,6 +14,9 @@ return {
         s_hero_damage_factor = 10,
         hero_cooldown_factor = 0.9,
         s_hero_cooldown_factor = 10,
+        archer_bleed = 0.1,
+        archer_insight = 0.01,
+        archer_critical = 0.15,
     },
     enemy_buff = {
         health_factor = 1.06,

@@ -1125,6 +1125,11 @@ tt.tween.props[2].sprite_id = 2
 tt.tween.props[2].loop = true
 tt.tween.props[2].keys = {{0, 0}, {0.5, 255}, {1, 0}}
 
+tt = E:register_t("mod_health_damage_factor_inc", "modifier")
+tt.main_script.insert = scripts.mod_health_damage_factor_inc.insert
+tt.main_script.update = nil
+tt.modifier.health_damage_factor_inc = 0.01
+
 tt = E:register_t("power_reinforcements_control")
 E:add_comps(tt, "user_power", "pos", "main_script", "user_selection")
 tt.main_script.insert = scripts.power_reinforcements_control.insert
