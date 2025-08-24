@@ -1,15 +1,19 @@
 return {
     friend_buff = {
-        health_factor = 1.1,
-        s_health_factor = 10,
-        soldier_damage_factor = 1.05,
-        s_soldier_damage_factor = 5,
+        health_factor = 1.15,
+        s_health_factor = 15,
+        soldier_damage_factor = 1.07,
+        s_soldier_damage_factor = 7,
         tower_damage_factor = 0.05,
         s_tower_damage_factor = 5,
         soldier_cooldown_factor = 0.95,
         s_soldier_cooldown_factor = 5,
         tower_cooldown_factor = 0.95,
-        s_tower_cooldown_factor = 5
+        s_tower_cooldown_factor = 5,
+        hero_damage_factor = 1.1,
+        s_hero_damage_factor = 10,
+        hero_cooldown_factor = 0.9,
+        s_hero_cooldown_factor = 10,
     },
     enemy_buff = {
         health_factor = 1.05,

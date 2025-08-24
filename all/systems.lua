@@ -64,7 +64,7 @@ function sys.level:init(store)
     if store.config.reverse_path then
         P:reverse_all_paths()
     end
-    W:load(store.level_name, store.level_mode)
+    W:load(store.level_name, store.level_mode, store.level_mode_override == GAME_MODE_ENDLESS)
     if store.criket and store.criket.on then
         W:patch_waves(store.criket)
     end
@@ -80,7 +80,7 @@ function sys.level:init(store)
         store.level:init(store)
     end
 
-    UP:patch_templates(store.level.max_upgrade_level)
+    UP:patch_templates(store.level.max_upgrade_level or GS.max_upgrade_level)
     DI:patch_templates()
 
     if store.level.data then
@@ -119,7 +119,8 @@ function sys.level:init(store)
         store.lives = 1
     elseif store.level_mode == GAME_MODE_IRON then
         store.lives = 1
-    elseif store.level_mode == GAME_MODE_ENDLESS then
+    end
+    if store.level_mode_override == GAME_MODE_ENDLESS then
         store.lives = 20
         store.player_gold = store.player_gold + W.endless.extra_cash
         store.endless = W.endless
@@ -175,7 +176,7 @@ function sys.level:on_update(dt, ts, store)
 
         if store.level_mode == GAME_MODE_IRON or store.level_mode == GAME_MODE_HEROIC then
             signal.emit("wave-notification", "view", "TIP_UPGRADES")
-        elseif store.level_mode == GAME_MODE_ENDLESS then
+        elseif store.level_mode_override == GAME_MODE_ENDLESS then
             signal.emit("wave-notification", "view", "TIP_SURVIVAL")
         elseif KR_GAME == "kr1" and store.selected_hero and #store.selected_hero ~= 0 and
             not U.is_seen(store, "TIP_HEROES") then
@@ -212,7 +213,7 @@ function sys.level:on_update(dt, ts, store)
 
             slot.gems = (slot.gems or 0) + store.gems_collected
 
-            if store.level_mode == GAME_MODE_ENDLESS then
+            if store.level_mode_override == GAME_MODE_ENDLESS then
                 local slot_level = slot.levels[store.level_idx]
 
                 slot_level = slot_level or {}
@@ -394,7 +395,7 @@ function sys.wave_spawn:init(store)
     store.wave_signals = {}
     store.send_next_wave = false
 
-    if store.level_mode == GAME_MODE_ENDLESS then
+    if store.level_mode_override == GAME_MODE_ENDLESS then
         store.gems_per_wave = 0
         store.wave_group_total = 0
     else
@@ -550,7 +551,7 @@ function sys.wave_spawn:on_insert(entity, store)
 
     --     -- entity._entity_progression_done = true
     -- end
-    if store.level_mode == GAME_MODE_ENDLESS and entity.enemy and not entity._endless_strengthened then
+    if store.level_mode_override == GAME_MODE_ENDLESS and entity.enemy and not entity._endless_strengthened then
         entity._endless_strengthened = true
         W:endless_strengthen_enemy(entity)
     end

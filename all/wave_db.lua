@@ -49,9 +49,9 @@ function wave_db:patch_waves(criket)
     }
 end
 
-function wave_db:load(level_name, game_mode)
+function wave_db:load(level_name, game_mode, endless)
     self.game_mode = game_mode
-
+    self.is_endless = endless
     local suffix = gms[game_mode]
     local wn = string.format("%s/data/waves/%s_waves_%s", KR_PATH_GAME, level_name, suffix)
     local wf = string.format("%s.lua", wn)
@@ -101,7 +101,7 @@ function wave_db:load(level_name, game_mode)
         self:add_waves_to_groups(extraw)
     end
 
-    if game_mode == GAME_MODE_ENDLESS then
+    if endless then
         wave_db.endless = {}
         local endless = wave_db.endless
         endless.enemy_list = {}
@@ -117,8 +117,8 @@ function wave_db:load(level_name, game_mode)
         endless.tower_cooldown_factor = 1
         endless.interval = 0
         endless.available_paths = {}
-        local group = wave_db:group(#wave_db:groups() - 1)
-        endless.interval = group.interval
+        local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)
+        endless.interval = 0
         local waves = group.waves
         endless.avg_interval = 0
         endless.avg_interval_next = 0
@@ -213,7 +213,7 @@ function wave_db:initial_lives()
 end
 
 function wave_db:groups_count()
-    if self.game_mode == GAME_MODE_ENDLESS then
+    if self.is_endless then
         return 0
     else
         return #self.db.groups
@@ -221,7 +221,7 @@ function wave_db:groups_count()
 end
 
 function wave_db:waves_count()
-    if self.game_mode == GAME_MODE_ENDLESS then
+    if self.is_endless then
         return 0
     else
         local result = 0
@@ -235,7 +235,7 @@ function wave_db:waves_count()
 end
 
 function wave_db:has_group(i)
-    if self.game_mode == GAME_MODE_ENDLESS then
+    if self.is_endless then
         return i > 0
     else
         return i <= #self.db.groups
@@ -243,7 +243,7 @@ function wave_db:has_group(i)
 end
 
 function wave_db:get_group(i)
-    if self.game_mode == GAME_MODE_ENDLESS then
+    if self.is_endless then
         return self:get_endless_group(i)
     else
         return self.db.groups[i]

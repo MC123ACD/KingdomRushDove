@@ -497,7 +497,7 @@ function director:queue_load_item_named(name, force_reload)
 
         game.store.config = storage:load_config()
         if game.store.config.endless then
-            game.store.level_mode = GAME_MODE_ENDLESS
+            game.store.level_mode_override = GAME_MODE_ENDLESS
         end
         game.store.criket = storage:load_criket()
 

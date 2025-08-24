@@ -102,15 +102,9 @@ local function next_wave_ready_handler(group)
 
         game_gui:show_balloon("TB_WAVE")
     end
-    if game_gui.game.store.level_mode == GAME_MODE_ENDLESS then
+    if game_gui.game.store.level_mode_override == GAME_MODE_ENDLESS then
         game_gui.endless_select_reward_view:show()
-        local tmp = {
-            "health",
-            "damage",
-            "speed",
-            "health_damage_factor",
-            "lives"
-        }
+        local tmp = {"health", "damage", "speed", "health_damage_factor", "lives"}
         local endless = game_gui.game.store.endless
         local enemy_buff = require("kr1.data.endless").enemy_buff
         local key = table.random(tmp)
@@ -123,8 +117,8 @@ local function next_wave_ready_handler(group)
         elseif key == "health_damage_factor" then
             endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
         elseif key == "lives" then
-        endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+            endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
+            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
         end
     end
 end
@@ -1026,8 +1020,8 @@ function game_gui:keypressed(key, isrepeat)
         self.power_1:toggle_selection()
     elseif table.contains(ks.pow_2, key) and not self.power_2:is_disabled() then
         self.power_2:toggle_selection()
-    -- elseif IS_KR3 and key == ks.pow_3 and not self.power_3:is_disabled() then
-    --     self.power_3:toggle_selection()
+        -- elseif IS_KR3 and key == ks.pow_3 and not self.power_3:is_disabled() then
+        --     self.power_3:toggle_selection()
     elseif table.contains(ks.hero_1, key) then
         if self.heroes and self.heroes[1] then
             self.heroes[1]:on_click(1, 0, 0)
@@ -1094,10 +1088,10 @@ function game_gui:keypressed(key, isrepeat)
         self.game.simulation.store.speed_factor = self.game.simulation.store.speed_factor * 2
     elseif table.contains(ks.normal, key) then
         self.game.simulation.store.speed_factor = 1
-    -- elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
-    --     if self.bag_button and not self.bag_button:is_disabled() then
-    --         self.bag_button:on_click()
-    --     end
+        -- elseif not game.DBG_ENEMY_PAGES and self.is_premium and key == ks.bag then
+        --     if self.bag_button and not self.bag_button:is_disabled() then
+        --         self.bag_button:on_click()
+        --     end
     elseif table.contains(ks.next_wave, key) then
         if not self.next_wave_button:is_disabled() then
             game_gui.game.store.send_next_wave = true
@@ -1108,21 +1102,21 @@ function game_gui:keypressed(key, isrepeat)
         else
             self.criketmenu:hide()
         end
-    -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
-    --     table.contains(table.keys(ks.all_items), key) then
-    --     local bb = self.bag_button
-    --     local item = ks.all_items[key]
-    --     local last_selected_item = bb.selected_item
+        -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
+        --     table.contains(table.keys(ks.all_items), key) then
+        --     local bb = self.bag_button
+        --     local item = ks.all_items[key]
+        --     local last_selected_item = bb.selected_item
 
-    --     self:deselect_all()
+        --     self:deselect_all()
 
-    --     if last_selected_item ~= item then
-    --         local ib = wid("bag_item_" .. item)
+        --     if last_selected_item ~= item then
+        --         local ib = wid("bag_item_" .. item)
 
-    --         if ib and not ib:is_disabled() then
-    --             bb:select_item(item)
-    --         end
-    --     end
+        --         if ib and not ib:is_disabled() then
+        --             bb:select_item(item)
+        --         end
+        --     end
     end
 end
 
@@ -1445,13 +1439,12 @@ function game_gui:select_entity(e)
     game_gui.hud_bottom.infobar:show()
 
     if e.enemy or e.soldier or e.barrack then
-        if e.soldier and e.soldier.tower_id and
-            self.game.simulation.store.entities[e.soldier.tower_id] then
+        if e.soldier and e.soldier.tower_id and self.game.simulation.store.entities[e.soldier.tower_id] then
             local tower = self.game.simulation.store.entities[e.soldier.tower_id]
 
             game_gui:set_mode(GUI_MODE_RALLY_TOWER)
-            local ux, uy = game_gui:g2u(V.v(V.add(tower.pos.x, tower.pos.y,
-                tower.tower.range_offset.x, tower.tower.range_offset.y)))
+            local ux, uy = game_gui:g2u(V.v(V.add(tower.pos.x, tower.pos.y, tower.tower.range_offset.x,
+                tower.tower.range_offset.y)))
 
             game_gui:show_rally_range(ux, uy, tower.barrack.rally_range)
         else
@@ -2450,7 +2443,6 @@ end
 
 function Power2Button:fire(wx, wy)
     Power2Button.super.fire(self, wx, wy)
-
 
     local i = math.random(1, 3)
     local e = E:create_entity("re_current_" .. i)
@@ -3536,7 +3528,7 @@ function HudCountersView:initialize(level_mode)
     lbl_gold.font_size = 12
     lbl_gold.colors.text = {255, 255, 255}
 
-    local lbl_wave = GGLabel:new(V.v(level_mode == GAME_MODE_ENDLESS and 25 or 74, 28))
+    local lbl_wave = GGLabel:new(V.v(game_gui.game.store.level_mode_override == GAME_MODE_ENDLESS and 25 or 74, 28))
 
     lbl_wave.pos = v(240, 38)
     lbl_wave.text_align = "left"
@@ -3635,7 +3627,7 @@ function HudCountersView:update(dt)
     self.lbl_lives.text = string.format("%d", store.lives)
     self.lbl_gold.text = string.format("%d", store.player_gold)
 
-    if self.level_mode == GAME_MODE_ENDLESS then
+    if game_gui.game.store.level_mode_override == GAME_MODE_ENDLESS then
         self.lbl_wave.text = string.format("%d", store.wave_group_number)
         -- self.lbl_score.text = string.format("%d", store.player_score)
     else
@@ -6049,7 +6041,7 @@ function PickView:on_down(button, x, y)
         elseif game_gui.mode == GUI_MODE_RALLY_CONTROABLES then
             local function calc_rally_pos(idx)
                 local r = 15
-                return V.v(wx+ r * math.cos(idx * 2 * math.pi / #game_gui.selected_controables),
+                return V.v(wx + r * math.cos(idx * 2 * math.pi / #game_gui.selected_controables),
                     wy + r * math.sin(idx * 2 * math.pi / #game_gui.selected_controables))
             end
             if P:valid_node_nearby(wx, wy, nil, NF_RALLY) then
@@ -6057,8 +6049,8 @@ function PickView:on_down(button, x, y)
                 for idx, e in ipairs(game_gui.selected_controables) do
                     local rally_pos = calc_rally_pos(idx)
                     if GR:cell_is_only(rally_pos.x, rally_pos.y, e.nav_grid.valid_terrains_dest) then
-                        local waypoints = GR:find_waypoints(e.pos, e.nav_rally.pos, rally_pos,
-                            e.nav_grid.valid_terrains)
+                        local waypoints =
+                            GR:find_waypoints(e.pos, e.nav_rally.pos, rally_pos, e.nav_grid.valid_terrains)
                         if waypoints then
                             e.nav_grid.waypoints = waypoints
                             e.nav_rally.new = true
@@ -6395,38 +6387,39 @@ end
 function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
     if item.action == "tw_upgrade" then
         for k, v in pairs(game_gui.game.store.towers) do
-           local new_tower = E:create_entity(item.action_arg)
-           game_gui.game.store.criket.tower_name = new_tower.template_name
-           new_tower.pos = V.vclone(v.pos)
-           new_tower.tower.holder_id = v.tower.holder_id
-           new_tower.tower.flip_x = v.tower.flip_x
-           if v.tower.default_rally_pos then
+            local new_tower = E:create_entity(item.action_arg)
+            game_gui.game.store.criket.tower_name = new_tower.template_name
+            new_tower.pos = V.vclone(v.pos)
+            new_tower.tower.holder_id = v.tower.holder_id
+            new_tower.tower.flip_x = v.tower.flip_x
+            if v.tower.default_rally_pos then
                 new_tower.tower.default_rally_pos = V.vclone(v.tower.default_rally_pos)
-           end
-           if v.tower.terrain_style then
+            end
+            if v.tower.terrain_style then
                 new_tower.tower.terrain_style = v.tower.terrain_style
-                new_tower.render.sprites[1].name = string.format(new_tower.render.sprites[1].name, v.tower.terrain_style)
-           end
+                new_tower.render.sprites[1].name =
+                    string.format(new_tower.render.sprites[1].name, v.tower.terrain_style)
+            end
 
-           if new_tower.ui and v.ui then
+            if new_tower.ui and v.ui then
                 new_tower.ui.nav_mesh_id = v.ui.nav_mesh_id
-           end
-           queue_remove(game_gui.game.store, v)
-           queue_insert(game_gui.game.store, new_tower)
-           game_gui.game.store.towers[k] = new_tower
-           if new_tower.powers then
+            end
+            queue_remove(game_gui.game.store, v)
+            queue_insert(game_gui.game.store, new_tower)
+            game_gui.game.store.towers[k] = new_tower
+            if new_tower.powers then
                 for _, p in pairs(new_tower.powers) do
                     p.level = p.max_level
                     p.changed = true
                 end
-           end
-           if new_tower.template_name == "tower_sunray" then
+            end
+            if new_tower.template_name == "tower_sunray" then
                 new_tower.powers.manual.level = 0
                 new_tower.powers.manual.changed = nil
                 new_tower.powers.auto.level = 1
                 new_tower.powers.auto.changed = true
-           end
-           if new_tower.barrack then
+            end
+            if new_tower.barrack then
                 if game_gui.game.store.criket and game_gui.game.store.criket.on then
                     local path_index = game_gui.game.store.criket.groups[1].path_index
                     -- local nodes = P:nearest_nodes(new_tower.pos.x, new_tower.pos.y, {path_index}, {1}, true)
@@ -6434,7 +6427,8 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
 
                     local i = 1
 
-                    while i <= #nodes and not U.is_inside_ellipse(nodes[i], new_tower.pos, new_tower.barrack.rally_range) do
+                    while i <= #nodes and
+                        not U.is_inside_ellipse(nodes[i], new_tower.pos, new_tower.barrack.rally_range) do
                         i = i + 1
                     end
                     if i > #nodes then
@@ -6448,14 +6442,14 @@ function CriketMenu:button_callback(button, item, entity, mouse_button, x, y)
                 else
                     new_tower.barrack.rally_pos = V.vclone(new_tower.tower.default_rally_pos)
                 end
-           end
-           if new_tower.mercenary then
+            end
+            if new_tower.mercenary then
                 for i = 1, new_tower.barrack.max_soldiers do
                     new_tower.barrack.soldiers[i] = E:create_entity(new_tower.barrack.soldier_type)
                     new_tower.barrack.soldiers[i].health.dead = true
                     new_tower.barrack.soldiers[i].id = -1
                 end
-           end
+            end
         end
     end
     self:hide()
@@ -7588,8 +7582,8 @@ function WaveFlag:update(dt)
     end
 
     if self.duration and self.duration > 0 then
-        self.bg_circle.phase = km.clamp(0, 1,
-            (self.duration - (game_gui.game.store.tick_ts - self.start_game_ts)) / self.duration)
+        self.bg_circle.phase = km.clamp(0, 1, (self.duration - (game_gui.game.store.tick_ts - self.start_game_ts)) /
+            self.duration)
     end
 
     if not self.clicked and not self.hide_timer then
@@ -7746,13 +7740,13 @@ function SelectGroup:add_item(key, initial_value)
 
     local item_y = self.padding.y + item_count * self.item_height
 
-    local item = SelectItem:new(self.key_label_map[key] or key, initial_value,
-        V.v(self.size.x - 2 * self.padding.x, 40))
+    local item =
+        SelectItem:new(self.key_label_map[key] or key, initial_value, V.v(self.size.x - 2 * self.padding.x, 40))
     item.pos = V.v(self.padding.x, item_y)
     item.on_change_callback = function(label, value)
         local key = table.keyforobject(self.key_label_map, label) or label
         self.data[key] = value
-        for k,v in pairs(self.data) do
+        for k, v in pairs(self.data) do
             if k ~= key then
                 self.data[k] = false
                 if self.items[k] then
@@ -7884,25 +7878,21 @@ function EndlessSelectRewardView:initialize(sw, sh)
         soldier_cooldown = _("ENDLESS_MODE_REWARD_SOLDIER_COOLDOWN"),
         tower_damage = _("ENDLESS_MODE_REWARD_TOWER_DAMAGE"),
         tower_cooldown = _("ENDLESS_MODE_REWARD_TOWER_COOLDOWN"),
+        hero_damage = _("ENDLESS_MODE_REWARD_HERO_DAMAGE"),
+        hero_cooldown = _("ENDLESS_MODE_REWARD_HERO_COOLDOWN"),
     })
 end
 
 function EndlessSelectRewardView:load()
-    local data = {
-        "health",
-        "soldier_damage",
-        "soldier_cooldown",
-        "tower_damage",
-        "tower_cooldown",
-    }
+    local data = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown","hero_damage","hero_cooldown"}
     -- 随机选择两个
     local selected = {}
-    local count = 0  -- 手动计数
+    local count = 0 -- 手动计数
     while count < 2 do
         local choice = data[math.random(1, #data)]
         if selected[choice] == nil then
             selected[choice] = false
-            count = count + 1  -- 增加计数
+            count = count + 1 -- 增加计数
         end
     end
 
@@ -7937,13 +7927,12 @@ function EndlessSelectRewardView:save()
             end
         end
         for _, s in pairs(E:filter_templates("soldier")) do
-            if s.health then
+            if s.health and s.health.hp_max then
                 s.health.hp_max = s.health.hp_max * friend_buff.health_factor
             end
         end
         W.endless.soldier_health_factor = W.endless.soldier_health_factor * friend_buff.health_factor
-    end
-    if key == "soldier_damage" then
+    elseif key == "soldier_damage" then
         for _, s in pairs(store.soldiers) do
             if s.unit then
                 s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
@@ -7955,8 +7944,8 @@ function EndlessSelectRewardView:save()
             end
         end
         W.endless.soldier_damage_factor = W.endless.soldier_damage_factor * friend_buff.soldier_damage_factor
-    end
-    if key == "soldier_cooldown" then
+
+    elseif key == "soldier_cooldown" then
         for _, s in pairs(store.soldiers) do
             if s.cooldown_factor then
                 s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
@@ -7968,8 +7957,8 @@ function EndlessSelectRewardView:save()
             end
         end
         W.endless.soldier_cooldown_factor = W.endless.soldier_cooldown_factor * friend_buff.soldier_cooldown_factor
-    end
-    if key == "tower_damage" then
+
+    elseif key == "tower_damage" then
         for _, t in pairs(store.towers) do
             script_utils.insert_tower_damage_factor_buff(t, friend_buff.tower_damage_factor)
         end
@@ -7977,8 +7966,8 @@ function EndlessSelectRewardView:save()
             t.tower.damage_factor = t.tower.damage_factor + friend_buff.tower_damage_factor
         end
         W.endless.tower_damage_factor = W.endless.tower_damage_factor + friend_buff.tower_damage_factor
-    end
-    if key == "tower_cooldown" then
+
+    elseif key == "tower_cooldown" then
         for _, t in pairs(store.towers) do
             script_utils.insert_tower_cooldown_buff(t, friend_buff.tower_cooldown_factor)
         end
@@ -7986,6 +7975,24 @@ function EndlessSelectRewardView:save()
             t.tower.cooldown_factor = t.tower.cooldown_factor * friend_buff.tower_cooldown_factor
         end
         W.endless.tower_cooldown_factor = W.endless.tower_cooldown_factor * friend_buff.tower_cooldown_factor
+    elseif key == "hero_damage" then
+        for _, h in pairs(store.soldiers) do
+            if h.hero then
+                h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
+            end
+        end
+        for _, h in pairs(E:filter_templates("hero")) do
+            h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
+        end
+    elseif key == "hero_cooldown" then
+        for _, h in pairs(store.soldiers) do
+            if h.hero then
+                h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
+            end
+        end
+        for _, h in pairs(E:filter_templates("hero")) do
+            h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
+        end
     end
 
     game_gui:enable_keys()
