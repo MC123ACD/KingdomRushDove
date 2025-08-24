@@ -79,7 +79,7 @@ function storage:load_lua(filename, force_load)
 end
 
 function storage:load_config()
-    local config = self:load_lua("config.lua")
+    local config = self:load_lua("config.lua", true)
     local default_patch = require("patches.default")
     if not config then
         log.error("config.lua not found, using default.lua instead")
@@ -99,7 +99,7 @@ function storage:load_config()
 end
 
 function storage:load_criket()
-    local criket = self:load_lua("criket.lua")
+    local criket = self:load_lua("criket.lua", true)
 
     if not criket then
         local criket_template = require("patches.criket_template")
@@ -137,12 +137,13 @@ function storage:load_criket()
                 end
             end
         end
+        criket.fps_transformed = false
     end
     return criket
 end
 
 function storage:load_keyset()
-    local key_shortcuts = self:load_lua("keyset.lua")
+    local key_shortcuts = self:load_lua("keyset.lua", true)
     local default_key_shortcuts = require("patches.keyset_default")
     if not key_shortcuts then
         key_shortcuts = default_key_shortcuts

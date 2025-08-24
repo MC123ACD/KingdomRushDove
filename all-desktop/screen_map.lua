@@ -5887,6 +5887,9 @@ end
 
 function BooleanToggleGroup:set_all_data(data)
     self.data = data
+    for key, item in pairs(self.items) do
+        self:remove_child(item)
+    end
     self.items = {}
     for key, value in pairs(data) do
         if type(value) == "boolean" then
@@ -5899,141 +5902,109 @@ function BooleanToggleGroup:set_on_data_change_callback(callback)
     self.on_data_change_callback = callback
 end
 
-ConfigPanelView = class("ConfigPanelView", PopUpView)
-
-function ConfigPanelView:initialize(sw, sh)
+BooleanPanelView = class("BooleanPanelView", PopUpView)
+function BooleanPanelView:initialize(sw, sh, title)
     PopUpView.initialize(self, V.v(sw, sh))
 
     self.back = KImageView:new("options_bg_notxt")
     self.pos = v(0, 0)
     self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
     self.back.pos = v(sw / 2, sh / 2 - 50)
-
+    self.header = title
     self:add_child(self.back)
 
     self.back.alpha = 1
     -- 添加标题
-    local header = GGPanelHeader:new(_("自定义配置"), 242)
+    local header = GGPanelHeader:new(self.header, 242)
     header.pos = V.v(240, CJK(41, 39, nil, 39) - (IS_KR3 and 19 or 0))
     self.back:add_child(header)
 
     -- 创建配置组
-    self.config_group = BooleanToggleGroup:new(V.v(400, 300))
-    self.config_group.pos = V.v(self.back.size.x / 2 - 200, 120)
-    self.config_group:set_key_label_map({
+    self.data_group = BooleanToggleGroup:new(V.v(400, 300))
+    self.data_group.pos = V.v(self.back.size.x / 2 - 200, 120)
+
+    -- 设置数据改变回调
+    self.data_group:set_on_data_change_callback(function(key, value, all_data)
+    end)
+
+    self.back:add_child(self.data_group)
+
+    -- 添加底部按钮
+    local mx = 150
+    local y = 420
+
+    local b = GGOptionsButton:new(_("BUTTON_DONE"))
+    b.anchor.x = b.size.x / 2
+    b.pos = V.v(self.back.size.x / 2, y)
+
+    function b.on_click()
+        S:queue("GUIButtonCommon")
+        self:save()
+        self:hide()
+    end
+
+    self.done_button = b
+    self.back:add_child(b)
+end
+
+function BooleanPanelView:set_key_label_map(map)
+    self.data_group:set_key_label_map(map)
+end
+function BooleanPanelView:load()
+    log.error("BooleanPanelView:load not implemented")
+end
+
+function BooleanPanelView:show()
+    self:load()
+    BooleanPanelView.super.show(self)
+end
+
+function BooleanPanelView:hide()
+    BooleanPanelView.super.hide(self)
+end
+
+ConfigPanelView = class("ConfigPanelView", BooleanPanelView)
+function ConfigPanelView:initialize(sw, sh)
+    BooleanPanelView.initialize(self, sw, sh, "自定义配置")
+    self:set_key_label_map({
         hero_full_level_at_start = "英雄开局满级",
         reverse_path = "路线倒转",
         show_health_bar = "显示血条",
         custom_config_enabled = "启用自定义配置",
     })
-
-    -- 设置数据改变回调
-    self.config_group:set_on_data_change_callback(function(key, value, all_data)
-    end)
-
-    self.back:add_child(self.config_group)
-
-    -- 添加底部按钮
-    local mx = 150
-    local y = 420
-
-    local b = GGOptionsButton:new(_("BUTTON_DONE"))
-    b.anchor.x = b.size.x / 2
-    b.pos = V.v(self.back.size.x / 2, y)
-
-    function b.on_click()
-        S:queue("GUIButtonCommon")
-        local config = storage:load_config()
-        for k, v in pairs(self.config_group:get_all_data()) do
-            config[k] = v
-        end
-        storage:save_config(config)
-        self:hide()
-    end
-
-    self.done_button = b
-    self.back:add_child(b)
 end
-
-function ConfigPanelView:load_config()
+function ConfigPanelView:load()
     local config = storage:load_config()
-    self.config_group:set_all_data(config)
+    self.data_group:set_all_data(config)
 end
-
-function ConfigPanelView:show()
-    ConfigPanelView.super.show(self)
-    self:load_config()
-end
-
-function ConfigPanelView:hide()
-    ConfigPanelView.super.hide(self)
-end
-
-CriketPanelView = class("CriketPanelView", PopUpView)
-
-function CriketPanelView:initialize(sw, sh)
-    PopUpView.initialize(self, V.v(sw, sh))
-
-    self.back = KImageView:new("options_bg_notxt")
-    self.pos = v(0, 0)
-    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
-    self.back.pos = v(sw / 2, sh / 2 - 50)
-
-    self:add_child(self.back)
-
-    self.back.alpha = 1
-    -- 添加标题
-    local header = GGPanelHeader:new(_("斗蛐蛐配置"), 242)
-    header.pos = V.v(240, CJK(41, 39, nil, 39) - (IS_KR3 and 19 or 0))
-    self.back:add_child(header)
-
-    -- 创建配置组
-    self.criket_group = BooleanToggleGroup:new(V.v(400, 300))
-    self.criket_group.pos = V.v(self.back.size.x / 2 - 200, 120)
-    self.criket_group:set_key_label_map({
-        on = "启用斗蛐蛐",
-    })
-
-    -- 设置数据改变回调
-    self.criket_group:set_on_data_change_callback(function(key, value, all_data)
-    end)
-
-    self.back:add_child(self.criket_group)
-
-    -- 添加底部按钮
-    local mx = 150
-    local y = 420
-
-    local b = GGOptionsButton:new(_("BUTTON_DONE"))
-    b.anchor.x = b.size.x / 2
-    b.pos = V.v(self.back.size.x / 2, y)
-
-    function b.on_click()
-        S:queue("GUIButtonCommon")
-        local criket = storage:load_criket()
-        for k, v in pairs(self.criket_group:get_all_data()) do
-            criket[k] = v
-        end
-        storage:save_criket(criket)
-        self:hide()
+function ConfigPanelView:save()
+    local config = storage:load_config()
+    for k, v in pairs(self.data_group:get_all_data()) do
+        config[k] = v
     end
-
-    self.done_button = b
-    self.back:add_child(b)
+    storage:save_config(config)
 end
 
-function CriketPanelView:load_criket()
+CriketPanelView = class("CriketPanelView", BooleanPanelView)
+function CriketPanelView:initialize(sw, sh)
+    BooleanPanelView.initialize(self, sw, sh, "斗蛐蛐配置")
+    self:set_key_label_map({
+        on = "启用斗蛐蛐",
+        fps_transformed = "请勿修改本条",
+    })
+end
+
+function CriketPanelView:load()
     local criket = storage:load_criket()
-    self.criket_group:set_all_data(criket)
+    self.data_group:set_all_data(criket)
 end
 
-function CriketPanelView:show()
-    CriketPanelView.super.show(self)
-    self:load_criket()
-end
-
-function CriketPanelView:hide()
-    CriketPanelView.super.hide(self)
+function CriketPanelView:save()
+    local criket = storage:load_criket()
+    for k, v in pairs(self.data_group:get_all_data()) do
+        criket[k] = v
+    end
+    storage:save_criket(criket)
 end
 
 return screen_map
