@@ -102,56 +102,91 @@ function wave_db:load(level_name, game_mode, endless)
     end
 
     if endless then
-        wave_db.endless = {}
-        local endless = wave_db.endless
-        endless.enemy_list = {}
-        endless.total_lives_cost = 0
-        endless.enemy_health_factor = 1
-        endless.enemy_damage_factor = 1
-        endless.enemy_speed_factor = 1
-        endless.enemy_health_damage_factor = 1
-        endless.soldier_health_factor = 1
-        endless.soldier_damage_factor = 1
-        endless.tower_damage_factor = 1
-        endless.soldier_cooldown_factor = 1
-        endless.tower_cooldown_factor = 1
-        endless.interval = 0
-        endless.available_paths = {}
-        local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)
-        endless.interval = 0
-        local waves = group.waves
-        endless.avg_interval = 0
-        endless.avg_interval_next = 0
-        endless.extra_cash = 0
-        local total_spawns = 0
-        for _, wave in pairs(waves) do
-            for _, spawn in pairs(wave.spawns) do
-                endless.avg_interval = endless.avg_interval + spawn.interval
-                endless.avg_interval_next = endless.avg_interval_next + spawn.interval_next
-                total_spawns = total_spawns + 1
-                local tpl = E:get_template(spawn.creep)
-                if tpl and tpl.enemy then
-                    endless.total_lives_cost = endless.total_lives_cost + tpl.enemy.lives_cost * spawn.max
+        local storage = require("all.storage")
+        local endless_history = storage:load_endless(level_name)
+        if endless_history then
+            local friend_buff = require("kr1.data.endless").friend_buff
+
+            wave_db.endless = endless_history
+            wave_db.endless.load_from_history = true
+            for _, s in pairs(E:filter_templates("soldier")) do
+                if s.health and s.health.hp_max then
+                    s.health.hp_max = s.health.hp_max * (endless_history.soldier_health_factor or 1)
+                end
+                if s.unit.damage_factor then
+                    s.unit.damage_factor = s.unit.damage_factor * (endless_history.soldier_health_factor or 1)
+                end
+                if s.cooldown_factor then
+                    s.cooldown_factor = s.cooldown_factor * (endless_history.soldier_cooldown_factor or 1)
                 end
             end
-        end
-        endless.std_waves_count = #waves
-        endless.spawn_count_per_wave = math.ceil(total_spawns / #waves)
-        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #waves)
-        endless.avg_interval = endless.avg_interval / total_spawns
-        endless.avg_interval_next = endless.avg_interval_next / total_spawns
+            for _, t in pairs(E:filter_templates("tower")) do
+                t.tower.damage_factor = t.tower.damage_factor + ((endless_history.tower_damage_factor or 1) - 1)
+                t.tower.cooldown_factor = t.tower.cooldown_factor * (endless_history.tower_cooldown_factor or 1)
+            end
+            for _, h in pairs(E:filter_templates("hero")) do
+                h.unit.damage_factor = h.unit.damage_factor * (endless_history.hero_damage_factor or 1)
+                h.cooldown_factor = h.cooldown_factor * (endless_history.hero_cooldown_factor or 1)
+            end
+        else
+            wave_db.endless = {
+                enemy_list = {},
+                total_lives_cost = 0,
+                enemy_health_factor = 1,
+                enemy_damage_factor = 1,
+                enemy_speed_factor = 1,
+                enemy_health_damage_factor = 1,
+                soldier_health_factor = 1,
+                soldier_damage_factor = 1,
+                tower_damage_factor = 1,
+                soldier_cooldown_factor = 1,
+                tower_cooldown_factor = 1,
+                hero_damage_factor = 1,
+                hero_cooldown_factor = 1,
+                interval = 0,
+                available_paths = {},
+                avg_interval = 0,
+                avg_interval_next = 0,
+                extra_cash = 0,
+                std_waves_count = 0,
+                spawn_count_per_wave = 0,
+                lives_cost_per_wave = 0,
+                load_from_history = false
+            }
+            local endless = wave_db.endless
+            local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)
+            local waves = group.waves
 
-        for _, group in pairs(wave_db:groups()) do
-            for _, wave in pairs(group.waves) do
-                if wave.path_index and not table.contains(endless.available_paths, wave.path_index) then
-                    table.insert(endless.available_paths, wave.path_index)
-                end
+            local total_spawns = 0
+            for _, wave in pairs(waves) do
                 for _, spawn in pairs(wave.spawns) do
+                    endless.avg_interval = endless.avg_interval + spawn.interval
+                    endless.avg_interval_next = endless.avg_interval_next + spawn.interval_next
+                    total_spawns = total_spawns + 1
                     local tpl = E:get_template(spawn.creep)
                     if tpl and tpl.enemy then
-                        endless.extra_cash = endless.extra_cash + (tpl.enemy.gold or 0) *   spawn.max
-                        if not table.contains(endless.enemy_list, spawn.creep) then
-                            table.insert(endless.enemy_list, spawn.creep)
+                        endless.total_lives_cost = endless.total_lives_cost + tpl.enemy.lives_cost * spawn.max
+                    end
+                end
+            end
+            endless.std_waves_count = #waves
+            endless.spawn_count_per_wave = math.ceil(total_spawns / #waves)
+            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #waves)
+            endless.avg_interval = endless.avg_interval / total_spawns
+            endless.avg_interval_next = endless.avg_interval_next / total_spawns
+
+            for _, group in pairs(wave_db:groups()) do
+                for _, wave in pairs(group.waves) do
+                    if wave.path_index and not table.contains(endless.available_paths, wave.path_index) then
+                        table.insert(endless.available_paths, wave.path_index)
+                    end
+                    for _, spawn in pairs(wave.spawns) do
+                        local tpl = E:get_template(spawn.creep)
+                        if tpl and tpl.enemy then
+                            endless.extra_cash = endless.extra_cash + (tpl.enemy.gold or 0) * spawn.max
+                            if not table.contains(endless.enemy_list, spawn.creep) then
+                                table.insert(endless.enemy_list, spawn.creep)
+                            end
                         end
                     end
                 end
@@ -424,6 +459,7 @@ end
 function wave_db:get_endless_group(i)
     local group = {}
     local endless = self.endless
+    endless.current_wave_count = i
     group.interval = endless.interval
     group.waves = {}
     local i = 1
@@ -449,7 +485,8 @@ function wave_db:get_endless_group(i)
 
     for _, wave in pairs(group.waves) do
         for j = 1, endless.spawn_count_per_wave do
-            local this_spawn_lives_cost = math.floor(endless.lives_cost_per_wave / endless.spawn_count_per_wave * (0.8 + 0.4 * j / endless.spawn_count_per_wave))
+            local this_spawn_lives_cost = math.floor(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
+                                                         (0.8 + 0.4 * j / endless.spawn_count_per_wave))
             local creep = table.random(enemy_list)
             local tpl = E:get_template(creep)
             local max = math.ceil(this_spawn_lives_cost / tpl.enemy.lives_cost)

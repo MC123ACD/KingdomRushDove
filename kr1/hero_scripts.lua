@@ -10546,7 +10546,7 @@ function scripts.hero_durax.update(this, store)
                         clone.clone.duration = skill.duration[skill.level]
                         clone.hero.level = this.hero.level
                         clone.hero.xp = this.hero.xp
-                        clone.unit.damage_factor = 0.8
+                        clone.unit.damage_factor = 0.8 * this.unit.damage_factor
 
                         for sn, s in pairs(this.hero.skills) do
                             clone.hero.skills[sn].level = s.level

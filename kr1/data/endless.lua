@@ -16,15 +16,15 @@ return {
         s_hero_cooldown_factor = 10,
     },
     enemy_buff = {
-        health_factor = 1.05,
-        s_health_factor = 5,
+        health_factor = 1.06,
+        s_health_factor = 6,
         damage_factor = 1.1,
         s_damage_factor = 10,
         speed_factor = 1.03,
         s_speed_factor = 3,
-        health_damage_factor = 0.96,
-        s_health_damage_factor = 4,
-        lives_cost_factor = 1.05,
-        s_lives_cost_factor = 5,
+        health_damage_factor = 0.95,
+        s_health_damage_factor = 5,
+        lives_cost_factor = 1.07,
+        s_lives_cost_factor = 7,
     }
 }

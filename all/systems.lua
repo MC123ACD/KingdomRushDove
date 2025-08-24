@@ -64,12 +64,12 @@ function sys.level:init(store)
     if store.config.reverse_path then
         P:reverse_all_paths()
     end
+    E:load()
     W:load(store.level_name, store.level_mode, store.level_mode_override == GAME_MODE_ENDLESS)
     if store.criket and store.criket.on then
         W:patch_waves(store.criket)
     end
     A:load()
-    E:load()
 
     store.selected_hero = slot.heroes.selected
     if store.selected_hero and #store.selected_hero > 0 then
@@ -124,6 +124,77 @@ function sys.level:init(store)
         store.lives = 20
         store.player_gold = store.player_gold + W.endless.extra_cash
         store.endless = W.endless
+        local endless_data = store.endless
+        if endless_data.player_gold then
+            store.player_gold = endless_data.player_gold
+        end
+        if endless_data.lives then
+            store.lives = endless_data.lives
+        end
+        if endless_data.wave_group_number then
+            store.wave_group_number = endless_data.wave_group_number
+        end
+        if endless_data.towers then
+            for _, tower_data in ipairs(endless_data.towers) do
+                local tower = E:create_entity(tower_data.template_name)
+                tower.pos = V.v(tower_data.pos.x, tower_data.pos.y)
+                tower.tower.level = tower_data.tower_level
+                tower.tower.spent = tower_data.spent
+                tower.tower.holder_id = tower_data.holder_id
+                for _, e in pairs(store.pending_inserts) do
+                    if e.tower and e.tower.holder_id == tower.tower.holder_id then
+                        if e.template_name == tower.template_name then
+                            -- 说明是同一座塔，移除待插入的旧数据
+                            goto continue
+                        end
+                        tower.tower.default_rally_pos = V.vclone(e.tower.default_rally_pos)
+                        if tower.ui and e.ui then
+                            tower.ui.nav_mesh_id = e.ui.nav_mesh_id
+                        end
+                        queue_remove(store, e)
+                    end
+                end
+                tower.tower.flip_x = tower_data.flip_x
+                if tower_data.terrain_style then
+                    tower.tower.terrain_style = tower_data.terrain_style
+                    tower.render.sprites[1].name = string.format(tower.render.sprites[1].name, tower.tower.terrain_style)
+                end
+
+                -- 恢复技能等级
+                if tower_data.powers and tower.powers then
+                    for power_name, power_data in pairs(tower_data.powers) do
+                        if tower.powers[power_name] then
+                            tower.powers[power_name].level = power_data.level
+                            tower.powers[power_name].changed = true
+                        end
+                    end
+                end
+
+                -- 恢复集结点
+                if tower_data.rally_pos and tower.barrack then
+                    tower.barrack.rally_pos = V.v(tower_data.rally_pos.x, tower_data.rally_pos.y)
+                    if tower.mercenary then
+                        for i = 1, tower_data.soldier_count do
+                            tower.barrack.soldiers[i] = E:create_entity(tower.barrack.soldier_type)
+                            tower.barrack.soldiers[i].health.dead = true
+                            tower.barrack.soldiers[i].id = -1
+                        end
+                    end
+                end
+
+                -- -- 恢复购买的攻击
+                -- if tower_data.attacks and tower.attacks then
+                --     for i, attack_data in pairs(tower_data.attacks) do
+                --         if tower.attacks.list[i] and attack_data.bought then
+                --             tower.attacks.list[i].bought = true
+                --         end
+                --     end
+                -- end
+
+                queue_insert(store, tower)
+                ::continue::
+            end
+        end
     end
 
     store.gems_collected = 0
@@ -398,6 +469,9 @@ function sys.wave_spawn:init(store)
     if store.level_mode_override == GAME_MODE_ENDLESS then
         store.gems_per_wave = 0
         store.wave_group_total = 0
+        if store.endless and store.endless.wave_group_number then
+            store.wave_group_number = store.endless.wave_group_number
+        end
     else
         -- store.gems_per_wave = math.floor(
         --     GS.gems_per_level[store.level_idx] * GS.gems_factor_per_mode[store.level_mode] / W:waves_count())
@@ -408,7 +482,10 @@ function sys.wave_spawn:init(store)
         log.info("Wave group spawn thread STARTING")
 
         local i = 1
-
+        local start = true
+        if store.endless and store.endless.current_wave_count then
+            i = store.endless.current_wave_count
+        end
         while W:has_group(i) do
             local group = W:get_group(i)
 
@@ -417,7 +494,7 @@ function sys.wave_spawn:init(store)
 
             signal.emit("next-wave-ready", group)
 
-            if i == 1 then
+            if start then
                 for _, wave in pairs(group.waves) do
                     if wave.notification and wave.notification ~= "" then
                         signal.emit("wave-notification", "view", wave.notification)
@@ -427,7 +504,7 @@ function sys.wave_spawn:init(store)
                 while not store.send_next_wave do
                     coroutine.yield()
                 end
-
+                start = false
                 log.debug("Sending first WAVE. (Started by player)")
             else
                 while not store.send_next_wave and not (store.tick_ts - store.last_wave_ts >= fts(group.interval)) and
@@ -446,7 +523,7 @@ function sys.wave_spawn:init(store)
                 local remaining_secs = km.round(fts(group.interval) - (store.tick_ts - store.last_wave_ts))
 
                 if store.level_mode == -1 then
-                -- if store.level_mode == GAME_MODE_ENDLESS then
+                    -- if store.level_mode == GAME_MODE_ENDLESS then
                     store.early_wave_reward = math.ceil(remaining_secs * GS.early_wave_reward_per_second *
                                                             W:get_endless_early_wave_reward_factor())
 

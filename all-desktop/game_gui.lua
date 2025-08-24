@@ -103,23 +103,34 @@ local function next_wave_ready_handler(group)
         game_gui:show_balloon("TB_WAVE")
     end
     if game_gui.game.store.level_mode_override == GAME_MODE_ENDLESS then
-        game_gui.endless_select_reward_view:show()
-        local tmp = {"health", "damage", "speed", "health_damage_factor", "lives"}
-        local endless = game_gui.game.store.endless
-        local enemy_buff = require("kr1.data.endless").enemy_buff
-        local key = table.random(tmp)
-        if key == "health" then
-            endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
-        elseif key == "damage" then
-            endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
-        elseif key == "speed" then
-            endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
-        elseif key == "health_damage_factor" then
-            endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
-        elseif key == "lives" then
-            endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+        if game_gui.game.store.endless.load_from_history then
+            game_gui.game.store.endless.load_from_history = false
+        else
+            game_gui.endless_select_reward_view:show()
+            local tmp = {"health", "damage", "speed", "health_damage_factor", "lives"}
+            local endless = game_gui.game.store.endless
+            local enemy_buff = require("kr1.data.endless").enemy_buff
+            local key = table.random(tmp)
+            if key == "health" then
+                endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
+            elseif key == "damage" then
+                endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
+            elseif key == "speed" then
+                endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
+            elseif key == "health_damage_factor" then
+                endless.enemy_health_damage_factor = endless.enemy_health_damage_factor *
+                                                         enemy_buff.health_damage_factor
+            elseif key == "lives" then
+                endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
+                endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+                endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor
+                if endless.avg_interval < 0.1 then
+                    endless.avg_interval = 0.1
+                end
+            end
+
         end
+
     end
 end
 
@@ -1639,7 +1650,67 @@ function game_gui:go_to_map()
 
         storage:save_slot(slot)
     end
+    if self.game.store.level_mode_override == GAME_MODE_ENDLESS then
+        local endless_data = self.game.store.endless
+        -- 保存玩家基础信息
+        endless_data.player_gold = self.game.store.player_gold
+        endless_data.lives = self.game.store.lives
+        endless_data.wave_group_number = self.game.store.wave_group_number
 
+        -- 保存塔的信息
+        endless_data.towers = {}
+        for _, tower in pairs(self.game.store.towers) do
+            local tower_data = {
+                template_name = tower.template_name,
+                pos = {
+                    x = tower.pos.x,
+                    y = tower.pos.y
+                },
+                tower_level = tower.tower.level,
+                spent = tower.tower.spent or 0,
+                holder_id = tower.tower.holder_id,
+                flip_x = tower.tower.flip_x,
+                terrain_style = tower.tower.terrain_style
+            }
+
+            -- 保存塔的技能等级
+            if tower.powers then
+                tower_data.powers = {}
+                for power_name, power in pairs(tower.powers) do
+                    tower_data.powers[power_name] = {
+                        level = power.level,
+                        price_base = power.price_base,
+                        price_inc = power.price_inc
+                    }
+                end
+            end
+
+            -- 保存兵营的集结点
+            if tower.barrack and tower.barrack.rally_pos then
+                tower_data.rally_pos = {
+                    x = tower.barrack.rally_pos.x,
+                    y = tower.barrack.rally_pos.y
+                }
+                tower_data.soldier_count = #tower.barrack.soldiers
+            end
+
+            -- 保存塔的攻击信息
+            if tower.attacks then
+                tower_data.attacks = {}
+                for i, attack in ipairs(tower.attacks.list) do
+                    if attack.bought then
+                        tower_data.attacks[i] = {
+                            bought = true
+                        }
+                    end
+                end
+            end
+
+            table.insert(endless_data.towers, tower_data)
+        end
+
+        storage:save_endless(self.game.store.level_name, self.game.store.endless)
+    end
     S:stop_all()
     S:resume()
     signal.emit("game-quit", self.game.store)
@@ -7879,12 +7950,13 @@ function EndlessSelectRewardView:initialize(sw, sh)
         tower_damage = _("ENDLESS_MODE_REWARD_TOWER_DAMAGE"),
         tower_cooldown = _("ENDLESS_MODE_REWARD_TOWER_COOLDOWN"),
         hero_damage = _("ENDLESS_MODE_REWARD_HERO_DAMAGE"),
-        hero_cooldown = _("ENDLESS_MODE_REWARD_HERO_COOLDOWN"),
+        hero_cooldown = _("ENDLESS_MODE_REWARD_HERO_COOLDOWN")
     })
 end
 
 function EndlessSelectRewardView:load()
-    local data = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown","hero_damage","hero_cooldown"}
+    local data = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown", "hero_damage",
+                  "hero_cooldown"}
     -- 随机选择两个
     local selected = {}
     local count = 0 -- 手动计数
@@ -7984,6 +8056,7 @@ function EndlessSelectRewardView:save()
         for _, h in pairs(E:filter_templates("hero")) do
             h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
         end
+        W.endless.hero_damage_factor = W.endless.hero_damage_factor * friend_buff.hero_damage_factor
     elseif key == "hero_cooldown" then
         for _, h in pairs(store.soldiers) do
             if h.hero then
@@ -7993,6 +8066,7 @@ function EndlessSelectRewardView:save()
         for _, h in pairs(E:filter_templates("hero")) do
             h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
         end
+        W.endless.hero_cooldown_factor = W.endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
     end
 
     game_gui:enable_keys()

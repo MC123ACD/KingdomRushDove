@@ -142,6 +142,17 @@ function storage:load_criket()
     return criket
 end
 
+function storage:load_endless(level_name)
+    return self:load_lua(string.format("endless_%s.lua", level_name), true)
+end
+
+function storage:save_endless(level_name, endless)
+    local success = self:write_lua(string.format("endless_%s.lua", level_name), endless, true)
+    if not success then
+        log.error("Error saving endless_%s.lua", level_name)
+    end
+end
+
 function storage:load_keyset()
     local key_shortcuts = self:load_lua("keyset.lua", true)
     local default_key_shortcuts = require("patches.keyset_default")
