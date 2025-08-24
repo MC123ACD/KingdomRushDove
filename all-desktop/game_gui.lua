@@ -7960,7 +7960,7 @@ function EndlessSelectRewardView:initialize(sw, sh)
                   "hero_cooldown", "archer_bleed","archer_multishot","archer_insight","archer_critical"}
     self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
 
-    self.upgrade.max_levels = {
+    self.upgrade_max_levels = {
         health = 15,
         soldier_damage = 15,
         soldier_cooldown = 5,
@@ -7986,7 +7986,7 @@ function EndlessSelectRewardView:load()
             count = count + 1 -- 增加计数
             self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
             game_gui.game.store.endless.upgrade_levels[choice] = self.upgrade_levels[choice]
-            if self.upgrade_levels[choice] >= self.upgrade.max_levels[choice] then
+            if self.upgrade_levels[choice] >= self.upgrade_max_levels[choice] then
                 table.removeobject(self.upgrade_options, choice)
             end
         end

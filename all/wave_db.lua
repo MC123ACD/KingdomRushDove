@@ -103,12 +103,7 @@ function wave_db:load(level_name, game_mode, endless)
 
     if endless then
         local storage = require("all.storage")
-        local endless_history = storage:load_endless(level_name)
-        if endless_history then
-            wave_db.endless = endless_history
-            wave_db.endless.load_from_history = true
-        else
-            wave_db.endless = {
+        local endless_template = {
                 enemy_list = {},
                 total_lives_cost = 0,
                 enemy_health_factor = 1,
@@ -142,9 +137,24 @@ function wave_db:load(level_name, game_mode, endless)
                     archer_bleed = 0,
                     archer_multishot = 0,
                     archer_insight = 0,
-                    archer_trick = 0
+                    archer_critical = 0
                 }
             }
+        local endless_history = storage:load_endless(level_name)
+        if endless_history then
+            wave_db.endless = endless_history
+            wave_db.endless.load_from_history = true
+            for k, v in pairs(endless_template) do
+                if wave_db.endless[k] == nil then
+                    if type(v) == "table" then
+                        wave_db.endless[k] = table.deepclone(v)
+                    else
+                        wave_db.endless[k] = v
+                    end
+                end
+            end
+        else
+            wave_db.endless = endless_template
             local endless = wave_db.endless
             local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)
             local waves = group.waves

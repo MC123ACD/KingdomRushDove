@@ -1,6 +1,6 @@
 local friend_buff = require("kr1.data.endless").friend_buff
-local E = require("all.entity_db")
-local UP = require("kr1.data.upgrade")
+local E = require("entity_db")
+local UP = require("kr1.upgrades")
 local U = require("all.utils")
 local EU = {}
 local scripts = require("all.scripts")
@@ -10,7 +10,7 @@ function EU.patch_archer_bleed(level)
     mod.damage_factor = 0.1 + friend_buff.archer_bleed * level
 end
 function EU.patch_archer_insight(level)
-    for _, name in UP:arrows() do
+    for _, name in pairs(UP:arrows()) do
         local arrow = E:get_template(name)
         if not arrow._endless_archer_insight then
             U.append_mod(arrow.bullet, "mod_endless_archer_insight")
@@ -20,16 +20,16 @@ function EU.patch_archer_insight(level)
     end
 end
 function EU.patch_archer_multishot(level)
-    for _, name in UP:arrows() do
+    for _, name in pairs(UP:arrows()) do
         local arrow = E:get_template(name)
         if not arrow._endless_multishot then
             arrow.main_script.insert = U.function_append(arrow.main_script.insert, scripts.arrow_endless_multishot.insert)
         end
-        arrow._endless_multishot = self.upgrade_levels[level]
+        arrow._endless_multishot = level
     end
 end
 function EU.patch_archer_critical(level)
-    for _, name in UP:arrows() do
+    for _, name in pairs(UP:arrows()) do
         local arrow = E:get_template(name)
         if not arrow._endless_archer_critical then
             arrow.main_script.insert = U.function_append(function(this, store, script)
