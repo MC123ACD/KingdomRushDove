@@ -2202,7 +2202,7 @@ function scripts.arrow.update(this, store, script)
                 target_pos.y + target.unit.hit_offset.y
         end
 
-        if V.dist2(this.pos.x, this.pos.y, target_pos.x, target_pos.y) < b.hit_distance * b.hit_distance and
+        if V.dist2(this.pos.x, this.pos.y, target_pos.x, target_pos.y) < b.hit_distance * b.hit_distance * 1.44 and
             not SU.unit_dodges(store, target, true) and (not b.hit_chance or math.random() < b.hit_chance) then
             hit = true
 
@@ -2220,7 +2220,6 @@ function scripts.arrow.update(this, store, script)
                 for _, mod_name in pairs(mods) do
 
                     local mod = E:create_entity(mod_name)
-
                     mod.modifier.source_id = this.id
                     mod.modifier.target_id = target.id
                     mod.modifier.level = b.level
@@ -2343,27 +2342,33 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
                 if target then
                     local b = E:clone_entity(this)
                     b._endless_multishot = 0
-                    if this.bullet.flight_time then
-                        b.bullet.flight_time = this.bullet.flight_time + U.frandom(-0.1, 0.1)
-                    end
 
                     b.bullet.from = V.vclone(this.bullet.from)
-                    if this.bullet.predict_target_pos then
-                        b.bullet.to.x = target.pos.x + target.unit.hit_offset.x + target.motion.speed.x * b.bullet.flight_time
-                        b.bullet.to.y = target.pos.y + target.unit.hit_offset.y + target.motion.speed.y * b.bullet.flight_time
-                    else
-                        b.bullet.to.x = target.pos.x + target.unit.hit_offset.x
-                        b.bullet.to.y = target.pos.y + target.unit.hit_offset.y
+
+                    b.bullet.to.x = target.pos.x + target.unit.hit_offset.x
+                    b.bullet.to.y = target.pos.y + target.unit.hit_offset.y
+                    if b.bullet.predict_target_pos then
+                        b.bullet.to.x = b.bullet.to.x + target.motion.speed.x * b.bullet.flight_time
+                        b.bullet.to.y = b.bullet.to.y + target.motion.speed.y * b.bullet.flight_time
+                    end
+
+                    if b.bullet.flight_time_factor then
+                        local dist1 = V.dist(b.bullet.to.x, b.bullet.to.y, b.bullet.from.x, b.bullet.from.y)
+                        local dist2 = V.dist(this.bullet.to.x, this.bullet.to.y, this.bullet.from.x, this.bullet.from.y)
+                        b.bullet.flight_time = b.bullet.flight_time_min + dist1 / dist2 *
+                                                   (this.bullet.flight_time - this.bullet.flight_time_min)
                     end
 
                     b.bullet.target_id = target.id
 
                     if this.bullet.flight_time then
-                        b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time, b.bullet.g)
+                        b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time,
+                            b.bullet.g)
                     end
 
                     if b.bullet.rotation_speed then
-                        b.bullet.rotation_speed = b.bullet.rotation_speed * (b.bullet.to.x > b.bullet.from.x and -1 or 1)
+                        b.bullet.rotation_speed = b.bullet.rotation_speed *
+                                                      (b.bullet.to.x > b.bullet.from.x and -1 or 1)
                         if b.bullet.rotation_speed > 0 then
                             b.render.sprites[1].flip_x = not b.render.sprites[1].flip_x
                         end
@@ -2372,7 +2377,7 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
                         local fx = E:create_entity(b.bullet.start_fx)
 
                         fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-                        fx.render.sprites[1].r = V.angleTo(b.bullet.to.x - this.pos.x, b.bulet.to.y - this.pos.y)
+                        fx.render.sprites[1].r = V.angleTo(b.bullet.to.x - this.pos.x, b.bullet.to.y - this.pos.y)
                         fx.render.sprites[1].ts = store.tick_ts
 
                         queue_insert(store, fx)
@@ -2386,6 +2391,7 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
             end
         end
     end
+    return true
 end
 scripts.mod_health_damage_factor_inc = {}
 function scripts.mod_health_damage_factor_inc.insert(this, store, script)
@@ -2811,8 +2817,8 @@ function scripts.missile.update(this, store, script)
         -- local shock_and_awe = UP:get_upgrade("engineer_shock_and_awe")
 
         for _, enemy in pairs(store.enemies) do
-            if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
-                0 and
+            if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and
+                band(enemy.vis.bans, b.damage_flags) == 0 and
                 U.is_inside_ellipse(V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y),
                     b.to, b.damage_radius) then
                 local enemy_pos = V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y)

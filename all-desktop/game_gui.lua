@@ -7973,6 +7973,11 @@ function EndlessSelectRewardView:initialize(sw, sh)
         archer_insight = 3,
         archer_critical = 4
     }
+    for k, v in pairs(self.upgrade_levels) do
+        if v >= self.upgrade_max_levels[k] then
+            table.removeobject(self.upgrade_options, k)
+        end
+    end
 end
 
 function EndlessSelectRewardView:load()

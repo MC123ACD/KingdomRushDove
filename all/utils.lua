@@ -1850,8 +1850,14 @@ end
 
 function U.append_mod(entity, mod_name)
     if entity.mod then
-        entity.mods = {entity.mod, mod_name}
-        entity.mod = nil
+        if type(entity.mod) == "table" then
+            entity.mods = entity.mod
+            table.insert(entity.mods, mod_name)
+            entity.mod = nil
+        else
+            entity.mods = {entity.mod, mod_name}
+            entity.mod = nil
+        end
     else
         entity.mods = entity.mods or {}
         table.insert(entity.mods, mod_name)
