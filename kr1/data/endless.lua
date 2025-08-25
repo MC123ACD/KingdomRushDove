@@ -1,3 +1,5 @@
+local i18n = require("i18n")
+
 return {
     friend_buff = {
         health_factor = 1.15,
@@ -15,8 +17,12 @@ return {
         hero_cooldown_factor = 0.9,
         s_hero_cooldown_factor = 10,
         archer_bleed = 0.1,
-        archer_insight = 0.01,
-        archer_critical = 0.15
+        archer_insight = 0.012,
+        archer_critical = 0.1,
+        rain_count_inc = 2,
+        rain_damage_inc = 60,
+        rain_radius_mul = 1.25,
+        rain_cooldown_dec = 10
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -65,7 +71,11 @@ return {
             archer_bleed = 0,
             archer_multishot = 0,
             archer_insight = 0,
-            archer_critical = 0
+            archer_critical = 0,
+            rain_count_inc = 0,
+            rain_damage_inc = 0,
+            rain_radius_mul = 0,
+            rain_cooldown_dec = 0
         },
         enemy_upgrade_levels = {
             health = 0,
@@ -77,24 +87,54 @@ return {
         }
     },
     upgrade_max_levels = {
-        health = 15,
+        health = 20,
         soldier_damage = 15,
         soldier_cooldown = 5,
         tower_damage = 15,
         tower_cooldown = 5,
-        hero_damage = 15,
+        hero_damage = 20,
         hero_cooldown = 4,
         archer_bleed = 5,
         archer_multishot = 2,
         archer_insight = 3,
-        archer_critical = 4
+        archer_critical = 4,
+        rain_count_inc = 4,
+        rain_damage_inc = 5,
+        rain_radius_mul = 1,
+        rain_cooldown_dec = 2
     },
     enemy_upgrade_max_levels = {
-        health = 45,
-        damage = 45,
-        speed = 25,
-        health_damage_factor = 25,
-        lives = 45,
+        health = 50,
+        damage = 50,
+        speed = 20,
+        health_damage_factor = 20,
+        lives = 50,
         wave_interval = 45
+    },
+    gold_extra_upgrade = {
+        "archer_bleed",
+        "archer_multishot",
+        "archer_insight",
+        "archer_critical",
+        "rain_count_inc",
+        "rain_damage_inc",
+    },
+    gold_extra_cost = 10000,
+    key_label_map = {
+        health = _("ENDLESS_REWARD_HEALTH"),
+        soldier_damage = _("ENDLESS_REWARD_SOLDIER_DAMAGE"),
+        soldier_cooldown = _("ENDLESS_REWARD_SOLDIER_COOLDOWN"),
+        tower_damage = _("ENDLESS_REWARD_TOWER_DAMAGE"),
+        tower_cooldown = _("ENDLESS_REWARD_TOWER_COOLDOWN"),
+        hero_damage = _("ENDLESS_REWARD_HERO_DAMAGE"),
+        hero_cooldown = _("ENDLESS_REWARD_HERO_COOLDOWN"),
+        archer_bleed = _("ENDLESS_REWARD_ARCHER_BLEED"),
+        archer_multishot = _("ENDLESS_REWARD_ARCHER_MULTISHOT"),
+        archer_insight = _("ENDLESS_REWARD_ARCHER_INSIGHT"),
+        archer_critical = _("ENDLESS_REWARD_ARCHER_CRITICAL"),
+        rain_count_inc = _("ENDLESS_REWARD_RAIN_COUNT_INC"),
+        rain_damage_inc = _("ENDLESS_REWARD_RAIN_DAMAGE_INC"),
+        rain_radius_mul = _("ENDLESS_REWARD_RAIN_RADIUS_MUL"),
+        rain_cooldown_dec = _("ENDLESS_REWARD_RAIN_COOLDOWN_DEC")
     }
 }

@@ -109,6 +109,8 @@ local function next_wave_ready_handler(group)
         else
             if #game_gui.game.store.endless.upgrade_options > 0 then
                 game_gui.endless_select_reward_view:show()
+            elseif game_gui.game.store.player_gold > EL.gold_extra_cost then
+                game_gui.endless_select_reward_view:show()
             end
             local endless = game_gui.game.store.endless
             EU.patch_enemy_growth(endless)
@@ -7911,19 +7913,7 @@ end
 EndlessSelectRewardView = class("EndlessSelectRewardView", SelectPanelView)
 function EndlessSelectRewardView:initialize(sw, sh)
     SelectPanelView.initialize(self, sw, sh, "选择奖励")
-    self:set_key_label_map({
-        health = _("ENDLESS_REWARD_HEALTH"),
-        soldier_damage = _("ENDLESS_REWARD_SOLDIER_DAMAGE"),
-        soldier_cooldown = _("ENDLESS_REWARD_SOLDIER_COOLDOWN"),
-        tower_damage = _("ENDLESS_REWARD_TOWER_DAMAGE"),
-        tower_cooldown = _("ENDLESS_REWARD_TOWER_COOLDOWN"),
-        hero_damage = _("ENDLESS_REWARD_HERO_DAMAGE"),
-        hero_cooldown = _("ENDLESS_REWARD_HERO_COOLDOWN"),
-        archer_bleed = _("ENDLESS_REWARD_ARCHER_BLEED"),
-        archer_multishot = _("ENDLESS_REWARD_ARCHER_MULTISHOT"),
-        archer_insight = _("ENDLESS_REWARD_ARCHER_INSIGHT"),
-        archer_critical = _("ENDLESS_REWARD_ARCHER_CRITICAL")
-    })
+    self:set_key_label_map(EL.key_label_map)
     self.upgrade_options = game_gui.game.store.endless.upgrade_options
     self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
 
@@ -7933,21 +7923,34 @@ end
 function EndlessSelectRewardView:load()
     -- 随机选择两个
     local selected = {}
-    local count = 0 -- 手动计数
-    while count < 2 do
-        local choice = self.upgrade_options[math.random(1, #self.upgrade_options)]
-        if selected[choice] == nil then
-            selected[choice] = false
-            count = count + 1 -- 增加计数
-            self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
-            game_gui.game.store.endless.upgrade_levels[choice] = self.upgrade_levels[choice]
-            if self.upgrade_levels[choice] >= self.upgrade_max_levels[choice] then
-                table.removeobject(self.upgrade_options, choice)
+
+    if #self.upgrade_options <= 0 then
+        local count = 0
+        while count < 2 do
+            local choice = table.random(EL.gold_extra_upgrade)
+            if selected[choice] == nil then
+                selected[choice] = false
+                count = count + 1
+                self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
             end
         end
-        if #self.upgrade_options <= 1 then
-            break
+    else
+        local count = 0 -- 手动计数
+        while count < 2 do
+            local choice = self.upgrade_options[math.random(1, #self.upgrade_options)]
+            if selected[choice] == nil then
+                selected[choice] = false
+                count = count + 1 -- 增加计数
+                self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
+                if self.upgrade_levels[choice] >= self.upgrade_max_levels[choice] then
+                    table.removeobject(self.upgrade_options, choice)
+                end
+            end
+            if #self.upgrade_options <= 1 then
+                break
+            end
         end
+
     end
 
     self.data_group:set_all_data(selected)
@@ -7969,79 +7972,14 @@ function EndlessSelectRewardView:save()
             break
         end
     end
-    local script_utils = require("all.script_utils")
-    local store = game_gui.game.store
-    local W = store
-    if key == "health" then
-        for _, s in pairs(store.soldiers) do
-            if s.health then
-                s.health.hp_max = s.health.hp_max * friend_buff.health_factor
-                s.health.hp = s.health.hp_max
-            end
-        end
-
-        W.endless.soldier_health_factor = W.endless.soldier_health_factor * friend_buff.health_factor
-    elseif key == "soldier_damage" then
-        for _, s in pairs(store.soldiers) do
-            if s.unit then
-                s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
-            end
-        end
-
-        W.endless.soldier_damage_factor = W.endless.soldier_damage_factor * friend_buff.soldier_damage_factor
-    elseif key == "soldier_cooldown" then
-        for _, s in pairs(store.soldiers) do
-            if s.cooldown_factor then
-                s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
-            end
-        end
-
-        W.endless.soldier_cooldown_factor = W.endless.soldier_cooldown_factor * friend_buff.soldier_cooldown_factor
-
-    elseif key == "tower_damage" then
-        for _, t in pairs(store.towers) do
-            script_utils.insert_tower_damage_factor_buff(t, friend_buff.tower_damage_factor)
-        end
-
-        W.endless.tower_damage_factor = W.endless.tower_damage_factor + friend_buff.tower_damage_factor
-
-    elseif key == "tower_cooldown" then
-        for _, t in pairs(store.towers) do
-            script_utils.insert_tower_cooldown_buff(t, friend_buff.tower_cooldown_factor)
-        end
-
-        W.endless.tower_cooldown_factor = W.endless.tower_cooldown_factor * friend_buff.tower_cooldown_factor
-    elseif key == "hero_damage" then
-        for _, h in pairs(store.soldiers) do
-            if h.hero then
-                h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
-            end
-        end
-
-        W.endless.hero_damage_factor = W.endless.hero_damage_factor * friend_buff.hero_damage_factor
-    elseif key == "hero_cooldown" then
-        for _, h in pairs(store.soldiers) do
-            if h.hero then
-                h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
-            end
-        end
-
-        W.endless.hero_cooldown_factor = W.endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
-    elseif key == "archer_bleed" then
-        EU.patch_archer_bleed(self.upgrade_levels[key])
-        EU.patch_enemy_growth(game_gui.game.store.endless)
-    elseif key == "archer_multishot" then
-        EU.patch_archer_multishot(self.upgrade_levels[key])
-        EU.patch_enemy_growth(game_gui.game.store.endless)
-        EU.patch_enemy_growth(game_gui.game.store.endless)
-    elseif key == "archer_insight" then
-        EU.patch_archer_insight(self.upgrade_levels[key])
-        EU.patch_enemy_growth(game_gui.game.store.endless)
-    elseif key == "archer_critical" then
-        EU.patch_archer_critical(self.upgrade_levels[key])
-        EU.patch_enemy_growth(game_gui.game.store.endless)
+    local gold_bought = #self.upgrade_options <= 0
+    if gold_bought and key then
+        game_gui.game.store.player_gold = game_gui.game.store.player_gold - EL.gold_extra_cost
     end
 
+    local store = game_gui.game.store
+
+    EL.patch_upgrade_in_game(key, store, store.endless)
     game_gui:enable_keys()
     S:resume()
     game_gui.game.store.paused = false

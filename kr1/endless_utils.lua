@@ -7,6 +7,13 @@ local endless_balance = require("kr1.data.endless")
 local enemy_buff = endless_balance.enemy_buff
 local friend_buff = endless_balance.friend_buff
 local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
+local SU = require("script_utils")
+local function vv(x)
+    return {
+        x = x,
+        y = x
+    }
+end
 function EU.patch_enemy_growth(endless)
     for i = 1, 2 do
         if #endless.enemy_upgrade_options == 0 then
@@ -36,9 +43,7 @@ function EU.patch_enemy_growth(endless)
         if endless.enemy_upgrade_levels[key] >= enemy_upgrade_max_levels[key] then
             table.removeobject(endless.enemy_upgrade_options, key)
         end
-
     end
-
 end
 
 function EU.patch_archer_bleed(level)
@@ -71,7 +76,7 @@ function EU.patch_archer_critical(level)
         if not arrow._endless_archer_critical then
             arrow.main_script.insert = U.function_append(function(this, store, script)
                 if math.random() < this._endless_archer_critical then
-                    this.bullet.damage_factor = this.bullet.damage_factor * 2
+                    this.bullet.damage_factor = this.bullet.damage_factor * 3
                     if not (this.bullet.pop and table.contains(this.bullet.pop, "pop_headshot")) then
                         this.bullet.pop = {"pop_crit"}
                         this.bullet.pop_conds = DR_DAMAGE
@@ -81,6 +86,143 @@ function EU.patch_archer_critical(level)
             end, arrow.main_script.insert)
         end
         arrow._endless_archer_critical = level * friend_buff.archer_critical
+    end
+end
+
+function EU.patch_rain_count_inc(level)
+    local controller = E:get_template("power_fireball_control")
+    controller.cataclysm_count = controller.cataclysm_count + level * friend_buff.rain_count_inc
+    controller.fireball_count = controller.fireball_count + level * friend_buff.rain_count_inc
+end
+
+function EU.patch_rain_damage_inc(level)
+    local fireball = E:get_template("power_fireball")
+    fireball.bullet.damage_min = fireball.bullet.damage_min + level * friend_buff.rain_damage_inc
+    fireball.bullet.damage_max = fireball.bullet.damage_max + level * friend_buff.rain_damage_inc
+end
+
+function EU.patch_rain_radius_mul(level)
+    local fireball = E:get_template("power_fireball")
+    fireball.bullet.damage_radius = fireball.bullet.damage_radius * friend_buff.rain_radius_mul ^ level
+    fireball.render.sprites[1].scale = vv(friend_buff.rain_radius_mul ^ level)
+    local scorched_water = E:get_template("power_scorched_water")
+    scorched_water.aura.radius = scorched_water.aura.radius * friend_buff.rain_radius_mul ^ level
+    scorched_water.render.sprites[1].scale = vv(friend_buff.rain_radius_mul ^ level)
+    local scorched_earth = E:get_template("power_scorched_earth")
+    scorched_earth.aura.radius = scorched_earth.aura.radius * friend_buff.rain_radius_mul ^ level
+    scorched_earth.render.sprites[1].scale = vv(friend_buff.rain_radius_mul ^ level)
+end
+
+function EU.patch_rain_cooldown_dec(level)
+    local controller = E:get_template("power_fireball_control")
+    controller.cooldown = controller.cooldown - level * friend_buff.rain_cooldown_dec
+end
+
+function EU.patch_upgrade_in_game(key, store, endless)
+    if not key then
+        return
+    end
+    local gold_bought = #endless.upgrade_options <= 0
+    if key == "health" then
+        for _, s in pairs(store.soldiers) do
+            if s.health then
+                s.health.hp_max = s.health.hp_max * friend_buff.health_factor
+                s.health.hp = s.health.hp_max
+            end
+        end
+        endless.soldier_health_factor = endless.soldier_health_factor * friend_buff.health_factor
+    elseif key == "soldier_damage" then
+        for _, s in pairs(store.soldiers) do
+            if s.unit then
+                s.unit.damage_factor = s.unit.damage_factor * friend_buff.soldier_damage_factor
+            end
+        end
+        endless.soldier_damage_factor = endless.soldier_damage_factor * friend_buff.soldier_damage_factor
+    elseif key == "soldier_cooldown" then
+        for _, s in pairs(store.soldiers) do
+            if s.cooldown_factor then
+                s.cooldown_factor = s.cooldown_factor * friend_buff.soldier_cooldown_factor
+            end
+        end
+        endless.soldier_cooldown_factor = endless.soldier_cooldown_factor * friend_buff.soldier_cooldown_factor
+    elseif key == "tower_damage" then
+        for _, t in pairs(store.towers) do
+            SU.insert_tower_damage_factor_buff(t, friend_buff.tower_damage_factor)
+        end
+        endless.tower_damage_factor = endless.tower_damage_factor + friend_buff.tower_damage_factor
+    elseif key == "tower_cooldown" then
+        for _, t in pairs(store.towers) do
+            SU.insert_tower_cooldown_buff(t, friend_buff.tower_cooldown_factor)
+        end
+        endless.tower_cooldown_factor = endless.tower_cooldown_factor * friend_buff.tower_cooldown_factor
+    elseif key == "hero_damage" then
+        for _, h in pairs(store.soldiers) do
+            if h.hero then
+                h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
+            end
+        end
+        endless.hero_damage_factor = endless.hero_damage_factor * friend_buff.hero_damage_factor
+    elseif key == "hero_cooldown" then
+        for _, h in pairs(store.soldiers) do
+            if h.hero then
+                h.cooldown_factor = h.cooldown_factor * friend_buff.hero_cooldown_factor
+            end
+        end
+        endless.hero_cooldown_factor = endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
+    elseif key == "archer_bleed" then
+        EU.patch_archer_bleed(endless.upgrade_levels[key])
+        if not gold_bought then
+            EU.patch_enemy_growth(endless)
+        end
+    elseif key == "archer_multishot" then
+        EU.patch_archer_multishot(endless.upgrade_levels[key])
+        if not gold_bought then
+            EU.patch_enemy_growth(endless)
+        end
+    elseif key == "archer_insight" then
+        EU.patch_archer_insight(endless.upgrade_levels[key])
+        if not gold_bought then
+            EU.patch_enemy_growth(endless)
+        end
+    elseif key == "archer_critical" then
+        EU.patch_archer_critical(endless.upgrade_levels[key])
+        if not gold_bought then
+            EU.patch_enemy_growth(endless)
+        end
+    elseif key == "rain_count_inc" then
+        EU.patch_rain_count_inc(1)
+    elseif key == "rain_damage_inc" then
+        EU.patch_rain_damage_inc(1)
+    elseif key == "rain_radius_mul" then
+        EU.patch_rain_radius_mul(1)
+    elseif key == "rain_cooldown_dec" then
+        EU.patch_rain_cooldown_dec(1)
+    end
+end
+function EU.patch_upgrades(endless)
+    if endless.upgrade_levels.archer_bleed > 0 then
+        EU.patch_archer_bleed(endless.upgrade_levels.archer_bleed)
+    end
+    if endless.upgrade_levels.archer_multishot > 0 then
+        EU.patch_archer_multishot(endless.upgrade_levels.archer_multishot)
+    end
+    if endless.upgrade_levels.archer_insight > 0 then
+        EU.patch_archer_insight(endless.upgrade_levels.archer_insight)
+    end
+    if endless.upgrade_levels.archer_critical > 0 then
+        EU.patch_archer_critical(endless.upgrade_levels.archer_critical)
+    end
+    if endless.upgrade_levels.rain_count_inc > 0 then
+        EU.patch_rain_count_inc(endless.upgrade_levels.rain_count_inc)
+    end
+    if endless.upgrade_levels.rain_damage_inc > 0 then
+        EU.patch_rain_damage_inc(endless.upgrade_levels.rain_damage_inc)
+    end
+    if endless.upgrade_levels.rain_radius_mul > 0 then
+        EU.patch_rain_radius_mul(endless.upgrade_levels.rain_radius_mul)
+    end
+    if endless.upgrade_levels.rain_cooldown_dec > 0 then
+        EU.patch_rain_cooldown_dec(endless.upgrade_levels.rain_cooldown_dec)
     end
 end
 return EU
