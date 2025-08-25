@@ -1,6 +1,34 @@
 return {
     entities_list = {
         {
+            template = "cricet_random_eff_aura",
+            pos = {
+                x = 451,
+                y = 134
+            }
+        },
+        {
+            template = "cricet_random_eff_aura",
+            pos = {
+                x = 451,
+                y = 304
+            }
+        },
+        {
+            template = "cricet_random_eff_aura",
+            pos = {
+                x = 451,
+                y = 472
+            }
+        },
+        {
+            template = "cricet_random_eff_aura",
+            pos = {
+                x = 451,
+                y = 638
+            }
+        },
+        {
             template = "decal_background",
             pos = {
                 x = 512,
@@ -1288,6 +1316,8 @@ return {
     },
     required_textures = {
         "go_stage1000_bg",
-		"go_enemies_grass"
+        "go_enemies_grass",
+        "cricet_random_eff",
+        "criket_random_eff_mod"
     }
 }

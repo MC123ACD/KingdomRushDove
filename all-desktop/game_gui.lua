@@ -1062,7 +1062,7 @@ function game_gui:keypressed(key, isrepeat)
         else
             self.criketmenu:hide()
         end
-    elseif table.contains(ks.endless_shop, key) and self.game.store.level_mode_override == GAME_MODE_ENDLESS and self.game.store.player_gold >= EL.gold_extra_cost then
+    elseif table.contains(ks.endless_shop, key) and self.game.store.level_mode_override == GAME_MODE_ENDLESS and self.game.store.player_gold >= EL.gold_extra_cost and game_gui.endless_select_reward_view.hidden then
         self.game.store.player_gold = self.game.store.player_gold - EL.gold_extra_cost
         game_gui.endless_select_reward_view:show(true)
         -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and

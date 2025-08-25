@@ -33603,11 +33603,50 @@ local kr5_a = {
 	},
 }
 
+local cricet = {
+    cricet_random_eff_idle = {
+        prefix = "cricet_random_eff",
+        to = 1,
+        from = 1
+    },
+    cricet_random_eff_start = {
+        prefix = "cricet_random_eff",
+        to = 12,
+        from = 2
+    },
+    cricet_random_eff_end = {
+        prefix = "cricet_random_eff",
+        to = 27,
+        from = 13
+    },
+    cricet_random_eff_mod_give = {
+        prefix = "cricet_random_eff_a",
+        to = 21,
+        from = 1
+    },
+    criket_random_eff_mod_protection_idle = {
+        prefix = "criket_random_eff_mod_protection",
+        to = 1,
+        from = 1
+    },
+    criket_random_eff_mod_attack_idle = {
+        prefix = "criket_random_eff_mod_attack",
+        to = 1,
+        from = 1
+    },
+    criket_random_eff_mod_faster_idle = {
+        prefix = "criket_random_eff_mod_faster",
+        to = 1,
+        from = 1
+    }
+}
+
 local o = {}
 local merge_tables = require("script_utils").merge_tables
 local a = merge_tables(kr1_a, kr2_a)
 a = merge_tables(a, kr3_a)
 a = merge_tables(a, kr5_a)
+a = merge_tables(a, cricet)
 o.animations = a
 
 return o
