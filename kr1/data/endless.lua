@@ -22,7 +22,8 @@ local endless = {
         rain_count_inc = 2,
         rain_damage_inc = 60,
         rain_radius_mul = 1.25,
-        rain_cooldown_dec = 10
+        rain_cooldown_dec = 10,
+        rain_scorch_damage_true = 15
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -75,7 +76,8 @@ local endless = {
             rain_count_inc = 0,
             rain_damage_inc = 0,
             rain_radius_mul = 0,
-            rain_cooldown_dec = 0
+            rain_cooldown_dec = 0,
+            rain_scorch_damage_true = 0
         },
         enemy_upgrade_levels = {
             health = 0,
@@ -101,7 +103,8 @@ local endless = {
         rain_count_inc = 4,
         rain_damage_inc = 5,
         rain_radius_mul = 1,
-        rain_cooldown_dec = 2
+        rain_cooldown_dec = 2,
+        rain_scorch_damage_true = 1
     },
     enemy_upgrade_max_levels = {
         health = 50,
@@ -137,7 +140,8 @@ local key_label_map = {
     rain_count_inc = string.format("火雨数量提升%d颗", endless.friend_buff.rain_count_inc),
     rain_damage_inc = string.format("火雨伤害提升%d", endless.friend_buff.rain_damage_inc),
     rain_radius_mul = string.format("火雨范围提升%d%%", (endless.friend_buff.rain_radius_mul - 1) * 100),
-    rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec)
+    rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec),
+    rain_scorch_damage_true = string.format("焦土伤害提升%d点，且造成真实伤害", endless.friend_buff.rain_scorch_damage_true)
 }
 endless.key_label_map = key_label_map
 return endless

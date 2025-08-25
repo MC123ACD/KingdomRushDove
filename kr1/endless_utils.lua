@@ -8,6 +8,7 @@ local enemy_buff = endless_balance.enemy_buff
 local friend_buff = endless_balance.friend_buff
 local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
 local SU = require("script_utils")
+require("constants")
 local function vv(x)
     return {
         x = x,
@@ -99,6 +100,12 @@ function EU.patch_rain_damage_inc(level)
     local fireball = E:get_template("power_fireball")
     fireball.bullet.damage_min = fireball.bullet.damage_min + level * friend_buff.rain_damage_inc
     fireball.bullet.damage_max = fireball.bullet.damage_max + level * friend_buff.rain_damage_inc
+    local scorched_water = E:get_template("power_scorched_water")
+    scorched_water.aura.damage_min = scorched_water.aura.damage_min + level * friend_buff.rain_damage_inc * 0.1
+    scorched_water.aura.damage_max = scorched_water.aura.damage_max + level * friend_buff.rain_damage_inc * 0.1
+    local scorched_earth = E:get_template("power_scorched_earth")
+    scorched_earth.aura.damage_min = scorched_earth.aura.damage_min + level * friend_buff.rain_damage_inc * 0.1
+    scorched_earth.aura.damage_max = scorched_earth.aura.damage_max + level * friend_buff.rain_damage_inc * 0.1
 end
 
 function EU.patch_rain_radius_mul(level)
@@ -118,11 +125,24 @@ function EU.patch_rain_cooldown_dec(level)
     controller.cooldown = controller.cooldown - level * friend_buff.rain_cooldown_dec
 end
 
+function EU.patch_rain_scorch_damage_true(level)
+    local scorched_earth = E:get_template("power_scorched_earth")
+    scorched_earth.aura.damage_type = DAMAGE_TRUE
+    scorched_earth.aura.damage_min = scorched_earth.aura.damage_min + level * friend_buff.rain_scorch_damage_true
+    scorched_earth.aura.damage_max = scorched_earth.aura.damage_max +
+        level * friend_buff.rain_scorch_damage_true
+    local scorched_water = E:get_template("power_scorched_water")
+    scorched_water.aura.damage_type = DAMAGE_TRUE
+    scorched_water.aura.damage_min = scorched_water.aura.damage_min + level * friend_buff.rain_scorch_damage_true
+    scorched_water.aura.damage_max = scorched_water.aura.damage_max +
+        level * friend_buff.rain_scorch_damage_true
+end
+
 function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
         return
     end
-    
+
     if key == "health" then
         for _, s in pairs(store.soldiers) do
             if s.health then
@@ -185,6 +205,8 @@ function EU.patch_upgrade_in_game(key, store, endless)
         EU.patch_rain_radius_mul(1)
     elseif key == "rain_cooldown_dec" then
         EU.patch_rain_cooldown_dec(1)
+    elseif key == "rain_scorch_damage_true" then
+        EU.patch_rain_scorch_damage_true(1)
     end
 end
 function EU.patch_upgrades(endless)
@@ -211,6 +233,9 @@ function EU.patch_upgrades(endless)
     end
     if endless.upgrade_levels.rain_cooldown_dec > 0 then
         EU.patch_rain_cooldown_dec(endless.upgrade_levels.rain_cooldown_dec)
+    end
+    if endless.upgrade_levels.rain_scorch_damage_true > 0 then
+        EU.patch_rain_scorch_damage_true(endless.upgrade_levels.rain_scorch_damage_true)
     end
 end
 return EU
