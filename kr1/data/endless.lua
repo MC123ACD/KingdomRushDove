@@ -16,7 +16,7 @@ return {
         s_hero_cooldown_factor = 10,
         archer_bleed = 0.1,
         archer_insight = 0.01,
-        archer_critical = 0.15,
+        archer_critical = 0.15
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -29,5 +29,72 @@ return {
         s_health_damage_factor = 5,
         lives_cost_factor = 1.07,
         s_lives_cost_factor = 7,
+        wave_interval_factor = 0.97
+    },
+    template = {
+        enemy_list = {},
+        total_lives_cost = 0,
+        enemy_health_factor = 1,
+        enemy_damage_factor = 1,
+        enemy_speed_factor = 1,
+        enemy_health_damage_factor = 1,
+        soldier_health_factor = 1,
+        soldier_damage_factor = 1,
+        tower_damage_factor = 1,
+        soldier_cooldown_factor = 1,
+        tower_cooldown_factor = 1,
+        hero_damage_factor = 1,
+        hero_cooldown_factor = 1,
+        interval = 0,
+        available_paths = {},
+        avg_interval = 0,
+        avg_interval_next = 0,
+        extra_cash = 0,
+        std_waves_count = 0,
+        spawn_count_per_wave = 0,
+        lives_cost_per_wave = 0,
+        load_from_history = false,
+        upgrade_levels = {
+            health = 0,
+            soldier_damage = 0,
+            soldier_cooldown = 0,
+            tower_damage = 0,
+            tower_cooldown = 0,
+            hero_damage = 0,
+            hero_cooldown = 0,
+            archer_bleed = 0,
+            archer_multishot = 0,
+            archer_insight = 0,
+            archer_critical = 0
+        },
+        enemy_upgrade_levels = {
+            health = 0,
+            damage = 0,
+            speed = 0,
+            health_damage_factor = 0,
+            lives = 0,
+            wave_interval = 0
+        }
+    },
+    upgrade_max_levels = {
+        health = 15,
+        soldier_damage = 15,
+        soldier_cooldown = 5,
+        tower_damage = 15,
+        tower_cooldown = 5,
+        hero_damage = 15,
+        hero_cooldown = 4,
+        archer_bleed = 5,
+        archer_multishot = 2,
+        archer_insight = 3,
+        archer_critical = 4
+    },
+    enemy_upgrade_max_levels = {
+        health = 45,
+        damage = 45,
+        speed = 25,
+        health_damage_factor = 25,
+        lives = 45,
+        wave_interval = 45
     }
 }

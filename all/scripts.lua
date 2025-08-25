@@ -2343,20 +2343,13 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
                     local b = E:clone_entity(this)
                     b._endless_multishot = 0
 
-                    b.bullet.from = V.vclone(this.bullet.from)
+                    b.bullet.from = V.vclone(this.pos)
 
                     b.bullet.to.x = target.pos.x + target.unit.hit_offset.x
                     b.bullet.to.y = target.pos.y + target.unit.hit_offset.y
                     if b.bullet.predict_target_pos then
                         b.bullet.to.x = b.bullet.to.x + target.motion.speed.x * b.bullet.flight_time
                         b.bullet.to.y = b.bullet.to.y + target.motion.speed.y * b.bullet.flight_time
-                    end
-
-                    if b.bullet.flight_time_factor then
-                        local dist1 = V.dist(b.bullet.to.x, b.bullet.to.y, b.bullet.from.x, b.bullet.from.y)
-                        local dist2 = V.dist(this.bullet.to.x, this.bullet.to.y, this.bullet.from.x, this.bullet.from.y)
-                        b.bullet.flight_time = b.bullet.flight_time_min + dist1 / dist2 *
-                                                   (this.bullet.flight_time - this.bullet.flight_time_min)
                     end
 
                     b.bullet.target_id = target.id

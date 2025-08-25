@@ -3,7 +3,7 @@ local log = require("klua.log"):new("wave_db")
 local km = require("klua.macros")
 local FS = love.filesystem
 local E = require("entity_db")
-
+local EL = require("kr1.data.endless")
 require("constants")
 
 local wave_db = {}
@@ -103,56 +103,26 @@ function wave_db:load(level_name, game_mode, endless)
 
     if endless then
         local storage = require("all.storage")
-        local endless_template = {
-                enemy_list = {},
-                total_lives_cost = 0,
-                enemy_health_factor = 1,
-                enemy_damage_factor = 1,
-                enemy_speed_factor = 1,
-                enemy_health_damage_factor = 1,
-                soldier_health_factor = 1,
-                soldier_damage_factor = 1,
-                tower_damage_factor = 1,
-                soldier_cooldown_factor = 1,
-                tower_cooldown_factor = 1,
-                hero_damage_factor = 1,
-                hero_cooldown_factor = 1,
-                interval = 0,
-                available_paths = {},
-                avg_interval = 0,
-                avg_interval_next = 0,
-                extra_cash = 0,
-                std_waves_count = 0,
-                spawn_count_per_wave = 0,
-                lives_cost_per_wave = 0,
-                load_from_history = false,
-                upgrade_levels = {
-                    health = 0,
-                    soldier_damage = 0,
-                    soldier_cooldown = 0,
-                    tower_damage = 0,
-                    tower_cooldown = 0,
-                    hero_damage = 0,
-                    hero_cooldown = 0,
-                    archer_bleed = 0,
-                    archer_multishot = 0,
-                    archer_insight = 0,
-                    archer_critical = 0
-                }
-            }
+        local endless_template = EL.template
         local endless_history = storage:load_endless(level_name)
         if endless_history then
             wave_db.endless = endless_history
             wave_db.endless.load_from_history = true
-            for k, v in pairs(endless_template) do
-                if wave_db.endless[k] == nil then
+            local function deepcopy(table, base_table)
+                for k, v in pairs(base_table) do
                     if type(v) == "table" then
-                        wave_db.endless[k] = table.deepclone(v)
+                        if table[k] == nil then
+                            table[k] = {}
+                        end
+                        deepcopy(table[k], v)
                     else
-                        wave_db.endless[k] = v
+                        if table[k] == nil then
+                            table[k] = v
+                        end
                     end
                 end
             end
+            deepcopy(endless_history ,endless_template)
         else
             wave_db.endless = endless_template
             local endless = wave_db.endless
@@ -192,6 +162,22 @@ function wave_db:load(level_name, game_mode, endless)
                         end
                     end
                 end
+            end
+        end
+        if not self.endless.enemy_upgrade_options then
+            self.endless.enemy_upgrade_options = table.keys(self.endless.enemy_upgrade_levels)
+        end
+        for k, v in pairs(self.endless.enemy_upgrade_levels) do
+            if v >= EL.enemy_upgrade_max_levels[k] then
+                table.removeobject(self.endless.enemy_upgrade_options, k)
+            end
+        end
+        if not self.endless.upgrade_options then
+            self.endless.upgrade_options = table.keys(self.endless.upgrade_levels)
+        end
+        for k, v in pairs(self.endless.upgrade_levels) do
+            if v >= EL.upgrade_max_levels[k] then
+                table.removeobject(self.endless.upgrade_options, k)
             end
         end
     end
@@ -259,7 +245,7 @@ end
 
 function wave_db:has_group(i)
     if self.is_endless then
-        return i > 0
+        return i <= 200
     else
         return i <= #self.db.groups
     end

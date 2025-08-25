@@ -37,7 +37,8 @@ local LU = require("level_utils")
 local storage = require("storage")
 local G = love.graphics
 local i18n = require("i18n")
-
+local EU = require("endless_utils")
+local EL = require("kr1.data.endless")
 local function ISW(...)
     return i18n.sw(i18n, ...)
 end
@@ -106,31 +107,12 @@ local function next_wave_ready_handler(group)
         if game_gui.game.store.endless.load_from_history then
             game_gui.game.store.endless.load_from_history = false
         else
-            game_gui.endless_select_reward_view:show()
-            local tmp = {"health", "damage", "speed", "health_damage_factor", "lives"}
-            local endless = game_gui.game.store.endless
-            local enemy_buff = require("kr1.data.endless").enemy_buff
-            local key = table.random(tmp)
-            if key == "health" then
-                endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
-            elseif key == "damage" then
-                endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
-            elseif key == "speed" then
-                endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
-            elseif key == "health_damage_factor" then
-                endless.enemy_health_damage_factor = endless.enemy_health_damage_factor *
-                                                         enemy_buff.health_damage_factor
-            elseif key == "lives" then
-                endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-                endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
-                endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor
-                if endless.avg_interval < 0.1 then
-                    endless.avg_interval = 0.1
-                end
+            if #game_gui.game.store.endless.upgrade_options > 0 then
+                game_gui.endless_select_reward_view:show()
             end
-
+            local endless = game_gui.game.store.endless
+            EU.patch_enemy_growth(endless)
         end
-
     end
 end
 
@@ -7835,21 +7817,6 @@ function SelectGroup:add_item(key, initial_value)
     return item
 end
 
--- function SelectGroup:set_value(key, value)
---     if self.items[key] then
---         self.items[key]:set_value(value)
---         self.data[key] = value
---         for k, v in pairs(self.data) do
---             if k ~= key then
---                 self.data[k] = false
---                 if self.items[k] then
---                     self.items[k]:set_value(false)
---                 end
---             end
---         end
---     end
--- end
-
 function SelectGroup:get_value(key)
     return self.data[key]
 end
@@ -7893,8 +7860,9 @@ function SelectPanelView:initialize(sw, sh, title)
     self.back:add_child(header)
 
     -- 创建配置组
-    self.data_group = SelectGroup:new(V.v(400, 300))
-    self.data_group.pos = V.v(self.back.size.x / 2 - 200, 120)
+    local data_group_width = 600
+    self.data_group = SelectGroup:new(V.v(600, 300))
+    self.data_group.pos = V.v((self.back.size.x - data_group_width) / 2, 120)
 
     -- 设置数据改变回调
     self.data_group:set_on_data_change_callback(function(key, value, all_data)
@@ -7956,28 +7924,10 @@ function EndlessSelectRewardView:initialize(sw, sh)
         archer_insight = _("ENDLESS_REWARD_ARCHER_INSIGHT"),
         archer_critical = _("ENDLESS_REWARD_ARCHER_CRITICAL")
     })
-    self.upgrade_options = {"health", "soldier_damage", "soldier_cooldown", "tower_damage", "tower_cooldown", "hero_damage",
-                  "hero_cooldown", "archer_bleed","archer_multishot","archer_insight","archer_critical"}
+    self.upgrade_options = game_gui.game.store.endless.upgrade_options
     self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
 
-    self.upgrade_max_levels = {
-        health = 15,
-        soldier_damage = 15,
-        soldier_cooldown = 5,
-        tower_damage = 15,
-        tower_cooldown = 5,
-        hero_damage = 15,
-        hero_cooldown = 4,
-        archer_bleed = 5,
-        archer_multishot = 2,
-        archer_insight = 3,
-        archer_critical = 4
-    }
-    for k, v in pairs(self.upgrade_levels) do
-        if v >= self.upgrade_max_levels[k] then
-            table.removeobject(self.upgrade_options, k)
-        end
-    end
+    self.upgrade_max_levels = EL.upgrade_max_levels
 end
 
 function EndlessSelectRewardView:load()
@@ -8020,7 +7970,6 @@ function EndlessSelectRewardView:save()
         end
     end
     local script_utils = require("all.script_utils")
-    local EU = require("kr1.endless_utils")
     local store = game_gui.game.store
     local W = store
     if key == "health" then
@@ -8080,12 +8029,17 @@ function EndlessSelectRewardView:save()
         W.endless.hero_cooldown_factor = W.endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
     elseif key == "archer_bleed" then
         EU.patch_archer_bleed(self.upgrade_levels[key])
+        EU.patch_enemy_growth(game_gui.game.store.endless)
     elseif key == "archer_multishot" then
         EU.patch_archer_multishot(self.upgrade_levels[key])
+        EU.patch_enemy_growth(game_gui.game.store.endless)
+        EU.patch_enemy_growth(game_gui.game.store.endless)
     elseif key == "archer_insight" then
         EU.patch_archer_insight(self.upgrade_levels[key])
+        EU.patch_enemy_growth(game_gui.game.store.endless)
     elseif key == "archer_critical" then
         EU.patch_archer_critical(self.upgrade_levels[key])
+        EU.patch_enemy_growth(game_gui.game.store.endless)
     end
 
     game_gui:enable_keys()

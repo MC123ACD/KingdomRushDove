@@ -511,6 +511,8 @@ function sys.wave_spawn:init(store)
             signal.emit("next-wave-ready", group)
 
             if start then
+                -- ...
+                group.group_idx = 1
                 for _, wave in pairs(group.waves) do
                     if wave.notification and wave.notification ~= "" then
                         signal.emit("wave-notification", "view", wave.notification)
