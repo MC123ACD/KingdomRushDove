@@ -7887,9 +7887,10 @@ EndlessSelectRewardView = class("EndlessSelectRewardView", SelectPanelView)
 function EndlessSelectRewardView:initialize(sw, sh)
     SelectPanelView.initialize(self, sw, sh, "选择奖励")
     self:set_key_label_map(EL.key_label_map)
-    self.upgrade_options = game_gui.game.store.endless.upgrade_options
-    self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
-
+    if game_gui.game.store.endless then
+        self.upgrade_options = game_gui.game.store.endless.upgrade_options
+        self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
+    end
     self.upgrade_max_levels = EL.upgrade_max_levels
 end
 
