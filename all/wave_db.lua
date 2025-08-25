@@ -245,7 +245,7 @@ end
 
 function wave_db:has_group(i)
     if self.is_endless then
-        return i <= 200
+        return i <= 100
     else
         return i <= #self.db.groups
     end

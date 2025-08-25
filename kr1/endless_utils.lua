@@ -8,29 +8,37 @@ local enemy_buff = endless_balance.enemy_buff
 local friend_buff = endless_balance.friend_buff
 local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
 function EU.patch_enemy_growth(endless)
-    local key = table.random(endless.enemy_upgrade_options)
-    if key == "health" then
-        endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
-    elseif key == "damage" then
-        endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
-    elseif key == "speed" then
-        endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
-    elseif key == "health_damage_factor" then
-        endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
-    elseif key == "lives" then
-        endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
-        endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor
-        if endless.avg_interval < 0.1 then
-            endless.avg_interval = 0.1
+    for i = 1, 2 do
+        if #endless.enemy_upgrade_options == 0 then
+            break
         end
-    elseif key == "wave_interval" then
-        endless.avg_interval_next = endless.avg_interval_next * enemy_buff.wave_interval_factor
+        local key = table.random(endless.enemy_upgrade_options)
+
+        if key == "health" then
+            endless.enemy_health_factor = endless.enemy_health_factor * enemy_buff.health_factor
+        elseif key == "damage" then
+            endless.enemy_damage_factor = endless.enemy_damage_factor * enemy_buff.damage_factor
+        elseif key == "speed" then
+            endless.enemy_speed_factor = endless.enemy_speed_factor * enemy_buff.speed_factor
+        elseif key == "health_damage_factor" then
+            endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
+        elseif key == "lives" then
+            endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
+            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+            endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor
+            if endless.avg_interval < 0.1 then
+                endless.avg_interval = 0.1
+            end
+        elseif key == "wave_interval" then
+            endless.avg_interval_next = endless.avg_interval_next * enemy_buff.wave_interval_factor
+        end
+        endless.enemy_upgrade_levels[key] = endless.enemy_upgrade_levels[key] + 1
+        if endless.enemy_upgrade_levels[key] >= enemy_upgrade_max_levels[key] then
+            table.removeobject(endless.enemy_upgrade_options, key)
+        end
+
     end
-    endless.enemy_upgrade_levels[key] = endless.enemy_upgrade_levels[key] + 1
-    if endless.enemy_upgrade_levels[key] >= enemy_upgrade_max_levels[key] then
-        table.removeobject(endless.enemy_upgrade_options, key)
-    end
+
 end
 
 function EU.patch_archer_bleed(level)

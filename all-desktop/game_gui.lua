@@ -7708,7 +7708,7 @@ function SelectItem:initialize(key_text, size)
     self.on_change_callback = nil
 
     -- 键名标签
-    self.key_label = GGLabel:new(V.v(self.size.x - 80, self.size.y))
+    self.key_label = GGLabel:new(V.v(self.size.x, self.size.y))
     self.key_label.pos = V.v(10, 0)
     self.key_label.font_name = "body"
     self.key_label.font_size = 16
@@ -7860,8 +7860,8 @@ function SelectPanelView:initialize(sw, sh, title)
     self.back:add_child(header)
 
     -- 创建配置组
-    local data_group_width = 600
-    self.data_group = SelectGroup:new(V.v(600, 300))
+    local data_group_width = 400
+    self.data_group = SelectGroup:new(V.v(data_group_width, 300))
     self.data_group.pos = V.v((self.back.size.x - data_group_width) / 2, 120)
 
     -- 设置数据改变回调
