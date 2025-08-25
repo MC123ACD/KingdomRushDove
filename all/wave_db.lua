@@ -105,7 +105,7 @@ function wave_db:load(level_name, game_mode, endless)
         local storage = require("all.storage")
         local endless_template = EL.template
         local endless_history = storage:load_endless(level_name)
-        if endless_history then
+        if endless_history and endless_history.lives > 0 then
             wave_db.endless = endless_history
             wave_db.endless.load_from_history = true
             local function deepcopy(table, base_table)
@@ -122,9 +122,9 @@ function wave_db:load(level_name, game_mode, endless)
                     end
                 end
             end
-            deepcopy(endless_history ,endless_template)
+            deepcopy(endless_history , endless_template)
         else
-            wave_db.endless = endless_template
+            wave_db.endless = table.deepclone(endless_template)
             local endless = wave_db.endless
             local group = wave_db:group(#wave_db:groups() - 1 >= 1 and #wave_db:groups() - 1 or 1)
             local waves = group.waves
