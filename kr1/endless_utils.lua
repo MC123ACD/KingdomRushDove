@@ -122,7 +122,7 @@ function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
         return
     end
-    local gold_bought = #endless.upgrade_options <= 0
+    
     if key == "health" then
         for _, s in pairs(store.soldiers) do
             if s.health then
@@ -171,24 +171,12 @@ function EU.patch_upgrade_in_game(key, store, endless)
         endless.hero_cooldown_factor = endless.hero_cooldown_factor * friend_buff.hero_cooldown_factor
     elseif key == "archer_bleed" then
         EU.patch_archer_bleed(endless.upgrade_levels[key])
-        if not gold_bought then
-            EU.patch_enemy_growth(endless)
-        end
     elseif key == "archer_multishot" then
         EU.patch_archer_multishot(endless.upgrade_levels[key])
-        if not gold_bought then
-            EU.patch_enemy_growth(endless)
-        end
     elseif key == "archer_insight" then
         EU.patch_archer_insight(endless.upgrade_levels[key])
-        if not gold_bought then
-            EU.patch_enemy_growth(endless)
-        end
     elseif key == "archer_critical" then
         EU.patch_archer_critical(endless.upgrade_levels[key])
-        if not gold_bought then
-            EU.patch_enemy_growth(endless)
-        end
     elseif key == "rain_count_inc" then
         EU.patch_rain_count_inc(1)
     elseif key == "rain_damage_inc" then

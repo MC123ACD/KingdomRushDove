@@ -1,6 +1,6 @@
 local i18n = require("i18n")
 
-return {
+local endless = {
     friend_buff = {
         health_factor = 1.15,
         s_health_factor = 15,
@@ -17,7 +17,7 @@ return {
         hero_cooldown_factor = 0.9,
         s_hero_cooldown_factor = 10,
         archer_bleed = 0.1,
-        archer_insight = 0.012,
+        archer_insight = 0.01,
         archer_critical = 0.1,
         rain_count_inc = 2,
         rain_damage_inc = 60,
@@ -120,21 +120,24 @@ return {
         "rain_damage_inc",
     },
     gold_extra_cost = 10000,
-    key_label_map = {
-        health = _("ENDLESS_REWARD_HEALTH"),
-        soldier_damage = _("ENDLESS_REWARD_SOLDIER_DAMAGE"),
-        soldier_cooldown = _("ENDLESS_REWARD_SOLDIER_COOLDOWN"),
-        tower_damage = _("ENDLESS_REWARD_TOWER_DAMAGE"),
-        tower_cooldown = _("ENDLESS_REWARD_TOWER_COOLDOWN"),
-        hero_damage = _("ENDLESS_REWARD_HERO_DAMAGE"),
-        hero_cooldown = _("ENDLESS_REWARD_HERO_COOLDOWN"),
-        archer_bleed = _("ENDLESS_REWARD_ARCHER_BLEED"),
-        archer_multishot = _("ENDLESS_REWARD_ARCHER_MULTISHOT"),
-        archer_insight = _("ENDLESS_REWARD_ARCHER_INSIGHT"),
-        archer_critical = _("ENDLESS_REWARD_ARCHER_CRITICAL"),
-        rain_count_inc = _("ENDLESS_REWARD_RAIN_COUNT_INC"),
-        rain_damage_inc = _("ENDLESS_REWARD_RAIN_DAMAGE_INC"),
-        rain_radius_mul = _("ENDLESS_REWARD_RAIN_RADIUS_MUL"),
-        rain_cooldown_dec = _("ENDLESS_REWARD_RAIN_COOLDOWN_DEC")
-    }
 }
+local key_label_map = {
+    health = string.format("友方单位生命值提升%d%%", endless.friend_buff.s_health_factor),
+    soldier_damage = string.format("友方士兵伤害提升%d%%", endless.friend_buff.s_soldier_damage_factor),
+    soldier_cooldown = string.format("友方士兵攻速提升%d%%", endless.friend_buff.s_soldier_cooldown_factor),
+    tower_damage = string.format("防御塔伤害增加%d%%", endless.friend_buff.s_tower_damage_factor),
+    tower_cooldown = string.format("防御塔攻速提升%d%%", endless.friend_buff.s_tower_cooldown_factor),
+    hero_damage = string.format("英雄伤害提升%d%%", endless.friend_buff.s_hero_damage_factor),
+    hero_cooldown = string.format("英雄攻速提升%d%%", endless.friend_buff.s_hero_cooldown_factor),
+    archer_bleed = string.format("弓箭塔的流血伤害提升%d%%", endless.friend_buff.archer_bleed * 1000),
+    archer_multishot = string.format("弓箭塔普攻额外发射一支箭矢"),
+    archer_insight = string.format("弓箭命中敌人额外提升敌人易伤%d%%",
+        endless.friend_buff.archer_insight * 100),
+    archer_critical = string.format("提升弓箭的暴击率%d%%", endless.friend_buff.archer_critical * 100),
+    rain_count_inc = string.format("火雨数量提升%d颗", endless.friend_buff.rain_count_inc),
+    rain_damage_inc = string.format("火雨伤害提升%d", endless.friend_buff.rain_damage_inc),
+    rain_radius_mul = string.format("火雨范围提升%d%%", (endless.friend_buff.rain_radius_mul - 1) * 100),
+    rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec)
+}
+endless.key_label_map = key_label_map
+return endless

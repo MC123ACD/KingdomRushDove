@@ -109,9 +109,8 @@ local function next_wave_ready_handler(group)
         else
             if #game_gui.game.store.endless.upgrade_options > 0 then
                 game_gui.endless_select_reward_view:show()
-            elseif game_gui.game.store.player_gold > EL.gold_extra_cost then
-                game_gui.endless_select_reward_view:show()
             end
+
             local endless = game_gui.game.store.endless
             EU.patch_enemy_growth(endless)
         end
@@ -416,40 +415,6 @@ function game_gui:init(w, h, game)
     self.key_shortcuts = storage:load_keyset()
 
     self.pause_on_switch = settings.pause_on_switch
-    -- self.key_shortcuts = {}
-    -- self.key_shortcuts.pow_1 = settings.key_pow_1 or KEYPRESS_1
-    -- self.key_shortcuts.pow_2 = settings.key_pow_2 or KEYPRESS_2
-    -- self.key_shortcuts.pow_3 = settings.key_pow_3 or KEYPRESS_3
-    -- self.key_shortcuts.hero_1 = KEYPRESS_A
-    -- self.key_shortcuts.hero_2 = KEYPRESS_D
-    -- self.key_shortcuts.hero_3 = KEYPRESS_S
-    -- self.key_shortcuts.hero_4 = KEYPRESS_Q
-    -- self.key_shortcuts.hero_5 = KEYPRESS_R
-    -- self.key_shortcuts.reinforce = KEYPRESS_F
-    -- self.key_shortcuts.bag = settings.key_wave or KEYPRESS_Q
-    -- self.key_shortcuts.next_wave = settings.key_wave or KEYPRESS_W
-    -- self.key_shortcuts.slow = KEYPRESS_4
-    -- self.key_shortcuts.quick = KEYPRESS_5
-
-    -- if IS_KR1 or IS_KR2 then
-    --     self.key_shortcuts.item_coins = settings.key_item_coins or KEYPRESS_F1
-    --     self.key_shortcuts.item_hearts = settings.key_item_hearts or KEYPRESS_F2
-    --     self.key_shortcuts.item_freeze = settings.key_item_freeze or KEYPRESS_F3
-    --     self.key_shortcuts.item_dynamite = settings.key_item_dynamite or KEYPRESS_F4
-    --     self.key_shortcuts.item_atomic_freeze = settings.key_item_atomic_freeze or KEYPRESS_F5
-    --     self.key_shortcuts.item_atomic_bomb = settings.key_item_atomic_bomb or KEYPRESS_F6
-    --     self.key_shortcuts.all_items = {
-    --         [self.key_shortcuts.item_coins] = "coins",
-    --         [self.key_shortcuts.item_hearts] = "hearts",
-    --         [self.key_shortcuts.item_freeze] = "freeze",
-    --         [self.key_shortcuts.item_dynamite] = "dynamite",
-    --         [self.key_shortcuts.item_atomic_freeze] = "atomic_freeze",
-    --         [self.key_shortcuts.item_atomic_bomb] = "atomic_bomb"
-    --     }
-    -- else
-    --     log.error("TODO: add KR3 items shortcuts")
-    -- end
-
     local window = KWindow:new(V.v(sw, sh))
 
     self.window = window
@@ -1097,6 +1062,9 @@ function game_gui:keypressed(key, isrepeat)
         else
             self.criketmenu:hide()
         end
+    elseif table.contains(ks.endless_shop, key) and self.game.store.level_mode_override == GAME_MODE_ENDLESS and self.game.store.player_gold >= EL.gold_extra_cost then
+        self.game.store.player_gold = self.game.store.player_gold - EL.gold_extra_cost
+        game_gui.endless_select_reward_view:show(true)
         -- elseif self.is_premium and self.bag_button and not self.bag_button:is_disabled() and
         --     table.contains(table.keys(ks.all_items), key) then
         --     local bb = self.bag_button
@@ -7854,7 +7822,7 @@ function SelectPanelView:initialize(sw, sh, title)
     self.back.pos = v(sw / 2, sh / 2 - 50)
     self.header = title
     self:add_child(self.back)
-
+    self.extra = false
     self.back.alpha = 1
     -- 添加标题
     local header = GGPanelHeader:new(self.header, 242)
@@ -7901,7 +7869,12 @@ function SelectPanelView:save()
     log.error("SelectPanelView:save not implemented")
 end
 
-function SelectPanelView:show()
+function SelectPanelView:show(extra)
+    if extra then
+        self.extra = true
+    else
+        self.extra = false
+    end
     self:load()
     SelectPanelView.super.show(self)
 end
@@ -7921,10 +7894,10 @@ function EndlessSelectRewardView:initialize(sw, sh)
 end
 
 function EndlessSelectRewardView:load()
-    -- 随机选择两个
+    -- 随机选择
     local selected = {}
 
-    if #self.upgrade_options <= 0 then
+    if self.extra then
         local count = 0
         while count < 2 do
             local choice = table.random(EL.gold_extra_upgrade)
@@ -7936,7 +7909,8 @@ function EndlessSelectRewardView:load()
         end
     else
         local count = 0 -- 手动计数
-        while count < 2 do
+        local max_count = math.min(3, #self.upgrade_options) -- 最大选择数量
+        while count < max_count do
             local choice = self.upgrade_options[math.random(1, #self.upgrade_options)]
             if selected[choice] == nil then
                 selected[choice] = false
@@ -7946,11 +7920,7 @@ function EndlessSelectRewardView:load()
                     table.removeobject(self.upgrade_options, choice)
                 end
             end
-            if #self.upgrade_options <= 1 then
-                break
-            end
         end
-
     end
 
     self.data_group:set_all_data(selected)
@@ -7964,7 +7934,6 @@ function EndlessSelectRewardView:load()
 end
 
 function EndlessSelectRewardView:save()
-    local friend_buff = require("kr1.data.endless").friend_buff
     local key
     for k, v in pairs(self.data_group:get_all_data()) do
         if v then
@@ -7972,14 +7941,10 @@ function EndlessSelectRewardView:save()
             break
         end
     end
-    local gold_bought = #self.upgrade_options <= 0
-    if gold_bought and key then
-        game_gui.game.store.player_gold = game_gui.game.store.player_gold - EL.gold_extra_cost
-    end
 
     local store = game_gui.game.store
 
-    EL.patch_upgrade_in_game(key, store, store.endless)
+    EU.patch_upgrade_in_game(key, store, store.endless)
     game_gui:enable_keys()
     S:resume()
     game_gui.game.store.paused = false

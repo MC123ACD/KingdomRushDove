@@ -122,7 +122,7 @@ function wave_db:load(level_name, game_mode, endless)
                     end
                 end
             end
-            deepcopy(endless_history , endless_template)
+            deepcopy(endless_history, endless_template)
         else
             wave_db.endless = table.deepclone(endless_template)
             local endless = wave_db.endless
@@ -164,17 +164,17 @@ function wave_db:load(level_name, game_mode, endless)
                 end
             end
         end
-        if not self.endless.enemy_upgrade_options then
-            self.endless.enemy_upgrade_options = table.keys(self.endless.enemy_upgrade_levels)
-        end
+
+        self.endless.enemy_upgrade_options = table.keys(self.endless.enemy_upgrade_levels)
+
         for k, v in pairs(self.endless.enemy_upgrade_levels) do
             if v >= EL.enemy_upgrade_max_levels[k] then
                 table.removeobject(self.endless.enemy_upgrade_options, k)
             end
         end
-        if not self.endless.upgrade_options then
-            self.endless.upgrade_options = table.keys(self.endless.upgrade_levels)
-        end
+
+        self.endless.upgrade_options = table.keys(self.endless.upgrade_levels)
+
         for k, v in pairs(self.endless.upgrade_levels) do
             if v >= EL.upgrade_max_levels[k] then
                 table.removeobject(self.endless.upgrade_options, k)

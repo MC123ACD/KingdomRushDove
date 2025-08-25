@@ -628,47 +628,6 @@ function sys.wave_spawn:force_next_wave(store)
     end
 end
 
-function sys.wave_spawn:on_insert(entity, store)
-    if store.level_mode_override == GAME_MODE_ENDLESS then
-        if not entity._endless_strengthened then
-            entity._endless_strengthened = true
-            if entity.enemy then
-                if entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
-                    entity.health.hp = entity.health.hp_max
-                    entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
-                end
-                if entity.unit.damage_factor then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor
-                end
-                if entity.motion.max_speed then
-                    entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
-                end
-            elseif entity.soldier then
-                if entity.health and entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)
-                    entity.health.hp = entity.health.hp_max
-                    -- entity.health.damage_factor = entity.health.damage_factor * store.endless.soldier_health_damage_factor
-                end
-                if entity.unit then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.soldier_damage_factor
-                end
-                if entity.cooldown_factor then
-                    entity.cooldown_factor = entity.cooldown_factor * store.endless.soldier_cooldown_factor
-                end
-                if entity.hero then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
-                    entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
-                end
-            elseif entity.tower then
-                entity.tower.damage_factor = entity.tower.damage_factor * store.endless.tower_damage_factor
-                entity.tower.cooldown_factor = entity.tower.cooldown_factor * store.endless.tower_cooldown_factor
-            end
-        end
-    end
-    return true
-end
-
 function sys.wave_spawn:on_update(dt, ts, store)
     sys.wave_spawn:force_next_wave(store)
 
@@ -2786,6 +2745,48 @@ if performance_monitor_enabled then
         perf.save_report(store)
     end
 
+end
+
+sys.endless_patch = {}
+sys.endless_patch.name = "endless_patch"
+function sys.endless_patch:on_insert(entity, store)
+    if store.level_mode_override == GAME_MODE_ENDLESS then
+        if not entity._endless_strengthened then
+            entity._endless_strengthened = true
+            if entity.enemy then
+                if entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
+                    entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
+                end
+                if entity.unit.damage_factor then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor
+                end
+                if entity.motion.max_speed then
+                    entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
+                end
+            elseif entity.soldier then
+                if entity.health and entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)
+                    entity.health.hp = entity.health.hp_max
+                    -- entity.health.damage_factor = entity.health.damage_factor * store.endless.soldier_health_damage_factor
+                end
+                if entity.unit then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.soldier_damage_factor
+                end
+                if entity.cooldown_factor then
+                    entity.cooldown_factor = entity.cooldown_factor * store.endless.soldier_cooldown_factor
+                end
+                if entity.hero then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
+                    entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
+                end
+            elseif entity.tower then
+                entity.tower.damage_factor = entity.tower.damage_factor * store.endless.tower_damage_factor
+                entity.tower.cooldown_factor = entity.tower.cooldown_factor * store.endless.tower_cooldown_factor
+            end
+        end
+    end
+    return true
 end
 
 return sys
