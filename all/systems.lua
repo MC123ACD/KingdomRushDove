@@ -2764,6 +2764,7 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.motion.max_speed then
                     entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
                 end
+                entity.gold = math.ceil(entity.gold * store.endless.enemy_gold_factor)
             elseif entity.soldier then
                 if entity.health and entity.health.hp_max then
                     entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)

@@ -31751,6 +31751,63 @@ function scripts.mod_cricet_faster.remove(this, store)
     return true
 end
 
+scripts.endless_barrack_synergy_aura = {}
+
+function scripts.endless_barrack_synergy_aura.insert(this, store, script)
+    local source = store.entities[this.aura.source_id]
+    if not source then
+        return false
+    end
+    this.aura.ts = store.tick_ts
+    this.pos = source.pos
+    return true
+end
+
+function scripts.endless_barrack_synergy_aura.update(this, store, script)
+    local last_hit_ts = store.tick_ts - this.aura.cycle_time
+    while true do
+        if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
+            local towers = U.find_towers_in_range(store.towers, this.pos, {min_range = 0, max_range = this.aura.radius})
+            if towers then
+                for _, t in pairs(towers) do
+                    local m = E:create_entity(this.aura.mod)
+                    m.modifier.target_id = t.id
+                    m.modifier.source_id = this.id
+                    m.template_name = m.template_name .. tostring(this.id)
+                    queue_insert(store. m)
+                end
+            end
+        end
+        coroutine.yield()
+    end
+end
+
+scripts.mod_endless_barrack_synergy = {}
+function scripts.mod_endless_barrack_synergy.insert(this, store, script)
+    local target = store.entities[this.modifier.target_id]
+    if not target then
+        return false
+    end
+    SU.insert_tower_damage_factor_buff(target, this.extra_damage)
+    this.modifier.ts = store.tick_ts
+    return true
+end
+
+function scripts.mod_endless_barrack_synergy.update(this, store, script)
+    while this.modifier.ts + this.modifier.duration > store.tick_ts do
+        coroutine.yield()
+    end
+    queue_remove(store, this)
+    return
+end
+
+function scripts.mod_endless_barrack_synergy.remove(this, store)
+    local target = store.entities[this.modifier.target_id]
+    if target then
+        SU.remove_tower_damage_factor_buff(target, this.extra_damage)
+    end
+    return true
+end
 return scripts
 
 

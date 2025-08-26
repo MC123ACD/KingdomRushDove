@@ -9950,3 +9950,17 @@ tt.main_script.remove = scripts.mod_cricet_faster.remove
 
 tt.modifier.speed_factor = 1.3
 tt.modifier.duration = -1
+
+tt = RT("endless_barrack_synergy_aura", "aura")
+tt.aura.mod = "mod_endless_barrack_synergy"
+tt.aura.radius = 180
+tt.aura.cycle_time = 1
+tt.main_script.insert = scripts.endless_barrack_synergy_aura.insert
+tt.main_script.update = scripts.endless_barrack_synergy_aura.update
+
+tt = RT("mod_endless_barrack_synergy", "modifier")
+tt.extra_damage = nil
+tt.modifier.duration = 4
+tt.main_script.insert = scripts.mod_endless_barrack_synergy.insert
+tt.main_script.update = scripts.mod_endless_barrack_synergy.update
+tt.main_script.remove = scripts.mod_endless_barrack_synergy.remove

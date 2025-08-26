@@ -106,7 +106,7 @@ function wave_db:load(level_name, game_mode, endless)
         local storage = require("storage")
         local endless_template = EL.template
         local endless_history = storage:load_endless(level_name)
-        if endless_history and endless_history.lives > 0 then
+        if endless_history and (endless_history.lives > 0) then
             wave_db.endless = endless_history
             wave_db.endless.load_from_history = true
             local function deepcopy(table, base_table)

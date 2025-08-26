@@ -23,7 +23,12 @@ local endless = {
         rain_damage_inc = 60,
         rain_radius_mul = 1.25,
         rain_cooldown_dec = 10,
-        rain_scorch_damage_true = 15
+        rain_scorch_damage_true = 15,
+        more_gold = 0.15,
+        barrack_unity_lifetime = 2,
+        barrack_unity_count = 1,
+        barrack_luck = 0.1,
+        barrack_synergy = 0.01
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -45,6 +50,7 @@ local endless = {
         enemy_damage_factor = 1,
         enemy_speed_factor = 1,
         enemy_health_damage_factor = 1,
+        enemy_gold_factor = 1,
         soldier_health_factor = 1,
         soldier_damage_factor = 1,
         tower_damage_factor = 1,
@@ -77,7 +83,8 @@ local endless = {
             rain_damage_inc = 0,
             rain_radius_mul = 0,
             rain_cooldown_dec = 0,
-            rain_scorch_damage_true = 0
+            rain_scorch_damage_true = 0,
+            more_gold = 0
         },
         enemy_upgrade_levels = {
             health = 0,
@@ -89,12 +96,12 @@ local endless = {
         }
     },
     upgrade_max_levels = {
-        health = 20,
-        soldier_damage = 15,
+        health = 25,
+        soldier_damage = 25,
         soldier_cooldown = 5,
-        tower_damage = 15,
+        tower_damage = 25,
         tower_cooldown = 5,
-        hero_damage = 20,
+        hero_damage = 25,
         hero_cooldown = 4,
         archer_bleed = 5,
         archer_multishot = 2,
@@ -104,7 +111,12 @@ local endless = {
         rain_damage_inc = 5,
         rain_radius_mul = 1,
         rain_cooldown_dec = 2,
-        rain_scorch_damage_true = 1
+        rain_scorch_damage_true = 1,
+        more_gold = 1,
+        barrack_rally = 1,
+        barrack_unity = 1,
+        barrack_luck = 3,
+        barrack_synergy = 5
     },
     enemy_upgrade_max_levels = {
         health = 55,
@@ -114,17 +126,36 @@ local endless = {
         lives = 45,
         wave_interval = 45
     },
-    gold_extra_upgrade = {
-        "archer_bleed",
-        "archer_multishot",
-        "archer_insight",
-        "archer_critical",
-        "rain_count_inc",
-        "rain_damage_inc",
-    },
-    gold_extra_cost = 10000,
+    gold_extra_upgrade = {"archer_bleed", "archer_multishot", "archer_insight", "archer_critical", "rain_count_inc",
+                          "rain_damage_inc", "more_gold", "barrack_synergy"},
+    gold_extra_cost = 10000
 }
+
 local key_label_map = {
+    health = "体魄",
+    soldier_damage = "力量",
+    soldier_cooldown = "训练有素",
+    tower_damage = "火力提升",
+    tower_cooldown = "快速装填",
+    hero_damage = "英雄之力",
+    hero_cooldown = "英雄熟练",
+    archer_bleed = "流血专精",
+    archer_multishot = "多重射击",
+    archer_insight = "洞察",
+    archer_critical = "致命一击",
+    rain_count_inc = "火雨增多",
+    rain_damage_inc = "猛烈灾劫",
+    rain_radius_mul = "巨星陨落",
+    rain_cooldown_dec = "狂热节奏",
+    rain_scorch_damage_true = "末日焦土",
+    more_gold = "点石成金",
+    barrack_rally = "战术调集",
+    barrack_unity = "众志成城",
+    barrack_luck = "死神对弈",
+    barrack_synergy = "战术协同"
+}
+
+local key_desc_map = {
     health = string.format("友方单位生命值提升%d%%", endless.friend_buff.s_health_factor),
     soldier_damage = string.format("友方士兵伤害提升%d%%", endless.friend_buff.s_soldier_damage_factor),
     soldier_cooldown = string.format("友方士兵攻速提升%d%%", endless.friend_buff.s_soldier_cooldown_factor),
@@ -141,7 +172,18 @@ local key_label_map = {
     rain_damage_inc = string.format("火雨伤害提升%d", endless.friend_buff.rain_damage_inc),
     rain_radius_mul = string.format("火雨范围提升%d%%", (endless.friend_buff.rain_radius_mul - 1) * 100),
     rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec),
-    rain_scorch_damage_true = string.format("焦土伤害提升%d点，且造成真实伤害", endless.friend_buff.rain_scorch_damage_true)
+    rain_scorch_damage_true = string.format("焦土伤害提升%d点，且造成真实伤害",
+        endless.friend_buff.rain_scorch_damage_true),
+    more_gold = string.format("提升金币收益%d%%", endless.friend_buff.more_gold * 100),
+    barrack_rally = "取消兵营的调集范围限制",
+    barrack_unity = string.format("士兵复活速度加快%d秒，且兵营士兵容量+%d",
+        endless.friend_buff.barrack_unity_lifetime, endless.friend_buff.barrack_unity_count),
+    barrack_luck = string.format("士兵在受到攻击时有额外%d概率闪避伤害",
+        endless.friend_buff.barrack_luck * 100),
+    barrack_synergy = string.format("每一个士兵为周围的防御塔提供%d%%伤害加成",
+        endless.friend_buff.barrack_synergy * 100)
 }
 endless.key_label_map = key_label_map
+endless.key_desc_map = key_desc_map
+
 return endless

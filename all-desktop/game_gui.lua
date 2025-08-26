@@ -7671,51 +7671,72 @@ end
 SelectItem = class("SelectItem", KButton)
 
 function SelectItem:initialize(key_text, size)
-    size = size or V.v(300, 40)
-    KButton.initialize(self, size) -- 改为 KButton.initialize
+    size = size or V.v(400, 60) -- 增加高度以容纳两行文本
+    KButton.initialize(self, size)
 
     self.key = key_text
     self.on_change_callback = nil
 
-    -- 键名标签
-    self.key_label = GGLabel:new(V.v(self.size.x, self.size.y))
-    self.key_label.pos = V.v(10, 0)
-    self.key_label.font_name = "body"
-    self.key_label.font_size = 16
-    self.key_label.text = key_text
-    self.key_label.text_align = "left"
-    self.key_label.vertical_align = "middle"
-    self.key_label.colors.text = {200, 200, 200, 255}
-    self.key_label.colors.text_default = {200, 200, 200, 255}
-    self.key_label.colors.text_hover = {255, 255, 255, 255}
-    self.key_label.propagate_on_click = true
+    -- 标题标签（原来的key_label改为title_label）
+    self.title_label = GGLabel:new(V.v(self.size.x - 20, 20))
+    self.title_label.pos = V.v(15, 8)
+    self.title_label.font_name = "body"
+    self.title_label.font_size = 16
+    self.title_label.text = key_text -- 直接使用key_text作为标题
+    self.title_label.text_align = "left"
+    self.title_label.vertical_align = "top"
+    self.title_label.colors.text = {255, 255, 255, 255}
+    self.title_label.colors.text_default = {255, 255, 255, 255}
+    self.title_label.colors.text_hover = {255, 255, 100, 255}
+    self.title_label.propagate_on_click = true
 
-    self:add_child(self.key_label)
+    -- 描述标签（新增）
+    self.desc_label = GGLabel:new(V.v(self.size.x - 20, 20))
+    self.desc_label.pos = V.v(15, 32)
+    self.desc_label.font_name = "body"
+    self.desc_label.font_size = 12
+    self.desc_label.text = "" -- 描述文本稍后通过映射设置
+    self.desc_label.text_align = "left"
+    self.desc_label.vertical_align = "top"
+    self.desc_label.colors.text = {180, 180, 180, 255}
+    self.desc_label.colors.text_default = {180, 180, 180, 255}
+    self.desc_label.colors.text_hover = {220, 220, 220, 255}
+    self.desc_label.propagate_on_click = true
+
+    self:add_child(self.title_label)
+    self:add_child(self.desc_label)
+
     -- 设置初始状态
     self.value = false
     self:update_display()
 end
 
+function SelectItem:set_description(desc_text)
+    self.desc_label.text = desc_text or ""
+end
+
 function SelectItem:update_display()
     if self.value then
-        self.colors.background = {30, 30, 30, 150}
-        self.key_label.colors.text = self.key_label.colors.text_hover
+        self.colors.background = {40, 40, 40, 200}
+        self.title_label.colors.text = self.title_label.colors.text_hover
+        self.desc_label.colors.text = self.desc_label.colors.text_hover
     else
         self.colors.background = {0, 0, 0, 0}
-        self.key_label.colors.text = self.key_label.colors.text_default
+        self.title_label.colors.text = self.title_label.colors.text_default
+        self.desc_label.colors.text = self.desc_label.colors.text_default
     end
 end
 
 function SelectItem:on_enter()
-    -- 悬浮高亮效果
-    self.colors.background = {50, 50, 50, 100}
-    self.key_label.colors.text = self.key_label.colors.text_hover
+    self.colors.background = {60, 60, 60, 150}
+    self.title_label.colors.text = self.title_label.colors.text_hover
+    self.desc_label.colors.text = self.desc_label.colors.text_hover
 end
 
 function SelectItem:on_exit()
-    -- 取消高亮效果
     self.colors.background = {0, 0, 0, 0}
-    self.key_label.colors.text = self.key_label.colors.text_default
+    self.title_label.colors.text = self.title_label.colors.text_default
+    self.desc_label.colors.text = self.desc_label.colors.text_default
     self:update_display()
 end
 
@@ -7746,8 +7767,8 @@ function SelectGroup:initialize(size)
     KView.initialize(self, size)
     self.key_label_map = {}
     self.items = {}
-    self.item_height = 45
-    self.padding = V.v(10, 10) -- 修正：使用向量表示水平和垂直内边距
+    self.item_height = 55
+    self.padding = V.v(10, 5) -- 修正：使用向量表示水平和垂直内边距
     self.data = {}
 end
 
@@ -7763,11 +7784,16 @@ function SelectGroup:add_item(key, initial_value)
 
     local item_y = self.padding.y + item_count * self.item_height
 
-    local item =
-        SelectItem:new(self.key_label_map[key] or key, initial_value, V.v(self.size.x - 2 * self.padding.x, 40))
+    local display_text = self.key_label_map[key] or key
+    local item = SelectItem:new(display_text, V.v(self.size.x - 2 * self.padding.x, 60))
+
+    -- 设置描述文本
+    if self.key_desc_map and self.key_desc_map[key] then
+        item:set_description(self.key_desc_map[key])
+    end
+
     item.pos = V.v(self.padding.x, item_y)
     item.on_change_callback = function(label, value)
-        local key = table.keyforobject(self.key_label_map, label) or label
         self.data[key] = value
         for k, v in pairs(self.data) do
             if k ~= key then
@@ -7780,11 +7806,14 @@ function SelectGroup:add_item(key, initial_value)
     end
 
     self:add_child(item)
-
     self.items[key] = item
     self.data[key] = initial_value
 
     return item
+end
+
+function SelectGroup:set_key_desc_map(map)
+    self.key_desc_map = map
 end
 
 function SelectGroup:get_value(key)
@@ -7861,6 +7890,11 @@ end
 function SelectPanelView:set_key_label_map(map)
     self.data_group:set_key_label_map(map)
 end
+
+function SelectPanelView:set_key_desc_map(map)
+    self.data_group:set_key_desc_map(map)
+end
+
 function SelectPanelView:load()
     log.error("SelectPanelView:load not implemented")
 end
@@ -7884,9 +7918,11 @@ function SelectPanelView:hide()
 end
 
 EndlessSelectRewardView = class("EndlessSelectRewardView", SelectPanelView)
+
 function EndlessSelectRewardView:initialize(sw, sh)
     SelectPanelView.initialize(self, sw, sh, "选择奖励")
     self:set_key_label_map(EL.key_label_map)
+    self:set_key_desc_map(EL.key_desc_map)
     if game_gui.game.store.endless then
         self.upgrade_options = game_gui.game.store.endless.upgrade_options
         self.upgrade_levels = game_gui.game.store.endless.upgrade_levels

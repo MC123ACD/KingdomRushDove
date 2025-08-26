@@ -1,20 +1,29 @@
 local E = require("entity_db")
+require("constants")
 local UP = require("kr1.upgrades")
 local U = require("all.utils")
-local EU = {}
 local scripts = require("all.scripts")
 local endless_balance = require("kr1.data.endless")
 local enemy_buff = endless_balance.enemy_buff
 local friend_buff = endless_balance.friend_buff
 local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
 local SU = require("script_utils")
-require("constants")
+local simulation = require("simulation")
+local function queue_insert(store, e)
+    simulation:queue_insert_entity(e)
+end
+local function queue_remove(store, e)
+    simulation:queue_remove_entity(e)
+end
 local function vv(x)
     return {
         x = x,
         y = x
     }
 end
+
+local EU = {}
+
 function EU.generate_group(endless)
     local group = {}
 
@@ -84,6 +93,7 @@ function EU.patch_enemy_growth(endless)
             if endless.avg_interval < 0.1 then
                 endless.avg_interval = 0.1
             end
+            endless.enemy_gold_factor = endless.enemy_gold_factor - 0.01
         elseif key == "wave_interval" then
             endless.avg_interval_next = endless.avg_interval_next * enemy_buff.wave_interval_factor
         end
@@ -182,6 +192,54 @@ function EU.patch_rain_scorch_damage_true(level)
     scorched_water.aura.damage_min = scorched_water.aura.damage_min + level * friend_buff.rain_scorch_damage_true
     scorched_water.aura.damage_max = scorched_water.aura.damage_max + level * friend_buff.rain_scorch_damage_true
 end
+function EU.patch_barrack_luck(level)
+    for _, name in pairs(UP:barrack_soldiers()) do
+        local s = E:get_template(name)
+        if not s._endless_barrack_luck then
+            s.health.on_damage = U.function_append(s.health.on_damage, function(this, store, damage)
+                return math.random() > this._endless_barrack_luck
+            end)
+        end
+        s._endless_barrack_luck = level * friend_buff.barrack_luck
+    end
+end
+
+function EU.patch_barrack_unity(level)
+    for _, name in pairs(UP:towers_with_barrack()) do
+        local t = E:get_template(name)
+        t.barrack.max_soldiers = t.barrack.max_soldiers + level * friend_buff.barrack_unity_count
+    end
+    for _, name in pairs(UP:barrack_soldiers()) do
+        local s = E:get_template(name)
+        s.health.dead_lifetime = s.health.dead_lifetime - friend_buff.barrack_unity_lifetime * level
+    end
+end
+
+function EU.patch_barrack_synergy(level)
+    for _, name in pairs(UP:barrack_soldiers()) do
+        local s = E:get_template(name)
+        if not s._barrack_synergy then
+            if s.main_script then
+                s.main_script.insert = U.function_append(s.main_script.insert, function(this, store)
+                    local a = E:create_entity("endless_barrack_synergy_aura")
+                    a.aura.source_id = this.id
+                    queue_insert(store, a)
+                    this._barrack_synergy_aura = a
+                    return true
+                end)
+                s.main_script.remove = U.function_append(s.main_script.remove, function(this, store)
+                    if this._barrack_synergy_aura then
+                        queue_remove(this._barrack_synergy_aura)
+                    end
+                    return true
+                end)
+            end
+            s._barrack_synergy = true
+        end
+    end
+    local m = E:get_template("mod_endless_barrack_synergy")
+    m.extra_damage = level * friend_buff.barrack_synergy
+end
 
 function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
@@ -252,8 +310,55 @@ function EU.patch_upgrade_in_game(key, store, endless)
         EU.patch_rain_cooldown_dec(1)
     elseif key == "rain_scorch_damage_true" then
         EU.patch_rain_scorch_damage_true(1)
+    elseif key == "more_gold" then
+        endless.enemy_gold_factor = endless.enemy_gold_factor + friend_buff.more_gold
+    elseif key == "barrack_rally" then
+        for _, t in pairs(store.towers) do
+            if t.barrack then
+                t.barrack.rally_range = math.huge
+            end
+        end
+    elseif key == "barrack_unity" then
+        for _, t in pairs(store.towers)do
+            if t.barrack then
+                t.barrack.max_soldiers = t.barrack.max_soldiers + friend_buff.barrack_unity_count
+            end
+        end
+        EU.patch_barrack_unity(endless.upgrade_levels[key])
+    elseif key == "barrack_luck" then
+        EU.patch_barrack_luck(endless.upgrade_levels[key])
+        for _, s in pairs(store.soldiers) do
+            if s.health then
+                if not s._endless_barrack_luck then
+                    s.health.on_damage = U.function_append(s.health.on_damage, function(this, store, damage)
+                        return math.random() > this._endless_barrack_luck
+                    end)
+                end
+                s._endless_barrack_luck = endless.upgrade_levels[key] * friend_buff.barrack_luck
+            end
+        end
+    elseif key == "barrack_synergy" then
+        for _, s in pairs(store.soldiers) do
+            if not s._barrack_synergy_aura then
+                local a = E:create_entity("endless_barrack_synergy_aura")
+                a.aura.source_id = s.id
+                queue_insert(store, a)
+                s._barrack_synergy_aura = a
+                if s.main_script then
+                    s.main_script.remove = U.function_append(s.main_script.remove, function(this, store)
+                        if this._barrack_synergy_aura then
+                            queue_remove(this._barrack_synergy_aura)
+                        end
+                        return true
+                    end)
+                end
+            end
+        end
+        EU.patch_barrack_synergy(endless.upgrade_levels[key])
     end
 end
+
+
 function EU.patch_upgrades(endless)
     if endless.upgrade_levels.archer_bleed > 0 then
         EU.patch_archer_bleed(endless.upgrade_levels.archer_bleed)

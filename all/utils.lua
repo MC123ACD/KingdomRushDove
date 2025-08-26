@@ -1838,9 +1838,10 @@ function U.find_teleport_moment(store, center, range, trigger_count)
     return nil
 end
 
+-- 把 f2 加在 f1 后面
 function U.function_append(f1, f2)
     return function(...)
-        if f1(...) then
+        if not f1 or f1(...) then
             return f2(...)
         else
             return false
