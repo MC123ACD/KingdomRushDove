@@ -4,6 +4,7 @@ local km = require("klua.macros")
 local FS = love.filesystem
 local E = require("entity_db")
 local EL = require("kr1.data.endless")
+local EU = require("endless_utils")
 require("constants")
 
 local wave_db = {}
@@ -102,7 +103,7 @@ function wave_db:load(level_name, game_mode, endless)
     end
 
     if endless then
-        local storage = require("all.storage")
+        local storage = require("storage")
         local endless_template = EL.template
         local endless_history = storage:load_endless(level_name)
         if endless_history and endless_history.lives > 0 then
@@ -296,49 +297,7 @@ function wave_db:get_endless_boss_config(i)
 end
 
 function wave_db:get_endless_group(i)
-    local group = {}
-    local endless = self.endless
-    endless.current_wave_count = i
-    group.interval = endless.interval
-    group.waves = {}
-    local i = 1
-    for _, path_id in pairs(endless.available_paths) do
-        group.waves[i] = {
-            delay = 0,
-            path_index = path_id,
-            spawns = {}
-        }
-        i = i + 1
-    end
-    -- 加权数量的敌人列表，模拟加权随机
-    local enemy_list = {}
-    local remain_lives_cost = endless.total_lives_cost
-    while remain_lives_cost > 0 do
-        local template_name = table.random(endless.enemy_list)
-        local tpl = E:get_template(template_name)
-        for j = 1, math.floor(20 / tpl.enemy.lives_cost) do
-            table.insert(enemy_list, template_name)
-            remain_lives_cost = remain_lives_cost - tpl.enemy.lives_cost
-        end
-    end
-
-    for _, wave in pairs(group.waves) do
-        for j = 1, endless.spawn_count_per_wave do
-            local this_spawn_lives_cost = math.floor(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
-                                                         (0.8 + 0.4 * j / endless.spawn_count_per_wave))
-            local creep = table.random(enemy_list)
-            local tpl = E:get_template(creep)
-            local max = math.ceil(this_spawn_lives_cost / tpl.enemy.lives_cost)
-            wave.spawns[j] = {
-                interval = endless.avg_interval,
-                interval_next = endless.avg_interval_next,
-                fixed_sub_path = 0,
-                max = max,
-                creep = creep
-            }
-        end
-    end
-    return group
+    return EU.generate_group(self.endless)
 end
 
 function wave_db:set_entity_progression(e, wave_idx)

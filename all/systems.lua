@@ -488,8 +488,8 @@ function sys.wave_spawn:init(store)
 
         local i = 1
         local start = true
-        if store.endless and store.endless.current_wave_count then
-            i = store.endless.current_wave_count
+        if store.endless and store.endless.wave_group_number then
+            i = store.endless.wave_group_number
         end
         while W:has_group(i) do
             local group = W:get_group(i)

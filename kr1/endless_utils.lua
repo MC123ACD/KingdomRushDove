@@ -15,6 +15,50 @@ local function vv(x)
         y = x
     }
 end
+function EU.generate_group(endless)
+    local group = {}
+
+    group.interval = endless.interval
+    group.waves = {}
+    local i = 1
+    for _, path_id in pairs(endless.available_paths) do
+        group.waves[i] = {
+            delay = 0,
+            path_index = path_id,
+            spawns = {}
+        }
+        i = i + 1
+    end
+    -- 加权数量的敌人列表，模拟加权随机
+    local enemy_list = {}
+    local remain_lives_cost = endless.total_lives_cost
+    while remain_lives_cost > 0 do
+        local template_name = table.random(endless.enemy_list)
+        local tpl = E:get_template(template_name)
+        for j = 1, math.floor(20 / tpl.enemy.lives_cost) do
+            table.insert(enemy_list, template_name)
+            remain_lives_cost = remain_lives_cost - tpl.enemy.lives_cost
+        end
+    end
+
+    for _, wave in pairs(group.waves) do
+        for j = 1, endless.spawn_count_per_wave do
+            local this_spawn_lives_cost = math.floor(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
+                                                         (0.8 + 0.4 * j / endless.spawn_count_per_wave))
+            local creep = table.random(enemy_list)
+            local tpl = E:get_template(creep)
+            local max = math.ceil(this_spawn_lives_cost / tpl.enemy.lives_cost)
+            wave.spawns[j] = {
+                interval = endless.avg_interval,
+                interval_next = endless.avg_interval_next,
+                fixed_sub_path = 0,
+                max = max,
+                creep = creep
+            }
+        end
+    end
+    return group
+end
 function EU.patch_enemy_growth(endless)
     for i = 1, 2 do
         if #endless.enemy_upgrade_options == 0 then
@@ -33,6 +77,9 @@ function EU.patch_enemy_growth(endless)
         elseif key == "lives" then
             endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
             endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+            if endless.lives_cost_per_wave / endless.spawn_count_per_wave > 40 then
+                endless.spawn_count_per_wave = endless.spawn_count_per_wave + 1
+            end
             endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor
             if endless.avg_interval < 0.1 then
                 endless.avg_interval = 0.1
@@ -129,13 +176,11 @@ function EU.patch_rain_scorch_damage_true(level)
     local scorched_earth = E:get_template("power_scorched_earth")
     scorched_earth.aura.damage_type = DAMAGE_TRUE
     scorched_earth.aura.damage_min = scorched_earth.aura.damage_min + level * friend_buff.rain_scorch_damage_true
-    scorched_earth.aura.damage_max = scorched_earth.aura.damage_max +
-        level * friend_buff.rain_scorch_damage_true
+    scorched_earth.aura.damage_max = scorched_earth.aura.damage_max + level * friend_buff.rain_scorch_damage_true
     local scorched_water = E:get_template("power_scorched_water")
     scorched_water.aura.damage_type = DAMAGE_TRUE
     scorched_water.aura.damage_min = scorched_water.aura.damage_min + level * friend_buff.rain_scorch_damage_true
-    scorched_water.aura.damage_max = scorched_water.aura.damage_max +
-        level * friend_buff.rain_scorch_damage_true
+    scorched_water.aura.damage_max = scorched_water.aura.damage_max + level * friend_buff.rain_scorch_damage_true
 end
 
 function EU.patch_upgrade_in_game(key, store, endless)

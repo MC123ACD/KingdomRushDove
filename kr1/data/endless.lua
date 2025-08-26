@@ -52,7 +52,7 @@ local endless = {
         tower_cooldown_factor = 1,
         hero_damage_factor = 1,
         hero_cooldown_factor = 1,
-        interval = 0,
+        interval = 150,
         available_paths = {},
         avg_interval = 0,
         avg_interval_next = 0,
@@ -107,11 +107,11 @@ local endless = {
         rain_scorch_damage_true = 1
     },
     enemy_upgrade_max_levels = {
-        health = 50,
+        health = 55,
         damage = 50,
         speed = 20,
         health_damage_factor = 20,
-        lives = 50,
+        lives = 45,
         wave_interval = 45
     },
     gold_extra_upgrade = {
