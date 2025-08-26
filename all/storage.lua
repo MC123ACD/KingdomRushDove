@@ -153,6 +153,14 @@ function storage:save_endless(level_name, endless)
     end
 end
 
+function storage:delete_endless(level_name)
+    local success = self:remove(string.format("endless_%s.lua", level_name), true)
+    if not success then
+        log.error("Error deleting endless_%s.lua", level_name)
+    end
+    return success
+end
+
 function storage:load_keyset()
     local key_shortcuts = self:load_lua("keyset.lua", true)
     local default_key_shortcuts = require("patches.keyset_default")

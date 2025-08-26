@@ -1684,6 +1684,10 @@ function game_gui:restart_game()
     S:stop_all()
     S:resume()
     signal.emit("game-restart", self.game.store)
+    if self.game.store.level_mode_override == GAME_MODE_ENDLESS then
+        -- 删除无尽模式存档
+        storage:delete_endless(self.game.store.level_name)
+    end
     game_gui.game:restart()
 end
 
