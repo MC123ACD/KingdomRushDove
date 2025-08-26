@@ -31774,9 +31774,10 @@ function scripts.endless_barrack_synergy_aura.update(this, store, script)
                     m.modifier.target_id = t.id
                     m.modifier.source_id = this.id
                     m.template_name = m.template_name .. tostring(this.id)
-                    queue_insert(store. m)
+                    queue_insert(store, m)
                 end
             end
+            last_hit_ts = store.tick_ts
         end
         coroutine.yield()
     end

@@ -8,13 +8,7 @@ local enemy_buff = endless_balance.enemy_buff
 local friend_buff = endless_balance.friend_buff
 local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
 local SU = require("script_utils")
-local simulation = require("simulation")
-local function queue_insert(store, e)
-    simulation:queue_insert_entity(e)
-end
-local function queue_remove(store, e)
-    simulation:queue_remove_entity(e)
-end
+
 local function vv(x)
     return {
         x = x,
@@ -241,11 +235,21 @@ function EU.patch_barrack_synergy(level)
     m.extra_damage = level * friend_buff.barrack_synergy
 end
 
+function EU.patch_barrack_rally(level)
+    for _, name in pairs(UP:towers_with_barrack()) do
+        local t = E:get_template(name)
+        t.barrack.rally_range = math.huge
+    end
+end
+
 function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
         return
     end
-
+    endless.upgrade_levels[key] = endless.upgrade_levels[key] + 1
+    if endless.upgrade_levels[key] >= endless_balance.upgrade_max_levels[key] then
+        table.removeobject(endless.upgrade_options, key)
+    end
     if key == "health" then
         for _, s in pairs(store.soldiers) do
             if s.health then
@@ -318,6 +322,7 @@ function EU.patch_upgrade_in_game(key, store, endless)
                 t.barrack.rally_range = math.huge
             end
         end
+        EU.patch_barrack_rally(endless.upgrade_levels[key])
     elseif key == "barrack_unity" then
         for _, t in pairs(store.towers)do
             if t.barrack then
@@ -386,6 +391,18 @@ function EU.patch_upgrades(endless)
     end
     if endless.upgrade_levels.rain_scorch_damage_true > 0 then
         EU.patch_rain_scorch_damage_true(endless.upgrade_levels.rain_scorch_damage_true)
+    end
+    if endless.upgrade_levels.barrack_rally > 0 then
+        EU.patch_barrack_rally(endless.upgrade_levels.barrack_rally)
+    end
+    if endless.upgrade_levels.barrack_luck > 0 then
+        EU.patch_barrack_luck(endless.upgrade_levels.barrack_luck)
+    end
+    if endless.upgrade_levels.barrack_unity > 0 then
+        EU.patch_barrack_unity(endless.upgrade_levels.barrack_unity)
+    end
+    if endless.upgrade_levels.barrack_synergy > 0 then
+        EU.patch_barrack_synergy(endless.upgrade_levels.barrack_synergy)
     end
 end
 return EU

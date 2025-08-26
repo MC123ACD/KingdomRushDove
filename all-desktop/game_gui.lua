@@ -7923,11 +7923,6 @@ function EndlessSelectRewardView:initialize(sw, sh)
     SelectPanelView.initialize(self, sw, sh, "选择奖励")
     self:set_key_label_map(EL.key_label_map)
     self:set_key_desc_map(EL.key_desc_map)
-    if game_gui.game.store.endless then
-        self.upgrade_options = game_gui.game.store.endless.upgrade_options
-        self.upgrade_levels = game_gui.game.store.endless.upgrade_levels
-    end
-    self.upgrade_max_levels = EL.upgrade_max_levels
 end
 
 function EndlessSelectRewardView:load()
@@ -7941,21 +7936,17 @@ function EndlessSelectRewardView:load()
             if selected[choice] == nil then
                 selected[choice] = false
                 count = count + 1
-                self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
             end
         end
     else
         local count = 0 -- 手动计数
-        local max_count = math.min(3, #self.upgrade_options) -- 最大选择数量
+        local upgrade_options = game_gui.game.store.endless.upgrade_options
+        local max_count = math.min(3, #upgrade_options) -- 最大选择数量
         while count < max_count do
-            local choice = self.upgrade_options[math.random(1, #self.upgrade_options)]
+            local choice = upgrade_options[math.random(1, #upgrade_options)]
             if selected[choice] == nil then
                 selected[choice] = false
                 count = count + 1 -- 增加计数
-                self.upgrade_levels[choice] = self.upgrade_levels[choice] + 1
-                if self.upgrade_levels[choice] >= self.upgrade_max_levels[choice] then
-                    table.removeobject(self.upgrade_options, choice)
-                end
             end
         end
     end

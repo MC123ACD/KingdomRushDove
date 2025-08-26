@@ -7,7 +7,7 @@ local signal = require("hump.signal")
 
 require("klua.table")
 require("klua.dump")
-
+local EU = require("endless_utils")
 local A = require("animation_db")
 local AC = require("achievements")
 local DI = require("difficulty")
@@ -125,6 +125,9 @@ function sys.level:init(store)
         store.player_gold = store.player_gold + W.endless.extra_cash
         store.endless = W.endless
         local endless_data = store.endless
+        if endless_data.upgrade_levels then
+            EU.patch_upgrades(endless_data)
+        end
         if endless_data.player_gold then
             store.player_gold = endless_data.player_gold
         end
@@ -196,10 +199,7 @@ function sys.level:init(store)
                 ::continue::
             end
         end
-        local EU = require("kr1.endless_utils")
-        if endless_data.upgrade_levels then
-            EU.patch_upgrades(endless_data)
-        end
+
     end
 
     store.gems_collected = 0
@@ -2764,7 +2764,7 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.motion.max_speed then
                     entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
                 end
-                entity.gold = math.ceil(entity.gold * store.endless.enemy_gold_factor)
+                entity.enemy.gold = math.ceil(entity.enemy.gold * store.endless.enemy_gold_factor)
             elseif entity.soldier then
                 if entity.health and entity.health.hp_max then
                     entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)

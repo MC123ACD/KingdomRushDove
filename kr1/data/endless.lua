@@ -84,7 +84,11 @@ local endless = {
             rain_radius_mul = 0,
             rain_cooldown_dec = 0,
             rain_scorch_damage_true = 0,
-            more_gold = 0
+            more_gold = 0,
+            barrack_rally = 0,
+            barrack_unity = 0,
+            barrack_luck = 0,
+            barrack_synergy = 0
         },
         enemy_upgrade_levels = {
             health = 0,

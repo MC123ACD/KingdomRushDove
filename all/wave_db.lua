@@ -145,7 +145,7 @@ function wave_db:load(level_name, game_mode, endless)
             endless.std_waves_count = #waves
             endless.spawn_count_per_wave = math.ceil(total_spawns / #waves)
             endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #waves)
-            endless.avg_interval = endless.avg_interval / total_spawns
+            endless.avg_interval = math.min(endless.avg_interval / total_spawns, 90)
             endless.avg_interval_next = endless.avg_interval_next / total_spawns
 
             for _, group in pairs(wave_db:groups()) do
