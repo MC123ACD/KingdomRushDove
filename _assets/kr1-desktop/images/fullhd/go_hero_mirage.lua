@@ -375,7 +375,7 @@ return {
         trim = {121, 55, 110, 9},
         a_size = {1024, 1024},
         f_quad = {984, 62, 39, 37},
-        alias = {}
+        alias = {"hero_mirage_0086"}
     },
     hero_mirage_0087 = {
         a_name = "go_hero_mirage-1.png",

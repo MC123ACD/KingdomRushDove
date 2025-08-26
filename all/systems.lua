@@ -186,15 +186,6 @@ function sys.level:init(store)
                     end
                 end
 
-                -- -- 恢复购买的攻击
-                -- if tower_data.attacks and tower.attacks then
-                --     for i, attack_data in pairs(tower_data.attacks) do
-                --         if tower.attacks.list[i] and attack_data.bought then
-                --             tower.attacks.list[i].bought = true
-                --         end
-                --     end
-                -- end
-
                 queue_insert(store, tower)
                 ::continue::
             end

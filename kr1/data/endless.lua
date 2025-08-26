@@ -63,7 +63,6 @@ local endless = {
         avg_interval = 0,
         avg_interval_next = 0,
         extra_cash = 0,
-        std_waves_count = 0,
         spawn_count_per_wave = 0,
         lives_cost_per_wave = 0,
         load_from_history = false,

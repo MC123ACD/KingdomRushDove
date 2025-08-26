@@ -3,12 +3,13 @@ require("constants")
 local UP = require("kr1.upgrades")
 local U = require("all.utils")
 local scripts = require("all.scripts")
-local endless_balance = require("kr1.data.endless")
-local enemy_buff = endless_balance.enemy_buff
-local friend_buff = endless_balance.friend_buff
-local enemy_upgrade_max_levels = endless_balance.enemy_upgrade_max_levels
+local EL = require("kr1.data.endless")
+local enemy_buff = EL.enemy_buff
+local friend_buff = EL.friend_buff
+local enemy_upgrade_max_levels = EL.enemy_upgrade_max_levels
+local endless_template = EL.template
 local SU = require("script_utils")
-
+local storage = require("storage")
 local function vv(x)
     return {
         x = x,
@@ -17,6 +18,85 @@ local function vv(x)
 end
 
 local EU = {}
+
+function EU.init_endless(level_name, groups)
+    local endless
+    local endless_history = storage:load_endless(level_name)
+    if endless_history and (endless_history.lives > 0) then
+        endless = endless_history
+        endless.load_from_history = true
+        local function deepcopy(table, base_table)
+            for k, v in pairs(base_table) do
+                if type(v) == "table" then
+                    if table[k] == nil then
+                        table[k] = {}
+                    end
+                    deepcopy(table[k], v)
+                else
+                    if table[k] == nil then
+                        table[k] = v
+                    end
+                end
+            end
+        end
+        deepcopy(endless_history, endless_template)
+    else
+        endless = table.deepclone(endless_template)
+        local group = #groups > 1 and groups[#groups - 1] or groups[1]
+        local waves = group.waves
+
+        local total_spawns = 0
+        for _, wave in pairs(waves) do
+            for _, spawn in pairs(wave.spawns) do
+                endless.avg_interval = endless.avg_interval + spawn.interval
+                endless.avg_interval_next = endless.avg_interval_next + spawn.interval_next
+                total_spawns = total_spawns + 1
+                local tpl = E:get_template(spawn.creep)
+                if tpl and tpl.enemy then
+                    endless.total_lives_cost = endless.total_lives_cost + tpl.enemy.lives_cost * spawn.max
+                end
+            end
+        end
+        endless.avg_interval = math.min(endless.avg_interval / total_spawns, 90)
+        endless.avg_interval_next = endless.avg_interval_next / total_spawns
+
+        for _, group in pairs(groups) do
+            for _, wave in pairs(group.waves) do
+                if wave.path_index and not table.contains(endless.available_paths, wave.path_index) then
+                    table.insert(endless.available_paths, wave.path_index)
+                end
+                for _, spawn in pairs(wave.spawns) do
+                    local tpl = E:get_template(spawn.creep)
+                    if tpl and tpl.enemy then
+                        endless.extra_cash = endless.extra_cash + (tpl.enemy.gold or 0) * spawn.max
+                        if not table.contains(endless.enemy_list, spawn.creep) then
+                            table.insert(endless.enemy_list, spawn.creep)
+                        end
+                    end
+                end
+            end
+        end
+        endless.spawn_count_per_wave = math.ceil(total_spawns / #endless.available_paths)
+        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #endless.available_paths)
+    end
+
+    endless.enemy_upgrade_options = table.keys(endless.enemy_upgrade_levels)
+
+    for k, v in pairs(endless.enemy_upgrade_levels) do
+        if v >= EL.enemy_upgrade_max_levels[k] then
+            table.removeobject(endless.enemy_upgrade_options, k)
+        end
+    end
+
+    endless.upgrade_options = table.keys(endless.upgrade_levels)
+
+    for k, v in pairs(endless.upgrade_levels) do
+        if v >= EL.upgrade_max_levels[k] then
+            table.removeobject(endless.upgrade_options, k)
+        end
+    end
+    return endless
+end
 
 function EU.generate_group(endless)
     local group = {}
@@ -46,11 +126,24 @@ function EU.generate_group(endless)
 
     for _, wave in pairs(group.waves) do
         for j = 1, endless.spawn_count_per_wave do
-            local this_spawn_lives_cost = math.floor(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
+            local this_spawn_lives_cost = math.ceil(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
                                                          (0.8 + 0.4 * j / endless.spawn_count_per_wave))
-            local creep = table.random(enemy_list)
-            local tpl = E:get_template(creep)
-            local max = math.ceil(this_spawn_lives_cost / tpl.enemy.lives_cost)
+            local function generate_creep(i)
+                if i <= 0 then
+                    return table.random(endless.enemy_list), 0
+                end
+                local creep = table.random(enemy_list)
+                local tpl = E:get_template(creep)
+                -- 避免前期就出 boss，太夸张了
+                local max = math.floor(this_spawn_lives_cost / tpl.enemy.lives_cost)
+                if max > 0 then
+                    return creep, max
+                else
+                    return generate_creep(i - 1)
+                end
+            end
+            local creep, max = generate_creep(5)
+
             wave.spawns[j] = {
                 interval = endless.avg_interval,
                 interval_next = endless.avg_interval_next,
@@ -79,7 +172,7 @@ function EU.patch_enemy_growth(endless)
             endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
         elseif key == "lives" then
             endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / endless.std_waves_count)
+            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #endless.available_paths)
             if endless.lives_cost_per_wave / endless.spawn_count_per_wave > 40 then
                 endless.spawn_count_per_wave = endless.spawn_count_per_wave + 1
             end
@@ -247,7 +340,7 @@ function EU.patch_upgrade_in_game(key, store, endless)
         return
     end
     endless.upgrade_levels[key] = endless.upgrade_levels[key] + 1
-    if endless.upgrade_levels[key] >= endless_balance.upgrade_max_levels[key] then
+    if endless.upgrade_levels[key] >= EL.upgrade_max_levels[key] then
         table.removeobject(endless.upgrade_options, key)
     end
     if key == "health" then
@@ -324,7 +417,7 @@ function EU.patch_upgrade_in_game(key, store, endless)
         end
         EU.patch_barrack_rally(endless.upgrade_levels[key])
     elseif key == "barrack_unity" then
-        for _, t in pairs(store.towers)do
+        for _, t in pairs(store.towers) do
             if t.barrack then
                 t.barrack.max_soldiers = t.barrack.max_soldiers + friend_buff.barrack_unity_count
             end
@@ -362,7 +455,6 @@ function EU.patch_upgrade_in_game(key, store, endless)
         EU.patch_barrack_synergy(endless.upgrade_levels[key])
     end
 end
-
 
 function EU.patch_upgrades(endless)
     if endless.upgrade_levels.archer_bleed > 0 then
