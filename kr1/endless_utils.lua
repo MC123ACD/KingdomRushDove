@@ -18,7 +18,16 @@ local function vv(x)
 end
 
 local EU = {}
-
+local function get_enemy_lives_cost(name)
+    local tpl = E:get_template(name)
+    local lives_cost = 0
+    if tpl.enemy then
+        lives_cost = tpl.enemy.lives_cost
+        if tpl.death_spawns and tpl.death_spawns.name then
+            lives_cost = lives_cost + get_enemy_lives_cost(tpl.death_spawns.name) * (tpl.death_spawns.quantity or 1)
+        end
+    end
+end
 function EU.init_endless(level_name, groups)
     local endless
     local endless_history = storage:load_endless(level_name)
@@ -51,10 +60,7 @@ function EU.init_endless(level_name, groups)
                 endless.avg_interval = endless.avg_interval + spawn.interval
                 endless.avg_interval_next = endless.avg_interval_next + spawn.interval_next
                 total_spawns = total_spawns + 1
-                local tpl = E:get_template(spawn.creep)
-                if tpl and tpl.enemy then
-                    endless.total_lives_cost = endless.total_lives_cost + tpl.enemy.lives_cost * spawn.max
-                end
+                endless.total_lives_cost = endless.total_lives_cost + get_enemy_lives_cost(spawn.creep) * spawn.max
             end
         end
         endless.avg_interval = math.min(endless.avg_interval / total_spawns, 90)
@@ -127,15 +133,17 @@ function EU.generate_group(endless)
     for _, wave in pairs(group.waves) do
         for j = 1, endless.spawn_count_per_wave do
             local this_spawn_lives_cost = math.ceil(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
-                                                         (0.8 + 0.4 * j / endless.spawn_count_per_wave))
+                                                        (0.8 + 0.4 * j / endless.spawn_count_per_wave))
             local function generate_creep(i)
                 if i <= 0 then
                     return table.random(endless.enemy_list), 0
                 end
                 local creep = table.random(enemy_list)
-                local tpl = E:get_template(creep)
+
+                local lives_cost = get_enemy_lives_cost(creep)
+
                 -- 避免前期就出 boss，太夸张了
-                local max = math.floor(this_spawn_lives_cost / tpl.enemy.lives_cost)
+                local max = math.floor(this_spawn_lives_cost / lives_cost)
                 if max > 0 then
                     return creep, max
                 else
