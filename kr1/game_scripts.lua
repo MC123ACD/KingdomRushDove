@@ -31828,30 +31828,30 @@ scripts.mod_endless_engineer_aftermath = {
                 V.dist2(e.pos.x, e.pos.y, target.pos.x, target.pos.y) <= radius2 then
                 local d = E:create_entity("damage")
                 d.damage_type = DAMAGE_EXPLOSION
-                d.damage_min = this.value
-                d.damage_max = this.value
+                d.value = this.value
                 d.source_id = this.id
                 d.target_id = e.id
                 queue_damage(store, d)
-                local decal = E:create_entity("decal_tween")
-
-                decal.pos.x, decal.pos.y = e.pos.x, e.pos.y
-                decal.tween.props[1].keys = {{0, 255}, {0.5, 128}, {1, 0}}
-                decal.tween.props[1].name = "alpha"
-
-                if math.random() < 0.5 then
-                    decal.render.sprites[1].name = "EarthquakeTower_HitDecal1"
-                else
-                    decal.render.sprites[1].name = "EarthquakeTower_HitDecal2"
-                end
-
-                decal.render.sprites[1].animated = false
-                decal.render.sprites[1].z = Z_DECALS
-                decal.render.sprites[1].ts = store.tick_ts
-                decal.render.sprites[1].scale = V.v(0.6, 0.6)
-                queue_insert(store, decal)
             end
         end
+        local decal = E:create_entity("decal_tween")
+
+        decal.pos.x, decal.pos.y = target.pos.x, target.pos.y
+        decal.tween.props[1].keys = {{0, 255}, {0.5, 128}, {1, 0}}
+        decal.tween.props[1].name = "alpha"
+
+        if math.random() < 0.5 then
+            decal.render.sprites[1].name = "EarthquakeTower_HitDecal1"
+        else
+            decal.render.sprites[1].name = "EarthquakeTower_HitDecal2"
+        end
+
+        decal.render.sprites[1].animated = false
+        decal.render.sprites[1].z = Z_DECALS
+        decal.render.sprites[1].ts = store.tick_ts
+        decal.render.sprites[1].scale = V.v(0.6, 0.6)
+        queue_insert(store, decal)
+
         return false
     end
 }

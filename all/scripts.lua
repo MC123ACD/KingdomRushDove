@@ -4172,32 +4172,32 @@ function scripts.aura_apply_mod.update(this, store, script)
                 last_hit_ts = last_hit_ts + fts(1)
             else
                 for i, target in ipairs(targets) do
-    if this.aura.targets_per_cycle and i > this.aura.targets_per_cycle then
-        break
-    end
+                    if this.aura.targets_per_cycle and i > this.aura.targets_per_cycle then
+                        break
+                    end
 
-    if this.aura.max_count and victims_count >= this.aura.max_count then
-        break
-    end
+                    if this.aura.max_count and victims_count >= this.aura.max_count then
+                        break
+                    end
 
-    local mods = this.aura.mods or {this.aura.mod}
+                    local mods = this.aura.mods or {this.aura.mod}
 
-    for _, mod_name in pairs(mods) do
-        local new_mod = E:create_entity(mod_name)
+                    for _, mod_name in pairs(mods) do
+                        local new_mod = E:create_entity(mod_name)
 
-        new_mod.modifier.level = this.aura.level
-        new_mod.modifier.target_id = target.id
-        new_mod.modifier.source_id = this.id
-        new_mod.modifier.damage_factor = this.aura.damage_factor
-        if this.aura.hide_source_fx and target.id == this.aura.source_id then
-            new_mod.render = nil
-        end
+                        new_mod.modifier.level = this.aura.level
+                        new_mod.modifier.target_id = target.id
+                        new_mod.modifier.source_id = this.id
+                        new_mod.modifier.damage_factor = this.aura.damage_factor
+                        if this.aura.hide_source_fx and target.id == this.aura.source_id then
+                            new_mod.render = nil
+                        end
 
-        queue_insert(store, new_mod)
+                        queue_insert(store, new_mod)
 
-        victims_count = victims_count + 1
-    end
-end
+                        victims_count = victims_count + 1
+                    end
+                end
 
             end
 

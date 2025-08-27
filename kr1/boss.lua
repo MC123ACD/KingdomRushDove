@@ -181,7 +181,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(55, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 8
     tt.health.hp_max = 12000
     tt.health.on_damage = scripts.eb_jt.on_damage
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
@@ -724,7 +724,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(33, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 10
     tt.health.ignore_damage = true
     tt.health.hp_max = {11111, 13333, 15555, 18888}
     tt.health.magic_armor = 0.5
@@ -857,7 +857,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(40, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 10
     tt.health.armor = 0.95
     tt.health.hp_max = 11000
     tt.health_bar.offset = vec_2(0, 125)
@@ -1727,7 +1727,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(15, 0)
-    tt.health.dead_lifetime = fts(10000)
+    tt.health.dead_lifetime = fts(1000)
     tt.health.hp_max = 8475
     tt.health_bar.offset = vec_2(0, 60)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM
@@ -1872,7 +1872,7 @@ local function boss()
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(40, 0)
     tt.health.armor = 0.6
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health.hp_max = 8000
     tt.health_bar.offset = vec_2(0, 100)
     tt.health_bar.type = HEALTH_BAR_SIZE_LARGE
@@ -1972,7 +1972,7 @@ local function boss()
     tt.health.hp_max = {6000, 9000, 12000, 13500}
     tt.health.hp_max_rounds = {{6000, 4000, 2000}, {9000, 6000, 3000}, {12000, 9000, 5000}, {13500, 10000, 5500}}
     tt.health.on_damage = scripts.eb_drow_queen.on_damage
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health_bar.hidden = true
     tt.health_bar.offset = vec_2(0, 49)
     tt.health_bar.sort_y_offset = -2
@@ -2174,7 +2174,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(53, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health.hp_max = {12000, 15000, 19000, 21000}
     tt.health.hp_max_rounds = {{12000, 9000, 6000, 3000}, {15000, 11000, 7000, 3000}, {19000, 14000, 10000, 6000},
                                {21000, 16000, 12000, 7000}}
@@ -2372,7 +2372,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(40, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health.hp_max = 11000
     tt.health_bar.offset = vec_2(0, 98)
     tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
@@ -2471,7 +2471,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(60, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health.armor = 0.2
     tt.health.magic_armor = {0, 0, 0.5, 0.5}
     tt.health.hp_max = 10000
@@ -2574,7 +2574,7 @@ local function boss()
     tt.enemy.gold = 0
     tt.enemy.lives_cost = 20
     tt.enemy.melee_slot = vec_2(60, 0)
-    tt.health.dead_lifetime = 100
+    tt.health.dead_lifetime = 50
     tt.health.hp_max = 11000
     tt.health.armor = 0.7
     tt.health_bar.offset = vec_2(0, 100)
