@@ -146,16 +146,16 @@ for k, _ in pairs(endless.enemy_upgrade_max_levels) do
 end
 
 local key_label_map = {
-    health = "坚韧",
-    soldier_damage = "力量",
+    health = "坚韧不拔",
+    soldier_damage = "所向披靡",
     soldier_cooldown = "训练有素",
     tower_damage = "火力提升",
     tower_cooldown = "快速装填",
-    hero_damage = "英雄之力",
-    hero_cooldown = "英雄熟练",
-    archer_bleed = "流血专精",
+    hero_damage = "英杰豪力",
+    hero_cooldown = "技艺娴熟",
+    archer_bleed = "血光之灾",
     archer_multishot = "多重射击",
-    archer_insight = "洞察",
+    archer_insight = "洞察之息",
     archer_critical = "致命一击",
     rain_count_inc = "流星号角",
     rain_damage_inc = "猛烈灾劫",

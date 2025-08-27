@@ -4359,13 +4359,13 @@ function scripts.soldier_mecha.update(this, store, script)
             end
 
             if store.tick_ts - am.ts > am.cooldown * this.owner.tower.cooldown_factor then
-                local _, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range, false,
+                local target, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range, false,
                     am.vis_flags, am.vis_bans)
 
                 if not targets then
                     -- block empty
                 else
-                    local target = table.random(targets)
+                    -- local target = table.random(targets)
 
                     am.ts = store.tick_ts
 
@@ -4407,14 +4407,14 @@ function scripts.soldier_mecha.update(this, store, script)
 
                             queue_insert(store, b)
 
-                            _, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range,
+                            target, targets = U.find_foremost_enemy(store.enemies, this.pos, am.min_range, am.max_range,
                                 false, am.vis_flags, am.vis_bans)
 
                             if not targets then
                                 goto label_67_1
                             end
 
-                            target = table.random(targets)
+                            -- target = table.random(targets)
                         end
 
                         while not U.animation_finished(this) do

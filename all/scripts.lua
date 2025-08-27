@@ -2349,32 +2349,6 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
                     b.bullet.to.y = target.pos.y + target.unit.hit_offset.y
 
                     b.bullet.target_id = target.id
-
-                    -- if this.bullet.flight_time then
-                    --     b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time,
-                    --         b.bullet.g)
-                    -- end
-
-                    -- if b.bullet.rotation_speed then
-                    --     b.bullet.rotation_speed = b.bullet.rotation_speed *
-                    --                                   (b.bullet.to.x > b.bullet.from.x and -1 or 1)
-                    --     if b.bullet.rotation_speed > 0 then
-                    --         b.render.sprites[1].flip_x = not b.render.sprites[1].flip_x
-                    --     end
-                    -- end
-                    -- if b.bullet.start_fx then
-                    --     local fx = E:create_entity(b.bullet.start_fx)
-
-                    --     fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-                    --     fx.render.sprites[1].r = V.angleTo(b.bullet.to.x - this.pos.x, b.bullet.to.y - this.pos.y)
-                    --     fx.render.sprites[1].ts = store.tick_ts
-
-                    --     queue_insert(store, fx)
-                    -- end
-                    -- b.render.sprites[1].r = V.angleTo(b.bullet.to.x - b.bullet.from.x, b.bullet.to.y - b.bullet.from.y)
-                    -- if b.bullet.hide_radius then
-                    --     b.render.sprites[1].hidden = true
-                    -- end
                     queue_insert(store, b)
                 end
             end
@@ -2754,7 +2728,8 @@ function scripts.missile.update(this, store, script)
     if not target or target.health and target.health.dead then
         local ref_pos = target and target.pos or this.pos
 
-        target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+        -- target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+        target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
     end
 
     if target then
@@ -2769,7 +2744,8 @@ function scripts.missile.update(this, store, script)
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 
-            target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+            -- target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+            target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
 
             if b.rot_dir_from_long_angle and target then
                 rot_dir = target.pos.x < this.pos.x and -1 or 1
@@ -4192,34 +4168,39 @@ function scripts.aura_apply_mod.update(this, store, script)
                                not table.contains(this.aura.excluded_templates, v.template_name)) and
                            (not this.aura.filter_source or this.aura.source_id ~= v.id)
             end)
+            if #targets == 0 then
+                last_hit_ts = last_hit_ts + fts(1)
+            else
+                for i, target in ipairs(targets) do
+    if this.aura.targets_per_cycle and i > this.aura.targets_per_cycle then
+        break
+    end
 
-            for i, target in ipairs(targets) do
-                if this.aura.targets_per_cycle and i > this.aura.targets_per_cycle then
-                    break
-                end
+    if this.aura.max_count and victims_count >= this.aura.max_count then
+        break
+    end
 
-                if this.aura.max_count and victims_count >= this.aura.max_count then
-                    break
-                end
+    local mods = this.aura.mods or {this.aura.mod}
 
-                local mods = this.aura.mods or {this.aura.mod}
+    for _, mod_name in pairs(mods) do
+        local new_mod = E:create_entity(mod_name)
 
-                for _, mod_name in pairs(mods) do
-                    local new_mod = E:create_entity(mod_name)
+        new_mod.modifier.level = this.aura.level
+        new_mod.modifier.target_id = target.id
+        new_mod.modifier.source_id = this.id
+        new_mod.modifier.damage_factor = this.aura.damage_factor
+        if this.aura.hide_source_fx and target.id == this.aura.source_id then
+            new_mod.render = nil
+        end
 
-                    new_mod.modifier.level = this.aura.level
-                    new_mod.modifier.target_id = target.id
-                    new_mod.modifier.source_id = this.id
-                    new_mod.modifier.damage_factor = this.aura.damage_factor
-                    if this.aura.hide_source_fx and target.id == this.aura.source_id then
-                        new_mod.render = nil
-                    end
+        queue_insert(store, new_mod)
 
-                    queue_insert(store, new_mod)
+        victims_count = victims_count + 1
+    end
+end
 
-                    victims_count = victims_count + 1
-                end
             end
+
         end
 
         ::label_89_0::
@@ -4284,42 +4265,45 @@ function scripts.aura_apply_damage.update(this, store, script)
                            (not this.aura.excluded_templates or
                                not table.contains(this.aura.excluded_templates, v.template_name))
             end)
+            if #targets == 0 then
+                last_hit_ts = last_hit_ts + fts(1)
+            else
+                for _, target in pairs(targets) do
+                    local d = E:create_entity("damage")
 
-            for _, target in pairs(targets) do
-                local d = E:create_entity("damage")
+                    d.source_id = this.id
+                    d.target_id = target.id
 
-                d.source_id = this.id
-                d.target_id = target.id
+                    local dmin, dmax = this.aura.damage_min, this.aura.damage_max
 
-                local dmin, dmax = this.aura.damage_min, this.aura.damage_max
-
-                if this.aura.damage_inc then
-                    dmin = dmin + this.aura.damage_inc * this.aura.level
-                    dmax = dmax + this.aura.damage_inc * this.aura.level
-                end
-
-                d.value = math.random(dmin, dmax)
-                d.damage_type = this.aura.damage_type
-                d.track_damage = this.aura.track_damage
-                d.xp_dest_id = this.aura.xp_dest_id
-                d.xp_gain_factor = this.aura.xp_gain_factor
-
-                queue_damage(store, d)
-
-                local mods = this.aura.mods or {this.aura.mod}
-
-                for _, mod_name in pairs(mods) do
-                    local m = E:create_entity(mod_name)
-
-                    m.modifier.level = this.aura.level
-                    m.modifier.target_id = target.id
-                    m.modifier.source_id = this.id
-
-                    if this.aura.hide_source_fx and target.id == this.aura.source_id then
-                        m.render = nil
+                    if this.aura.damage_inc then
+                        dmin = dmin + this.aura.damage_inc * this.aura.level
+                        dmax = dmax + this.aura.damage_inc * this.aura.level
                     end
 
-                    queue_insert(store, m)
+                    d.value = math.random(dmin, dmax)
+                    d.damage_type = this.aura.damage_type
+                    d.track_damage = this.aura.track_damage
+                    d.xp_dest_id = this.aura.xp_dest_id
+                    d.xp_gain_factor = this.aura.xp_gain_factor
+
+                    queue_damage(store, d)
+
+                    local mods = this.aura.mods or {this.aura.mod}
+
+                    for _, mod_name in pairs(mods) do
+                        local m = E:create_entity(mod_name)
+
+                        m.modifier.level = this.aura.level
+                        m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
+
+                        if this.aura.hide_source_fx and target.id == this.aura.source_id then
+                            m.render = nil
+                        end
+
+                        queue_insert(store, m)
+                    end
                 end
             end
         end
