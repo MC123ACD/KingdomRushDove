@@ -2555,58 +2555,62 @@ scripts.enemy_zombiemancer = {
                 end
 
                 if ready_to_raise() then
-                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
-
                     local zombies = get_zombies()
-                    local raise_index = math.random(1, #zombies)
-                    local anchor = zombies[raise_index]
+                    if zombies and #zombies > 0 then
+                        U.animation_start(this, a.animation, nil, store.tick_ts, false)
 
-                    local fx = E:create_entity("decal_zombiemancer_raise")
-                    fx.pos = V.vclone(anchor.pos)
-                    for i = 1, #fx.render.sprites do
-                        fx.render.sprites[i].ts = store.tick_ts
-                    end
-                    queue_insert(store, fx)
+                        local raise_index = math.random(1, #zombies)
+                        local anchor = zombies[raise_index]
 
-                    local hp_sum = 0
-                    for _, zombie in pairs(zombies) do
-                        if zombie.health and not zombie.health.dead then
-                            local mod = E:create_entity("mod_blood")
-                            mod.modifier.duration = 1
-                            mod.dps.damage_inc = 0
-                            local deal = this.health.hp / 4
-                            mod.dps.damage_max = deal
-                            mod.dps.damage_min = deal
-                            hp_sum = hp_sum + deal
-
-                            mod.modifier.source_id = this.id
-                            mod.modifier.target_id = zombie.id
-                            queue_insert(store, mod)
+                        local fx = E:create_entity("decal_zombiemancer_raise")
+                        fx.pos = V.vclone(anchor.pos)
+                        for i = 1, #fx.render.sprites do
+                            fx.render.sprites[i].ts = store.tick_ts
                         end
+                        queue_insert(store, fx)
+
+                        local hp_sum = 0
+                        for _, zombie in pairs(zombies) do
+                            if zombie.health and not zombie.health.dead then
+                                local mod = E:create_entity("mod_blood")
+                                mod.modifier.duration = 1
+                                mod.dps.damage_inc = 0
+                                local deal = this.health.hp / 4
+                                mod.dps.damage_max = deal
+                                mod.dps.damage_min = deal
+                                hp_sum = hp_sum + deal
+
+                                mod.modifier.source_id = this.id
+                                mod.modifier.target_id = zombie.id
+                                queue_insert(store, mod)
+                            end
+                        end
+
+                        local abomination = E:create_entity("enemy_abomination")
+                        abomination.nav_path.pi = anchor.nav_path.pi
+                        abomination.nav_path.spi = anchor.nav_path.spi
+                        abomination.nav_path.ni = anchor.nav_path.ni
+                        abomination.enemy.gold = 0
+                        abomination.render.sprites[1].alpha = 100
+                        abomination.health.hp_max = 3 * hp_sum
+                        abomination.health.hp = abomination.health.hp_max
+                        if P:is_node_valid(abomination.nav_path.pi, abomination.nav_path.ni) then
+                            queue_insert(store, abomination)
+                        end
+
+                        SU.stun_inc(abomination)
+                        if SU.y_enemy_wait(store, this, a.spawn_time) then
+                            goto label_117_0
+                        end
+
+                        U.y_animation_wait(this)
+                        abomination.render.sprites[1].alpha = 255
+                        SU.stun_dec(abomination)
+
+                        a2.ts = store.tick_ts
                     end
-
-                    local abomination = E:create_entity("enemy_abomination")
-                    abomination.nav_path.pi = anchor.nav_path.pi
-                    abomination.nav_path.spi = anchor.nav_path.spi
-                    abomination.nav_path.ni = anchor.nav_path.ni
-                    abomination.enemy.gold = 0
-                    abomination.render.sprites[1].alpha = 100
-                    abomination.health.hp_max = 3 * hp_sum
-                    abomination.health.hp = abomination.health.hp_max
-                    if P:is_node_valid(abomination.nav_path.pi, abomination.nav_path.ni) then
-                        queue_insert(store, abomination)
-                    end
-
-                    SU.stun_inc(abomination)
-                    if SU.y_enemy_wait(store, this, a.spawn_time) then
-                        goto label_117_0
-                    end
-
-                    U.y_animation_wait(this)
-                    abomination.render.sprites[1].alpha = 255
-                    SU.stun_dec(abomination)
-
-                    a2.ts = store.tick_ts
+                else
+                    a2.ts = a2.ts + 1
                 end
 
                 if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, break_fn, break_fn) then

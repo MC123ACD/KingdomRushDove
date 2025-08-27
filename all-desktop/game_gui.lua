@@ -2424,7 +2424,9 @@ function Power1Button:set_cooldown_time(t)
 end
 
 function Power1Button:wait_time_dec(dt)
-    self.cooldown_view.start_ts = self.cooldown_view.start_ts - dt
+    if self.cooldown_view.start_ts then
+        self.cooldown_view.start_ts = self.cooldown_view.start_ts - dt
+    end
 end
 
 Power2Button = class("Power2Button", PowerButton)
