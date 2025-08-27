@@ -107,7 +107,7 @@ local function next_wave_ready_handler(group)
         if game_gui.game.store.endless.load_from_history then
             game_gui.game.store.endless.load_from_history = false
         else
-            if #game_gui.game.store.endless.upgrade_options > 0 then
+            if #game_gui.game.store.endless.upgrade_options > 0 and game_gui.game.store.wave_group_number <= 60 then
                 game_gui.endless_select_reward_view:show()
             end
 
@@ -2417,6 +2417,14 @@ function Power1Button:fire(wx, wy)
 
     game_gui.game.simulation:insert_entity(e)
     signal.emit("power-used", 1)
+end
+
+function Power1Button:set_cooldown_time(t)
+    self.cooldown_time = t
+end
+
+function Power1Button:wait_time_dec(dt)
+    self.cooldown_view.start_ts = self.cooldown_view.start_ts - dt
 end
 
 Power2Button = class("Power2Button", PowerButton)
@@ -7675,7 +7683,7 @@ end
 SelectItem = class("SelectItem", KButton)
 
 function SelectItem:initialize(key_text, size)
-    size = size or V.v(400, 60) -- 增加高度以容纳两行文本
+    size = size or V.v(400, 80) -- 增加高度以容纳两行文本
     KButton.initialize(self, size)
 
     self.key = key_text
@@ -7695,7 +7703,7 @@ function SelectItem:initialize(key_text, size)
     self.title_label.propagate_on_click = true
 
     -- 描述标签（新增）
-    self.desc_label = GGLabel:new(V.v(self.size.x - 20, 20))
+    self.desc_label = GGLabel:new(V.v(self.size.x - 20, 40))
     self.desc_label.pos = V.v(15, 32)
     self.desc_label.font_name = "body"
     self.desc_label.font_size = 12
@@ -7771,8 +7779,8 @@ function SelectGroup:initialize(size)
     KView.initialize(self, size)
     self.key_label_map = {}
     self.items = {}
-    self.item_height = 55
-    self.padding = V.v(10, 5) -- 修正：使用向量表示水平和垂直内边距
+    self.item_height = 75
+    self.padding = V.v(10, -5) -- 修正：使用向量表示水平和垂直内边距
     self.data = {}
 end
 
@@ -7789,7 +7797,7 @@ function SelectGroup:add_item(key, initial_value)
     local item_y = self.padding.y + item_count * self.item_height
 
     local display_text = self.key_label_map[key] or key
-    local item = SelectItem:new(display_text, V.v(self.size.x - 2 * self.padding.x, 60))
+    local item = SelectItem:new(display_text, V.v(self.size.x - 2 * self.padding.x, 80))
 
     -- 设置描述文本
     if self.key_desc_map and self.key_desc_map[key] then
@@ -7936,7 +7944,7 @@ function EndlessSelectRewardView:load()
     if self.extra then
         local count = 0
         while count < 2 do
-            local choice = table.random(EL.gold_extra_upgrade)
+            local choice = table.random(game_gui.game.store.endless.gold_extra_upgrade_options)
             if selected[choice] == nil then
                 selected[choice] = false
                 count = count + 1

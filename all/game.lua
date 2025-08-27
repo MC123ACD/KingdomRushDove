@@ -132,6 +132,8 @@ function game:init(screen_w, screen_h, done_callback)
     game_gui:init(screen_w, screen_h, self)
 
     self.game_gui = game_gui
+    -- 允许 store 层影响 game_gui
+    self.store.game_gui = game_gui
 
     if not self.store.level.show_comic_idx or self.store.level_mode ~= GAME_MODE_CAMPAIGN then
         S:queue(string.format("MusicBattlePrep_%02d", self.store.level_idx))

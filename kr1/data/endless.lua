@@ -28,7 +28,11 @@ local endless = {
         barrack_unity_lifetime = 2,
         barrack_unity_count = 1,
         barrack_luck = 0.1,
-        barrack_synergy = 0.01
+        barrack_synergy = 0.01,
+        engineer_focus = 0.8,
+        engineer_aftermath = 20,
+        engineer_seek = 0.25,
+        engineer_fireball = 1,
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -66,37 +70,8 @@ local endless = {
         spawn_count_per_wave = 0,
         lives_cost_per_wave = 0,
         load_from_history = false,
-        upgrade_levels = {
-            health = 0,
-            soldier_damage = 0,
-            soldier_cooldown = 0,
-            tower_damage = 0,
-            tower_cooldown = 0,
-            hero_damage = 0,
-            hero_cooldown = 0,
-            archer_bleed = 0,
-            archer_multishot = 0,
-            archer_insight = 0,
-            archer_critical = 0,
-            rain_count_inc = 0,
-            rain_damage_inc = 0,
-            rain_radius_mul = 0,
-            rain_cooldown_dec = 0,
-            rain_scorch_damage_true = 0,
-            more_gold = 0,
-            barrack_rally = 0,
-            barrack_unity = 0,
-            barrack_luck = 0,
-            barrack_synergy = 0
-        },
-        enemy_upgrade_levels = {
-            health = 0,
-            damage = 0,
-            speed = 0,
-            health_damage_factor = 0,
-            lives = 0,
-            wave_interval = 0
-        }
+        upgrade_levels = {},
+        enemy_upgrade_levels = {}
     },
     upgrade_max_levels = {
         health = 25,
@@ -119,7 +94,30 @@ local endless = {
         barrack_rally = 1,
         barrack_unity = 1,
         barrack_luck = 3,
-        barrack_synergy = 5
+        barrack_synergy = 5,
+        engineer_focus = 3,
+        engineer_aftermath = 5,
+        engineer_seek = 1,
+        engineer_fireball = 2,
+        ban_rain = 1,
+        ban_archer = 1,
+        ban_engineer = 1,
+        ban_barrack = 1,
+    },
+    force_upgrade_max_levels = {
+        archer_critical = 10,
+        rain_radius_mul = 1,
+        rain_scorch_damage_true = 1,
+        rain_cooldown_dec = 2,
+        barrack_rally = 1,
+        barrack_unity = 1,
+        barrack_luck = 3,
+        engineer_seek = 1,
+        engineer_fireball = 2,
+        ban_rain = 1,
+        ban_archer = 1,
+        ban_engineer = 1,
+        ban_barrack = 1
     },
     enemy_upgrade_max_levels = {
         health = 55,
@@ -129,13 +127,26 @@ local endless = {
         lives = 45,
         wave_interval = 45
     },
-    gold_extra_upgrade = {"archer_bleed", "archer_multishot", "archer_insight", "archer_critical", "rain_count_inc",
-                          "rain_damage_inc", "more_gold", "barrack_synergy"},
-    gold_extra_cost = 10000
+    gold_extra_upgrade = {"archer_bleed", "archer_multishot", "archer_insight", "rain_count_inc", "rain_damage_inc",
+                          "more_gold", "barrack_synergy", "engineer_focus", "engineer_aftermath","archer_critical","rain_radius_mul",
+                          "rain_scorch_damage_true","barrack_rally","barrack_unity","engineer_seek","engineer_fireball","ban_rain","ban_archer","ban_engineer","ban_barrack","rain_cooldown_dec","barrack_luck", "health","tower_damage","hero_damage"},
+    gold_extra_cost = 10000,
+    rain = {"rain_radius_mul","rain_scorch_damage_true","rain_cooldown_dec","rain_count_inc","rain_damage_inc"},
+    archer = {"archer_bleed","archer_multishot","archer_insight","archer_critical"},
+    barrack = {"barrack_synergy","barrack_unity","barrack_rally","barrack_luck"},
+    engineer = {"engineer_focus","engineer_aftermath","engineer_seek","engineer_fireball"}
 }
 
+for k, _ in pairs(endless.upgrade_max_levels) do
+    endless.template.upgrade_levels[k] = 0
+end
+
+for k, _ in pairs(endless.enemy_upgrade_max_levels) do
+    endless.template.enemy_upgrade_levels[k] = 0
+end
+
 local key_label_map = {
-    health = "体魄",
+    health = "坚韧",
     soldier_damage = "力量",
     soldier_cooldown = "训练有素",
     tower_damage = "火力提升",
@@ -146,7 +157,7 @@ local key_label_map = {
     archer_multishot = "多重射击",
     archer_insight = "洞察",
     archer_critical = "致命一击",
-    rain_count_inc = "火雨增多",
+    rain_count_inc = "流星号角",
     rain_damage_inc = "猛烈灾劫",
     rain_radius_mul = "巨星陨落",
     rain_cooldown_dec = "狂热节奏",
@@ -155,7 +166,15 @@ local key_label_map = {
     barrack_rally = "战术调集",
     barrack_unity = "众志成城",
     barrack_luck = "死神对弈",
-    barrack_synergy = "战术协同"
+    barrack_synergy = "战术协同",
+    engineer_focus = "聚能爆破",
+    engineer_aftermath = "动能余波",
+    engineer_seek = "准心校正",
+    engineer_fireball = "燃焰前奏",
+    ban_rain = "禁绝·火雨",
+    ban_archer = "禁绝·箭塔",
+    ban_engineer = "禁绝·炮塔",
+    ban_barrack = "禁绝·兵营"
 }
 
 local key_desc_map = {
@@ -172,7 +191,8 @@ local key_desc_map = {
         endless.friend_buff.archer_insight * 100),
     archer_critical = string.format("提升弓箭的暴击率%d%%", endless.friend_buff.archer_critical * 100),
     rain_count_inc = string.format("火雨数量提升%d颗", endless.friend_buff.rain_count_inc),
-    rain_damage_inc = string.format("火雨伤害提升%d", endless.friend_buff.rain_damage_inc),
+    rain_damage_inc = string.format("火雨伤害提升%d点，焦土伤害提升%d点",
+        endless.friend_buff.rain_damage_inc, endless.friend_buff.rain_damage_inc * 0.1),
     rain_radius_mul = string.format("火雨范围提升%d%%", (endless.friend_buff.rain_radius_mul - 1) * 100),
     rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec),
     rain_scorch_damage_true = string.format("焦土伤害提升%d点，且造成真实伤害",
@@ -184,7 +204,20 @@ local key_desc_map = {
     barrack_luck = string.format("士兵在受到攻击时有额外%d概率闪避伤害",
         endless.friend_buff.barrack_luck * 100),
     barrack_synergy = string.format("每一个士兵为周围的防御塔提供%d%%伤害加成",
-        endless.friend_buff.barrack_synergy * 100)
+        endless.friend_buff.barrack_synergy * 100),
+    engineer_focus = string.format("火炮对中心敌人额外造成%d%%伤害，闪电与导弹伤害提升%d%%",
+        endless.friend_buff.engineer_focus * 100, endless.friend_buff.engineer_focus * 100 * 0.8),
+    engineer_aftermath = string.format(
+        "火炮/闪电附带震荡，对附近敌人额外造成%d/15点爆炸/雷电伤害",
+        endless.friend_buff.engineer_aftermath),
+    engineer_seek = string.format("使炮塔主动对空，电塔攻击范围提升%d%%",
+        endless.friend_buff.engineer_seek * 100),
+    engineer_fireball = string.format("每次炮弹/雷电攻击额外减少火雨%.2f秒冷却",
+        endless.friend_buff.engineer_fireball / 30),
+    ban_rain = "不再出现火雨科技",
+    ban_archer = "不再出现箭塔科技",
+    ban_engineer = "不再出现炮塔科技",
+    ban_barrack = "不再出现兵营科技"
 }
 endless.key_label_map = key_label_map
 endless.key_desc_map = key_desc_map

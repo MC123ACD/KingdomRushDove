@@ -2474,8 +2474,7 @@ function scripts.bomb.update(this, store, script)
             d.reduce_armor = b.reduce_armor
             d.reduce_magic_armor = b.reduce_magic_armor
 
-            if this.up_alchemical_powder_chance and math.random() < this.up_alchemical_powder_chance or
-                UP:get_upgrade("engineer_efficiency") then
+            if UP:get_upgrade("engineer_efficiency") then
                 d.value = dmax
             else
                 local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, b.to, dradius)
@@ -2501,13 +2500,21 @@ function scripts.bomb.update(this, store, script)
                 queue_insert(store, mod)
             end
 
+            local mods
             if b.mod then
-                local mod = E:create_entity(b.mod)
-
-                mod.modifier.target_id = enemy.id
-                mod.modifier.source_id = this.id
-                if U.flags_pass(enemy.vis, mod.modifier) then
-                    queue_insert(store, mod)
+                mods = type(b.mod) == "string" and {b.mod} or b.mod
+            elseif b.mods then
+                mods = b.mods
+            end
+            if mods then
+                for _, mod_name in pairs(mods) do
+                    local mod = E:create_entity(mod_name)
+                    mod.modifier.damage_factor = b.damage_factor
+                    mod.modifier.target_id = enemy.id
+                    mod.modifier.source_id = this.id
+                    if U.flags_pass(enemy.vis, mod.modifier) then
+                        queue_insert(store, mod)
+                    end
                 end
             end
         end
@@ -4207,7 +4214,7 @@ function scripts.aura_apply_mod.update(this, store, script)
                     new_mod.modifier.level = this.aura.level
                     new_mod.modifier.target_id = target.id
                     new_mod.modifier.source_id = this.id
-
+                    new_mod.modifier.damage_factor = this.aura.damage_factor
                     if this.aura.hide_source_fx and target.id == this.aura.source_id then
                         new_mod.render = nil
                     end
@@ -5574,7 +5581,6 @@ function scripts.mod_tower_factors.insert(this, store)
     local target = store.entities[m.target_id]
 
     if not target or not target.tower then
-        log.error("cannot insert mod_tower_factors to entity %s - ", target.id, target.template_name)
 
         return false
     end
@@ -5601,8 +5607,6 @@ function scripts.mod_tower_factors.remove(this, store)
     local target = store.entities[m.target_id]
 
     if not target or not target.tower then
-        log.error("error removing mod_tower_factors %s", this.id)
-
         return true
     end
 

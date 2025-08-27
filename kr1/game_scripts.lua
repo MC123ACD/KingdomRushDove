@@ -1,5 +1,4 @@
 ﻿-- chunkname: @./kr1/game_scripts.lua
-
 require("klua.table")
 require("i18n")
 require("scripts")
@@ -36,14 +35,14 @@ scripts.mod_high_elven = {
 
 scripts.mod_tower_decal = {}
 function scripts.mod_tower_decal.insert(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
-	if not target or not target.tower then
-		log.error("cannot insert mod_crossbow_eagle to entity %s - ", target.id, target.template_name)
-		return false
-	end
-	signal.emit("mod-applied", this, target)
-	return true
+    local m = this.modifier
+    local target = store.entities[m.target_id]
+    if not target or not target.tower then
+        log.error("cannot insert mod_crossbow_eagle to entity %s - ", target.id, target.template_name)
+        return false
+    end
+    signal.emit("mod-applied", this, target)
+    return true
 end
 function scripts.mod_tower_decal.remove(this, store, script)
     return true
@@ -52,233 +51,234 @@ end
 scripts.mod_crossbow_eagle = {}
 
 function scripts.mod_crossbow_eagle.insert(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
     local range_factor = this.range_factor + m.level * this.range_factor_inc
     local cooldown_factor = this.cooldown_factor + m.level * this.cooldown_factor_inc
-	if not target or not target.tower then
-		log.error("cannot insert mod_crossbow_eagle to entity %s - ", target.id, target.template_name)
-		return false
-	end
+    if not target or not target.tower then
+        log.error("cannot insert mod_crossbow_eagle to entity %s - ", target.id, target.template_name)
+        return false
+    end
     SU.insert_tower_range_buff(target, range_factor, true)
     SU.insert_tower_cooldown_buff(target, cooldown_factor)
 
-	signal.emit("mod-applied", this, target)
+    signal.emit("mod-applied", this, target)
 
-	return true
+    return true
 end
 
 function scripts.mod_crossbow_eagle.remove(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
     local range_factor = this.range_factor + m.level * this.range_factor_inc
     local cooldown_factor = this.cooldown_factor + m.level * this.cooldown_factor_inc
     SU.remove_tower_range_buff(target, range_factor, true)
     SU.remove_tower_cooldown_buff(target, cooldown_factor)
-	return true
+    return true
 end
 
 scripts.aura_totem = {}
 
 function scripts.aura_totem.update(this, store, script)
-	local last_hit_ts = 0
-	local a = this.aura
-	local ring_sid = 1
-	local ground_sid = 2
-	local totem_sid = 3
+    local last_hit_ts = 0
+    local a = this.aura
+    local ring_sid = 1
+    local ground_sid = 2
+    local totem_sid = 3
 
-	if GR:cell_is(this.pos.x, this.pos.y, TERRAIN_WATER) then
-		local fx = E:create_entity("fx")
+    if GR:cell_is(this.pos.x, this.pos.y, TERRAIN_WATER) then
+        local fx = E:create_entity("fx")
 
-		fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-		fx.render.sprites[1].name = "totem_water_fx_enter"
-		fx.render.sprites[1].anchor.y = 0.09
-		fx.render.sprites[1].ts = store.tick_ts
+        fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+        fx.render.sprites[1].name = "totem_water_fx_enter"
+        fx.render.sprites[1].anchor.y = 0.09
+        fx.render.sprites[1].ts = store.tick_ts
 
-		queue_insert(store, fx)
-	end
+        queue_insert(store, fx)
+    end
 
-	this.render.sprites[ring_sid].ts = store.tick_ts
+    this.render.sprites[ring_sid].ts = store.tick_ts
 
-	U.animation_start(this, "start", nil, store.tick_ts, 1, totem_sid)
+    U.animation_start(this, "start", nil, store.tick_ts, 1, totem_sid)
 
-	while not U.animation_finished(this, totem_sid) do
-		coroutine.yield()
-	end
+    while not U.animation_finished(this, totem_sid) do
+        coroutine.yield()
+    end
 
-	while store.tick_ts - this.aura.ts < a.duration + a.duration_inc * a.level do
-		local enemies = table.filter(store.enemies, function(k, e)
-			return not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and band(e.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
-		end)
+    while store.tick_ts - this.aura.ts < a.duration + a.duration_inc * a.level do
+        local enemies = table.filter(store.enemies, function(k, e)
+            return not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and
+                       band(e.vis.bans, this.aura.vis_flags) == 0 and
+                       U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
+        end)
 
         local mods = this.aura.mods or {this.aura.mod}
 
-		for _, enemy in pairs(enemies) do
+        for _, enemy in pairs(enemies) do
             for _, mod in pairs(mods) do
                 local new_mod = E:create_entity(mod)
                 new_mod.modifier.level = this.aura.level
                 new_mod.modifier.target_id = enemy.id
                 new_mod.modifier.source_id = this.id
-    			queue_insert(store, new_mod)
+                queue_insert(store, new_mod)
             end
-		end
+        end
 
-		last_hit_ts = store.tick_ts
+        last_hit_ts = store.tick_ts
 
-		while store.tick_ts - last_hit_ts < this.aura.cycle_time do
-			coroutine.yield()
-		end
-	end
+        while store.tick_ts - last_hit_ts < this.aura.cycle_time do
+            coroutine.yield()
+        end
+    end
 
-	if GR:cell_is(this.pos.x, this.pos.y, TERRAIN_WATER) then
-		local fx = E:create_entity("fx")
+    if GR:cell_is(this.pos.x, this.pos.y, TERRAIN_WATER) then
+        local fx = E:create_entity("fx")
 
-		fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-		fx.render.sprites[1].name = "totem_water_fx_exit"
-		fx.render.sprites[1].anchor.y = 0.09
-		fx.render.sprites[1].ts = store.tick_ts
+        fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+        fx.render.sprites[1].name = "totem_water_fx_exit"
+        fx.render.sprites[1].anchor.y = 0.09
+        fx.render.sprites[1].ts = store.tick_ts
 
-		queue_insert(store, fx)
-	end
+        queue_insert(store, fx)
+    end
 
-	this.render.sprites[ground_sid].hidden = true
-	this.render.sprites[ring_sid].hidden = true
+    this.render.sprites[ground_sid].hidden = true
+    this.render.sprites[ring_sid].hidden = true
 
-	S:queue("TotemVanish")
-	U.animation_start(this, "end", nil, store.tick_ts, 1, totem_sid)
+    S:queue("TotemVanish")
+    U.animation_start(this, "end", nil, store.tick_ts, 1, totem_sid)
 
-	while not U.animation_finished(this, totem_sid) do
-		coroutine.yield()
-	end
+    while not U.animation_finished(this, totem_sid) do
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
-
-
-
-
 
 scripts.twister = {}
 
 function scripts.twister.insert(this, store, script)
-	return true
+    return true
 end
 
 function scripts.twister.update(this, store, script)
-	local dmax = this.damage_max + this.aura.level * this.damage_inc
-	local dmin = this.damage_min + this.aura.level * this.damage_inc
-	local enemies_max = this.enemies_max + this.aura.level * this.enemies_inc
+    local dmax = this.damage_max + this.aura.level * this.damage_inc
+    local dmin = this.damage_min + this.aura.level * this.damage_inc
+    local enemies_max = this.enemies_max + this.aura.level * this.enemies_inc
 
-	U.animation_start(this, "start", nil, store.tick_ts, 1)
+    U.animation_start(this, "start", nil, store.tick_ts, 1)
 
-	while not U.animation_finished(this) do
-		coroutine.yield()
-	end
+    while not U.animation_finished(this) do
+        coroutine.yield()
+    end
 
-	S:queue("ArchmageTwisterTravel")
-	U.animation_start(this, "travel", nil, store.tick_ts, -1)
+    S:queue("ArchmageTwisterTravel")
+    U.animation_start(this, "travel", nil, store.tick_ts, -1)
 
-	local np = this.nav_path
+    local np = this.nav_path
 
-	np.ni = km.clamp(P:get_start_node(np.pi), P:get_end_node(np.pi), np.ni)
+    np.ni = km.clamp(P:get_start_node(np.pi), P:get_end_node(np.pi), np.ni)
 
-	local walk_nodes = this.nodes + this.aura.level * this.nodes_inc
-	local nodes_step = -5
-	local picked_enemies = this.picked_enemies
-	local terrains = P:path_terrain_types(np.pi)
+    local walk_nodes = this.nodes + this.aura.level * this.nodes_inc
+    local nodes_step = -5
+    local picked_enemies = this.picked_enemies
+    local terrains = P:path_terrain_types(np.pi)
 
-	terrains = band(terrains, bnot(TERRAIN_CLIFF))
+    terrains = band(terrains, bnot(TERRAIN_CLIFF))
 
-	local last_node = P:get_start_node(np.pi) + this.nodes_limit
+    local last_node = P:get_start_node(np.pi) + this.nodes_limit
 
-	for i = 1, math.ceil(walk_nodes / math.abs(nodes_step)) do
-		if last_node >= np.ni and band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_CLIFF) == 0 then
-			coroutine.yield()
-			break
-		end
+    for i = 1, math.ceil(walk_nodes / math.abs(nodes_step)) do
+        if last_node >= np.ni and band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_CLIFF) == 0 then
+            coroutine.yield()
+            break
+        end
 
-		local next_pos = P:node_pos(np.pi, np.spi, np.ni + nodes_step)
+        local next_pos = P:node_pos(np.pi, np.spi, np.ni + nodes_step)
 
-		if P:is_node_valid(np.pi, np.ni + nodes_step, NF_TWISTER) and band(GR:cell_type(next_pos.x, next_pos.y), TERRAIN_CLIFF) == 0 then
-			np.ni = np.ni + nodes_step
-		end
+        if P:is_node_valid(np.pi, np.ni + nodes_step, NF_TWISTER) and
+            band(GR:cell_type(next_pos.x, next_pos.y), TERRAIN_CLIFF) == 0 then
+            np.ni = np.ni + nodes_step
+        end
 
-		np.spi = np.spi == 2 and 3 or 2
+        np.spi = np.spi == 2 and 3 or 2
 
-		U.set_destination(this, P:node_pos(np.pi, np.spi, np.ni))
+        U.set_destination(this, P:node_pos(np.pi, np.spi, np.ni))
 
-		while not this.motion.arrived do
-			U.walk(this, store.tick_length)
-			coroutine.yield()
+        while not this.motion.arrived do
+            U.walk(this, store.tick_length)
+            coroutine.yield()
 
-			if this.interrupt then
-				goto label_105_0
-			end
+            if this.interrupt then
+                goto label_105_0
+            end
 
-			if enemies_max > #picked_enemies then
-				local _, enemies = U.find_foremost_enemy(store.enemies, this.pos, 0, this.pickup_range, false, this.aura.vis_flags, this.aura.vis_bans, function(e)
-					return (not e.enemy.counts.twister or e.enemy.counts.twister < this.max_times_applied) and band(bnot(e.enemy.valid_terrains), terrains) == 0
-				end)
+            if enemies_max > #picked_enemies then
+                local _, enemies = U.find_foremost_enemy(store.enemies, this.pos, 0, this.pickup_range, false,
+                    this.aura.vis_flags, this.aura.vis_bans, function(e)
+                        return (not e.enemy.counts.twister or e.enemy.counts.twister < this.max_times_applied) and
+                                   band(bnot(e.enemy.valid_terrains), terrains) == 0
+                    end)
 
-				if enemies then
-					for _, enemy in ipairs(enemies) do
-						if enemies_max > #picked_enemies then
-							log.debug("^ twister %s picked up (%s)-%s", this.id, enemy.id, enemy.template_name)
-							-- AC:inc_check("FUJITA5", 1)
-							table.insert(picked_enemies, enemy)
-							SU.remove_modifiers(store, enemy)
-							SU.remove_auras(store, enemy)
+                if enemies then
+                    for _, enemy in ipairs(enemies) do
+                        if enemies_max > #picked_enemies then
+                            log.debug("^ twister %s picked up (%s)-%s", this.id, enemy.id, enemy.template_name)
+                            -- AC:inc_check("FUJITA5", 1)
+                            table.insert(picked_enemies, enemy)
+                            SU.remove_modifiers(store, enemy)
+                            SU.remove_auras(store, enemy)
                             U.sprites_hide(enemy, nil, nil, true)
                             SU.stun_inc(enemy)
                             scripts.cast_silence(enemy, store)
-							-- queue_remove(store, enemy)
+                            -- queue_remove(store, enemy)
 
-							-- enemy.health.dead = true
-							-- enemy.health.last_damage_types = DAMAGE_EAT
-							-- enemy.main_script.co = nil
-							-- enemy.main_script.runs = 0
+                            -- enemy.health.dead = true
+                            -- enemy.health.last_damage_types = DAMAGE_EAT
+                            -- enemy.main_script.co = nil
+                            -- enemy.main_script.runs = 0
 
-							U.unblock_all(store, enemy)
+                            U.unblock_all(store, enemy)
 
                             if enemy.health_bar then
                                 enemy.health_bar.hidden = true
                             end
 
-							if enemy.ui then
-								enemy.ui.can_click = false
-							end
+                            if enemy.ui then
+                                enemy.ui.can_click = false
+                            end
 
-							if enemy.count_group then
-								enemy.count_group.in_limbo = true
-							end
+                            if enemy.count_group then
+                                enemy.count_group.in_limbo = true
+                            end
 
                             enemy.vis_bans_before_twister = enemy.vis.bans
                             enemy.vis.bans = F_ALL
-						end
-					end
-				end
-			end
-		end
-	end
+                        end
+                    end
+                end
+            end
+        end
+    end
 
-	for _, enemy in pairs(picked_enemies) do
-		if not enemy.enemy.counts.twister then
-			enemy.enemy.counts.twister = 1
-		else
-			enemy.enemy.counts.twister = enemy.enemy.counts.twister + 1
-		end
+    for _, enemy in pairs(picked_enemies) do
+        if not enemy.enemy.counts.twister then
+            enemy.enemy.counts.twister = 1
+        else
+            enemy.enemy.counts.twister = enemy.enemy.counts.twister + 1
+        end
 
-		log.debug("v twister %s dropped (%s)-%s", this.id, enemy.id, enemy.template_name)
+        log.debug("v twister %s dropped (%s)-%s", this.id, enemy.id, enemy.template_name)
 
-		enemy.nav_path.pi = np.pi
-		enemy.nav_path.ni = km.clamp(1, #P:path(np.pi) - 1, math.random(-3, 3) + np.ni)
-		enemy.pos = P:node_pos(enemy.nav_path.pi, enemy.nav_path.spi, enemy.nav_path.ni)
-		-- enemy.main_script.runs = 1
-		-- enemy.health.dead = false
+        enemy.nav_path.pi = np.pi
+        enemy.nav_path.ni = km.clamp(1, #P:path(np.pi) - 1, math.random(-3, 3) + np.ni)
+        enemy.pos = P:node_pos(enemy.nav_path.pi, enemy.nav_path.spi, enemy.nav_path.ni)
+        -- enemy.main_script.runs = 1
+        -- enemy.health.dead = false
 
-		if enemy.ui then
-			enemy.ui.can_click = true
-		end
+        if enemy.ui then
+            enemy.ui.can_click = true
+        end
 
         if enemy.health_bar then
             enemy.health_bar.hidden = nil
@@ -289,288 +289,255 @@ function scripts.twister.update(this, store, script)
         SU.stun_dec(enemy)
         scripts.remove_silence(enemy, store)
         U.sprites_show(enemy, nil, nil, true)
-		-- enemy.motion.forced_waypoint = nil
+        -- enemy.motion.forced_waypoint = nil
 
-		-- queue_insert(store, enemy)
-	end
+        -- queue_insert(store, enemy)
+    end
 
-	coroutine.yield()
+    coroutine.yield()
 
-	for _, enemy in pairs(picked_enemies) do
-		local d = E:create_entity("damage")
-		d.source_id = this.id
-		d.target_id = enemy.id
-		d.value = math.random(dmin, dmax)
-		d.damage_type = this.damage_type
-		queue_damage(store, d)
+    for _, enemy in pairs(picked_enemies) do
+        local d = E:create_entity("damage")
+        d.source_id = this.id
+        d.target_id = enemy.id
+        d.value = math.random(dmin, dmax)
+        d.damage_type = this.damage_type
+        queue_damage(store, d)
         local m = E:create_entity(this.after_mod)
         m.source_id = this.id
         m.target_id = enemy.id
         queue_insert(store, m)
-	end
+    end
 
-	::label_105_0::
+    ::label_105_0::
 
-	this.picked_enemies = {}
+    this.picked_enemies = {}
 
-	S:stop("ArchmageTwisterTravel")
-	U.animation_start(this, "end", nil, store.tick_ts, 1)
+    S:stop("ArchmageTwisterTravel")
+    U.animation_start(this, "end", nil, store.tick_ts, 1)
 
-	while not U.animation_finished(this) do
-		coroutine.yield()
-	end
+    while not U.animation_finished(this) do
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.pestilence = {}
 
 function scripts.pestilence.insert(this, store, script)
-	local duration = this.aura.duration + this.aura.level * this.aura.duration_inc
+    local duration = this.aura.duration + this.aura.level * this.aura.duration_inc
 
-	this.actual_duration = duration
+    this.actual_duration = duration
 
-	local count = 2 + this.aura.level
-	local points = {}
+    local count = 2 + this.aura.level
+    local points = {}
 
-	this.aura.ts = store.tick_ts
+    this.aura.ts = store.tick_ts
 
-	for i = 1, count do
-		points[i] = V.v(this.pos.x + math.random(-42, 42), this.pos.y + math.random(-42, 42))
-	end
+    for i = 1, count do
+        points[i] = V.v(this.pos.x + math.random(-42, 42), this.pos.y + math.random(-42, 42))
+    end
 
-	for _, dest in pairs(points) do
-		local decal = E:create_entity("decal_tween")
+    for _, dest in pairs(points) do
+        local decal = E:create_entity("decal_tween")
 
-		decal.pos.x, decal.pos.y = dest.x, dest.y
-		decal.tween.props[1].keys = {
-			{
-				0,
-				0
-			},
-			{
-				0.1,
-				255
-			},
-			{
-				duration,
-				255
-			},
-			{
-				duration + 1.2,
-				0
-			}
-		}
-		decal.tween.props[1].name = "alpha"
-		decal.render.sprites[1].name = "NecroPestilenceDecal"
-		decal.render.sprites[1].animated = false
-		decal.render.sprites[1].z = Z_DECALS
-		decal.render.sprites[1].ts = store.tick_ts
+        decal.pos.x, decal.pos.y = dest.x, dest.y
+        decal.tween.props[1].keys = {{0, 0}, {0.1, 255}, {duration, 255}, {duration + 1.2, 0}}
+        decal.tween.props[1].name = "alpha"
+        decal.render.sprites[1].name = "NecroPestilenceDecal"
+        decal.render.sprites[1].animated = false
+        decal.render.sprites[1].z = Z_DECALS
+        decal.render.sprites[1].ts = store.tick_ts
 
-		queue_insert(store, decal)
-	end
+        queue_insert(store, decal)
+    end
 
-	local smoke_offsets = {
-		V.v(-17, 5),
-		V.v(6, 13),
-		V.v(3, -5),
-		V.v(23, 3)
-	}
+    local smoke_offsets = {V.v(-17, 5), V.v(6, 13), V.v(3, -5), V.v(23, 3)}
 
-	for _, dest in pairs(points) do
-		for i, off in ipairs(smoke_offsets) do
-			local sm = E:create_entity("decal_tween")
+    for _, dest in pairs(points) do
+        for i, off in ipairs(smoke_offsets) do
+            local sm = E:create_entity("decal_tween")
 
-			sm.pos.x, sm.pos.y = dest.x + off.x, dest.y + off.y
-			sm.tween.props[1].keys = {
-				{
-					0,
-					0
-				},
-				{
-					0.1,
-					255
-				},
-				{
-					duration,
-					255
-				},
-				{
-					duration + 1.2,
-					0
-				}
-			}
-			sm.tween.props[1].name = "alpha"
-			sm.render.sprites[1].name = "pestilence_fx_decal_smoke"
-			sm.render.sprites[1].z = Z_OBJECTS
-			sm.render.sprites[1].ts = store.tick_ts
-			sm.render.sprites[1].time_offset = i * 6 / FPS
+            sm.pos.x, sm.pos.y = dest.x + off.x, dest.y + off.y
+            sm.tween.props[1].keys = {{0, 0}, {0.1, 255}, {duration, 255}, {duration + 1.2, 0}}
+            sm.tween.props[1].name = "alpha"
+            sm.render.sprites[1].name = "pestilence_fx_decal_smoke"
+            sm.render.sprites[1].z = Z_OBJECTS
+            sm.render.sprites[1].ts = store.tick_ts
+            sm.render.sprites[1].time_offset = i * 6 / FPS
 
-			queue_insert(store, sm)
-		end
-	end
+            queue_insert(store, sm)
+        end
+    end
 
-	for _, dest in pairs(points) do
-		local s = E:create_entity("decal_timed")
+    for _, dest in pairs(points) do
+        local s = E:create_entity("decal_timed")
 
-		s.pos.x, s.pos.y = dest.x, dest.y
-		s.render.sprites[1].name = "pestilence_fx_start_smoke"
-		s.render.sprites[1].ts = store.tick_ts
-		s.render.sprites[1].time_offset = math.random(0, 3) / 30
+        s.pos.x, s.pos.y = dest.x, dest.y
+        s.render.sprites[1].name = "pestilence_fx_start_smoke"
+        s.render.sprites[1].ts = store.tick_ts
+        s.render.sprites[1].time_offset = math.random(0, 3) / 30
 
-		queue_insert(store, s)
-	end
+        queue_insert(store, s)
+    end
 
-	return true
+    return true
 end
 
 scripts.necromancer_aura = {}
 
 function scripts.necromancer_aura.update(this, store, script)
-	local last_ts = store.tick_ts
-	local tower_skeletons_count = 0
-	local cg = store.count_groups[this.count_group_type]
+    local last_ts = store.tick_ts
+    local tower_skeletons_count = 0
+    local cg = store.count_groups[this.count_group_type]
 
-	while true do
-		local source = store.entities[this.aura.source_id]
+    while true do
+        local source = store.entities[this.aura.source_id]
 
-		if not source then
-			queue_remove(store, this)
-			return
-		end
+        if not source then
+            queue_remove(store, this)
+            return
+        end
 
-		if store.tick_ts - last_ts >= this.aura.cycle_time then
-			last_ts = store.tick_ts
-			tower_skeletons_count = 0
+        if store.tick_ts - last_ts >= this.aura.cycle_time then
+            last_ts = store.tick_ts
+            tower_skeletons_count = 0
 
-			for _, e in pairs(store.soldiers) do
-				if e and not e.health.dead and e.soldier.tower_id == source.id and e.template_name ~= "soldier_death_rider" then
-					tower_skeletons_count = tower_skeletons_count + 1
-				end
-			end
+            for _, e in pairs(store.soldiers) do
+                if e and not e.health.dead and e.soldier.tower_id == source.id and e.template_name ~=
+                    "soldier_death_rider" then
+                    tower_skeletons_count = tower_skeletons_count + 1
+                end
+            end
 
-			local max_spawns = math.min(this.max_skeletons_tower - tower_skeletons_count, this.count_group_max - (cg[this.count_group_name] or 0))
+            local max_spawns = math.min(this.max_skeletons_tower - tower_skeletons_count,
+                this.count_group_max - (cg[this.count_group_name] or 0))
 
-			if max_spawns < 1 then
-				-- block empty
-			else
-				local dead_enemies = table.filter(store.enemies, function(k, v)
-					return v.enemy and v.vis and v.health and v.health.dead and band(v.health.last_damage_types, bor(DAMAGE_EAT)) == 0 and band(v.vis.bans, F_SKELETON) == 0 and store.tick_ts - v.health.death_ts >= v.health.dead_lifetime - this.aura.cycle_time and U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
-				end)
+            if max_spawns < 1 then
+                -- block empty
+            else
+                local dead_enemies = table.filter(store.enemies, function(k, v)
+                    return v.enemy and v.vis and v.health and v.health.dead and
+                               band(v.health.last_damage_types, bor(DAMAGE_EAT)) == 0 and band(v.vis.bans, F_SKELETON) ==
+                               0 and store.tick_ts - v.health.death_ts >= v.health.dead_lifetime - this.aura.cycle_time and
+                               U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
+                end)
 
-				dead_enemies = table.slice(dead_enemies, 1, max_spawns)
+                dead_enemies = table.slice(dead_enemies, 1, max_spawns)
 
-				for _, dead in pairs(dead_enemies) do
-					dead.vis.bans = bor(dead.vis.bans, F_SKELETON)
-					dead.health.delete_after = 0
+                for _, dead in pairs(dead_enemies) do
+                    dead.vis.bans = bor(dead.vis.bans, F_SKELETON)
+                    dead.health.delete_after = 0
 
-					local e
+                    local e
 
-					if dead.health.hp_max > this.min_health_for_knight then
-						e = E:create_entity("soldier_skeleton_knight")
-					else
-						e = E:create_entity("soldier_skeleton")
-					end
+                    if dead.health.hp_max > this.min_health_for_knight then
+                        e = E:create_entity("soldier_skeleton_knight")
+                    else
+                        e = E:create_entity("soldier_skeleton")
+                    end
 
-					e.pos = V.vclone(dead.pos)
+                    e.pos = V.vclone(dead.pos)
 
-					if dead.enemy.necromancer_offset then
-						e.pos.x = e.pos.x + dead.enemy.necromancer_offset.x * (dead.render.sprites[1].flip_x and -1 or 1)
-						e.pos.y = e.pos.y + dead.enemy.necromancer_offset.y
-					end
+                    if dead.enemy.necromancer_offset then
+                        e.pos.x = e.pos.x + dead.enemy.necromancer_offset.x *
+                                      (dead.render.sprites[1].flip_x and -1 or 1)
+                        e.pos.y = e.pos.y + dead.enemy.necromancer_offset.y
+                    end
 
-					e.nav_rally.center = V.vclone(e.pos)
-					e.nav_rally.pos = V.vclone(e.pos)
-					e.soldier.tower_id = source.id
+                    e.nav_rally.center = V.vclone(e.pos)
+                    e.nav_rally.pos = V.vclone(e.pos)
+                    e.soldier.tower_id = source.id
 
-					queue_insert(store, e)
-				end
-			end
-		end
+                    queue_insert(store, e)
+                end
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.mod_death_rider = {}
 
 function scripts.mod_death_rider.insert(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
     local level = m.level
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	target.health.armor = target.health.armor + (this.extra_armor + this.extra_armor_inc * level)
-	target.unit.damage_factor = target.unit.damage_factor * (this.inflicted_damage_factor + this.inflicted_damage_factor_inc * level)
+    target.health.armor = target.health.armor + (this.extra_armor + this.extra_armor_inc * level)
+    target.unit.damage_factor = target.unit.damage_factor *
+                                    (this.inflicted_damage_factor + this.inflicted_damage_factor_inc * level)
 
-	return true
+    return true
 end
 
 function scripts.mod_death_rider.remove(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
     local level = m.level
-	if target then
-		target.health.armor = target.health.armor - (this.extra_armor + this.extra_armor_inc * level)
-		target.unit.damage_factor = target.unit.damage_factor /( this.inflicted_damage_factor + this.inflicted_damage_factor_inc * level)
-	end
+    if target then
+        target.health.armor = target.health.armor - (this.extra_armor + this.extra_armor_inc * level)
+        target.unit.damage_factor = target.unit.damage_factor /
+                                        (this.inflicted_damage_factor + this.inflicted_damage_factor_inc * level)
+    end
 
-	return true
+    return true
 end
 
 scripts.drill = {}
 
 function scripts.drill.update(this, store, script)
-	local b = this.bullet
-	local target = store.entities[b.target_id]
+    local b = this.bullet
+    local target = store.entities[b.target_id]
 
-	if not target or target.health.dead then
-		queue_remove(store, this)
+    if not target or target.health.dead then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	local no = P:predict_enemy_node_advance(target, b.flight_time)
-	local pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + no)
+    local no = P:predict_enemy_node_advance(target, b.flight_time)
+    local pos = P:node_pos(target.nav_path.pi, target.nav_path.spi, target.nav_path.ni + no)
 
-	if GR:cell_is(pos.x, pos.y, TERRAIN_WATER) then
-		U.animation_start(this, "water", nil, store.tick_ts, 1)
-	else
-		U.animation_start(this, "ground", nil, store.tick_ts, 1)
-	end
+    if GR:cell_is(pos.x, pos.y, TERRAIN_WATER) then
+        U.animation_start(this, "water", nil, store.tick_ts, 1)
+    else
+        U.animation_start(this, "ground", nil, store.tick_ts, 1)
+    end
 
-	while store.tick_ts - this.render.sprites[1].ts < this.hit_time do
-		coroutine.yield()
-	end
+    while store.tick_ts - this.render.sprites[1].ts < this.hit_time do
+        coroutine.yield()
+    end
 
-	local d = E:create_entity("damage")
+    local d = E:create_entity("damage")
 
-	d.damage_type = DAMAGE_INSTAKILL
-	d.source_id = this.id
-	d.target_id = target.id
-	d.pop = b.pop
-	d.pop_conds = b.pop_conds
-	d.pop_chance = b.pop_chance
+    d.damage_type = DAMAGE_INSTAKILL
+    d.source_id = this.id
+    d.target_id = target.id
+    d.pop = b.pop
+    d.pop_conds = b.pop_conds
+    d.pop_chance = b.pop_chance
 
-	queue_damage(store, d)
+    queue_damage(store, d)
 
-	while not U.animation_finished(this) do
-		coroutine.yield()
-	end
+    while not U.animation_finished(this) do
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
-
-
 
 scripts.tower_elf_holder = {}
 
 function scripts.tower_elf_holder.get_info()
-	local tpl = E:get_template("tower_elf")
-	local o = scripts.tower_barrack.get_info(tpl)
-	return o
+    local tpl = E:get_template("tower_elf")
+    local o = scripts.tower_barrack.get_info(tpl)
+    return o
 end
 
 scripts.amazona_gain_mod = {}
@@ -623,7 +590,7 @@ function scripts.amazona_gain_mod.update(this, store, script)
             size_limit = size_limit - this.gain.size
             if size_limit >= 0 then
                 if not target.render.sprites[1].scale then
-                    target.render.sprites[1].scale = vec_2(1+this.gain.size, 1+this.gain.size)
+                    target.render.sprites[1].scale = vec_2(1 + this.gain.size, 1 + this.gain.size)
                 else
                     target.render.sprites[1].scale.x = target.render.sprites[1].scale.x + this.gain.size
                     target.render.sprites[1].scale.y = target.render.sprites[1].scale.y + this.gain.size
@@ -661,58 +628,59 @@ end
 scripts.soldier_dwarf = {}
 
 function scripts.soldier_dwarf.update(this, store, script)
-	local brk, sta
+    local brk, sta
 
-	if this.vis._bans then
-		this.vis.bans = this.vis._bans
-		this.vis._bans = nil
-	end
+    if this.vis._bans then
+        this.vis.bans = this.vis._bans
+        this.vis._bans = nil
+    end
 
-	while true do
-		if this.powers then
-			for pn, p in pairs(this.powers) do
-				if p.changed then
-					p.changed = nil
+    while true do
+        if this.powers then
+            for pn, p in pairs(this.powers) do
+                if p.changed then
+                    p.changed = nil
 
-					SU.soldier_power_upgrade(this, pn)
-				end
-			end
-		end
+                    SU.soldier_power_upgrade(this, pn)
+                end
+            end
+        end
 
-		if this.health.dead then
-			SU.y_soldier_death(store, this)
+        if this.health.dead then
+            SU.y_soldier_death(store, this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.soldier_idle(store, this)
-		else
-			while this.nav_rally.new do
-				if SU.y_soldier_new_rally(store, this) then
-					goto label_180_0
-				end
-			end
+        if this.unit.is_stunned then
+            SU.soldier_idle(store, this)
+        else
+            while this.nav_rally.new do
+                if SU.y_soldier_new_rally(store, this) then
+                    goto label_180_0
+                end
+            end
 
-			if this.powers.beer.level > 0 and this.health.hp > 0 and this.health.hp < this.beer.hp_trigger_factor * this.health.hp_max and store.tick_ts - this.beer.ts > this.beer.cooldown then
-				this.beer.ts = store.tick_ts
-				this.health.immune_to = DAMAGE_ALL
+            if this.powers.beer.level > 0 and this.health.hp > 0 and this.health.hp < this.beer.hp_trigger_factor *
+                this.health.hp_max and store.tick_ts - this.beer.ts > this.beer.cooldown then
+                this.beer.ts = store.tick_ts
+                this.health.immune_to = DAMAGE_ALL
 
-				U.y_animation_play(this, this.beer.animation, nil, store.tick_ts, 1)
+                U.y_animation_play(this, this.beer.animation, nil, store.tick_ts, 1)
 
-				this.health.immune_to = 0
+                this.health.immune_to = 0
 
-				local m = E:create_entity(this.beer.mod)
+                local m = E:create_entity(this.beer.mod)
 
-				m.pos = this.pos
-				m.modifier.level = this.powers.beer.level
-				m.modifier.target_id = this.id
-				m.modifier.source_id = this.id
+                m.pos = this.pos
+                m.modifier.level = this.powers.beer.level
+                m.modifier.target_id = this.id
+                m.modifier.source_id = this.id
 
-				queue_insert(store, m)
+                queue_insert(store, m)
 
-				goto label_180_0
-			end
+                goto label_180_0
+            end
 
             brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
@@ -720,83 +688,80 @@ function scripts.soldier_dwarf.update(this, store, script)
                 goto label_180_0
             end
 
-			if SU.soldier_go_back_step(store, this) then
-				-- block empty
-			else
-				SU.soldier_idle(store, this)
-				SU.soldier_regen(store, this)
-			end
-		end
+            if SU.soldier_go_back_step(store, this) then
+                -- block empty
+            else
+                SU.soldier_idle(store, this)
+                SU.soldier_regen(store, this)
+            end
+        end
 
-		::label_180_0::
+        ::label_180_0::
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
-
 
 scripts.tower_sasquash_holder = {}
 
 function scripts.tower_sasquash_holder.get_info()
-	local tpl = E:get_template("tower_sasquash")
-	local o = scripts.tower_barrack.get_info(tpl)
+    local tpl = E:get_template("tower_sasquash")
+    local o = scripts.tower_barrack.get_info(tpl)
 
-	-- o.respawn = nil
+    -- o.respawn = nil
 
-	return o
+    return o
 end
 
 function scripts.tower_sasquash_holder.update(this, store)
-	while true do
-		local items = LU.list_entities(store.entities, "fx_fireball_explosion")
+    while true do
+        local items = LU.list_entities(store.entities, "fx_fireball_explosion")
 
-		if #items > 0 then
-			for _, e in pairs(items) do
-				if U.is_inside_ellipse(tpos(this), e.pos, this.unfreeze_radius) then
-					this.tower.upgrade_to = this.unfreeze_upgrade_to
+        if #items > 0 then
+            for _, e in pairs(items) do
+                if U.is_inside_ellipse(tpos(this), e.pos, this.unfreeze_radius) then
+                    this.tower.upgrade_to = this.unfreeze_upgrade_to
 
-					SU.insert_sprite(store, this.unfreeze_fx, this.pos)
-					queue_remove(store, this)
+                    SU.insert_sprite(store, this.unfreeze_fx, this.pos)
+                    queue_remove(store, this)
 
-					return
-				end
-			end
-		end
+                    return
+                end
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.soldier_barbarian = {}
 
 function scripts.soldier_barbarian.on_power_upgrade(this, power_name, power)
-	if not this._on_power_upgrade_called then
-		this._on_power_upgrade_called = true
-		this.ranged.attacks[1].animation = this.ranged.attacks[1].animation .. "2"
-		this.melee.attacks[1].animation = this.melee.attacks[1].animation .. "2"
-		this.melee.attacks[2].animation = this.melee.attacks[2].animation .. "2"
-		this.render.sprites[1].angles.walk[1] = this.render.sprites[1].angles.walk[1] .. "2"
-		this.idle_flip.last_animation = this.idle_flip.last_animation .. "2"
-		this.soldier.melee_slot_offset = V.v(7, 0)
+    if not this._on_power_upgrade_called then
+        this._on_power_upgrade_called = true
+        this.ranged.attacks[1].animation = this.ranged.attacks[1].animation .. "2"
+        this.melee.attacks[1].animation = this.melee.attacks[1].animation .. "2"
+        this.melee.attacks[2].animation = this.melee.attacks[2].animation .. "2"
+        this.render.sprites[1].angles.walk[1] = this.render.sprites[1].angles.walk[1] .. "2"
+        this.idle_flip.last_animation = this.idle_flip.last_animation .. "2"
+        this.soldier.melee_slot_offset = V.v(7, 0)
         this.melee.attacks[1].damage_type = DAMAGE_RUDE
         this.melee.attacks[2].damage_type = DAMAGE_RUDE
         this.ranged.attacks[1].bullet = "axe_barbarian_rude"
-	end
+    end
 end
 
 scripts.soldier_sasquash = {}
 
 function scripts.soldier_sasquash.insert(this, store)
-	if not scripts.soldier_barrack.insert(this, store) then
-		return false
-	end
+    if not scripts.soldier_barrack.insert(this, store) then
+        return false
+    end
 
-	AC:got("HENDERSON")
+    AC:got("HENDERSON")
 
-	return true
+    return true
 end
-
-
 
 scripts.mod_dracolich_disease = {}
 
@@ -804,8 +769,8 @@ function scripts.mod_dracolich_disease.remove(this, store)
     local target = store.entities[this.modifier.target_id]
 
     if this.spread_active and target and target.health.dead and band(target.health.last_damage_types, DAMAGE_EAT) == 0 then
-        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.spread_radius,
-            this.modifier.vis_flags, this.modifier.vis_bans)
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, this.spread_radius, this.modifier.vis_flags,
+            this.modifier.vis_bans)
 
         if targets then
             for _, t in pairs(targets) do
@@ -1572,171 +1537,169 @@ function scripts.mod_stun_kraken.update(this, store)
 end
 
 function scripts.hero_elora.freeze_filter_fn(e, origin)
-	return e.template_name ~= "enemy_demon_cerberus"
+    return e.template_name ~= "enemy_demon_cerberus"
 end
 
 function scripts.hero_elora.update(this, store)
-	local h = this.health
-	local he = this.hero
-	local a, skill, brk, sta
-	local fe = this.render.sprites[2]
-	local ps = E:create_entity(this.run_particles_name)
+    local h = this.health
+    local he = this.hero
+    local a, skill, brk, sta
+    local fe = this.render.sprites[2]
+    local ps = E:create_entity(this.run_particles_name)
 
-	ps.particle_system.track_id = this.id
-	ps.particle_system.emit = false
+    ps.particle_system.track_id = this.id
+    ps.particle_system.emit = false
 
-	queue_insert(store, ps)
-	U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+    queue_insert(store, ps)
+    U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
 
-	this.health_bar.hidden = false
-	fe.hidden = true
+    this.health_bar.hidden = false
+    fe.hidden = true
 
-	while true do
-		ps.particle_system.emit = false
+    while true do
+        ps.particle_system.emit = false
 
-		if h.dead then
-			fe.hidden = true
+        if h.dead then
+            fe.hidden = true
 
-			SU.y_hero_death_and_respawn(store, this)
-		end
+            SU.y_hero_death_and_respawn(store, this)
+        end
 
-		fe.hidden = false
+        fe.hidden = false
 
-		if this.unit.is_stunned then
-			SU.soldier_idle(store, this)
-		else
-			while this.nav_rally.new do
-				ps.particle_system.emit = true
+        if this.unit.is_stunned then
+            SU.soldier_idle(store, this)
+        else
+            while this.nav_rally.new do
+                ps.particle_system.emit = true
 
-				if SU.y_hero_new_rally(store, this) then
-					goto label_61_0
-				end
-			end
+                if SU.y_hero_new_rally(store, this) then
+                    goto label_61_0
+                end
+            end
 
-			if SU.hero_level_up(store, this) then
-				U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
-			end
+            if SU.hero_level_up(store, this) then
+                U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+            end
 
-			a = this.timed_attacks.list[1]
-			skill = this.hero.skills.ice_storm
+            a = this.timed_attacks.list[1]
+            skill = this.hero.skills.ice_storm
 
-			if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-				local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans)
+            if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+                local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    a.vis_bans)
 
-				if not target then
-					SU.delay_attack(store, a, 0.13333333333333333)
-				else
-					local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
-					local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {
-						pi
-					}, nil, nil, NF_RALLY)
+                if not target then
+                    SU.delay_attack(store, a, 0.13333333333333333)
+                else
+                    local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
+                    local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {pi}, nil, nil, NF_RALLY)
 
-					if #nodes < 1 then
-						SU.delay_attack(store, a, 0.4)
-					else
-						local s_pi, s_spi, s_ni = unpack(nodes[1])
-						local flip = target.pos.x < this.pos.x
-						local start_ts = store.tick_ts
+                    if #nodes < 1 then
+                        SU.delay_attack(store, a, 0.4)
+                    else
+                        local s_pi, s_spi, s_ni = unpack(nodes[1])
+                        local flip = target.pos.x < this.pos.x
+                        local start_ts = store.tick_ts
 
-						U.animation_start(this, "iceStorm", flip, store.tick_ts)
-						S:queue(a.sound)
+                        U.animation_start(this, "iceStorm", flip, store.tick_ts)
+                        S:queue(a.sound)
 
-						if SU.y_hero_wait(store, this, a.cast_time) then
-							goto label_61_0
-						end
+                        if SU.y_hero_wait(store, this, a.cast_time) then
+                            goto label_61_0
+                        end
 
-						a.ts = start_ts
+                        a.ts = start_ts
 
-						SU.hero_gain_xp_from_skill(this, skill)
+                        SU.hero_gain_xp_from_skill(this, skill)
 
-						local delay = 0
-						local n_step = ni < s_ni and -2 or 2
+                        local delay = 0
+                        local n_step = ni < s_ni and -2 or 2
 
-						ni = km.clamp(1, #P:path(s_pi), ni < s_ni and ni + a.nodes_offset or ni)
+                        ni = km.clamp(1, #P:path(s_pi), ni < s_ni and ni + a.nodes_offset or ni)
 
-						for i = 1, skill.count[skill.level] do
-							local b = E:create_entity(a.bullet)
+                        for i = 1, skill.count[skill.level] do
+                            local b = E:create_entity(a.bullet)
 
-							b.pos = P:node_pos(pi, spi, ni)
-							b.spike_idx = math.random(1, 2)
-							b.render.sprites[1].prefix = b.render.sprites[1].prefix .. b.spike_idx
-							b.render.sprites[1].flip_x = not flip
-							b.render.sprites[2].name = b.render.sprites[2].name .. b.spike_idx
-							b.delay = delay
-							b.bullet.source_id = this.id
+                            b.pos = P:node_pos(pi, spi, ni)
+                            b.spike_idx = math.random(1, 2)
+                            b.render.sprites[1].prefix = b.render.sprites[1].prefix .. b.spike_idx
+                            b.render.sprites[1].flip_x = not flip
+                            b.render.sprites[2].name = b.render.sprites[2].name .. b.spike_idx
+                            b.delay = delay
+                            b.bullet.source_id = this.id
                             b.bullet.damage_factor = this.unit.damage_factor
-							queue_insert(store, b)
+                            queue_insert(store, b)
 
-							delay = delay + U.frandom(0.05, 0.1)
-							ni = ni + n_step
-							spi = km.zmod(spi + 1, 3)
-						end
+                            delay = delay + U.frandom(0.05, 0.1)
+                            ni = ni + n_step
+                            spi = km.zmod(spi + 1, 3)
+                        end
 
-						SU.y_hero_animation_wait(this)
+                        SU.y_hero_animation_wait(this)
 
-						goto label_61_0
-					end
-				end
-			end
+                        goto label_61_0
+                    end
+                end
+            end
 
-			a = this.timed_attacks.list[2]
-			skill = this.hero.skills.chill
+            a = this.timed_attacks.list[2]
+            skill = this.hero.skills.chill
 
-			if not a.disabled and store.tick_ts - a.ts > a.cooldown then
-				local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans)
+            if not a.disabled and store.tick_ts - a.ts > a.cooldown then
+                local target = U.find_random_enemy(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    a.vis_bans)
 
-				if not target then
-					SU.delay_attack(store, a, 0.13333333333333333)
-				else
-					local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
-					local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {
-						pi
-					}, nil, nil, NF_RALLY)
+                if not target then
+                    SU.delay_attack(store, a, 0.13333333333333333)
+                else
+                    local pi, spi, ni = target.nav_path.pi, target.nav_path.spi, target.nav_path.ni
+                    local nodes = P:nearest_nodes(this.pos.x, this.pos.y, {pi}, nil, nil, NF_RALLY)
 
-					if #nodes < 1 then
-						SU.delay_attack(store, a, 0.4)
-					else
-						local s_pi, s_spi, s_ni = unpack(nodes[1])
-						local flip = target.pos.x < this.pos.x
-						local start_ts = store.tick_ts
+                    if #nodes < 1 then
+                        SU.delay_attack(store, a, 0.4)
+                    else
+                        local s_pi, s_spi, s_ni = unpack(nodes[1])
+                        local flip = target.pos.x < this.pos.x
+                        local start_ts = store.tick_ts
 
-						U.animation_start(this, "chill", flip, store.tick_ts)
-						S:queue(a.sound)
+                        U.animation_start(this, "chill", flip, store.tick_ts)
+                        S:queue(a.sound)
 
-						if SU.y_hero_wait(store, this, a.cast_time) then
-							goto label_61_0
-						end
+                        if SU.y_hero_wait(store, this, a.cast_time) then
+                            goto label_61_0
+                        end
 
-						a.ts = start_ts
+                        a.ts = start_ts
 
-						SU.hero_gain_xp_from_skill(this, skill)
+                        SU.hero_gain_xp_from_skill(this, skill)
 
-						local delay = 0
-						local n_step = ni < s_ni and -a.step or a.step
+                        local delay = 0
+                        local n_step = ni < s_ni and -a.step or a.step
 
-						ni = km.clamp(1, #P:path(s_pi), ni < s_ni and ni + a.nodes_offset or ni)
+                        ni = km.clamp(1, #P:path(s_pi), ni < s_ni and ni + a.nodes_offset or ni)
 
-						for i = 1, skill.count[skill.level] do
-							local b = E:create_entity(a.bullet)
+                        for i = 1, skill.count[skill.level] do
+                            local b = E:create_entity(a.bullet)
 
-							b.pos = P:node_pos(pi, spi, ni)
-							b.render.sprites[1].prefix = b.render.sprites[1].prefix .. math.random(1, 3)
-							b.render.sprites[1].flip_x = not flip
-							b.delay = delay
+                            b.pos = P:node_pos(pi, spi, ni)
+                            b.render.sprites[1].prefix = b.render.sprites[1].prefix .. math.random(1, 3)
+                            b.render.sprites[1].flip_x = not flip
+                            b.delay = delay
 
-							queue_insert(store, b)
+                            queue_insert(store, b)
 
-							delay = delay + 0.05
-							ni = ni + n_step
-							spi = km.zmod(spi + 1, 3)
-						end
+                            delay = delay + 0.05
+                            ni = ni + n_step
+                            spi = km.zmod(spi + 1, 3)
+                        end
 
-						SU.y_hero_animation_wait(this)
+                        SU.y_hero_animation_wait(this)
 
-						goto label_61_0
-					end
-				end
-			end
+                        goto label_61_0
+                    end
+                end
+            end
 
             if this.soldier.target_id then
                 brk, sta = SU.y_soldier_ranged_attacks(store, this)
@@ -1745,10 +1708,10 @@ function scripts.hero_elora.update(this, store)
                 end
             end
 
-			brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+            brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
-			if brk or sta ~= A_NO_TARGET then
-				goto label_61_0
+            if brk or sta ~= A_NO_TARGET then
+                goto label_61_0
             end
 
             brk, sta = SU.y_soldier_ranged_attacks(store, this)
@@ -1763,208 +1726,207 @@ function scripts.hero_elora.update(this, store)
 
             SU.soldier_idle(store, this)
             SU.soldier_regen(store, this)
-		end
+        end
 
-		::label_61_0::
+        ::label_61_0::
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.elora_ice_spike = {}
 
 function scripts.elora_ice_spike.update(this, store)
-	local b = this.bullet
+    local b = this.bullet
 
-	U.sprites_hide(this)
+    U.sprites_hide(this)
 
-	if this.sprite_idx == 1 then
-		this.render.sprites[1].anchor.y = this.spike_1_anchor_y
-		this.render.sprites[2].anchor.y = this.spike_1_anchor_y
-	end
+    if this.sprite_idx == 1 then
+        this.render.sprites[1].anchor.y = this.spike_1_anchor_y
+        this.render.sprites[2].anchor.y = this.spike_1_anchor_y
+    end
 
-	if this.delay then
-		U.y_wait(store, this.delay)
-	end
+    if this.delay then
+        U.y_wait(store, this.delay)
+    end
 
-	this.render.sprites[1].hidden = false
+    this.render.sprites[1].hidden = false
 
-	local start_ts = store.tick_ts
+    local start_ts = store.tick_ts
 
-	this.pos.x = this.pos.x + math.random(-4, 4)
-	this.pos.y = this.pos.y + math.random(-5, 5)
+    this.pos.x = this.pos.x + math.random(-4, 4)
+    this.pos.y = this.pos.y + math.random(-5, 5)
 
-	S:queue(this.sound_events.delayed_insert)
-	U.animation_start(this, "start", nil, store.tick_ts, false, 1)
-	U.y_wait(store, b.hit_time)
+    S:queue(this.sound_events.delayed_insert)
+    U.animation_start(this, "start", nil, store.tick_ts, false, 1)
+    U.y_wait(store, b.hit_time)
 
-	this.render.sprites[2].hidden = false
+    this.render.sprites[2].hidden = false
 
-	local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.damage_flags, b.damage_bans)
 
-	if targets then
-		for _, target in pairs(targets) do
-			local d = E:create_entity("damage")
+    if targets then
+        for _, target in pairs(targets) do
+            local d = E:create_entity("damage")
 
-			d.damage_type = b.damage_type
-			d.source_id = this.id
-			d.target_id = target.id
-			d.value = math.random(b.damage_min, b.damage_max)
+            d.damage_type = b.damage_type
+            d.source_id = this.id
+            d.target_id = target.id
+            d.value = math.random(b.damage_min, b.damage_max)
 
-			queue_damage(store, d)
-		end
-	end
+            queue_damage(store, d)
+        end
+    end
 
-	U.y_wait(store, 1)
-	S:queue(this.sound_events.ice_break)
-	U.y_wait(store, b.duration - (store.tick_ts - start_ts))
-	queue_remove(store, this)
+    U.y_wait(store, 1)
+    S:queue(this.sound_events.ice_break)
+    U.y_wait(store, b.duration - (store.tick_ts - start_ts))
+    queue_remove(store, this)
 end
 
 function scripts.hero_hacksaw.update(this, store)
-	local h = this.health
-	local he = this.hero
-	local a, skill, brk, sta
+    local h = this.health
+    local he = this.hero
+    local a, skill, brk, sta
 
-	U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+    U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
 
-	this.health_bar.hidden = false
+    this.health_bar.hidden = false
 
-	while true do
-		if h.dead then
-			S:queue(this.sound_events.death2)
-			SU.y_hero_death_and_respawn(store, this)
-		end
+    while true do
+        if h.dead then
+            S:queue(this.sound_events.death2)
+            SU.y_hero_death_and_respawn(store, this)
+        end
 
-		if this.unit.is_stunned then
-			SU.soldier_idle(store, this)
-		else
-			while this.nav_rally.new do
-				if SU.y_hero_new_rally(store, this) then
-					goto label_64_0
-				end
-			end
+        if this.unit.is_stunned then
+            SU.soldier_idle(store, this)
+        else
+            while this.nav_rally.new do
+                if SU.y_hero_new_rally(store, this) then
+                    goto label_64_0
+                end
+            end
 
-			if SU.hero_level_up(store, this) then
-				U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
-			end
+            if SU.hero_level_up(store, this) then
+                U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+            end
 
-			brk, sta = SU.y_soldier_ranged_attacks(store, this)
+            brk, sta = SU.y_soldier_ranged_attacks(store, this)
 
-			if brk then
-				-- block empty
-			else
-				brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+            if brk then
+                -- block empty
+            else
+                brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
-				if brk or sta ~= A_NO_TARGET then
-					-- block empty
-				elseif SU.soldier_go_back_step(store, this) then
-					-- block empty
-				else
-					SU.soldier_idle(store, this)
-					SU.soldier_regen(store, this)
-				end
-			end
-		end
+                if brk or sta ~= A_NO_TARGET then
+                    -- block empty
+                elseif SU.soldier_go_back_step(store, this) then
+                    -- block empty
+                else
+                    SU.soldier_idle(store, this)
+                    SU.soldier_regen(store, this)
+                end
+            end
+        end
 
-		::label_64_0::
+        ::label_64_0::
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.decal_oni_torment_sword = {}
 
 function scripts.decal_oni_torment_sword.update(this, store)
-	local sword_name = table.random(this.sword_names)
+    local sword_name = table.random(this.sword_names)
 
-	this.render.sprites[1].prefix = sword_name
-	this.render.sprites[1].hidden = true
+    this.render.sprites[1].prefix = sword_name
+    this.render.sprites[1].hidden = true
 
-	U.y_wait(store, this.delay)
+    U.y_wait(store, this.delay)
 
-	this.render.sprites[1].hidden = false
+    this.render.sprites[1].hidden = false
 
-	U.y_animation_play(this, "in", nil, store.tick_ts)
-	U.y_wait(store, this.duration)
-	U.y_animation_play(this, "out", nil, store.tick_ts)
-	queue_remove(store, this)
+    U.y_animation_play(this, "in", nil, store.tick_ts)
+    U.y_wait(store, this.duration)
+    U.y_animation_play(this, "out", nil, store.tick_ts)
+    queue_remove(store, this)
 end
 
 function scripts.hero_thor.update(this, store)
-	local h = this.health
-	local he = this.hero
-	local a, skill, brk, sta
+    local h = this.health
+    local he = this.hero
+    local a, skill, brk, sta
 
-	U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+    U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
 
-	this.health_bar.hidden = false
+    this.health_bar.hidden = false
 
-	while true do
-		if h.dead then
-			SU.y_hero_death_and_respawn(store, this)
-		end
+    while true do
+        if h.dead then
+            SU.y_hero_death_and_respawn(store, this)
+        end
 
-		if this.unit.is_stunned then
-			SU.soldier_idle(store, this)
-		else
-			while this.nav_rally.new do
-				if SU.y_hero_new_rally(store, this) then
-					goto label_87_0
-				end
-			end
+        if this.unit.is_stunned then
+            SU.soldier_idle(store, this)
+        else
+            while this.nav_rally.new do
+                if SU.y_hero_new_rally(store, this) then
+                    goto label_87_0
+                end
+            end
 
-			if SU.hero_level_up(store, this) then
-				U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
-			end
+            if SU.hero_level_up(store, this) then
+                U.y_animation_play(this, "levelUp", nil, store.tick_ts, 1)
+            end
 
-			brk, sta = SU.y_soldier_ranged_attacks(store, this)
+            brk, sta = SU.y_soldier_ranged_attacks(store, this)
 
-			if brk then
-				-- block empty
-			else
-				brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
+            if brk then
+                -- block empty
+            else
+                brk, sta = SU.y_soldier_melee_block_and_attacks(store, this)
 
-				if brk or sta ~= A_NO_TARGET then
-					-- block empty
-				elseif SU.soldier_go_back_step(store, this) then
-					-- block empty
-				else
-					SU.soldier_idle(store, this)
-					SU.soldier_regen(store, this)
-				end
-			end
-		end
+                if brk or sta ~= A_NO_TARGET then
+                    -- block empty
+                elseif SU.soldier_go_back_step(store, this) then
+                    -- block empty
+                else
+                    SU.soldier_idle(store, this)
+                    SU.soldier_regen(store, this)
+                end
+            end
+        end
 
-		::label_87_0::
+        ::label_87_0::
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 function scripts.hero_10yr.get_info(this)
-	local a = this.is_buffed and this.melee.attacks[3] or this.melee.attacks[1]
-	local min, max = a.damage_min + this.damage_buff, a.damage_max+this.damage_buff
+    local a = this.is_buffed and this.melee.attacks[3] or this.melee.attacks[1]
+    local min, max = a.damage_min + this.damage_buff, a.damage_max + this.damage_buff
 
-	min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
+    min, max = min * this.unit.damage_factor, max * this.unit.damage_factor
 
-	return {
-		type = STATS_TYPE_SOLDIER,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
+    return {
+        type = STATS_TYPE_SOLDIER,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
         damage_type = a.damage_type,
-		-- damage_icon = this.info.damage_icon,
-		armor = this.health.armor,
+        -- damage_icon = this.info.damage_icon,
+        armor = this.health.armor,
         magic_armor = this.health.magic_armor,
-		respawn = this.health.dead_lifetime
-	}
+        respawn = this.health.dead_lifetime
+    }
 end
 
-
 scripts.enemy_sheep = {
-    update = function (this, store)
+    update = function(this, store)
         local clicks = 0
         local hp_max = this.health.hp_max
         if hp_max > 4000 then
@@ -1999,9 +1961,8 @@ scripts.enemy_sheep = {
     end
 }
 
-
 scripts.enemy_shaman = {
-    update= function(this, store)
+    update = function(this, store)
         local a = this.timed_attacks.list[1]
         a.ts = store.tick_ts
 
@@ -2035,8 +1996,8 @@ scripts.enemy_shaman = {
                         if SU.y_enemy_wait(store, this, a.cast_time) then
                             goto label_95_0
                         end
-                        targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans,
-                            function(e)
+                        targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
+                            a.vis_bans, function(e)
                                 return e.health.hp < e.health.hp_max
                             end)
                         if targets then
@@ -2077,7 +2038,8 @@ scripts.enemy_spider_big = {
         local eggs_count = 0
 
         local function ready_to_lay()
-            return enemy_ready_to_magic_attack(this, store, ta) and eggs_count < ta.max_count and not U.get_blocker(store, this)
+            return enemy_ready_to_magic_attack(this, store, ta) and eggs_count < ta.max_count and
+                       not U.get_blocker(store, this)
         end
 
         while true do
@@ -2149,8 +2111,8 @@ scripts.enemy_troll_chieftain = {
         local function get_rage_targets()
             return U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans, function(e)
                 return table.contains(a.allowed_templates, e.template_name) and
-                        not U.has_modifier_in_list(store, e, a.exclude_with_mods) and
-                        not U.has_modifier_types(store, e, MOD_TYPE_SLOW)
+                           not U.has_modifier_in_list(store, e, a.exclude_with_mods) and
+                           not U.has_modifier_types(store, e, MOD_TYPE_SLOW)
             end)
         end
 
@@ -2217,282 +2179,285 @@ scripts.enemy_troll_chieftain = {
 scripts.enemy_demon_mage = {}
 
 function scripts.enemy_demon_mage.update(this, store)
-	local a = this.timed_attacks.list[1]
+    local a = this.timed_attacks.list[1]
 
-	a.ts = store.tick_ts
+    a.ts = store.tick_ts
 
-	local function ready_to_shield()
-		return enemy_ready_to_magic_attack(this, store, a)
-	end
+    local function ready_to_shield()
+        return enemy_ready_to_magic_attack(this, store, a)
+    end
 
-	local function get_shield_targets()
-		return U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans, function(e)
-			return (table.contains(a.allowed_templates, e.template_name))
-		end)
-	end
+    local function get_shield_targets()
+        return U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans, function(e)
+            return (table.contains(a.allowed_templates, e.template_name))
+        end)
+    end
 
-	::label_107_0::
+    ::label_107_0::
 
-	while true do
-		if this.health.dead then
-			SU.y_enemy_death(store, this)
+    while true do
+        if this.health.dead then
+            SU.y_enemy_death(store, this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.y_enemy_stun(store, this)
-		else
-			if ready_to_shield() then
-				local targets = get_shield_targets()
+        if this.unit.is_stunned then
+            SU.y_enemy_stun(store, this)
+        else
+            if ready_to_shield() then
+                local targets = get_shield_targets()
 
-				if not targets then
-					SU.delay_attack(store, a, 0.5)
-				else
-					a.ts = store.tick_ts
+                if not targets then
+                    SU.delay_attack(store, a, 0.5)
+                else
+                    a.ts = store.tick_ts
 
-					U.animation_start(this, a.animation, nil, store.tick_ts, false)
-					S:queue(a.sound)
+                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                    S:queue(a.sound)
 
-					if SU.y_enemy_wait(store, this, a.cast_time) then
-						goto label_107_0
-					end
+                    if SU.y_enemy_wait(store, this, a.cast_time) then
+                        goto label_107_0
+                    end
 
-					targets = get_shield_targets()
+                    targets = get_shield_targets()
 
-					if targets then
-						local shielded_count = 0
+                    if targets then
+                        local shielded_count = 0
 
-						for _, target in ipairs(targets) do
-							if shielded_count >= a.max_count then
-								break
-							end
+                        for _, target in ipairs(targets) do
+                            if shielded_count >= a.max_count then
+                                break
+                            end
 
-							shielded_count = shielded_count + 1
+                            shielded_count = shielded_count + 1
 
-							local m = E:create_entity(a.mod)
+                            local m = E:create_entity(a.mod)
 
-							m.modifier.source_id = this.id
-							m.modifier.target_id = target.id
+                            m.modifier.source_id = this.id
+                            m.modifier.target_id = target.id
 
-							queue_insert(store, m)
-						end
-					end
+                            queue_insert(store, m)
+                        end
+                    end
 
-					if SU.y_enemy_animation_wait(this) then
-						goto label_107_0
-					end
-				end
-			end
+                    if SU.y_enemy_animation_wait(this) then
+                        goto label_107_0
+                    end
+                end
+            end
 
-			if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_shield, ready_to_shield) then
-				-- block empty
-			else
-				coroutine.yield()
-			end
-		end
-	end
+            if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_shield, ready_to_shield) then
+                -- block empty
+            else
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.enemy_demon_legion = {}
 
 function scripts.enemy_demon_legion.update(this, store)
-	local a = this.timed_attacks.list[1]
+    local a = this.timed_attacks.list[1]
 
-	local function ready_to_clone()
-		return a.count > 0 and enemy_ready_to_magic_attack(this, store, a) and P:nodes_to_defend_point(this.nav_path) > a.nodes_limit
-	end
+    local function ready_to_clone()
+        return a.count > 0 and enemy_ready_to_magic_attack(this, store, a) and P:nodes_to_defend_point(this.nav_path) >
+                   a.nodes_limit
+    end
 
-	if this.render.sprites[1].name == "raise" then
-		if this.sound_events and this.sound_events.raise then
-			S:queue(this.sound_events.raise, this.sound_events.raise_args)
-		end
+    if this.render.sprites[1].name == "raise" then
+        if this.sound_events and this.sound_events.raise then
+            S:queue(this.sound_events.raise, this.sound_events.raise_args)
+        end
 
-		local an, af = U.animation_name_facing_point(this, "raise", this.motion.dest)
+        local an, af = U.animation_name_facing_point(this, "raise", this.motion.dest)
 
-		U.y_animation_play(this, an, af, store.tick_ts)
+        U.y_animation_play(this, an, af, store.tick_ts)
 
-		if not this.health.dead then
-			this.health_bar.hidden = nil
-		end
+        if not this.health.dead then
+            this.health_bar.hidden = nil
+        end
 
-		if this._raise_vis_bans then
-			this.vis.bans = this._raise_vis_bans
-			this.health.ignore_damage = this._raise_ignore_damage
-		end
+        if this._raise_vis_bans then
+            this.vis.bans = this._raise_vis_bans
+            this.health.ignore_damage = this._raise_ignore_damage
+        end
 
-		U.animation_start(this, "idle", af, store.tick_ts, true)
-	end
+        U.animation_start(this, "idle", af, store.tick_ts, true)
+    end
 
-	a.count = a.generation
-	a.ts = store.tick_ts
+    a.count = a.generation
+    a.ts = store.tick_ts
 
-	::label_111_0::
+    ::label_111_0::
 
-	while true do
-		if this.health.dead then
-			SU.y_enemy_death(store, this)
-			return
-		end
+    while true do
+        if this.health.dead then
+            SU.y_enemy_death(store, this)
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.y_enemy_stun(store, this)
-		else
-			if ready_to_clone() then
-				U.animation_start(this, a.animation, nil, store.tick_ts)
+        if this.unit.is_stunned then
+            SU.y_enemy_stun(store, this)
+        else
+            if ready_to_clone() then
+                U.animation_start(this, a.animation, nil, store.tick_ts)
 
-				if SU.y_enemy_wait(store, this, a.spawn_time) then
-					goto label_111_0
-				end
+                if SU.y_enemy_wait(store, this, a.spawn_time) then
+                    goto label_111_0
+                end
 
-				local e = E:create_entity(a.entity)
+                local e = E:create_entity(a.entity)
 
-				e._summoned = true
-				e.health.hp = this.health.hp
-				e.enemy.gold = 0
-				e.render.sprites[1].name = "raise"
-				e.timed_attacks.list[1].generation = a.generation - 1
-				e.nav_path.pi = this.nav_path.pi
-				e.nav_path.spi = math.random(1, 3)
-				e.nav_path.ni = this.nav_path.ni + math.random(a.spawn_offset_nodes[1], a.spawn_offset_nodes[2])
+                e._summoned = true
+                e.health.hp = this.health.hp
+                e.enemy.gold = 0
+                e.render.sprites[1].name = "raise"
+                e.timed_attacks.list[1].generation = a.generation - 1
+                e.nav_path.pi = this.nav_path.pi
+                e.nav_path.spi = math.random(1, 3)
+                e.nav_path.ni = this.nav_path.ni + math.random(a.spawn_offset_nodes[1], a.spawn_offset_nodes[2])
 
-				if not P:is_node_valid(e.nav_path.pi, e.nav_path.ni) then
-					e.nav_path.ni = this.nav_path.ni
-				end
+                if not P:is_node_valid(e.nav_path.pi, e.nav_path.ni) then
+                    e.nav_path.ni = this.nav_path.ni
+                end
 
-				queue_insert(store, e)
-				SU.y_enemy_animation_wait(this)
+                queue_insert(store, e)
+                SU.y_enemy_animation_wait(this)
 
-				a.ts = store.tick_ts
-				a.count = a.count - 1
-				a.cooldown = a.cooldown_after
-			end
+                a.ts = store.tick_ts
+                a.count = a.count - 1
+                a.cooldown = a.cooldown_after
+            end
 
-			if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_clone, ready_to_clone) then
-				-- block empty
-			else
-				coroutine.yield()
-			end
-		end
-	end
+            if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_clone, ready_to_clone) then
+                -- block empty
+            else
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.enemy_demon_gulaemon = {}
 
 function scripts.enemy_demon_gulaemon.update(this, store)
-	local cont, blocker, is_flying
-	local a = this.timed_actions.list[1]
-	local sp = this.render.sprites[1]
+    local cont, blocker, is_flying
+    local a = this.timed_actions.list[1]
+    local sp = this.render.sprites[1]
 
-	this.is_flying = false
-	a.ts = store.tick_ts
+    this.is_flying = false
+    a.ts = store.tick_ts
 
-	local function ready_for_takeoff()
-		return not is_flying and enemy_ready_to_magic_attack(this, store, a) and P:nodes_to_defend_point(this.nav_path) > a.nodes_limit_start
-	end
+    local function ready_for_takeoff()
+        return
+            not is_flying and enemy_ready_to_magic_attack(this, store, a) and P:nodes_to_defend_point(this.nav_path) >
+                a.nodes_limit_start
+    end
 
-	local function ready_to_land()
-		return this._should_land
-	end
+    local function ready_to_land()
+        return this._should_land
+    end
 
-	local function patch_offsets(factor)
-		this.health_bar.offset.y = this.health_bar.offset.y + factor * a.off_health_bar_y
-		this.ui.click_rect.pos.y = this.ui.click_rect.pos.y + factor * a.off_click_rect_y
-		this.unit.mod_offset.y = this.unit.mod_offset.y + factor * a.off_mod_offset_y
-		this.unit.hit_offset.y = this.unit.hit_offset.y + factor * a.off_hit_offset_y
-	end
+    local function patch_offsets(factor)
+        this.health_bar.offset.y = this.health_bar.offset.y + factor * a.off_health_bar_y
+        this.ui.click_rect.pos.y = this.ui.click_rect.pos.y + factor * a.off_click_rect_y
+        this.unit.mod_offset.y = this.unit.mod_offset.y + factor * a.off_mod_offset_y
+        this.unit.hit_offset.y = this.unit.hit_offset.y + factor * a.off_hit_offset_y
+    end
 
-	::label_113_0::
+    ::label_113_0::
 
-	while true do
-		if this.health.dead then
-			SU.y_enemy_death(store, this)
+    while true do
+        if this.health.dead then
+            SU.y_enemy_death(store, this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.y_enemy_stun(store, this)
-		else
-			if ready_to_land() and not this.health.dead then
-				this._should_land = nil
-				this.health_bar.hidden = true
+        if this.unit.is_stunned then
+            SU.y_enemy_stun(store, this)
+        else
+            if ready_to_land() and not this.health.dead then
+                this._should_land = nil
+                this.health_bar.hidden = true
 
-				local an, af = U.animation_name_facing_point(this, "land", this.motion.dest)
+                local an, af = U.animation_name_facing_point(this, "land", this.motion.dest)
 
-				U.animation_start(this, an, af, store.tick_ts)
+                U.animation_start(this, an, af, store.tick_ts)
 
-				while not U.animation_finished(this) and not this.health.dead do
-					coroutine.yield()
-				end
+                while not U.animation_finished(this) and not this.health.dead do
+                    coroutine.yield()
+                end
 
-				this.health_bar.hidden = this.health.dead
-				is_flying = false
+                this.health_bar.hidden = this.health.dead
+                is_flying = false
 
-				patch_offsets(-1)
+                patch_offsets(-1)
 
-				sp.prefix = sp.prefix_ground
-				sp.name = "idle"
-				this.vis.bans = U.flag_clear(this.vis.bans, a.bans_air)
-				this.vis.flags = U.flag_clear(this.vis.flags, a.flags_air)
-				this.unit.disintegrate_fx = "fx_enemy_desintegrate"
-				a.ts = store.tick_ts
+                sp.prefix = sp.prefix_ground
+                sp.name = "idle"
+                this.vis.bans = U.flag_clear(this.vis.bans, a.bans_air)
+                this.vis.flags = U.flag_clear(this.vis.flags, a.flags_air)
+                this.unit.disintegrate_fx = "fx_enemy_desintegrate"
+                a.ts = store.tick_ts
 
-				goto label_113_0
-			end
+                goto label_113_0
+            end
 
-			cont, blocker = SU.y_enemy_walk_until_blocked(store, this, is_flying, ready_to_land)
+            cont, blocker = SU.y_enemy_walk_until_blocked(store, this, is_flying, ready_to_land)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker and not is_flying then
-					if ready_for_takeoff() then
-						is_flying = true
+            if not cont then
+                -- block empty
+            else
+                if blocker and not is_flying then
+                    if ready_for_takeoff() then
+                        is_flying = true
 
-						U.cleanup_blockers(store, this)
-						SU.remove_modifiers_by_type(store, this, MOD_TYPE_SLOW)
-						patch_offsets(1)
+                        U.cleanup_blockers(store, this)
+                        SU.remove_modifiers_by_type(store, this, MOD_TYPE_SLOW)
+                        patch_offsets(1)
 
-						sp.prefix = sp.prefix_air
-						this.vis.bans = U.flag_set(this.vis.bans, a.bans_air)
-						this.vis.flags = U.flag_set(this.vis.flags, a.flags_air)
-						this.unit.disintegrate_fx = "fx_enemy_desintegrate_air"
-						this.health_bar.hidden = true
+                        sp.prefix = sp.prefix_air
+                        this.vis.bans = U.flag_set(this.vis.bans, a.bans_air)
+                        this.vis.flags = U.flag_set(this.vis.flags, a.flags_air)
+                        this.unit.disintegrate_fx = "fx_enemy_desintegrate_air"
+                        this.health_bar.hidden = true
 
-						local an, af = U.animation_name_facing_point(this, "takeoff", this.motion.dest)
+                        local an, af = U.animation_name_facing_point(this, "takeoff", this.motion.dest)
 
-						U.y_animation_play(this, an, af, store.tick_ts)
+                        U.y_animation_play(this, an, af, store.tick_ts)
 
-						this.health_bar.hidden = nil
+                        this.health_bar.hidden = nil
 
-						local m = E:create_entity(a.mod)
+                        local m = E:create_entity(a.mod)
 
-						m.modifier.source_id = this.id
-						m.modifier.target_id = this.id
+                        m.modifier.source_id = this.id
+                        m.modifier.target_id = this.id
 
-						queue_insert(store, m)
+                        queue_insert(store, m)
 
-						goto label_113_0
-					else
-						if not SU.y_wait_for_blocker(store, this, blocker) then
-							goto label_113_0
-						end
+                        goto label_113_0
+                    else
+                        if not SU.y_wait_for_blocker(store, this, blocker) then
+                            goto label_113_0
+                        end
 
-						while SU.can_melee_blocker(store, this, blocker) do
-							if not SU.y_enemy_melee_attacks(store, this, blocker) then
-								goto label_113_0
-							end
+                        while SU.can_melee_blocker(store, this, blocker) do
+                            if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                                goto label_113_0
+                            end
 
-							coroutine.yield()
-						end
-					end
-				end
+                            coroutine.yield()
+                        end
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.enemy_zombiemancer = {
@@ -2522,11 +2487,12 @@ scripts.enemy_zombiemancer = {
 
                 return false
             end
-            return enemy_ready_to_magic_attack(this, store, a2) and cg[a.count_group_name] and cg[a.count_group_name] > 0
+            return enemy_ready_to_magic_attack(this, store, a2) and cg[a.count_group_name] and cg[a.count_group_name] >
+                       0
         end
 
         local function get_zombies()
-            return table.filter(store.enemies, function(k,v)
+            return table.filter(store.enemies, function(k, v)
                 return v.owner and v.owner == this.id and v.health and not v.health.dead
             end)
         end
@@ -2572,7 +2538,7 @@ scripts.enemy_zombiemancer = {
                         e.render.sprites[1].name = a.spawn_animation
                         e.enemy.gold = 0
                         e.owner = this.id
-                        e.motion.max_speed = (0.5 + math.random() * 0.1 ) * FPS
+                        e.motion.max_speed = (0.5 + math.random() * 0.1) * FPS
                         E:add_comps(e, "count_group")
                         e.count_group.name = a.count_group_name
                         e.count_group.type = a.count_group_type
@@ -2656,95 +2622,95 @@ scripts.enemy_zombiemancer = {
 scripts.enemy_necromancer = {}
 
 function scripts.enemy_necromancer.update(this, store)
-	local a = this.timed_actions.list[1]
-	local cg = store.count_groups[a.count_group_type]
+    local a = this.timed_actions.list[1]
+    local cg = store.count_groups[a.count_group_type]
 
-	a.ts = store.tick_ts
+    a.ts = store.tick_ts
 
-	local function summon_count_exceeded()
-		return cg[a.count_group_name] and cg[a.count_group_name] >= a.count_group_max
-	end
+    local function summon_count_exceeded()
+        return cg[a.count_group_name] and cg[a.count_group_name] >= a.count_group_max
+    end
 
-	local function ready_to_summon()
-		if U.get_blocker(store, this) then
-			a.ts = store.tick_ts
+    local function ready_to_summon()
+        if U.get_blocker(store, this) then
+            a.ts = store.tick_ts
 
-			return false
-		else
-			return enemy_ready_to_magic_attack(this, store, a) and not summon_count_exceeded()
-		end
-	end
+            return false
+        else
+            return enemy_ready_to_magic_attack(this, store, a) and not summon_count_exceeded()
+        end
+    end
 
-	::label_117_0::
+    ::label_117_0::
 
-	while true do
-		if this.health.dead then
+    while true do
+        if this.health.dead then
             -- 找到所有由此necromancer召唤的骷髅，将它们的减伤效果取消（即damage_factor置为1）
             for _, entity in pairs(store.enemies) do
                 if entity.health.damage_factor_source and entity.health.damage_factor_source == this.id then
                     entity.health.damage_factor = entity.health.damage_factor + 0.3
                 end
             end
-			SU.y_enemy_death(store, this)
+            SU.y_enemy_death(store, this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.y_enemy_stun(store, this)
-		else
-			if ready_to_summon() then
-				U.animation_start(this, a.animation, nil, store.tick_ts, false)
+        if this.unit.is_stunned then
+            SU.y_enemy_stun(store, this)
+        else
+            if ready_to_summon() then
+                U.animation_start(this, a.animation, nil, store.tick_ts, false)
 
-				if SU.y_enemy_wait(store, this, a.spawn_time) then
-					goto label_117_0
-				end
+                if SU.y_enemy_wait(store, this, a.spawn_time) then
+                    goto label_117_0
+                end
 
-				for i = 1, a.max_count do
-					if SU.y_enemy_wait(store, this, a.spawn_delay) then
-						goto label_117_0
-					end
+                for i = 1, a.max_count do
+                    if SU.y_enemy_wait(store, this, a.spawn_delay) then
+                        goto label_117_0
+                    end
 
-					if i ~= 1 and summon_count_exceeded() then
-						break
-					end
+                    if i ~= 1 and summon_count_exceeded() then
+                        break
+                    end
 
-					local e_name = a.entity_names[U.random_table_idx(a.entity_chances)]
-					local e = E:create_entity(e_name)
-					local noff = a.summon_offsets[i] or a.summon_offsets[1]
+                    local e_name = a.entity_names[U.random_table_idx(a.entity_chances)]
+                    local e = E:create_entity(e_name)
+                    local noff = a.summon_offsets[i] or a.summon_offsets[1]
 
-					e.nav_path.pi = this.nav_path.pi
-					e.nav_path.spi = noff[1]
-					e.nav_path.ni = this.nav_path.ni + math.random(noff[2], noff[3])
-					e.render.sprites[1].name = a.spawn_animation
-					e.enemy.gold = 0
+                    e.nav_path.pi = this.nav_path.pi
+                    e.nav_path.spi = noff[1]
+                    e.nav_path.ni = this.nav_path.ni + math.random(noff[2], noff[3])
+                    e.render.sprites[1].name = a.spawn_animation
+                    e.enemy.gold = 0
                     e.health.damage_factor = e.health.damage_factor - 0.3
                     e.health.damage_factor_source = this.id
-                    e.motion.max_speed = (0.5 + math.random() * 0.2 ) * FPS
-					E:add_comps(e, "count_group")
+                    e.motion.max_speed = (0.5 + math.random() * 0.2) * FPS
+                    E:add_comps(e, "count_group")
 
-					e.count_group.name = a.count_group_name
-					e.count_group.type = a.count_group_type
+                    e.count_group.name = a.count_group_name
+                    e.count_group.type = a.count_group_type
 
-					if P:is_node_valid(e.nav_path.pi, e.nav_path.ni) then
-						queue_insert(store, e)
-					end
+                    if P:is_node_valid(e.nav_path.pi, e.nav_path.ni) then
+                        queue_insert(store, e)
+                    end
 
-					coroutine.yield()
-				end
+                    coroutine.yield()
+                end
 
-				U.y_animation_wait(this)
+                U.y_animation_wait(this)
 
-				a.ts = store.tick_ts
-			end
+                a.ts = store.tick_ts
+            end
 
-			if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_summon, ready_to_summon) then
-				-- block empty
-			else
-				coroutine.yield()
-			end
-		end
-	end
+            if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, ready_to_summon, ready_to_summon) then
+                -- block empty
+            else
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.enemy_demon_cerberus = {
@@ -2772,60 +2738,60 @@ scripts.enemy_demon_cerberus = {
 scripts.enemy_troll_skater = {}
 
 function scripts.enemy_troll_skater.update(this, store)
-	local walking_angles = this.render.sprites[1].angles.walk
+    local walking_angles = this.render.sprites[1].angles.walk
 
-	this._last_on_ice = false
+    this._last_on_ice = false
 
-	local function on_ice()
-		return this.enemy.can_do_magic and band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_ICE) ~= 0
-	end
+    local function on_ice()
+        return this.enemy.can_do_magic and band(GR:cell_type(this.pos.x, this.pos.y), TERRAIN_ICE) ~= 0
+    end
 
-	local function ice_changed()
-		return this._last_on_ice ~= on_ice()
-	end
+    local function ice_changed()
+        return this._last_on_ice ~= on_ice()
+    end
 
-	while true do
-		if this.health.dead then
-			SU.y_enemy_death(store, this)
-			return
-		end
+    while true do
+        if this.health.dead then
+            SU.y_enemy_death(store, this)
+            return
+        end
 
-		if this.unit.is_stunned then
-			SU.y_enemy_stun(store, this)
-		else
-			if ice_changed() then
-				if on_ice() then
-					this._last_on_ice = true
-					this.vis.bans = U.flag_set(this.vis.bans, this.skate.vis_bans_extra)
-					this.render.sprites[1].angles.walk = this.skate.walk_angles
+        if this.unit.is_stunned then
+            SU.y_enemy_stun(store, this)
+        else
+            if ice_changed() then
+                if on_ice() then
+                    this._last_on_ice = true
+                    this.vis.bans = U.flag_set(this.vis.bans, this.skate.vis_bans_extra)
+                    this.render.sprites[1].angles.walk = this.skate.walk_angles
 
-					local m = E:create_entity(this.skate.mod)
+                    local m = E:create_entity(this.skate.mod)
 
-					m.modifier.source_id = this.id
-					m.modifier.target_id = this.id
+                    m.modifier.source_id = this.id
+                    m.modifier.target_id = this.id
 
-					queue_insert(store, m)
+                    queue_insert(store, m)
 
-					this.skate._mod = m
-				else
-					this._last_on_ice = false
-					this.vis.bans = U.flag_clear(this.vis.bans, this.skate.vis_bans_extra)
-					this.render.sprites[1].angles.walk = walking_angles
+                    this.skate._mod = m
+                else
+                    this._last_on_ice = false
+                    this.vis.bans = U.flag_clear(this.vis.bans, this.skate.vis_bans_extra)
+                    this.render.sprites[1].angles.walk = walking_angles
 
-					if this.skate._mod then
-						queue_remove(store, this.skate._mod)
-						this.skate._mod = nil
-					end
-				end
-			end
+                    if this.skate._mod then
+                        queue_remove(store, this.skate._mod)
+                        this.skate._mod = nil
+                    end
+                end
+            end
 
-			if not SU.y_enemy_mixed_walk_melee_ranged(store, this, skating, ice_changed) then
-				-- block empty
-			else
-				coroutine.yield()
-			end
-		end
-	end
+            if not SU.y_enemy_mixed_walk_melee_ranged(store, this, skating, ice_changed) then
+                -- block empty
+            else
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.enemy_witch = {
@@ -2841,44 +2807,44 @@ scripts.enemy_witch = {
 scripts.enemy_spectral_knight = {}
 
 function scripts.enemy_spectral_knight.insert(this, store)
-	if not scripts.enemy_basic.insert(this, store) then
-		return false
-	end
+    if not scripts.enemy_basic.insert(this, store) then
+        return false
+    end
 
-	if this.render.sprites[1].name == "raise" then
-		this._raise_vis_bans = this.vis.bans
-		this._raise_ignore_damage = this.health.ignore_damage
-		this.vis.bans = bor(F_ALL)
-		this.health.ignore_damage = true
-		this.health_bar.hidden = true
-	end
+    if this.render.sprites[1].name == "raise" then
+        this._raise_vis_bans = this.vis.bans
+        this._raise_ignore_damage = this.health.ignore_damage
+        this.vis.bans = bor(F_ALL)
+        this.health.ignore_damage = true
+        this.health_bar.hidden = true
+    end
 
-	return true
+    return true
 end
 
 function scripts.enemy_spectral_knight.update(this, store)
-	if this.render.sprites[1].name == "raise" then
-		if this.sound_events and this.sound_events.raise then
-			S:queue(this.sound_events.raise, this.sound_events.raise_args)
-		end
+    if this.render.sprites[1].name == "raise" then
+        if this.sound_events and this.sound_events.raise then
+            S:queue(this.sound_events.raise, this.sound_events.raise_args)
+        end
 
-		local an, af = U.animation_name_facing_point(this, "raise", this.motion.dest)
+        local an, af = U.animation_name_facing_point(this, "raise", this.motion.dest)
 
-		U.y_animation_play(this, an, af, store.tick_ts, 1)
+        U.y_animation_play(this, an, af, store.tick_ts, 1)
 
-		if not this.health.dead then
-			this.health_bar.hidden = nil
-		end
+        if not this.health.dead then
+            this.health_bar.hidden = nil
+        end
 
-		if this._raise_vis_bans then
-			this.vis.bans = this._raise_vis_bans
-			this.health.ignore_damage = this._raise_ignore_damage
-		end
+        if this._raise_vis_bans then
+            this.vis.bans = this._raise_vis_bans
+            this.health.ignore_damage = this._raise_ignore_damage
+        end
 
-		U.animation_start(this, "idle", af, store.tick_ts, true)
-	end
+        U.animation_start(this, "idle", af, store.tick_ts, true)
+    end
 
-	return scripts.enemy_mixed.update(this, store)
+    return scripts.enemy_mixed.update(this, store)
 end
 
 scripts.eb_juggernaut = {}
@@ -2900,1198 +2866,1199 @@ scripts.eb_juggernaut = {}
 -- end
 
 function scripts.eb_juggernaut.insert(this, store, script)
-	this.melee.order = U.attack_order(this.melee.attacks)
-	return true
+    this.melee.order = U.attack_order(this.melee.attacks)
+    return true
 end
 
 function scripts.eb_juggernaut.update(this, store, script)
-	local ma = this.timed_attacks.list[1]
-	local ba = this.timed_attacks.list[2]
+    local ma = this.timed_attacks.list[1]
+    local ba = this.timed_attacks.list[2]
 
-	local function ready_to_shoot()
-		for _, a in pairs(this.timed_attacks.list) do
-			if enemy_ready_to_magic_attack(this, store, a) then
-				return true
-			end
-		end
-		return false
-	end
+    local function ready_to_shoot()
+        for _, a in pairs(this.timed_attacks.list) do
+            if enemy_ready_to_magic_attack(this, store, a) then
+                return true
+            end
+        end
+        return false
+    end
     local spawn_level = 0
-	ma.ts = store.tick_ts
-	ba.ts = store.tick_ts
+    ma.ts = store.tick_ts
+    ba.ts = store.tick_ts
 
-	::label_129_0::
+    ::label_129_0::
 
-	while true do
-		if this.health.dead then
-			LU.kill_all_enemies(store, true)
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
-			signal.emit("boss-killed", this)
+    while true do
+        if this.health.dead then
+            LU.kill_all_enemies(store, true)
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
+            signal.emit("boss-killed", this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			for _, a in pairs(this.timed_attacks.list) do
-				if store.tick_ts - a.ts < a.cooldown then
-					-- block empty
-				else
-					local target
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            for _, a in pairs(this.timed_attacks.list) do
+                if store.tick_ts - a.ts < a.cooldown then
+                    -- block empty
+                else
+                    local target
 
-					if a == ma then
-						local targets = U.find_soldiers_in_range(store.soldiers, this.pos, a.min_range, a.max_range, a.vis_flags, a.vis_bans)
+                    if a == ma then
+                        local targets = U.find_soldiers_in_range(store.soldiers, this.pos, a.min_range, a.max_range,
+                            a.vis_flags, a.vis_bans)
 
-						if not targets then
-							SU.delay_attack(store, a, 0.5)
+                        if not targets then
+                            SU.delay_attack(store, a, 0.5)
 
-							goto label_129_1
-						end
+                            goto label_129_1
+                        end
 
-						target = targets[1]
-					end
+                        target = targets[1]
+                    end
 
-					U.animation_start(this, a.animation, nil, store.tick_ts, false)
-					U.y_wait(store, a.shoot_time)
+                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                    U.y_wait(store, a.shoot_time)
 
-					local af = this.render.sprites[1].flip_x
-					local o = a.bullet_start_offset
-					local b = E:create_entity(a.bullet)
+                    local af = this.render.sprites[1].flip_x
+                    local o = a.bullet_start_offset
+                    local b = E:create_entity(a.bullet)
 
-					b.bullet.source_id = this.id
-					b.bullet.target_id = target and target.id
-					b.bullet.from = V.v(this.pos.x + (af and -1 or 1) * o.x, this.pos.y + o.y)
-					b.pos = V.vclone(b.bullet.from)
+                    b.bullet.source_id = this.id
+                    b.bullet.target_id = target and target.id
+                    b.bullet.from = V.v(this.pos.x + (af and -1 or 1) * o.x, this.pos.y + o.y)
+                    b.pos = V.vclone(b.bullet.from)
 
-					if a == ma then
-						b.bullet.to = V.v(b.pos.x + a.launch_vector.x, b.pos.y + a.launch_vector.y)
-					else
-						b.bullet.to = P:get_random_position(20, TERRAIN_LAND, NF_RANGE, 30)
+                    if a == ma then
+                        b.bullet.to = V.v(b.pos.x + a.launch_vector.x, b.pos.y + a.launch_vector.y)
+                    else
+                        b.bullet.to = P:get_random_position(20, TERRAIN_LAND, NF_RANGE, 30)
                         E:get_template(b.bullet.hit_payload).level = spawn_level < 7 and spawn_level or 7
-						b.bullet.hit_payload = E:create_entity(b.bullet.hit_payload)
-						b.bullet.hit_payload.spawner.owner_id = this.id
+                        b.bullet.hit_payload = E:create_entity(b.bullet.hit_payload)
+                        b.bullet.hit_payload.spawner.owner_id = this.id
                         spawn_level = spawn_level + 1
-					end
+                    end
 
-					if b.bullet.to then
-						queue_insert(store, b)
-					else
-						log.debug("could not find random position to shoot juggernaut bomb. skipping...")
-					end
+                    if b.bullet.to then
+                        queue_insert(store, b)
+                    else
+                        log.debug("could not find random position to shoot juggernaut bomb. skipping...")
+                    end
 
-					U.y_animation_wait(this)
+                    U.y_animation_wait(this)
 
-					a.ts = store.tick_ts
-				end
+                    a.ts = store.tick_ts
+                end
 
-				::label_129_1::
-			end
+                ::label_129_1::
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_shoot)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_shoot)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_129_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_129_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_shoot() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_129_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_shoot() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_129_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.eb_jt = {}
 
 function scripts.eb_jt.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+    local ma = this.melee.attacks[1]
+    local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_jt.on_damage(this, store, damage)
-	local pd = U.predict_damage(this, damage)
+    local pd = U.predict_damage(this, damage)
 
-	if pd >= this.health.hp then
-		this.dying = true
-		this.health_bar.hidden = true
-		this.health.ignore_damage = true
-		this.ui.can_select = false
-		this.vis.bans = F_ALL
+    if pd >= this.health.hp then
+        this.dying = true
+        this.health_bar.hidden = true
+        this.health.ignore_damage = true
+        this.ui.can_select = false
+        this.vis.bans = F_ALL
 
-		SU.remove_modifiers(store, this)
-		SU.stun_inc(this)
+        SU.remove_modifiers(store, this)
+        SU.stun_inc(this)
 
-		return false
-	end
+        return false
+    end
 
-	return true
+    return true
 end
 
 function scripts.eb_jt.update(this, store)
-	local fa = this.timed_attacks.list[1]
+    local fa = this.timed_attacks.list[1]
 
-	local function ready_to_freeze()
-		return enemy_ready_to_magic_attack(this, store, fa)
-	end
+    local function ready_to_freeze()
+        return enemy_ready_to_magic_attack(this, store, fa)
+    end
 
-	fa.ts = store.tick_ts
+    fa.ts = store.tick_ts
 
-	::label_133_0::
+    ::label_133_0::
 
-	while true do
-		if this.dying then
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
+    while true do
+        if this.dying then
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
 
-			if IS_CONSOLE then
-				U.y_wait(store, this.tap_timeout)
-			else
-				local tap = SU.insert_sprite(store, this.tap_decal, this.pos)
+            if IS_CONSOLE then
+                U.y_wait(store, this.tap_timeout)
+            else
+                local tap = SU.insert_sprite(store, this.tap_decal, this.pos)
 
-				this.ui.clicked = nil
+                this.ui.clicked = nil
 
-				while not this.ui.clicked do
-					coroutine.yield()
-				end
+                while not this.ui.clicked do
+                    coroutine.yield()
+                end
 
-				queue_remove(store, tap)
-			end
+                queue_remove(store, tap)
+            end
 
-			S:stop_all()
-			S:queue(this.sound_events.death_explode)
-			U.y_animation_play(this, "death_end", nil, store.tick_ts)
+            S:stop_all()
+            S:queue(this.sound_events.death_explode)
+            U.y_animation_play(this, "death_end", nil, store.tick_ts)
 
-			this.health.ignore_damage = false
-			this.health.hp = 0
+            this.health.ignore_damage = false
+            this.health.hp = 0
 
-			coroutine.yield()
-			LU.kill_all_enemies(store, true)
-			signal.emit("boss-killed", this)
+            coroutine.yield()
+            LU.kill_all_enemies(store, true)
+            signal.emit("boss-killed", this)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned and not this.dying then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_freeze() then
-				local towers = U.find_towers_in_range(store.towers, this.pos, fa, function(t)
-					return t.tower.can_be_mod
-				end)
+        if this.unit.is_stunned and not this.dying then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_freeze() then
+                local towers = U.find_towers_in_range(store.towers, this.pos, fa, function(t)
+                    return t.tower.can_be_mod
+                end)
 
-				if not towers then
-					SU.delay_attack(store, fa, 0.5)
-				else
-					SU.hide_modifiers(store, this, true)
-					U.animation_start(this, "freeze", nil, store.tick_ts, 1)
-					S:queue(fa.sound, fa.sound_args)
-					U.y_wait(store, fa.hit_time)
+                if not towers then
+                    SU.delay_attack(store, fa, 0.5)
+                else
+                    SU.hide_modifiers(store, this, true)
+                    U.animation_start(this, "freeze", nil, store.tick_ts, 1)
+                    S:queue(fa.sound, fa.sound_args)
+                    U.y_wait(store, fa.hit_time)
 
-					local hit_pos = V.vclone(this.pos)
-					local af = this.render.sprites[1].flip_x
+                    local hit_pos = V.vclone(this.pos)
+                    local af = this.render.sprites[1].flip_x
 
-					if fa.hit_offset then
-						hit_pos.x = hit_pos.x + (af and -1 or 1) * fa.hit_offset.x
-						hit_pos.y = hit_pos.y + fa.hit_offset.y
-					end
+                    if fa.hit_offset then
+                        hit_pos.x = hit_pos.x + (af and -1 or 1) * fa.hit_offset.x
+                        hit_pos.y = hit_pos.y + fa.hit_offset.y
+                    end
 
-					SU.insert_sprite(store, fa.hit_decal, hit_pos)
+                    SU.insert_sprite(store, fa.hit_decal, hit_pos)
 
-					for i, t in ipairs(towers) do
-						if i >= fa.count then
-							break
-						end
+                    for i, t in ipairs(towers) do
+                        if i >= fa.count then
+                            break
+                        end
 
-						local m = E:create_entity(fa.mod)
+                        local m = E:create_entity(fa.mod)
 
-						m.modifier.target_id = t.id
-						m.modifier.source_id = this.id
+                        m.modifier.target_id = t.id
+                        m.modifier.source_id = this.id
 
-						queue_insert(store, m)
-					end
+                        queue_insert(store, m)
+                    end
 
-					U.y_animation_wait(this)
-					SU.show_modifiers(store, this, true)
+                    U.y_animation_wait(this)
+                    SU.show_modifiers(store, this, true)
 
-					fa.ts = store.tick_ts
+                    fa.ts = store.tick_ts
 
-					U.animation_start(this, "breath", nil, store.tick_ts, -1)
-					S:queue(fa.exhausted_sound, fa.exhausted_sound_args)
+                    U.animation_start(this, "breath", nil, store.tick_ts, -1)
+                    S:queue(fa.exhausted_sound, fa.exhausted_sound_args)
 
-					if SU.y_enemy_wait(store, this, fa.exhausted_duration) then
-						goto label_133_0
-					end
-				end
-			end
+                    if SU.y_enemy_wait(store, this, fa.exhausted_duration) then
+                        goto label_133_0
+                    end
+                end
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_freeze)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_freeze)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_133_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_133_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_freeze() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_133_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_freeze() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_133_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.jt_spawner_aura = {}
 
 function scripts.jt_spawner_aura.update(this, store)
-	local spawn_ts = {}
+    local spawn_ts = {}
 
-	for i = 1, #this.spawn_data do
-		spawn_ts[i] = store.tick_ts
-	end
+    for i = 1, #this.spawn_data do
+        spawn_ts[i] = store.tick_ts
+    end
 
-	local owner = store.entities[this.aura.source_id]
+    local owner = store.entities[this.aura.source_id]
 
-	if not owner then
-		log.error("owner %s was not found. baling out", this.aura.source_id)
-	else
-		while not owner.dying do
-			for i, v in ipairs(this.spawn_data) do
-				local template, cooldown, delay, pi, spi = unpack(v)
+    if not owner then
+        log.error("owner %s was not found. baling out", this.aura.source_id)
+    else
+        while not owner.dying do
+            for i, v in ipairs(this.spawn_data) do
+                local template, cooldown, delay, pi, spi = unpack(v)
 
-				if store.tick_ts - spawn_ts[i] >= cooldown + delay then
-					local e = E:create_entity(template)
+                if store.tick_ts - spawn_ts[i] >= cooldown + delay then
+                    local e = E:create_entity(template)
 
-					e.nav_path.pi = pi
-					e.nav_path.spi = spi
-					e.nav_path.ni = P:get_start_node(pi)
+                    e.nav_path.pi = pi
+                    e.nav_path.spi = spi
+                    e.nav_path.ni = P:get_start_node(pi)
 
-					queue_insert(store, e)
+                    queue_insert(store, e)
 
-					spawn_ts[i] = store.tick_ts - delay
-				end
-			end
+                    spawn_ts[i] = store.tick_ts - delay
+                end
+            end
 
-			coroutine.yield()
-		end
-	end
+            coroutine.yield()
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.mod_jt_tower = {}
 
 function scripts.mod_jt_tower.update(this, store)
-	local clicks = 0
-	local s_tap = this.render.sprites[2]
-	local target = store.entities[this.modifier.target_id]
+    local clicks = 0
+    local s_tap = this.render.sprites[2]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		queue_remove(store, this)
+    if not target then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	SU.tower_block_inc(target)
+    SU.tower_block_inc(target)
 
-	this.pos.x, this.pos.y = target.pos.x, target.pos.y
+    this.pos.x, this.pos.y = target.pos.x, target.pos.y
 
-	U.y_animation_play(this, "start", nil, store.tick_ts, 1, 1)
+    U.y_animation_play(this, "start", nil, store.tick_ts, 1, 1)
 
-	s_tap.hidden = nil
+    s_tap.hidden = nil
 
-	SU.ui_click_proxy_add(target, this)
+    SU.ui_click_proxy_add(target, this)
 
-	while clicks < this.required_clicks do
-		if IS_CONSOLE then
-			if target.ui.hover_controller_active then
-				s_tap.alpha = s_tap.alpha_focused
-				s_tap.name = s_tap.name_focused
-			else
-				s_tap.alpha = s_tap.alpha_unfocused
-				s_tap.name = s_tap.name_unfocused
-			end
-		end
+    while clicks < this.required_clicks do
+        if IS_CONSOLE then
+            if target.ui.hover_controller_active then
+                s_tap.alpha = s_tap.alpha_focused
+                s_tap.name = s_tap.name_focused
+            else
+                s_tap.alpha = s_tap.alpha_unfocused
+                s_tap.name = s_tap.name_unfocused
+            end
+        end
 
-		if this.ui.clicked then
-			S:queue(this.sound_events.click)
-			SU.insert_sprite(store, this.ui.click_fx, target.pos)
+        if this.ui.clicked then
+            S:queue(this.sound_events.click)
+            SU.insert_sprite(store, this.ui.click_fx, target.pos)
 
-			this.ui.clicked = nil
-			clicks = clicks + 1
-		end
+            this.ui.clicked = nil
+            clicks = clicks + 1
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	SU.ui_click_proxy_remove(target, this)
+    SU.ui_click_proxy_remove(target, this)
 
-	this.ui.can_click = false
-	s_tap.hidden = true
+    this.ui.can_click = false
+    s_tap.hidden = true
 
-	U.animation_start(this, "end", nil, store.tick_ts, false, 1)
-	U.y_wait(store, this.end_delay)
-	SU.tower_block_dec(target)
-	U.y_animation_wait(this)
+    U.animation_start(this, "end", nil, store.tick_ts, false, 1)
+    U.y_wait(store, this.end_delay)
+    SU.tower_block_dec(target)
+    U.y_animation_wait(this)
 
-	if this.tween then
-		this.tween.ts = store.tick_ts
-		this.tween.props[1].disabled = nil
+    if this.tween then
+        this.tween.ts = store.tick_ts
+        this.tween.props[1].disabled = nil
 
-		U.y_wait(store, 2)
-	end
+        U.y_wait(store, 2)
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.eb_veznan = {}
 
 function scripts.eb_veznan.get_info(this)
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = this.melee.attacks[1].damage_min,
-		damage_max = this.melee.attacks[1].damage_max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = this.melee.attacks[1].damage_min,
+        damage_max = this.melee.attacks[1].damage_max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_veznan.on_damage(this, store, damage)
-	if this.phase == "battle" then
-		local pd = U.predict_damage(this, damage)
+    if this.phase == "battle" then
+        local pd = U.predict_damage(this, damage)
 
-		if pd >= this.health.hp then
-			this.phase_signal = true
+        if pd >= this.health.hp then
+            this.phase_signal = true
 
-			return false
-		end
-	elseif this.phase == "demon" then
-		local pd = U.predict_damage(this, damage)
+            return false
+        end
+    elseif this.phase == "demon" then
+        local pd = U.predict_damage(this, damage)
 
-		if pd >= this.health.hp then
-			this.phase_signal = true
+        if pd >= this.health.hp then
+            this.phase_signal = true
 
-			return false
-		end
-	end
+            return false
+        end
+    end
 
-	return true
+    return true
 end
 
 function scripts.eb_veznan.update(this, store)
-	local ba = this.timed_attacks.list[1]
-	local pa = this.timed_attacks.list[2]
-	local taunt_ts
-	local portals = LU.list_entities(store.entities, pa.portal_name)
-	local initial_hp = this.health.hp_max
+    local ba = this.timed_attacks.list[1]
+    local pa = this.timed_attacks.list[2]
+    local taunt_ts
+    local portals = LU.list_entities(store.entities, pa.portal_name)
+    local initial_hp = this.health.hp_max
 
-	local function y_taunt(idx, set)
-		U.animation_start(this, "laugh", nil, store.tick_ts, true)
-		SU.y_show_taunt_set(store, this.taunts, set or this.phase, idx, nil, nil, true)
-		U.y_animation_wait(this)
-		U.animation_start(this, "idleDown", nil, store.tick_ts, true)
-	end
+    local function y_taunt(idx, set)
+        U.animation_start(this, "laugh", nil, store.tick_ts, true)
+        SU.y_show_taunt_set(store, this.taunts, set or this.phase, idx, nil, nil, true)
+        U.y_animation_wait(this)
+        U.animation_start(this, "idleDown", nil, store.tick_ts, true)
+    end
 
-	local function y_block_towers()
-		local towers = table.filter(store.towers, function(_, e)
-			return e.tower.can_be_mod and not U.has_modifiers(store, e, ba.mod)
-		end)
+    local function y_block_towers()
+        local towers = table.filter(store.towers, function(_, e)
+            return e.tower.can_be_mod and not U.has_modifiers(store, e, ba.mod)
+        end)
 
-		if not towers or #towers == 0 then
-			SU.delay_attack(store, ba, 0.5)
+        if not towers or #towers == 0 then
+            SU.delay_attack(store, ba, 0.5)
 
-			return
-		end
+            return
+        end
 
-		local start_ts = store.tick_ts
+        local start_ts = store.tick_ts
 
-		U.animation_start(this, ba.animation, nil, store.tick_ts)
-		U.y_wait(store, ba.hit_time)
-		S:queue(ba.sound)
+        U.animation_start(this, ba.animation, nil, store.tick_ts)
+        U.y_wait(store, ba.hit_time)
+        S:queue(ba.sound)
 
-		local random_towers = table.random_order(towers)
+        local random_towers = table.random_order(towers)
 
-		for i, t in ipairs(random_towers) do
-			if i > ba.count then
-				break
-			end
+        for i, t in ipairs(random_towers) do
+            if i > ba.count then
+                break
+            end
 
-			local m = E:create_entity(ba.mod)
+            local m = E:create_entity(ba.mod)
 
-			m.modifier.target_id = t.id
-			m.modifier.source_id = this.id
+            m.modifier.target_id = t.id
+            m.modifier.source_id = this.id
 
-			queue_insert(store, m)
-		end
+            queue_insert(store, m)
+        end
 
-		U.y_animation_wait(this)
-		U.y_wait(store, ba.attack_duration - (store.tick_ts - start_ts))
+        U.y_animation_wait(this)
+        U.y_wait(store, ba.attack_duration - (store.tick_ts - start_ts))
 
-		ba.ts = store.tick_ts
+        ba.ts = store.tick_ts
 
-		if this.phase == "castle" then
-			U.animation_start(this, "idleDown", nil, store.tick_ts, true)
-		end
-	end
+        if this.phase == "castle" then
+            U.animation_start(this, "idleDown", nil, store.tick_ts, true)
+        end
+    end
 
-	local function y_portal()
-		local start_ts = store.tick_ts
+    local function y_portal()
+        local start_ts = store.tick_ts
 
-		U.animation_start(this, pa.animation, nil, store.tick_ts)
-		U.y_wait(store, pa.hit_time)
-		S:queue(pa.sound)
+        U.animation_start(this, pa.animation, nil, store.tick_ts)
+        U.y_wait(store, pa.hit_time)
+        S:queue(pa.sound)
 
-		pa.count = pa.count + 1
+        pa.count = pa.count + 1
 
-		for _, p in pairs(portals) do
-			if pa.portals[p.portal_idx] ~= 1 then
-				-- block empty
-			else
-				p.spawn_signal = true
-			end
-		end
+        for _, p in pairs(portals) do
+            if pa.portals[p.portal_idx] ~= 1 then
+                -- block empty
+            else
+                p.spawn_signal = true
+            end
+        end
 
-		U.y_animation_wait(this)
-		U.y_wait(store, pa.attack_duration - (store.tick_ts - start_ts))
+        U.y_animation_wait(this)
+        U.y_wait(store, pa.attack_duration - (store.tick_ts - start_ts))
 
-		pa.ts = store.tick_ts
+        pa.ts = store.tick_ts
 
-		if this.phase == "castle" then
-			U.animation_start(this, "idleDown", nil, store.tick_ts, true)
-		end
-	end
+        if this.phase == "castle" then
+            U.animation_start(this, "idleDown", nil, store.tick_ts, true)
+        end
+    end
 
-	local function signal_ready()
-		return this.phase_signal
-	end
+    local function signal_ready()
+        return this.phase_signal
+    end
 
-	local function battle_started()
-		return store.wave_group_number >= 1
-	end
+    local function battle_started()
+        return store.wave_group_number >= 1
+    end
 
-	local function ready_to_block()
-		return not ba.disabled and enemy_ready_to_magic_attack(this, store, ba)
-	end
+    local function ready_to_block()
+        return not ba.disabled and enemy_ready_to_magic_attack(this, store, ba)
+    end
 
-	local function ready_to_portal()
-		return not pa.disabled and enemy_ready_to_magic_attack(this, store, pa) and pa.count < pa.max_count
-	end
+    local function ready_to_portal()
+        return not pa.disabled and enemy_ready_to_magic_attack(this, store, pa) and pa.count < pa.max_count
+    end
 
-	local function can_break_battle_walk()
-		return ready_to_block() or ready_to_portal() or this.phase_signal
-	end
+    local function can_break_battle_walk()
+        return ready_to_block() or ready_to_portal() or this.phase_signal
+    end
 
-	this.phase_signal = nil
-	this.phase_signal = nil
+    this.phase_signal = nil
+    this.phase_signal = nil
 
-	while not this.phase_signal do
-		coroutine.yield()
-	end
+    while not this.phase_signal do
+        coroutine.yield()
+    end
 
-	this.phase = "welcome"
+    this.phase = "welcome"
 
-	for i, d in ipairs(this.taunts.sets.welcome.delays) do
-		if U.y_wait(store, d, battle_started) then
-			break
-		end
+    for i, d in ipairs(this.taunts.sets.welcome.delays) do
+        if U.y_wait(store, d, battle_started) then
+            break
+        end
 
-		y_taunt(i)
-	end
+        y_taunt(i)
+    end
 
-	while not battle_started() do
-		coroutine.yield()
-	end
+    while not battle_started() do
+        coroutine.yield()
+    end
 
-	y_taunt(5)
+    y_taunt(5)
 
-	this.phase = "castle"
+    this.phase = "castle"
 
-	local last_lives = store.lives
-	local last_wave
-	local taunt_cooldown = math.random(this.taunts.delay_min, this.taunts.delay_max)
+    local last_lives = store.lives
+    local last_wave
+    local taunt_cooldown = math.random(this.taunts.delay_min, this.taunts.delay_max)
 
-	ba.ts = store.tick_ts
-	pa.ts = store.tick_ts
-	taunt_ts = store.tick_ts
-	this.phase_signal = nil
+    ba.ts = store.tick_ts
+    pa.ts = store.tick_ts
+    taunt_ts = store.tick_ts
+    this.phase_signal = nil
 
-	while not this.phase_signal do
-		if store.wave_group_number ~= last_wave and not this.phase_signal then
-			local ba_wave_data = ba.data[store.wave_group_number]
+    while not this.phase_signal do
+        if store.wave_group_number ~= last_wave and not this.phase_signal then
+            local ba_wave_data = ba.data[store.wave_group_number]
 
-			ba.disabled = not ba_wave_data
+            ba.disabled = not ba_wave_data
 
-			if not ba.disabled then
-				ba.cooldown = ba_wave_data and ba_wave_data[1] or 0
-				ba.count = ba_wave_data and ba_wave_data[2] or 0
-			end
+            if not ba.disabled then
+                ba.cooldown = ba_wave_data and ba_wave_data[1] or 0
+                ba.count = ba_wave_data and ba_wave_data[2] or 0
+            end
 
-			local pa_wave_data = pa.data[store.wave_group_number]
+            local pa_wave_data = pa.data[store.wave_group_number]
 
-			pa.disabled = not pa_wave_data
+            pa.disabled = not pa_wave_data
 
-			if not pa.disabled then
-				pa.cooldown, pa.max_count, pa.portals = unpack(pa_wave_data)
-				pa.count = 0
-			end
+            if not pa.disabled then
+                pa.cooldown, pa.max_count, pa.portals = unpack(pa_wave_data)
+                pa.count = 0
+            end
 
-			last_wave = store.wave_group_number
-		end
+            last_wave = store.wave_group_number
+        end
 
-		if taunt_cooldown <= store.tick_ts - taunt_ts and not this.phase_signal then
-			y_taunt(nil, last_lives > store.lives and "damage" or nil)
+        if taunt_cooldown <= store.tick_ts - taunt_ts and not this.phase_signal then
+            y_taunt(nil, last_lives > store.lives and "damage" or nil)
 
-			last_lives = store.lives
-			taunt_ts = store.tick_ts
-			taunt_cooldown = math.random(this.taunts.delay_min, this.taunts.delay_max)
-		end
+            last_lives = store.lives
+            taunt_ts = store.tick_ts
+            taunt_cooldown = math.random(this.taunts.delay_min, this.taunts.delay_max)
+        end
 
-		if ready_to_block() and not this.phase_signal then
-			y_block_towers()
-		end
+        if ready_to_block() and not this.phase_signal then
+            y_block_towers()
+        end
 
-		if ready_to_portal() and not this.phase_signal then
-			y_portal()
-		end
+        if ready_to_portal() and not this.phase_signal then
+            y_portal()
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	this.phase = "pre_battle"
+    this.phase = "pre_battle"
 
-	local battle_ts = store.tick_ts
+    local battle_ts = store.tick_ts
 
-	pa.cooldown = this.battle.pa_cooldown
-	pa.max_count = this.battle.pa_max_count
-	pa.animation = this.battle.pa_animation
-	ba.animation = this.battle.ba_animation
+    pa.cooldown = this.battle.pa_cooldown
+    pa.max_count = this.battle.pa_max_count
+    pa.animation = this.battle.pa_animation
+    ba.animation = this.battle.ba_animation
 
-	U.y_wait(store, fts(24))
-	y_taunt()
-	U.y_wait(store, battle_ts + fts(115) - store.tick_ts)
-	U.y_animation_play(this, "walkAway", nil, store.tick_ts)
+    U.y_wait(store, fts(24))
+    y_taunt()
+    U.y_wait(store, battle_ts + fts(115) - store.tick_ts)
+    U.y_animation_play(this, "walkAway", nil, store.tick_ts)
 
-	this.nav_path.pi, this.nav_path.spi, this.nav_path.ni = 1, 1, 1
-	this.pos = P:node_pos(this.nav_path)
-	pa.ts = store.tick_ts
-	ba.ts = store.tick_ts
-	this.vis.bans = U.flag_clear(this.vis.bans, F_ALL)
-	this.health.ignore_damage = false
-	this.health_bar.hidden = nil
-	this.phase_signal = nil
-	this.phase = "battle"
+    this.nav_path.pi, this.nav_path.spi, this.nav_path.ni = 1, 1, 1
+    this.pos = P:node_pos(this.nav_path)
+    pa.ts = store.tick_ts
+    ba.ts = store.tick_ts
+    this.vis.bans = U.flag_clear(this.vis.bans, F_ALL)
+    this.health.ignore_damage = false
+    this.health_bar.hidden = nil
+    this.phase_signal = nil
+    this.phase = "battle"
 
-	while not this.phase_signal do
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_block() and not this.phase_signal then
-				y_block_towers()
-			end
+    while not this.phase_signal do
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_block() and not this.phase_signal then
+                y_block_towers()
+            end
 
-			if ready_to_portal() and not this.phase_signal then
-				y_portal()
-			end
+            if ready_to_portal() and not this.phase_signal then
+                y_portal()
+            end
 
-			if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, can_break_battle_walk, can_break_battle_walk) then
-				-- block empty
-			else
-				coroutine.yield()
-			end
-		end
-	end
+            if not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, can_break_battle_walk, can_break_battle_walk) then
+                -- block empty
+            else
+                coroutine.yield()
+            end
+        end
+    end
 
-	this.health_bar.hidden = true
-	this.vis.bans = U.flag_set(this.vis.bans, F_ALL)
+    this.health_bar.hidden = true
+    this.vis.bans = U.flag_set(this.vis.bans, F_ALL)
 
-	SU.remove_modifiers(store, this)
-	S:queue(this.demon.transform_sound)
-	U.y_animation_play(this, "demonTransform", nil, store.tick_ts, 1)
+    SU.remove_modifiers(store, this)
+    S:queue(this.demon.transform_sound)
+    U.y_animation_play(this, "demonTransform", nil, store.tick_ts, 1)
 
-	this.enemy.melee_slot = this.demon.melee_slot
-	this.health.hp = initial_hp * 1.5
-	this.health.hp_max = initial_hp * 1.5
-	this.health_bar.offset = this.demon.health_bar_offset
-	this.health_bar.frames[1].bar_width = this.health_bar.frames[1].bar_width * this.demon.health_bar_scale
-	this.health_bar.frames[2].bar_width = this.health_bar.frames[2].bar_width * this.demon.health_bar_scale
-	this.health_bar.frames[1].scale.x = this.health_bar.frames[1].scale.x * this.demon.health_bar_scale
-	this.health_bar.frames[2].scale.x = this.health_bar.frames[2].scale.x * this.demon.health_bar_scale
-	this.melee.attacks[1].disabled = true
-	this.melee.attacks[2].disabled = false
-	this.motion.max_speed = this.demon.speed
+    this.enemy.melee_slot = this.demon.melee_slot
+    this.health.hp = initial_hp * 1.5
+    this.health.hp_max = initial_hp * 1.5
+    this.health_bar.offset = this.demon.health_bar_offset
+    this.health_bar.frames[1].bar_width = this.health_bar.frames[1].bar_width * this.demon.health_bar_scale
+    this.health_bar.frames[2].bar_width = this.health_bar.frames[2].bar_width * this.demon.health_bar_scale
+    this.health_bar.frames[1].scale.x = this.health_bar.frames[1].scale.x * this.demon.health_bar_scale
+    this.health_bar.frames[2].scale.x = this.health_bar.frames[2].scale.x * this.demon.health_bar_scale
+    this.melee.attacks[1].disabled = true
+    this.melee.attacks[2].disabled = false
+    this.motion.max_speed = this.demon.speed
     this.motion.real_speed = U.real_max_speed(this)
-	this.render.sprites[1].prefix = this.demon.sprites_prefix
-	this.ui.click_rect = this.demon.ui_click_rect
-	this.unit.hit_offset = this.demon.unit_hit_offset
-	this.unit.mod_offset = this.demon.unit_mod_offset
-	this.unit.size = this.demon.unit_size
-	this.info.portrait = this.demon.info_portrait
-	this.health_bar.hidden = nil
-	this.vis.bans = U.flag_clear(this.vis.bans, F_ALL)
-	this.phase_signal = nil
-	this.phase = "demon"
+    this.render.sprites[1].prefix = this.demon.sprites_prefix
+    this.ui.click_rect = this.demon.ui_click_rect
+    this.unit.hit_offset = this.demon.unit_hit_offset
+    this.unit.mod_offset = this.demon.unit_mod_offset
+    this.unit.size = this.demon.unit_size
+    this.info.portrait = this.demon.info_portrait
+    this.health_bar.hidden = nil
+    this.vis.bans = U.flag_clear(this.vis.bans, F_ALL)
+    this.phase_signal = nil
+    this.phase = "demon"
 
-	while not this.phase_signal do
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		elseif not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, signal_ready, signal_ready) then
-			-- block empty
-		else
-			coroutine.yield()
-		end
-	end
+    while not this.phase_signal do
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        elseif not SU.y_enemy_mixed_walk_melee_ranged(store, this, false, signal_ready, signal_ready) then
+            -- block empty
+        else
+            coroutine.yield()
+        end
+    end
 
-	this.phase = "death"
-	this.health_bar.hidden = true
-	this.health.ignore_damage = true
-	this.ui.can_click = false
-	this.vis.bans = U.flag_set(this.vis.bans, F_ALL)
+    this.phase = "death"
+    this.health_bar.hidden = true
+    this.health.ignore_damage = true
+    this.ui.can_click = false
+    this.vis.bans = U.flag_set(this.vis.bans, F_ALL)
 
-	SU.remove_modifiers(store, this)
-	LU.kill_all_enemies(store, true)
-	S:stop_all()
-	S:queue(this.sound_events.death)
-	signal.emit("boss-killed", this)
-	U.animation_start(this, "death", nil, store.tick_ts, 1)
-	signal.emit("hide-gui")
-	U.y_wait(store, fts(110))
-	LU.kill_all_enemies(store, true)
+    SU.remove_modifiers(store, this)
+    LU.kill_all_enemies(store, true)
+    S:stop_all()
+    S:queue(this.sound_events.death)
+    signal.emit("boss-killed", this)
+    U.animation_start(this, "death", nil, store.tick_ts, 1)
+    signal.emit("hide-gui")
+    U.y_wait(store, fts(110))
+    LU.kill_all_enemies(store, true)
 
-	local sc = E:create_entity(this.souls_aura)
+    local sc = E:create_entity(this.souls_aura)
 
-	sc.pos = V.vclone(this.pos)
-	sc.pos.y = sc.pos.y + 14
+    sc.pos = V.vclone(this.pos)
+    sc.pos.y = sc.pos.y + 14
 
-	queue_insert(store, sc)
-	U.y_animation_wait(this)
-	U.animation_start(this, "deathLoop", nil, store.tick_ts, true)
-	U.y_wait(store, fts(90))
+    queue_insert(store, sc)
+    U.y_animation_wait(this)
+    U.animation_start(this, "deathLoop", nil, store.tick_ts, true)
+    U.y_wait(store, fts(90))
 
-	sc.interrupt = true
+    sc.interrupt = true
 
-	LU.kill_all_enemies(store, true)
-	U.animation_start(this, "deathEnd", nil, store.tick_ts, true)
+    LU.kill_all_enemies(store, true)
+    U.animation_start(this, "deathEnd", nil, store.tick_ts, true)
 
-	local circle = E:create_entity(this.white_circle)
+    local circle = E:create_entity(this.white_circle)
 
-	circle.pos.x, circle.pos.y = this.pos.x + 6, this.pos.y + 12
-	circle.tween.ts = store.tick_ts
-	circle.render.sprites[1].ts = store.tick_ts
+    circle.pos.x, circle.pos.y = this.pos.x + 6, this.pos.y + 12
+    circle.tween.ts = store.tick_ts
+    circle.render.sprites[1].ts = store.tick_ts
 
-	queue_insert(store, circle)
-	U.y_wait(store, fts(65) + 2)
+    queue_insert(store, circle)
+    U.y_wait(store, fts(65) + 2)
 
-	this.phase = "death-end"
+    this.phase = "death-end"
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.veznan_portal = {}
 
 function scripts.veznan_portal.update(this, store)
-	local spawns = this.spawn_groups[this.portal_idx]
-	local ni = this.out_nodes[this.pi]
+    local spawns = this.spawn_groups[this.portal_idx]
+    local ni = this.out_nodes[this.pi]
 
-	while true do
-		while not this.spawn_signal do
-			coroutine.yield()
-		end
+    while true do
+        while not this.spawn_signal do
+            coroutine.yield()
+        end
 
-		U.y_animation_play(this, "start", nil, store.tick_ts)
+        U.y_animation_play(this, "start", nil, store.tick_ts)
 
-		local roll = math.random()
-		local entity_data
+        local roll = math.random()
+        local entity_data
 
-		for _, s in pairs(spawns) do
-			if roll <= s[1] then
-				entity_data = s[2]
+        for _, s in pairs(spawns) do
+            if roll <= s[1] then
+                entity_data = s[2]
 
-				break
-			end
-		end
+                break
+            end
+        end
 
-		U.animation_start(this, "active", nil, store.tick_ts, true)
+        U.animation_start(this, "active", nil, store.tick_ts, true)
 
-		for _, d in pairs(entity_data) do
-			local min, max, template = unpack(d)
-			local count = min ~= max and math.random(min, max) or min
+        for _, d in pairs(entity_data) do
+            local min, max, template = unpack(d)
+            local count = min ~= max and math.random(min, max) or min
 
-			for i = 1, count do
-				local e = E:create_entity(template)
+            for i = 1, count do
+                local e = E:create_entity(template)
 
-				e.nav_path.pi = this.pi
-				e.nav_path.spi = math.random(1, 3)
-				e.nav_path.ni = ni
-				e.pos = V.vclone(this.pos)
+                e.nav_path.pi = this.pi
+                e.nav_path.spi = math.random(1, 3)
+                e.nav_path.ni = ni
+                e.pos = V.vclone(this.pos)
 
-				queue_insert(store, e)
-				U.y_wait(store, this.spawn_interval)
-			end
-		end
+                queue_insert(store, e)
+                U.y_wait(store, this.spawn_interval)
+            end
+        end
 
-		U.y_animation_wait(this)
-		U.y_animation_play(this, "end", nil, store.tick_ts)
+        U.y_animation_wait(this)
+        U.y_animation_play(this, "end", nil, store.tick_ts)
 
-		this.spawn_signal = nil
+        this.spawn_signal = nil
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.mod_veznan_tower = {}
 
 function scripts.mod_veznan_tower.update(this, store)
-	local clicks = 0
-	local s_tap = this.render.sprites[2]
-	local target = store.entities[this.modifier.target_id]
+    local clicks = 0
+    local s_tap = this.render.sprites[2]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		queue_remove(store, this)
+    if not target then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.pos.x, this.pos.y = target.pos.x, target.pos.y
+    this.pos.x, this.pos.y = target.pos.x, target.pos.y
 
-	U.y_animation_play(this, "start", nil, store.tick_ts, 1, 1)
+    U.y_animation_play(this, "start", nil, store.tick_ts, 1, 1)
 
-	s_tap.hidden = nil
+    s_tap.hidden = nil
 
-	U.animation_start(this, "preHold", nil, store.tick_ts, true, 1)
-	SU.tower_block_inc(target)
+    U.animation_start(this, "preHold", nil, store.tick_ts, true, 1)
+    SU.tower_block_inc(target)
 
-	local hold_ts = store.tick_ts
+    local hold_ts = store.tick_ts
 
-	SU.ui_click_proxy_add(target, this)
+    SU.ui_click_proxy_add(target, this)
 
-	while clicks < this.required_clicks and store.tick_ts - hold_ts < this.click_time do
-		if IS_CONSOLE then
-			if target.ui.hover_controller_active then
-				s_tap.alpha = s_tap.alpha_focused
-				s_tap.name = s_tap.name_focused
-			else
-				s_tap.alpha = s_tap.alpha_unfocused
-				s_tap.name = s_tap.name_unfocused
-			end
-		end
+    while clicks < this.required_clicks and store.tick_ts - hold_ts < this.click_time do
+        if IS_CONSOLE then
+            if target.ui.hover_controller_active then
+                s_tap.alpha = s_tap.alpha_focused
+                s_tap.name = s_tap.name_focused
+            else
+                s_tap.alpha = s_tap.alpha_unfocused
+                s_tap.name = s_tap.name_unfocused
+            end
+        end
 
-		if this.ui.clicked then
-			S:queue(this.sound_click)
+        if this.ui.clicked then
+            S:queue(this.sound_click)
 
-			this.ui.clicked = nil
-			clicks = clicks + 1
+            this.ui.clicked = nil
+            clicks = clicks + 1
 
-			if clicks >= this.required_clicks then
-				goto label_151_0
-			end
-		end
+            if clicks >= this.required_clicks then
+                goto label_151_0
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	s_tap.hidden = true
+    s_tap.hidden = true
 
-	S:queue(this.sound_blocked)
-	U.animation_start(this, "hold", nil, store.tick_ts, 1, 1)
-	U.y_wait(store, this.duration)
+    S:queue(this.sound_blocked)
+    U.animation_start(this, "hold", nil, store.tick_ts, 1, 1)
+    U.y_wait(store, this.duration)
 
-	::label_151_0::
+    ::label_151_0::
 
-	SU.ui_click_proxy_remove(target, this)
+    SU.ui_click_proxy_remove(target, this)
 
-	s_tap.hidden = true
+    s_tap.hidden = true
 
-	S:queue(this.sound_released)
-	U.y_animation_play(this, "remove", nil, store.tick_ts, 1, 1)
-	SU.tower_block_dec(target)
-	queue_remove(store, this)
+    S:queue(this.sound_released)
+    U.y_animation_play(this, "remove", nil, store.tick_ts, 1, 1)
+    SU.tower_block_dec(target)
+    queue_remove(store, this)
 end
 
 scripts.veznan_souls_aura = {}
 
 function scripts.veznan_souls_aura.update(this, store)
-	local count = 0
+    local count = 0
 
-	for i = 1, this.souls.count do
-		if this.interrupt then
-			break
-		end
+    for i = 1, this.souls.count do
+        if this.interrupt then
+            break
+        end
 
-		local e = E:create_entity(this.souls.entity)
+        local e = E:create_entity(this.souls.entity)
 
-		e.angle = U.frandom(this.souls.angles[1], this.souls.angles[2])
-		e.pos = V.vclone(this.pos)
-		e.soul_phase = 1 - i / this.souls.count
+        e.angle = U.frandom(this.souls.angles[1], this.souls.angles[2])
+        e.pos = V.vclone(this.pos)
+        e.soul_phase = 1 - i / this.souls.count
 
-		queue_insert(store, e)
+        queue_insert(store, e)
 
-		if this.souls.delay_frames >= 2 then
-			this.souls.delay_frames = this.souls.delay_frames - 1
-		end
+        if this.souls.delay_frames >= 2 then
+            this.souls.delay_frames = this.souls.delay_frames - 1
+        end
 
-		U.y_wait(store, fts(this.souls.delay_frames))
-	end
+        U.y_wait(store, fts(this.souls.delay_frames))
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.veznan_soul = {}
 
 function scripts.veznan_soul.update(this, store)
-	local speed = math.random(this.speed[1], this.speed[2])
-	local inc = math.random() > 0.5 and this.angle_variation or -this.angle_variation
-	local angle_var = 0
-	local start_ts = store.tick_ts
-	local last_ts = store.tick_ts
-	local ps = E:create_entity(this.particles_name)
+    local speed = math.random(this.speed[1], this.speed[2])
+    local inc = math.random() > 0.5 and this.angle_variation or -this.angle_variation
+    local angle_var = 0
+    local start_ts = store.tick_ts
+    local last_ts = store.tick_ts
+    local ps = E:create_entity(this.particles_name)
 
-	ps.particle_system.track_id = this.id
+    ps.particle_system.track_id = this.id
 
-	local pl = ps.particle_system.particle_lifetime
+    local pl = ps.particle_system.particle_lifetime
 
-	pl[1], pl[2] = pl[1] * this.soul_phase, pl[2] * this.soul_phase
+    pl[1], pl[2] = pl[1] * this.soul_phase, pl[2] * this.soul_phase
 
-	queue_insert(store, ps)
+    queue_insert(store, ps)
 
-	while store.tick_ts - start_ts < this.duration do
-		local dt = store.tick_ts - last_ts
-		local a = this.angle + angle_var
-		local x_step, y_step = V.rotate(a, speed * dt, 0)
+    while store.tick_ts - start_ts < this.duration do
+        local dt = store.tick_ts - last_ts
+        local a = this.angle + angle_var
+        local x_step, y_step = V.rotate(a, speed * dt, 0)
 
-		this.render.sprites[1].r = a
-		this.pos.x = this.pos.x + x_step
-		this.pos.y = this.pos.y + y_step
-		angle_var = angle_var + inc
+        this.render.sprites[1].r = a
+        this.pos.x = this.pos.x + x_step
+        this.pos.y = this.pos.y + y_step
+        angle_var = angle_var + inc
 
-		if angle_var >= this.max_angle then
-			inc = -this.angle_variation
-		elseif angle_var <= this.min_angle then
-			inc = this.angle_variation
-		end
+        if angle_var >= this.max_angle then
+            inc = -this.angle_variation
+        elseif angle_var <= this.min_angle then
+            inc = this.angle_variation
+        end
 
-		last_ts = store.tick_ts
+        last_ts = store.tick_ts
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.eb_greenmuck = {}
 
 function scripts.eb_greenmuck.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+    local ma = this.melee.attacks[1]
+    local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_greenmuck.update(this, store)
-	local ba = this.timed_attacks.list[1]
+    local ba = this.timed_attacks.list[1]
 
-	local function ready_to_shoot()
-		return enemy_ready_to_magic_attack(this, store, ba)
-	end
+    local function ready_to_shoot()
+        return enemy_ready_to_magic_attack(this, store, ba)
+    end
 
-	ba.ts = store.tick_ts
+    ba.ts = store.tick_ts
 
-	::label_155_0::
+    ::label_155_0::
 
-	while true do
-		if this.health.dead then
-			U.y_animation_play(this, "death", nil, store.tick_ts)
-			signal.emit("boss-killed", this)
-			SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
+    while true do
+        if this.health.dead then
+            U.y_animation_play(this, "death", nil, store.tick_ts)
+            signal.emit("boss-killed", this)
+            SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
 
-			local spawner = LU.list_entities(store.entities, "s15_rotten_spawner")[1]
+            local spawner = LU.list_entities(store.entities, "s15_rotten_spawner")[1]
 
-			if spawner then
-				spawner.interrupt = true
-			end
+            if spawner then
+                spawner.interrupt = true
+            end
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_shoot() then
-				local targets = table.filter(store.soldiers, function(_, e)
-					return not e.pending_removal and not e.health.dead and band(e.vis.flags, ba.vis_bans) == 0 and band(e.vis.bans, ba.vis_flags) == 0
-				end)
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_shoot() then
+                local targets = table.filter(store.soldiers, function(_, e)
+                    return not e.pending_removal and not e.health.dead and band(e.vis.flags, ba.vis_bans) == 0 and
+                               band(e.vis.bans, ba.vis_flags) == 0
+                end)
 
-				if #targets < 1 then
-					SU.delay_attack(store, ba, 0.5)
-				else
-					U.animation_start(this, ba.animation, nil, store.tick_ts, false)
-					U.y_wait(store, ba.shoot_time)
+                if #targets < 1 then
+                    SU.delay_attack(store, ba, 0.5)
+                else
+                    U.animation_start(this, ba.animation, nil, store.tick_ts, false)
+                    U.y_wait(store, ba.shoot_time)
 
-					local af = this.render.sprites[1].flip_x
-					local o = ba.bullet_start_offset
-					local random_targets = table.random_order(targets)
+                    local af = this.render.sprites[1].flip_x
+                    local o = ba.bullet_start_offset
+                    local random_targets = table.random_order(targets)
 
-					for i, t in ipairs(random_targets) do
-						if i > ba.count then
-							break
-						end
+                    for i, t in ipairs(random_targets) do
+                        if i > ba.count then
+                            break
+                        end
 
-						local b = E:create_entity(ba.bullet)
+                        local b = E:create_entity(ba.bullet)
 
-						b.bullet.source_id = this.id
-						b.bullet.target_id = t
-						b.bullet.from = V.v(this.pos.x + (af and -1 or 1) * o.x, this.pos.y + o.y)
-						b.bullet.to = V.vclone(t.pos)
-						b.pos = V.vclone(b.bullet.from)
+                        b.bullet.source_id = this.id
+                        b.bullet.target_id = t
+                        b.bullet.from = V.v(this.pos.x + (af and -1 or 1) * o.x, this.pos.y + o.y)
+                        b.bullet.to = V.vclone(t.pos)
+                        b.pos = V.vclone(b.bullet.from)
 
-						queue_insert(store, b)
-					end
+                        queue_insert(store, b)
+                    end
 
-					U.y_animation_wait(this)
+                    U.y_animation_wait(this)
 
-					ba.ts = store.tick_ts
-				end
-			end
+                    ba.ts = store.tick_ts
+                end
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_shoot)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_shoot)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_155_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_155_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_shoot() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_155_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_shoot() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_155_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.eb_kingpin = {}
 
 function scripts.eb_kingpin.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+    local ma = this.melee.attacks[1]
+    local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_kingpin.update(this, store)
-	local hs = this.timed_attacks.list[1]
-	local ho = this.timed_attacks.list[2]
-	local stop_ts
+    local hs = this.timed_attacks.list[1]
+    local ho = this.timed_attacks.list[2]
+    local stop_ts
 
-	local function ready_to_stop()
-		return store.tick_ts - stop_ts > this.stop_cooldown
-	end
+    local function ready_to_stop()
+        return store.tick_ts - stop_ts > this.stop_cooldown
+    end
 
-	stop_ts = store.tick_ts
+    stop_ts = store.tick_ts
 
-	::label_159_0::
+    ::label_159_0::
 
-	while true do
-		if this.health.dead then
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
-			signal.emit("boss-killed", this)
-			SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
+    while true do
+        if this.health.dead then
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
+            signal.emit("boss-killed", this)
+            SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_stop() then
-				local stop_start = store.tick_ts
-				local a = table.random(this.timed_attacks.list)
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_stop() then
+                local stop_start = store.tick_ts
+                local a = table.random(this.timed_attacks.list)
 
-				U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                U.animation_start(this, a.animation, nil, store.tick_ts, false)
 
-				if SU.y_enemy_wait(store, this, this.stop_wait) then
-					goto label_159_0
-				end
+                if SU.y_enemy_wait(store, this, this.stop_wait) then
+                    goto label_159_0
+                end
 
-				local targets
+                local targets
 
-				if a == hs and this.health.hp < this.health.hp_max then
-					targets = {
-						this
-					}
-				elseif a == ho then
-					targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans, function(e)
-						return e.health.hp < e.health.hp_max and e ~= this
-					end)
-				end
+                if a == hs and this.health.hp < this.health.hp_max then
+                    targets = {this}
+                elseif a == ho then
+                    targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans,
+                        function(e)
+                            return e.health.hp < e.health.hp_max and e ~= this
+                        end)
+                end
 
-				if targets then
-					for _, target in pairs(targets) do
-						local m = E:create_entity(a.mod)
+                if targets then
+                    for _, target in pairs(targets) do
+                        local m = E:create_entity(a.mod)
 
-						m.modifier.source_id = this.id
-						m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
+                        m.modifier.target_id = target.id
 
-						queue_insert(store, m)
-					end
-				end
+                        queue_insert(store, m)
+                    end
+                end
 
-				if SU.y_enemy_animation_wait(this) then
-					goto label_159_0
-				end
+                if SU.y_enemy_animation_wait(this) then
+                    goto label_159_0
+                end
 
-				U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                U.animation_start(this, a.animation, nil, store.tick_ts, false)
 
-				if SU.y_enemy_animation_wait(this) then
-					goto label_159_0
-				end
+                if SU.y_enemy_animation_wait(this) then
+                    goto label_159_0
+                end
 
-				if SU.y_enemy_wait(store, this, this.stop_time - (store.tick_ts - stop_start)) then
-					goto label_159_0
-				end
+                if SU.y_enemy_wait(store, this, this.stop_time - (store.tick_ts - stop_start)) then
+                    goto label_159_0
+                end
 
-				stop_ts = store.tick_ts
-			end
+                stop_ts = store.tick_ts
+            end
 
-			SU.y_enemy_walk_until_blocked(store, this, false, ready_to_stop)
-		end
-	end
+            SU.y_enemy_walk_until_blocked(store, this, false, ready_to_stop)
+        end
+    end
 end
 
 scripts.eb_ulgukhai = {}
 
 function scripts.eb_ulgukhai.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+    local ma = this.melee.attacks[1]
+    local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_ulgukhai.update(this, store)
-	::label_163_0::
+    ::label_163_0::
 
-	while true do
-		if this.health.dead then
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
-			signal.emit("boss-killed", this)
-			SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
+    while true do
+        if this.health.dead then
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
+            signal.emit("boss-killed", this)
+            SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			this.health.ignore_damage = true
-			this.unit.blood_color = BLOOD_NONE
-			this.vis.bans = U.flag_set(this.vis.bans, this.shielded_extra_vis_bans)
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            this.health.ignore_damage = true
+            this.unit.blood_color = BLOOD_NONE
+            this.vis.bans = U.flag_set(this.vis.bans, this.shielded_extra_vis_bans)
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					this.health.ignore_damage = nil
-					this.unit.blood_color = BLOOD_RED
-					this.vis.bans = U.flag_clear(this.vis.bans, this.shielded_extra_vis_bans)
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    this.health.ignore_damage = nil
+                    this.unit.blood_color = BLOOD_RED
+                    this.vis.bans = U.flag_clear(this.vis.bans, this.shielded_extra_vis_bans)
 
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_163_0
-					end
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_163_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_163_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_163_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.eb_moloch = {}
@@ -4113,131 +4080,133 @@ scripts.eb_moloch = {}
 -- end
 
 function scripts.eb_moloch.update(this, store)
-	local ha = this.timed_attacks.list[1]
+    local ha = this.timed_attacks.list[1]
 
-	local function ready_to_horn()
-		return enemy_ready_to_magic_attack(this, store, ha)
-	end
+    local function ready_to_horn()
+        return enemy_ready_to_magic_attack(this, store, ha)
+    end
 
-	U.animation_start(this, "sitting", nil, store.tick_ts, true)
+    U.animation_start(this, "sitting", nil, store.tick_ts, true)
 
-	this.phase = "sitting"
-	this.phase_signal = nil
-	this.health_bar.hidden = true
+    this.phase = "sitting"
+    this.phase_signal = nil
+    this.health_bar.hidden = true
 
-	while not this.phase_signal do
-		coroutine.yield()
-	end
+    while not this.phase_signal do
+        coroutine.yield()
+    end
 
-	U.y_wait(store, this.stand_up_wait_time)
-	S:queue(this.stand_up_sound)
-	U.y_animation_play(this, "raise", nil, store.tick_ts)
+    U.y_wait(store, this.stand_up_wait_time)
+    S:queue(this.stand_up_sound)
+    U.y_animation_play(this, "raise", nil, store.tick_ts)
 
-	this.health_bar.hidden = nil
-	this.health.ignore_damage = nil
-	this.vis.bans = this.active_vis_bans
-	ha.ts = store.tick_ts
+    this.health_bar.hidden = nil
+    this.health.ignore_damage = nil
+    this.vis.bans = this.active_vis_bans
+    ha.ts = store.tick_ts
 
-	::label_165_0::
+    ::label_165_0::
 
-	while true do
-		if this.health.dead then
-			game.store.force_next_wave = true
-			this.phase = "dead"
+    while true do
+        if this.health.dead then
+            game.store.force_next_wave = true
+            this.phase = "dead"
 
-			LU.kill_all_enemies(store, true)
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
-			signal.emit("boss-killed", this)
-			LU.kill_all_enemies(store, true)
+            LU.kill_all_enemies(store, true)
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
+            signal.emit("boss-killed", this)
+            LU.kill_all_enemies(store, true)
 
-			this.phase = "death-complete"
+            this.phase = "death-complete"
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_horn() then
-				local dest = V.vclone(this.pos)
-				local af = this.render.sprites[1].flip_x and -1 or 1
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_horn() then
+                local dest = V.vclone(this.pos)
+                local af = this.render.sprites[1].flip_x and -1 or 1
 
-				if ha.hit_offset then
-					dest.x = dest.x + af * ha.hit_offset.x
-					dest.y = dest.y + ha.hit_offset.y
-				end
+                if ha.hit_offset then
+                    dest.x = dest.x + af * ha.hit_offset.x
+                    dest.y = dest.y + ha.hit_offset.y
+                end
 
-				local targets = U.find_soldiers_in_range(store.soldiers, dest, 0, ha.damage_radius, ha.vis_flags or 0, ha.vis_bans or 0)
+                local targets = U.find_soldiers_in_range(store.soldiers, dest, 0, ha.damage_radius, ha.vis_flags or 0,
+                    ha.vis_bans or 0)
 
-				if not targets or #targets < ha.min_targets then
-					SU.delay_attack(store, ha, 0.5)
-				else
-					SU.hide_modifiers(store, this, true)
-					S:queue(ha.sound, ha.sound_args)
-					U.animation_start(this, ha.animation, nil, store.tick_ts, false)
+                if not targets or #targets < ha.min_targets then
+                    SU.delay_attack(store, ha, 0.5)
+                else
+                    SU.hide_modifiers(store, this, true)
+                    S:queue(ha.sound, ha.sound_args)
+                    U.animation_start(this, ha.animation, nil, store.tick_ts, false)
 
-					if SU.y_enemy_wait(store, this, ha.hit_time) then
-						goto label_165_0
-					end
+                    if SU.y_enemy_wait(store, this, ha.hit_time) then
+                        goto label_165_0
+                    end
 
-					targets = U.find_soldiers_in_range(store.soldiers, dest, 0, ha.damage_radius, ha.vis_flags or 0, ha.vis_bans or 0)
+                    targets = U.find_soldiers_in_range(store.soldiers, dest, 0, ha.damage_radius, ha.vis_flags or 0,
+                        ha.vis_bans or 0)
 
-					if targets then
-						for _, t in pairs(targets) do
-							local d = SU.create_attack_damage(ha, t.id, this)
+                    if targets then
+                        for _, t in pairs(targets) do
+                            local d = SU.create_attack_damage(ha, t.id, this)
 
-							queue_damage(store, d)
-						end
-					end
+                            queue_damage(store, d)
+                        end
+                    end
 
-					for _, f in pairs(ha.fx_list) do
-						local fx_name, positions = unpack(f)
+                    for _, f in pairs(ha.fx_list) do
+                        local fx_name, positions = unpack(f)
 
-						for _, p in pairs(positions) do
-							local xo, yo = unpack(p)
-							local fx = E:create_entity(fx_name)
+                        for _, p in pairs(positions) do
+                            local xo, yo = unpack(p)
+                            local fx = E:create_entity(fx_name)
 
-							fx.render.sprites[1].ts = store.tick_ts
-							fx.pos.x = this.pos.x + xo * af
-							fx.pos.y = this.pos.y + yo
+                            fx.render.sprites[1].ts = store.tick_ts
+                            fx.pos.x = this.pos.x + xo * af
+                            fx.pos.y = this.pos.y + yo
 
-							queue_insert(store, fx)
-						end
-					end
+                            queue_insert(store, fx)
+                        end
+                    end
 
-					U.y_wait(store, fts(12))
-					SU.show_modifiers(store, this, true)
-					U.y_animation_wait(this)
+                    U.y_wait(store, fts(12))
+                    SU.show_modifiers(store, this, true)
+                    U.y_animation_wait(this)
 
-					ha.ts = store.tick_ts
-				end
-			end
+                    ha.ts = store.tick_ts
+                end
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_horn)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_horn)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_165_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_165_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_horn() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_165_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_horn() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_165_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.eb_myconid = {}
@@ -4259,804 +4228,811 @@ scripts.eb_myconid = {}
 -- end
 
 function scripts.eb_myconid.update(this, store)
-	local sa = this.timed_attacks.list[1]
-	local si = 1
+    local sa = this.timed_attacks.list[1]
+    local si = 1
 
-	local function ready_to_spore()
-		return enemy_ready_to_magic_attack(this, store, sa) and this.nav_path.ni > sa.min_nodes
-	end
+    local function ready_to_spore()
+        return enemy_ready_to_magic_attack(this, store, sa) and this.nav_path.ni > sa.min_nodes
+    end
 
-	local function spawn_mushrooms(count, owner)
-		local sp = E:create_entity(this.spawner_entity)
+    local function spawn_mushrooms(count, owner)
+        local sp = E:create_entity(this.spawner_entity)
 
-		sp.spawner.pi = this.nav_path.pi
-		sp.spawner.spi = this.nav_path.spi
-		sp.spawner.ni = this.nav_path.ni
-		sp.spawner.random_cycle = {
-			0,
-			1 / count
-		}
-		sp.spawner.count = count
-		sp.spawner.owner_id = owner
+        sp.spawner.pi = this.nav_path.pi
+        sp.spawner.spi = this.nav_path.spi
+        sp.spawner.ni = this.nav_path.ni
+        sp.spawner.random_cycle = {0, 1 / count}
+        sp.spawner.count = count
+        sp.spawner.owner_id = owner
 
-		queue_insert(store, sp)
-	end
+        queue_insert(store, sp)
+    end
 
-	sa.ts = store.tick_ts
+    sa.ts = store.tick_ts
 
-	::label_168_0::
+    ::label_168_0::
 
-	while true do
-		if this.health.dead then
-			S:queue(this.sound_events.death)
-			U.animation_start(this, "death", nil, store.tick_ts, false)
-			U.y_wait(store, this.on_death_spawn_wait)
-			spawn_mushrooms(this.on_death_spawn_count, nil)
-			signal.emit("boss-killed", this)
-			SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
+    while true do
+        if this.health.dead then
+            S:queue(this.sound_events.death)
+            U.animation_start(this, "death", nil, store.tick_ts, false)
+            U.y_wait(store, this.on_death_spawn_wait)
+            spawn_mushrooms(this.on_death_spawn_count, nil)
+            signal.emit("boss-killed", this)
+            SU.fade_out_entity(store, this, this.unit.fade_time_after_death)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_spore() then
-				local fx_wait, mod_wait, spawner_wait = unpack(sa.wait_times)
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_spore() then
+                local fx_wait, mod_wait, spawner_wait = unpack(sa.wait_times)
 
-				S:queue(sa.sound)
-				U.animation_start(this, "spores", nil, store.tick_ts, false)
+                S:queue(sa.sound)
+                U.animation_start(this, "spores", nil, store.tick_ts, false)
 
-				if SU.y_enemy_wait(store, this, fx_wait) then
-					goto label_168_0
-				end
+                if SU.y_enemy_wait(store, this, fx_wait) then
+                    goto label_168_0
+                end
 
-				local fx = E:create_entity(sa.fx)
+                local fx = E:create_entity(sa.fx)
 
-				fx.render.sprites[1].ts = store.tick_ts
-				fx.pos = V.vclone(this.pos)
+                fx.render.sprites[1].ts = store.tick_ts
+                fx.pos = V.vclone(this.pos)
 
-				if sa.fx_offset then
-					fx.pos.x = fx.pos.x + sa.fx_offset.x
-					fx.pos.y = fx.pos.y + sa.fx_offset.y
-				end
+                if sa.fx_offset then
+                    fx.pos.x = fx.pos.x + sa.fx_offset.x
+                    fx.pos.y = fx.pos.y + sa.fx_offset.y
+                end
 
-				queue_insert(store, fx)
+                queue_insert(store, fx)
 
-				if SU.y_enemy_wait(store, this, mod_wait) then
-					goto label_168_0
-				end
+                if SU.y_enemy_wait(store, this, mod_wait) then
+                    goto label_168_0
+                end
 
-				local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, sa.radius, sa.vis_flags, sa.vis_bans)
+                local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, sa.radius, sa.vis_flags,
+                    sa.vis_bans)
 
-				if targets then
-					for _, target in pairs(targets) do
-						local m = E:create_entity(sa.mod)
+                if targets then
+                    for _, target in pairs(targets) do
+                        local m = E:create_entity(sa.mod)
 
-						m.modifier.target_id = target.id
-						m.modifier.source_id = this.id
+                        m.modifier.target_id = target.id
+                        m.modifier.source_id = this.id
 
-						queue_insert(store, m)
-					end
-				end
+                        queue_insert(store, m)
+                    end
+                end
 
-				if SU.y_enemy_wait(store, this, spawner_wait) then
-					goto label_168_0
-				end
+                if SU.y_enemy_wait(store, this, spawner_wait) then
+                    goto label_168_0
+                end
 
-				spawn_mushrooms(sa.summon_counts[si] or sa.summon_counts[#sa.summon_counts], this.id)
+                spawn_mushrooms(sa.summon_counts[si] or sa.summon_counts[#sa.summon_counts], this.id)
 
-				si = si + 1
+                si = si + 1
 
-				if SU.y_enemy_wait(store, this, sa.final_wait) then
-					if sp then
-						sp.spawner.interrupt = true
-					end
+                if SU.y_enemy_wait(store, this, sa.final_wait) then
+                    if sp then
+                        sp.spawner.interrupt = true
+                    end
 
-					goto label_168_0
-				end
+                    goto label_168_0
+                end
 
-				sa.ts = store.tick_ts
-			end
+                sa.ts = store.tick_ts
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_spore)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_spore)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_168_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_168_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_spore() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_168_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_spore() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_168_0
+                        end
 
-						coroutine.yield()
-					end
-				end
+                        coroutine.yield()
+                    end
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.eb_blackburn = {}
 
 function scripts.eb_blackburn.get_info(this)
-	local ma = this.melee.attacks[1]
-	local min, max = ma.damage_min, ma.damage_max
+    local ma = this.melee.attacks[1]
+    local min, max = ma.damage_min, ma.damage_max
 
-	return {
-		type = STATS_TYPE_ENEMY,
-		hp = this.health.hp,
-		hp_max = this.health.hp_max,
-		damage_min = min,
-		damage_max = max,
-		armor = this.health.armor,
-		magic_armor = this.health.magic_armor,
-		lives = this.enemy.lives_cost
-	}
+    return {
+        type = STATS_TYPE_ENEMY,
+        hp = this.health.hp,
+        hp_max = this.health.hp_max,
+        damage_min = min,
+        damage_max = max,
+        armor = this.health.armor,
+        magic_armor = this.health.magic_armor,
+        lives = this.enemy.lives_cost
+    }
 end
 
 function scripts.eb_blackburn.update(this, store)
-	local sa = this.timed_attacks.list[1]
+    local sa = this.timed_attacks.list[1]
 
-	local function ready_to_smash()
-		return enemy_ready_to_magic_attack(this, store, sa)
-	end
+    local function ready_to_smash()
+        return enemy_ready_to_magic_attack(this, store, sa)
+    end
 
-	sa.ts = store.tick_ts
+    sa.ts = store.tick_ts
 
-	::label_172_0::
+    ::label_172_0::
 
-	while true do
-		if this.health.dead then
-			LU.kill_all_enemies(store, true)
-			S:queue(this.sound_events.death)
-			U.y_animation_play(this, "death", nil, store.tick_ts)
+    while true do
+        if this.health.dead then
+            LU.kill_all_enemies(store, true)
+            S:queue(this.sound_events.death)
+            U.y_animation_play(this, "death", nil, store.tick_ts)
 
-			this.ui.can_click = false
+            this.ui.can_click = false
 
-			local megaspawner = LU.list_entities(store.entities, "mega_spawner")[1]
+            local megaspawner = LU.list_entities(store.entities, "mega_spawner")[1]
 
-			if megaspawner then
-				megaspawner.interrupt = true
-			end
+            if megaspawner then
+                megaspawner.interrupt = true
+            end
 
-			store.force_next_wave = true
+            store.force_next_wave = true
 
-			U.animation_start(this, "death_end", nil, store.tick_ts, true)
-			signal.emit("boss-killed", this)
-			LU.kill_all_enemies(store, true)
+            U.animation_start(this, "death_end", nil, store.tick_ts, true)
+            signal.emit("boss-killed", this)
+            LU.kill_all_enemies(store, true)
 
-			return
-		end
+            return
+        end
 
-		if this.unit.is_stunned then
-			U.animation_start(this, "idle", nil, store.tick_ts, -1)
-			coroutine.yield()
-		else
-			if ready_to_smash() then
-				U.animation_start(this, sa.animation, nil, store.tick_ts, false)
-				S:queue(sa.sound, sa.sound_args)
+        if this.unit.is_stunned then
+            U.animation_start(this, "idle", nil, store.tick_ts, -1)
+            coroutine.yield()
+        else
+            if ready_to_smash() then
+                U.animation_start(this, sa.animation, nil, store.tick_ts, false)
+                S:queue(sa.sound, sa.sound_args)
 
-				if SU.y_enemy_wait(store, this, sa.hit_time) then
-					goto label_172_0
-				end
+                if SU.y_enemy_wait(store, this, sa.hit_time) then
+                    goto label_172_0
+                end
 
-				local a = E:create_entity(sa.aura_shake)
+                local a = E:create_entity(sa.aura_shake)
 
-				queue_insert(store, a)
+                queue_insert(store, a)
 
-				local af = this.render.sprites[1].flip_x
-				local fx = E:create_entity(sa.fx)
+                local af = this.render.sprites[1].flip_x
+                local fx = E:create_entity(sa.fx)
 
-				fx.pos = V.vclone(this.pos)
-				fx.render.sprites[1].ts = store.tick_ts
-				fx.pos.x = fx.pos.x + (af and -1 or 1) * sa.fx_offset.x
-				fx.pos.y = fx.pos.y + (af and -1 or 1) * sa.fx_offset.y
+                fx.pos = V.vclone(this.pos)
+                fx.render.sprites[1].ts = store.tick_ts
+                fx.pos.x = fx.pos.x + (af and -1 or 1) * sa.fx_offset.x
+                fx.pos.y = fx.pos.y + (af and -1 or 1) * sa.fx_offset.y
 
-				queue_insert(store, fx)
-				SU.insert_sprite(store, sa.hit_decal, fx.pos, af, fts(2))
+                queue_insert(store, fx)
+                SU.insert_sprite(store, sa.hit_decal, fx.pos, af, fts(2))
 
-				local towers = U.find_towers_in_range(store.towers, this.pos, sa, function(t)
-					return t.tower.can_be_mod
-				end)
+                local towers = U.find_towers_in_range(store.towers, this.pos, sa, function(t)
+                    return t.tower.can_be_mod
+                end)
 
-				if towers then
-					for _, tt in pairs(towers) do
-						local tm = E:create_entity(sa.mod_towers)
+                if towers then
+                    for _, tt in pairs(towers) do
+                        local tm = E:create_entity(sa.mod_towers)
 
-						tm.modifier.source_id = this.id
-						tm.modifier.target_id = tt.id
+                        tm.modifier.source_id = this.id
+                        tm.modifier.target_id = tt.id
 
-						queue_insert(store, tm)
-					end
-				end
+                        queue_insert(store, tm)
+                    end
+                end
 
-				local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, sa.damage_radius, sa.vis_flags or 0, sa.vis_bans or 0)
+                local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, sa.damage_radius,
+                    sa.vis_flags or 0, sa.vis_bans or 0)
 
-				if targets then
-					for _, t in pairs(targets) do
-						local d = E:create_entity("damage")
+                if targets then
+                    for _, t in pairs(targets) do
+                        local d = E:create_entity("damage")
 
-						d.damage_type = sa.damage_type
-						d.value = math.random(sa.damage_min, sa.damage_max)
-						d.source_id = this.id
-						d.target_id = t.id
+                        d.damage_type = sa.damage_type
+                        d.value = math.random(sa.damage_min, sa.damage_max)
+                        d.source_id = this.id
+                        d.target_id = t.id
 
-						queue_damage(store, d)
+                        queue_damage(store, d)
 
-						local tm = E:create_entity(sa.mod)
+                        local tm = E:create_entity(sa.mod)
 
-						tm.modifier.source_id = this.id
-						tm.modifier.target_id = t.id
+                        tm.modifier.source_id = this.id
+                        tm.modifier.target_id = t.id
 
-						queue_insert(store, tm)
-					end
-				end
+                        queue_insert(store, tm)
+                    end
+                end
 
-				U.y_animation_wait(this)
+                U.y_animation_wait(this)
 
-				if SU.y_enemy_wait(store, this, sa.after_hit_wait) then
-					goto label_172_0
-				end
+                if SU.y_enemy_wait(store, this, sa.after_hit_wait) then
+                    goto label_172_0
+                end
 
-				sa.cooldown = sa.after_cooldown
-				sa.ts = store.tick_ts
-			end
+                sa.cooldown = sa.after_cooldown
+                sa.ts = store.tick_ts
+            end
 
-			local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_smash)
+            local cont, blocker = SU.y_enemy_walk_until_blocked(store, this, false, ready_to_smash)
 
-			if not cont then
-				-- block empty
-			else
-				if blocker and blocker.unit and not blocker.unit.is_stunned then
-					if not SU.y_wait_for_blocker(store, this, blocker) then
-						goto label_172_0
-					end
+            if not cont then
+                -- block empty
+            else
+                if blocker and blocker.unit and not blocker.unit.is_stunned then
+                    if not SU.y_wait_for_blocker(store, this, blocker) then
+                        goto label_172_0
+                    end
 
-					while SU.can_melee_blocker(store, this, blocker) and not ready_to_smash() do
-						if not SU.y_enemy_melee_attacks(store, this, blocker) then
-							goto label_172_0
-						end
+                    while SU.can_melee_blocker(store, this, blocker) and not ready_to_smash() do
+                        if not SU.y_enemy_melee_attacks(store, this, blocker) then
+                            goto label_172_0
+                        end
 
-						coroutine.yield()
-					end
-				else
-					U.unblock_target(store, blocker)
-				end
+                        coroutine.yield()
+                    end
+                else
+                    U.unblock_target(store, blocker)
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 end
 
 scripts.mod_blackburn_tower = {}
 
 function scripts.mod_blackburn_tower.update(this, store, script)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target then
-		queue_remove(store, this)
+    if not target then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	m.ts = store.tick_ts
+    m.ts = store.tick_ts
 
-	SU.tower_block_inc(target)
+    SU.tower_block_inc(target)
 
-	this.pos.x, this.pos.y = target.pos.x, target.pos.y
+    this.pos.x, this.pos.y = target.pos.x, target.pos.y
 
-	if this.tween then
-		this.tween.disabled = false
-		this.tween.reverse = false
-		this.tween.ts = store.tick_ts
-	end
+    if this.tween then
+        this.tween.disabled = false
+        this.tween.reverse = false
+        this.tween.ts = store.tick_ts
+    end
 
-	U.y_wait(store, m.duration)
+    U.y_wait(store, m.duration)
 
-	if this.tween then
-		this.tween.ts = store.tick_ts
-		this.tween.reverse = true
-	end
+    if this.tween then
+        this.tween.ts = store.tick_ts
+        this.tween.reverse = true
+    end
 
-	SU.tower_block_dec(target)
-	U.y_wait(store, this.tween.props[1].keys[2][1])
-	queue_remove(store, this)
+    SU.tower_block_dec(target)
+    U.y_wait(store, this.tween.props[1].keys[2][1])
+    queue_remove(store, this)
 end
 
 scripts.blackburn_aura = {}
 
 function scripts.blackburn_aura.update(this, store)
-	local last_ts = store.tick_ts
-	local cg = store.count_groups[this.count_group_type]
+    local last_ts = store.tick_ts
+    local cg = store.count_groups[this.count_group_type]
 
-	while true do
-		local source = store.entities[this.aura.source_id]
+    while true do
+        local source = store.entities[this.aura.source_id]
 
-		if not source or source.health.dead then
-			queue_remove(store, this)
+        if not source or source.health.dead then
+            queue_remove(store, this)
 
-			return
-		end
+            return
+        end
 
-		this.pos = source.pos
+        this.pos = source.pos
 
-		if store.tick_ts - last_ts >= this.aura.cycle_time then
-			last_ts = store.tick_ts
+        if store.tick_ts - last_ts >= this.aura.cycle_time then
+            last_ts = store.tick_ts
 
-			for _, e in pairs(store.soldiers) do
-				if e and not e.health.dead  and e.soldier.tower_id == source.id then
-					tower_skeletons_count = tower_skeletons_count + 1
-				end
-			end
+            for _, e in pairs(store.soldiers) do
+                if e and not e.health.dead and e.soldier.tower_id == source.id then
+                    tower_skeletons_count = tower_skeletons_count + 1
+                end
+            end
 
-			local max_spawns = this.count_group_max - (cg[this.count_group_name] or 0)
+            local max_spawns = this.count_group_max - (cg[this.count_group_name] or 0)
 
-			if max_spawns < 1 then
-				-- block empty
-			else
-				local dead_soldiers = table.filter(store.soldiers, function(k, v)
-					return v.soldier and v.health and v.health.dead and band(v.vis.bans or 0, F_SKELETON) == 0 and store.tick_ts - v.health.death_ts >= this.aura.cycle_time and U.is_inside_ellipse(v.pos, this.pos, this.aura.radius)
-				end)
+            if max_spawns < 1 then
+                -- block empty
+            else
+                local dead_soldiers = table.filter(store.soldiers, function(k, v)
+                    return v.soldier and v.health and v.health.dead and band(v.vis.bans or 0, F_SKELETON) == 0 and
+                               store.tick_ts - v.health.death_ts >= this.aura.cycle_time and
+                               U.is_inside_ellipse(v.pos, this.pos, this.aura.radius)
+                end)
 
-				dead_soldiers = table.slice(dead_soldiers, 1, max_spawns)
+                dead_soldiers = table.slice(dead_soldiers, 1, max_spawns)
 
-				local spii = math.random(1, 3)
+                local spii = math.random(1, 3)
 
-				for _, dead in pairs(dead_soldiers) do
-					local nearest_nodes = P:nearest_nodes(dead.pos.x, dead.pos.y, {
-						source.nav_path.pi
-					})
+                for _, dead in pairs(dead_soldiers) do
+                    local nearest_nodes = P:nearest_nodes(dead.pos.x, dead.pos.y, {source.nav_path.pi})
 
-					if #nearest_nodes < 1 then
-						-- block empty
-					else
-						local pi, spi, ni = unpack(nearest_nodes[1])
+                    if #nearest_nodes < 1 then
+                        -- block empty
+                    else
+                        local pi, spi, ni = unpack(nearest_nodes[1])
 
-						if not P:is_node_valid(pi, ni) then
-							-- block empty
-						else
-							U.sprites_hide(dead)
+                        if not P:is_node_valid(pi, ni) then
+                            -- block empty
+                        else
+                            U.sprites_hide(dead)
 
-							dead.vis.bans = bor(dead.vis.bans, F_SKELETON)
+                            dead.vis.bans = bor(dead.vis.bans, F_SKELETON)
 
-							local e = E:create_entity(this.aura.raise_entity)
+                            local e = E:create_entity(this.aura.raise_entity)
 
-							spii = km.zmod(spii + 1, 3)
-							e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pi, spii, ni
-							e.enemy.gold = 0
-							e.pos = V.vclone(dead.pos)
-							e.render.sprites[1].name = "raise"
+                            spii = km.zmod(spii + 1, 3)
+                            e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pi, spii, ni
+                            e.enemy.gold = 0
+                            e.pos = V.vclone(dead.pos)
+                            e.render.sprites[1].name = "raise"
 
-							E:add_comps(e, "count_group")
+                            E:add_comps(e, "count_group")
 
-							e.count_group.name = this.count_group_name
-							e.count_group.type = this.count_group_type
+                            e.count_group.name = this.count_group_name
+                            e.count_group.type = this.count_group_type
 
-							queue_insert(store, e)
-						end
-					end
-				end
-			end
-		end
+                            queue_insert(store, e)
+                        end
+                    end
+                end
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.eb_elder_shaman = {}
 
 function scripts.eb_elder_shaman.update(this, store)
-	local taunt = this.taunt
+    local taunt = this.taunt
 
-	local function y_show_taunt(set, index, duration)
-		index = index or math.random(taunt.sets[set].start_idx, taunt.sets[set].end_idx)
-		duration = duration or taunt.duration
-		taunt.ts = store.tick_ts
-		taunt.next_ts = store.tick_ts + math.random(taunt.delay_min, taunt.delay_max)
+    local function y_show_taunt(set, index, duration)
+        index = index or math.random(taunt.sets[set].start_idx, taunt.sets[set].end_idx)
+        duration = duration or taunt.duration
+        taunt.ts = store.tick_ts
+        taunt.next_ts = store.tick_ts + math.random(taunt.delay_min, taunt.delay_max)
 
-		local t = E:create_entity("decal_elder_shaman_shoutbox")
+        local t = E:create_entity("decal_elder_shaman_shoutbox")
 
-		t.texts.list[1].text = _(string.format(taunt.sets[set].format, index))
-		t.pos.x, t.pos.y = this.pos.x + taunt.offset.x, this.pos.y + taunt.offset.y
-		t.render.sprites[1].ts = store.tick_ts
-		t.render.sprites[2].ts = store.tick_ts
+        t.texts.list[1].text = _(string.format(taunt.sets[set].format, index))
+        t.pos.x, t.pos.y = this.pos.x + taunt.offset.x, this.pos.y + taunt.offset.y
+        t.render.sprites[1].ts = store.tick_ts
+        t.render.sprites[2].ts = store.tick_ts
 
-		queue_insert(store, t)
-		U.y_wait(store, duration)
+        queue_insert(store, t)
+        U.y_wait(store, duration)
 
-		t.tween.props[1].disabled = true
-		t.tween.props[2].disabled = true
-		t.tween.ts = store.tick_ts
-		t.tween.reverse = true
-		t.tween.remove = true
+        t.tween.props[1].disabled = true
+        t.tween.props[2].disabled = true
+        t.tween.ts = store.tick_ts
+        t.tween.reverse = true
+        t.tween.remove = true
 
-		return t
-	end
+        return t
+    end
 
-	local function find_target(at)
-		local targets = table.filter(store.entities, function(_, e)
-			return not e.pending_removal and e.health and not e.health.dead and e.vis and band(e.vis.flags, at.vis_bans) == 0 and band(e.vis.bans, at.vis_flags) == 0 and (not at.path_margins or P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and e.nav_path.ni > P:get_visible_start_node(e.nav_path.pi) + at.path_margins[1] and e.nav_path.ni < P:get_defend_point_node(e.nav_path.pi) - at.path_margins[2])
-		end)
+    local function find_target(at)
+        local targets = table.filter(store.entities, function(_, e)
+            return
+                not e.pending_removal and e.health and not e.health.dead and e.vis and band(e.vis.flags, at.vis_bans) ==
+                    0 and band(e.vis.bans, at.vis_flags) == 0 and
+                    (not at.path_margins or P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and e.nav_path.ni >
+                        P:get_visible_start_node(e.nav_path.pi) + at.path_margins[1] and e.nav_path.ni <
+                        P:get_defend_point_node(e.nav_path.pi) - at.path_margins[2])
+        end)
 
-		if at.power_name == "damage" then
-			local pis = U.find_paths_with_enemies(store.enemies, at.enemy_vis_flags, at.enemy_vis_bans)
+        if at.power_name == "damage" then
+            local pis = U.find_paths_with_enemies(store.enemies, at.enemy_vis_flags, at.enemy_vis_bans)
 
-			if not pis then
-				return nil
-			end
+            if not pis then
+                return nil
+            end
 
-			targets = table.filter(targets, function(_, e)
-				local nodes = P:nearest_nodes(e.pos.x, e.pos.y, pis, nil, true)
+            targets = table.filter(targets, function(_, e)
+                local nodes = P:nearest_nodes(e.pos.x, e.pos.y, pis, nil, true)
 
-				return #nodes > 0
-			end)
-		end
+                return #nodes > 0
+            end)
+        end
 
-		if #targets < 1 then
-			return nil
-		else
-			local target = table.random(targets)
+        if #targets < 1 then
+            return nil
+        else
+            local target = table.random(targets)
 
-			if target.nav_path then
-				return target, target.nav_path.pi, target.nav_path.ni
-			else
-				local nodes = P:nearest_nodes(target.pos.x, target.pos.y)
+            if target.nav_path then
+                return target, target.nav_path.pi, target.nav_path.ni
+            else
+                local nodes = P:nearest_nodes(target.pos.x, target.pos.y)
 
-				if #nodes < 1 then
-					return nil
-				else
-					return target, nodes[1][1], nodes[1][3]
-				end
-			end
-		end
-	end
+                if #nodes < 1 then
+                    return nil
+                else
+                    return target, nodes[1][1], nodes[1][3]
+                end
+            end
+        end
+    end
 
-	this.percussionist = LU.list_entities(store.entities, "decal_s81_percussionist")[1]
-	this.phase = "welcome"
+    this.percussionist = LU.list_entities(store.entities, "decal_s81_percussionist")[1]
+    this.phase = "welcome"
 
-	U.y_wait(store, 1.5)
-	y_show_taunt("welcome", 1)
-	y_show_taunt("welcome", 2)
+    U.y_wait(store, 1.5)
+    y_show_taunt("welcome", 1)
+    y_show_taunt("welcome", 2)
 
-	this.phase = "prebattle"
+    this.phase = "prebattle"
 
-	while this.phase == "prebattle" do
-		if store.tick_ts > taunt.next_ts then
-			y_show_taunt(this.phase)
-		end
+    while this.phase == "prebattle" do
+        if store.tick_ts > taunt.next_ts then
+            y_show_taunt(this.phase)
+        end
 
-		if store.wave_group_number > 0 then
-			this.phase = "battle"
-		end
+        if store.wave_group_number > 0 then
+            this.phase = "battle"
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	local last_wave_number = 0
-	local a = this.attacks
-	local ah = this.attacks.list[1]
-	local ad = this.attacks.list[2]
-	local as = this.attacks.list[3]
-	local wave_config
+    local last_wave_number = 0
+    local a = this.attacks
+    local ah = this.attacks.list[1]
+    local ad = this.attacks.list[2]
+    local as = this.attacks.list[3]
+    local wave_config
 
-	while true do
-		if store.tick_ts > taunt.next_ts then
-			y_show_taunt(this.phase)
-		end
+    while true do
+        if store.tick_ts > taunt.next_ts then
+            y_show_taunt(this.phase)
+        end
 
-		if store.wave_group_number ~= last_wave_number then
-			log.debug("EB_ELDER_SHAMAN: setting wave config for %s", store.wave_group_number)
+        if store.wave_group_number ~= last_wave_number then
+            log.debug("EB_ELDER_SHAMAN: setting wave config for %s", store.wave_group_number)
 
-			last_wave_number = store.wave_group_number
-			wave_config = W:get_endless_boss_config(store.wave_group_number)
-			a.chance = wave_config.chance
-			a.cooldown = wave_config.cooldown
-			a.multiple_attacks_chance = wave_config.multiple_attacks_chance
-			a.power_chances = wave_config.power_chances
-			a.ts = store.tick_ts
-		end
+            last_wave_number = store.wave_group_number
+            wave_config = W:get_endless_boss_config(store.wave_group_number)
+            a.chance = wave_config.chance
+            a.cooldown = wave_config.cooldown
+            a.multiple_attacks_chance = wave_config.multiple_attacks_chance
+            a.power_chances = wave_config.power_chances
+            a.ts = store.tick_ts
+        end
 
-		if store.tick_ts - a.ts > a.cooldown then
-			log.debug("EB_ELDER_SHAMAN: power cooldown complete")
+        if store.tick_ts - a.ts > a.cooldown then
+            log.debug("EB_ELDER_SHAMAN: power cooldown complete")
 
-			a.ts = store.tick_ts
-			this.percussionist.play_loops = 3
+            a.ts = store.tick_ts
+            this.percussionist.play_loops = 3
 
-			while math.random() < a.chance do
-				local pconf, e, api, aspi, ani
-				local a_idx = U.random_table_idx(a.power_chances)
-				local aa = this.attacks.list[a_idx]
-				local plevel = km.clamp(0, 9000000000, store.wave_group_number - wave_config.powers_config.powerProgressionWaveStart)
-				local target, tpi, tni = find_target(aa)
+            while math.random() < a.chance do
+                local pconf, e, api, aspi, ani
+                local a_idx = U.random_table_idx(a.power_chances)
+                local aa = this.attacks.list[a_idx]
+                local plevel = km.clamp(0, 9000000000,
+                    store.wave_group_number - wave_config.powers_config.powerProgressionWaveStart)
+                local target, tpi, tni = find_target(aa)
 
-				if not target then
-					log.debug("EB_ELDER_SHAMAN: no enemies found for attack %s", aa.aura)
-				else
-					this.percussionist.play_loops = 9
+                if not target then
+                    log.debug("EB_ELDER_SHAMAN: no enemies found for attack %s", aa.aura)
+                else
+                    this.percussionist.play_loops = 9
 
-					U.animation_start(this, a.animation, nil, store.tick_ts, false)
-					U.y_wait(store, U.frandom(a.delay[1], a.delay[2]))
+                    U.animation_start(this, a.animation, nil, store.tick_ts, false)
+                    U.y_wait(store, U.frandom(a.delay[1], a.delay[2]))
 
-					pconf = wave_config.powers_config[aa.power_name]
-					e = E:create_entity(aa.aura)
-					e.aura.duration = pconf.duration + plevel * pconf.durationIncrement
-					e.aura.radius = pconf.range / 2
-					api, aspi, ani = tpi, 1, tni
+                    pconf = wave_config.powers_config[aa.power_name]
+                    e = E:create_entity(aa.aura)
+                    e.aura.duration = pconf.duration + plevel * pconf.durationIncrement
+                    e.aura.radius = pconf.range / 2
+                    api, aspi, ani = tpi, 1, tni
 
-					if aa.node_offset then
-						ani = tni + math.random(aa.node_offset[1], aa.node_offset[2])
-					end
+                    if aa.node_offset then
+                        ani = tni + math.random(aa.node_offset[1], aa.node_offset[2])
+                    end
 
-					if aa.path_margins then
-						ani = km.clamp(P:get_visible_start_node(api) + aa.path_margins[1], P:get_defend_point_node(api) - aa.path_margins[2], ani)
-					end
+                    if aa.path_margins then
+                        ani = km.clamp(P:get_visible_start_node(api) + aa.path_margins[1],
+                            P:get_defend_point_node(api) - aa.path_margins[2], ani)
+                    end
 
-					log.debug("EB_ELDER_SHAMAN enemy aura insertion node: %s,%s,%s target ni:%s defend ni:%s", api, aspi, ani, tni, P:get_defend_point_node(api))
+                    log.debug("EB_ELDER_SHAMAN enemy aura insertion node: %s,%s,%s target ni:%s defend ni:%s", api,
+                        aspi, ani, tni, P:get_defend_point_node(api))
 
-					e.pos = P:node_pos(api, aspi, ani)
+                    e.pos = P:node_pos(api, aspi, ani)
 
-					if aa == ah then
-						e.aura.mod_args = {
-							["hps.heal_min"] = math.floor(pconf.healthPerTick + plevel * pconf.healthPerTickIncrement),
-							["hps.heal_max"] = math.floor(pconf.healthPerTick + plevel * pconf.healthPerTickIncrement)
-						}
-					elseif aa == ad then
-						e.aura.mod_args = {
-							["dps.damage_min"] = math.floor(pconf.damagePerTick + plevel * pconf.damagePerTickIncrement),
-							["dps.damage_max"] = math.floor(pconf.damagePerTick + plevel * pconf.damagePerTickIncrement)
-						}
-					elseif aa == as then
-						e.aura.mod_args = {
-							["slow.factor"] = pconf.speedModifier + plevel * pconf.speedModifierIncrement
-						}
-					end
+                    if aa == ah then
+                        e.aura.mod_args = {
+                            ["hps.heal_min"] = math.floor(pconf.healthPerTick + plevel * pconf.healthPerTickIncrement),
+                            ["hps.heal_max"] = math.floor(pconf.healthPerTick + plevel * pconf.healthPerTickIncrement)
+                        }
+                    elseif aa == ad then
+                        e.aura.mod_args = {
+                            ["dps.damage_min"] = math.floor(pconf.damagePerTick + plevel * pconf.damagePerTickIncrement),
+                            ["dps.damage_max"] = math.floor(pconf.damagePerTick + plevel * pconf.damagePerTickIncrement)
+                        }
+                    elseif aa == as then
+                        e.aura.mod_args = {
+                            ["slow.factor"] = pconf.speedModifier + plevel * pconf.speedModifierIncrement
+                        }
+                    end
 
-					queue_insert(store, e)
-					U.y_animation_wait(this)
-					U.animation_start(this, "idle", nil, store.tick_ts)
-				end
+                    queue_insert(store, e)
+                    U.y_animation_wait(this)
+                    U.animation_start(this, "idle", nil, store.tick_ts)
+                end
 
-				if math.random() >= a.multiple_attacks_chance then
-					break
-				end
-			end
-		end
+                if math.random() >= a.multiple_attacks_chance then
+                    break
+                end
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.decal_s81_percussionist = {}
 
 function scripts.decal_s81_percussionist.update(this, store)
-	while true do
-		while this.play_loops > 0 do
-			local loops = this.play_loops
+    while true do
+        while this.play_loops > 0 do
+            local loops = this.play_loops
 
-			this.play_loops = 0
+            this.play_loops = 0
 
-			U.y_animation_play(this, "play", nil, store.tick_ts, loops)
-			U.animation_start(this, "idle", nil, store.tick_ts)
-		end
+            U.y_animation_play(this, "play", nil, store.tick_ts, loops)
+            U.animation_start(this, "idle", nil, store.tick_ts)
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.aura_elder_shaman = {}
 
 function scripts.aura_elder_shaman.update(this, store)
-	local a = this.aura
-	local s = this.render.sprites
-	local ring_sid = 1
-	local ground_sid = 2
-	local totem_sid = 3
-	local fx_sid = 4
+    local a = this.aura
+    local s = this.render.sprites
+    local ring_sid = 1
+    local ground_sid = 2
+    local totem_sid = 3
+    local fx_sid = 4
 
-	s[ring_sid].ts = store.tick_ts
+    s[ring_sid].ts = store.tick_ts
 
-	U.y_animation_play(this, "start", nil, store.tick_ts, 1, totem_sid)
+    U.y_animation_play(this, "start", nil, store.tick_ts, 1, totem_sid)
 
-	s[fx_sid].hidden = false
-	this.aura.ts = store.tick_ts
+    s[fx_sid].hidden = false
+    this.aura.ts = store.tick_ts
 
-	while store.tick_ts - this.aura.ts < a.duration do
-		local targets = U.find_targets_in_range(store.entities, this.pos, 0, this.aura.radius, this.aura.vis_flags, this.aura.vis_bans)
+    while store.tick_ts - this.aura.ts < a.duration do
+        local targets = U.find_targets_in_range(store.entities, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+            this.aura.vis_bans)
 
-		if targets then
-			for _, target in pairs(targets) do
-				local e = E:create_entity(this.aura.mod)
+        if targets then
+            for _, target in pairs(targets) do
+                local e = E:create_entity(this.aura.mod)
 
-				e.modifier.target_id = target.id
-				e.modifier.source_id = this.id
+                e.modifier.target_id = target.id
+                e.modifier.source_id = this.id
 
-				for k, v in pairs(a.mod_args) do
-					LU.eval_set_prop(e, k, v)
-				end
+                for k, v in pairs(a.mod_args) do
+                    LU.eval_set_prop(e, k, v)
+                end
 
-				queue_insert(store, e)
-			end
-		end
+                queue_insert(store, e)
+            end
+        end
 
-		U.y_wait(store, a.cycle_time)
-	end
+        U.y_wait(store, a.cycle_time)
+    end
 
-	s[ground_sid].hidden = true
-	s[ring_sid].hidden = true
-	s[fx_sid].hidden = true
+    s[ground_sid].hidden = true
+    s[ring_sid].hidden = true
+    s[fx_sid].hidden = true
 
-	U.y_animation_play(this, "end", nil, store.tick_ts, 1, totem_sid)
-	queue_remove(store, this)
+    U.y_animation_play(this, "end", nil, store.tick_ts, 1, totem_sid)
+    queue_remove(store, this)
 end
 
 scripts.axe_barbarian = {}
 
 function scripts.axe_barbarian.insert(this, store, script)
-	if scripts.arrow.insert(this, store, script) then
-		AC:inc_check("AXE_RAINER")
+    if scripts.arrow.insert(this, store, script) then
+        AC:inc_check("AXE_RAINER")
 
-		return true
-	else
-		return false
-	end
+        return true
+    else
+        return false
+    end
 end
 
 scripts.bomb_cluster = {}
 
 function scripts.bomb_cluster.insert(this, store)
-	local b = this.bullet
-	local dest = V.vclone(b.to)
-	local target = store.entities[b.target_id]
-	local nearest_nodes = P:nearest_nodes(b.to.x, b.to.y, target and {
-		target.nav_path.pi
-	} or nil)
+    local b = this.bullet
+    local dest = V.vclone(b.to)
+    local target = store.entities[b.target_id]
+    local nearest_nodes = P:nearest_nodes(b.to.x, b.to.y, target and {target.nav_path.pi} or nil)
 
-	if #nearest_nodes > 0 then
-		local pi, spi, ni = unpack(nearest_nodes[1])
+    if #nearest_nodes > 0 then
+        local pi, spi, ni = unpack(nearest_nodes[1])
 
-		this._pred_pi, this._pred_ni = pi, ni
-		dest = P:node_pos(pi, 1, ni)
-	end
+        this._pred_pi, this._pred_ni = pi, ni
+        dest = P:node_pos(pi, 1, ni)
+    end
 
-	b.to.x, b.to.y = dest.x + b.dest_pos_offset.x, dest.y + b.dest_pos_offset.y
+    b.to.x, b.to.y = dest.x + b.dest_pos_offset.x, dest.y + b.dest_pos_offset.y
 
-	return scripts.bomb.insert(this, store)
+    return scripts.bomb.insert(this, store)
 end
 
 function scripts.bomb_cluster.update(this, store)
-	local b = this.bullet
+    local b = this.bullet
 
-	this.render.sprites[1].r = 20 * math.pi / 180 * (b.to.x > b.from.x and 1 or -1)
+    this.render.sprites[1].r = 20 * math.pi / 180 * (b.to.x > b.from.x and 1 or -1)
 
-	while store.tick_ts - b.ts < b.flight_time do
-		b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
-		this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
+    while store.tick_ts - b.ts < b.flight_time do
+        b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
+        this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
 
-		if b.align_with_trajectory then
-			this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
-		elseif b.rotation_speed then
-			this.render.sprites[1].r = this.render.sprites[1].r + b.rotation_speed * store.tick_length
-		end
+        if b.align_with_trajectory then
+            this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
+        elseif b.rotation_speed then
+            this.render.sprites[1].r = this.render.sprites[1].r + b.rotation_speed * store.tick_length
+        end
 
-		if b.hide_radius then
-			this.render.sprites[1].hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
-		end
+        if b.hide_radius then
+            this.render.sprites[1].hidden = V.dist(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius or
+                                                V.dist(this.pos.x, this.pos.y, b.to.x, b.to.y) < b.hide_radius
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	if b.hit_fx then
-		S:queue(this.sound_events.hit)
+    if b.hit_fx then
+        S:queue(this.sound_events.hit)
 
-		local sfx = E:create_entity(b.hit_fx)
+        local sfx = E:create_entity(b.hit_fx)
 
-		sfx.pos = V.vclone(b.to)
-		sfx.render.sprites[1].ts = store.tick_ts
+        sfx.pos = V.vclone(b.to)
+        sfx.render.sprites[1].ts = store.tick_ts
 
-		queue_insert(store, sfx)
-	end
+        queue_insert(store, sfx)
+    end
 
-	local pi, ni = this._pred_pi, this._pred_ni
-	local ni_offset = b.fragment_node_spread * math.floor(b.fragment_count / 2)
-	local dest = b.to
+    local pi, ni = this._pred_pi, this._pred_ni
+    local ni_offset = b.fragment_node_spread * math.floor(b.fragment_count / 2)
+    local dest = b.to
 
-	for i = 1, b.fragment_count do
-		local bf_dest
+    for i = 1, b.fragment_count do
+        local bf_dest
 
-		if pi and ni then
-			bf_dest = P:node_pos(pi, 1, ni + ni_offset - i * b.fragment_node_spread)
-		else
-			bf_dest = U.point_on_ellipse(dest, (50 * math.random() + 45) / 2, 2 * math.pi * i / b.fragment_count)
-		end
+        if pi and ni then
+            bf_dest = P:node_pos(pi, 1, ni + ni_offset - i * b.fragment_node_spread)
+        else
+            bf_dest = U.point_on_ellipse(dest, (50 * math.random() + 45) / 2, 2 * math.pi * i / b.fragment_count)
+        end
 
-		bf_dest.x = bf_dest.x + U.frandom(-b.fragment_pos_spread.x, b.fragment_pos_spread.x)
-		bf_dest.y = bf_dest.y + U.frandom(-b.fragment_pos_spread.y, b.fragment_pos_spread.y)
+        bf_dest.x = bf_dest.x + U.frandom(-b.fragment_pos_spread.x, b.fragment_pos_spread.x)
+        bf_dest.y = bf_dest.y + U.frandom(-b.fragment_pos_spread.y, b.fragment_pos_spread.y)
 
-		local bf = E:create_entity(b.fragment_name)
+        local bf = E:create_entity(b.fragment_name)
 
-		bf.bullet.from = V.vclone(this.pos)
-		bf.bullet.to = bf_dest
-		bf.bullet.flight_time = bf.bullet.flight_time + fts(i) * math.random(1, 2)
-		bf.render.sprites[1].r = 100 * math.random() * (math.pi / 180)
+        bf.bullet.from = V.vclone(this.pos)
+        bf.bullet.to = bf_dest
+        bf.bullet.flight_time = bf.bullet.flight_time + fts(i) * math.random(1, 2)
+        bf.render.sprites[1].r = 100 * math.random() * (math.pi / 180)
 
-		queue_insert(store, bf)
-		AC:inc_check("CLUSTERED")
-	end
+        queue_insert(store, bf)
+        AC:inc_check("CLUSTERED")
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.ray_tesla = {}
 
 function scripts.ray_tesla.update(this, store)
-	local b = this.bullet
-	local s = this.render.sprites[1]
-	local target = store.entities[b.target_id]
-	local source = store.entities[b.source_id]
-	local dest = b.to
-	local l_src, l_dst = V.vclone(this.pos), V.vclone(b.to)
+    local b = this.bullet
+    local s = this.render.sprites[1]
+    local target = store.entities[b.target_id]
+    local source = store.entities[b.source_id]
+    local dest = b.to
+    local l_src, l_dst = V.vclone(this.pos), V.vclone(b.to)
 
-	s.scale = V.v(1, 1)
+    s.scale = V.v(1, 1)
 
-	local function update_sprite()
-		if target and target.motion then
-			dest.x, dest.y = target.pos.x, target.pos.y
+    local function update_sprite()
+        if target and target.motion then
+            dest.x, dest.y = target.pos.x, target.pos.y
 
-			if target.unit and target.unit.hit_offset then
-				dest.x, dest.y = dest.x + target.unit.hit_offset.x, dest.y + target.unit.hit_offset.y
-			end
-		end
+            if target.unit and target.unit.hit_offset then
+                dest.x, dest.y = dest.x + target.unit.hit_offset.x, dest.y + target.unit.hit_offset.y
+            end
+        end
 
-		if source and source.motion then
-			this.pos.x, this.pos.y = source.pos.x, source.pos.y
+        if source and source.motion then
+            this.pos.x, this.pos.y = source.pos.x, source.pos.y
 
-			if source.unit and source.unit.hit_offset then
-				this.pos.x, this.pos.y = this.pos.x + source.unit.hit_offset.x, this.pos.y + source.unit.hit_offset.y
-			end
-		end
+            if source.unit and source.unit.hit_offset then
+                this.pos.x, this.pos.y = this.pos.x + source.unit.hit_offset.x, this.pos.y + source.unit.hit_offset.y
+            end
+        end
 
-		local dsrc = math.max(math.abs(this.pos.x - l_src.x), math.abs(this.pos.y - l_src.y))
-		local ddst = math.max(math.abs(dest.x - l_dst.x), math.abs(dest.y - l_dst.y))
+        local dsrc = math.max(math.abs(this.pos.x - l_src.x), math.abs(this.pos.y - l_src.y))
+        local ddst = math.max(math.abs(dest.x - l_dst.x), math.abs(dest.y - l_dst.y))
 
-		if dsrc > b.max_track_distance or ddst > b.max_track_distance then
-			log.paranoid("(%s) ray_tesla jumped out of max_track_distance", this.id)
+        if dsrc > b.max_track_distance or ddst > b.max_track_distance then
+            log.paranoid("(%s) ray_tesla jumped out of max_track_distance", this.id)
 
-			s.hidden = true
-			target = nil
+            s.hidden = true
+            target = nil
 
-			return false
-		end
+            return false
+        end
 
-		l_src.x, l_src.y = this.pos.x, this.pos.y
-		l_dst.x, l_dst.y = dest.x, dest.y
+        l_src.x, l_src.y = this.pos.x, this.pos.y
+        l_dst.x, l_dst.y = dest.x, dest.y
 
-		local angle = V.angleTo(dest.x - this.pos.x, dest.y - this.pos.y)
+        local angle = V.angleTo(dest.x - this.pos.x, dest.y - this.pos.y)
 
-		s.r = angle
-		s.scale.x = V.dist(dest.x, dest.y, this.pos.x, this.pos.y) / this.image_width
-		s.scale.y = 0.4 + km.clamp(0, 0.6, s.scale.x * 0.6)
-		s.scale.y = s.scale.y * this.bounce_scale_y
+        s.r = angle
+        s.scale.x = V.dist(dest.x, dest.y, this.pos.x, this.pos.y) / this.image_width
+        s.scale.y = 0.4 + km.clamp(0, 0.6, s.scale.x * 0.6)
+        s.scale.y = s.scale.y * this.bounce_scale_y
 
-		return true
-	end
+        return true
+    end
 
-	if target then
-		s.ts = store.tick_ts
+    if target then
+        s.ts = store.tick_ts
 
-		if not update_sprite() then
-			-- block empty
-		else
+        if not update_sprite() then
+            -- block empty
+        else
             this.orig_bounce_range = this.bounce_range
             if not this.bounces then
                 this.max_bounces = this.bounces_lvl[b.level]
@@ -5066,7 +5042,7 @@ function scripts.ray_tesla.update(this, store)
                 this.bounce_range = this.bounce_range + this.bounce_range_inc * b.level
             end
 
-			if not this.excluded_templates or not table.contains(this.excluded_templates, target.template_name) then
+            if not this.excluded_templates or not table.contains(this.excluded_templates, target.template_name) then
                 if target.template_name == "hero_thor" then
                     scripts.heal(target, target.lightning_heal)
                     this.bounce_range = this.bounce_range * 2
@@ -5093,15 +5069,17 @@ function scripts.ray_tesla.update(this, store)
 
                     queue_insert(store, mod)
                 end
-			end
+            end
 
-			table.insert(this.seen_targets, target.id)
+            table.insert(this.seen_targets, target.id)
 
-			if this.bounces < this.max_bounces then
-				U.y_wait(store, this.bounce_delay)
-                local bounce_target, bounce_targets = U.find_nearest_target(store.entities, dest, 0, this.bounce_range, this.bounce_vis_flags, this.bounce_vis_bans, function(v)
-					return (not table.contains(this.seen_targets, v.id)) and (v.enemy or v.template_name == "hero_thor")
-				end)
+            if this.bounces < this.max_bounces then
+                U.y_wait(store, this.bounce_delay)
+                local bounce_target, bounce_targets = U.find_nearest_target(store.entities, dest, 0, this.bounce_range,
+                    this.bounce_vis_flags, this.bounce_vis_bans, function(v)
+                        return (not table.contains(this.seen_targets, v.id)) and
+                                   (v.enemy or v.template_name == "hero_thor")
+                    end)
                 if bounce_targets then
                     if this.bounces + 1 >= this.max_bounces then
                         for _, t in pairs(bounce_targets) do
@@ -5112,993 +5090,1020 @@ function scripts.ray_tesla.update(this, store)
                         end
                     elseif bounce_targets[#bounce_targets].template_name == "hero_thor" then
                         bounce_target = bounce_targets[#bounce_targets]
-                    elseif #bounce_targets > 1 and bounce_targets[#bounce_targets-1].template_name == "hero_thor" then
-                        bounce_target = bounce_targets[#bounce_targets-1]
+                    elseif #bounce_targets > 1 and bounce_targets[#bounce_targets - 1].template_name == "hero_thor" then
+                        bounce_target = bounce_targets[#bounce_targets - 1]
                     end
                 end
 
-				if bounce_target then
-					log.paranoid("ray_tesla bounce from %s to %s dist:%s", target.id, bounce_target.id, V.dist(dest.x, dest.y, bounce_target.pos.x, bounce_target.pos.y))
+                if bounce_target then
+                    log.paranoid("ray_tesla bounce from %s to %s dist:%s", target.id, bounce_target.id,
+                        V.dist(dest.x, dest.y, bounce_target.pos.x, bounce_target.pos.y))
 
-					local r = E:create_entity(this.template_name)
+                    local r = E:create_entity(this.template_name)
 
-					r.pos = V.vclone(dest)
+                    r.pos = V.vclone(dest)
                     r.bounce_range = this.orig_bounce_range
-					r.bullet.to = V.vclone(bounce_target.pos)
-					r.bullet.target_id = bounce_target.id
-					r.bullet.source_id = target.id
+                    r.bullet.to = V.vclone(bounce_target.pos)
+                    r.bullet.target_id = bounce_target.id
+                    r.bullet.source_id = target.id
                     r.bullet.damage_factor = b.damage_factor
                     r.bullet.level = b.level
                     r.max_bounces = this.max_bounces
-					r.bounce_scale_y = r.bounce_scale_y * r.bounce_scale_y_factor
-					r.seen_targets = this.seen_targets
-					r.bounce_damage_factor = math.max(this.bounce_damage_factor + this.bounce_damage_factor_inc, this.bounce_damage_factor_min)
+                    r.bounce_scale_y = r.bounce_scale_y * r.bounce_scale_y_factor
+                    r.seen_targets = this.seen_targets
+                    r.bounce_damage_factor = math.max(this.bounce_damage_factor + this.bounce_damage_factor_inc,
+                        this.bounce_damage_factor_min)
                     if bounce_target.template_name == "hero_thor" then
                         r.bounces = 0
                     else
                         r.bounces = this.bounces + 1
                     end
-					queue_insert(store, r)
-				end
-			end
+                    queue_insert(store, r)
+                end
+            end
 
-			while not U.animation_finished(this) do
-				if target then
-					update_sprite()
-				end
+            while not U.animation_finished(this) do
+                if target then
+                    update_sprite()
+                end
 
-				coroutine.yield()
-			end
-		end
-	end
+                coroutine.yield()
+            end
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.hacksaw_sawblade = {}
 
 function scripts.hacksaw_sawblade.update(this, store)
-	local b = this.bullet
-	local mspeed = b.min_speed
-	local target, ps
-	local bounce_count = 0
+    local b = this.bullet
+    local mspeed = b.min_speed
+    local target, ps
+    local bounce_count = 0
 
-	U.animation_start(this, "flying", nil, store.tick_ts, true)
+    U.animation_start(this, "flying", nil, store.tick_ts, true)
 
-	b.speed.x, b.speed.y = V.normalize(b.to.x - b.from.x, b.to.y - b.from.y)
+    b.speed.x, b.speed.y = V.normalize(b.to.x - b.from.x, b.to.y - b.from.y)
 
-	if b.particles_name then
-		ps = E:create_entity(b.particles_name)
-		ps.particle_system.track_id = this.id
+    if b.particles_name then
+        ps = E:create_entity(b.particles_name)
+        ps.particle_system.track_id = this.id
 
-		queue_insert(store, ps)
-	end
+        queue_insert(store, ps)
+    end
 
-	::label_193_0::
+    ::label_193_0::
 
     local mdist2 = mspeed * mspeed * store.tick_length * store.tick_length
 
-	while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mdist2 do
-		target = store.entities[b.target_id]
+    while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mdist2 do
+        target = store.entities[b.target_id]
 
-		if target and target.health and not target.health.dead then
-			b.to.x, b.to.y = target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y
-		end
+        if target and target.health and not target.health.dead then
+            b.to.x, b.to.y = target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y
+        end
 
-		mspeed = mspeed + FPS * math.ceil(mspeed * (1 / FPS) * b.acceleration_factor)
-		mspeed = km.clamp(b.min_speed, b.max_speed, mspeed)
-		b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
-		this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
+        mspeed = mspeed + FPS * math.ceil(mspeed * (1 / FPS) * b.acceleration_factor)
+        mspeed = km.clamp(b.min_speed, b.max_speed, mspeed)
+        b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
+        this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	if target and not target.health.dead then
-		local d = SU.create_bullet_damage(b, target.id, this.id)
+    if target and not target.health.dead then
+        local d = SU.create_bullet_damage(b, target.id, this.id)
 
-		queue_damage(store, d)
-	end
+        queue_damage(store, d)
+    end
 
-	if b.hit_fx then
-		local sfx = E:create_entity(b.hit_fx)
+    if b.hit_fx then
+        local sfx = E:create_entity(b.hit_fx)
 
-		sfx.pos.x, sfx.pos.y = b.to.x, b.to.y
-		sfx.render.sprites[1].ts = store.tick_ts
-		sfx.render.sprites[1].runs = 0
+        sfx.pos.x, sfx.pos.y = b.to.x, b.to.y
+        sfx.render.sprites[1].ts = store.tick_ts
+        sfx.render.sprites[1].runs = 0
 
-		queue_insert(store, sfx)
-	end
+        queue_insert(store, sfx)
+    end
 
-	if b.hit_blood_fx and target.unit.blood_color ~= BLOOD_NONE then
-		local sfx = E:create_entity(b.hit_blood_fx)
+    if b.hit_blood_fx and target.unit.blood_color ~= BLOOD_NONE then
+        local sfx = E:create_entity(b.hit_blood_fx)
 
-		sfx.pos = V.vclone(b.to)
-		sfx.render.sprites[1].ts = store.tick_ts
+        sfx.pos = V.vclone(b.to)
+        sfx.render.sprites[1].ts = store.tick_ts
 
-		if sfx.use_blood_color and target.unit.blood_color then
-			sfx.render.sprites[1].name = target.unit.blood_color
-			sfx.render.sprites[1].r = this.render.sprites[1].r
-		end
+        if sfx.use_blood_color and target.unit.blood_color then
+            sfx.render.sprites[1].name = target.unit.blood_color
+            sfx.render.sprites[1].r = this.render.sprites[1].r
+        end
 
-		queue_insert(store, sfx)
-	end
+        queue_insert(store, sfx)
+    end
 
-	if bounce_count < this.bounces_max then
-		local target = U.find_random_enemy(store.enemies, this.pos, 0, this.bounce_range, b.vis_flags, b.vis_bans, function(v)
-			return v ~= target
-		end)
+    if bounce_count < this.bounces_max then
+        local target = U.find_random_enemy(store.enemies, this.pos, 0, this.bounce_range, b.vis_flags, b.vis_bans,
+            function(v)
+                return v ~= target
+            end)
 
-		if target then
-			S:queue(this.sound_events.bounce)
+        if target then
+            S:queue(this.sound_events.bounce)
 
-			bounce_count = bounce_count + 1
-			b.to.x, b.to.y = target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y
-			b.target_id = target.id
+            bounce_count = bounce_count + 1
+            b.to.x, b.to.y = target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y
+            b.target_id = target.id
 
-			goto label_193_0
-		end
-	end
+            goto label_193_0
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.ray_thor = {}
 
 function scripts.ray_thor.update(this, store)
-	local b = this.bullet
-	local s = this.render.sprites[1]
-	local target = store.entities[b.target_id]
-	local source = store.entities[b.source_id]
-	local dest = b.to
+    local b = this.bullet
+    local s = this.render.sprites[1]
+    local target = store.entities[b.target_id]
+    local source = store.entities[b.source_id]
+    local dest = b.to
 
-	s.scale = V.v(1, 1)
+    s.scale = V.v(1, 1)
 
-	local function update_sprite()
-		if target and target.motion then
-			dest.x, dest.y = target.pos.x, target.pos.y
+    local function update_sprite()
+        if target and target.motion then
+            dest.x, dest.y = target.pos.x, target.pos.y
 
-			if target.unit and target.unit.hit_offset then
-				dest.x, dest.y = dest.x + target.unit.hit_offset.x, dest.y + target.unit.hit_offset.y
-			end
-		end
+            if target.unit and target.unit.hit_offset then
+                dest.x, dest.y = dest.x + target.unit.hit_offset.x, dest.y + target.unit.hit_offset.y
+            end
+        end
 
-		local angle = V.angleTo(dest.x - this.pos.x, dest.y - this.pos.y)
+        local angle = V.angleTo(dest.x - this.pos.x, dest.y - this.pos.y)
 
-		s.r = angle
-		s.scale.x = V.dist(dest.x, dest.y, this.pos.x, this.pos.y) / this.image_width
-		s.scale.y = 0.4 + km.clamp(0, 0.6, s.scale.x * 0.6)
-		s.scale.y = s.scale.y * this.bounce_scale_y
-	end
+        s.r = angle
+        s.scale.x = V.dist(dest.x, dest.y, this.pos.x, this.pos.y) / this.image_width
+        s.scale.y = 0.4 + km.clamp(0, 0.6, s.scale.x * 0.6)
+        s.scale.y = s.scale.y * this.bounce_scale_y
+    end
 
-	if target then
-		s.ts = store.tick_ts
+    if target then
+        s.ts = store.tick_ts
 
-		update_sprite()
+        update_sprite()
 
-		local mod = E:create_entity(b.mod)
+        local mod = E:create_entity(b.mod)
 
-		mod.modifier.source_id = b.source_id
-		mod.modifier.target_id = target.id
+        mod.modifier.source_id = b.source_id
+        mod.modifier.target_id = target.id
 
-		queue_insert(store, mod)
+        queue_insert(store, mod)
 
-		while not U.animation_finished(this) do
-			update_sprite()
-			coroutine.yield()
-		end
-	end
+        while not U.animation_finished(this) do
+            update_sprite()
+            coroutine.yield()
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_ranger_thorn = {}
 
 function scripts.aura_ranger_thorn.update(this, store)
-	local a = this.aura
+    local a = this.aura
 
-	a.ts = store.tick_ts
+    a.ts = store.tick_ts
 
-	local function find_targets()
-		local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans, function(e)
-			return not e.enemy.counts[a.mod] or e.enemy.counts[a.mod] < a.max_times
-		end)
+    local function find_targets()
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans,
+            function(e)
+                return not e.enemy.counts[a.mod] or e.enemy.counts[a.mod] < a.max_times
+            end)
 
-		return targets
-	end
+        return targets
+    end
 
-	while true do
-		local owner = store.entities[a.source_id]
+    while true do
+        local owner = store.entities[a.source_id]
 
-		if not owner then
-			-- log.error("aura_ranger_thorn has no parent tower. removing")
+        if not owner then
+            -- log.error("aura_ranger_thorn has no parent tower. removing")
 
-			break
-		end
+            break
+        end
 
-		if owner.tower.blocked then
-			-- block empty
-		elseif store.tick_ts - a.ts >= a.cooldown then
-			local targets = find_targets()
+        if owner.tower.blocked then
+            -- block empty
+        elseif store.tick_ts - a.ts >= a.cooldown then
+            local targets = find_targets()
 
-			if not targets or #targets < a.min_count then
-				-- block empty
-			else
-				a.ts = store.tick_ts
+            if not targets or #targets < a.min_count then
+                -- block empty
+            else
+                a.ts = store.tick_ts
 
-				U.animation_start(owner, a.owner_animation, nil, store.tick_ts, false, a.owner_sid)
-				U.y_wait(store, a.hit_time)
+                U.animation_start(owner, a.owner_animation, nil, store.tick_ts, false, a.owner_sid)
+                U.y_wait(store, a.hit_time)
 
-				targets = find_targets()
+                targets = find_targets()
 
-				if not targets or #targets < a.min_count then
-					-- block empty
-				else
-					S:queue(a.hit_sound)
+                if not targets or #targets < a.min_count then
+                    -- block empty
+                else
+                    S:queue(a.hit_sound)
 
-					for i = 1, math.min(#targets, a.max_count + a.max_count_inc * owner.powers.thorn.level) do
-						local e = targets[i]
-						local m = E:create_entity(a.mod)
+                    for i = 1, math.min(#targets, a.max_count + a.max_count_inc * owner.powers.thorn.level) do
+                        local e = targets[i]
+                        local m = E:create_entity(a.mod)
 
-						m.modifier.target_id = e.id
-						m.modifier.source_id = this.id
-						m.modifier.level = owner.powers.thorn.level
-						m.modifier.duration = m.modifier.duration + m.modifier.duration_inc * owner.powers.thorn.level
+                        m.modifier.target_id = e.id
+                        m.modifier.source_id = this.id
+                        m.modifier.level = owner.powers.thorn.level
+                        m.modifier.duration = m.modifier.duration + m.modifier.duration_inc * owner.powers.thorn.level
 
                         if U.has_modifier_in_list(store, e, {"mod_ranger_poison"}) then
-                            m.modifier.duration = m.modifier.duration + owner.powers.poison.level * m.modifier.duration_inc * 0.5
+                            m.modifier.duration = m.modifier.duration + owner.powers.poison.level *
+                                                      m.modifier.duration_inc * 0.5
                         end
 
-						queue_insert(store, m)
-					end
+                        queue_insert(store, m)
+                    end
 
-					U.y_animation_wait(owner, a.owner_sid)
-				end
-			end
-		end
+                    U.y_animation_wait(owner, a.owner_sid)
+                end
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_tesla_overcharge = {}
 
 function scripts.aura_tesla_overcharge.update(this, store)
-	local a = this.aura
-	local ps = E:create_entity(this.particles_name)
+    local a = this.aura
+    local ps = E:create_entity(this.particles_name)
 
-	ps.pos = V.vclone(this.pos)
+    ps.pos = V.vclone(this.pos)
 
-	queue_insert(store, ps)
-	U.y_wait(store, a.duration)
+    queue_insert(store, ps)
+    U.y_wait(store, a.duration)
 
-	local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
 
-	if targets then
-		for _, e in pairs(targets) do
-			local d = SU.create_attack_damage(a, e.id, this)
+    if targets then
+        for _, e in pairs(targets) do
+            local d = SU.create_attack_damage(a, e.id, this)
 
-			queue_damage(store, d)
+            queue_damage(store, d)
 
-			if not this.aura.excluded_templates or not table.contains(this.aura.excluded_templates, e.template_name) then
-				local m = E:create_entity(a.mod)
+            if not this.aura.excluded_templates or not table.contains(this.aura.excluded_templates, e.template_name) then
+                local m = E:create_entity(a.mod)
 
-				m.modifier.target_id = e.id
-				m.modifier.source_id = this.id
+                m.modifier.target_id = e.id
+                m.modifier.source_id = this.id
 
-				queue_insert(store, m)
-			end
-		end
-	end
+                queue_insert(store, m)
+            end
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_chill_elora = {}
 
 function scripts.aura_chill_elora.update(this, store)
-	local last_hit_ts = 0
+    local last_hit_ts = 0
 
-	U.sprites_hide(this)
+    U.sprites_hide(this)
 
-	if this.delay then
-		U.y_wait(store, this.delay)
-	end
+    if this.delay then
+        U.y_wait(store, this.delay)
+    end
 
-	for _, s in pairs(this.render.sprites) do
-		s.ts = store.tick_ts
-	end
+    for _, s in pairs(this.render.sprites) do
+        s.ts = store.tick_ts
+    end
 
-	U.sprites_show(this)
+    U.sprites_show(this)
 
-	last_hit_ts = store.tick_ts - this.aura.cycle_time
+    last_hit_ts = store.tick_ts - this.aura.cycle_time
 
-	while true do
-		if this.interrupt then
-			last_hit_ts = 1e+99
-		end
+    while true do
+        if this.interrupt then
+            last_hit_ts = 1e+99
+        end
 
-		if this.aura.duration >= 0 and store.tick_ts - this.aura.ts > this.aura.duration then
-			this.tween.disabled = false
-			this.tween.ts = store.tick_ts
+        if this.aura.duration >= 0 and store.tick_ts - this.aura.ts > this.aura.duration then
+            this.tween.disabled = false
+            this.tween.ts = store.tick_ts
 
-			return
-		end
+            return
+        end
 
-		if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
-			last_hit_ts = store.tick_ts
+        if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
+            last_hit_ts = store.tick_ts
 
-			local targets = table.filter(store.entities, function(k, v)
-				return v.unit and v.vis and v.health and not v.health.dead and not v._last_on_ice and band(v.vis.flags, this.aura.vis_bans) == 0 and band(v.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and (not this.aura.allowed_templates or table.contains(this.aura.allowed_templates, v.template_name)) and (not this.aura.excluded_templates or not table.contains(this.aura.excluded_templates, v.template_name)) and (not this.aura.filter_source or this.aura.source_id ~= v.id)
-			end)
+            local targets = table.filter(store.entities, function(k, v)
+                return v.unit and v.vis and v.health and not v.health.dead and not v._last_on_ice and
+                           band(v.vis.flags, this.aura.vis_bans) == 0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                           U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                           (not this.aura.allowed_templates or
+                               table.contains(this.aura.allowed_templates, v.template_name)) and
+                           (not this.aura.excluded_templates or
+                               not table.contains(this.aura.excluded_templates, v.template_name)) and
+                           (not this.aura.filter_source or this.aura.source_id ~= v.id)
+            end)
 
-			for i, target in ipairs(targets) do
-				if not U.has_modifiers(store, target, this.aura.mod) then
-					SU.remove_modifiers_by_type(store, target, MOD_TYPE_SLOW, this.aura.mod)
-				end
+            for i, target in ipairs(targets) do
+                if not U.has_modifiers(store, target, this.aura.mod) then
+                    SU.remove_modifiers_by_type(store, target, MOD_TYPE_SLOW, this.aura.mod)
+                end
 
-				local new_mod = E:create_entity(this.aura.mod)
+                local new_mod = E:create_entity(this.aura.mod)
 
-				new_mod.modifier.level = this.aura.level
-				new_mod.modifier.target_id = target.id
-				new_mod.modifier.source_id = this.id
+                new_mod.modifier.level = this.aura.level
+                new_mod.modifier.target_id = target.id
+                new_mod.modifier.source_id = this.id
 
-				queue_insert(store, new_mod)
-			end
-		end
+                queue_insert(store, new_mod)
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.aura_slow_bolin = {}
 
 function scripts.aura_slow_bolin.update(this, store)
-	local last_hit_ts = store.tick_ts - this.aura.cycle_time
+    local last_hit_ts = store.tick_ts - this.aura.cycle_time
 
-	while true do
-		if this.interrupt then
-			last_hit_ts = 1e+99
-		end
+    while true do
+        if this.interrupt then
+            last_hit_ts = 1e+99
+        end
 
-		if this.aura.duration >= 0 and store.tick_ts - this.aura.ts > this.aura.duration then
-			U.animation_start(this, "end", nil, store.tick_ts)
+        if this.aura.duration >= 0 and store.tick_ts - this.aura.ts > this.aura.duration then
+            U.animation_start(this, "end", nil, store.tick_ts)
 
-			this.tween.disabled = false
-			this.tween.ts = store.tick_ts
+            this.tween.disabled = false
+            this.tween.ts = store.tick_ts
 
-			return
-		end
+            return
+        end
 
-		if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
-			last_hit_ts = store.tick_ts
+        if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
+            last_hit_ts = store.tick_ts
 
-			local targets = table.filter(store.entities, function(k, v)
-				return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) == 0 and band(v.vis.bans, this.aura.vis_flags) == 0 and U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and (not this.aura.allowed_templates or table.contains(this.aura.allowed_templates, v.template_name)) and (not this.aura.excluded_templates or not table.contains(this.aura.excluded_templates, v.template_name)) and (not this.aura.filter_source or this.aura.source_id ~= v.id)
-			end)
+            local targets = table.filter(store.entities, function(k, v)
+                return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
+                           0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                           U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                           (not this.aura.allowed_templates or
+                               table.contains(this.aura.allowed_templates, v.template_name)) and
+                           (not this.aura.excluded_templates or
+                               not table.contains(this.aura.excluded_templates, v.template_name)) and
+                           (not this.aura.filter_source or this.aura.source_id ~= v.id)
+            end)
 
-			for i, target in ipairs(targets) do
-				local new_mod = E:create_entity(this.aura.mod)
+            for i, target in ipairs(targets) do
+                local new_mod = E:create_entity(this.aura.mod)
 
-				new_mod.modifier.level = this.aura.level
-				new_mod.modifier.target_id = target.id
-				new_mod.modifier.source_id = this.id
+                new_mod.modifier.level = this.aura.level
+                new_mod.modifier.target_id = target.id
+                new_mod.modifier.source_id = this.id
 
-				queue_insert(store, new_mod)
-			end
-		end
+                queue_insert(store, new_mod)
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.aura_ignus_particles = {}
 
 function scripts.aura_ignus_particles.update(this, store)
-	local source = store.entities[this.aura.source_id]
+    local source = store.entities[this.aura.source_id]
 
-	if not source then
-		queue_remove(store, this)
+    if not source then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.pos = source.pos
+    this.pos = source.pos
 
-	local particles = {}
-	local s = source.render.sprites[1]
-	local h = source.health
-	local flip = s.flip_x
+    local particles = {}
+    local s = source.render.sprites[1]
+    local h = source.health
+    local flip = s.flip_x
 
-	for i, o in ipairs(this.particle_offsets) do
-		local ps = E:create_entity(this.particles_name)
+    for i, o in ipairs(this.particle_offsets) do
+        local ps = E:create_entity(this.particles_name)
 
-		ps.particle_system.track_id = source.id
-		ps.particle_system.track_offset = o
-		ps.particle_system.ts_offset = fts(2 * i)
+        ps.particle_system.track_id = source.id
+        ps.particle_system.track_offset = o
+        ps.particle_system.ts_offset = fts(2 * i)
 
-		queue_insert(store, ps)
-		table.insert(particles, ps)
-	end
+        queue_insert(store, ps)
+        table.insert(particles, ps)
+    end
 
-	::label_209_0::
+    ::label_209_0::
 
-	while h.dead or not table.contains(this.emit_states, s.name) do
-		coroutine.yield()
-	end
+    while h.dead or not table.contains(this.emit_states, s.name) do
+        coroutine.yield()
+    end
 
-	for i, p in pairs(particles) do
-		p.particle_system.emit = true
-	end
+    for i, p in pairs(particles) do
+        p.particle_system.emit = true
+    end
 
-	while table.contains(this.emit_states, s.name) and not h.dead do
-		if s.flip_x ~= flip then
-			flip = s.flip_x
+    while table.contains(this.emit_states, s.name) and not h.dead do
+        if s.flip_x ~= flip then
+            flip = s.flip_x
 
-			for i, p in pairs(particles) do
-				p.particle_system.emit_offset = s.flip_x and this.flip_offset or nil
-			end
-		end
+            for i, p in pairs(particles) do
+                p.particle_system.emit_offset = s.flip_x and this.flip_offset or nil
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	for _, p in pairs(particles) do
-		p.particle_system.emit = false
-	end
+    for _, p in pairs(particles) do
+        p.particle_system.emit = false
+    end
 
-	goto label_209_0
+    goto label_209_0
 end
 
 scripts.aura_ignus_surge_of_flame = {}
 
 function scripts.aura_ignus_surge_of_flame.update(this, store)
-	local source = store.entities[this.aura.source_id]
+    local source = store.entities[this.aura.source_id]
 
-	if not source then
-		queue_remove(store, this)
+    if not source then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.pos = source.pos
+    this.pos = source.pos
 
-	local s = source.render.sprites[1]
-	local ps = E:create_entity(this.particles_name)
+    local s = source.render.sprites[1]
+    local ps = E:create_entity(this.particles_name)
 
-	ps.particle_system.track_id = source.id
-	ps.particle_system.emit = true
+    ps.particle_system.track_id = source.id
+    ps.particle_system.emit = true
 
-	queue_insert(store, ps)
+    queue_insert(store, ps)
 
-	local a = this.aura
-	local ts = 0
-	local targets
+    local a = this.aura
+    local ts = 0
+    local targets
 
-	while s.name == this.damage_state do
-		if store.tick_ts - ts + 1e-09 <= a.cycle_time then
-			-- block empty
-		else
-			targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.damage_flags or 0, a.damage_bans or 0) or {}
-			ts = store.tick_ts
+    while s.name == this.damage_state do
+        if store.tick_ts - ts + 1e-09 <= a.cycle_time then
+            -- block empty
+        else
+            targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.damage_radius, a.damage_flags or 0,
+                a.damage_bans or 0) or {}
+            ts = store.tick_ts
 
-			for _, t in pairs(targets) do
-				local d = E:create_entity("damage")
+            for _, t in pairs(targets) do
+                local d = E:create_entity("damage")
 
-				d.damage_type = a.damage_type
-				d.source_id = this.id
-				d.target_id = t.id
-				d.value = math.random(a.damage_min, a.damage_max)
+                d.damage_type = a.damage_type
+                d.source_id = this.id
+                d.target_id = t.id
+                d.value = math.random(a.damage_min, a.damage_max)
 
-				queue_damage(store, d)
+                queue_damage(store, d)
 
-				local fx = E:create_entity(a.hit_fx)
+                local fx = E:create_entity(a.hit_fx)
 
-				fx.pos = V.vclone(t.pos)
+                fx.pos = V.vclone(t.pos)
 
-				if t.unit and t.unit.mod_offset then
-					fx.pos.x, fx.pos.y = fx.pos.x + t.unit.mod_offset.x, fx.pos.y + t.unit.mod_offset.y
-				end
+                if t.unit and t.unit.mod_offset then
+                    fx.pos.x, fx.pos.y = fx.pos.x + t.unit.mod_offset.x, fx.pos.y + t.unit.mod_offset.y
+                end
 
-				for i = 1, #fx.render.sprites do
-					fx.render.sprites[i].ts = store.tick_ts
-				end
+                for i = 1, #fx.render.sprites do
+                    fx.render.sprites[i].ts = store.tick_ts
+                end
 
-				queue_insert(store, fx)
-			end
-		end
+                queue_insert(store, fx)
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	ps.particle_system.emit = false
+    ps.particle_system.emit = false
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_ingvar_bear_regenerate = {}
 
 function scripts.aura_ingvar_bear_regenerate.update(this, store)
-	local hero = store.entities[this.aura.source_id]
+    local hero = store.entities[this.aura.source_id]
 
-	if not hero then
-		log.error("hero not found for aura_ingvar_bear_regenerate")
-		queue_remove(store, this)
+    if not hero then
+        log.error("hero not found for aura_ingvar_bear_regenerate")
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.aura.ts = store.tick_ts
+    this.aura.ts = store.tick_ts
 
-	while true do
-		if not hero.is_bear or hero.health.dead then
-			-- block empty
-		elseif store.tick_ts - this.aura.ts >= this.regen.cooldown then
-			this.aura.ts = store.tick_ts
-			hero.health.hp = hero.health.hp + this.regen.health
-			hero.health.hp = km.clamp(0, hero.health.hp_max, hero.health.hp)
-		end
+    while true do
+        if not hero.is_bear or hero.health.dead then
+            -- block empty
+        elseif store.tick_ts - this.aura.ts >= this.regen.cooldown then
+            this.aura.ts = store.tick_ts
+            hero.health.hp = hero.health.hp + this.regen.health
+            hero.health.hp = km.clamp(0, hero.health.hp_max, hero.health.hp)
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.aura_10yr_particles = {}
 
 function scripts.aura_10yr_particles.update(this, store)
-	local source = store.entities[this.aura.source_id]
+    local source = store.entities[this.aura.source_id]
 
-	if not source then
-		queue_remove(store, this)
+    if not source then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.pos = source.pos
+    this.pos = source.pos
 
-	local particles = {}
-	local s = source.render.sprites[1]
-	local h = source.health
-	local flip = s.flip_x
+    local particles = {}
+    local s = source.render.sprites[1]
+    local h = source.health
+    local flip = s.flip_x
 
-	for i, o in ipairs(this.particle_offsets) do
-		local ps = E:create_entity(this.particles_name)
+    for i, o in ipairs(this.particle_offsets) do
+        local ps = E:create_entity(this.particles_name)
 
-		ps.particle_system.track_id = source.id
-		ps.particle_system.track_offset = o
-		ps.particle_system.ts_offset = fts(2 * i)
+        ps.particle_system.track_id = source.id
+        ps.particle_system.track_offset = o
+        ps.particle_system.ts_offset = fts(2 * i)
 
-		queue_insert(store, ps)
-		table.insert(particles, ps)
-	end
+        queue_insert(store, ps)
+        table.insert(particles, ps)
+    end
 
-	for i, p in pairs(particles) do
-		p.particle_system.emit = false
-	end
+    for i, p in pairs(particles) do
+        p.particle_system.emit = false
+    end
 
-	::label_212_0::
+    ::label_212_0::
 
-	while h.dead or not source.is_buffed or not table.contains(this.emit_states, s.name) do
-		coroutine.yield()
-	end
+    while h.dead or not source.is_buffed or not table.contains(this.emit_states, s.name) do
+        coroutine.yield()
+    end
 
-	for i, p in pairs(particles) do
-		p.particle_system.emit = true
-	end
+    for i, p in pairs(particles) do
+        p.particle_system.emit = true
+    end
 
-	while table.contains(this.emit_states, s.name) and not h.dead and source.is_buffed do
-		if s.flip_x ~= flip then
-			flip = s.flip_x
+    while table.contains(this.emit_states, s.name) and not h.dead and source.is_buffed do
+        if s.flip_x ~= flip then
+            flip = s.flip_x
 
-			for i, p in pairs(particles) do
-				p.particle_system.emit_offset = s.flip_x and this.flip_offset or nil
-			end
-		end
+            for i, p in pairs(particles) do
+                p.particle_system.emit_offset = s.flip_x and this.flip_offset or nil
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	for _, p in pairs(particles) do
-		p.particle_system.emit = false
-	end
+    for _, p in pairs(particles) do
+        p.particle_system.emit = false
+    end
 
-	goto label_212_0
+    goto label_212_0
 end
 
 scripts.aura_10yr_fireball = {}
 
 function scripts.aura_10yr_fireball.update(this, store)
-	local start_y = store.visible_coords and store.visible_coords.top or REF_H
-	local bdt
-	local a = this.aura
-	local owner = store.entities[a.source_id]
+    local start_y = store.visible_coords and store.visible_coords.top or REF_H
+    local bdt
+    local a = this.aura
+    local owner = store.entities[a.source_id]
 
-	if not owner then
-		log.error("owner %s was not found. bailing out", a.source_od)
-	else
-		do
-			local bdy = math.abs(owner.pos.y - start_y)
-			local tpl = E:get_template(a.entity)
+    if not owner then
+        log.error("owner %s was not found. bailing out", a.source_od)
+    else
+        do
+            local bdy = math.abs(owner.pos.y - start_y)
+            local tpl = E:get_template(a.entity)
 
-			bdt = bdy / tpl.bullet.max_speed
-		end
+            bdt = bdy / tpl.bullet.max_speed
+        end
 
-		for i = 1, a.loops do
-			local target, __, pred_pos = U.find_foremost_enemy(store.enemies, owner.pos, a.min_range, a.max_range, bdt, a.vis_flags, a.vis_ban)
-			local b = E:create_entity(a.entity)
+        for i = 1, a.loops do
+            local target, __, pred_pos = U.find_foremost_enemy(store.enemies, owner.pos, a.min_range, a.max_range, bdt,
+                a.vis_flags, a.vis_ban)
+            local b = E:create_entity(a.entity)
 
-			if target then
-				local dh = start_y - pred_pos.y
-				local dx = dh * 0.4
+            if target then
+                local dh = start_y - pred_pos.y
+                local dx = dh * 0.4
 
-				b.pos.x, b.pos.y = pred_pos.x + dx, start_y
-				b.bullet.to = V.v(pred_pos.x, pred_pos.y)
-			else
-				local tx = owner.pos.x + math.random(-20, 20)
-				local ty = owner.pos.y + math.random(-20, 20)
-				local dh = start_y - ty
-				local dx = dh * 0.4
+                b.pos.x, b.pos.y = pred_pos.x + dx, start_y
+                b.bullet.to = V.v(pred_pos.x, pred_pos.y)
+            else
+                local tx = owner.pos.x + math.random(-20, 20)
+                local ty = owner.pos.y + math.random(-20, 20)
+                local dh = start_y - ty
+                local dx = dh * 0.4
 
-				b.pos.x, b.pos.y = tx + dx, start_y
-				b.bullet.to = V.v(tx, ty)
-			end
+                b.pos.x, b.pos.y = tx + dx, start_y
+                b.bullet.to = V.v(tx, ty)
+            end
 
-			b.bullet.from = V.vclone(b.pos)
+            b.bullet.from = V.vclone(b.pos)
 
-			queue_insert(store, b)
-			U.y_wait(store, a.delay)
-		end
-	end
+            queue_insert(store, b)
+            U.y_wait(store, a.delay)
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_10yr_bomb = {}
 
 function scripts.aura_10yr_bomb.update(this, store)
-	local a = this.aura
+    local a = this.aura
 
-	local function do_attack(pos, last_attack)
-		local fx = E:create_entity(a.fx)
+    local function do_attack(pos, last_attack)
+        local fx = E:create_entity(a.fx)
 
-		fx.pos.x, fx.pos.y = pos.x, pos.y
+        fx.pos.x, fx.pos.y = pos.x, pos.y
 
-		if not last_attack then
-			fx.render.sprites[2].scale = V.v(0.8, 0.8)
-		end
+        if not last_attack then
+            fx.render.sprites[2].scale = V.v(0.8, 0.8)
+        end
 
-		fx.render.sprites[2].ts = store.tick_ts
-		fx.tween.ts = store.tick_ts
+        fx.render.sprites[2].ts = store.tick_ts
+        fx.tween.ts = store.tick_ts
 
-		queue_insert(store, fx)
+        queue_insert(store, fx)
 
-		local radius = last_attack and a.last_attack_damage_radius or a.damage_radius
-		local targets = U.find_enemies_in_range(store.enemies, pos, 0, radius, a.vis_flags, a.vis_bans)
+        local radius = last_attack and a.last_attack_damage_radius or a.damage_radius
+        local targets = U.find_enemies_in_range(store.enemies, pos, 0, radius, a.vis_flags, a.vis_bans)
 
-		if targets then
-			for _, t in pairs(targets) do
-				local d = E:create_entity("damage")
+        if targets then
+            for _, t in pairs(targets) do
+                local d = E:create_entity("damage")
 
-				d.value = math.random(a.damage_min, a.damage_max)
-				d.damage_type = a.damage_type
-				d.source_id = this.id
-				d.target_id = t.id
+                d.value = math.random(a.damage_min, a.damage_max)
+                d.damage_type = a.damage_type
+                d.source_id = this.id
+                d.target_id = t.id
 
-				queue_damage(store, d)
+                queue_damage(store, d)
 
-				if (last_attack or math.random() < a.stun_chance) and U.flags_pass(t.vis, this.stun) then
-					local m = E:create_entity(this.stun.mod)
+                if (last_attack or math.random() < a.stun_chance) and U.flags_pass(t.vis, this.stun) then
+                    local m = E:create_entity(this.stun.mod)
 
-					m.modifier.source_id = this.id
-					m.modifier.target_id = t.id
+                    m.modifier.source_id = this.id
+                    m.modifier.target_id = t.id
 
-					queue_insert(store, m)
-				end
-			end
+                    queue_insert(store, m)
+                end
+            end
 
-			log.paranoid(">>>> aura_10yr_bomb POS:%s,%s  damaged:%s", pos.x, pos.y, table.concat(table.map(targets, function(k, v)
-				return v.id
-			end), ","))
-		end
-	end
+            log.paranoid(">>>> aura_10yr_bomb POS:%s,%s  damaged:%s", pos.x, pos.y,
+                table.concat(table.map(targets, function(k, v)
+                    return v.id
+                end), ","))
+        end
+    end
 
-	local pi, spi, ni, tni, target, origin
-	local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.min_nodes, a.max_nodes, nil, a.vis_flags, a.vis_bans)
+    local pi, spi, ni, tni, target, origin
+    local target_info = U.find_enemies_in_paths(store.enemies, this.pos, a.min_nodes, a.max_nodes, nil, a.vis_flags,
+        a.vis_bans)
 
-	if not target_info or #target_info < a.min_count then
-		-- log.error("aura_10yr_bomb could not find valid enemies in the hero paths")
-	else
-		target = target_info[1].enemy
-		origin = target_info[1].origin
-		pi, spi, ni = unpack(origin)
-		tni = target.nav_path.ni
+    if not target_info or #target_info < a.min_count then
+        -- log.error("aura_10yr_bomb could not find valid enemies in the hero paths")
+    else
+        target = target_info[1].enemy
+        origin = target_info[1].origin
+        pi, spi, ni = unpack(origin)
+        tni = target.nav_path.ni
 
-		for i = 1, a.steps do
-			local nni = ni + i * a.step_nodes * km.sign(tni - ni)
-			local oni = ni + i * a.step_nodes * km.sign(tni - ni) * -1
+        for i = 1, a.steps do
+            local nni = ni + i * a.step_nodes * km.sign(tni - ni)
+            local oni = ni + i * a.step_nodes * km.sign(tni - ni) * -1
 
-			spi = i == a.steps and 1 or (spi == 2 or spi == 3) and 1 or math.random() < 0.5 and 2 or 3
+            spi = i == a.steps and 1 or (spi == 2 or spi == 3) and 1 or math.random() < 0.5 and 2 or 3
 
-			U.y_wait(store, a.step_delay)
+            U.y_wait(store, a.step_delay)
 
-			local spos = P:node_pos(pi, spi, nni)
+            local spos = P:node_pos(pi, spi, nni)
 
-			do_attack(spos, i == a.steps)
+            do_attack(spos, i == a.steps)
 
-			if i == 1 then
-				local opos = P:node_pos(pi, spi, oni)
+            if i == 1 then
+                local opos = P:node_pos(pi, spi, oni)
 
-				do_attack(opos, false)
-			end
-		end
-	end
+                do_attack(opos, false)
+            end
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_spectral_knight = {}
 
 function scripts.aura_spectral_knight.update(this, store)
-	U.y_wait(store, this.aura.delay)
+    U.y_wait(store, this.aura.delay)
 
-	this.tween.disabled = false
-	this.tween.ts = store.tick_ts
+    this.tween.disabled = false
+    this.tween.ts = store.tick_ts
 
-	return scripts.aura_apply_mod.update(this, store)
+    return scripts.aura_apply_mod.update(this, store)
 end
 
 scripts.aura_skeleton_big = {}
 function scripts.aura_skeleton_big.update(this, store)
-	U.y_wait(store, this.aura.delay)
+    U.y_wait(store, this.aura.delay)
 
-	this.tween.disabled = false
-	this.tween.ts = store.tick_ts
+    this.tween.disabled = false
+    this.tween.ts = store.tick_ts
 
-	return scripts.aura_apply_mod.update(this, store)
+    return scripts.aura_apply_mod.update(this, store)
 end
 
 scripts.aura_abomination = {}
 function scripts.aura_abomination.update(this, store)
-	U.y_wait(store, this.aura.delay)
+    U.y_wait(store, this.aura.delay)
 
-	this.tween.disabled = false
-	this.tween.ts = store.tick_ts
+    this.tween.disabled = false
+    this.tween.ts = store.tick_ts
 
-	return scripts.aura_apply_mod.update(this, store)
+    return scripts.aura_apply_mod.update(this, store)
 end
 
 scripts.mod_slow_curse = {}
 
 function scripts.mod_slow_curse.insert(this, store)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or U.has_modifier_types(store, target, MOD_TYPE_SLOW, MOD_TYPE_RAGE) then
-		return false
-	end
+    if not target or U.has_modifier_types(store, target, MOD_TYPE_SLOW, MOD_TYPE_RAGE) then
+        return false
+    end
 
-	return scripts.mod_slow.insert(this, store)
+    return scripts.mod_slow.insert(this, store)
 end
 
 scripts.mod_thorn = {}
 
 function scripts.mod_thorn.queue(this, store, insertion)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		return
-	end
+    if not target then
+        return
+    end
 
-	if insertion then
-		log.debug("%s (%s) queue/insertion", this.template_name, this.id)
+    if insertion then
+        log.debug("%s (%s) queue/insertion", this.template_name, this.id)
 
-		if U.flags_pass(target.vis, this.modifier) then
-			this._target_prev_bans = target.vis.bans
-			target.vis.bans = U.flag_set(target.vis.bans, F_THORN)
-		end
-	else
-		log.debug("%s (%s) queue/removal", this.template_name, this.id)
+        if U.flags_pass(target.vis, this.modifier) then
+            this._target_prev_bans = target.vis.bans
+            target.vis.bans = U.flag_set(target.vis.bans, F_THORN)
+        end
+    else
+        log.debug("%s (%s) queue/removal", this.template_name, this.id)
 
-		if this._target_prev_bans then
-			target.vis.bans = this._target_prev_bans
-		end
-	end
+        if this._target_prev_bans then
+            target.vis.bans = this._target_prev_bans
+        end
+    end
 end
 
 function scripts.mod_thorn.dequeue(this, store, insertion)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		return
-	end
+    if not target then
+        return
+    end
 
-	if insertion then
-		log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
+    if insertion then
+        log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
 
-		if this._target_prev_bans then
-			target.vis.bans = this._target_prev_bans
-		end
-	end
+        if this._target_prev_bans then
+            target.vis.bans = this._target_prev_bans
+        end
+    end
 end
 
 function scripts.mod_thorn.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
-	local s = this.render.sprites[1]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
+    local s = this.render.sprites[1]
 
-	s.ts = store.tick_ts
+    s.ts = store.tick_ts
 
-	if target and target.health and not target.health.dead and this._target_prev_bans ~= nil and (not target.enemy.counts.mod_thorn or target.enemy.counts.mod_thorn < this.max_times_applied) then
-		SU.stun_inc(target)
+    if target and target.health and not target.health.dead and this._target_prev_bans ~= nil and
+        (not target.enemy.counts.mod_thorn or target.enemy.counts.mod_thorn < this.max_times_applied) then
+        SU.stun_inc(target)
 
-		s.prefix = s.size_prefixes[target.unit.size]
-		s.scale = s.size_scales[target.unit.size]
+        s.prefix = s.size_prefixes[target.unit.size]
+        s.scale = s.size_scales[target.unit.size]
 
-		return true
-	else
-		return false
-	end
+        return true
+    else
+        return false
+    end
 end
 
 function scripts.mod_thorn.remove(this, store)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if target then
-		target.health.ignore_damage = false
+    if target then
+        target.health.ignore_damage = false
 
-		SU.stun_dec(target)
-	end
+        SU.stun_dec(target)
+    end
 
-	return true
+    return true
 end
 
 function scripts.mod_thorn.update(this, store)
-	local hit_ts
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local hit_ts
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		queue_remove(store, this)
+    if not target or not target.health or target.health.dead then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	if this.max_times_applied then
-		if not target.enemy.counts.mod_thorn then
-			target.enemy.counts.mod_thorn = 0
-		end
+    if this.max_times_applied then
+        if not target.enemy.counts.mod_thorn then
+            target.enemy.counts.mod_thorn = 0
+        end
 
-		target.enemy.counts.mod_thorn = target.enemy.counts.mod_thorn + 1
-	end
+        target.enemy.counts.mod_thorn = target.enemy.counts.mod_thorn + 1
+    end
 
-	this.pos = target.pos
+    this.pos = target.pos
 
-	local target_flip = target.render.sprites[1].flip_x
+    local target_flip = target.render.sprites[1].flip_x
 
-	U.animation_start(this, "start", target_flip, store.tick_ts, false)
+    U.animation_start(this, "start", target_flip, store.tick_ts, false)
 
-	while not U.animation_finished(this) do
-		if target.health.dead then
-			goto label_223_0
-		end
+    while not U.animation_finished(this) do
+        if target.health.dead then
+            goto label_223_0
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	m.ts = store.tick_ts
-	hit_ts = store.tick_ts
+    m.ts = store.tick_ts
+    hit_ts = store.tick_ts
 
-	U.animation_start(this, "loop", target_flip, store.tick_ts, true)
+    U.animation_start(this, "loop", target_flip, store.tick_ts, true)
 
-	while store.tick_ts - m.ts <= m.duration + 1e-09 do
-		if this.interrupt or target.health.dead then
-			break
-		end
+    while store.tick_ts - m.ts <= m.duration + 1e-09 do
+        if this.interrupt or target.health.dead then
+            break
+        end
 
-		if store.tick_ts - hit_ts >= this.damage_every then
-			hit_ts = store.tick_ts
+        if store.tick_ts - hit_ts >= this.damage_every then
+            hit_ts = store.tick_ts
 
-			local d = SU.create_attack_damage(this, target.id, this)
+            local d = SU.create_attack_damage(this, target.id, this)
 
-			queue_damage(store, d)
-		end
+            queue_damage(store, d)
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	::label_223_0::
+    ::label_223_0::
 
-	U.y_animation_play(this, "end", target_flip, store.tick_ts, false)
-	queue_remove(store, this)
-	signal.emit("mod-applied", this, target)
+    U.y_animation_play(this, "end", target_flip, store.tick_ts, false)
+    queue_remove(store, this)
+    signal.emit("mod-applied", this, target)
 end
 
 scripts.mod_ray_arcane = {}
 
 function scripts.mod_ray_arcane.update(this, store)
-	local cycles, total_damage = 0, 0
-	local m = this.modifier
-	local dps = this.dps
-	local target = store.entities[m.target_id]
+    local cycles, total_damage = 0, 0
+    local m = this.modifier
+    local dps = this.dps
+    local target = store.entities[m.target_id]
 
-	if not target or target.health.dead then
-		queue_remove(store, this)
-		return
-	end
+    if not target or target.health.dead then
+        queue_remove(store, this)
+        return
+    end
 
-	local function apply_damage(value)
-		local d = E:create_entity("damage")
-		d.source_id = this.id
-		d.target_id = target.id
-		d.value = value
-		d.damage_type = dps.damage_type
-		d.pop = dps.pop
-		d.pop_chance = dps.pop_chance
-		d.pop_conds = dps.pop_conds
-		queue_damage(store, d)
-		total_damage = total_damage + value
-	end
+    local function apply_damage(value)
+        local d = E:create_entity("damage")
+        d.source_id = this.id
+        d.target_id = target.id
+        d.value = value
+        d.damage_type = dps.damage_type
+        d.pop = dps.pop
+        d.pop_chance = dps.pop_chance
+        d.pop_conds = dps.pop_conds
+        queue_damage(store, d)
+        total_damage = total_damage + value
+    end
 
-	local raw_damage = math.random(dps.damage_min, dps.damage_max) * m.damage_factor
-	local extra_damage = math.max(0, raw_damage - target.health.hp)
-	local total_cycles = m.duration / dps.damage_every
-	local dps_damage = math.floor((raw_damage - extra_damage) / total_cycles)
-	local first_damage = raw_damage - extra_damage - dps_damage * total_cycles
+    local raw_damage = math.random(dps.damage_min, dps.damage_max) * m.damage_factor
+    local extra_damage = math.max(0, raw_damage - target.health.hp)
+    local total_cycles = m.duration / dps.damage_every
+    local dps_damage = math.floor((raw_damage - extra_damage) / total_cycles)
+    local first_damage = raw_damage - extra_damage - dps_damage * total_cycles
 
-	this.pos = target.pos
-	dps.ts = store.tick_ts
-	m.ts = store.tick_ts
+    this.pos = target.pos
+    dps.ts = store.tick_ts
+    m.ts = store.tick_ts
 
-	while true do
-		target = store.entities[m.target_id]
+    while true do
+        target = store.entities[m.target_id]
 
-		if not target or target.health.dead then
-			break
-		end
+        if not target or target.health.dead then
+            break
+        end
 
-		if total_cycles <= cycles then
-			log.paranoid(">>>>> id:%s - mod_ray_arcane cycles:%s raw_damage:%s dps_damage:%s first_damage:%s total_damage:%s", this.id, cycles, raw_damage, dps_damage, first_damage, total_damage)
-			apply_damage(extra_damage)
+        if total_cycles <= cycles then
+            log.paranoid(
+                ">>>>> id:%s - mod_ray_arcane cycles:%s raw_damage:%s dps_damage:%s first_damage:%s total_damage:%s",
+                this.id, cycles, raw_damage, dps_damage, first_damage, total_damage)
+            apply_damage(extra_damage)
 
-			break
-		end
+            break
+        end
 
-		if this.render and m.use_mod_offset and target.unit.hit_offset then
-			this.render.sprites[1].offset.x, this.render.sprites[1].offset.y = target.unit.hit_offset.x, target.unit.hit_offset.y
-		end
+        if this.render and m.use_mod_offset and target.unit.hit_offset then
+            this.render.sprites[1].offset.x, this.render.sprites[1].offset.y = target.unit.hit_offset.x,
+                target.unit.hit_offset.y
+        end
 
-		if dps.damage_every and store.tick_ts - dps.ts >= dps.damage_every then
-			cycles = cycles + 1
-			dps.ts = dps.ts + dps.damage_every
+        if dps.damage_every and store.tick_ts - dps.ts >= dps.damage_every then
+            cycles = cycles + 1
+            dps.ts = dps.ts + dps.damage_every
 
-			apply_damage(dps_damage + (cycles == 1 and first_damage or 0))
-		end
+            apply_damage(dps_damage + (cycles == 1 and first_damage or 0))
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.mod_ray_arcane_disintegrate = {}
 
 function scripts.mod_ray_arcane_disintegrate.update(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or target.health.dead then
-		return
-	end
+    if not target or target.health.dead then
+        return
+    end
 
-	this.pos = target.pos
-	m.ts = store.tick_ts
+    this.pos = target.pos
+    m.ts = store.tick_ts
 
-	while true do
-		target = store.entities[m.target_id]
+    while true do
+        target = store.entities[m.target_id]
 
-		if not target or target.health.dead then
-			break
-		end
+        if not target or target.health.dead then
+            break
+        end
 
         if store.tick_ts - m.ts >= m.duration then
             if band(target.vis.flags, F_BOSS) == 0 and band(target.vis.bans, F_INSTAKILL) == 0 then
@@ -6132,193 +6137,193 @@ function scripts.mod_ray_arcane_disintegrate.update(this, store)
 
         coroutine.yield()
 
-	end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.mod_rocketeer_speed_buff = {}
 
 function scripts.mod_rocketeer_speed_buff.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[this.modifier.target_id]
+    local m = this.modifier
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	m.ts = store.tick_ts
-	target._angles_walk = target.render.sprites[1].angles.walk
-	target.already_speed_up = true
-	target.render.sprites[1].angles.walk = this.walk_angles
+    m.ts = store.tick_ts
+    target._angles_walk = target.render.sprites[1].angles.walk
+    target.already_speed_up = true
+    target.render.sprites[1].angles.walk = this.walk_angles
     U.speed_mul(target, this.fast.factor)
-	return true
+    return true
 end
 
 function scripts.mod_rocketeer_speed_buff.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
-		target.render.sprites[1].angles.walk = target._angles_walk
-		U.speed_div(target, this.fast.factor)
+    if target then
+        target.render.sprites[1].angles.walk = target._angles_walk
+        U.speed_div(target, this.fast.factor)
 
-		return true
-	end
+        return true
+    end
 
-	return false
+    return false
 end
 
 scripts.mod_troll_rage = {}
 
 function scripts.mod_troll_rage.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[this.modifier.target_id]
+    local m = this.modifier
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	m.ts = store.tick_ts
+    m.ts = store.tick_ts
     U.speed_inc(target, this.extra_speed)
 
     if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
         SU.armor_inc(target, this.extra_armor)
     end
 
-	local ma = target.melee.attacks[1]
+    local ma = target.melee.attacks[1]
 
-	if ma then
-		ma.damage_min = ma.damage_min + this.extra_damage_min
-		ma.damage_max = ma.damage_max + this.extra_damage_max
-	end
+    if ma then
+        ma.damage_min = ma.damage_min + this.extra_damage_min
+        ma.damage_max = ma.damage_max + this.extra_damage_max
+    end
 
-	return true
+    return true
 end
 
 function scripts.mod_troll_rage.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
+    if target then
         U.speed_dec(target, this.extra_speed)
 
         if target.template_name ~= "enemy_troll_brute" and target.template_name ~= "enemy_troll_chieftain" then
             SU.armor_dec(target, this.extra_armor)
         end
 
-		local ma = target.melee.attacks[1]
+        local ma = target.melee.attacks[1]
 
-		if ma then
-			ma.damage_min = ma.damage_min - this.extra_damage_min
-			ma.damage_max = ma.damage_max - this.extra_damage_max
-		end
-	end
+        if ma then
+            ma.damage_min = ma.damage_min - this.extra_damage_min
+            ma.damage_max = ma.damage_max - this.extra_damage_max
+        end
+    end
 
-	return true
+    return true
 end
 
 scripts.mod_demon_shield = {}
 
 function scripts.mod_demon_shield.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[this.modifier.target_id]
+    local m = this.modifier
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	m.ts = store.tick_ts
-	target.health.on_damage = scripts.mod_demon_shield.on_damage
-	this._hits = 0
-	this._hit_sources = {}
-	this._blood_color = target.unit.blood_color
-	target.unit.blood_color = BLOOD_NONE
-	target._shield_mod = this
+    m.ts = store.tick_ts
+    target.health.on_damage = scripts.mod_demon_shield.on_damage
+    this._hits = 0
+    this._hit_sources = {}
+    this._blood_color = target.unit.blood_color
+    target.unit.blood_color = BLOOD_NONE
+    target._shield_mod = this
 
-	return true
+    return true
 end
 
 function scripts.mod_demon_shield.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
-		target.health.on_damage = nil
-		target._shield_mod = nil
-		target.unit.blood_color = this._blood_color
-	end
+    if target then
+        target.health.on_damage = nil
+        target._shield_mod = nil
+        target.unit.blood_color = this._blood_color
+    end
 
-	return true
+    return true
 end
 
 function scripts.mod_demon_shield.on_damage(this, store, damage)
-	local mod = this._shield_mod
+    local mod = this._shield_mod
 
-	if not mod then
-		log.error("mod_demon_shield.on_damage for enemy %s has no mod pointer", this.id)
+    if not mod then
+        log.error("mod_demon_shield.on_damage for enemy %s has no mod pointer", this.id)
 
-		return true
-	end
+        return true
+    end
 
-	if U.flag_has(damage.damage_type, bor(DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_EAT, DAMAGE_IGNORE_SHIELD)) then
-		queue_remove(store, mod)
+    if U.flag_has(damage.damage_type, bor(DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_EAT, DAMAGE_IGNORE_SHIELD)) then
+        queue_remove(store, mod)
 
-		return true
-	end
+        return true
+    end
 
-	if U.flag_has(damage.damage_type, DAMAGE_ONE_SHIELD_HIT) then
-		if not mod._hit_sources[damage.source_id] then
-			mod._hit_sources[damage.source_id] = true
-			mod._hits = mod._hits + 1
-		end
-	elseif not U.flag_has(damage.damage_type, DAMAGE_NO_SHIELD_HIT) then
-		mod._hits = mod._hits + 1
-	end
+    if U.flag_has(damage.damage_type, DAMAGE_ONE_SHIELD_HIT) then
+        if not mod._hit_sources[damage.source_id] then
+            mod._hit_sources[damage.source_id] = true
+            mod._hits = mod._hits + 1
+        end
+    elseif not U.flag_has(damage.damage_type, DAMAGE_NO_SHIELD_HIT) then
+        mod._hits = mod._hits + 1
+    end
 
-	if mod._hits >= mod.shield_ignore_hits then
-		queue_remove(store, mod)
-	end
+    if mod._hits >= mod.shield_ignore_hits then
+        queue_remove(store, mod)
+    end
 
-	return false
+    return false
 end
 
 scripts.mod_giant_rat_poison = {}
 
 function scripts.mod_giant_rat_poison.insert(this, store, script)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or not scripts.mod_dps.insert(this, store) then
-		return false
-	end
+    if not target or not scripts.mod_dps.insert(this, store) then
+        return false
+    end
 
-	target.unit.damage_factor = target.unit.damage_factor * this.reduced_damage_factor
+    target.unit.damage_factor = target.unit.damage_factor * this.reduced_damage_factor
 
-	return true
+    return true
 end
 
 function scripts.mod_giant_rat_poison.remove(this, store, script)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if target and target.unit then
-		target.unit.damage_factor = target.unit.damage_factor / this.reduced_damage_factor
-	end
+    if target and target.unit then
+        target.unit.damage_factor = target.unit.damage_factor / this.reduced_damage_factor
+    end
 
-	return true
+    return true
 end
 
 scripts.mod_gerald_courage = {}
 
 function scripts.mod_gerald_courage.insert(this, store)
-	local m = this.modifier
-	local buff = this.courage
-	local target = store.entities[this.modifier.target_id]
+    local m = this.modifier
+    local buff = this.courage
+    local target = store.entities[this.modifier.target_id]
 
-	if not target or target.health.dead or not target.unit then
-		return false
-	end
+    if not target or target.health.dead or not target.unit then
+        return false
+    end
 
-    local heal = (buff.heal_once_factor+m.level*buff.heal_inc) * target.health.hp_max
+    local heal = (buff.heal_once_factor + m.level * buff.heal_inc) * target.health.hp_max
 
     if band(target.vis.flags, F_HERO) ~= 0 then
         SU.magic_armor_inc(target, buff.magic_armor_inc * m.level * 0.5)
@@ -6327,84 +6332,85 @@ function scripts.mod_gerald_courage.insert(this, store)
         SU.damage_inc(target, buff.damage_inc * m.level + buff.damage_inc_base)
     else
         SU.magic_armor_inc(target, buff.magic_armor_inc * m.level)
-	    SU.armor_inc(target, buff.armor_inc * m.level)
+        SU.armor_inc(target, buff.armor_inc * m.level)
         target.health.hp = km.clamp(0, target.health.hp_max, target.health.hp + heal)
         SU.damage_inc(target, buff.damage_inc * m.level + buff.damage_inc_base)
     end
 
-	if this.render then
-		for _, s in pairs(this.render.sprites) do
-			s.ts = store.tick_ts
+    if this.render then
+        for _, s in pairs(this.render.sprites) do
+            s.ts = store.tick_ts
 
-			if s.size_names then
-				s.name = s.size_names[target.unit.size]
-			end
-		end
-	end
+            if s.size_names then
+                s.name = s.size_names[target.unit.size]
+            end
+        end
+    end
 
-	signal.emit("mod-applied", this, target)
+    signal.emit("mod-applied", this, target)
 
-	return true
+    return true
 end
 
 function scripts.mod_gerald_courage.remove(this, store)
-	local m = this.modifier
-	local buff = this.courage
-	local target = store.entities[this.modifier.target_id]
+    local m = this.modifier
+    local buff = this.courage
+    local target = store.entities[this.modifier.target_id]
 
-	if target then
+    if target then
         if band(target.vis.flags, F_HERO) ~= 0 then
             SU.magic_armor_dec(target, buff.magic_armor_inc * m.level * 0.5)
             SU.armor_dec(target, buff.armor_inc * m.level * 0.5)
             SU.damage_dec(target, buff.damage_inc * m.level + buff.damage_inc_base)
         else
             SU.magic_armor_dec(target, buff.magic_armor_inc * m.level)
-		    SU.armor_dec(target, buff.armor_inc * m.level)
+            SU.armor_dec(target, buff.armor_inc * m.level)
             SU.damage_dec(target, buff.damage_inc * m.level + buff.damage_inc_base)
         end
-	end
+    end
 
-	return true
+    return true
 end
 
 scripts.mod_hero_thor_chainlightning = {}
 
 function scripts.mod_hero_thor_chainlightning.update(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
-	local source = store.entities[m.source_id]
-	local cl = this.chainlightning
+    local m = this.modifier
+    local target = store.entities[m.target_id]
+    local source = store.entities[m.source_id]
+    local cl = this.chainlightning
 
-	if target and target.health and not target.health.dead then
-		local d = E:create_entity("damage")
+    if target and target.health and not target.health.dead then
+        local d = E:create_entity("damage")
 
-		d.source_id = m.source_id
-		d.target_id = m.target_id
-		d.damage_type = cl.damage_type
-		d.value = cl.damage
+        d.source_id = m.source_id
+        d.target_id = m.target_id
+        d.damage_type = cl.damage_type
+        d.value = cl.damage
 
-		queue_damage(store, d)
+        queue_damage(store, d)
 
-		local mod = E:create_entity(cl.mod)
+        local mod = E:create_entity(cl.mod)
 
-		mod.modifier.ts = store.tick_ts
-		mod.modifier.source_id = m.source_id
-		mod.modifier.target_id = target.id
+        mod.modifier.ts = store.tick_ts
+        mod.modifier.source_id = m.source_id
+        mod.modifier.target_id = target.id
 
-		queue_insert(store, mod)
-	end
+        queue_insert(store, mod)
+    end
 
-	U.y_wait(store, cl.chain_delay)
+    U.y_wait(store, cl.chain_delay)
 
-	local chain_pos = V.vclone(source.pos)
-	local af = source.render.sprites[1].flip_x
+    local chain_pos = V.vclone(source.pos)
+    local af = source.render.sprites[1].flip_x
 
-	chain_pos.x = chain_pos.x + cl.offset.x * (af and -1 or 1)
-	chain_pos.y = chain_pos.y + cl.offset.y
+    chain_pos.x = chain_pos.x + cl.offset.x * (af and -1 or 1)
+    chain_pos.y = chain_pos.y + cl.offset.y
 
-	local targets = U.find_enemies_in_range(store.enemies, chain_pos, cl.min_range, cl.max_range, cl.vis_flags or 0, cl.vis_bans or 0)
+    local targets = U.find_enemies_in_range(store.enemies, chain_pos, cl.min_range, cl.max_range, cl.vis_flags or 0,
+        cl.vis_bans or 0)
 
-	if targets then
+    if targets then
         -- local last_num = 0
         for i = 1, cl.count do
             local num = math.random(1, #targets)
@@ -6419,919 +6425,916 @@ function scripts.mod_hero_thor_chainlightning.update(this, store)
             b.bullet.source_id = m.source_id
             b.bullet.level = m.level
             -- if last_num == num then
-                -- b.bullet.damage_factor = b.bullet.damage_factor * 0.5
+            -- b.bullet.damage_factor = b.bullet.damage_factor * 0.5
             -- end
             -- last_num = num
             queue_insert(store, b)
         end
-		-- local random_targets = table.random_order(targets)
-		-- local count = 0
+        -- local random_targets = table.random_order(targets)
+        -- local count = 0
 
-		-- for _, t in pairs(random_targets) do
+        -- for _, t in pairs(random_targets) do
 
-		-- 	if count >= cl.count then
-		-- 		break
-		-- 	end
+        -- 	if count >= cl.count then
+        -- 		break
+        -- 	end
 
-		-- 	local dest = V.vclone(t.pos)
-		-- 	local b = E:create_entity(cl.bullet)
+        -- 	local dest = V.vclone(t.pos)
+        -- 	local b = E:create_entity(cl.bullet)
 
-		-- 	b.pos = V.vclone(chain_pos)
-		-- 	b.bullet.from = V.vclone(b.pos)
-		-- 	b.bullet.to = dest
-		-- 	b.bullet.target_id = t.id
-		-- 	b.bullet.source_id = m.source_id
-		-- 	b.bullet.level = m.level
+        -- 	b.pos = V.vclone(chain_pos)
+        -- 	b.bullet.from = V.vclone(b.pos)
+        -- 	b.bullet.to = dest
+        -- 	b.bullet.target_id = t.id
+        -- 	b.bullet.source_id = m.source_id
+        -- 	b.bullet.level = m.level
 
-		-- 	queue_insert(store, b)
+        -- 	queue_insert(store, b)
 
-		-- 	count = count + 1
-		-- end
-	end
+        -- 	count = count + 1
+        -- end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.mod_hero_thor_thunderclap = {}
 
 function scripts.mod_hero_thor_thunderclap.update(this, store)
-	local tc = this.thunderclap
-	local m = this.modifier
-	local target = store.entities[m.target_id]
-	local mods = {
-		tc.mod_stun,
-		tc.mod_fx
-	}
+    local tc = this.thunderclap
+    local m = this.modifier
+    local target = store.entities[m.target_id]
+    local mods = {tc.mod_stun, tc.mod_fx}
 
-	if not target then
-		queue_remove(store, this)
+    if not target then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	this.pos = V.vclone(target.pos)
+    this.pos = V.vclone(target.pos)
 
-	if target.health and not target.health.dead then
-		local d = E:create_entity("damage")
+    if target.health and not target.health.dead then
+        local d = E:create_entity("damage")
 
-		d.source_id = m.source_id
-		d.target_id = m.target_id
-		d.damage_type = tc.damage_type
-		d.value = tc.damage
+        d.source_id = m.source_id
+        d.target_id = m.target_id
+        d.damage_type = tc.damage_type
+        d.value = tc.damage
 
-		queue_damage(store, d)
+        queue_damage(store, d)
 
-		local mod = E:create_entity(tc.mod_stun)
+        local mod = E:create_entity(tc.mod_stun)
 
-		mod.modifier.ts = store.tick_ts
-		mod.modifier.source_id = m.source_id
-		mod.modifier.target_id = m.target_id
+        mod.modifier.ts = store.tick_ts
+        mod.modifier.source_id = m.source_id
+        mod.modifier.target_id = m.target_id
 
-		queue_insert(store, mod)
-	end
+        queue_insert(store, mod)
+    end
 
-	S:queue(tc.sound)
-	U.y_wait(store, tc.explosion_delay)
+    S:queue(tc.sound)
+    U.y_wait(store, tc.explosion_delay)
 
-	local targets = U.find_enemies_in_range(store.enemies, target.pos, 0, tc.max_range, tc.vis_flags or 0, tc.vis_bans or 0, function(e)
-		return e.id ~= m.target_id and e.health and not e.health.dead
-	end)
+    local targets = U.find_enemies_in_range(store.enemies, target.pos, 0, tc.max_range, tc.vis_flags or 0,
+        tc.vis_bans or 0, function(e)
+            return e.id ~= m.target_id and e.health and not e.health.dead
+        end)
 
-	if targets then
-		for _, t in ipairs(targets) do
-			d = E:create_entity("damage")
-			d.damage_type = tc.secondary_damage_type
-			d.value = tc.secondary_damage
-			d.source_id = m.source_id
-			d.target_id = t.id
+    if targets then
+        for _, t in ipairs(targets) do
+            d = E:create_entity("damage")
+            d.damage_type = tc.secondary_damage_type
+            d.value = tc.secondary_damage
+            d.source_id = m.source_id
+            d.target_id = t.id
 
-			queue_damage(store, d)
+            queue_damage(store, d)
 
-			for _, tm in ipairs(mods) do
-				local mod = E:create_entity(tm)
+            for _, tm in ipairs(mods) do
+                local mod = E:create_entity(tm)
 
-				mod.modifier.ts = store.tick_ts
-				mod.modifier.source_id = m.source_id
+                mod.modifier.ts = store.tick_ts
+                mod.modifier.source_id = m.source_id
 
-				if mod == tc.mod_stun then
-					mod.modifier.duration = U.frandom(tc.stun_duration_min, tc.stun_duration_max)
-				end
+                if mod == tc.mod_stun then
+                    mod.modifier.duration = U.frandom(tc.stun_duration_min, tc.stun_duration_max)
+                end
 
-				mod.modifier.target_id = t.id
-				mod.modifier.level = m.level
+                mod.modifier.target_id = t.id
+                mod.modifier.level = m.level
 
-				queue_insert(store, mod)
-			end
-		end
-	end
+                queue_insert(store, mod)
+            end
+        end
+    end
 
-	local fx = E:create_entity(tc.fx)
+    local fx = E:create_entity(tc.fx)
 
-	fx.pos = V.vclone(this.pos)
-	fx.render.sprites[1].ts = store.tick_ts
+    fx.pos = V.vclone(this.pos)
+    fx.render.sprites[1].ts = store.tick_ts
 
-	queue_insert(store, fx)
-	U.y_wait(store, fts(24))
-	queue_remove(store, this)
+    queue_insert(store, fx)
+    U.y_wait(store, fts(24))
+    queue_remove(store, this)
 end
 
 scripts.mod_witch_frog = {}
 
 function scripts.mod_witch_frog.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	m.ts = store.tick_ts
-	this.render.sprites[1].ts = store.tick_ts
-	this.render.sprites[1].z = target.render.sprites[1].z
-	this.pos = target.pos
+    m.ts = store.tick_ts
+    this.render.sprites[1].ts = store.tick_ts
+    this.render.sprites[1].z = target.render.sprites[1].z
+    this.pos = target.pos
 
-	return true
+    return true
 end
 
 function scripts.mod_witch_frog.update(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		queue_remove(store, this)
+    if not target or not target.health or target.health.dead then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	local damage_type = target.hero and m.hero_damage_type or m.damage_type
+    local damage_type = target.hero and m.hero_damage_type or m.damage_type
 
-	if band(target.health.immune_to, damage_type) ~= 0 then
-		queue_remove(store, this)
+    if band(target.health.immune_to, damage_type) ~= 0 then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	local d = E:create_entity("damage")
+    local d = E:create_entity("damage")
 
-	d.damage_type = target.hero and m.hero_damage_type or m.damage_type
-	d.value = math.random(m.damage_min, m.damage_max)
-	d.source_id = m.source_id
-	d.target_id = target.id
+    d.damage_type = target.hero and m.hero_damage_type or m.damage_type
+    d.value = math.random(m.damage_min, m.damage_max)
+    d.source_id = m.source_id
+    d.target_id = target.id
 
-	queue_damage(store, d)
+    queue_damage(store, d)
 
-	if target.hero then
-		queue_remove(store, this)
+    if target.hero then
+        queue_remove(store, this)
 
-		return
-	end
+        return
+    end
 
-	U.y_wait(store, this.frog_delay)
+    U.y_wait(store, this.frog_delay)
 
-	local af = target.render.sprites[1].flip_x
-	local t = this.tween
-	local t_end = t.props[1].keys[2]
+    local af = target.render.sprites[1].flip_x
+    local t = this.tween
+    local t_end = t.props[1].keys[2]
 
-	this.render.sprites[1].flip_x = af
-	this.render.sprites[1].hidden = false
+    this.render.sprites[1].flip_x = af
+    this.render.sprites[1].hidden = false
 
-	U.y_wait(store, this.fx_delay + this.animation_delay - this.frog_delay)
-	U.animation_start(this, "jump", nil, store.tick_ts, true)
+    U.y_wait(store, this.fx_delay + this.animation_delay - this.frog_delay)
+    U.animation_start(this, "jump", nil, store.tick_ts, true)
 
-	t_end[2].x = t_end[2].x * (af and -1 or 1)
-	t.disabled = false
-	t.ts = store.tick_ts
+    t_end[2].x = t_end[2].x * (af and -1 or 1)
+    t.disabled = false
+    t.ts = store.tick_ts
 
-	U.y_wait(store, t_end[1])
-	U.y_animation_wait(this)
-	U.animation_start(this, "idle", nil, store.tick_ts, true)
-	U.y_wait(store, this.animation_delay)
-	U.y_animation_play(this, "puff", nil, store.tick_ts, 1)
-	queue_remove(store, this)
+    U.y_wait(store, t_end[1])
+    U.y_animation_wait(this)
+    U.animation_start(this, "idle", nil, store.tick_ts, true)
+    U.y_wait(store, this.animation_delay)
+    U.y_animation_play(this, "puff", nil, store.tick_ts, 1)
+    queue_remove(store, this)
 end
 
 scripts.mod_spectral_knight = {}
 
 function scripts.mod_spectral_knight.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	for _, s in pairs(this.render.sprites) do
-		s.ts = store.tick_ts
-	end
+    for _, s in pairs(this.render.sprites) do
+        s.ts = store.tick_ts
+    end
 
-	this.pos = target.pos
-	m.ts = store.tick_ts
-	target.unit.damage_factor = target.unit.damage_factor * this.damage_factor_increase
+    this.pos = target.pos
+    m.ts = store.tick_ts
+    target.unit.damage_factor = target.unit.damage_factor * this.damage_factor_increase
 
-	return true
+    return true
 end
 
 function scripts.mod_spectral_knight.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
-		target.unit.damage_factor = target.unit.damage_factor / this.damage_factor_increase
-	end
+    if target then
+        target.unit.damage_factor = target.unit.damage_factor / this.damage_factor_increase
+    end
 
-	return true
+    return true
 end
 
 scripts.mod_skeleton_big = {}
 function scripts.mod_skeleton_big.insert(this, store)
     local m = this.modifier
-	local target = store.entities[m.target_id]
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	for _, s in pairs(this.render.sprites) do
-		s.ts = store.tick_ts
-	end
+    for _, s in pairs(this.render.sprites) do
+        s.ts = store.tick_ts
+    end
 
-	this.pos = target.pos
-	m.ts = store.tick_ts
-	target.health.damage_factor = target.health.damage_factor - this.health_damage_factor_dec
+    this.pos = target.pos
+    m.ts = store.tick_ts
+    target.health.damage_factor = target.health.damage_factor - this.health_damage_factor_dec
 
-	return true
+    return true
 end
 function scripts.mod_skeleton_big.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
-		target.health.damage_factor = target.health.damage_factor + this.health_damage_factor_dec
-	end
+    if target then
+        target.health.damage_factor = target.health.damage_factor + this.health_damage_factor_dec
+    end
 
-	return true
+    return true
 end
 
 scripts.mod_gulaemon_fly = {}
 
 function scripts.mod_gulaemon_fly.queue(this, store, insertion)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		return
-	end
+    if not target then
+        return
+    end
 
-	if insertion then
-		log.debug("%s (%s) queue/insertion", this.template_name, this.id)
+    if insertion then
+        log.debug("%s (%s) queue/insertion", this.template_name, this.id)
 
         U.speed_mul(target, this.speed_factor)
-	else
-		log.debug("%s (%s) queue/removal", this.template_name, this.id)
+    else
+        log.debug("%s (%s) queue/removal", this.template_name, this.id)
         U.speed_div(target, this.speed_factor)
-	end
+    end
 end
 
 function scripts.mod_gulaemon_fly.dequeue(this, store, insertion)
-	local target = store.entities[this.modifier.target_id]
+    local target = store.entities[this.modifier.target_id]
 
-	if not target then
-		return
-	end
+    if not target then
+        return
+    end
 
-	if insertion then
-		log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
+    if insertion then
+        log.debug("%s (%s) dequeue/insertion", this.template_name, this.id)
         U.speed_div(target, this.speed_factor)
-	end
+    end
 end
 
 function scripts.mod_gulaemon_fly.insert(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if not target or not target.health or target.health.dead then
-		return false
-	end
+    if not target or not target.health or target.health.dead then
+        return false
+    end
 
-	m.ts = store.tick_ts
+    m.ts = store.tick_ts
 
-	return true
+    return true
 end
 
 function scripts.mod_gulaemon_fly.remove(this, store)
-	local m = this.modifier
-	local target = store.entities[m.target_id]
+    local m = this.modifier
+    local target = store.entities[m.target_id]
 
-	if target then
-		target._should_land = true
-	end
+    if target then
+        target._should_land = true
+    end
 
-	return true
+    return true
 end
 
 function scripts.mod_gulaemon_fly.update(this, store)
-	local target
-	local m = this.modifier
+    local target
+    local m = this.modifier
 
-	while true do
-		target = store.entities[m.target_id]
+    while true do
+        target = store.entities[m.target_id]
 
-		if not target or target.health.dead or store.tick_ts - m.ts > m.duration or P:nodes_to_defend_point(target.nav_path) < this.nodes_limit then
-			queue_remove(store, this)
+        if not target or target.health.dead or store.tick_ts - m.ts > m.duration or
+            P:nodes_to_defend_point(target.nav_path) < this.nodes_limit then
+            queue_remove(store, this)
 
-			return
-		end
+            return
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.decal_sheep_big = {}
 
 function scripts.decal_sheep_big.insert(this, store)
-	if math.random() < this.delayed_play.required_clicks_fx_alt_chance then
-		local d = this.delayed_play
+    if math.random() < this.delayed_play.required_clicks_fx_alt_chance then
+        local d = this.delayed_play
 
-		d.required_clicks_fx = d.required_clicks_fx_alt
-		d.clicked_sound = d.clicked_sound_alt
-	end
+        d.required_clicks_fx = d.required_clicks_fx_alt
+        d.clicked_sound = d.clicked_sound_alt
+    end
 
-	return true
+    return true
 end
 
 scripts.decal_fish = {}
 
 function scripts.decal_fish.update(this, store, script)
-	while true do
-		this.render.sprites[1].hidden = true
+    while true do
+        this.render.sprites[1].hidden = true
 
-		U.y_wait(store, math.random(5, 10))
+        U.y_wait(store, math.random(5, 10))
 
-		this.render.sprites[1].hidden = false
+        this.render.sprites[1].hidden = false
 
-		U.animation_start(this, "jump", nil, store.tick_ts, false)
+        U.animation_start(this, "jump", nil, store.tick_ts, false)
 
-		this.ui.clicked = nil
+        this.ui.clicked = nil
 
-		while not U.animation_finished(this) do
-			if this.ui.clicked then
-				AC:got(this.achievement_id)
+        while not U.animation_finished(this) do
+            if this.ui.clicked then
+                AC:got(this.achievement_id)
 
-				this.ui.clicked = nil
-			end
+                this.ui.clicked = nil
+            end
 
-			coroutine.yield()
-		end
-	end
+            coroutine.yield()
+        end
+    end
 end
 
 scripts.graveyard_controller = {}
 
 function scripts.graveyard_controller.update(this, store)
-	local g = this.graveyard
+    local g = this.graveyard
 
-	while not this.interrupt do
-		local targets = table.filter(store.entities, function(k, v)
-			return not v._in_graveyard and (v.health and v.health.dead) and (v.vis and band(v.vis.flags, g.vis_has) ~= 0 and band(v.vis.flags, g.vis_bans) == 0 and band(v.vis.bans, g.vis_flags) == 0) and store.tick_ts - v.health.death_ts >= g.dead_time and (not v.reinforcement or not v.reinforcement.hp_before_timeout) and (not g.excluded_templates or not table.contains(g.excluded_templates, v.template_name))
-		end)
+    while not this.interrupt do
+        local targets = table.filter(store.entities, function(k, v)
+            return not v._in_graveyard and (v.health and v.health.dead) and
+                       (v.vis and band(v.vis.flags, g.vis_has) ~= 0 and band(v.vis.flags, g.vis_bans) == 0 and
+                           band(v.vis.bans, g.vis_flags) == 0) and store.tick_ts - v.health.death_ts >= g.dead_time and
+                       (not v.reinforcement or not v.reinforcement.hp_before_timeout) and
+                       (not g.excluded_templates or not table.contains(g.excluded_templates, v.template_name))
+        end)
 
-		if #targets == 0 then
-			U.y_wait(store, g.check_interval)
-		else
-			for _, t in ipairs(targets) do
-				if this.interrupt then
-					return
-				end
+        if #targets == 0 then
+            U.y_wait(store, g.check_interval)
+        else
+            for _, t in ipairs(targets) do
+                if this.interrupt then
+                    return
+                end
 
-				t._in_graveyard = true
+                t._in_graveyard = true
 
-				for _, s in ipairs(g.spawns_by_health) do
-					local e, s_pos, pi, spi, ni
+                for _, s in ipairs(g.spawns_by_health) do
+                    local e, s_pos, pi, spi, ni
 
-					if t.health.hp_max > s[2] then
-						-- block empty
-					else
-						s_pos = table.random(g.spawn_pos)
+                    if t.health.hp_max > s[2] then
+                        -- block empty
+                    else
+                        s_pos = table.random(g.spawn_pos)
 
-						local nearest_nodes = P:nearest_nodes(s_pos.x, s_pos.y, g.pi and {
-							g.pi
-						} or nil)
+                        local nearest_nodes = P:nearest_nodes(s_pos.x, s_pos.y, g.pi and {g.pi} or nil)
 
-						if #nearest_nodes < 1 then
-							log.error("graveyard controller %s could not spawn enemy. node not found near %s,%s", this.id, s_pos.x, s_pos.y)
-						else
-							pi, spi, ni = unpack(nearest_nodes[1])
-							e = E:create_entity(s[1])
-							e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pi, math.random(1, 3), ni
-							e.pos = V.vclone(s_pos)
-							e.render.sprites[1].name = "raise"
-							e.motion.forced_waypoint = P:node_pos(e.nav_path)
+                        if #nearest_nodes < 1 then
+                            log.error("graveyard controller %s could not spawn enemy. node not found near %s,%s",
+                                this.id, s_pos.x, s_pos.y)
+                        else
+                            pi, spi, ni = unpack(nearest_nodes[1])
+                            e = E:create_entity(s[1])
+                            e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pi, math.random(1, 3), ni
+                            e.pos = V.vclone(s_pos)
+                            e.render.sprites[1].name = "raise"
+                            e.motion.forced_waypoint = P:node_pos(e.nav_path)
 
-							if not g.keep_gold and e.enemy then
-								e.enemy.gold = 0
-							end
+                            if not g.keep_gold and e.enemy then
+                                e.enemy.gold = 0
+                            end
 
-							queue_insert(store, e)
+                            queue_insert(store, e)
 
-							break
-						end
-					end
-				end
+                            break
+                        end
+                    end
+                end
 
-				U.y_wait(store, g.spawn_interval)
-			end
-		end
-	end
+                U.y_wait(store, g.spawn_interval)
+            end
+        end
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.s11_lava_spawner = {}
 
 function scripts.s11_lava_spawner.update(this, store)
-	local cooldown = this.cooldown
+    local cooldown = this.cooldown
 
-	while store.wave_group_number < 1 do
-		coroutine.yield()
-	end
+    while store.wave_group_number < 1 do
+        coroutine.yield()
+    end
 
-	while true do
-		U.y_wait(store, cooldown)
-		S:queue(this.sound)
+    while true do
+        U.y_wait(store, cooldown)
+        S:queue(this.sound)
 
-		local e = E:create_entity(this.entity)
+        local e = E:create_entity(this.entity)
 
-		e.pos = V.vclone(this.pos)
-		e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = this.pi, 1, 1
-		e.render.sprites[1].name = "raise"
+        e.pos = V.vclone(this.pos)
+        e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = this.pi, 1, 1
+        e.render.sprites[1].name = "raise"
 
-		queue_insert(store, e)
+        queue_insert(store, e)
 
-		cooldown = this.cooldown_after
+        cooldown = this.cooldown_after
 
-		if not U.is_seen(store, this.entity) then
-			signal.emit("wave-notification", "icon", this.entity)
-			U.mark_seen(store, this.entity)
-		end
-	end
+        if not U.is_seen(store, this.entity) then
+            signal.emit("wave-notification", "icon", this.entity)
+            U.mark_seen(store, this.entity)
+        end
+    end
 end
 
 scripts.decal_fredo = {}
 
 function scripts.decal_fredo.update(this, store, script)
-	local clicks = 0
-	local s = this.render.sprites[1]
+    local clicks = 0
+    local s = this.render.sprites[1]
 
-	while true do
-		if this.ui.clicked then
-			this.ui.clicked = nil
-			clicks = clicks + 1
+    while true do
+        if this.ui.clicked then
+            this.ui.clicked = nil
+            clicks = clicks + 1
 
-			U.animation_start(this, "clicked", nil, store.tick_ts, false)
-		end
+            U.animation_start(this, "clicked", nil, store.tick_ts, false)
+        end
 
-		if clicks >= 8 then
-			this.ui.can_click = false
+        if clicks >= 8 then
+            this.ui.can_click = false
 
-			U.animation_start(this, "release", nil, store.tick_ts, false)
-			U.y_animation_wait(this)
-			AC:got("FREE_FREDO")
-			queue_remove(store, this)
-		end
+            U.animation_start(this, "release", nil, store.tick_ts, false)
+            U.y_animation_wait(this)
+            AC:got("FREE_FREDO")
+            queue_remove(store, this)
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 end
 
 scripts.enemy_base_portal = {}
 
 function scripts.enemy_base_portal.insert(this, store)
-	if not scripts.enemy_basic.insert(this, store) then
-		return false
-	end
+    if not scripts.enemy_basic.insert(this, store) then
+        return false
+    end
 
-	local portal_templates = {
-		"decal_demon_portal_big",
-		"decal_inferno_portal",
-		"decal_inferno_ground_portal",
-		"veznan_portal"
-	}
-	local portal = table.filter(store.entities, function(_, e)
-		return table.contains(portal_templates, e.template_name) and e.out_nodes and e.out_nodes[this.nav_path.pi]
-	end)[1]
+    local portal_templates = {"decal_demon_portal_big", "decal_inferno_portal", "decal_inferno_ground_portal",
+                              "veznan_portal"}
+    local portal = table.filter(store.entities, function(_, e)
+        return table.contains(portal_templates, e.template_name) and e.out_nodes and e.out_nodes[this.nav_path.pi]
+    end)[1]
 
-	if portal and portal.out_nodes[this.nav_path.pi] - this.nav_path.ni < 8 then
-		local fx = E:create_entity(portal.fx_out)
+    if portal and portal.out_nodes[this.nav_path.pi] - this.nav_path.ni < 8 then
+        local fx = E:create_entity(portal.fx_out)
 
-		fx.pos = V.vclone(this.pos)
-		fx.render.sprites[1].ts = store.tick_ts
+        fx.pos = V.vclone(this.pos)
+        fx.render.sprites[1].ts = store.tick_ts
 
-		if this.unit and this.unit.mod_offset then
-			fx.pos.x, fx.pos.y = fx.pos.x + this.unit.mod_offset.x, fx.pos.y + this.unit.mod_offset.y
-		end
+        if this.unit and this.unit.mod_offset then
+            fx.pos.x, fx.pos.y = fx.pos.x + this.unit.mod_offset.x, fx.pos.y + this.unit.mod_offset.y
+        end
 
-		queue_insert(store, fx)
-	end
+        queue_insert(store, fx)
+    end
 
-	if this.render.sprites[1].name == "raise" and this.template_name == "enemy_demon_legion" then
-		this._raise_vis_bans = this.vis.bans
-		this._raise_ignore_damage = this.health.ignore_damage
-		this.vis.bans = bor(F_ALL)
-		this.health.ignore_damage = true
-		this.health_bar.hidden = true
-	end
+    if this.render.sprites[1].name == "raise" and this.template_name == "enemy_demon_legion" then
+        this._raise_vis_bans = this.vis.bans
+        this._raise_ignore_damage = this.health.ignore_damage
+        this.vis.bans = bor(F_ALL)
+        this.health.ignore_damage = true
+        this.health_bar.hidden = true
+    end
 
-	return true
+    return true
 end
 
 scripts.decal_demon_portal_big = {}
 
 function scripts.decal_demon_portal_big.update(this, store)
-	local function has_enemies_in_paths(group)
-		if group and group.waves then
-			for _, w in pairs(group.waves) do
-				if w.path_index and this.out_nodes[w.path_index] then
-					return true
-				end
-			end
-		end
+    local function has_enemies_in_paths(group)
+        if group and group.waves then
+            for _, w in pairs(group.waves) do
+                if w.path_index and this.out_nodes[w.path_index] then
+                    return true
+                end
+            end
+        end
 
-		return false
-	end
+        return false
+    end
 
-	while true do
-		while not has_enemies_in_paths(store.current_wave_group) and not has_enemies_in_paths(store.next_wave_group_ready) do
-			coroutine.yield()
-		end
+    while true do
+        while not has_enemies_in_paths(store.current_wave_group) and
+            not has_enemies_in_paths(store.next_wave_group_ready) do
+            coroutine.yield()
+        end
 
-		this.tween.ts = store.tick_ts
-		this.tween.reverse = false
+        this.tween.ts = store.tick_ts
+        this.tween.reverse = false
 
-		::label_261_0::
+        ::label_261_0::
 
-		local current_wave = store.wave_group_number
+        local current_wave = store.wave_group_number
 
-		while current_wave == store.wave_group_number and not store.waves_finished do
-			coroutine.yield()
-		end
+        while current_wave == store.wave_group_number and not store.waves_finished do
+            coroutine.yield()
+        end
 
-		if has_enemies_in_paths(store.current_wave_group) then
-			goto label_261_0
-		end
+        if has_enemies_in_paths(store.current_wave_group) then
+            goto label_261_0
+        end
 
-		this.tween.ts = store.tick_ts
-		this.tween.reverse = true
-	end
+        this.tween.ts = store.tick_ts
+        this.tween.reverse = true
+    end
 end
 
 scripts.s15_rotten_spawner = {}
 
 function scripts.s15_rotten_spawner.update(this, store)
-	local cooldown, max_count, ts, last_wave
+    local cooldown, max_count, ts, last_wave
 
-	while true do
-		::label_263_0::
+    while true do
+        ::label_263_0::
 
-		while (not max_count or max_count == 0) and store.wave_group_number == last_wave do
-			coroutine.yield()
-		end
+        while (not max_count or max_count == 0) and store.wave_group_number == last_wave do
+            coroutine.yield()
+        end
 
-		if this.interrupt then
-			break
-		end
+        if this.interrupt then
+            break
+        end
 
-		if store.wave_group_number ~= last_wave then
-			local wave_timers = this.spawn_timers[store.wave_group_number]
+        if store.wave_group_number ~= last_wave then
+            local wave_timers = this.spawn_timers[store.wave_group_number]
 
-			cooldown, max_count = unpack(wave_timers or {
-				cooldown,
-				max_count
-			})
-			last_wave = store.wave_group_number
-			ts = store.tick_ts
-		end
+            cooldown, max_count = unpack(wave_timers or {cooldown, max_count})
+            last_wave = store.wave_group_number
+            ts = store.tick_ts
+        end
 
-		if not max_count or max_count == 0 then
-			goto label_263_0
-		end
+        if not max_count or max_count == 0 then
+            goto label_263_0
+        end
 
-		if cooldown < store.tick_ts - ts and max_count > 0 then
-			for i = 1, max_count do
-				do
-					local e = E:create_entity(this.entity)
-					local pos, pi, spi, ni = P:get_random_position(this.spawn_margin, bor(TERRAIN_LAND), nil, true)
+        if cooldown < store.tick_ts - ts and max_count > 0 then
+            for i = 1, max_count do
+                do
+                    local e = E:create_entity(this.entity)
+                    local pos, pi, spi, ni = P:get_random_position(this.spawn_margin, bor(TERRAIN_LAND), nil, true)
 
-					if not pos then
-						local valid_nodes = P:get_valid_nodes(1)
+                    if not pos then
+                        local valid_nodes = P:get_valid_nodes(1)
 
-						pi, spi, ni = math.random(1, 3), math.random(1, 3), math.random(30, P:get_defend_point_node(1) - 60)
+                        pi, spi, ni = math.random(1, 3), math.random(1, 3),
+                            math.random(30, P:get_defend_point_node(1) - 60)
 
-						if not P:is_node_valid(pi, ni) then
-							log.debug("s15_rotten_spawner: could not find random node")
+                        if not P:is_node_valid(pi, ni) then
+                            log.debug("s15_rotten_spawner: could not find random node")
 
-							goto label_263_1
-						end
+                            goto label_263_1
+                        end
 
-						pos = P:node_pos(pi, spi, ni)
-					end
+                        pos = P:node_pos(pi, spi, ni)
+                    end
 
-					e.pos, e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pos, pi, spi, ni
-					e.render.sprites[1].name = "raise"
-					e.enemy.gold = 0
+                    e.pos, e.nav_path.pi, e.nav_path.spi, e.nav_path.ni = pos, pi, spi, ni
+                    e.render.sprites[1].name = "raise"
+                    e.enemy.gold = 0
 
-					queue_insert(store, e)
-				end
+                    queue_insert(store, e)
+                end
 
-				::label_263_1::
-			end
+                ::label_263_1::
+            end
 
-			ts = store.tick_ts
-		end
+            ts = store.tick_ts
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.decal_s17_barricade = {}
 
 function scripts.decal_s17_barricade.update(this, store, script)
-	local boss
+    local boss
 
-	while not boss do
-		boss = LU.list_entities(store.enemies, this.boss_name)[1]
+    while not boss do
+        boss = LU.list_entities(store.enemies, this.boss_name)[1]
 
-		if not boss then
-			U.y_wait(store, 5)
-		end
-	end
+        if not boss then
+            U.y_wait(store, 5)
+        end
+    end
 
-	while boss and boss.nav_path and boss.nav_path.ni < this.destroy_node do
-		coroutine.yield()
-	end
+    while boss and boss.nav_path and boss.nav_path.ni < this.destroy_node do
+        coroutine.yield()
+    end
 
-	U.animation_start(this, "destroy", nil, store.tick_ts, false)
+    U.animation_start(this, "destroy", nil, store.tick_ts, false)
 end
 
 scripts.decal_scrat = {}
 
 function scripts.decal_scrat.update(this, store, script)
-	local clicks = 0
+    local clicks = 0
 
-	while true do
-		if this.ui.clicked then
-			this.ui.clicked = nil
+    while true do
+        if this.ui.clicked then
+            this.ui.clicked = nil
 
-			local fx = E:create_entity(this.touch_fx)
+            local fx = E:create_entity(this.touch_fx)
 
-			fx.pos = V.vclone(this.pos)
-			fx.render.sprites[1].ts = store.tick_ts
+            fx.pos = V.vclone(this.pos)
+            fx.render.sprites[1].ts = store.tick_ts
 
-			queue_insert(store, fx)
+            queue_insert(store, fx)
 
-			clicks = clicks + 1
+            clicks = clicks + 1
 
-			if clicks >= 10 then
-				break
-			end
-		end
+            if clicks >= 10 then
+                break
+            end
+        end
 
-		coroutine.yield()
-	end
+        coroutine.yield()
+    end
 
-	this.ui.can_click = false
+    this.ui.can_click = false
 
-	U.animation_start(this, "play", nil, store.tick_ts, false)
-	U.y_animation_wait(this)
+    U.animation_start(this, "play", nil, store.tick_ts, false)
+    U.y_animation_wait(this)
 
-	this.render.sprites[1].hidden = true
+    this.render.sprites[1].hidden = true
 
-	U.animation_start(this, "end", nil, store.tick_ts, false, 2)
-	AC:got("DEFEAT_ACORN")
+    U.animation_start(this, "end", nil, store.tick_ts, false, 2)
+    AC:got("DEFEAT_ACORN")
 end
 
 scripts.burning_floor_controller = {}
 
 function scripts.burning_floor_controller.update(this, store, script)
-	local auras = LU.list_entities(store.auras, "aura_burning_floor")
-	local data = this.cooldowns[store.level_mode]
-	local wdata, current_wave
+    local auras = LU.list_entities(store.auras, "aura_burning_floor")
+    local data = this.cooldowns[store.level_mode]
+    local wdata, current_wave
 
-	local function wave_changed()
-		return current_wave ~= store.wave_group_number or store.waves_finished
-	end
+    local function wave_changed()
+        return current_wave ~= store.wave_group_number or store.waves_finished
+    end
 
-	if not auras or not data then
-		-- block empty
-	else
-		while true do
-			repeat
-				coroutine.yield()
+    if not auras or not data then
+        -- block empty
+    else
+        while true do
+            repeat
+                coroutine.yield()
 
-				wdata = data[store.wave_group_number]
-			until wdata
+                wdata = data[store.wave_group_number]
+            until wdata
 
-			current_wave = store.wave_group_number
+            current_wave = store.wave_group_number
 
-			local delay, duration = unpack(wdata)
+            local delay, duration = unpack(wdata)
 
-			if U.y_wait(store, delay, wave_changed) then
-				-- block empty
-			else
-				for _, a in pairs(auras) do
-					a.aura.active = true
-				end
+            if U.y_wait(store, delay, wave_changed) then
+                -- block empty
+            else
+                for _, a in pairs(auras) do
+                    a.aura.active = true
+                end
 
-				U.y_wait(store, duration, wave_changed)
+                U.y_wait(store, duration, wave_changed)
 
-				for _, a in pairs(auras) do
-					a.aura.active = false
-				end
+                for _, a in pairs(auras) do
+                    a.aura.active = false
+                end
 
-				while not wave_changed() do
-					coroutine.yield()
-				end
-			end
-		end
-	end
+                while not wave_changed() do
+                    coroutine.yield()
+                end
+            end
+        end
+    end
 
-	if not auras then
-		log.error("no aura_burning_floor entities available in this level, removing controller")
-	elseif not data then
-		log.error("no cooldowns table defined, removing controller")
-	end
+    if not auras then
+        log.error("no aura_burning_floor entities available in this level, removing controller")
+    elseif not data then
+        log.error("no cooldowns table defined, removing controller")
+    end
 
-	queue_remove(store, this)
+    queue_remove(store, this)
 end
 
 scripts.aura_burning_floor = {}
 
 function scripts.aura_burning_floor.update(this, store, script)
-	local a = this.aura
+    local a = this.aura
 
-	while true do
-		while not a.active do
-			coroutine.yield()
-		end
+    while true do
+        while not a.active do
+            coroutine.yield()
+        end
 
-		this.tween.reverse = false
-		this.tween.ts = store.tick_ts
+        this.tween.reverse = false
+        this.tween.ts = store.tick_ts
 
-		while not U.y_wait(store, a.cycle_time, function()
-			return not a.active
-		end) do
-			local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+        while not U.y_wait(store, a.cycle_time, function()
+            return not a.active
+        end) do
+            local targets = U.find_soldiers_in_range(store.soldiers, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
 
-			if targets then
-				for _, target in pairs(targets) do
-					local m = E:create_entity(this.aura.mod)
+            if targets then
+                for _, target in pairs(targets) do
+                    local m = E:create_entity(this.aura.mod)
 
-					m.modifier.target_id = target.id
-					m.modifier.source_id = this.id
+                    m.modifier.target_id = target.id
+                    m.modifier.source_id = this.id
 
-					queue_insert(store, m)
-				end
-			end
-		end
+                    queue_insert(store, m)
+                end
+            end
+        end
 
-		this.tween.reverse = true
-		this.tween.ts = store.tick_ts
-	end
+        this.tween.reverse = true
+        this.tween.ts = store.tick_ts
+    end
 end
 
 scripts.decal_s23_splinter_pizza = {}
 
 function scripts.decal_s23_splinter_pizza.update(this, store, script)
-	while not this.ui.clicked do
-		coroutine.yield()
-	end
+    while not this.ui.clicked do
+        coroutine.yield()
+    end
 
-	this.ui.clicked = nil
+    this.ui.clicked = nil
 
-	U.animation_start(this, "clicked", nil, store.tick_ts, false)
-	U.y_animation_wait(this)
-	AC:got("SPLINTER")
+    U.animation_start(this, "clicked", nil, store.tick_ts, false)
+    U.y_animation_wait(this)
+    AC:got("SPLINTER")
 
-	this.render.sprites[1].prefix = "decal_s23_splinter"
+    this.render.sprites[1].prefix = "decal_s23_splinter"
 
-	return scripts.click_play.update(this, store, script)
+    return scripts.click_play.update(this, store, script)
 end
 
 scripts.decal_bat_flying = {}
 
 function scripts.decal_bat_flying.insert(this, store, script)
-	if this.snapping then
-		local v_left = store.visible_coords.left
-		local v_right = store.visible_coords.right
-		local positions = {
-			["top left"] = V.v(v_left, 0),
-			top = V.v(0, 0),
-			["top right"] = V.v(v_right - REF_W, 0),
-			["bottom right"] = V.v(v_right - REF_W, 0),
-			bottom = V.v(0, 0),
-			["bottom left"] = V.v(v_left, 0)
-		}
+    if this.snapping then
+        local v_left = store.visible_coords.left
+        local v_right = store.visible_coords.right
+        local positions = {
+            ["top left"] = V.v(v_left, 0),
+            top = V.v(0, 0),
+            ["top right"] = V.v(v_right - REF_W, 0),
+            ["bottom right"] = V.v(v_right - REF_W, 0),
+            bottom = V.v(0, 0),
+            ["bottom left"] = V.v(v_left, 0)
+        }
 
-		this.pos = positions[this.snapping]
-	end
+        this.pos = positions[this.snapping]
+    end
 
-	return true
+    return true
 end
 
 scripts.decal_s24_nevermore = {}
 
 function scripts.decal_s24_nevermore.update(this, store, script)
-	while not this.ui.clicked do
-		coroutine.yield()
-	end
+    while not this.ui.clicked do
+        coroutine.yield()
+    end
 
-	this.ui.clicked = nil
+    this.ui.clicked = nil
 
-	U.animation_start(this, "clicked", nil, store.tick_ts, false)
-	U.y_animation_wait(this)
-	U.animation_start(this, "fly", nil, store.tick_ts, true)
+    U.animation_start(this, "clicked", nil, store.tick_ts, false)
+    U.y_animation_wait(this)
+    U.animation_start(this, "fly", nil, store.tick_ts, true)
 
-	this.tween.reverse = false
-	this.tween.ts = store.tick_ts
+    this.tween.reverse = false
+    this.tween.ts = store.tick_ts
 
-	U.y_wait(store, this.leave_time)
-	AC:got("NEVERMORE")
-	queue_remove(store, this)
+    U.y_wait(store, this.leave_time)
+    AC:got("NEVERMORE")
+    queue_remove(store, this)
 end
 
 scripts.decal_s25_nessie = {}
 
 function scripts.decal_s25_nessie.update(this, store, script)
-	local pause_min, pause_max = unpack(this.pause_duration)
-	local animation_min, animation_max = unpack(this.animation_duration)
-	local pause_ts = 0
-	local animation_ts = 0
-	local current_pause, current_animation
+    local pause_min, pause_max = unpack(this.pause_duration)
+    local animation_min, animation_max = unpack(this.animation_duration)
+    local pause_ts = 0
+    local animation_ts = 0
+    local current_pause, current_animation
 
-	while true do
-		::label_273_0::
+    while true do
+        ::label_273_0::
 
-		U.sprites_hide(this)
+        U.sprites_hide(this)
 
-		this.ui.can_click = false
-		pause_ts = store.tick_ts
-		current_pause = U.frandom(pause_min, pause_max)
+        this.ui.can_click = false
+        pause_ts = store.tick_ts
+        current_pause = U.frandom(pause_min, pause_max)
 
-		while current_pause > store.tick_ts - pause_ts do
-			coroutine.yield()
-		end
+        while current_pause > store.tick_ts - pause_ts do
+            coroutine.yield()
+        end
 
-		this.pos = this.out_pos[math.random(1, #this.out_pos)]
+        this.pos = this.out_pos[math.random(1, #this.out_pos)]
 
-		U.sprites_show(this)
+        U.sprites_show(this)
 
-		this.ui.can_click = true
+        this.ui.can_click = true
 
-		U.animation_start(this, "bubble_in", nil, store.tick_ts, false)
-		U.y_animation_wait(this)
+        U.animation_start(this, "bubble_in", nil, store.tick_ts, false)
+        U.y_animation_wait(this)
 
-		while this.render.sprites[1].runs < 1 do
-			if this.ui.clicked then
-				goto label_273_1
-			end
+        while this.render.sprites[1].runs < 1 do
+            if this.ui.clicked then
+                goto label_273_1
+            end
 
-			coroutine.yield()
-		end
+            coroutine.yield()
+        end
 
-		animation_ts = U.frandom(animation_min, animation_max)
+        animation_ts = U.frandom(animation_min, animation_max)
 
-		U.animation_start(this, "bubble_play", nil, store.tick_ts, true)
+        U.animation_start(this, "bubble_play", nil, store.tick_ts, true)
 
-		while animation_ts > this.render.sprites[1].runs * fts(22) do
-			if this.ui.clicked then
-				goto label_273_1
-			end
+        while animation_ts > this.render.sprites[1].runs * fts(22) do
+            if this.ui.clicked then
+                goto label_273_1
+            end
 
-			coroutine.yield()
-		end
+            coroutine.yield()
+        end
 
-		U.sprites_hide(this)
+        U.sprites_hide(this)
 
-		this.ui.can_click = false
+        this.ui.can_click = false
 
-		U.animation_start(this, "bubble_out", nil, store.tick_ts, false)
-		U.y_animation_wait(this)
+        U.animation_start(this, "bubble_out", nil, store.tick_ts, false)
+        U.y_animation_wait(this)
 
-		goto label_273_0
+        goto label_273_0
 
-		::label_273_1::
+        ::label_273_1::
 
-		this.ui.clicked = nil
+        this.ui.clicked = nil
 
-		S:queue(this.sound)
-		U.animation_start(this, "clicked", nil, store.tick_ts, false)
-		U.y_wait(store, fts(90))
-		S:queue(this.sound)
-		U.y_animation_wait(this)
-		AC:got("NESSIE")
-		U.sprites_hide(this)
-		coroutine.yield()
-	end
+        S:queue(this.sound)
+        U.animation_start(this, "clicked", nil, store.tick_ts, false)
+        U.y_wait(store, fts(90))
+        S:queue(this.sound)
+        U.y_animation_wait(this)
+        AC:got("NESSIE")
+        U.sprites_hide(this)
+        coroutine.yield()
+    end
 end
 
 scripts.enemy_tremor = {}
@@ -7417,8 +7420,8 @@ function scripts.enemy_munra.update(this, store, script)
     ha.ts = store.tick_ts
 
     local function ready_to_sarcophagus()
-        return enemy_ready_to_magic_attack(this, store, sa) and not this.health.dead and
-                   this.nav_path.ni < P:get_defend_point_node(this.nav_path.pi) and
+        return enemy_ready_to_magic_attack(this, store, sa) and not this.health.dead and this.nav_path.ni <
+                   P:get_defend_point_node(this.nav_path.pi) and
                    (not cg[sa.count_group_name] or cg[sa.count_group_name] < sa.count_group_max)
     end
 
@@ -7428,8 +7431,9 @@ function scripts.enemy_munra.update(this, store, script)
         end
 
         local targets = table.filter(store.enemies, function(k, v)
-            return v.enemy.can_accept_magic and v.id ~= this.id and  not v.health.dead and
-                       v.health.hp < v.health.hp_max and U.is_inside_ellipse(v.pos, this.pos, ha.range)
+            return
+                v.enemy.can_accept_magic and v.id ~= this.id and not v.health.dead and v.health.hp < v.health.hp_max and
+                    U.is_inside_ellipse(v.pos, this.pos, ha.range)
         end)
 
         if #targets > 0 then
@@ -7648,8 +7652,7 @@ function scripts.enemy_cannibal.update(this, store, script)
                 end
 
                 if blocker and blocker.health.dead and not in_water and
-                    band(blocker.health.last_damage_types,
-                        bor(DAMAGE_DISINTEGRATE, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
+                    band(blocker.health.last_damage_types, bor(DAMAGE_DISINTEGRATE, DAMAGE_HOST, DAMAGE_EAT)) == 0 then
                     local target = blocker
 
                     if band(target.vis.bans, F_CANNIBALIZE) ~= 0 then
@@ -7995,9 +7998,9 @@ function scripts.enemy_shaman_necro.update(this, store, script)
                 na.ts = store.tick_ts
 
                 local dead_enemies = table.filter(store.enemies, function(_, e)
-                    return e.health.dead and e.unit and not e.unit.hide_after_death and
-                               band(e.health.last_damage_types, bor(DAMAGE_EAT, DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE,
-                            DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE)) == 0 and band(e.vis.bans, F_UNDEAD) == 0 and
+                    return e.health.dead and e.unit and not e.unit.hide_after_death and band(e.health.last_damage_types,
+                        bor(DAMAGE_EAT, DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE)) ==
+                               0 and band(e.vis.bans, F_UNDEAD) == 0 and
                                table.contains(na.allowed_templates, e.template_name) and
                                U.is_inside_ellipse(e.pos, this.pos, na.max_range)
                 end)
@@ -9490,7 +9493,7 @@ function scripts.aura_damage_sprint.update(this, store, script)
             local hp, hp_max = target.health.hp, target.health.hp_max
             local sprint_factor = 1 + (hp_max - hp) / hp_max * target.damage_sprint_factor
 
-            U.speed_mul(target, sprint_factor / this.last_sprint_factor )
+            U.speed_mul(target, sprint_factor / this.last_sprint_factor)
             this.last_sprint_hp = target.health.hp
             this.last_sprint_factor = sprint_factor
         end
@@ -9675,7 +9678,8 @@ scripts.enemy_elvira = {}
 
 function scripts.enemy_elvira.can_lifesteal(this, store, attack, target)
     return target.template_name ~= "soldier_death_rider" and target.template_name ~= "soldier_skeleton" and
-               target.template_name ~= "soldier_skeleton_knight" and target.template_name ~= "soldier_frankenstein" and target.emplate_name ~= "hero_vampiress" and this.enemy.can_do_magic and this.health.hp /
+               target.template_name ~= "soldier_skeleton_knight" and target.template_name ~= "soldier_frankenstein" and
+               target.emplate_name ~= "hero_vampiress" and this.enemy.can_do_magic and this.health.hp /
                this.health.hp_max < attack.health_trigger_factor
 end
 
@@ -9893,11 +9897,11 @@ function scripts.eb_xerxes.update(this, store)
                     log.debug("EB_XERXES: power teleport starts")
 
                     local targets = table.filter(store.enemies, function(_, e)
-                        return not e.pending_removal and e.nav_path and
-                                   not e.health.dead and band(e.vis.flags, at.vis_bans) == 0 and
-                                   band(e.vis.bans, at.vis_flags) == 0 and P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and
-                                   e.nav_path.ni > P:get_visible_start_node(e.nav_path.pi) + at.path_margins[1] and
-                                   e.nav_path.ni < P:get_defend_point_node(e.nav_path.pi) - at.path_margins[2]
+                        return not e.pending_removal and e.nav_path and not e.health.dead and
+                                   band(e.vis.flags, at.vis_bans) == 0 and band(e.vis.bans, at.vis_flags) == 0 and
+                                   P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and e.nav_path.ni >
+                                   P:get_visible_start_node(e.nav_path.pi) + at.path_margins[1] and e.nav_path.ni <
+                                   P:get_defend_point_node(e.nav_path.pi) - at.path_margins[2]
                     end)
 
                     if #targets < 1 then
@@ -9973,9 +9977,9 @@ function scripts.eb_xerxes.update(this, store)
                     local radius = pconf.range / 2
                     local duration = pconf.duration + plevel * pconf.durationIncrement
                     local targets = table.filter(store.enemies, function(k, e)
-                        return not e.pending_removal and e.nav_path and
-                                   not e.health.dead and band(e.vis.flags, ai.vis_bans) == 0 and
-                                   band(e.vis.bans, ai.vis_flags) == 0 and e.enemy.can_accept_magic and
+                        return not e.pending_removal and e.nav_path and not e.health.dead and
+                                   band(e.vis.flags, ai.vis_bans) == 0 and band(e.vis.bans, ai.vis_flags) == 0 and
+                                   e.enemy.can_accept_magic and
                                    not table.contains(ai.excluded_templates, e.template_name) and
                                    P:is_node_valid(e.nav_path.pi, e.nav_path.ni) and e.nav_path.ni >
                                    P:get_visible_start_node(e.nav_path.pi) + ai.path_margins[1] and e.nav_path.ni <
@@ -10198,8 +10202,8 @@ function scripts.eb_alien.update(this, store)
 
     local function find_screech_targets(flags, bans)
         return table.filter(store.enemies, function(k, v)
-            return not v.pending_removal and v.nav_path and not v.health.dead and
-                       band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and
+            return not v.pending_removal and v.nav_path and not v.health.dead and band(v.vis.flags, bans) == 0 and
+                       band(v.vis.bans, flags) == 0 and
                        (v.template_name == "enemy_alien_reaper" or v.template_name == "enemy_alien_breeder") and
                        P:is_node_valid(v.nav_path.pi, v.nav_path.ni)
         end)
@@ -10635,7 +10639,7 @@ function scripts.eb_efreeti.update(this, store, script)
 
     local function do_polymorph()
         local targets = table.filter(store.soldiers, function(_, e)
-            return  not e.health.dead  and band(e.vis.bans, F_POLYMORPH) == 0 and
+            return not e.health.dead and band(e.vis.bans, F_POLYMORPH) == 0 and
                        U.is_inside_ellipse(e.pos, this.pos, a_poly.max_range) and
                        not U.is_inside_ellipse(e.pos, this.pos, a_poly.min_range)
         end)
@@ -10655,8 +10659,7 @@ function scripts.eb_efreeti.update(this, store, script)
 
     local function do_desintegrate()
         local targets = table.filter(store.soldiers, function(_, e)
-            return  not e.health.dead and
-                       U.is_inside_ellipse(e.pos, this.pos, a_des.max_range)
+            return not e.health.dead and U.is_inside_ellipse(e.pos, this.pos, a_des.max_range)
         end)
 
         for i = 1, math.min(#targets, a_des.max_count) do
@@ -10673,8 +10676,8 @@ function scripts.eb_efreeti.update(this, store, script)
 
     local function can_sand()
         for _, e in pairs(store.towers) do
-            if not e.tower_holder and not e.tower.blocked and
-                V.dist2(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range * a_sand.max_range then
+            if not e.tower_holder and not e.tower.blocked and V.dist2(e.pos.x, e.pos.y, this.pos.x, this.pos.y) <
+                a_sand.max_range * a_sand.max_range then
                 return true
             end
         end
@@ -10684,8 +10687,8 @@ function scripts.eb_efreeti.update(this, store, script)
 
     local function do_sand()
         local towers = table.filter(store.towers, function(_, e)
-            return not e.tower_holder and not e.tower.blocked and
-                       V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) < a_sand.max_range
+            return not e.tower_holder and not e.tower.blocked and V.dist(e.pos.x, e.pos.y, this.pos.x, this.pos.y) <
+                       a_sand.max_range
         end)
 
         for i = 1, math.min(#towers, a_sand.max_count) do
@@ -12208,10 +12211,9 @@ function scripts.leviathan_tentacle.update(this, store)
         U.y_wait(store, 2)
 
         local targets = table.filter(store.towers, function(k, e)
-            return
-                e and not e.tower_holder and e.tower.type ~= "build_animation" and not e.tower.blocked and
-                    not table.contains(this.tower_bans, e.template_name) and
-                    U.is_inside_ellipse(e.pos, search_pos, this.range)
+            return e and not e.tower_holder and e.tower.type ~= "build_animation" and not e.tower.blocked and
+                       not table.contains(this.tower_bans, e.template_name) and
+                       U.is_inside_ellipse(e.pos, search_pos, this.range)
         end)
 
         if #targets > 0 then
@@ -12262,7 +12264,8 @@ end
 
 function scripts.eb_dracula.can_lifesteal(this, store, attack, target)
     return target.template_name ~= "soldier_death_rider" and target.template_name ~= "soldier_skeleton" and
-               target.template_name ~= "soldier_skeleton_knight" and target.template_name ~= "soldier_frankenstein" and target.template_name ~= "hero_vampiress"
+               target.template_name ~= "soldier_skeleton_knight" and target.template_name ~= "soldier_frankenstein" and
+               target.template_name ~= "hero_vampiress"
 end
 
 function scripts.eb_dracula.update(this, store, script)
@@ -13084,10 +13087,9 @@ function scripts.sand_worm.update(this, store, script)
             if ce.soldier.target_id and not ce.health.dead and band(ce.vis.flags, a.vis_bans) == 0 and
                 band(ce.vis.bans, a.vis_flags) == 0 and P:valid_node_nearby(ce.pos.x, ce.pos.y) then
                 local nearby = table.filter(store.soldiers, function(_, e)
-                    return
-                        e.soldier.target_id and e ~= ce and not e.health.dead and e.vis and
-                            band(e.vis.flags, a.vis_bans) == 0 and band(e.vis.bans, a.vis_flags) == 0 and
-                            U.is_inside_ellipse(e.pos, ce.pos, a.max_range)
+                    return e.soldier.target_id and e ~= ce and not e.health.dead and e.vis and
+                               band(e.vis.flags, a.vis_bans) == 0 and band(e.vis.bans, a.vis_flags) == 0 and
+                               U.is_inside_ellipse(e.pos, ce.pos, a.max_range)
                 end)
 
                 if best_count < #nearby then
@@ -13098,9 +13100,10 @@ function scripts.sand_worm.update(this, store, script)
 
         if not target then
             local targets = table.filter(store.soldiers, function(k, v)
-                return not v.health.dead and band(v.vis.flags, a.vis_bans) == 0 and
-                           band(v.vis.bans, a.vis_flags) == 0 and v.template_name ~= "soldier_djinn" and v.template_name ~=
-                           "soldier_legionnaire" and P:valid_node_nearby(v.pos.x, v.pos.y)
+                return
+                    not v.health.dead and band(v.vis.flags, a.vis_bans) == 0 and band(v.vis.bans, a.vis_flags) == 0 and
+                        v.template_name ~= "soldier_djinn" and v.template_name ~= "soldier_legionnaire" and
+                        P:valid_node_nearby(v.pos.x, v.pos.y)
             end)
 
             if #targets > 0 then
@@ -13575,7 +13578,6 @@ function scripts.decal_indiana_boulder.update(this, store, script)
     queue_remove(store, this)
 end
 
-
 scripts.enemy_gunboat = {}
 
 function scripts.enemy_gunboat.get_info(this)
@@ -13887,7 +13889,7 @@ function scripts.hero_steam_frigate.get_info(this)
         damage_min = min,
         damage_max = max,
         armor = this.health.armor,
-        magic_armor = this.health.magic_armor,
+        magic_armor = this.health.magic_armor
     }
 end
 
@@ -14363,7 +14365,8 @@ function scripts.hero_vampiress.update(this, store, script)
         else
             while r.new do
                 if not already_flying then
-                    should_fly = V.dist2(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > this.fly_to.min_distance * this.fly_to.min_distance
+                    should_fly = V.dist2(this.pos.x, this.pos.y, r.pos.x, r.pos.y) > this.fly_to.min_distance *
+                                     this.fly_to.min_distance
 
                     if should_fly then
                         already_flying = true
@@ -14436,7 +14439,8 @@ function scripts.hero_vampiress.update(this, store, script)
 
                             d.source_id = this.id
                             d.target_id = e.id
-                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) * this.unit.damage_factor
+                            d.value = (math.random(a.damage_min, a.damage_max) + this.damage_buff) *
+                                          this.unit.damage_factor
                             d.damage_type = a.damage_type
                             d.track_kills = true
                             if table.contains(a.extra_damage_templates, e.template_name) then
@@ -14498,14 +14502,15 @@ scripts.mod_vampiress_gain = {
                     target.health.armor = target.health.armor + this.gain.armor
                     target.health.magic_armor = target.health.magic_armor + this.gain.magic_armor
                     if not target.render.sprites[1].scale then
-                        target.render.sprites[1].scale = V.v(1+this.gain.size, 1+this.gain.size)
+                        target.render.sprites[1].scale = V.v(1 + this.gain.size, 1 + this.gain.size)
                     else
                         target.render.sprites[1].scale.x = target.render.sprites[1].scale.x + this.gain.size
                         target.render.sprites[1].scale.y = target.render.sprites[1].scale.y + this.gain.size
                     end
                     target.melee.attacks[2].cooldown = target.melee.attacks[2].cooldown - this.gain.cooldown
                     target.timed_attacks.list[1].cooldown = target.timed_attacks.list[1].cooldown - this.gain.cooldown
-                    target.timed_attacks.list[1].damage_radius = target.timed_attacks.list[1].damage_radius + this.gain.radius
+                    target.timed_attacks.list[1].damage_radius =
+                        target.timed_attacks.list[1].damage_radius + this.gain.radius
                     target.motion.max_speed_bat = target.motion.max_speed_bat + this.gain.speed
                     U.speed_inc_self(target, this.gain.speed)
                     target.gain_count = target.gain_count + 1
@@ -14520,8 +14525,6 @@ scripts.mod_vampiress_gain = {
         end
     end
 }
-
-
 
 scripts.ray_frankenstein = {}
 
@@ -14580,6 +14583,7 @@ function scripts.ray_frankenstein.update(this, store)
             mod.modifier.level = b.level
             mod.modifier.source_id = b.source_id
             mod.modifier.target_id = target.id
+            mod.modifier.damage_factor = b.damage_factor
             mod.dps.damage_max = mod.dps.damage_max * this.bounce_damage_factor
             mod.dps.damage_min = mod.dps.damage_min * this.bounce_damage_factor
             mod.dps.damage_inc = mod.dps.damage_inc * this.bounce_damage_factor
@@ -14618,7 +14622,7 @@ function scripts.ray_frankenstein.update(this, store)
                 r.bullet.to = V.vclone(target.pos)
                 r.bullet.target_id = bounce_target.id
                 r.bullet.source_id = target.id
-
+                r.bullet.damage_factor = b.damage_factor
                 if bounce_target.template_name == "hero_thor" then
                     r.bounces = this.bounces + 1
                     r.bounce_range = this.bounce_range * 1.5
@@ -14899,7 +14903,8 @@ function scripts.points_spawner.update(this, store)
                             local spi = subpath > 0 and subpath or math.random(1, 3)
                             local this_delay = c_delay + U.frandom(0, delay_var)
                             for i = 1, store.config.enemy_count_multiplier do
-                                table.insert(spawn_queue, {this_delay / i, template, point.from, point.to, point.path, spi, custom_data})
+                                table.insert(spawn_queue, {this_delay / i, template, point.from, point.to, point.path,
+                                                           spi, custom_data})
                             end
                         end
                     else
@@ -14911,7 +14916,8 @@ function scripts.points_spawner.update(this, store)
                         local point = this.spawner_points[point_id]
                         local spi = subpath > 0 and subpath or math.random(1, 3)
                         for i = 1, store.config.enemy_count_multiplier do
-                            table.insert(spawn_queue, {c_delay / i, template, point.from, point.to, point.path, spi, custom_data})
+                            table.insert(spawn_queue,
+                                {c_delay / i, template, point.from, point.to, point.path, spi, custom_data})
                         end
                     end
 
@@ -15440,9 +15446,8 @@ function scripts.alien_glaive.update(this, store)
     end
 
     if bounce_count == 0 or math.random() < this.bounce_chance then
-        local target = U.find_foremost_enemy_with_flying_preference(store.enemies, this.pos, 0, this.bounce_range,nil,
-            b.vis_flags, b.vis_bans,
-            function(v)
+        local target = U.find_foremost_enemy_with_flying_preference(store.enemies, this.pos, 0, this.bounce_range, nil,
+            b.vis_flags, b.vis_bans, function(v)
                 return v ~= target
             end)
 
@@ -16282,7 +16287,8 @@ function scripts.hero_crab.update(this, store, script)
                         end
                     end
                     if this.motion.real_speed >= b.stun_speed and store.tick_ts - b.ts >= b.cooldown then
-                        local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, b.radius, F_STUN, bor(F_BOSS, F_FLYING))
+                        local enemies = U.find_enemies_in_range(store.enemies, this.pos, 0, b.radius, F_STUN,
+                            bor(F_BOSS, F_FLYING))
                         if enemies then
                             local rate = (this.motion.real_speed - 60) / (b.stun_speed - 60)
                             for _, e in pairs(enemies) do
@@ -16965,8 +16971,6 @@ function scripts.tower_rock_thrower.update(this, store)
     end
 end
 
-
-
 scripts.druid_shooter_sylvan = {}
 
 function scripts.druid_shooter_sylvan.update(this, store)
@@ -16980,9 +16984,11 @@ function scripts.druid_shooter_sylvan.update(this, store)
         elseif store.tick_ts - a.ts > a.cooldown then
             SU.delay_attack(store, a, 1)
             local target
-            local _, enemies = U.find_foremost_enemy(store.enemies, this.owner.pos, 0, a.range, nil, a.vis_flags, a.vis_bans, function (v)
-                return not table.contains(a.excluded_templates, v.template_name) and not SU.has_modifiers(store, v, "mod_druid_sylvan")
-            end)
+            local _, enemies = U.find_foremost_enemy(store.enemies, this.owner.pos, 0, a.range, nil, a.vis_flags,
+                a.vis_bans, function(v)
+                    return not table.contains(a.excluded_templates, v.template_name) and
+                               not SU.has_modifiers(store, v, "mod_druid_sylvan")
+                end)
 
             if enemies then
                 local foremost_enemy = enemies[1]
@@ -16991,7 +16997,8 @@ function scripts.druid_shooter_sylvan.update(this, store)
                 for i = 2, #enemies do
                     local e = enemies[i]
 
-                    if V.dist(e.__ffe_pos.x, e.__ffe_pos.y, foremost_enemy.__ffe_pos.x, foremost_enemy.__ffe_pos.y) <= 50 then
+                    if V.dist(e.__ffe_pos.x, e.__ffe_pos.y, foremost_enemy.__ffe_pos.x, foremost_enemy.__ffe_pos.y) <=
+                        50 then
                         if e.health.hp > max_hp then
                             max_hp = e.health.hp
                             max_hp_enemy_idx = i
@@ -17098,8 +17105,6 @@ function scripts.druid_shooter_nature.update(this, store)
     end
 end
 
-
-
 scripts.tower_bastion_holder = {}
 
 function scripts.tower_bastion_holder.insert(this, store)
@@ -17169,8 +17174,7 @@ function scripts.tower_bastion.update(this, store)
             if store.tick_ts - ra.ts < ra.cooldown then
                 -- block empty
             else
-                target =
-                    U.find_foremost_enemy(store.enemies, trigger_pos, 0, a.range, false, ra.vis_flags, ra.vis_bans)
+                target = U.find_foremost_enemy(store.enemies, trigger_pos, 0, a.range, false, ra.vis_flags, ra.vis_bans)
 
                 if not target then
                     -- block empty
@@ -17985,8 +17989,6 @@ function scripts.soldier_xin_shadow.update(this, store)
     U.y_animation_play(this, "death", nil, store.tick_ts)
     queue_remove(store, this)
 end
-
-
 
 scripts.decal_minidragon_faustus = {}
 
@@ -19432,8 +19434,8 @@ function scripts.enemy_twilight_avenger.update(this, store, script)
             enable_shield()
 
             if ready_to_cast() then
-                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags,
-                    a.vis_bans)
+                local targets =
+                    U.find_enemies_in_range(store.enemies, this.pos, 0, a.max_range, a.vis_flags, a.vis_bans)
 
                 if targets then
                     local target = targets[1]
@@ -19660,8 +19662,7 @@ function scripts.enemy_twilight_scourger_banshee.update(this, store, script)
         if not SU.y_enemy_walk_step(store, this) and kamikaze_target then
             if kamikaze_target.tower and kamikaze_target.tower.upgrade_to then
                 for _, e in pairs(store.towers) do
-                    if e.tower.holder_id == kamikaze_target.tower.holder_id and
-                        V.veq(e.pos, kamikaze_target.pos) then
+                    if e.tower.holder_id == kamikaze_target.tower.holder_id and V.veq(e.pos, kamikaze_target.pos) then
                         log.debug("banshee target %s changed for %s", kamikaze_target.id, e.id)
 
                         kamikaze_target = e
@@ -21617,7 +21618,7 @@ function scripts.eb_drow_queen.update(this, store)
         end
 
         if #towers > 5 then
-            local tower_2 , tower_id_2 = table.random(towers)
+            local tower_2, tower_id_2 = table.random(towers)
             if tower_2 and tower_2_id ~= tower_id then
                 block_tower_ids({tower_2.tower.holder_id})
             end
@@ -23768,8 +23769,7 @@ function scripts.crystal_arcane.update(this, store)
                 S:queue(aa.sound)
                 U.animation_start(this, aa.animation, nil, store.tick_ts, true)
 
-                local targets =
-                    U.find_enemies_in_range(store.enemies, this.pos, 0, aa.range, aa.vis_flags, aa.vis_bans)
+                local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, aa.range, aa.vis_flags, aa.vis_bans)
 
                 for i = 1, aa.bullet_count do
                     U.y_wait(store, fts(3))
@@ -24631,8 +24631,6 @@ function scripts.missile_phoenix.insert(this, store, script)
 
     return scripts.missile.insert(this, store, script)
 end
-
-
 
 scripts.bullet_gnoll_blighter = {}
 
@@ -25932,7 +25930,9 @@ function scripts.mod_rag_raggified.update(this, store)
 
     local start_ts = store.tick_ts
 
-    while (not e.health.dead) and (e.health.hp_max - e.health.hp < e.health.hp_max * this.break_factor or store.tick_ts - start_ts < this.doll_duration) do
+    while (not e.health.dead) and
+        (e.health.hp_max - e.health.hp < e.health.hp_max * this.break_factor or store.tick_ts - start_ts <
+            this.doll_duration) do
         coroutine.yield()
     end
 
@@ -26050,8 +26050,6 @@ function scripts.mod_bruce_sharp_claws.insert(this, store)
         return true
     end
 end
-
-
 
 scripts.mod_phoenix_flaming_path = {}
 
@@ -26550,7 +26548,8 @@ function scripts.mod_drider_poison.update(this, store)
             coroutine.yield()
             coroutine.yield()
 
-            if target.hero or (not target.health.dead) or (target.reinforcement and target.reinforcement.hp_before_timeout) then
+            if target.hero or (not target.health.dead) or
+                (target.reinforcement and target.reinforcement.hp_before_timeout) then
                 break
             end
 
@@ -27979,8 +27978,8 @@ function scripts.decal_tree_ewok.update(this, store)
 
     while true do
         if store.tick_ts - a.ts > a.cooldown then
-            local target = U.find_random_enemy(store.enemies, this.ranged_center, a.min_range, a.max_range,
-                a.vis_flags, a.vis_bans)
+            local target = U.find_random_enemy(store.enemies, this.ranged_center, a.min_range, a.max_range, a.vis_flags,
+                a.vis_bans)
 
             if target then
                 a.ts = store.tick_ts
@@ -28116,7 +28115,6 @@ function scripts.soldier_ewok.update(this, store)
             elseif sta == A_IN_COOLDOWN then
                 goto label_519_0
             end
-
 
             if SU.soldier_go_back_step(store, this) then
                 goto label_519_1
@@ -28954,7 +28952,9 @@ scripts.aura_tower_faerie_dragon = {
             if store.tick_ts - last_ts >= source.attacks.list[1].cooldown then
                 last_ts = store.tick_ts
                 local targets = table.filter(store.enemies, function(k, v)
-                    return (not v.health.dead) and ((band(F_BOSS, v.vis.flags) == 0) and (band(bor(F_MOD, F_STUN), v.vis.bans) == 0)) and U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
+                    return (not v.health.dead) and
+                               ((band(F_BOSS, v.vis.flags) == 0) and (band(bor(F_MOD, F_STUN), v.vis.bans) == 0)) and
+                               U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
                 end)
 
                 if targets then
@@ -28978,7 +28978,6 @@ scripts.aura_tower_faerie_dragon = {
         end
     end
 }
-
 
 scripts.faerie_dragon = {}
 
@@ -29071,7 +29070,7 @@ function scripts.faerie_dragon.update(this, store)
                     end
                     for i, modname in ipairs(b.bullet.mods) do
                         if modname == "mod_faerie_dragon" then
-                            b.bullet.mods[i] =  "mod_faerie_dragon_l" .. this.owner.powers.improve_shot.level
+                            b.bullet.mods[i] = "mod_faerie_dragon_l" .. this.owner.powers.improve_shot.level
                             break
                         end
                     end
@@ -30668,7 +30667,7 @@ end
 function scripts.malik_slave_controller.update(this, store)
     local function do_thunder_fx(pos)
         -- local e = E:create_entity("fx_power_thunder_explosion")
-        local e= E:create_entity("fx_fireball_explosion")
+        local e = E:create_entity("fx_fireball_explosion")
         e.pos.x, e.pos.y = pos.x, pos.y
         e.render.sprites[1].ts = store.tick_ts
         -- e.render.sprites[2].ts = store.tick_ts
@@ -31767,7 +31766,10 @@ function scripts.endless_barrack_synergy_aura.update(this, store, script)
     local last_hit_ts = store.tick_ts - this.aura.cycle_time
     while true do
         if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
-            local towers = U.find_towers_in_range(store.towers, this.pos, {min_range = 0, max_range = this.aura.radius})
+            local towers = U.find_towers_in_range(store.towers, this.pos, {
+                min_range = 0,
+                max_range = this.aura.radius
+            })
             if towers then
                 for _, t in pairs(towers) do
                     local m = E:create_entity(this.aura.mod)
@@ -31809,7 +31811,70 @@ function scripts.mod_endless_barrack_synergy.remove(this, store)
     end
     return true
 end
+
+scripts.mod_endless_engineer_aftermath = {
+    insert = function(this, store)
+        local target = store.entities[this.modifier.target_id]
+        if not target then
+            return false
+        end
+        local radius2 = this.radius * this.radius
+        for _, e in pairs(store.enemies) do
+            if not e.health.dead and band(e.vis.bans, F_RANGED) == 0 and
+                V.dist2(e.pos.x, e.pos.y, target.pos.x, target.pos.y) <= radius2 then
+                local d = E:create_entity("damage")
+                d.damage_type = DAMAGE_EXPLOSION
+                d.damage_min = this.value
+                d.damage_max = this.value
+                d.source_id = this.id
+                d.target_id = e.id
+                queue_damage(store, d)
+                local decal = E:create_entity("decal_tween")
+
+                decal.pos.x, decal.pos.y = e.pos.x, e.pos.y
+                decal.tween.props[1].keys = {{0, 255}, {0.5, 128}, {1, 0}}
+                decal.tween.props[1].name = "alpha"
+
+                if math.random() < 0.5 then
+                    decal.render.sprites[1].name = "EarthquakeTower_HitDecal1"
+                else
+                    decal.render.sprites[1].name = "EarthquakeTower_HitDecal2"
+                end
+
+                decal.render.sprites[1].animated = false
+                decal.render.sprites[1].z = Z_DECALS
+                decal.render.sprites[1].ts = store.tick_ts
+                decal.render.sprites[1].scale = V.v(0.6, 0.6)
+                queue_insert(store, decal)
+            end
+        end
+        return false
+    end
+}
+
+scripts.aura_endless_engineer_aftermath_ray = {
+    update = function(this, store)
+        local a = this.aura
+        local ps = E:create_entity(this.particles_name)
+
+        ps.pos = V.vclone(this.pos)
+        ps.particle_system.scales_x = {0.8, 0.36}
+        ps.particle_system.scales_y = {0.8, 0.36}
+        queue_insert(store, ps)
+        U.y_wait(store, a.duration)
+
+        local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, a.radius, a.vis_flags, a.vis_bans)
+
+        if targets then
+            for _, e in pairs(targets) do
+                local d = SU.create_attack_damage(a, e.id, this)
+
+                queue_damage(store, d)
+            end
+        end
+
+        queue_remove(store, this)
+    end
+}
 return scripts
-
-
 

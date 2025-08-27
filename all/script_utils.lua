@@ -3862,6 +3862,7 @@ local function update_on_damage(entity)
     end
 end
 
+
 local SU = {
     has_modifiers = U.has_modifiers,
     ui_click_proxy_add = ui_click_proxy_add,
@@ -3965,7 +3966,7 @@ local SU = {
     insert_tower_damage_factor_buff = insert_tower_damage_factor_buff,
     remove_tower_damage_factor_buff = remove_tower_damage_factor_buff,
     y_controable_new_rally = y_controable_new_rally,
-    update_on_damage = update_on_damage
+    update_on_damage = update_on_damage,
 }
 
 return SU

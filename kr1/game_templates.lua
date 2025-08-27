@@ -9964,3 +9964,21 @@ tt.modifier.duration = 4
 tt.main_script.insert = scripts.mod_endless_barrack_synergy.insert
 tt.main_script.update = scripts.mod_endless_barrack_synergy.update
 tt.main_script.remove = scripts.mod_endless_barrack_synergy.remove
+
+tt = RT("mod_endless_engineer_aftermath", "modifier")
+tt.main_script.insert = scripts.mod_endless_engineer_aftermath.insert
+tt.radius = 60
+tt.value = 20
+tt.main_script.update = nil
+tt.main_script.remove = nil
+
+tt = RT("aura_endless_engineer_aftermath_ray", "aura_tesla_overcharge")
+tt.aura.duration = fts(22)
+tt.aura.radius = 120
+tt.aura.damage_min = 0
+tt.aura.damage_max = 0
+tt.aura.damage_inc = 15
+tt.aura.damage_type = DAMAGE_ELECTRICAL
+tt.aura.excluded_templates = {"enemy_spectral_knight"}
+tt.main_script.update = scripts.aura_endless_engineer_aftermath_ray.update
+tt.particles_name = "ps_tesla_overcharge"

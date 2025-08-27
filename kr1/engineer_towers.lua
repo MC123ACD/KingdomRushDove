@@ -193,7 +193,7 @@ local function engineer_towers()
     tt.attacks.list[1].bullet_start_offset = vec_2(7, 79)
     tt.attacks.list[1].cooldown = 2.2
     tt.attacks.list[1].node_prediction = fts(18)
-    tt.attacks.list[1].range = 165
+    tt.attacks.list[1].range = 170
     tt.attacks.list[1].shoot_time = fts(48)
     -- tt.attacks.list[1].shoot_time = fts(24)
     tt.attacks.list[1].sound_shoot = "TeslaAttack"

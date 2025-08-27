@@ -3627,6 +3627,15 @@ scripts.tower_dwaarp = {
                                 mod.modifier.target_id = enemy.id
 
                                 queue_insert(store, mod)
+                            elseif aa.mods then
+                                for _, m in pairs(aa.mods) do
+                                    local mod = E:create_entity(m)
+
+                                    mod.modifier.source_id = this.id
+                                    mod.modifier.target_id = enemy.id
+                                    mod.modifier.damage_factor = this.tower.damage_factor
+                                    queue_insert(store, mod)
+                                end
                             end
 
                             -- if shock_and_awe and band(enemy.vis.bans, F_STUN) == 0 and band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() < shock_and_awe.chance then
@@ -3650,6 +3659,7 @@ scripts.tower_dwaarp = {
                                 lava.aura.source_id = this.id
                                 lava.aura.level = pow_l.level
                                 lava.aura.radius = lava.aura.radius * radius_factor
+                                lava.aura.damage_factor = this.tower.damage_factor
                                 queue_insert(store, lava)
                             end
 
@@ -5147,7 +5157,7 @@ function scripts.tower_tricannon.update(this, store, script)
                 pow = pows[i]
 
                 if aa and (not pow or pow.level > 0) and aa.cooldown and ready_to_attack(aa, store, this.tower.cooldown_factor) and
-                    (not a.min_cooldown or store.tick_ts - last_ts > a.min_cooldown) then
+                    (not a.min_cooldown or store.tick_ts - last_ts > a.min_cooldown * this.tower.cooldown_factor) then
                     local trigger, enemies, trigger_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, aa.range,
                         aa.node_prediction, aa.vis_flags, aa.vis_bans)
 

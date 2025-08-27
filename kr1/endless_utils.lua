@@ -1,8 +1,8 @@
 local E = require("entity_db")
 require("constants")
 local UP = require("kr1.upgrades")
-local U = require("all.utils")
-local scripts = require("all.scripts")
+local U = require("utils")
+local scripts = require("scripts")
 local EL = require("kr1.data.endless")
 local enemy_buff = EL.enemy_buff
 local friend_buff = EL.friend_buff
@@ -10,14 +10,183 @@ local enemy_upgrade_max_levels = EL.enemy_upgrade_max_levels
 local endless_template = EL.template
 local SU = require("script_utils")
 local storage = require("storage")
+local log = require("klua.log"):new("endless_utils")
+local GR = require("grid_db")
+local S = require("sound_db")
+local function fts(t)
+    return t / FPS
+end
 local function vv(x)
     return {
         x = x,
         y = x
     }
 end
+local V = require("klua.vector")
+local bit = require("bit")
+local band = bit.band
+local bor = bit.bor
+local bnot = bit.bnot
 
 local EU = {}
+
+local function engineer_focus_bomb_update(this, store, script)
+    local b = this.bullet
+    local dmin, dmax = b.damage_min, b.damage_max
+    local dradius = b.damage_radius
+
+    if b.level and b.level > 0 then
+        if b.damage_radius_inc then
+            dradius = dradius + b.level * b.damage_radius_inc
+        end
+
+        if b.damage_min_inc then
+            dmin = dmin + b.level * b.damage_min_inc
+        end
+
+        if b.damage_max_inc then
+            dmax = dmax + b.level * b.damage_max_inc
+        end
+    end
+
+    local ps
+
+    if b.particles_name then
+        ps = E:create_entity(b.particles_name)
+        ps.particle_system.track_id = this.id
+
+        queue_insert(store, ps)
+    end
+
+    while store.tick_ts - b.ts + store.tick_length < b.flight_time do
+        coroutine.yield()
+
+        b.last_pos.x, b.last_pos.y = this.pos.x, this.pos.y
+        this.pos.x, this.pos.y = SU.position_in_parabola(store.tick_ts - b.ts, b.from, b.speed, b.g)
+
+        if b.align_with_trajectory then
+            this.render.sprites[1].r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
+        elseif b.rotation_speed then
+            this.render.sprites[1].r = this.render.sprites[1].r + b.rotation_speed * store.tick_length
+        end
+
+        if b.hide_radius then
+            this.render.sprites[1].hidden = V.dist2(this.pos.x, this.pos.y, b.from.x, b.from.y) < b.hide_radius *
+                                                b.hide_radius or V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) <
+                                                b.hide_radius * b.hide_radius
+        end
+    end
+
+    for _, enemy in pairs(store.enemies) do
+        if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
+            0 and U.is_inside_ellipse(enemy.pos, b.to, dradius) then
+            local d = E:create_entity("damage")
+
+            d.damage_type = b.damage_type
+            d.reduce_armor = b.reduce_armor
+            d.reduce_magic_armor = b.reduce_magic_armor
+
+            local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, b.to, dradius)
+
+            d.value = dmax + (dmax - (dmax - dmin) * dist_factor) *
+                          (store.endless.upgrade_levels.engineer_focus * EL.friend_buff.engineer_focus)
+
+            d.value = b.damage_factor * d.value
+            d.source_id = this.id
+            d.target_id = enemy.id
+
+            queue_damage(store, d)
+            log.paranoid("bomb id:%s, radius:%s, enemy id:%s, dist:%s, damage:%s damage_type:%x", this.id, dradius,
+                enemy.id, V.dist(enemy.pos.x, enemy.pos.y, b.to.x, b.to.y), d.value, d.damage_type)
+
+            if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
+                band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() <
+                this.up_shock_and_awe_chance then
+                local mod = E:create_entity("mod_shock_and_awe")
+
+                mod.modifier.target_id = enemy.id
+
+                queue_insert(store, mod)
+            end
+
+            local mods
+            if b.mod then
+                mods = type(b.mod) == "string" and {b.mod} or b.mod
+            elseif b.mods then
+                mods = b.mods
+            end
+            if mods then
+                for _, mod_name in pairs(mods) do
+                    local mod = E:create_entity(mod_name)
+                    mod.modifier.damage_factor = b.damage_factor
+                    mod.modifier.target_id = enemy.id
+                    mod.modifier.source_id = this.id
+                    if U.flags_pass(enemy.vis, mod.modifier) then
+                        queue_insert(store, mod)
+                    end
+                end
+            end
+        end
+    end
+
+    local p = SU.create_bullet_pop(store, this)
+
+    queue_insert(store, p)
+
+    local cell_type = GR:cell_type(b.to.x, b.to.y)
+
+    if b.hit_fx_water and band(cell_type, TERRAIN_WATER) ~= 0 then
+        S:queue(this.sound_events.hit_water)
+
+        local water_fx = E:create_entity(b.hit_fx_water)
+
+        water_fx.pos.x, water_fx.pos.y = b.to.x, b.to.y
+        water_fx.render.sprites[1].ts = store.tick_ts
+        water_fx.render.sprites[1].sort_y_offset = b.hit_fx_sort_y_offset
+
+        queue_insert(store, water_fx)
+    elseif b.hit_fx then
+        S:queue(this.sound_events.hit)
+
+        local sfx = E:create_entity(b.hit_fx)
+
+        sfx.pos = V.vclone(b.to)
+        sfx.render.sprites[1].ts = store.tick_ts
+        sfx.render.sprites[1].sort_y_offset = b.hit_fx_sort_y_offset
+
+        queue_insert(store, sfx)
+    end
+
+    if b.hit_decal and band(cell_type, TERRAIN_WATER) == 0 then
+        local decal = E:create_entity(b.hit_decal)
+
+        decal.pos = V.vclone(b.to)
+        decal.render.sprites[1].ts = store.tick_ts
+
+        queue_insert(store, decal)
+    end
+
+    if b.hit_payload then
+        local hp
+
+        if type(b.hit_payload) == "string" then
+            hp = E:create_entity(b.hit_payload)
+        else
+            hp = b.hit_payload
+        end
+
+        hp.pos.x, hp.pos.y = b.to.x, b.to.y
+
+        if hp.aura then
+            hp.aura.level = this.bullet.level
+        end
+
+        queue_insert(store, hp)
+    end
+
+    queue_remove(store, this)
+end
+
 local function get_enemy_lives_cost(name)
     local tpl = E:get_template(name)
     local lives_cost = 0
@@ -27,7 +196,9 @@ local function get_enemy_lives_cost(name)
             lives_cost = lives_cost + get_enemy_lives_cost(tpl.death_spawns.name) * (tpl.death_spawns.quantity or 1)
         end
     end
+    return lives_cost
 end
+
 function EU.init_endless(level_name, groups)
     local endless
     local endless_history = storage:load_endless(level_name)
@@ -95,10 +266,14 @@ function EU.init_endless(level_name, groups)
     end
 
     endless.upgrade_options = table.keys(endless.upgrade_levels)
+    endless.gold_extra_upgrade_options = table.deepclone(EL.gold_extra_upgrade)
 
     for k, v in pairs(endless.upgrade_levels) do
         if v >= EL.upgrade_max_levels[k] then
             table.removeobject(endless.upgrade_options, k)
+        end
+        if EL.force_upgrade_max_levels[k] and v >= EL.force_upgrade_max_levels[k] then
+            table.removeobject(endless.gold_extra_upgrade_options, k)
         end
     end
     return endless
@@ -342,6 +517,163 @@ function EU.patch_barrack_rally(level)
         t.barrack.rally_range = math.huge
     end
 end
+local bombs = {"bomb", "bomb_dynamite", "bomb_black", "bomb_musketeer", "dwarf_barrel", "pirate_watchtower_bomb",
+               "bomb_molotov", "bomb_molotov_big", "bomb_bfg", "bomb_bfg_fragment", "bomb_mecha",
+               "tower_tricannon_bomb", "tower_tricannon_bomb_bombardment_bomb", "rock_druid", "rock_entwood",
+               "rock_druid"}
+
+function EU.patch_engineer_focus(level)
+    for _, name in pairs(bombs) do
+        local b = E:get_template(name)
+        if not b._endless_engineer_focus then
+            if name == "rock_druid" then
+                b.main_script.update = function(this, store)
+                    local b = this.bullet
+
+                    this.render.sprites[1].z = Z_OBJECTS
+
+                    S:queue(this.sound_events.load, {
+                        delay = fts(4)
+                    })
+                    U.y_animation_play(this, "load", nil, store.tick_ts)
+                    U.y_animation_play(this, "travel", nil, store.tick_ts)
+
+                    this.tween.disabled = false
+
+                    while not b.target_id do
+                        coroutine.yield()
+                    end
+
+                    local fx = E:create_entity("fx_rock_druid_launch")
+
+                    fx.pos.x, fx.pos.y = b.from.x, b.from.y
+                    fx.render.sprites[1].ts = store.tick_ts
+                    fx.render.sprites[1].flip_x = b.to.x < fx.pos.x
+
+                    queue_insert(store, fx)
+
+                    this.render.sprites[1].sort_y_offset = nil
+                    this.render.sprites[1].z = Z_BULLETS
+                    this.tween.disabled = true
+                    b.speed = SU.initial_parabola_speed(b.from, b.to, b.flight_time, b.g)
+                    b.ts = store.tick_ts
+                    b.last_pos = V.vclone(b.from)
+                    b.rotation_speed = b.rotation_speed * (b.to.x > b.from.x and -1 or 1)
+
+                    engineer_focus_bomb_update(this, store)
+                end
+            else
+                b.main_script.update = engineer_focus_bomb_update
+            end
+            b._endless_engineer_focus = true
+        end
+    end
+
+    local tower = E:get_template("tower_tesla")
+    tower.tower.damage_factor = tower.tower.damage_factor + level * friend_buff.engineer_focus * 0.8
+    tower = E:get_template("tower_dwaarp")
+    tower.tower.damage_factor = tower.tower.damage_factor + level * friend_buff.engineer_focus * 0.8
+    tower = E:get_template("tower_frankenstein")
+    tower.tower.damage_factor = tower.tower.damage_factor + level * friend_buff.engineer_focus * 0.8
+    local missile = E:get_template("missile_bfg")
+    missile.bullet.damage_min = missile.bullet.damage_min * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+    missile.bullet.damage_max = missile.bullet.damage_max * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+    missile = E:get_template("missile_mecha")
+    missile.bullet.damage_min = missile.bullet.damage_min * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+    missile.bullet.damage_max = missile.bullet.damage_max * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+end
+
+local function endless_engineer_aftermath_ray_remove(this, store)
+    local after_math = E:create_entity("aura_endless_engineer_aftermath_ray")
+
+    after_math.pos.x, after_math.pos.y = this.bullet.to.x, this.bullet.to.y
+    after_math.aura.source_id = this.id
+    after_math.aura.level = store.endless.upgrade_levels.engineer_aftermath
+    queue_insert(store, after_math)
+    return true
+end
+
+function EU.patch_engineer_aftermath(level)
+    for _, name in pairs(bombs) do
+        local b = E:get_template(name)
+        if not b._endless_engineer_aftermath then
+            U.append_mod(b.bullet, "mod_endless_engineer_aftermath")
+            b._endless_engineer_aftermath = true
+        end
+    end
+    local dwarrp_attack = E:get_template("tower_dwaarp").attacks.list[1]
+    if not dwarrp_attack._endless_engineer_aftermath then
+        U.append_mod(dwarrp_attack, "mod_endless_engineer_aftermath")
+        dwarrp_attack._endless_engineer_aftermath = true
+    end
+    local mod = E:get_template("mod_endless_engineer_aftermath")
+    mod.value = level * friend_buff.engineer_aftermath
+    local ray = E:get_template("ray_tesla")
+    if not ray._endless_engineer_aftermath then
+        ray.main_script.remove = U.function_append(ray.main_script.remove, endless_engineer_aftermath_ray_remove)
+        ray._endless_engineer_aftermath = true
+    end
+    ray = E:get_template("ray_frankenstein")
+    if not ray._endless_engineer_aftermath then
+        ray.main_script.remove = U.function_append(ray.main_script.remove, endless_engineer_aftermath_ray_remove)
+        ray._endless_engineer_aftermath = true
+    end
+end
+
+function EU.patch_engineer_seek(level)
+    local t = E:get_template("tower_engineer_1")
+    local function clear_flying_bans(attack)
+        attack.vis_bans = U.flag_clear(attack.vis_bans, F_FLYING)
+    end
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("tower_engineer_2")
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("tower_engineer_3")
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("tower_bfg")
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("soldier_mecha")
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("tower_druid")
+    clear_flying_bans(t.attacks.list[1])
+    t = E:get_template("tower_entwood")
+    clear_flying_bans(t.attacks.list[1])
+    clear_flying_bans(t.attacks.list[2])
+    t = E:get_template("tower_tricannon_lvl4")
+    clear_flying_bans(t.attacks.list[1])
+    clear_flying_bans(t.attacks.list[2])
+    t = E:get_template("tower_tesla")
+    t.attacks.range = t.attacks.range * (1 + level * friend_buff.engineer_seek)
+    t.attacks.list[1].range = t.attacks.list[1].range * (1 + level * friend_buff.engineer_seek)
+    t = E:get_template("tower_frankenstein")
+    t.attacks.range = t.attacks.range * (1 + level * friend_buff.engineer_seek)
+end
+
+local function fireball_quick_up(this, store)
+    store.game_gui.power_1:wait_time_dec(fts(friend_buff.engineer_fireball *
+                                                 store.endless.upgrade_levels.engineer_fireball))
+    return true
+end
+
+function EU.patch_engineer_fireball(level)
+    for _, name in pairs(bombs) do
+        local b = E:get_template(name)
+        if not b._endless_engineer_fireball then
+            b.main_script.remove = U.function_append(b.main_script.remove, fireball_quick_up)
+            b._endless_engineer_fireball = true
+        end
+    end
+    local ray = E:get_template("ray_tesla")
+    if not ray._endless_engineer_fireball then
+        ray.main_script.remove = U.function_append(ray.main_script.remove, fireball_quick_up)
+        ray._endless_engineer_fireball = true
+    end
+    ray = E:get_template("ray_frankenstein")
+    if not ray._endless_engineer_fireball then
+        ray.main_script.remove = U.function_append(ray.main_script.remove, fireball_quick_up)
+        ray._endless_engineer_fireball = true
+    end
+end
 
 function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
@@ -351,7 +683,33 @@ function EU.patch_upgrade_in_game(key, store, endless)
     if endless.upgrade_levels[key] >= EL.upgrade_max_levels[key] then
         table.removeobject(endless.upgrade_options, key)
     end
-    if key == "health" then
+    if EL.force_upgrade_max_levels[key] and endless.upgrade_levels[key] >= EL.force_upgrade_max_levels[key] then
+        table.removeobject(endless.gold_extra_upgrade_options, key)
+    end
+    if key == "ban_rain" then
+        for _, name in pairs(EL.rain) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    elseif key == "ban_archer" then
+        for _, name in pairs(EL.archer) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+
+        end
+    elseif key == "ban_barrack" then
+        for _, name in pairs(EL.barrack) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+
+        end
+    elseif key == "ban_engineer" then
+        for _, name in pairs(EL.engineer) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+
+        end
+    elseif key == "health" then
         for _, s in pairs(store.soldiers) do
             if s.health then
                 s.health.hp_max = s.health.hp_max * friend_buff.health_factor
@@ -413,6 +771,7 @@ function EU.patch_upgrade_in_game(key, store, endless)
         EU.patch_rain_radius_mul(1)
     elseif key == "rain_cooldown_dec" then
         EU.patch_rain_cooldown_dec(1)
+        store.game_gui.power_1:set_cooldown_time(E:get_template("power_fireball_control").cooldown)
     elseif key == "rain_scorch_damage_true" then
         EU.patch_rain_scorch_damage_true(1)
     elseif key == "more_gold" then
@@ -461,6 +820,34 @@ function EU.patch_upgrade_in_game(key, store, endless)
             end
         end
         EU.patch_barrack_synergy(endless.upgrade_levels[key])
+    elseif key == "engineer_focus" then
+        for _, t in pairs(store.towers) do
+            if t.template_name == "tower_tesla" or t.template_name == "tower_dwaarp" or t.template_name ==
+                "tower_frankenstein" then
+                t.tower.damage_factor = t.tower.damage_factor + friend_buff.engineer_focus * 0.8
+            end
+        end
+        EU.patch_engineer_focus(1)
+    elseif key == "engineer_aftermath" then
+        EU.patch_engineer_aftermath(endless.upgrade_levels[key])
+    elseif key == "engineer_seek" then
+        EU.patch_engineer_seek(endless.upgrade_levels[key])
+        for _, t in pairs(store.towers) do
+            if table.contains({"tower_engineer_1", "tower_engineer_2", "tower_engineer_3", "tower_bfg", "tower_druid",
+                               "tower_entwood", "tower_tricannon_lvl4"}, t.template_name) then
+                t.attacks.list[1].vis_bans = U.flag_clear(t.attacks.list[1].vis_bans, F_FLYING)
+            end
+            if t.template_name == "tower_entwood" or t.template_name == "tower_tricannon_lvl4" then
+                t.attacks.list[2].vis_bans = U.flag_clear(t.attacks.list[2].vis_bans, F_FLYING)
+            elseif t.template_name == "tower_tesla" then
+                t.attacks.range = t.attacks.range * (1 + friend_buff.engineer_seek)
+                t.attacks.list[1].range = t.attacks.list[1].range * (1 + friend_buff.engineer_seek)
+            elseif t.template_name == "tower_frankenstein" then
+                t.attacks.range = t.attacks.range * (1 + friend_buff.engineer_seek)
+            end
+        end
+    elseif key == "engineer_fireball" then
+        EU.patch_engineer_fireball(1)
     end
 end
 
@@ -504,5 +891,39 @@ function EU.patch_upgrades(endless)
     if endless.upgrade_levels.barrack_synergy > 0 then
         EU.patch_barrack_synergy(endless.upgrade_levels.barrack_synergy)
     end
+    if endless.upgrade_levels.engineer_focus > 0 then
+        EU.patch_engineer_focus(endless.upgrade_levels.engineer_focus)
+    end
+    if endless.upgrade_levels.engineer_aftermath > 0 then
+        EU.patch_engineer_aftermath(endless.upgrade_levels.engineer_aftermath)
+    end
+    if endless.upgrade_levels.engineer_seek > 0 then
+        EU.patch_engineer_seek(endless.upgrade_levels.engineer_seek)
+    end
+    if endless.upgrade_levels.engineer_fireball > 0 then
+        EU.patch_engineer_fireball(endless.upgrade_levels.engineer_fireball)
+    end
+    if endless.upgrade_levels.ban_rain > 0 then
+        for _, name in pairs(EL.rain) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    elseif endless.upgrade_levels.ban_archer > 0 then
+        for _, name in pairs(EL.archer) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    elseif endless.upgrade_levels.ban_barrack > 0 then
+        for _, name in pairs(EL.barrack) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    elseif endless.upgrade_levels.ban_engineer > 0 then
+        for _, name in pairs(EL.engineer) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    end
 end
+
 return EU
