@@ -2347,38 +2347,34 @@ function scripts.arrow_endless_multishot.insert(this, store, script)
 
                     b.bullet.to.x = target.pos.x + target.unit.hit_offset.x
                     b.bullet.to.y = target.pos.y + target.unit.hit_offset.y
-                    if b.bullet.predict_target_pos then
-                        b.bullet.to.x = b.bullet.to.x + target.motion.speed.x * b.bullet.flight_time
-                        b.bullet.to.y = b.bullet.to.y + target.motion.speed.y * b.bullet.flight_time
-                    end
 
                     b.bullet.target_id = target.id
 
-                    if this.bullet.flight_time then
-                        b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time,
-                            b.bullet.g)
-                    end
+                    -- if this.bullet.flight_time then
+                    --     b.bullet.speed = SU.initial_parabola_speed(b.bullet.from, b.bullet.to, b.bullet.flight_time,
+                    --         b.bullet.g)
+                    -- end
 
-                    if b.bullet.rotation_speed then
-                        b.bullet.rotation_speed = b.bullet.rotation_speed *
-                                                      (b.bullet.to.x > b.bullet.from.x and -1 or 1)
-                        if b.bullet.rotation_speed > 0 then
-                            b.render.sprites[1].flip_x = not b.render.sprites[1].flip_x
-                        end
-                    end
-                    if b.bullet.start_fx then
-                        local fx = E:create_entity(b.bullet.start_fx)
+                    -- if b.bullet.rotation_speed then
+                    --     b.bullet.rotation_speed = b.bullet.rotation_speed *
+                    --                                   (b.bullet.to.x > b.bullet.from.x and -1 or 1)
+                    --     if b.bullet.rotation_speed > 0 then
+                    --         b.render.sprites[1].flip_x = not b.render.sprites[1].flip_x
+                    --     end
+                    -- end
+                    -- if b.bullet.start_fx then
+                    --     local fx = E:create_entity(b.bullet.start_fx)
 
-                        fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
-                        fx.render.sprites[1].r = V.angleTo(b.bullet.to.x - this.pos.x, b.bullet.to.y - this.pos.y)
-                        fx.render.sprites[1].ts = store.tick_ts
+                    --     fx.pos.x, fx.pos.y = this.pos.x, this.pos.y
+                    --     fx.render.sprites[1].r = V.angleTo(b.bullet.to.x - this.pos.x, b.bullet.to.y - this.pos.y)
+                    --     fx.render.sprites[1].ts = store.tick_ts
 
-                        queue_insert(store, fx)
-                    end
-                    b.render.sprites[1].r = V.angleTo(b.bullet.to.x - b.bullet.from.x, b.bullet.to.y - b.bullet.from.y)
-                    if b.bullet.hide_radius then
-                        b.render.sprites[1].hidden = true
-                    end
+                    --     queue_insert(store, fx)
+                    -- end
+                    -- b.render.sprites[1].r = V.angleTo(b.bullet.to.x - b.bullet.from.x, b.bullet.to.y - b.bullet.from.y)
+                    -- if b.bullet.hide_radius then
+                    --     b.render.sprites[1].hidden = true
+                    -- end
                     queue_insert(store, b)
                 end
             end
