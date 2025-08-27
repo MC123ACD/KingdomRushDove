@@ -908,17 +908,20 @@ function EU.patch_upgrades(endless)
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
         end
-    elseif endless.upgrade_levels.ban_archer > 0 then
+    end
+    if endless.upgrade_levels.ban_archer > 0 then
         for _, name in pairs(EL.archer) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
         end
-    elseif endless.upgrade_levels.ban_barrack > 0 then
+    end
+    if endless.upgrade_levels.ban_barrack > 0 then
         for _, name in pairs(EL.barrack) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
         end
-    elseif endless.upgrade_levels.ban_engineer > 0 then
+    end
+    if endless.upgrade_levels.ban_engineer > 0 then
         for _, name in pairs(EL.engineer) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)

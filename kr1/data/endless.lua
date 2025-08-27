@@ -120,11 +120,11 @@ local endless = {
         ban_barrack = 1
     },
     enemy_upgrade_max_levels = {
-        health = 55,
+        health = 60,
         damage = 50,
         speed = 20,
         health_damage_factor = 20,
-        lives = 45,
+        lives = 40,
         wave_interval = 45
     },
     gold_extra_upgrade = {"archer_bleed", "archer_multishot", "archer_insight", "rain_count_inc", "rain_damage_inc",

@@ -107,7 +107,7 @@ local function next_wave_ready_handler(group)
         if game_gui.game.store.endless.load_from_history then
             game_gui.game.store.endless.load_from_history = false
         else
-            if #game_gui.game.store.endless.upgrade_options > 0 and game_gui.game.store.wave_group_number <= 60 then
+            if #game_gui.game.store.endless.upgrade_options > 0 and game_gui.game.store.wave_group_number <= 75 then
                 game_gui.endless_select_reward_view:show()
             end
 
@@ -7943,7 +7943,7 @@ function EndlessSelectRewardView:load()
 
     if self.extra then
         local count = 0
-        while count < 2 do
+        while count < 3 do
             local choice = table.random(game_gui.game.store.endless.gold_extra_upgrade_options)
             if selected[choice] == nil then
                 selected[choice] = false
