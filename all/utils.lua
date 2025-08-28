@@ -1235,8 +1235,8 @@ function U.find_foremost_enemy(store, origin, min_range, max_range, prediction_t
 
     local enemies = store.enemy_spatial_index:query_entities_in_ellipse(origin.x, origin.y, max_range, 0, function(e)
         if e.pending_removal or e.health.dead or band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or
-            not (min_range == 0 or band(e.vis.flags, min_override_flags) ~= 0 or
-                not U.is_inside_ellipse(e.pos, origin, min_range)) or filter_func and not filter_func(e, origin) then
+            (not (min_range == 0 or band(e.vis.flags, min_override_flags) ~= 0 or
+                not U.is_inside_ellipse(e.pos, origin, min_range))) or (filter_func and not filter_func(e, origin)) then
             return false
         end
 

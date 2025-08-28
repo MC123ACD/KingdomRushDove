@@ -77,10 +77,10 @@ local function engineer_focus_bomb_update(this, store, script)
                                                 b.hide_radius * b.hide_radius
         end
     end
+    local enemies = U.find_enemies_in_range(store, b.to, 0, dradius, b.damage_flags, b.damage_bans)
+    if enemies then
+        for _, enemy in pairs(enemies) do
 
-    for _, enemy in pairs(store.enemies) do
-        if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
-            0 and U.is_inside_ellipse(enemy.pos, b.to, dradius) then
             local d = E:create_entity("damage")
 
             d.damage_type = b.damage_type
@@ -97,18 +97,15 @@ local function engineer_focus_bomb_update(this, store, script)
             d.target_id = enemy.id
 
             queue_damage(store, d)
-            log.paranoid("bomb id:%s, radius:%s, enemy id:%s, dist:%s, damage:%s damage_type:%x", this.id, dradius,
-                enemy.id, V.dist(enemy.pos.x, enemy.pos.y, b.to.x, b.to.y), d.value, d.damage_type)
 
-            if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
-                band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() <
-                this.up_shock_and_awe_chance then
-                local mod = E:create_entity("mod_shock_and_awe")
+            -- if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
+            --     band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() < this.up_shock_and_awe_chance then
+            --     local mod = E:create_entity("mod_shock_and_awe")
 
-                mod.modifier.target_id = enemy.id
+            --     mod.modifier.target_id = enemy.id
 
-                queue_insert(store, mod)
-            end
+            --     queue_insert(store, mod)
+            -- end
 
             local mods
             if b.mod then
@@ -344,7 +341,7 @@ function EU.generate_group(endless)
         end
         for j = 1, endless.spawn_count_per_wave do
             local this_spawn_weight = math.ceil(endless.enemy_weight_per_wave / endless.spawn_count_per_wave *
-                                                   (0.8 + 0.4 * j / endless.spawn_count_per_wave))
+                                                    (0.8 + 0.4 * j / endless.spawn_count_per_wave))
             local function generate_creep_by_weight(i)
                 if i <= 0 then
                     return table.random(wave_enemy_list), 0
@@ -738,11 +735,12 @@ function EU.patch_engineer_fireball(level)
 end
 
 function EU.patch_mage_thunder(level)
-    for _, name in pairs(table.append(UP:bolts(),{"ray_arcane_disintegrate"}, true)) do
+    for _, name in pairs(table.append(UP:bolts(), {"ray_arcane_disintegrate"}, true)) do
         local bolt = E:get_template(name)
         if not bolt._endless_mage_thunder then
             bolt._endless_mage_thunder = true
-            if (bolt.bullet and bolt.bullet.damage_max and bolt.bullet.damage_max >= 50) or bolt.template_name == "ray_arcane" then
+            if (bolt.bullet and bolt.bullet.damage_max and bolt.bullet.damage_max >= 50) or bolt.template_name ==
+                "ray_arcane" then
                 bolt.main_script.insert = U.function_append(bolt.main_script.insert, function(this, store)
                     local target = store.entities[this.bullet.target_id]
                     if not target or target.health.dead then
@@ -774,18 +772,19 @@ function EU.patch_mage_thunder(level)
     local mod_pixie_pickpocket = E:get_template("mod_pixie_pickpocket")
     if not mod_pixie_pickpocket._endless_mage_thunder then
         mod_pixie_pickpocket._endless_mage_thunder = true
-        mod_pixie_pickpocket.main_script.insert = U.function_append(mod_pixie_pickpocket.main_script.insert, function(this, store)
-            local target = store.entities[this.modifier.target_id]
-            if not target or target.health.dead then
+        mod_pixie_pickpocket.main_script.insert = U.function_append(mod_pixie_pickpocket.main_script.insert,
+            function(this, store)
+                local target = store.entities[this.modifier.target_id]
+                if not target or target.health.dead then
+                    return true
+                end
+                if math.random() < store.endless.upgrade_levels.mage_thunder * friend_buff.mage_thunder_normal then
+                    local thunder = E:create_entity("endless_mage_thunder")
+                    thunder.pos = V.vclone(target.pos)
+                    queue_insert(store, thunder)
+                end
                 return true
-            end
-            if math.random() < store.endless.upgrade_levels.mage_thunder * friend_buff.mage_thunder_normal then
-                local thunder = E:create_entity("endless_mage_thunder")
-                thunder.pos = V.vclone(target.pos)
-                queue_insert(store, thunder)
-            end
-            return true
-        end)
+            end)
     end
 end
 
@@ -812,7 +811,8 @@ function EU.patch_mage_shatter(level)
 end
 
 function EU.patch_mage_chain(level)
-    for _, name in pairs(table.append(UP:bolts(),{"bullet_pixie_poison","bullet_pixie_instakill", "ray_arcane_disintegrate"})) do
+    for _, name in pairs(table.append(UP:bolts(),
+        {"bullet_pixie_poison", "bullet_pixie_instakill", "ray_arcane_disintegrate"})) do
         local bolt = E:get_template(name)
         if not bolt._endless_mage_chain then
             bolt._endless_mage_chain = true
@@ -822,16 +822,22 @@ function EU.patch_mage_chain(level)
                     return true
                 end
                 if not this.bullet._endless_mage_chain then
-                    local count = 0
-                    for _, enemy in pairs(store.enemies) do
-                        if enemy.id ~= target.id and not enemy.health.dead and U.is_inside_ellipse(target.pos, enemy.pos, 60) then
+                    local enemies = U.find_enemies_in_range(store, target.pos, 0, friend_buff.mage_chain_radius,
+                        F_RANGED, 0, function(e)
+                            return e.id ~= target.id
+                        end)
+                    if enemies then
+                        for _, enemy in pairs(enemies) do
+
                             local bolt = E:create_entity(this.template_name)
                             bolt.bullet.target_id = enemy.id
-                            bolt.bullet.from = V.v(target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y)
+                            bolt.bullet.from = V.v(target.pos.x + target.unit.hit_offset.x,
+                                target.pos.y + target.unit.hit_offset.y)
                             bolt.pos = V.vclone(bolt.bullet.from)
                             bolt.bullet.to = V.v(enemy.pos.x + enemy.unit.hit_offset.x,
-                                              enemy.pos.y + enemy.unit.hit_offset.y)
-                            bolt.bullet.damage_factor = bolt.bullet.damage_factor * friend_buff.mage_chain * store.endless.upgrade_levels.mage_chain
+                                enemy.pos.y + enemy.unit.hit_offset.y)
+                            bolt.bullet.damage_factor = bolt.bullet.damage_factor * friend_buff.mage_chain *
+                                                            store.endless.upgrade_levels.mage_chain
                             bolt.bullet._endless_mage_chain = true
                             if bolt.tween then
                                 bolt.tween.ts = store.tick_ts
@@ -848,12 +854,11 @@ function EU.patch_mage_chain(level)
                                 bolt.bullet.shot_index = this.bullet.shot_index
                             end
                             queue_insert(store, bolt)
-                            count = count + 1
-                            if count >= friend_buff.mage_chain_max then
-                                break
-                            end
+
                         end
+
                     end
+
                 end
                 return true
             end)

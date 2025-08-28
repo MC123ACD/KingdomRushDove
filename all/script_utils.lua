@@ -1690,12 +1690,8 @@ local function y_soldier_do_single_area_attack(store, this, target, attack)
         hit_pos.x = hit_pos.x + (af and -1 or 1) * attack.hit_offset.x
         hit_pos.y = hit_pos.y + attack.hit_offset.y
     end
-
-    targets = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, attack.damage_bans) == 0 and
-                   band(v.vis.bans, attack.damage_flags) == 0 and
-                   U.is_inside_ellipse(v.pos, hit_pos, attack.damage_radius)
-    end)
+    targets = U.find_enemies_in_range(store, hit_pos, 0, attack.damage_radius, attack.damage_flags,
+        attack.damage_bans) or {}
 
     if attack.count then
         table.sort(targets, function(e1, e2)
@@ -1866,12 +1862,8 @@ local function y_soldier_do_loopable_melee_attack(store, this, target, attack)
                     hit_pos.x = hit_pos.x + (af and -1 or 1) * attack.hit_offset.x
                     hit_pos.y = hit_pos.y + attack.hit_offset.y
                 end
-
-                local targets = table.filter(store.enemies, function(k, v)
-                    return not v.health.dead and
-                               band(v.vis.flags, attack.damage_bans) == 0 and band(v.vis.bans, attack.damage_flags) == 0 and
-                               U.is_inside_ellipse(v.pos, hit_pos, attack.damage_radius)
-                end)
+                local targets = U.find_enemies_in_range(store, hit_pos, 0, attack.damage_radius,
+                    attack.damage_flags, attack.damage_bans) or {}
 
                 for _, e in pairs(targets) do
                     local d = E:create_entity("damage")

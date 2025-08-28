@@ -37,7 +37,7 @@ local endless = {
         mage_thunder_normal = 0.08,
         mage_thunder_small = 0.04,
         mage_chain = 0.2,
-        mage_chain_max = 3,
+        mage_chain_radius = 60,
         mage_curse_factor = 0.4,
         mage_curse_duration = 1,
     },

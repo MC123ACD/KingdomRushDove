@@ -22488,7 +22488,7 @@ function scripts.eb_bram.update(this, store)
 
     this.phase = "battle"
     this.health_bar.hidden = nil
-
+    this.vis.bans = U.flag_clear(this.vis.bans, bor(F_BLOCK, F_RANGED, F_MOD))
     U.y_animation_play(this, "raise", nil, store.tick_ts)
 
     ::label_358_0::
@@ -28955,11 +28955,7 @@ scripts.aura_tower_faerie_dragon = {
             end
             if store.tick_ts - last_ts >= source.attacks.list[1].cooldown then
                 last_ts = store.tick_ts
-                local targets = table.filter(store.enemies, function(k, v)
-                    return (not v.health.dead) and
-                               ((band(F_BOSS, v.vis.flags) == 0) and (band(bor(F_MOD, F_STUN), v.vis.bans) == 0)) and
-                               U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
-                end)
+                local targets = U.find_enemies_in_range(store, this.pos, 0, source.attacks.range, bor(F_MOD, F_STUN), F_BOSS)
 
                 if targets then
                     for _, target in pairs(targets) do
@@ -31822,18 +31818,21 @@ scripts.mod_endless_engineer_aftermath = {
         if not target then
             return false
         end
-        local radius2 = this.radius * this.radius
-        for _, e in pairs(store.enemies) do
-            if not e.health.dead and band(e.vis.bans, F_RANGED) == 0 and
-                V.dist2(e.pos.x, e.pos.y, target.pos.x, target.pos.y) <= radius2 then
-                local d = E:create_entity("damage")
-                d.damage_type = DAMAGE_EXPLOSION
-                d.value = this.value
-                d.source_id = this.id
-                d.target_id = e.id
-                queue_damage(store, d)
-            end
+        local enemies = U.find_enemies_in_range(store, target.pos, 0, this.radius, F_RANGED, 0)
+        if enemies then
+            for _, e in pairs(enemies) do
+
+        local d = E:create_entity("damage")
+        d.damage_type = DAMAGE_EXPLOSION
+        d.value = this.value
+        d.source_id = this.id
+        d.target_id = e.id
+        queue_damage(store, d)
+
+end
+
         end
+        
         local decal = E:create_entity("decal_tween")
 
         decal.pos.x, decal.pos.y = target.pos.x, target.pos.y

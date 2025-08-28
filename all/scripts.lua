@@ -1550,8 +1550,8 @@ function scripts.tower_archer.update(this, store, script)
                     coroutine.yield()
                 end
 
-                enemy = U.find_foremost_enemy_with_flying_preference(store, tpos(this), 0, at.range, false,
-                    a.vis_flags, a.vis_bans)
+                enemy = U.find_foremost_enemy_with_flying_preference(store, tpos(this), 0, at.range, false, a.vis_flags,
+                    a.vis_bans)
 
                 if enemy then
                     last_target_pos = enemy.pos
@@ -1669,8 +1669,7 @@ function scripts.tower_mage.update(this, store, script)
         elseif store.tick_ts - aa.ts <= aa.cooldown * this.tower.cooldown_factor then
             -- block empty
         else
-            enemy, enemies = U.find_foremost_enemy(store, tpos(this), 0, a.range, false, aa.vis_flags,
-                aa.vis_bans)
+            enemy, enemies = U.find_foremost_enemy(store, tpos(this), 0, a.range, false, aa.vis_flags, aa.vis_bans)
 
             if enemy then
                 aa.ts = store.tick_ts
@@ -2435,9 +2434,10 @@ function scripts.bomb.update(this, store, script)
         end
     end
 
-    for _, enemy in pairs(store.enemies) do
-        if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and band(enemy.vis.bans, b.damage_flags) ==
-            0 and U.is_inside_ellipse(enemy.pos, b.to, dradius) then
+    local enemies = U.find_enemies_in_range(store, b.to, 0, dradius, b.damage_flags, b.damage_bans)
+    if enemies then
+        for _, enemy in pairs(enemies) do
+
             local d = E:create_entity("damage")
 
             d.damage_type = b.damage_type
@@ -2457,18 +2457,16 @@ function scripts.bomb.update(this, store, script)
             d.target_id = enemy.id
 
             queue_damage(store, d)
-            log.paranoid("bomb id:%s, radius:%s, enemy id:%s, dist:%s, damage:%s damage_type:%x", this.id, dradius,
-                enemy.id, V.dist(enemy.pos.x, enemy.pos.y, b.to.x, b.to.y), d.value, d.damage_type)
 
-            if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
-                band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() <
-                this.up_shock_and_awe_chance then
-                local mod = E:create_entity("mod_shock_and_awe")
+            -- if this.up_shock_and_awe_chance and band(enemy.vis.bans, F_STUN) == 0 and
+            --     band(enemy.vis.flags, bor(F_BOSS, F_CLIFF, F_FLYING)) == 0 and math.random() <
+            --     this.up_shock_and_awe_chance then
+            --     local mod = E:create_entity("mod_shock_and_awe")
 
-                mod.modifier.target_id = enemy.id
+            --     mod.modifier.target_id = enemy.id
 
-                queue_insert(store, mod)
-            end
+            --     queue_insert(store, mod)
+            -- end
 
             local mods
             if b.mod then
@@ -2787,13 +2785,13 @@ function scripts.missile.update(this, store, script)
         -- local alchemical_powder = UP:get_upgrade("engineer_alchemical_powder")
         -- local alchemical_powder_on = alchemical_powder and math.random() < alchemical_powder.chance
         -- local shock_and_awe = UP:get_upgrade("engineer_shock_and_awe")
-
-        for _, enemy in pairs(store.enemies) do
-            if not enemy.health.dead and band(enemy.vis.flags, b.damage_bans) == 0 and
-                band(enemy.vis.bans, b.damage_flags) == 0 and
-                U.is_inside_ellipse(V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y),
-                    b.to, b.damage_radius) then
-                local enemy_pos = V.v(enemy.pos.x + enemy.unit.hit_offset.x, enemy.pos.y + enemy.unit.hit_offset.y)
+        local origin = V.vclone(b.to)
+        if target then
+            origin.x, origin.y = target.pos.x, target.pos.y
+        end
+        local enemies = U.find_enemies_in_range(store, origin, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+        if enemies then
+            for _, enemy in pairs(enemies) do
                 local d = E:create_entity("damage")
 
                 d.source_id = this.id
@@ -2805,7 +2803,7 @@ function scripts.missile.update(this, store, script)
                 if UP:get_upgrade("engineer_efficiency") then
                     d.value = b.damage_max
                 else
-                    local dist_factor = U.dist_factor_inside_ellipse(enemy_pos, this.pos, b.damage_radius)
+                    local dist_factor = U.dist_factor_inside_ellipse(enemy.pos, origin, b.damage_radius)
 
                     d.value = b.damage_max - (b.damage_max - b.damage_min) * dist_factor
                 end
@@ -2832,6 +2830,7 @@ function scripts.missile.update(this, store, script)
                 -- end
             end
         end
+
     elseif target then
         local d = SU.create_bullet_damage(b, target.id, this.id)
 
@@ -7066,22 +7065,20 @@ function scripts.power_fireball.update(this, store, script)
 
     this.pos.y = b.to.y
     particle.particle_system.source_lifetime = 0
+    local enemies = U.find_enemies_in_range(store, b.to, 0, b.damage_radius, b.damage_flags, b.damage_bans)
+    if enemies then
+        local damage_value = b.damage_factor * math.random(b.damage_min, b.damage_max)
 
-    local enemies = table.filter(store.enemies, function(k, v)
-        return not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
-                   U.is_inside_ellipse(v.pos, b.to, b.damage_radius)
-    end)
-    local damage_value = b.damage_factor * math.random(b.damage_min, b.damage_max)
+        for _, enemy in pairs(enemies) do
+            local d = E:create_entity("damage")
 
-    for _, enemy in pairs(enemies) do
-        local d = E:create_entity("damage")
+            d.source_id = this.id
+            d.target_id = enemy.id
+            d.value = damage_value
+            d.damage_type = b.damage_type
 
-        d.source_id = this.id
-        d.target_id = enemy.id
-        d.value = damage_value
-        d.damage_type = b.damage_type
-
-        queue_damage(store, d)
+            queue_damage(store, d)
+        end
     end
 
     S:queue(this.sound_events.hit)
@@ -7589,10 +7586,9 @@ function scripts.user_item_freeze.update(this, store)
         end
     end
 
-    local targets = U.find_enemies_in_range(store, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
-        function(e)
-            return not table.contains(b.excluded_templates, e.template_name)
-        end)
+    local targets = U.find_enemies_in_range(store, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans, function(e)
+        return not table.contains(b.excluded_templates, e.template_name)
+    end)
 
     if targets then
         for _, target in pairs(targets) do

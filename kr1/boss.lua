@@ -2402,7 +2402,7 @@ local function boss()
     tt.unit.mod_offset = vec_2(0, 45)
     tt.unit.size = UNIT_SIZE_LARGE
     tt.vis.flags = bor(tt.vis.flags)
-    tt.vis.bans = bor(F_SKELETON, F_POLYMORPH)
+    tt.vis.bans = bor(F_SKELETON, F_POLYMORPH, F_MOD, F_RANGED, F_TELEPORT, F_BLOCK)
     tt.pos_sitting = vec_2(716, 584)
     tt.nav_path.pi = 7
     tt.nav_path.spi = 1
