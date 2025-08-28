@@ -865,7 +865,7 @@ local function mage_towers()
     tt.tween.props[1].ts = -10
     tt.sound_events.insert = "ElvesMageHighElvenTaunt"
     tt.sentinels = {}
-    tt.max_sentinels = 2
+    tt.max_sentinels = 1
 
     tt = E:register_t("mod_high_elven", "modifier")
     E:add_comps(tt, "render", "tween")
@@ -976,8 +976,8 @@ local function mage_towers()
     tt.render.sprites[1].loop = false
     tt.render.sprites[1].anchor = vec_2(0, 0.5)
     tt.bullet.mod = "mod_ray_high_elven_sentinel_hit"
-    tt.bullet.damage_min = 10
-    tt.bullet.damage_max = 17
+    tt.bullet.damage_min = 20
+    tt.bullet.damage_max = 34
     tt.bullet.damage_type = DAMAGE_MAGICAL
     tt.bullet.hit_time = fts(4)
     tt.sound_events.insert = "TowerHighMageSentinelShot"

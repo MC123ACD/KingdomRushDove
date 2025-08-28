@@ -1088,6 +1088,7 @@ function sys.main_script:on_update(dt, ts, store)
             end
 
             if s.co then
+                -- log.error("Running update coro of entity %s (%s)", e.id, e.template_name)
                 local success, error = coroutine.resume(s.co, e, store, s)
 
                 if coroutine.status(s.co) == "dead" or error ~= nil then
@@ -2780,6 +2781,35 @@ function sys.endless_patch:on_insert(entity, store)
         end
     end
     return true
+end
+
+local SpatialHash = require("spatial_hash")
+sys.spatial_index = {}
+sys.spatial_index.name = "spatial_index"
+
+function sys.spatial_index:init(store)
+    store.enemy_spatial_index = SpatialHash:new(store.visible_coords,32)
+end
+
+function sys.spatial_index:on_insert(entity, store)
+    if entity.enemy then
+        store.enemy_spatial_index:insert_entity(entity)
+    end
+    return true
+end
+
+function sys.spatial_index:on_remove(entity, store)
+    if entity.enemy then
+        store.enemy_spatial_index:remove_entity(entity)
+    end
+    return true
+end
+
+function sys.spatial_index:on_update(dt, ts, store)
+    for _, e in pairs(store.enemies) do
+        store.enemy_spatial_index:update_entity(e)
+    end
+    -- store.enemy_spatial_index:print_debug_info()
 end
 
 return sys

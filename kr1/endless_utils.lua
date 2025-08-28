@@ -13,6 +13,7 @@ local storage = require("storage")
 local log = require("klua.log"):new("endless_utils")
 local GR = require("grid_db")
 local S = require("sound_db")
+local P = require("path_db")
 local function fts(t)
     return t / FPS
 end
@@ -187,6 +188,24 @@ local function engineer_focus_bomb_update(this, store, script)
     queue_remove(store, this)
 end
 
+local function get_enemy_weight(name)
+    local tpl = E:get_template(name)
+    local weight = 0
+    if tpl.enemy then
+        weight = tpl.enemy.lives_cost + 0.025 * tpl.enemy.gold
+        if tpl.death_spawns and tpl.death_spawns.name then
+            local quantity
+            if type(tpl.death_spawns.quantity) == "table" then
+                quantity = tpl.death_spawns.quantity[#tpl.death_spawns.quantity]
+            else
+                quantity = tpl.death_spawns.quantity or 1
+            end
+            weight = weight + get_enemy_weight(tpl.death_spawns.name) * quantity
+        end
+    end
+    return weight
+end
+
 local function get_enemy_lives_cost(name)
     local tpl = E:get_template(name)
     local lives_cost = 0
@@ -231,30 +250,37 @@ function EU.init_endless(level_name, groups)
                 endless.avg_interval = endless.avg_interval + spawn.interval
                 endless.avg_interval_next = endless.avg_interval_next + spawn.interval_next
                 total_spawns = total_spawns + 1
-                endless.total_lives_cost = endless.total_lives_cost + get_enemy_lives_cost(spawn.creep) * spawn.max
+                endless.total_enemy_weight = endless.total_enemy_weight + get_enemy_weight(spawn.creep) * spawn.max
             end
         end
         endless.avg_interval = math.min(endless.avg_interval / total_spawns, 90)
         endless.avg_interval_next = endless.avg_interval_next / total_spawns
 
+        for i = 1, #P.paths do
+            table.insert(endless.available_paths, i)
+            endless.only_fly_paths[i] = true
+        end
+        endless.only_fly_paths = table.deepclone(endless.available_paths)
         for _, group in pairs(groups) do
             for _, wave in pairs(group.waves) do
-                if wave.path_index and not table.contains(endless.available_paths, wave.path_index) then
-                    table.insert(endless.available_paths, wave.path_index)
-                end
                 for _, spawn in pairs(wave.spawns) do
                     local tpl = E:get_template(spawn.creep)
                     if tpl and tpl.enemy then
+                        if endless.only_fly_paths[wave.path_index] and band(tpl.vis.flags, F_FLYING) == 0 then
+                            endless.only_fly_paths[wave.path_index] = false
+                        end
                         endless.extra_cash = endless.extra_cash + (tpl.enemy.gold or 0) * spawn.max
-                        if not table.contains(endless.enemy_list, spawn.creep) then
-                            table.insert(endless.enemy_list, spawn.creep)
+                        if not endless.enemy_weight_map[spawn.creep] then
+                            endless.enemy_weight_map[spawn.creep] = get_enemy_weight(spawn.creep)
                         end
                     end
                 end
             end
         end
+        endless.enemy_list = table.keys(endless.enemy_weight_map)
         endless.spawn_count_per_wave = math.ceil(total_spawns / #endless.available_paths)
-        endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #endless.available_paths)
+
+        endless.enemy_weight_per_wave = math.ceil(endless.total_enemy_weight / #endless.available_paths)
     end
 
     endless.enemy_upgrade_options = table.keys(endless.enemy_upgrade_levels)
@@ -295,44 +321,53 @@ function EU.generate_group(endless)
     end
     -- 加权数量的敌人列表，模拟加权随机
     local enemy_list = {}
-    local remain_lives_cost = endless.total_lives_cost
-    while remain_lives_cost > 0 do
+
+    local remain_enemy_weight = endless.total_enemy_weight
+    while remain_enemy_weight > 0 do
         local template_name = table.random(endless.enemy_list)
-        local tpl = E:get_template(template_name)
-        for j = 1, math.floor(20 / tpl.enemy.lives_cost) do
+        local weight = endless.enemy_weight_map[template_name]
+        for j = 1, math.floor(20 / weight) do
             table.insert(enemy_list, template_name)
-            remain_lives_cost = remain_lives_cost - tpl.enemy.lives_cost
+            remain_enemy_weight = remain_enemy_weight - weight
         end
     end
 
     for _, wave in pairs(group.waves) do
-        for j = 1, endless.spawn_count_per_wave do
-            local this_spawn_lives_cost = math.ceil(endless.lives_cost_per_wave / endless.spawn_count_per_wave *
-                                                        (0.8 + 0.4 * j / endless.spawn_count_per_wave))
-            local function generate_creep(i)
-                if i <= 0 then
-                    return table.random(endless.enemy_list), 0
+        local wave_enemy_list = enemy_list
+        if endless.only_fly_paths[wave.path_index] then
+            wave_enemy_list = {}
+            for _, name in pairs(endless.enemy_list) do
+                if band(E:get_template(name).vis.flags, F_FLYING) ~= 0 then
+                    table.insert(wave_enemy_list, name)
                 end
-                local creep = table.random(enemy_list)
+            end
+        end
+        for j = 1, endless.spawn_count_per_wave do
+            local this_spawn_weight = math.ceil(endless.enemy_weight_per_wave / endless.spawn_count_per_wave *
+                                                   (0.8 + 0.4 * j / endless.spawn_count_per_wave))
+            local function generate_creep_by_weight(i)
+                if i <= 0 then
+                    return table.random(wave_enemy_list), 0
+                end
+                local creep = table.random(wave_enemy_list)
 
-                local lives_cost = get_enemy_lives_cost(creep)
+                local weight = endless.enemy_weight_map[creep]
 
                 -- 避免前期就出 boss，太夸张了
-                local max = math.floor(this_spawn_lives_cost / lives_cost)
+                local max = math.floor(this_spawn_weight / weight)
                 if max > 0 then
                     return creep, max
                 else
-                    return generate_creep(i - 1)
+                    return generate_creep_by_weight(i - 1)
                 end
             end
-            local creep, max = generate_creep(5)
-
+            local creep_by_weight, max_by_weight = generate_creep_by_weight(5)
             wave.spawns[j] = {
                 interval = endless.avg_interval,
                 interval_next = endless.avg_interval_next,
                 fixed_sub_path = 0,
-                max = max,
-                creep = creep
+                max = max_by_weight,
+                creep = creep_by_weight
             }
         end
     end
@@ -358,9 +393,11 @@ function EU.patch_enemy_growth(endless)
         elseif key == "health_damage_factor" then
             endless.enemy_health_damage_factor = endless.enemy_health_damage_factor * enemy_buff.health_damage_factor
         elseif key == "lives" then
-            endless.total_lives_cost = math.ceil(endless.total_lives_cost * enemy_buff.lives_cost_factor)
-            endless.lives_cost_per_wave = math.ceil(endless.total_lives_cost / #endless.available_paths)
-            if endless.lives_cost_per_wave / endless.spawn_count_per_wave > 40 then
+            endless.total_enemy_weight = math.ceil(endless.total_enemy_weight * enemy_buff.lives_cost_factor)
+
+            endless.enemy_weight_per_wave = math.ceil(endless.total_enemy_weight / #endless.available_paths)
+
+            if endless.enemy_weight_per_wave / endless.spawn_count_per_wave > 40 then
                 endless.spawn_count_per_wave = endless.spawn_count_per_wave + 1
             end
             endless.avg_interval = endless.avg_interval / enemy_buff.lives_cost_factor

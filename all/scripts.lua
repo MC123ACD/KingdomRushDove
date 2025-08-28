@@ -1530,7 +1530,7 @@ function scripts.tower_archer.update(this, store, script)
         elseif store.tick_ts - a.ts < a.cooldown * this.tower.cooldown_factor then
             -- block empty
         else
-            enemy = U.find_foremost_enemy(store.enemies, tpos(this), 0, at.range, false, a.vis_flags, a.vis_bans)
+            enemy = U.find_foremost_enemy(store, tpos(this), 0, at.range, false, a.vis_flags, a.vis_bans)
 
             if enemy then
                 a.ts = store.tick_ts
@@ -1550,7 +1550,7 @@ function scripts.tower_archer.update(this, store, script)
                     coroutine.yield()
                 end
 
-                enemy = U.find_foremost_enemy_with_flying_preference(store.enemies, tpos(this), 0, at.range, false,
+                enemy = U.find_foremost_enemy_with_flying_preference(store, tpos(this), 0, at.range, false,
                     a.vis_flags, a.vis_bans)
 
                 if enemy then
@@ -1669,7 +1669,7 @@ function scripts.tower_mage.update(this, store, script)
         elseif store.tick_ts - aa.ts <= aa.cooldown * this.tower.cooldown_factor then
             -- block empty
         else
-            enemy, enemies = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, false, aa.vis_flags,
+            enemy, enemies = U.find_foremost_enemy(store, tpos(this), 0, a.range, false, aa.vis_flags,
                 aa.vis_bans)
 
             if enemy then
@@ -1759,7 +1759,7 @@ function scripts.tower_engineer.update(this, store, script)
         elseif store.tick_ts - ba.ts < ba.cooldown * this.tower.cooldown_factor then
             coroutine.yield()
         else
-            local enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, ba.node_prediction,
+            local enemy, _, pred_pos = U.find_foremost_enemy(store, tpos(this), 0, a.range, ba.node_prediction,
                 ba.vis_flags, ba.vis_bans)
 
             if enemy then
@@ -1775,7 +1775,7 @@ function scripts.tower_engineer.update(this, store, script)
 
                 local trigger_pos = pred_pos
 
-                enemy, _, pred_pos = U.find_foremost_enemy(store.enemies, tpos(this), 0, a.range, ba.node_prediction,
+                enemy, _, pred_pos = U.find_foremost_enemy(store, tpos(this), 0, a.range, ba.node_prediction,
                     ba.vis_flags, ba.vis_bans)
 
                 local b = E:create_entity(ba.bullet)
@@ -2334,7 +2334,7 @@ scripts.arrow_endless_multishot = {}
 
 function scripts.arrow_endless_multishot.insert(this, store, script)
     if this._endless_multishot > 0 then
-        local targets = U.find_enemies_in_range(store.enemies, this.bullet.to, 0, 100, this.bullet.vis_flags,
+        local targets = U.find_enemies_in_range(store, this.bullet.to, 0, 100, this.bullet.vis_flags,
             this.bullet.vis_bans)
         if targets then
             for i = 1, this._endless_multishot do
@@ -2728,8 +2728,8 @@ function scripts.missile.update(this, store, script)
     if not target or target.health and target.health.dead then
         local ref_pos = target and target.pos or this.pos
 
-        -- target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
-        target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
+        target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+        -- target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
     end
 
     if target then
@@ -2744,8 +2744,8 @@ function scripts.missile.update(this, store, script)
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 
-            -- target = U.find_foremost_enemy(store.enemies, ref_pos, 0, b.retarget_range, false, b.vis_flags)
-            target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
+            target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+            -- target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
 
             if b.rot_dir_from_long_angle and target then
                 rot_dir = target.pos.x < this.pos.x and -1 or 1
@@ -3847,7 +3847,7 @@ function scripts.fireball.update(this, store)
         hit_center.y = hit_center.y - target.unit.hit_offset.y
     end
 
-    local targets = U.find_enemies_in_range(store.enemies, hit_center, 0, b.damage_radius, b.vis_flags, b.vis_bans)
+    local targets = U.find_enemies_in_range(store, hit_center, 0, b.damage_radius, b.vis_flags, b.vis_bans)
 
     if targets then
         for _, e in pairs(targets) do
@@ -7507,7 +7507,7 @@ function scripts.user_item_atomic_freeze.update(this, store, script)
 
     signal.emit("atomic-freeze-starts")
 
-    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, 9999, this.vis_flags, this.vis_bans, function(e)
+    local targets = U.find_enemies_in_range(store, this.pos, 0, 9999, this.vis_flags, this.vis_bans, function(e)
         return not table.contains(this.excluded_templates, e.template_name)
     end)
 
@@ -7589,7 +7589,7 @@ function scripts.user_item_freeze.update(this, store)
         end
     end
 
-    local targets = U.find_enemies_in_range(store.enemies, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
+    local targets = U.find_enemies_in_range(store, this.pos, 0, b.damage_radius, b.vis_flags, b.vis_bans,
         function(e)
             return not table.contains(b.excluded_templates, e.template_name)
         end)
