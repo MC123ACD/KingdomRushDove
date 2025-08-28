@@ -31892,7 +31892,7 @@ function scripts.endless_mage_thunder.update(this, store)
         e.render.sprites[1].ts = store.tick_ts
         e.render.sprites[1].scale = V.v(0.8, 0.8)
         if REF_H - pos.y > e.image_h then
-            e.render.sprites[1].scale = V.v(0.8, 0.8*(REF_H - pos.y) / e.image_h)
+            e.render.sprites[1].scale = V.v(0.8, (REF_H - pos.y) / e.image_h)
         end
 
         queue_insert(store, e)
@@ -31928,7 +31928,7 @@ function scripts.endless_mage_thunder.update(this, store)
                 d.value = math.random(thunder.damage_min, thunder.damage_max)
                 d.target_id = target.id
                 d.source_id = this.id
-
+                SU.magic_armor_dec(target, 0.01)
                 queue_damage(store, d)
             end
         end
