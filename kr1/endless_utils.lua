@@ -339,7 +339,11 @@ function EU.generate_group(endless)
     return group
 end
 function EU.patch_enemy_growth(endless)
-    for i = 1, 2 do
+    local imax = 2
+    if math.random() < 0.1 then
+        imax = 3
+    end
+    for i = 1, imax do
         if #endless.enemy_upgrade_options == 0 then
             break
         end
@@ -366,6 +370,8 @@ function EU.patch_enemy_growth(endless)
             endless.enemy_gold_factor = endless.enemy_gold_factor - 0.01
         elseif key == "wave_interval" then
             endless.avg_interval_next = endless.avg_interval_next * enemy_buff.wave_interval_factor
+        elseif key == "instakill_resistance" then
+            endless.enemy_instakill_resistance = endless.enemy_instakill_resistance + enemy_buff.instakill_resistance
         end
         endless.enemy_upgrade_levels[key] = endless.enemy_upgrade_levels[key] + 1
         if endless.enemy_upgrade_levels[key] >= enemy_upgrade_max_levels[key] then
@@ -462,6 +468,23 @@ function EU.patch_rain_scorch_damage_true(level)
     scorched_water.aura.damage_min = scorched_water.aura.damage_min + level * friend_buff.rain_scorch_damage_true
     scorched_water.aura.damage_max = scorched_water.aura.damage_max + level * friend_buff.rain_scorch_damage_true
 end
+
+function EU.patch_rain_thunder(level)
+    local controller = E:get_template("power_fireball_control")
+    if not controller._endless_rain_thunder then
+        controller.main_script.insert = U.function_append(controller.main_script.insert, function(this, store)
+            local thunder = E:create_entity("power_thunder_control")
+            thunder.slow.disabled = false
+            thunder.rain.disabled = false
+            thunder.thunders[1].count = this.fireball_count
+            thunder.thunders[2].count = this.cataclysm_count
+            queue_insert(store, thunder)
+            return true
+        end)
+        controller._endless_rain_thunder = true
+    end
+end
+
 function EU.patch_barrack_luck(level)
     for _, name in pairs(UP:barrack_soldiers()) do
         local s = E:get_template(name)
@@ -516,6 +539,8 @@ function EU.patch_barrack_rally(level)
         local t = E:get_template(name)
         t.barrack.rally_range = math.huge
     end
+    local pixie_tower = E:get_template("tower_pixie")
+    pixie_tower.attacks.range = math.huge
 end
 local bombs = {"bomb", "bomb_dynamite", "bomb_black", "bomb_musketeer", "dwarf_barrel", "pirate_watchtower_bomb",
                "bomb_molotov", "bomb_molotov_big", "bomb_bfg", "bomb_bfg_fragment", "bomb_mecha",
@@ -675,6 +700,136 @@ function EU.patch_engineer_fireball(level)
     end
 end
 
+function EU.patch_mage_thunder(level)
+    for _, name in pairs(table.append(UP:bolts(),{"ray_arcane_disintegrate"}, true)) do
+        local bolt = E:get_template(name)
+        if not bolt._endless_mage_thunder then
+            bolt._endless_mage_thunder = true
+            if (bolt.bullet and bolt.bullet.damage_max and bolt.bullet.damage_max >= 50) or bolt.template_name == "ray_arcane" then
+                bolt.main_script.insert = U.function_append(bolt.main_script.insert, function(this, store)
+                    local target = store.entities[this.bullet.target_id]
+                    if not target or target.health.dead then
+                        return true
+                    end
+                    if math.random() < store.endless.upgrade_levels.mage_thunder * friend_buff.mage_thunder_normal then
+                        local thunder = E:create_entity("endless_mage_thunder")
+                        thunder.pos = V.vclone(target.pos)
+                        queue_insert(store, thunder)
+                    end
+                    return true
+                end)
+            else
+                bolt.main_script.insert = U.function_append(bolt.main_script.insert, function(this, store)
+                    local target = store.entities[this.bullet.target_id]
+                    if not target or target.health.dead then
+                        return true
+                    end
+                    if math.random() < store.endless.upgrade_levels.mage_thunder * friend_buff.mage_thunder_small then
+                        local thunder = E:create_entity("endless_mage_thunder")
+                        thunder.pos = V.vclone(target.pos)
+                        queue_insert(store, thunder)
+                    end
+                    return true
+                end)
+            end
+        end
+    end
+    local mod_pixie_pickpocket = E:get_template("mod_pixie_pickpocket")
+    if not mod_pixie_pickpocket._endless_mage_thunder then
+        mod_pixie_pickpocket._endless_mage_thunder = true
+        mod_pixie_pickpocket.main_script.insert = U.function_append(mod_pixie_pickpocket.main_script.insert, function(this, store)
+            local target = store.entities[this.modifier.target_id]
+            if not target or target.health.dead then
+                return true
+            end
+            if math.random() < store.endless.upgrade_levels.mage_thunder * friend_buff.mage_thunder_normal then
+                local thunder = E:create_entity("endless_mage_thunder")
+                thunder.pos = V.vclone(target.pos)
+                queue_insert(store, thunder)
+            end
+            return true
+        end)
+    end
+end
+
+function EU.patch_mage_shatter(level)
+    for _, name in pairs(table.append(UP:bolts(), {"bullet_pixie_poison"}, true)) do
+        local bolt = E:get_template(name)
+        if not bolt._endless_mage_shatter then
+            bolt._endless_mage_shatter = true
+            bolt.main_script.insert = U.function_append(bolt.main_script.insert, function(this, store)
+                local target = store.entities[this.bullet.target_id]
+                if not target or target.health.dead then
+                    return true
+                end
+                if not this.bullet._endless_mage_shatter then
+                    this.bullet.damage_factor = this.bullet.damage_factor *
+                                                    (1 + target.health.armor * store.endless.upgrade_levels.mage_shatter *
+                                                        friend_buff.mage_shatter)
+                    this.bullet._endless_mage_shatter = true
+                end
+                return true
+            end)
+        end
+    end
+end
+
+function EU.patch_mage_chain(level)
+    for _, name in pairs(table.append(UP:bolts(),{"bullet_pixie_poison","bullet_pixie_instakill", "ray_arcane_disintegrate"})) do
+        local bolt = E:get_template(name)
+        if not bolt._endless_mage_chain then
+            bolt._endless_mage_chain = true
+            bolt.main_script.remove = U.function_append(bolt.main_script.remove, function(this, store)
+                local target = store.entities[this.bullet.target_id]
+                if not target or target.health.dead then
+                    return true
+                end
+                if not this.bullet._endless_mage_chain then
+                    local count = 0
+                    for _, enemy in pairs(store.enemies) do
+                        if enemy.id ~= target.id and not enemy.health.dead and U.is_inside_ellipse(target.pos, enemy.pos, 60) then
+                            local bolt = E:create_entity(this.template_name)
+                            bolt.bullet.target_id = enemy.id
+                            bolt.bullet.from = V.v(target.pos.x + target.unit.hit_offset.x, target.pos.y + target.unit.hit_offset.y)
+                            bolt.pos = V.vclone(bolt.bullet.from)
+                            bolt.bullet.to = V.v(enemy.pos.x + enemy.unit.hit_offset.x,
+                                              enemy.pos.y + enemy.unit.hit_offset.y)
+                            bolt.bullet.damage_factor = bolt.bullet.damage_factor * friend_buff.mage_chain * store.endless.upgrade_levels.mage_chain
+                            bolt.bullet._endless_mage_chain = true
+                            if bolt.tween then
+                                bolt.tween.ts = store.tick_ts
+                            end
+                            if this.bullet.payload then
+                                local payload = E:create_entity(this.bullet.payload.template_name)
+                                if payload.bullet then
+                                    payload.bullet.level = this.bullet.payload.bullet.level
+                                    payload.bullet.damage_factor = this.bullet.payload.bullet.damage_factor
+                                end
+                                bolt.bullet.payload = payload
+                            end
+                            if this.bullet.shot_index then
+                                bolt.bullet.shot_index = this.bullet.shot_index
+                            end
+                            queue_insert(store, bolt)
+                            count = count + 1
+                            if count >= friend_buff.mage_chain_max then
+                                break
+                            end
+                        end
+                    end
+                end
+                return true
+            end)
+        end
+    end
+end
+
+function EU.patch_mage_curse(level)
+    local curse = E:get_template("mod_slow_curse")
+    curse.slow.factor = friend_buff.mage_curse_factor
+    curse.slow.duration = friend_buff.mage_curse_duration
+end
+
 function EU.patch_upgrade_in_game(key, store, endless)
     if not key then
         return
@@ -701,13 +856,16 @@ function EU.patch_upgrade_in_game(key, store, endless)
         for _, name in pairs(EL.barrack) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
-
         end
     elseif key == "ban_engineer" then
         for _, name in pairs(EL.engineer) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
-
+        end
+    elseif key == "ban_mage" then
+        for _, name in pairs(EL.mage) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
         end
     elseif key == "health" then
         for _, s in pairs(store.soldiers) do
@@ -774,6 +932,8 @@ function EU.patch_upgrade_in_game(key, store, endless)
         store.game_gui.power_1:set_cooldown_time(E:get_template("power_fireball_control").cooldown)
     elseif key == "rain_scorch_damage_true" then
         EU.patch_rain_scorch_damage_true(1)
+    elseif key == "rain_thunder" then
+        EU.patch_rain_thunder(1)
     elseif key == "more_gold" then
         endless.enemy_gold_factor = endless.enemy_gold_factor + friend_buff.more_gold
     elseif key == "barrack_rally" then
@@ -787,6 +947,8 @@ function EU.patch_upgrade_in_game(key, store, endless)
         for _, t in pairs(store.towers) do
             if t.barrack then
                 t.barrack.max_soldiers = t.barrack.max_soldiers + friend_buff.barrack_unity_count
+            elseif t.template_name == "tower_pixie" then
+                t.attacks.range = math.huge
             end
         end
         EU.patch_barrack_unity(endless.upgrade_levels[key])
@@ -848,6 +1010,14 @@ function EU.patch_upgrade_in_game(key, store, endless)
         end
     elseif key == "engineer_fireball" then
         EU.patch_engineer_fireball(1)
+    elseif key == "mage_thunder" then
+        EU.patch_mage_thunder(endless.upgrade_levels[key])
+    elseif key == "mage_shatter" then
+        EU.patch_mage_shatter(endless.upgrade_levels[key])
+    elseif key == "mage_chain" then
+        EU.patch_mage_chain(endless.upgrade_levels[key])
+    elseif key == "mage_curse" then
+        EU.patch_mage_curse(endless.upgrade_levels[key])
     end
 end
 
@@ -879,6 +1049,9 @@ function EU.patch_upgrades(endless)
     if endless.upgrade_levels.rain_scorch_damage_true > 0 then
         EU.patch_rain_scorch_damage_true(endless.upgrade_levels.rain_scorch_damage_true)
     end
+    if endless.upgrade_levels.rain_thunder > 0 then
+        EU.patch_rain_thunder(endless.upgrade_levels.rain_thunder)
+    end
     if endless.upgrade_levels.barrack_rally > 0 then
         EU.patch_barrack_rally(endless.upgrade_levels.barrack_rally)
     end
@@ -903,6 +1076,18 @@ function EU.patch_upgrades(endless)
     if endless.upgrade_levels.engineer_fireball > 0 then
         EU.patch_engineer_fireball(endless.upgrade_levels.engineer_fireball)
     end
+    if endless.upgrade_levels.mage_thunder > 0 then
+        EU.patch_mage_thunder(endless.upgrade_levels.mage_thunder)
+    end
+    if endless.upgrade_levels.mage_shatter > 0 then
+        EU.patch_mage_shatter(endless.upgrade_levels.mage_shatter)
+    end
+    if endless.upgrade_levels.mage_chain > 0 then
+        EU.patch_mage_chain(endless.upgrade_levels.mage_chain)
+    end
+    if endless.upgrade_levels.mage_curse > 0 then
+        EU.patch_mage_curse(endless.upgrade_levels.mage_curse)
+    end
     if endless.upgrade_levels.ban_rain > 0 then
         for _, name in pairs(EL.rain) do
             table.removeobject(endless.upgrade_options, name)
@@ -923,6 +1108,12 @@ function EU.patch_upgrades(endless)
     end
     if endless.upgrade_levels.ban_engineer > 0 then
         for _, name in pairs(EL.engineer) do
+            table.removeobject(endless.upgrade_options, name)
+            table.removeobject(endless.gold_extra_upgrade_options, name)
+        end
+    end
+    if endless.upgrade_levels.ban_mage > 0 then
+        for _, name in pairs(EL.mage) do
             table.removeobject(endless.upgrade_options, name)
             table.removeobject(endless.gold_extra_upgrade_options, name)
         end

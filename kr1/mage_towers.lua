@@ -1288,7 +1288,7 @@ local function mage_towers()
     tt.render.sprites[1].name = "faerie_dragon_shoot_fx"
     tt = E:register_t("mod_faerie_dragon", "mod_freeze")
     E:add_comps(tt, "render")
-    tt.modifier.duration = nil
+    tt.modifier.duration = 0.9
     tt.modifier.vis_bans = F_BOSS
     tt.modifier.vis_flags = bor(F_STUN, F_MOD)
     tt.render.sprites[1].prefix = "mod_faerie_dragon"

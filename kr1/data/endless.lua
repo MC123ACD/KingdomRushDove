@@ -28,11 +28,18 @@ local endless = {
         barrack_unity_lifetime = 2,
         barrack_unity_count = 1,
         barrack_luck = 0.1,
-        barrack_synergy = 0.01,
+        barrack_synergy = 0.02,
         engineer_focus = 0.8,
         engineer_aftermath = 20,
         engineer_seek = 0.25,
         engineer_fireball = 1,
+        mage_shatter = 1,
+        mage_thunder_normal = 0.1,
+        mage_thunder_small = 0.05,
+        mage_chain = 0.2,
+        mage_chain_max = 3,
+        mage_curse_factor = 0.4,
+        mage_curse_duration = 1,
     },
     enemy_buff = {
         health_factor = 1.06,
@@ -45,7 +52,8 @@ local endless = {
         s_health_damage_factor = 5,
         lives_cost_factor = 1.07,
         s_lives_cost_factor = 7,
-        wave_interval_factor = 0.97
+        wave_interval_factor = 0.97,
+        instakill_resistance = 0.02,
     },
     template = {
         enemy_list = {},
@@ -55,6 +63,7 @@ local endless = {
         enemy_speed_factor = 1,
         enemy_health_damage_factor = 1,
         enemy_gold_factor = 1,
+        enemy_instakill_resistance = 0,
         soldier_health_factor = 1,
         soldier_damage_factor = 1,
         tower_damage_factor = 1,
@@ -90,6 +99,7 @@ local endless = {
         rain_radius_mul = 1,
         rain_cooldown_dec = 2,
         rain_scorch_damage_true = 1,
+        rain_thunder = 1,
         more_gold = 1,
         barrack_rally = 1,
         barrack_unity = 1,
@@ -103,12 +113,18 @@ local endless = {
         ban_archer = 1,
         ban_engineer = 1,
         ban_barrack = 1,
+        ban_mage = 1,
+        mage_shatter = 1,
+        mage_thunder = 10,
+        mage_chain = 5,
+        mage_curse = 1
     },
     force_upgrade_max_levels = {
         archer_critical = 10,
         rain_radius_mul = 1,
         rain_scorch_damage_true = 1,
         rain_cooldown_dec = 2,
+        rain_thunder = 1,
         barrack_rally = 1,
         barrack_unity = 1,
         barrack_luck = 3,
@@ -117,7 +133,11 @@ local endless = {
         ban_rain = 1,
         ban_archer = 1,
         ban_engineer = 1,
-        ban_barrack = 1
+        ban_barrack = 1,
+        ban_mage = 1,
+        mage_shatter = 1,
+        mage_curse = 1,
+        mage_thunder = 10
     },
     enemy_upgrade_max_levels = {
         health = 60,
@@ -125,16 +145,18 @@ local endless = {
         speed = 20,
         health_damage_factor = 20,
         lives = 40,
-        wave_interval = 45
+        wave_interval = 45,
+        instakill_resistance = 10
     },
     gold_extra_upgrade = {"archer_bleed", "archer_multishot", "archer_insight", "rain_count_inc", "rain_damage_inc",
                           "more_gold", "barrack_synergy", "engineer_focus", "engineer_aftermath","archer_critical","rain_radius_mul",
-                          "rain_scorch_damage_true","barrack_rally","barrack_unity","engineer_seek","engineer_fireball","ban_rain","ban_archer","ban_engineer","ban_barrack","rain_cooldown_dec","barrack_luck", "health","tower_damage","hero_damage"},
+                          "rain_scorch_damage_true","barrack_rally","barrack_unity","engineer_seek","engineer_fireball","ban_rain","ban_archer","ban_engineer","ban_barrack","rain_cooldown_dec","barrack_luck", "health","tower_damage","hero_damage","mage_shatter","mage_thunder","mage_chain","mage_curse","rain_thunder","ban_mage"},
     gold_extra_cost = 10000,
-    rain = {"rain_radius_mul","rain_scorch_damage_true","rain_cooldown_dec","rain_count_inc","rain_damage_inc"},
+    rain = {"rain_radius_mul","rain_scorch_damage_true","rain_cooldown_dec","rain_count_inc","rain_damage_inc","rain_thunder"},
     archer = {"archer_bleed","archer_multishot","archer_insight","archer_critical"},
     barrack = {"barrack_synergy","barrack_unity","barrack_rally","barrack_luck"},
-    engineer = {"engineer_focus","engineer_aftermath","engineer_seek","engineer_fireball"}
+    engineer = {"engineer_focus","engineer_aftermath","engineer_seek","engineer_fireball"},
+    mage = {"mage_shatter","mage_thunder","mage_chain","mage_curse"},
 }
 
 for k, _ in pairs(endless.upgrade_max_levels) do
@@ -162,6 +184,7 @@ local key_label_map = {
     rain_radius_mul = "巨星陨落",
     rain_cooldown_dec = "狂热节奏",
     rain_scorch_damage_true = "末日焦土",
+    rain_thunder = "电光火石",
     more_gold = "点石成金",
     barrack_rally = "战术调集",
     barrack_unity = "众志成城",
@@ -171,10 +194,15 @@ local key_label_map = {
     engineer_aftermath = "动能余波",
     engineer_seek = "准心校正",
     engineer_fireball = "燃焰前奏",
+    mage_shatter = "奥术裂解",
+    mage_thunder = "雷霆万钧",
+    mage_chain = "链式反应",
+    mage_curse = "诅咒谶言",
     ban_rain = "禁绝·火雨",
     ban_archer = "禁绝·箭塔",
     ban_engineer = "禁绝·炮塔",
-    ban_barrack = "禁绝·兵营"
+    ban_barrack = "禁绝·兵营",
+    ban_mage = "禁绝·法塔",
 }
 
 local key_desc_map = {
@@ -197,6 +225,7 @@ local key_desc_map = {
     rain_cooldown_dec = string.format("火雨冷却时间减少%d秒", endless.friend_buff.rain_cooldown_dec),
     rain_scorch_damage_true = string.format("焦土伤害提升%d点，且造成真实伤害",
         endless.friend_buff.rain_scorch_damage_true),
+    rain_thunder = "让闪电箭伴随火雨出现",
     more_gold = string.format("提升金币收益%d%%", endless.friend_buff.more_gold * 100),
     barrack_rally = "取消兵营的调集范围限制",
     barrack_unity = string.format("士兵复活速度加快%d秒，且兵营士兵容量+%d",
@@ -214,10 +243,17 @@ local key_desc_map = {
         endless.friend_buff.engineer_seek * 100),
     engineer_fireball = string.format("每次炮弹/雷电攻击额外减少火雨%.2f秒冷却",
         endless.friend_buff.engineer_fireball / 30),
+    mage_shatter = string.format("法师塔的攻击对敌人额外造成其物理护甲%d倍的伤害",
+        endless.friend_buff.mage_shatter),
+    mage_thunder = string.format("法师塔每次攻击有%d%%/%d%%概率召唤闪电", endless.friend_buff.mage_thunder_normal * 100, endless.friend_buff.mage_thunder_small * 100),
+    mage_chain = string.format("法师塔的攻击会向附近敌人弹射，造成%d%%伤害", endless.friend_buff.mage_chain * 100),
+    mage_curse = string.format("使法塔缓慢诅咒的减速效果提升至%d%%，持续时间延长至%d秒",
+        (1 - endless.friend_buff.mage_curse_factor) * 100, endless.friend_buff.mage_curse_duration),
     ban_rain = "不再出现火雨科技",
     ban_archer = "不再出现箭塔科技",
     ban_engineer = "不再出现炮塔科技",
-    ban_barrack = "不再出现兵营科技"
+    ban_barrack = "不再出现兵营科技",
+    ban_mage = "不再出现法塔科技",
 }
 endless.key_label_map = key_label_map
 endless.key_desc_map = key_desc_map

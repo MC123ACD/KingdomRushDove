@@ -2748,6 +2748,7 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.health.hp_max then
                     entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
                     entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
+                    entity.health.instakill_resistance = entity.health.instakill_resistance + store.endless.enemy_instakill_resistance
                 end
                 if entity.unit.damage_factor then
                     entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor

@@ -24252,27 +24252,27 @@ function scripts.bolt_elves.update(this, store)
 
     if target and not target.health.dead then
         local d = SU.create_bullet_damage(b, target.id, this.id)
-        local u = UP:get_upgrade("mage_el_empowerment")
+        -- local u = UP:get_upgrade("mage_el_empowerment")
 
-        if u and not this.upgrades_disabled and math.random() < u.chance then
-            d.value = km.round(d.value * u.damage_factor)
+        -- if u and not this.upgrades_disabled and math.random() < u.chance then
+        --     d.value = km.round(d.value * u.damage_factor)
 
-            if b.pop_mage_el_empowerment then
-                d.pop = b.pop_mage_el_empowerment
-                d.pop_conds = DR_DAMAGE
-            end
-        end
+        --     if b.pop_mage_el_empowerment then
+        --         d.pop = b.pop_mage_el_empowerment
+        --         d.pop_conds = DR_DAMAGE
+        --     end
+        -- end
 
         queue_damage(store, d)
 
-        if this.alter_reality_chance and UP:has_upgrade("mage_el_alter_reality") and math.random() <
-            this.alter_reality_chance then
-            local mod = E:create_entity(this.alter_reality_mod)
+        -- if this.alter_reality_chance and UP:has_upgrade("mage_el_alter_reality") and math.random() <
+        --     this.alter_reality_chance then
+        --     local mod = E:create_entity(this.alter_reality_mod)
 
-            mod.modifier.target_id = target.id
+        --     mod.modifier.target_id = target.id
 
-            queue_insert(store, mod)
-        end
+        --     queue_insert(store, mod)
+        -- end
         if this.bullet.mods then
             for _, mod_name in pairs(this.bullet.mods) do
                 local m = E:create_entity(mod_name)
@@ -31880,5 +31880,130 @@ scripts.aura_endless_engineer_aftermath_ray = {
         queue_remove(store, this)
     end
 }
+
+scripts.endless_mage_thunder = {}
+
+function scripts.endless_mage_thunder.update(this, store)
+    local function create_thunder(thunder, pos)
+        local e = E:create_entity("fx_power_thunder_" .. math.random(1, 2))
+
+        e.pos.x, e.pos.y = pos.x, pos.y
+        e.render.sprites[1].flip_x = math.random() < 0.5
+        e.render.sprites[1].ts = store.tick_ts
+        e.render.sprites[1].scale = V.v(0.8, 0.8)
+        if REF_H - pos.y > e.image_h then
+            e.render.sprites[1].scale = V.v(0.8, 0.8*(REF_H - pos.y) / e.image_h)
+        end
+
+        queue_insert(store, e)
+
+        e = E:create_entity("fx_power_thunder_explosion")
+        e.pos.x, e.pos.y = pos.x, pos.y
+        e.render.sprites[1].ts = store.tick_ts
+        e.render.sprites[1].scale = V.v(0.8, 0.8)
+        e.render.sprites[2].ts = store.tick_ts
+        e.render.sprites[2].scale = V.v(0.8, 0.8)
+        queue_insert(store, e)
+
+        e = E:create_entity("fx_power_thunder_explosion_decal")
+        e.pos.x, e.pos.y = pos.x, pos.y
+        e.render.sprites[1].ts = store.tick_ts
+        e.render.sprites[1].scale = V.v(0.8, 0.8)
+        queue_insert(store, e)
+
+        if thunder.pop and math.random() < thunder.pop_chance then
+            local e = SU.create_pop(store, this.pos, thunder.pop)
+
+            queue_insert(store, e)
+        end
+
+        local targets = U.find_enemies_in_range(store.enemies, pos, 0, thunder.damage_radius, this.vis_flags,
+            this.vis_bans)
+
+        if targets then
+            for _, target in pairs(targets) do
+                local d = E:create_entity("damage")
+
+                d.damage_type = thunder.damage_type
+                d.value = math.random(thunder.damage_min, thunder.damage_max)
+                d.target_id = target.id
+                d.source_id = this.id
+
+                queue_damage(store, d)
+            end
+        end
+
+        -- AC:inc_check("LIGHTNING_CAST")
+    end
+
+    local visited = {}
+    local t1, t2 = this.thunders[1], this.thunders[2]
+
+    t1.created, t2.created = 0, 0
+
+    if t2.count > 0 then
+        t2.cooldown = U.frandom(t2.delay_min, t2.delay_max)
+        t2.ts = store.tick_ts
+    end
+
+    while t1.created < t1.count or t2.created < t2.count do
+        for _, thunder in pairs(this.thunders) do
+            if thunder.created < thunder.count and store.tick_ts - thunder.ts > thunder.cooldown then
+                local pos
+
+                if thunder.targeting == "nearest" then
+                    if thunder.created == 0 then
+                        pos = this.pos
+                    else
+                        local target = U.find_nearest_enemy(store.enemies, this.pos, 0, thunder.range, this.vis_flags,
+                            this.vis_bans, function(v)
+                                return not table.contains(visited, v)
+                            end)
+
+                        if target then
+                            table.insert(visited, target)
+
+                            pos = target.pos
+                        else
+                            local nearest = P:nearest_nodes(this.pos.x, this.pos.y, nil, nil, true)
+
+                            if #nearest > 0 then
+                                local pi, spi, ni = unpack(nearest[1])
+                                local no = math.random(-this.nodes_spread, this.nodes_spread)
+
+                                if not P:is_node_valid(pi, ni + no) then
+                                    no = 0
+                                end
+
+                                pos = P:node_pos(pi, math.random(1, 3), ni + no)
+                            end
+                        end
+                    end
+                else
+                    local target = U.find_random_enemy(store.enemies, this.pos, 0, thunder.range, this.vis_flags,
+                        this.vis_bans)
+
+                    if target then
+                        pos = target.pos
+                    else
+                        pos = P:get_random_position(10, bor(TERRAIN_LAND, TERRAIN_WATER)) or this.pos
+                    end
+                end
+
+                if pos then
+                    create_thunder(thunder, pos)
+                end
+
+                thunder.ts = store.tick_ts
+                thunder.cooldown = U.frandom(thunder.delay_min, thunder.delay_max)
+                thunder.created = thunder.created + 1
+            end
+        end
+        coroutine.yield()
+    end
+
+    queue_remove(store, this)
+end
+
 return scripts
 

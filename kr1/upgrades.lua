@@ -538,10 +538,9 @@ function upgrades:patch_templates(max_level)
 
     if u then
         for _, n in pairs(self:bolts()) do
-
             local b = T(n).bullet
             local mods
-            if b.damage_max and b.damage_max >= 50 then
+            if (b.damage_max and b.damage_max >= 50) or b.template_name == "ray_arcane" then
                 mods = {u.mod_normal}
             else
                 mods = {u.mod_little}
