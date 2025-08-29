@@ -2565,6 +2565,79 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
+sys.endless_patch = {}
+sys.endless_patch.name = "endless_patch"
+function sys.endless_patch:on_insert(entity, store)
+    if store.level_mode_override == GAME_MODE_ENDLESS then
+        if not entity._endless_strengthened then
+            entity._endless_strengthened = true
+            if entity.enemy then
+                if entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
+                    entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
+                    entity.health.instakill_resistance = entity.health.instakill_resistance + store.endless.enemy_instakill_resistance
+                end
+                if entity.unit.damage_factor then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor
+                end
+                if entity.motion.max_speed then
+                    entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
+                end
+                entity.enemy.gold = math.ceil(entity.enemy.gold * store.endless.enemy_gold_factor)
+            elseif entity.soldier then
+                if entity.health and entity.health.hp_max then
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)
+                    entity.health.hp = entity.health.hp_max
+                    -- entity.health.damage_factor = entity.health.damage_factor * store.endless.soldier_health_damage_factor
+                end
+                if entity.unit then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.soldier_damage_factor
+                end
+                if entity.cooldown_factor then
+                    entity.cooldown_factor = entity.cooldown_factor * store.endless.soldier_cooldown_factor
+                end
+                if entity.hero then
+                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
+                    entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
+                end
+            elseif entity.tower then
+                entity.tower.damage_factor = entity.tower.damage_factor * store.endless.tower_damage_factor
+                entity.tower.cooldown_factor = entity.tower.cooldown_factor * store.endless.tower_cooldown_factor
+            end
+        end
+    end
+    return true
+end
+
+local SpatialHash = require("spatial_hash")
+sys.spatial_index = {}
+sys.spatial_index.name = "spatial_index"
+
+function sys.spatial_index:init(store)
+    store.enemy_spatial_index = SpatialHash:new(store.visible_coords,32)
+end
+
+function sys.spatial_index:on_insert(entity, store)
+    if entity.enemy then
+        store.enemy_spatial_index:insert_entity(entity)
+    end
+    return true
+end
+
+function sys.spatial_index:on_remove(entity, store)
+    if entity.enemy then
+        store.enemy_spatial_index:remove_entity(entity)
+    end
+    return true
+end
+
+function sys.spatial_index:on_update(dt, ts, store)
+    for _, e in pairs(store.enemies) do
+        store.enemy_spatial_index:update_entity(e)
+    end
+    -- store.enemy_spatial_index:print_debug_info()
+end
+
 local performance_monitor_enabled = false
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
@@ -2737,79 +2810,6 @@ if performance_monitor_enabled then
         perf.save_report(store)
     end
 
-end
-
-sys.endless_patch = {}
-sys.endless_patch.name = "endless_patch"
-function sys.endless_patch:on_insert(entity, store)
-    if store.level_mode_override == GAME_MODE_ENDLESS then
-        if not entity._endless_strengthened then
-            entity._endless_strengthened = true
-            if entity.enemy then
-                if entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
-                    entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
-                    entity.health.instakill_resistance = entity.health.instakill_resistance + store.endless.enemy_instakill_resistance
-                end
-                if entity.unit.damage_factor then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor
-                end
-                if entity.motion.max_speed then
-                    entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
-                end
-                entity.enemy.gold = math.ceil(entity.enemy.gold * store.endless.enemy_gold_factor)
-            elseif entity.soldier then
-                if entity.health and entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)
-                    entity.health.hp = entity.health.hp_max
-                    -- entity.health.damage_factor = entity.health.damage_factor * store.endless.soldier_health_damage_factor
-                end
-                if entity.unit then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.soldier_damage_factor
-                end
-                if entity.cooldown_factor then
-                    entity.cooldown_factor = entity.cooldown_factor * store.endless.soldier_cooldown_factor
-                end
-                if entity.hero then
-                    entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
-                    entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
-                end
-            elseif entity.tower then
-                entity.tower.damage_factor = entity.tower.damage_factor * store.endless.tower_damage_factor
-                entity.tower.cooldown_factor = entity.tower.cooldown_factor * store.endless.tower_cooldown_factor
-            end
-        end
-    end
-    return true
-end
-
-local SpatialHash = require("spatial_hash")
-sys.spatial_index = {}
-sys.spatial_index.name = "spatial_index"
-
-function sys.spatial_index:init(store)
-    store.enemy_spatial_index = SpatialHash:new(store.visible_coords,32)
-end
-
-function sys.spatial_index:on_insert(entity, store)
-    if entity.enemy then
-        store.enemy_spatial_index:insert_entity(entity)
-    end
-    return true
-end
-
-function sys.spatial_index:on_remove(entity, store)
-    if entity.enemy then
-        store.enemy_spatial_index:remove_entity(entity)
-    end
-    return true
-end
-
-function sys.spatial_index:on_update(dt, ts, store)
-    for _, e in pairs(store.enemies) do
-        store.enemy_spatial_index:update_entity(e)
-    end
-    -- store.enemy_spatial_index:print_debug_info()
 end
 
 return sys

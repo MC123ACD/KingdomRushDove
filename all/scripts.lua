@@ -4187,7 +4187,7 @@ function scripts.aura_apply_mod.update(this, store, script)
             end
 
             if #targets == 0 then
-                last_hit_ts = last_hit_ts + fts(1)
+                -- last_hit_ts = last_hit_ts + fts(1)
             else
                 for i, target in ipairs(targets) do
                     if this.aura.targets_per_cycle and i > this.aura.targets_per_cycle then
@@ -4300,7 +4300,7 @@ function scripts.aura_apply_damage.update(this, store, script)
             end
 
             if #targets == 0 then
-                last_hit_ts = last_hit_ts + fts(1)
+                -- last_hit_ts = last_hit_ts + fts(1)
             else
                 for _, target in pairs(targets) do
                     local d = E:create_entity("damage")

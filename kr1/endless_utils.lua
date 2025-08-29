@@ -443,13 +443,17 @@ function EU.patch_archer_critical(level)
         local arrow = E:get_template(name)
         if not arrow._endless_archer_critical then
             arrow.main_script.insert = U.function_append(function(this, store, script)
-                if math.random() < this._endless_archer_critical then
-                    this.bullet.damage_factor = this.bullet.damage_factor * 3
-                    if not (this.bullet.pop and table.contains(this.bullet.pop, "pop_headshot")) then
-                        this.bullet.pop = {"pop_crit"}
-                        this.bullet.pop_conds = DR_DAMAGE
+                if not this.bullet._endless_archer_critical then
+                    this.bullet._endless_archer_critical = true
+                    if math.random() < this._endless_archer_critical then
+                        this.bullet.damage_factor = this.bullet.damage_factor * 3
+                        if not (this.bullet.pop and table.contains(this.bullet.pop, "pop_headshot")) then
+                            this.bullet.pop = {"pop_crit"}
+                            this.bullet.pop_conds = DR_DAMAGE
+                        end
                     end
                 end
+
                 return true
             end, arrow.main_script.insert)
         end
@@ -711,6 +715,8 @@ function EU.patch_engineer_seek(level)
     t = E:get_template("tower_tricannon_lvl4")
     clear_flying_bans(t.attacks.list[1])
     clear_flying_bans(t.attacks.list[2])
+    t = E:get_template("soldier_mecha")
+    clear_flying_bans(t.attacks.list[1])
     t = E:get_template("tower_tesla")
     t.attacks.range = t.attacks.range * (1 + level * friend_buff.engineer_seek)
     t.attacks.list[1].range = t.attacks.list[1].range * (1 + level * friend_buff.engineer_seek)

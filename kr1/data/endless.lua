@@ -142,9 +142,9 @@ local endless = {
         mage_thunder = 10
     },
     enemy_upgrade_max_levels = {
-        health = 60,
+        health = 62,
         damage = 50,
-        speed = 20,
+        speed = 18,
         health_damage_factor = 20,
         lives = 40,
         wave_interval = 45,
