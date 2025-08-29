@@ -855,7 +855,7 @@ function U.find_random_enemy_with_pos(store, origin, min_range, max_range, predi
                     e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
                 end
             else
-                e.__ffe_pos = e.pos
+                e.__ffe_pos = V.vclone(e.pos)
             end
 
             return true
@@ -995,7 +995,7 @@ function U.find_biggest_enemy(store, origin, min_range, max_range, prediction_ti
                 e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
             end
         else
-            e.__ffe_pos = e.pos
+            e.__ffe_pos = V.vclone(e.pos)
         end
 
         return true
@@ -1082,7 +1082,7 @@ function U.find_foremost_enemy_with_max_coverage(store, origin, min_range, max_r
                 e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
             end
         else
-            e.__ffe_pos = e.pos
+            e.__ffe_pos = V.vclone(e.pos)
         end
 
         return true
@@ -1174,7 +1174,7 @@ function U.find_foremost_enemy_with_flying_preference(store, origin, min_range, 
                 e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
             end
         else
-            e.__ffe_pos = e.pos
+            e.__ffe_pos = V.vclone(e.pos)
         end
 
         return true
@@ -1252,7 +1252,7 @@ function U.find_foremost_enemy(store, origin, min_range, max_range, prediction_t
                 e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
             end
         else
-            e.__ffe_pos = e.pos
+            e.__ffe_pos = V.vclone(e.pos)
         end
 
         return true
