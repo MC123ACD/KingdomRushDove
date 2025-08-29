@@ -4147,26 +4147,45 @@ function scripts.aura_apply_mod.update(this, store, script)
             last_hit_ts = store.tick_ts
             cycles_count = cycles_count + 1
 
-            local entities
+            local targets
 
             if band(this.aura.vis_bans, F_ENEMY) ~= 0 then
-                entities = store.soldiers
+                targets = table.filter(store.soldiers, function(k, v)
+                    return
+                        v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
+                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                            (not this.aura.allowed_templates or
+                                table.contains(this.aura.allowed_templates, v.template_name)) and
+                            (not this.aura.excluded_templates or
+                                not table.contains(this.aura.excluded_templates, v.template_name)) and
+                            (not this.aura.filter_source or this.aura.source_id ~= v.id)
+                end)
+
             elseif band(this.aura.vis_bans, F_FRIEND) ~= 0 then
-                entities = store.enemies
+                targets = U.find_enemies_in_range(store, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+                    this.aura.vis_bans, function(e)
+                        return (not this.aura.allowed_templates or
+                                   table.contains(this.aura.allowed_templates, e.template_name)) and
+                                   (not this.aura.excluded_templates or
+                                       not table.contains(this.aura.excluded_templates, e.template_name)) and
+                                   (not this.aura.filter_source or this.aura.source_id ~= e.id)
+                    end) or {}
             else
-                entities = store.entities
+                targets = table.filter(store.entities, function(k, v)
+                    return
+                        v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
+                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                            (not this.aura.allowed_templates or
+                                table.contains(this.aura.allowed_templates, v.template_name)) and
+                            (not this.aura.excluded_templates or
+                                not table.contains(this.aura.excluded_templates, v.template_name)) and
+                            (not this.aura.filter_source or this.aura.source_id ~= v.id)
+                end)
+
             end
 
-            local targets = table.filter(entities, function(k, v)
-                return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
-                           0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
-                           U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
-                           (not this.aura.allowed_templates or
-                               table.contains(this.aura.allowed_templates, v.template_name)) and
-                           (not this.aura.excluded_templates or
-                               not table.contains(this.aura.excluded_templates, v.template_name)) and
-                           (not this.aura.filter_source or this.aura.source_id ~= v.id)
-            end)
             if #targets == 0 then
                 last_hit_ts = last_hit_ts + fts(1)
             else
@@ -4246,24 +4265,40 @@ function scripts.aura_apply_damage.update(this, store, script)
             cycles_count = cycles_count + 1
             last_hit_ts = store.tick_ts
 
-            local entities
+            local targets
             if band(this.aura.vis_bans, F_ENEMY) ~= 0 then
-                entities = store.soldiers
+                targets = table.filter(store.soldiers, function(k, v)
+                    return
+                        v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
+                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                            (not this.aura.allowed_templates or
+                                table.contains(this.aura.allowed_templates, v.template_name)) and
+                            (not this.aura.excluded_templates or
+                                not table.contains(this.aura.excluded_templates, v.template_name))
+                end)
             elseif band(this.aura.vis_bans, F_FRIEND) ~= 0 then
-                entities = store.enemies
+                targets = U.find_enemies_in_range(store, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+                    this.aura.vis_bans, function(e)
+                        return (not this.aura.allowed_templates or
+                                   table.contains(this.aura.allowed_templates, e.template_name)) and
+                                   (not this.aura.excluded_templates or
+                                       not table.contains(this.aura.excluded_templates, e.template_name)) and
+                                   (not this.aura.filter_source or this.aura.source_id ~= e.id)
+                    end) or {}
             else
-                entities = store.entities
+                targets = table.filter(store.entities, function(k, v)
+                    return
+                        v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
+                            0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
+                            U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
+                            (not this.aura.allowed_templates or
+                                table.contains(this.aura.allowed_templates, v.template_name)) and
+                            (not this.aura.excluded_templates or
+                                not table.contains(this.aura.excluded_templates, v.template_name))
+                end)
             end
 
-            local targets = table.filter(store.entities, function(k, v)
-                return v.unit and v.vis and v.health and not v.health.dead and band(v.vis.flags, this.aura.vis_bans) ==
-                           0 and band(v.vis.bans, this.aura.vis_flags) == 0 and
-                           U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
-                           (not this.aura.allowed_templates or
-                               table.contains(this.aura.allowed_templates, v.template_name)) and
-                           (not this.aura.excluded_templates or
-                               not table.contains(this.aura.excluded_templates, v.template_name))
-            end)
             if #targets == 0 then
                 last_hit_ts = last_hit_ts + fts(1)
             else

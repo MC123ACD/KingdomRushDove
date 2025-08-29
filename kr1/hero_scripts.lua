@@ -16580,17 +16580,15 @@ function scripts.aura_hero_hunter_shoot_around.update(this, store, script)
         if store.tick_ts - last_hit_ts >= this.aura.cycle_time then
             cycles_count = cycles_count + 1
             last_hit_ts = store.tick_ts
-
-            local targets = table.filter(store.enemies, function(k, v)
-                return not v.health.dead and band(v.vis.flags, this.aura.vis_bans) == 0 and
-                           band(v.vis.bans, this.aura.vis_flags) == 0 and
-                           U.is_inside_ellipse(v.pos, this.pos, this.aura.radius) and
-                           (not this.aura.allowed_templates or
-                               table.contains(this.aura.allowed_templates, v.template_name)) and
-                           (not this.aura.excluded_templates or
-                               not table.contains(this.aura.excluded_templates, v.template_name)) and
-                           (not this.aura.excluded_entities or not table.contains(this.aura.excluded_entities, v.id))
-            end)
+            local targets = U.find_enemies_in_range(store, this.pos, 0, this.aura.radius, this.aura.vis_flags,
+                this.aura.vis_bans, function(v)
+                    return
+                               (not this.aura.allowed_templates or
+                                   table.contains(this.aura.allowed_templates, v.template_name)) and
+                               (not this.aura.excluded_templates or
+                                   not table.contains(this.aura.excluded_templates, v.template_name)) and
+                               (not this.aura.excluded_entities or not table.contains(this.aura.excluded_entities, v.id))
+                end) or {}
 
             for _, target in pairs(targets) do
                 local d = E:create_entity("damage")

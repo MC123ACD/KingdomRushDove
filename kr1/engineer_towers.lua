@@ -1052,7 +1052,7 @@ local function engineer_towers()
     local balance = require("kr1.data.balance")
     local b = balance.towers.tricannon
     tt = E:register_t("tower_tricannon_lvl4", "tower")
-    E:add_comps(tt, "attacks", "powers", "vis")
+    E:add_comps(tt, "attacks", "powers")
     image_y = 120
     tt.is_kr5 = true
     tt.tower.type = "tricannon"

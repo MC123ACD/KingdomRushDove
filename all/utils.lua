@@ -977,29 +977,29 @@ function U.find_biggest_enemy(store, origin, min_range, max_range, prediction_ti
     --     end
     -- end
     local enemies = store.enemy_spatial_index:query_entities_in_ellipse(origin.x, origin.y, max_range, 0, function(e)
-    if e.pending_removal or e.health.dead or band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or
-        not (min_range == 0 or band(e.vis.flags, min_override_flags) ~= 0 or
-            not U.is_inside_ellipse(e.pos, origin, min_range)) or filter_func and not filter_func(e, origin) then
-        return false
-    end
-
-    if prediction_time and e.motion.speed then
-        if e.motion.forced_waypoint then
-            local dt = prediction_time == true and 1 or prediction_time
-
-            e.__ffe_pos = V.v(e.pos.x + dt * e.motion.speed.x, e.pos.y + dt * e.motion.speed.y)
-        else
-            local node_offset = P:predict_enemy_node_advance(e, prediction_time)
-
-            local e_ni = e.nav_path.ni + node_offset
-            e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
+        if e.pending_removal or e.health.dead or band(e.vis.flags, bans) ~= 0 or band(e.vis.bans, flags) ~= 0 or
+            not (min_range == 0 or band(e.vis.flags, min_override_flags) ~= 0 or
+                not U.is_inside_ellipse(e.pos, origin, min_range)) or filter_func and not filter_func(e, origin) then
+            return false
         end
-    else
-        e.__ffe_pos = e.pos
-    end
 
-    return true
-end)
+        if prediction_time and e.motion.speed then
+            if e.motion.forced_waypoint then
+                local dt = prediction_time == true and 1 or prediction_time
+
+                e.__ffe_pos = V.v(e.pos.x + dt * e.motion.speed.x, e.pos.y + dt * e.motion.speed.y)
+            else
+                local node_offset = P:predict_enemy_node_advance(e, prediction_time)
+
+                local e_ni = e.nav_path.ni + node_offset
+                e.__ffe_pos = P:node_pos(e.nav_path.pi, e.nav_path.spi, e_ni)
+            end
+        else
+            e.__ffe_pos = e.pos
+        end
+
+        return true
+    end)
     for _, e in pairs(enemies) do
         if e.health.hp > biggest_hp then
             biggest_hp = e.health.hp
@@ -1945,19 +1945,22 @@ end
 
 -- 用于传送索敌，返回传送目标
 function U.find_teleport_moment(store, center, range, trigger_count)
-    local enemy_count = 0
+    local enemies = U.find_enemies_in_range(store, center, 0, range, F_NONE, F_NONE)
+    if not enemies then
+        return nil
+    end
     local enemy_hp_max = 0
-    local soldier_count = 0
     local target = nil
-    for _, e in pairs(store.enemies) do
-        if not e.pending_removal and not e.health.dead and U.is_inside_ellipse(e.pos, center, range) then
-            enemy_count = enemy_count + 1
-            target = e
-            if e.health.hp > enemy_hp_max then
-                enemy_hp_max = e.health.hp
-            end
+    local soldier_count = 0
+
+    for _, e in pairs(enemies) do
+        target = e
+        if e.health.hp > enemy_hp_max then
+            enemy_hp_max = e.health.hp
         end
     end
+    local enemy_count = #enemies
+
     for _, s in pairs(store.soldiers) do
         if not s.pending_removal and not s.health.dead and U.is_inside_ellipse(s.pos, center, range) then
             soldier_count = soldier_count + 1

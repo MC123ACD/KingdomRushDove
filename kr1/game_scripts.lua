@@ -41,7 +41,6 @@ function scripts.mod_tower_decal.insert(this, store, script)
         log.error("cannot insert mod_crossbow_eagle to entity %s - ", target.id, target.template_name)
         return false
     end
-    signal.emit("mod-applied", this, target)
     return true
 end
 function scripts.mod_tower_decal.remove(this, store, script)
@@ -106,25 +105,23 @@ function scripts.aura_totem.update(this, store, script)
     end
 
     while store.tick_ts - this.aura.ts < a.duration + a.duration_inc * a.level do
-        local enemies = table.filter(store.enemies, function(k, e)
-            return not e.health.dead and band(e.vis.flags, this.aura.vis_bans) == 0 and
-                       band(e.vis.bans, this.aura.vis_flags) == 0 and
-                       U.is_inside_ellipse(e.pos, this.pos, this.aura.radius)
-        end)
+        local enemies = U.find_enemies_in_range(store, this.pos, 0, this.aura.radius, this.aura.vis_flags, this.aura.vis_bans)
 
-        local mods = this.aura.mods or {this.aura.mod}
+        if enemies then
+            local mods = this.aura.mods or {this.aura.mod}
 
-        for _, enemy in pairs(enemies) do
-            for _, mod in pairs(mods) do
-                local new_mod = E:create_entity(mod)
-                new_mod.modifier.level = this.aura.level
-                new_mod.modifier.target_id = enemy.id
-                new_mod.modifier.source_id = this.id
-                queue_insert(store, new_mod)
+            for _, enemy in pairs(enemies) do
+                for _, mod in pairs(mods) do
+                    local new_mod = E:create_entity(mod)
+                    new_mod.modifier.level = this.aura.level
+                    new_mod.modifier.target_id = enemy.id
+                    new_mod.modifier.source_id = this.id
+                    queue_insert(store, new_mod)
+                end
             end
-        end
 
-        last_hit_ts = store.tick_ts
+            last_hit_ts = store.tick_ts
+        end
 
         while store.tick_ts - last_hit_ts < this.aura.cycle_time do
             coroutine.yield()
@@ -7433,12 +7430,9 @@ function scripts.enemy_munra.update(this, store, script)
         if not enemy_ready_to_magic_attack(this, store, ha) or this.health.dead then
             return false
         end
-
-        local targets = table.filter(store.enemies, function(k, v)
-            return
-                v.enemy.can_accept_magic and v.id ~= this.id and not v.health.dead and v.health.hp < v.health.hp_max and
-                    U.is_inside_ellipse(v.pos, this.pos, ha.range)
-        end)
+        local targets = U.find_enemies_in_range(store, this.pos, 0, ha.range, F_NONE, F_NONE, function(e)
+            return e.enemy.can_accept_magic and e.id ~= this.id and e.health.hp < e.health.hp_max
+        end) or {}
 
         if #targets > 0 then
             return true, targets
@@ -31832,7 +31826,7 @@ scripts.mod_endless_engineer_aftermath = {
 end
 
         end
-        
+
         local decal = E:create_entity("decal_tween")
 
         decal.pos.x, decal.pos.y = target.pos.x, target.pos.y

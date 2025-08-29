@@ -1631,7 +1631,7 @@ sys.goal_line = {}
 sys.goal_line.name = "goal_line"
 
 function sys.goal_line:on_update(dt, ts, store)
-    for _, e in E:filter_iter(store.enemies, "nav_path") do
+    for _, e in pairs(store.enemies) do
         local node_index = e.nav_path.ni
         local end_node = P:get_end_node(e.nav_path.pi)
 
@@ -2565,7 +2565,7 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
-local performance_monitor_enabled = false
+local performance_monitor_enabled = true
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}
