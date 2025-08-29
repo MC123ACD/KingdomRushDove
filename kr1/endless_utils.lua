@@ -473,6 +473,16 @@ function EU.patch_rain_damage_inc(level)
     local scorched_earth = E:get_template("power_scorched_earth")
     scorched_earth.aura.damage_min = scorched_earth.aura.damage_min + level * friend_buff.rain_damage_inc * 0.1
     scorched_earth.aura.damage_max = scorched_earth.aura.damage_max + level * friend_buff.rain_damage_inc * 0.1
+    local thunder = E:get_template("power_thunder_control")
+    thunder.thunders[1].damage_min = thunder.thunders[1].damage_min + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[1].damage_max = thunder.thunders[1].damage_max + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[2].damage_min = thunder.thunders[2].damage_min + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[2].damage_max = thunder.thunders[2].damage_max + level * friend_buff.rain_damage_inc * 0.5
+    thunder = E:get_template("endless_mage_thunder")
+    thunder.thunders[1].damage_min = thunder.thunders[1].damage_min + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[1].damage_max = thunder.thunders[1].damage_max + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[2].damage_min = thunder.thunders[2].damage_min + level * friend_buff.rain_damage_inc * 0.5
+    thunder.thunders[2].damage_max = thunder.thunders[2].damage_max + level * friend_buff.rain_damage_inc * 0.5
 end
 
 function EU.patch_rain_radius_mul(level)

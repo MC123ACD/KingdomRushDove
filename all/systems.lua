@@ -2565,7 +2565,7 @@ function sys.editor_script:on_update(dt, ts, store)
     end
 end
 
-local performance_monitor_enabled = true
+local performance_monitor_enabled = false
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}
