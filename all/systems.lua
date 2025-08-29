@@ -2599,6 +2599,8 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.hero then
                     entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
                     entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
+                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.hero_health_factor)
+                    entity.health.hp = entity.health.hp_max
                 end
             elseif entity.tower then
                 entity.tower.damage_factor = entity.tower.damage_factor * store.endless.tower_damage_factor

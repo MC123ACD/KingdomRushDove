@@ -203,18 +203,6 @@ local function get_enemy_weight(name)
     return weight
 end
 
-local function get_enemy_lives_cost(name)
-    local tpl = E:get_template(name)
-    local lives_cost = 0
-    if tpl.enemy then
-        lives_cost = tpl.enemy.lives_cost
-        if tpl.death_spawns and tpl.death_spawns.name then
-            lives_cost = lives_cost + get_enemy_lives_cost(tpl.death_spawns.name) * (tpl.death_spawns.quantity or 1)
-        end
-    end
-    return lives_cost
-end
-
 function EU.init_endless(level_name, groups)
     local endless
     local endless_history = storage:load_endless(level_name)
@@ -345,9 +333,10 @@ function EU.generate_group(endless)
             local function generate_creep_by_weight(i)
                 if i <= 0 then
                     return table.random(wave_enemy_list), 0
+                elseif #wave_enemy_list == 0 then
+                    return enemy_list[1], 0
                 end
                 local creep = table.random(wave_enemy_list)
-
                 local weight = endless.enemy_weight_map[creep]
 
                 -- 避免前期就出 boss，太夸张了
@@ -429,7 +418,7 @@ function EU.patch_archer_insight(level)
     end
 end
 function EU.patch_archer_multishot(level)
-    for _, name in pairs(UP:arrows()) do
+    for _, name in pairs(table.append(UP:arrows(),{"arrow_arcane_burst"},true)) do
         local arrow = E:get_template(name)
         if not arrow._endless_multishot then
             arrow.main_script.insert = U.function_append(arrow.main_script.insert,
@@ -439,7 +428,7 @@ function EU.patch_archer_multishot(level)
     end
 end
 function EU.patch_archer_critical(level)
-    for _, name in pairs(UP:arrows()) do
+    for _, name in pairs(table.append(UP:arrows(),{"arrow_arcane_burst"},true)) do
         local arrow = E:get_template(name)
         if not arrow._endless_archer_critical then
             arrow.main_script.insert = U.function_append(function(this, store, script)
@@ -961,9 +950,12 @@ function EU.patch_upgrade_in_game(key, store, endless)
         for _, h in pairs(store.soldiers) do
             if h.hero then
                 h.unit.damage_factor = h.unit.damage_factor * friend_buff.hero_damage_factor
+                h.health.hp_max = h.health.hp_max * friend_buff.hero_health_factor
+                h.health.hp = h.health.hp_max
             end
         end
         endless.hero_damage_factor = endless.hero_damage_factor * friend_buff.hero_damage_factor
+        endless.hero_health_factor = endless.hero_health_factor * friend_buff.hero_health_factor
     elseif key == "hero_cooldown" then
         for _, h in pairs(store.soldiers) do
             if h.hero then
