@@ -663,7 +663,7 @@ local function endless_engineer_aftermath_ray_remove(this, store)
 end
 
 function EU.patch_engineer_aftermath(level)
-    for _, name in pairs(bombs) do
+    for _, name in pairs(table.append(bombs, {"missile_mecha"}, true)) do
         local b = E:get_template(name)
         if not b._endless_engineer_aftermath then
             U.append_mod(b.bullet, "mod_endless_engineer_aftermath")
