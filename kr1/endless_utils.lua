@@ -243,9 +243,9 @@ function EU.init_endless(level_name, groups)
 
         for i = 1, #P.paths do
             table.insert(endless.available_paths, i)
-            endless.only_fly_paths[i] = true
         end
         endless.only_fly_paths = table.deepclone(endless.available_paths)
+        endless.special_paths = table.deepclone(endless.available_paths)
         for _, group in pairs(groups) do
             for _, wave in pairs(group.waves) do
                 for _, spawn in pairs(wave.spawns) do
@@ -258,9 +258,16 @@ function EU.init_endless(level_name, groups)
                         if not endless.enemy_weight_map[spawn.creep] then
                             endless.enemy_weight_map[spawn.creep] = get_enemy_weight(spawn.creep)
                         end
+                        if endless.special_paths[wave.path_index] then
+                            endless.special_paths[wave.path_index] = nil
+                        end
                     end
                 end
             end
+        end
+        for k, v in pairs(endless.special_paths) do
+            endless.available_paths[k] = nil
+            endless.only_fly_paths[k] = nil
         end
         endless.enemy_list = table.keys(endless.enemy_weight_map)
         endless.spawn_count_per_wave = math.ceil(total_spawns / #endless.available_paths)
