@@ -108,7 +108,9 @@ local function next_wave_ready_handler(group)
             game_gui.game.store.endless.load_from_history = false
         else
             if #game_gui.game.store.endless.upgrade_options > 0 and game_gui.game.store.wave_group_number <= 75 then
-                game_gui.endless_select_reward_view:show()
+                if game_gui.endless_select_reward_view.hidden then
+                    game_gui.endless_select_reward_view:show()
+                end
             end
 
             local endless = game_gui.game.store.endless

@@ -738,20 +738,21 @@ function U.find_targets_in_range(entities, origin, min_range, max_range, flags, 
     end
 end
 
-function U.find_first_target(entities, origin, min_range, max_range, flags, bans, filter_func)
+function U.find_first_enemy(store, origin, min_range, max_range, flags, bans, filter_func)
     flags = flags or 0
     bans = bans or 0
-
-    for _, v in pairs(entities) do
-        if not v.pending_removal and v.health and not v.health.dead and v.vis and band(v.vis.flags, bans) == 0 and
-            band(v.vis.bans, flags) == 0 and U.is_inside_ellipse(v.pos, origin, max_range) and
-            (min_range == 0 or not U.is_inside_ellipse(v.pos, origin, min_range)) and
-            (not filter_func or filter_func(v, origin)) then
-            return v
+    if max_range == math.huge then
+        for _, e in pairs(store.enemies) do
+            if not e.pending_removal and not e.health.dead and band(e.vis.flags, bans) == 0 and band(e.vis.bans, flags) == 0 and
+                (not filter_func or filter_func(e, origin)) then
+                return e
+            end
         end
+        return nil
     end
-
-    return nil
+    return store.enemy_spatial_index:query_first_entity_in_ellipse(origin.x, origin.y, max_range, min_range, function(v)
+        return not v.pending_removal and not v.health.dead and band(v.vis.flags, bans) == 0 and band(v.vis.bans, flags) == 0 and (not filter_func or filter_func(v, origin))
+    end)
 end
 
 function U.find_random_target(entities, origin, min_range, max_range, flags, bans, filter_func)

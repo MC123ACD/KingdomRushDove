@@ -54,7 +54,7 @@ local endless = {
         lives_cost_factor = 1.07,
         s_lives_cost_factor = 7,
         wave_interval_factor = 0.97,
-        instakill_resistance = 0.02,
+        instakill_resistance = 0.01,
     },
     template = {
         enemy_list = {},
@@ -242,7 +242,7 @@ local key_desc_map = {
     engineer_focus = string.format("火炮对中心敌人额外造成%d%%伤害，闪电与导弹伤害提升%d%%",
         endless.friend_buff.engineer_focus * 100, endless.friend_buff.engineer_focus * 100 * 0.8),
     engineer_aftermath = string.format(
-        "火炮/闪电附带震荡，对附近敌人额外造成%d/15点爆炸/雷电伤害",
+        "火炮，导弹/闪电附带震荡，对附近敌人额外造成%d/15点爆炸/雷电伤害",
         endless.friend_buff.engineer_aftermath),
     engineer_seek = string.format("使炮塔主动对空，电塔攻击范围提升%d%%",
         endless.friend_buff.engineer_seek * 100),

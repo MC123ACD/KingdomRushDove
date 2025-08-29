@@ -2703,12 +2703,14 @@ function scripts.missile.update(this, store, script)
     local mspeed = b.min_speed
     local rot_dir = 1
     local follow = false
-    local max_seek_angle = b.max_seek_angle or 0.2
+    local max_same_target_count = 3
+    -- local max_seek_angle = b.max_seek_angle or 0.2
+    local max_seek_angle = b.math_seek_angle or math.pi / 6
 
     if this.render.sprites[1].animated then
         U.animation_start(this, "flying", nil, store.tick_ts, -1)
     end
-
+    -- 先发射，速度
     while V.dist2(this.pos.x, this.pos.y, b.to.x, b.to.y) > mspeed * mspeed * store.tick_length * store.tick_length do
         b.speed.x, b.speed.y = V.mul(mspeed, V.normalize(b.to.x - this.pos.x, b.to.y - this.pos.y))
         this.pos.x, this.pos.y = this.pos.x + b.speed.x * store.tick_length, this.pos.y + b.speed.y * store.tick_length
@@ -2723,13 +2725,15 @@ function scripts.missile.update(this, store, script)
         coroutine.yield()
     end
 
+    -- 如果敌人死了，就重新找目标
     if not target or target.health and target.health.dead then
         local ref_pos = target and target.pos or this.pos
 
-        target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
-        -- target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
+        -- target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+        target = U.find_first_enemy(store, ref_pos, 0, b.retarget_range, b.vis_flags)
     end
 
+    -- 找到了目标。就更新目标位置
     if target then
         b.to.x, b.to.y = target.pos.x, target.pos.y
 
@@ -2742,8 +2746,10 @@ function scripts.missile.update(this, store, script)
         if not target or target.health and target.health.dead or band(target.vis.bans, b.vis_flags) ~= 0 then
             local ref_pos = target and target.pos or this.pos
 
-            target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
-            -- target = U.find_first_target(store.enemies, ref_pos, 0, b.retarget_range, b.vis_flags)
+            -- target = U.find_foremost_enemy(store, ref_pos, 0, b.retarget_range, false, b.vis_flags)
+            target = U.find_first_enemy(store, ref_pos, 0, b.retarget_range, b.vis_flags, F_NONE, function(e)
+                return not e._missile_count or e._missile_count < max_same_target_count
+            end)
 
             if b.rot_dir_from_long_angle and target then
                 rot_dir = target.pos.x < this.pos.x and -1 or 1
@@ -2755,6 +2761,12 @@ function scripts.missile.update(this, store, script)
 
             if target.unit.hit_offset then
                 b.to.x, b.to.y = b.to.x + target.unit.hit_offset.x, b.to.y + target.unit.hit_offset.y
+            end
+
+            if not target._missile_count then
+                target._missile_count = 1
+            else
+                target._missile_count = target._missile_count + 1
             end
         end
 
@@ -2788,6 +2800,7 @@ function scripts.missile.update(this, store, script)
         local origin = V.vclone(b.to)
         if target then
             origin.x, origin.y = target.pos.x, target.pos.y
+            target._missile_count = target._missile_count - 1
         end
         local enemies = U.find_enemies_in_range(store, origin, 0, b.damage_radius, b.damage_flags, b.damage_bans)
         if enemies then
@@ -2832,6 +2845,7 @@ function scripts.missile.update(this, store, script)
         end
 
     elseif target then
+        target._missile_count = target._missile_count - 1
         local d = SU.create_bullet_damage(b, target.id, this.id)
 
         queue_damage(store, d)

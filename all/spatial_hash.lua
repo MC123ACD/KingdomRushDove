@@ -82,6 +82,8 @@ function spatial_hash:remove_entity(entity)
     end
 end
 
+
+
 -- 必须提供 filter_fn
 function spatial_hash:query_entities_in_ellipse(x, y, radius_outer, radius_inner, filter_fn)
     local result = {}
@@ -109,6 +111,32 @@ function spatial_hash:query_entities_in_ellipse(x, y, radius_outer, radius_inner
 
     return result
 end
+
+function spatial_hash:query_first_entity_in_ellipse(x, y, radius_outer, radius_inner, filter_fn)
+    local cells = self:_get_cells_in_ellipse_range(x, y, radius_outer)
+    local b2_outer = radius_outer * aspect * radius_outer * aspect
+    local a2_outer = radius_outer * radius_outer
+    local r2_outer = a2_outer * b2_outer
+
+    local b2_inner = radius_inner * aspect * radius_inner * aspect
+    local a2_inner = radius_inner * radius_inner
+    local r2_inner = a2_inner * b2_inner
+
+    for _, cell in ipairs(cells) do
+        for _, entity in pairs(cell) do
+            local r_x2 = (entity.pos.x - x) * (entity.pos.x - x)
+            local r_y2 = (entity.pos.y - y) * (entity.pos.y - y)
+
+            if r_x2 * b2_outer + r_y2 * a2_outer <= r2_outer and
+                ((radius_inner == 0) or (r_x2 * b2_inner + r_y2 * a2_inner > r2_inner)) and filter_fn(entity) then
+                return entity
+            end
+        end
+    end
+
+    return nil
+end
+
 
 -- 在 spatial_hash.lua 文件末尾添加调试方法
 function spatial_hash:print_debug_info()

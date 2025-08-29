@@ -3021,7 +3021,7 @@ tt.particle_system.scales_x = {1, 0.25}
 tt.particle_system.scales_y = {1, 0.25}
 tt = E:register_t("ps_bolt_high_elven", "ps_bolt_elves_1")
 tt.particle_system.name = "mage_highElven_proy_particle"
-tt.particle_system.particle_lifetime = {fts(10), fts(10)}
+tt.particle_system.particle_lifetime = {fts(8), fts(8)}
 tt.particle_system.scales_y = {1, 0.5}
 tt = E:register_t("ps_bolt_wild_magus")
 
@@ -3030,7 +3030,7 @@ E:add_comps(tt, "pos", "particle_system")
 tt.particle_system.name = "mage_wild_proy_particle"
 tt.particle_system.alphas = {180, 12}
 tt.particle_system.animated = false
-tt.particle_system.particle_lifetime = {fts(10), fts(10)}
+tt.particle_system.particle_lifetime = {fts(8), fts(8)}
 tt.particle_system.scales_y = {1, 0.5}
 tt.particle_system.scales_x = {1, 0.5}
 tt.particle_system.emission_rate = 60

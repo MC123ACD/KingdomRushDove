@@ -16704,7 +16704,7 @@ function scripts.decal_eerie_root.update(this, store)
     U.y_animation_play(this, "start", nil, store.tick_ts)
 
     while store.tick_ts - start_ts < this.duration do
-        if U.find_first_target(store.entities, this.pos, 0, 25, this.vis_flags, this.vis_bans) then
+        if U.find_first_enemy(store, this.pos, 0, 25, this.vis_flags, this.vis_bans) then
             U.y_animation_play(this, "loop", nil, store.tick_ts, 1)
         end
 

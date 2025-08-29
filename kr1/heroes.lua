@@ -2229,7 +2229,7 @@ local function heroes()
 
     tt = E:register_t("missile_wizard", "bullet")
     tt.render.sprites[1].prefix = "missile_wizard"
-    tt.bullet.retarget_range = 200
+    tt.bullet.retarget_range = math.huge
     tt.bullet.damage_type = DAMAGE_MAGICAL
     tt.bullet.min_speed = 270
     tt.bullet.max_speed = 330
@@ -6854,7 +6854,7 @@ local function heroes()
     tt.bullet.max_speed = 360
     tt.bullet.min_speed = 240
     tt.bullet.particles_name = "ps_missile_wilbur"
-    tt.bullet.retarget_range = 99999
+    tt.bullet.retarget_range = math.huge
     tt.bullet.turn_speed = 10 * math.pi / 180 * 30
     tt.bullet.vis_bans = 0
     tt.bullet.vis_flags = F_RANGED
@@ -8074,7 +8074,7 @@ local function heroes()
     tt.bullet.max_speed = 540
     tt.bullet.min_speed = 420
     tt.bullet.particles_name = "ps_missile_phoenix"
-    tt.bullet.retarget_range = 99999
+    tt.bullet.retarget_range = math.huge
     tt.bullet.speed_var = 60
     tt.bullet.turn_helicoidal_factor = 2
     tt.bullet.turn_speed = 10 * math.pi / 180 * 30

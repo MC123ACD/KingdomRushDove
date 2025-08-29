@@ -5668,7 +5668,7 @@ scripts.hero_ignus = {
 
                     if sta ~= A_NO_TARGET and not a.disabled and store.tick_ts - a.ts >= a.cooldown then
                         local function find_surge_target()
-                            return U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                            return U.find_first_enemy(store, this.pos, a.min_range, a.max_range, a.vis_flags,
                                 a.vis_bans, function(e)
                                     if not e.nav_path or not e.nav_path.pi then
                                         return false
@@ -7399,7 +7399,7 @@ scripts.hero_minotaur = {
                 skill = this.hero.skills.bullrush
 
                 if ready_to_use_skill(a, store) then
-                    local target = U.find_first_target(store.enemies, this.pos, a.min_range, a.max_range, a.vis_flags,
+                    local target = U.find_first_enemy(store, this.pos, a.min_range, a.max_range, a.vis_flags,
                         a.vis_bans, function(e)
                             if not e.heading or not e.nav_path then
                                 return false

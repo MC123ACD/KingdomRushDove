@@ -70,7 +70,7 @@ local function boss()
     tt.timed_attacks.list[1].bullet_start_offset = vec_2(-30, 82)
     tt.timed_attacks.list[1].cooldown = 11
     tt.timed_attacks.list[1].launch_vector = vec_2(12, 170)
-    tt.timed_attacks.list[1].max_range = 99999
+    tt.timed_attacks.list[1].max_range = math.huge
     tt.timed_attacks.list[1].min_range = 100
     tt.timed_attacks.list[1].shoot_time = fts(24)
     tt.timed_attacks.list[1].vis_flags = F_RANGED
@@ -157,7 +157,7 @@ local function boss()
     tt.bullet.max_speed = 450
     tt.bullet.min_speed = 300
     tt.bullet.particles_name = "ps_missile"
-    tt.bullet.retarget_range = 99999
+    tt.bullet.retarget_range = math.huge
     tt.bullet.rot_dir_from_long_angle = true
     tt.bullet.turn_speed = 10 * math.pi / 180 * 30
     tt.bullet.vis_bans = bor(F_ENEMY)

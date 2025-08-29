@@ -494,8 +494,8 @@ local function engineer_towers()
     missile_mecha.render.sprites[1].prefix = "missile_mecha"
     missile_mecha.render.sprites[1].loop = true
     missile_mecha.bullet.damage_type = DAMAGE_EXPLOSION
-    missile_mecha.bullet.min_speed = 300
-    missile_mecha.bullet.max_speed = 450
+    missile_mecha.bullet.min_speed = 350
+    missile_mecha.bullet.max_speed = 500
     missile_mecha.bullet.turn_speed = 10 * math.pi / 180 * 30
     missile_mecha.bullet.acceleration_factor = 0.1
     missile_mecha.bullet.hit_fx = "fx_explosion_fragment"
@@ -507,7 +507,7 @@ local function engineer_towers()
     missile_mecha.bullet.vis_flags = F_RANGED
     missile_mecha.bullet.damage_flags = F_AREA
     missile_mecha.bullet.particles_name = "ps_missile_mecha"
-    missile_mecha.bullet.retarget_range = 99999
+    missile_mecha.bullet.retarget_range = math.huge
     missile_mecha.main_script.insert = scripts.missile.insert
     missile_mecha.main_script.update = scripts.missile.update
     missile_mecha.sound_events.insert = "RocketLaunchSound"
@@ -518,7 +518,8 @@ local function engineer_towers()
     E:add_comps(ps_missile_mecha, "pos", "particle_system")
     ps_missile_mecha.particle_system.name = "particle_smokelet"
     ps_missile_mecha.particle_system.animated = false
-    ps_missile_mecha.particle_system.particle_lifetime = {1.6, 1.8}
+    -- ps_missile_mecha.particle_system.particle_lifetime = {1.6, 1.8}
+    ps_missile_mecha.particle_system.particle_lifetime = {0.8, 0.9}
     ps_missile_mecha.particle_system.alphas = {255, 0}
     ps_missile_mecha.particle_system.scales_x = {1, 3}
     ps_missile_mecha.particle_system.scales_y = {1, 3}
