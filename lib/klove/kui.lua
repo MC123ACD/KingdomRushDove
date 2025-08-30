@@ -849,8 +849,8 @@ function KView:_draw_self()
 		G.draw(self.image, ss.quad, ss.trim[1] * ref_scale, ss.trim[2] * ref_scale, 0, ref_scale)
 	elseif self.image then
 		local iw, ih = self.image:getDimensions()
-		local ix = (self.size.x - iw * self.image_scale) / 2
-		local iy = (self.size.y - ih * self.image_scale) / 2
+		local ix = (self.size.x - iw * self.image_scale) * 0.5
+		local iy = (self.size.y - ih * self.image_scale) * 0.5
 
 		G.draw(self.image, ix, iy, 0, self.image_scale, self.image_scale)
 	end
@@ -2089,7 +2089,7 @@ function KScrollList:scroll_to_top()
 end
 
 function KScrollList:scroll_to_show_y(y)
-	self.scroll_origin_y = -1 * (y - self.size.y / 2)
+	self.scroll_origin_y = -1 * (y - self.size.y * 0.5)
 	self.scroll_origin_y = km.clamp(-(self._bottom_y - self.size.y), 0, self.scroll_origin_y)
 end
 

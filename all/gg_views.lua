@@ -178,9 +178,9 @@ function GGLabel:_draw_self()
 		end
 
 		if self.vertical_align == "middle" then
-			voff = math.floor((self.text_size.y - th) / 2)
+			voff = math.floor((self.text_size.y - th) * 0.5)
 		elseif self.vertical_align == "middle-caps" then
-			voff = math.floor((self.text_size.y - th + des) / 2)
+			voff = math.floor((self.text_size.y - th + des) * 0.5)
 		elseif self.vertical_align == "bottom" then
 			voff = self.text_size.y - th
 		elseif self.vertical_align == "bottom-caps" then
@@ -371,7 +371,7 @@ function GGButton:initialize(default_image_name, hover_image_name, click_image_n
 	end
 
 	if not self._deserialize_table then
-		self.anchor.x, self.anchor.y = self.size.x / 2, self.size.y / 2
+		self.anchor.x, self.anchor.y = self.size.x * 0.5, self.size.y * 0.5
 	end
 
 	local rs = GGLabel.static.ref_h / REF_H
@@ -957,7 +957,7 @@ function GGEllipseText:initialize(size, text)
 
 	self.ellipse_w = size.x
 	self.ellipse_h = size.y
-	self.max_angle = self.max_angle or math.pi / 2
+	self.max_angle = self.max_angle or math.pi * 0.5
 	self.text = text
 
 	if self.text_key then
@@ -1002,18 +1002,18 @@ function GGEllipseText:redraw()
 		l.size.x = l:get_text_width(l.text)
 		l.size.y = l:get_font_height()
 		l.colors.text = color
-		l.anchor.x = l.size.x / 2
+		l.anchor.x = l.size.x * 0.5
 		l.anchor.y = l.size.y * 2 / 3
 		text_w = text_w + l.size.x
 	end
 
-	local so_x = (self.ellipse_w - text_w) / 2
+	local so_x = (self.ellipse_w - text_w) * 0.5
 	local o_x = so_x
 
 	for i = 1, count do
 		local l = cv[i]
 
-		l.pos.x = o_x + l.size.x / 2
+		l.pos.x = o_x + l.size.x * 0.5
 		l.pos.y = math.sin(l.pos.x / self.ellipse_w * math.pi) * self.ellipse_h
 
 		local phase = (l.pos.x - so_x) / text_w

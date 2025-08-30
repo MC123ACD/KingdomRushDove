@@ -149,7 +149,7 @@ function U.ease_phase(phase, easing)
             return s * s * s * s * s
         end,
         sine = function(s)
-            return 1 - math.cos(s * math.pi / 2)
+            return 1 - math.cos(s * math.pi * 0.5)
         end,
         expo = function(s)
             return 2 ^ (10 * (s - 1))
@@ -165,15 +165,15 @@ function U.ease_phase(phase, easing)
 
     if first_ease == "outin" then
         if phase <= 0.5 then
-            return fn(phase * 2) / 2
+            return fn(phase * 2) * 0.5
         else
-            return 0.5 + rotate_fn(fn)((phase - 0.5) * 2) / 2
+            return 0.5 + rotate_fn(fn)((phase - 0.5) * 2) * 0.5
         end
     elseif first_ease == "inout" then
         if phase <= 0.5 then
-            return rotate_fn(fn)(phase * 2) / 2
+            return rotate_fn(fn)(phase * 2) * 0.5
         else
-            return 0.5 + fn((phase - 0.5) * 2) / 2
+            return 0.5 + fn((phase - 0.5) * 2) * 0.5
         end
     elseif first_ease == "in" then
         return rotate_fn(fn)(phase)
@@ -322,11 +322,11 @@ function U.animation_name_for_angle(e, group, angle, idx)
     local angles = a.angles and a.angles[group] or nil
 
     if not angles then
-        return group, angle > math.pi / 2 and angle < 3 * math.pi / 2, 1
+        return group, angle > math.pi * 0.5 and angle < 3 * math.pi * 0.5, 1
     elseif #angles == 1 then
-        return angles[1], angle > math.pi / 2 and angle < 3 * math.pi / 2, 1
+        return angles[1], angle > math.pi * 0.5 and angle < 3 * math.pi * 0.5, 1
     elseif #angles == 2 then
-        local flip_x = angle > math.pi / 2 and angle < 3 * math.pi / 2
+        local flip_x = angle > math.pi * 0.5 and angle < 3 * math.pi * 0.5
 
         if angle > 0 and angle < math.pi then
             if a.angles_flip_horizontal and a.angles_flip_horizontal[1] then
@@ -380,7 +380,7 @@ function U.animation_name_for_angle(e, group, angle, idx)
         end
 
         if a.angles_flip_vertical and a.angles_flip_vertical[group] then
-            o_flip = angle > math.pi / 2 and angle < 3 * math.pi / 2
+            o_flip = angle > math.pi * 0.5 and angle < 3 * math.pi * 0.5
         end
 
         return o_name, o_flip, o_idx
@@ -1418,7 +1418,7 @@ function U.melee_slot_position(soldier, enemy, rank, back)
         y_off = 6
     end
 
-    local soldier_on_the_right = math.abs(km.signed_unroll(enemy.heading.angle)) < math.pi / 2
+    local soldier_on_the_right = math.abs(km.signed_unroll(enemy.heading.angle)) < math.pi * 0.5
 
     if back then
         soldier_on_the_right = not soldier_on_the_right
@@ -1443,7 +1443,7 @@ function U.rally_formation_position(idx, barrack, count, angle_offset)
     else
         local a = 2 * math.pi / count
 
-        pos = U.point_on_ellipse(barrack.rally_pos, barrack.rally_radius, (idx - 1) * a - math.pi / 2 + angle_offset)
+        pos = U.point_on_ellipse(barrack.rally_pos, barrack.rally_radius, (idx - 1) * a - math.pi * 0.5 + angle_offset)
     end
 
     local center = V.vclone(barrack.rally_pos)

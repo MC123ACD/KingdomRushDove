@@ -14,7 +14,7 @@ function SU.clamp_window_aspect(w, h, ref_w, ref_h, min_aspect, max_aspect)
 		sw = ref_w
 		sh = ref_w / min_aspect
 		scale = w / ref_w
-		origin.y = (h - sh * scale) / 2
+		origin.y = (h - sh * scale) * 0.5
 	else
 		sw = ref_h * (w / h)
 		sh = ref_h
@@ -22,7 +22,7 @@ function SU.clamp_window_aspect(w, h, ref_w, ref_h, min_aspect, max_aspect)
 
 		if max_aspect < sw / sh then
 			sw = sh * max_aspect
-			origin.x = (w - sw * scale) / 2
+			origin.x = (w - sw * scale) * 0.5
 		end
 	end
 

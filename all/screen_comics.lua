@@ -24,7 +24,7 @@ screen_comics = {}
 if KR_TARGET == "console" then
 	screen_comics.ref_h = 320
 	screen_comics.ref_w = 480
-	screen_comics.ref_res = TEXTURE_SIZE_ALIAS.fullhd / 2
+	screen_comics.ref_res = TEXTURE_SIZE_ALIAS.fullhd * 0.5
 elseif KR_TARGET == "tablet" then
 	screen_comics.ref_h = 768
 	screen_comics.ref_w = 1024
@@ -70,8 +70,8 @@ function screen_comics:init(w, h, done_callback)
 	local function new_page_view(hidden)
 		local page_view = KView:new(V.v(self.ref_h, self.ref_w))
 
-		page_view.anchor = v(self.ref_w / 2, 0)
-		page_view.pos = v(sw / 2, 0)
+		page_view.anchor = v(self.ref_w * 0.5, 0)
+		page_view.pos = v(sw * 0.5, 0)
 		page_view.hidden = hidden
 		page_view.propagate_on_down = true
 		page_view.propagate_on_up = true
@@ -129,7 +129,7 @@ function screen_comics:init(w, h, done_callback)
 					}
 				}
 				l.pos = V.v(x + s.anchor.x, y + s.anchor.y)
-				l.anchor = V.v(size_x / 2, size_y / 2)
+				l.anchor = V.v(size_x * 0.5, size_y * 0.5)
 				l.text = _(text_key .. "_" .. string.upper(KR_GAME))
 				l.r = r * -1 * math.pi / 180
 				l.font_name = "body"

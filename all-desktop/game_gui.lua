@@ -471,7 +471,7 @@ function game_gui:init(w, h, game)
         from = 1
     }
     point_confirm.hidden = true
-    point_confirm.anchor = v(point_confirm.size.x / 2, point_confirm.size.y / 2)
+    point_confirm.anchor = v(point_confirm.size.x * 0.5, point_confirm.size.y * 0.5)
 
     local rallyflag = KImageView:new("rally_feedback_0005")
 
@@ -481,7 +481,7 @@ function game_gui:init(w, h, game)
         from = 1
     }
     rallyflag.hidden = true
-    rallyflag.anchor = v(rallyflag.size.x / 2, rallyflag.size.y / 2)
+    rallyflag.anchor = v(rallyflag.size.x * 0.5, rallyflag.size.y * 0.5)
 
     local hud_bottom = HudBottomView:new(sw, sh)
     local hud_counters = HudCountersView:new(self.game.simulation.store.level_mode)
@@ -506,8 +506,8 @@ function game_gui:init(w, h, game)
 
     local pauseview = PauseView:new()
 
-    pauseview.anchor = v(pauseview.size.x / 2, pauseview.size.y / 2)
-    pauseview.pos.x = self.sw / 2
+    pauseview.anchor = v(pauseview.size.x * 0.5, pauseview.size.y * 0.5)
+    pauseview.pos.x = self.sw * 0.5
     pauseview.hidden = true
 
     local hud_noti_queue = NotificationQueue:new()
@@ -518,13 +518,13 @@ function game_gui:init(w, h, game)
 
     local notiview = NotificationView:new()
 
-    notiview.pos = v(self.sw / 2, self.sh / 2)
+    notiview.pos = v(self.sw * 0.5, self.sh * 0.5)
     notiview.hidden = true
 
     local victoryview = VictoryView:new(self.game.simulation.store.level_mode)
 
-    victoryview.pos.x, victoryview.pos.y = self.sw / 2, self.sh / 3
-    victoryview.anchor.x, victoryview.anchor.y = victoryview.size.x / 2, victoryview.size.y / 2
+    victoryview.pos.x, victoryview.pos.y = self.sw * 0.5, self.sh / 3
+    victoryview.anchor.x, victoryview.anchor.y = victoryview.size.x * 0.5, victoryview.size.y * 0.5
     victoryview.hidden = true
 
     local defeatview
@@ -631,8 +631,8 @@ function game_gui:init(w, h, game)
         end
     else
         defeatview = DefeatView:new()
-        defeatview.pos.x, defeatview.pos.y = self.sw / 2, 3 * self.sh / 7
-        defeatview.anchor.x, defeatview.anchor.y = defeatview.size.x / 2, defeatview.size.y / 2
+        defeatview.pos.x, defeatview.pos.y = self.sw * 0.5, 3 * self.sh / 7
+        defeatview.anchor.x, defeatview.anchor.y = defeatview.size.x * 0.5, defeatview.size.y * 0.5
     end
 
     defeatview.hidden = true
@@ -1285,7 +1285,7 @@ function game_gui:show_wave_flags(group)
                 local wf = WaveFlag:new(w.some_flying, duration, incoming_report, w.path_index)
                 local wfx, wfy = self:g2u(item.pos)
 
-                wf.pointer.r = item.r - math.pi / 2
+                wf.pointer.r = item.r - math.pi * 0.5
                 wf.hidden = false
 
                 local vf = V.v(V.rotate(-item.r, 1, 0))
@@ -1776,18 +1776,18 @@ function GemsRewardFx:initialize(amount)
 
     local icon = KImageView:new("gemsReward_0001")
 
-    icon.anchor.y = icon.size.y / 2
+    icon.anchor.y = icon.size.y * 0.5
 
     self:add_child(icon)
 
     local digits = SpriteDigits:new("waveRewardTimer", "%i", amount)
 
-    digits.anchor.y = digits.size.y / 2
+    digits.anchor.y = digits.size.y * 0.5
     digits.pos.x = icon.size.x
 
     self:add_child(digits)
 
-    self.anchor.x, self.anchor.y = (digits.size.x + icon.size.x) / 2, icon.size.y + 2
+    self.anchor.x, self.anchor.y = (digits.size.x + icon.size.x) * 0.5, icon.size.y + 2
     self.scale = V.v(0.3, 0.3)
 
     timer:script(function(wait)
@@ -1797,7 +1797,7 @@ function GemsRewardFx:initialize(amount)
         }, "out-back")
         wait(0.21)
 
-        local dy = icon.size.y / 2
+        local dy = icon.size.y * 0.5
 
         timer:tween(0.4, self, {
             alpha = 0,
@@ -1857,7 +1857,7 @@ function TimeRewardFx:initialize(amount)
     end
 
     self.size.x = text_width + text_width * (1 - letter_spacing) / #reward_string
-    self.anchor.x = self.size.x / 2
+    self.anchor.x = self.size.x * 0.5
     self.alpha = 1
 
     timer:tween(1, self, {
@@ -1946,7 +1946,7 @@ function WaveRewardFx:initialize(reward)
     end
 
     vd.pos.x = self.size.x
-    self.anchor.x = (self.size.x + text_width) / 2
+    self.anchor.x = (self.size.x + text_width) * 0.5
     self.alpha = 1
 
     timer:tween(1.5, self, {
@@ -2309,7 +2309,7 @@ function PowerButton:early_wave_bonus(remaining_time)
 
         local reward_fx = TimeRewardFx:new(remaining_time)
 
-        reward_fx.pos = V.v(self.size.x / 2, -2 * reward_fx.size.y / 3)
+        reward_fx.pos = V.v(self.size.x * 0.5, -2 * reward_fx.size.y / 3)
 
         self:add_child(reward_fx)
         log.debug("show early wave time reward at %s,%s", wx, wy)
@@ -2586,8 +2586,8 @@ function PowerButtonBlock:initialize(power_button, duration, style_name)
 
     KImageView.initialize(self, style.image)
 
-    self.anchor = v(self.size.x / 2, self.size.y / 2)
-    self.pos.x, self.pos.y = power_button.size.x / 2, power_button.size.y / 2
+    self.anchor = v(self.size.x * 0.5, self.size.y * 0.5)
+    self.pos.x, self.pos.y = power_button.size.x * 0.5, power_button.size.y * 0.5
     self.animations = style.animations
 end
 
@@ -2804,7 +2804,7 @@ function BagButton:fire_item(item_name, x, y, entity)
             local h = KImageView:new("heart_0001")
 
             h.pos = V.v(lh:view_to_view(x, y, hud))
-            h.anchor.x, h.anchor.y = h.size.x / 2, h.size.y / 2
+            h.anchor.x, h.anchor.y = h.size.x * 0.5, h.size.y * 0.5
             h.hidden = true
 
             hud:add_child(h)
@@ -2845,7 +2845,7 @@ function BagButton:fire_item(item_name, x, y, entity)
     elseif item_name == "atomic_bomb" then
         entity.pos.x, entity.pos.y = game_gui:u2g(V.v(-50, 200))
         entity.plane_dest = V.v(game_gui:u2g(V.v(game_gui.sw + 50, 200)))
-        entity.bomb_dest = V.v(game_gui:u2g(V.v(game_gui.sw / 2, 450)))
+        entity.bomb_dest = V.v(game_gui:u2g(V.v(game_gui.sw * 0.5, 450)))
 
         local wx, wy = game_gui:u2g(V.v(x, y))
     end
@@ -2914,7 +2914,7 @@ NextWaveButton = class("NextWaveButton", KImageButton)
 function NextWaveButton:initialize()
     NextWaveButton.super.initialize(self, "nextwave_0001", "nextwave_0002", "nextwave_0002")
 
-    self.anchor = v(math.floor(self.size.x / 2), self.size.y)
+    self.anchor = v(math.floor(self.size.x * 0.5), self.size.y)
 end
 
 function NextWaveButton:on_click(button, x, y)
@@ -3034,11 +3034,11 @@ function InfoBar:initialize()
 
                 b:add_child(bfg)
 
-                bfg.pos.x = (b.size.x - bfg.size.x) / 2
-                bfg.pos.y = (b.size.y - bfg.size.y) / 2
+                bfg.pos.x = (b.size.x - bfg.size.x) * 0.5
+                bfg.pos.y = (b.size.y - bfg.size.y) * 0.5
                 b.pos.x = off_x
                 b.bar = bfg
-                b.pos.x = (w - b.size.x) / 2
+                b.pos.x = (w - b.size.x) * 0.5
                 sv[name] = b
 
                 sv:add_child(b)
@@ -3307,14 +3307,14 @@ function HudBottomView:initialize(sw, sh)
 
     local bg_nextwave = KImageView:new("bg_bottom_nextwave")
 
-    bg_nextwave.anchor = v(math.floor(bg_nextwave.size.x / 2), bg_nextwave.size.y)
-    bg_nextwave.pos = v(next_wave.size.x / 2, next_wave.size.y)
+    bg_nextwave.anchor = v(math.floor(bg_nextwave.size.x * 0.5), bg_nextwave.size.y)
+    bg_nextwave.pos = v(next_wave.size.x * 0.5, next_wave.size.y)
 
     next_wave:add_child(bg_nextwave)
 
     local next_wave_button = NextWaveButton:new()
 
-    next_wave_button.pos = v(next_wave.size.x / 2, 31)
+    next_wave_button.pos = v(next_wave.size.x * 0.5, 31)
 
     next_wave:add_child(next_wave_button)
 
@@ -3380,19 +3380,19 @@ function HudBottomView:initialize(sw, sh)
         local pb = powers.children[1 + i]
         local pn = KImageView:new("power_nbrs_000" .. i)
 
-        pn.anchor = v(pn.size.x / 2, pn.size.y)
-        pn.pos = v(pb.pos.x + pb.size.x / 2, powers.size.y)
+        pn.anchor = v(pn.size.x * 0.5, pn.size.y)
+        pn.pos = v(pb.pos.x + pb.size.x * 0.5, powers.size.y)
 
         powers:add_child(pn)
     end
 
-    local x_center = math.floor((sw - next_wave.size.x - powers.size.x - powers.pos.x) / 2) + powers.pos.x +
+    local x_center = math.floor((sw - next_wave.size.x - powers.size.x - powers.pos.x) * 0.5) + powers.pos.x +
                          powers.size.x
 
     if not IS_KR3 then
         local bg_center = KImageView:new("bg_bottom_center")
 
-        bg_center.anchor = v(bg_center.size.x / 2, bg_center.size.y)
+        bg_center.anchor = v(bg_center.size.x * 0.5, bg_center.size.y)
         bg_center.pos = v(x_center, sh)
         self.bg_center = bg_center
 
@@ -3405,7 +3405,7 @@ function HudBottomView:initialize(sw, sh)
         local tt = kui_db:get_table("game_gui_bag_view", {})
 
         bagbar = GG9View:new_from_table(tt)
-        bagbar.anchor = v(math.floor(bagbar.size.x / 2), bagbar.size.y)
+        bagbar.anchor = v(math.floor(bagbar.size.x * 0.5), bagbar.size.y)
         bagbar.y_shown = sh + 25
         bagbar.y_hidden = sh + bagbar.size.y
         bagbar.pos = V.v(x_center, bagbar.y_hidden)
@@ -3443,7 +3443,7 @@ function HudBottomView:initialize(sw, sh)
 
     local infobar = InfoBar:new()
 
-    infobar.anchor = v(math.floor(infobar.size.x / 2), infobar.size.y)
+    infobar.anchor = v(math.floor(infobar.size.x * 0.5), infobar.size.y)
     infobar.pos = v(x_center, sh + infobar.size.y)
     infobar.pos_hidden = V.vclone(infobar.pos)
     infobar.hidden = true
@@ -3484,7 +3484,7 @@ function HudBottomView:show()
 end
 
 function HudBottomView:update_bars_pos()
-    local x_center = math.floor((game_gui.sw - self.next_wave.size.x - self.powers.size.x - self.powers.pos.x) / 2) +
+    local x_center = math.floor((game_gui.sw - self.next_wave.size.x - self.powers.size.x - self.powers.pos.x) * 0.5) +
                          self.powers.pos.x + self.powers.size.x
 
     self.infobar.pos.x = x_center - 12
@@ -3522,8 +3522,8 @@ function HudBottomView:add_hero(hero_entity)
 
         local separator = KImageView:new("heroPortrait_separator")
 
-        separator.anchor = v(separator.size.x / 2, hero.size.y)
-        separator.pos = v(last.pos.x + hero.size.x - overlap / 2, 3)
+        separator.anchor = v(separator.size.x * 0.5, hero.size.y)
+        separator.pos = v(last.pos.x + hero.size.x - overlap * 0.5, 3)
         separator.propagate_on_click = true
         separator.propagate_on_down = true
         separator.propagate_on_up = true
@@ -3750,8 +3750,8 @@ function HudPauseButton:initialize()
 
     local button = KImageButton:new("pause_btn_0001", "pause_btn_0002", "pause_btn_0002")
 
-    button.anchor = v(button.size.x / 2, 0)
-    button.pos = v(self.size.x / 2, 25)
+    button.anchor = v(button.size.x * 0.5, 0)
+    button.pos = v(self.size.x * 0.5, 25)
 
     function button.on_click()
         S:queue("GUIButtonCommon")
@@ -3791,8 +3791,8 @@ function PauseView:initialize()
     local title = GGOptionsLabel:new(V.v(self.size.x, 28))
 
     title.text = _("SFX")
-    title.pos = V.v(self.size.x / 2, y)
-    title.anchor.x = title.size.x / 2
+    title.pos = V.v(self.size.x * 0.5, y)
+    title.anchor.x = title.size.x * 0.5
     title.vertical_align = "middle"
 
     self:add_child(title)
@@ -3814,8 +3814,8 @@ function PauseView:initialize()
     y = y + 50
     title = GGOptionsLabel:new(V.v(self.size.x, 28))
     title.text = _("Music")
-    title.pos = V.v(self.size.x / 2, y)
-    title.anchor.x = title.size.x / 2
+    title.pos = V.v(self.size.x * 0.5, y)
+    title.anchor.x = title.size.x * 0.5
     title.vertical_align = "middle"
 
     self:add_child(title)
@@ -3839,7 +3839,7 @@ function PauseView:initialize()
     local b
 
     b = GGOptionsButton:new(_("BUTTON_QUIT"))
-    b.pos = V.v(mx + b.size.x / 2, y)
+    b.pos = V.v(mx + b.size.x * 0.5, y)
 
     self:add_child(b)
 
@@ -3849,7 +3849,7 @@ function PauseView:initialize()
     end
 
     b = GGOptionsButton:new(_("BUTTON_RESTART"))
-    b.pos = V.v(math.ceil(self.size.x / 2), y)
+    b.pos = V.v(math.ceil(self.size.x * 0.5), y)
 
     self:add_child(b)
 
@@ -3859,7 +3859,7 @@ function PauseView:initialize()
     end
 
     b = GGOptionsButton:new(_("BUTTON_RESUME"))
-    b.pos = V.v(self.size.x - mx - b.size.x / 2, y)
+    b.pos = V.v(self.size.x - mx - b.size.x * 0.5, y)
 
     self:add_child(b)
 
@@ -3895,7 +3895,7 @@ function PauseView:show()
 
     game_gui.overlay:show()
 
-    self.pos.y = game_gui.sh / 2 - 50
+    self.pos.y = game_gui.sh * 0.5 - 50
     self.hidden = false
     self.alpha = 0
     self.tweener = timer:tween(0.25, self, {
@@ -4002,7 +4002,7 @@ function DefeatView:initialize()
 
     local l_tip = GGLabel:new(V.v(246, 90))
 
-    l_tip.anchor.x = l_tip.size.x / 2
+    l_tip.anchor.x = l_tip.size.x * 0.5
     l_tip.text = _(string.format("TIP_%i", math.random(1, GS.gameplay_tips_count)))
     l_tip.text_align = "center"
     l_tip.font_name = "body"
@@ -4010,7 +4010,7 @@ function DefeatView:initialize()
     l_tip.font_size = 15
     l_tip.fit_size = true
     l_tip.colors.text = {255, 255, 255, 255}
-    l_tip.pos.x, l_tip.pos.y = self.size.x / 2, 155
+    l_tip.pos.x, l_tip.pos.y = self.size.x * 0.5, 155
 
     self:add_child(l_tip)
 
@@ -4021,7 +4021,7 @@ function DefeatView:initialize()
     local b
 
     b = GGOptionsButton(_("BUTTON_RESTART"))
-    b.pos.x, b.pos.y = V.csnap(mx + b.size.x / 2, y + b.size.y / 2)
+    b.pos.x, b.pos.y = V.csnap(mx + b.size.x * 0.5, y + b.size.y * 0.5)
 
     function b.on_click()
         log.debug("RETRY")
@@ -4031,7 +4031,7 @@ function DefeatView:initialize()
     self:add_child(b)
 
     b = GGOptionsButton(_("Quit"))
-    b.pos.x, b.pos.y = V.csnap(self.size.x - mx - b.size.x / 2, y + b.size.y / 2)
+    b.pos.x, b.pos.y = V.csnap(self.size.x - mx - b.size.x * 0.5, y + b.size.y * 0.5)
 
     function b.on_click()
         log.debug("QUIT")
@@ -4050,10 +4050,10 @@ function DefeatView:show()
     S:stop_all()
     S:queue("GUIQuestFailed")
 
-    self.pos.y = -game_gui.sw / 2
+    self.pos.y = -game_gui.sw * 0.5
 
     timer:tween(0.5, self.pos, {
-        y = game_gui.sh / 2
+        y = game_gui.sh * 0.5
     }, "out-back", nil, 1)
 
     if game_gui.is_premium then
@@ -4091,7 +4091,7 @@ function VictoryParticles:initialize(w, h)
 
     local ps = G.newParticleSystem(c, 500)
 
-    ps:setDirection(-math.pi / 2)
+    ps:setDirection(-math.pi * 0.5)
     ps:setSpread(2 * math.pi / 3)
     ps:setSizes(1 * p_scale, 1.4 * p_scale)
     ps:setLinearAcceleration(0, 2000)
@@ -4132,15 +4132,15 @@ function VictoryView:initialize(level_mode)
     local v_badge = KImageView:new(img_names[level_mode])
     local vw, vh = v_badge.size.x, v_badge.size.y
 
-    v_badge.anchor.x = vw / 2
+    v_badge.anchor.x = vw * 0.5
     v_badge.anchor.y = 0
-    v_badge.pos.x, v_badge.pos.y = vw / 2, 0
+    v_badge.pos.x, v_badge.pos.y = vw * 0.5, 0
     v_badge.propagate_on_click = true
 
     local ct = GGEllipseText:new(V.v(320, -30))
 
-    ct.pos.x, ct.pos.y = v_badge.size.x / 2, 235
-    ct.anchor.x = ct.size.x / 2
+    ct.pos.x, ct.pos.y = v_badge.size.x * 0.5, 235
+    ct.anchor.x = ct.size.x * 0.5
     ct.text = _("VICTORY")
     ct.font_name = "h_noti"
     ct.font_size = 78
@@ -4151,8 +4151,8 @@ function VictoryView:initialize(level_mode)
 
     local v_stars = KImageView:new("victoryStars_0001")
 
-    v_stars.anchor.x = v_stars.size.x / 2
-    v_stars.pos.x, v_stars.pos.y = vw / 2, 230
+    v_stars.anchor.x = v_stars.size.x * 0.5
+    v_stars.pos.x, v_stars.pos.y = vw * 0.5, 230
     v_stars.hidden = true
     v_stars.animations = {{
         to = 19,
@@ -4176,11 +4176,11 @@ function VictoryView:initialize(level_mode)
     local c = KImageView:new("button_continue_chains")
     local b = GGBorderButton(_("BUTTON_CONTINUE"), true)
 
-    c.anchor.x = c.size.x / 2
+    c.anchor.x = c.size.x * 0.5
     c.anchor.y = c.size.y + 0.9 * b.size.y
-    c.pos.x = vw / 2
+    c.pos.x = vw * 0.5
     c.pos.y = 0
-    b.pos.x = c.size.x / 2
+    b.pos.x = c.size.x * 0.5
     b.pos.y = c.size.y + 0.125 * b.size.y
 
     function b.on_click()
@@ -4197,20 +4197,20 @@ function VictoryView:initialize(level_mode)
     v_c.clip = true
     v_c.size.x = vw
     v_c.size.y = vh
-    v_c.anchor.x = vw / 2
+    v_c.anchor.x = vw * 0.5
     v_c.anchor.y = 0
-    v_c.pos.x = vw / 2
+    v_c.pos.x = vw * 0.5
     v_c.pos.y = 300
 
     local v_r = KView:new()
     local c = KImageView:new("button_restart_chains")
     local b = GGBorderButton(_("BUTTON_RESTART"))
 
-    c.anchor.x = c.size.x / 2
+    c.anchor.x = c.size.x * 0.5
     c.anchor.y = c.size.y + 0.9 * b.size.y
-    c.pos.x = vw / 2
+    c.pos.x = vw * 0.5
     c.pos.y = 0
-    b.pos.x = c.size.x / 2
+    b.pos.x = c.size.x * 0.5
     b.pos.y = c.size.y + 0.125 * b.size.y
 
     function b.on_click()
@@ -4225,9 +4225,9 @@ function VictoryView:initialize(level_mode)
     v_r.clip = true
     v_r.size.x = vw
     v_r.size.y = vh
-    v_r.anchor.x = vw / 2
+    v_r.anchor.x = vw * 0.5
     v_r.anchor.y = 0
-    v_r.pos.x = vw / 2
+    v_r.pos.x = vw * 0.5
     v_r.pos.y = v_c.pos.y + 115
 
     local v_gnome
@@ -4269,7 +4269,7 @@ function VictoryView:show()
         self.ct.font_size = 40
         if criket.tower_name then
             local tower_icon = KImageView:new(E:get_template(criket.tower_name).info.portrait)
-            tower_icon.anchor = V.v(tower_icon.size.x / 2, tower_icon.size.y / 2)
+            tower_icon.anchor = V.v(tower_icon.size.x * 0.5, tower_icon.size.y * 0.5)
             tower_icon.pos = V.v(400, 120)
             tower_icon.scale = V.v(1.2, 1.2)
             tower_icon.hidden = false
@@ -4307,7 +4307,7 @@ function VictoryView:show()
 
         local p = VictoryParticles:new()
 
-        p.pos.x, p.pos.y = self.size.x / 2, self.size.y / 3
+        p.pos.x, p.pos.y = self.size.x * 0.5, self.size.y / 3
         self.particles = p
 
         self:add_child(p)
@@ -4361,7 +4361,7 @@ function MousePointer:initialize()
 
     local rally_tower = KImageView:new("pointer_set_rally_0001")
 
-    rally_tower.anchor = V.v(rally_tower.size.x / 2, rally_tower.size.y / 2)
+    rally_tower.anchor = V.v(rally_tower.size.x * 0.5, rally_tower.size.y * 0.5)
     rally_tower.animation = {
         to = 10,
         prefix = "pointer_set_rally",
@@ -4371,7 +4371,7 @@ function MousePointer:initialize()
 
     local ipc = KImageView:new("error_feedback_0001")
 
-    ipc.anchor = v(ipc.size.x / 2, ipc.size.y / 2)
+    ipc.anchor = v(ipc.size.x * 0.5, ipc.size.y * 0.5)
     ipc.animation = {
         to = 14,
         prefix = "error_feedback",
@@ -4380,13 +4380,13 @@ function MousePointer:initialize()
 
     local pirate_camp = KImageView:new("pointer_pirate_cannons")
 
-    pirate_camp.anchor = v(pirate_camp.size.x / 2, pirate_camp.size.y / 2)
+    pirate_camp.anchor = v(pirate_camp.size.x * 0.5, pirate_camp.size.y * 0.5)
     pirate_camp.alpha = 0.75
 
     local p1b, p2b, p3b, pb_point, pb_area, sunray_tower
 
     p1b = KImageView:new("pointer_area_orange_0001")
-    p1b.anchor = V.v(p1b.size.x / 2, p1b.size.y / 2)
+    p1b.anchor = V.v(p1b.size.x * 0.5, p1b.size.y * 0.5)
     p1b.animation = {
         to = 10,
         prefix = "pointer_area_orange",
@@ -4396,13 +4396,13 @@ function MousePointer:initialize()
 
     local p1i = KImageView:new(IS_KR3 and "pointer_hero_power_0017" or "pointer_user_power_0001")
 
-    p1i.anchor = V.v(p1i.size.x / 2, p1i.size.y * 100 / 100)
-    p1i.pos.x, p1i.pos.y = p1b.size.x / 2, p1b.size.y / 2
+    p1i.anchor = V.v(p1i.size.x * 0.5, p1i.size.y * 100 / 100)
+    p1i.pos.x, p1i.pos.y = p1b.size.x * 0.5, p1b.size.y * 0.5
 
     p1b:add_child(p1i)
 
     p2b = KImageView:new("pointer_point_orange_0001")
-    p2b.anchor = V.v(p2b.size.x / 2, p2b.size.y / 2)
+    p2b.anchor = V.v(p2b.size.x * 0.5, p2b.size.y * 0.5)
     p2b.animation = {
         to = 10,
         prefix = "pointer_point_orange",
@@ -4412,8 +4412,8 @@ function MousePointer:initialize()
 
     local p2i = KImageView:new(IS_KR3 and "pointer_hero_power_0018" or "pointer_user_power_0002")
 
-    p2i.anchor = V.v(p2i.size.x / 2, p2i.size.y * 100 / 100)
-    p2i.pos.x, p2i.pos.y = p2b.size.x / 2, p2b.size.y / 2
+    p2i.anchor = V.v(p2i.size.x * 0.5, p2i.size.y * 100 / 100)
+    p2i.pos.x, p2i.pos.y = p2b.size.x * 0.5, p2b.size.y * 0.5
 
     p2b:add_child(p2i)
 
@@ -4424,7 +4424,7 @@ function MousePointer:initialize()
         local p3b_prefix = p3_style == "area" and "pointer_area_orange" or "pointer_point_orange"
 
         p3b = KImageView:new(p3b_prefix .. "_0001")
-        p3b.anchor = V.v(p3b.size.x / 2, p3b.size.y / 2)
+        p3b.anchor = V.v(p3b.size.x * 0.5, p3b.size.y * 0.5)
         p3b.animation = {
             to = 10,
             from = 1,
@@ -4434,15 +4434,15 @@ function MousePointer:initialize()
 
         local p3i = KImageView:new(p3_icon)
 
-        p3i.anchor = V.v(p3i.size.x / 2, p3i.size.y * 100 / 100)
-        p3i.pos.x, p3i.pos.y = p3b.size.x / 2, p3b.size.y / 2
+        p3i.anchor = V.v(p3i.size.x * 0.5, p3i.size.y * 100 / 100)
+        p3i.pos.x, p3i.pos.y = p3b.size.x * 0.5, p3b.size.y * 0.5
 
         p3b:add_child(p3i)
     end
 
     if IS_KR1 then
         sunray_tower = KImageView:new("pointer_point_orange_0001")
-        sunray_tower.anchor = V.v(sunray_tower.size.x / 2, sunray_tower.size.y / 2)
+        sunray_tower.anchor = V.v(sunray_tower.size.x * 0.5, sunray_tower.size.y * 0.5)
         sunray_tower.animation = {
             to = 10,
             prefix = "pointer_point_orange",
@@ -4452,15 +4452,15 @@ function MousePointer:initialize()
 
         local drop = KImageView:new("pointer_sunray_tower")
 
-        drop.anchor = V.v(drop.size.x / 2, drop.size.y * 100 / 100)
-        drop.pos.x, drop.pos.y = sunray_tower.size.x / 2, sunray_tower.size.y / 2
+        drop.anchor = V.v(drop.size.x * 0.5, drop.size.y * 100 / 100)
+        drop.pos.x, drop.pos.y = sunray_tower.size.x * 0.5, sunray_tower.size.y * 0.5
 
         sunray_tower:add_child(drop)
     end
 
     if game_gui.is_premium then
         pb_point = KImageView:new("pointer_point_orange_0001")
-        pb_point.anchor = V.v(pb_point.size.x / 2, pb_point.size.y / 2)
+        pb_point.anchor = V.v(pb_point.size.x * 0.5, pb_point.size.y * 0.5)
         pb_point.animation = {
             to = 10,
             prefix = "pointer_point_orange",
@@ -4470,13 +4470,13 @@ function MousePointer:initialize()
 
         local pbi = KImageView:new("pointer_bag_item_0001")
 
-        pbi.anchor = V.v(pbi.size.x / 2, pbi.size.y * 100 / 100)
-        pbi.pos.x, pbi.pos.y = pb_point.size.x / 2, pb_point.size.y / 2
+        pbi.anchor = V.v(pbi.size.x * 0.5, pbi.size.y * 100 / 100)
+        pbi.pos.x, pbi.pos.y = pb_point.size.x * 0.5, pb_point.size.y * 0.5
 
         pb_point:add_child(pbi)
 
         pb_area = KImageView:new("pointer_area_orange_0001")
-        pb_area.anchor = V.v(pb_area.size.x / 2, pb_area.size.y / 2)
+        pb_area.anchor = V.v(pb_area.size.x * 0.5, pb_area.size.y * 0.5)
         pb_area.animation = {
             to = 10,
             prefix = "pointer_area_orange",
@@ -4484,8 +4484,8 @@ function MousePointer:initialize()
         }
         pb_area.loop = true
         pbi = KImageView:new("pointer_bag_item_0001")
-        pbi.anchor = V.v(pbi.size.x / 2, pbi.size.y * 100 / 100)
-        pbi.pos.x, pbi.pos.y = pb_area.size.x / 2, pb_area.size.y / 2
+        pbi.anchor = V.v(pbi.size.x * 0.5, pbi.size.y * 100 / 100)
+        pbi.pos.x, pbi.pos.y = pb_area.size.x * 0.5, pb_area.size.y * 0.5
 
         pb_area:add_child(pbi)
     end
@@ -4686,8 +4686,8 @@ function NotificationView:show(id, no_transition, force_show)
         v_title_label.font_size = 24
         v_title_label.scale.x = 1 / v_title.scale.x
         v_title_label.pos.y = 16
-        v_title_label.pos.x = v_title.size.x / 2
-        v_title_label.anchor.x = v_title_label.size.x / 2
+        v_title_label.pos.x = v_title.size.x * 0.5
+        v_title_label.anchor.x = v_title_label.size.x * 0.5
         v_title_label.text = title_text
         v_title_label.text_align = "center"
         v_title_label.vertical_align = ISW("middle-caps", "zh-Hans", "middle", "zh-Hant", "middle", "ko", "middle",
@@ -4790,14 +4790,14 @@ function NotificationView:show(id, no_transition, force_show)
     local function create_photo(image, rotation, small_shadow)
         local v_image = KImageView:new(image)
 
-        v_image.anchor = V.v(v_image.size.x / 2, v_image.size.y / 2)
+        v_image.anchor = V.v(v_image.size.x * 0.5, v_image.size.y * 0.5)
         v_image.r = rotation
         v_image.propagate_on_click = true
 
         local border_name = small_shadow and "notifications_polaroid_overlay_small_shadow" or
                                 "notifications_polaroid_overlay"
         local v_border = KImageView:new(border_name)
-        local dx, dy = (v_border.size.x - v_image.size.x) / 2, (v_border.size.y - v_image.size.y) / 2
+        local dx, dy = (v_border.size.x - v_image.size.x) * 0.5, (v_border.size.y - v_image.size.y) * 0.5
 
         v_border.pos = V.v(-dx, -dy)
         v_border.propagate_on_click = true
@@ -5100,13 +5100,13 @@ function NotificationView:show(id, no_transition, force_show)
         end
 
         self.size = V.v(pw, ph)
-        self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+        self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     elseif n.layout == N_TIP then
         local views, pw, ph = create_slide(n.layout, n.paper, data.notification_slides[id])
         local v_title = create_noti_title(n.layout)
 
-        v_title.anchor = V.v(v_title.size.x / 2, v_title.size.y)
-        v_title.pos = V.v(pw / 2, 32)
+        v_title.anchor = V.v(v_title.size.x * 0.5, v_title.size.y)
+        v_title.pos = V.v(pw * 0.5, 32)
 
         local b_ok = create_noti_button("light")
 
@@ -5126,7 +5126,7 @@ function NotificationView:show(id, no_transition, force_show)
         end
 
         self.size = V.v(pw, ph)
-        self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+        self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     elseif n.layout == N_TOWER_2 then
         local views_1, pw1, ph1 = create_layout(N_TOWER, n.images[1], n.prefixes[1], n.subs[1])
         local views_2, pw2, ph2 = create_layout(N_TOWER, n.images[2], n.prefixes[2], n.subs[2], ph1 - 30)
@@ -5155,7 +5155,7 @@ function NotificationView:show(id, no_transition, force_show)
         end
 
         self.size = V.v(pw1, ph1 + ph2 - 30)
-        self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+        self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     elseif n.layout == N_TOWER_4 then
         local ox, oy = 76, 55
         local my = 5
@@ -5185,7 +5185,7 @@ function NotificationView:show(id, no_transition, force_show)
         oy = oy + my + l_2.size.y
 
         local offx = 140
-        local pox, poy = (v_paper.size.x - 3 * offx) / 2, 220
+        local pox, poy = (v_paper.size.x - 3 * offx) * 0.5, 220
         local rotations = {math.pi / 22, -math.pi / 20, math.pi / 30, -math.pi / 25}
         local photos = {}
 
@@ -5222,7 +5222,7 @@ function NotificationView:show(id, no_transition, force_show)
         end
 
         self.size = V.vclone(v_paper.size)
-        self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+        self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     elseif n.layout == N_TUTORIAL then
         local views, pw, ph = create_slide(n.layout, n.paper, data.notification_slides[id])
         local v_paper = views[1]
@@ -5232,8 +5232,8 @@ function NotificationView:show(id, no_transition, force_show)
 
         local v_title = create_noti_title(n.layout)
 
-        v_title.anchor = V.v(v_title.size.x / 2, v_title.size.y)
-        v_title.pos = V.v(pw / 2, 32)
+        v_title.anchor = V.v(v_title.size.x * 0.5, v_title.size.y)
+        v_title.pos = V.v(pw * 0.5, 32)
 
         self:add_child(v_title)
 
@@ -5241,7 +5241,7 @@ function NotificationView:show(id, no_transition, force_show)
             local b_skip = create_noti_button("skip")
 
             b_skip.anchor = V.v(b_skip.size.x, 0)
-            b_skip.pos = V.v(v_paper.size.x / 2 - 20, v_paper.size.y - 30)
+            b_skip.pos = V.v(v_paper.size.x * 0.5 - 20, v_paper.size.y - 30)
 
             function b_skip.on_click(this)
                 this:disable()
@@ -5253,7 +5253,7 @@ function NotificationView:show(id, no_transition, force_show)
             local b_next = create_noti_button("next")
 
             b_next.anchor = V.v(0, 0)
-            b_next.pos = V.v(v_paper.size.x / 2 + 20, v_paper.size.y - 30)
+            b_next.pos = V.v(v_paper.size.x * 0.5 + 20, v_paper.size.y - 30)
 
             function b_next.on_click(this)
                 self.show_next = n.next
@@ -5266,8 +5266,8 @@ function NotificationView:show(id, no_transition, force_show)
         else
             local b_ok = create_noti_button("gotcha")
 
-            b_ok.anchor = V.v(b_ok.size.x / 2, 0)
-            b_ok.pos = V.v(v_paper.size.x / 2, v_paper.size.y - 24)
+            b_ok.anchor = V.v(b_ok.size.x * 0.5, 0)
+            b_ok.pos = V.v(v_paper.size.x * 0.5, v_paper.size.y - 24)
 
             function b_ok.on_click(this)
                 this:disable()
@@ -5282,7 +5282,7 @@ function NotificationView:show(id, no_transition, force_show)
         end
 
         self.size.x, self.size.y = pw, ph
-        self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+        self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     else
         log.error("Notification type %s unknown", n.layout)
 
@@ -5443,13 +5443,13 @@ NotificationIcon = class("NotificationIcon", KImageView)
 function NotificationIcon:initialize(image, notification_id, layout)
     NotificationIcon.super.initialize(self, image)
 
-    self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+    self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
     self.notification_id = notification_id
 
     local title = GGShaderLabel:new(V.v(math.floor(self.size.x * 1.5), 30))
 
-    title.anchor = V.v(title.size.x / 2, 0)
-    title.pos.x = self.size.x / 2 - 4
+    title.anchor = V.v(title.size.x * 0.5, 0)
+    title.pos.x = self.size.x * 0.5 - 4
     title.font_name = "h_noti"
     title.text_align = "center"
     title.vertical_align = "bottom"
@@ -5599,7 +5599,7 @@ function TutorialBalloon:initialize(id)
     self.propagate_on_down = true
     self.propagate_on_up = true
     self.balloon_on_hide = bd.balloon
-    self.anchor = V.v(self.size.x / 2, self.size.y / 2)
+    self.anchor = V.v(self.size.x * 0.5, self.size.y * 0.5)
 
     if bd.origin == "world" then
         self.pos.x, self.pos.y = game_gui:g2u(bd.offset)
@@ -5623,8 +5623,8 @@ function TutorialBalloon:initialize(id)
         end
 
         if string.match(bd.origin, "center") then
-            ox = game_gui.sw / 2
-            oy = game_gui.sh / 2
+            ox = game_gui.sw * 0.5
+            oy = game_gui.sh * 0.5
         end
 
         self.pos.x, self.pos.y = ox + bd.offset.x, oy + bd.offset.y
@@ -5819,7 +5819,7 @@ function AchievementBanner:initialize(id)
 
     local icon = KImageView:new("achievement_icons_0001")
 
-    icon.anchor = V.v(icon.size.x / 2, icon.size.y / 2)
+    icon.anchor = V.v(icon.size.x * 0.5, icon.size.y * 0.5)
     icon.pos = V.v(40, 54)
     icon.scale = V.v(0.8, 0.8)
     icon.propagate_on_click = true
@@ -5866,8 +5866,8 @@ function AchievementBanner:initialize(id)
         end
     end
 
-    self.anchor = V.v(self.size.x / 2, self.size.y)
-    self.pos = V.v(game_gui.sw / 2, -1)
+    self.anchor = V.v(self.size.x * 0.5, self.size.y)
+    self.pos = V.v(game_gui.sw * 0.5, -1)
     self.hidden = true
     self.queued_ids = {}
 end
@@ -6288,7 +6288,7 @@ function CriketMenu:initialize()
     self.propagate_on_down = true
     self.propagate_on_up = true
     self.propagate_on_enter = true
-    self.anchor = v(self.size.x / 2, self.size.y / 2)
+    self.anchor = v(self.size.x * 0.5, self.size.y * 0.5)
     self.clip = false
 end
 
@@ -6307,21 +6307,21 @@ function CriketMenu:calculate_button_position(item_index)
     local angle_step = (2 * math.pi) / circle_volume
 
     -- 计算当前按钮的角度（从顶部开始，顺时针）
-    local angle = (item_index - 1) * angle_step - math.pi / 2
+    local angle = (item_index - 1) * angle_step - math.pi * 0.5
 
     -- 计算相对于圆心的位置
     local x = math.cos(angle) * radius
     local y = math.sin(angle) * radius
 
     -- 返回相对于菜单中心的位置
-    return V.v(self.size.x / 2 + x, self.size.y / 2 + y)
+    return V.v(self.size.x * 0.5 + x, self.size.y * 0.5 + y)
 end
 function CriketMenu:show()
     self:remove_children()
     for index, item in pairs(criket_menu) do
         local b = CriketMenuButton:new(item)
         b.pos = self:calculate_button_position(index)
-        b.pos.x, b.pos.y = b.pos.x - b.size.x / 2, b.pos.y - b.size.y / 2
+        b.pos.x, b.pos.y = b.pos.x - b.size.x * 0.5, b.pos.y - b.size.y * 0.5
         b.item_props = item
 
         local stm = self
@@ -6504,7 +6504,7 @@ function TowerMenu:initialize()
     self.propagate_on_down = true
     self.propagate_on_up = true
     self.propagate_on_enter = true
-    self.anchor = v(self.size.x / 2, self.size.y / 2)
+    self.anchor = v(self.size.x * 0.5, self.size.y * 0.5)
     self.clip = false
 end
 
@@ -6547,7 +6547,7 @@ function TowerMenu:show()
             local b = KImageView:new("main_icons_0014")
 
             b.pos = V.vclone(data.tower_menu_button_places[item.place])
-            b.pos.x, b.pos.y = b.pos.x - b.size.x / 2, b.pos.y - b.size.y / 2
+            b.pos.x, b.pos.y = b.pos.x - b.size.x * 0.5, b.pos.y - b.size.y * 0.5
 
             self:add_child(b)
 
@@ -6566,7 +6566,7 @@ function TowerMenu:show()
             local b = TowerMenuButton:new(item, entity)
 
             b.pos = V.vclone(data.tower_menu_button_places[item.place])
-            b.pos.x, b.pos.y = b.pos.x - b.size.x / 2, b.pos.y - b.size.y / 2
+            b.pos.x, b.pos.y = b.pos.x - b.size.x * 0.5, b.pos.y - b.size.y * 0.5
             b.item_props = item
 
             local stm = self
@@ -7023,10 +7023,10 @@ function TowerMenuTooltip:initialize()
     local bottom_margin = 26
     local font_size = 10
     local text_offset = v(18, CJK(3, 1, 1, 1))
-    local w2 = (self.size.x - margin.x) / 2
+    local w2 = (self.size.x - margin.x) * 0.5
     local w3 = (self.size.x - margin.x) / 3
-    local p12, p22 = margin.x / 2, margin.x / 2 + w2
-    local p13, p23, p33 = margin.x / 2, margin.x / 2 + w3, margin.x / 2 + 2 * w3
+    local p12, p22 = margin.x * 0.5, margin.x * 0.5 + w2
+    local p13, p23, p33 = margin.x * 0.5, margin.x * 0.5 + w3, margin.x * 0.5 + 2 * w3
     local damage_label = GGLabel:new(V.v(self.size.x / 3, 16), "tooltip_icons_0007")
 
     damage_label.pos = v(p13, self.size.y - bottom_margin)
@@ -7040,7 +7040,7 @@ function TowerMenuTooltip:initialize()
 
     self:add_child(damage_label)
 
-    local cooldown_label = GGLabel:new(V.v(self.size.x / 2, 16), "tooltip_icons_0009")
+    local cooldown_label = GGLabel:new(V.v(self.size.x * 0.5, 16), "tooltip_icons_0009")
 
     cooldown_label.pos = v(p23, self.size.y - bottom_margin)
     cooldown_label.font_name = "sans"
@@ -7206,7 +7206,7 @@ function TowerMenuTooltip:show(entity, item)
     local oy = 126
     local ex, ey = game_gui:g2u(V.v(entity.pos.x, entity.pos.y), true)
 
-    self.pos.x = ex - math.floor(self.size.x / 2)
+    self.pos.x = ex - math.floor(self.size.x * 0.5)
     self.pos.y = ey - self.size.y - oy - 20
 
     if self.pos.y < self.size.y / 3 then
@@ -7315,7 +7315,7 @@ function TowerMenuButton:initialize(item, entity)
                 end
 
                 pv.pos = V.vclone(data.tower_menu_power_places[i])
-                pv.pos.x, pv.pos.y = pv.pos.x - pv.size.x / 2, pv.pos.y - pv.size.y / 2
+                pv.pos.x, pv.pos.y = pv.pos.x - pv.size.x * 0.5, pv.pos.y - pv.size.y * 0.5
                 pv.disabled_tint_color = nil
                 pv.propagate_on_click = true
 
@@ -7364,7 +7364,7 @@ function TowerMenuButton:initialize(item, entity)
         local pt = GGLabel:new(nil, "price_tag")
 
         pt.id = "price_tag"
-        pt.pos = V.v(b.size.x / 2 - pt.size.x / 2, b.size.y - 11)
+        pt.pos = V.v(b.size.x * 0.5 - pt.size.x * 0.5, b.size.y - 11)
         pt.text_algin = "center"
         pt.text_offset.y = CJK(5, 2, 7, 3)
         pt.font_name = "body"
@@ -7407,10 +7407,10 @@ function IncomingTooltip:initialize()
 
     arrow.shape = {
         name = "polygon",
-        args = {"fill", {0, ah, aw, ah / 2, aw / 2, ah / 2, aw / 2, 0}}
+        args = {"fill", {0, ah, aw, ah * 0.5, aw * 0.5, ah * 0.5, aw * 0.5, 0}}
     }
     arrow.colors.background = self.colors.background
-    arrow.anchor = V.v(aw / 2, ah / 2)
+    arrow.anchor = V.v(aw * 0.5, ah * 0.5)
 
     self:add_child(arrow)
 
@@ -7533,35 +7533,35 @@ function WaveFlag:initialize(flying, duration, report, path_index)
     local pointer = KImageView:new("nextwaveTimer_0020")
 
     self.size.x, self.size.y = halo.size.x, halo.size.y
-    self.anchor.x, self.anchor.y = self.size.x / 2, self.size.y / 2
+    self.anchor.x, self.anchor.y = self.size.x * 0.5, self.size.y * 0.5
 
     local hrs = 0.25
 
     self.hit_rect = V.r(hrs * self.size.x, hrs * self.size.y, (1 - 2 * hrs) * self.size.x, (1 - 2 * hrs) * self.size.y)
 
     for _, v in pairs({halo, bg_circle, circle, icon}) do
-        v.anchor.x, v.anchor.y = v.size.x / 2, v.size.y / 2
+        v.anchor.x, v.anchor.y = v.size.x * 0.5, v.size.y * 0.5
     end
 
-    pointer.anchor.x, pointer.anchor.y = pointer.size.x / 2, pointer.size.y
+    pointer.anchor.x, pointer.anchor.y = pointer.size.x * 0.5, pointer.size.y
 
     for _, v in pairs({halo, bg_circle, circle, icon, pointer}) do
-        v.pos.x, v.pos.y = self.size.x / 2, self.size.y / 2
+        v.pos.x, v.pos.y = self.size.x * 0.5, self.size.y * 0.5
         v.propagate_on_click = true
 
         self:add_child(v)
     end
 
     halo.hidden = true
-    pointer.r = -math.pi / 2
+    pointer.r = -math.pi * 0.5
     bg_circle.phase = 0
     bg_circle.clip = true
 
     function bg_circle.clip_fn()
-        local start_angle = 3 * math.pi / 2
-        local stop_angle = 7 * math.pi / 2 - bg_circle.phase * 2 * math.pi
+        local start_angle = 3 * math.pi * 0.5
+        local stop_angle = 7 * math.pi * 0.5 - bg_circle.phase * 2 * math.pi
 
-        G.arc("fill", bg_circle.size.x / 2, bg_circle.size.y / 2, bg_circle.size.x / 2, start_angle, stop_angle, 12)
+        G.arc("fill", bg_circle.size.x * 0.5, bg_circle.size.y * 0.5, bg_circle.size.x * 0.5, start_angle, stop_angle, 12)
     end
 
     self.halo = halo
@@ -7655,7 +7655,7 @@ function ItemRewardParticles:initialize(scale)
 
     local ps = G.newParticleSystem(c, 500)
 
-    ps:setDirection(-math.pi / 2)
+    ps:setDirection(-math.pi * 0.5)
     ps:setSpread(2 * math.pi)
     ps:setSizes(1 * p_scale, 0.5 * p_scale)
     ps:setParticleLifetime(0, 0.8)
@@ -7863,8 +7863,8 @@ function SelectPanelView:initialize(sw, sh, title)
 
     self.back = KImageView:new("options_bg_notxt")
     self.pos = v(0, 0)
-    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
-    self.back.pos = v(sw / 2, sh / 2 - 50)
+    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
+    self.back.pos = v(sw * 0.5, sh * 0.5 - 50)
     self.header = title
     self:add_child(self.back)
     self.extra = false
@@ -7877,7 +7877,7 @@ function SelectPanelView:initialize(sw, sh, title)
     -- 创建配置组
     local data_group_width = 400
     self.data_group = SelectGroup:new(V.v(data_group_width, 300))
-    self.data_group.pos = V.v((self.back.size.x - data_group_width) / 2, 120)
+    self.data_group.pos = V.v((self.back.size.x - data_group_width) * 0.5, 120)
 
     -- 设置数据改变回调
     self.data_group:set_on_data_change_callback(function(key, value, all_data)
@@ -7890,8 +7890,8 @@ function SelectPanelView:initialize(sw, sh, title)
     local y = 420
 
     local b = GGOptionsButton:new(_("BUTTON_DONE"))
-    b.anchor.x = b.size.x / 2
-    b.pos = V.v(self.back.size.x / 2, y)
+    b.anchor.x = b.size.x * 0.5
+    b.pos = V.v(self.back.size.x * 0.5, y)
 
     function b.on_click()
         S:queue("GUIButtonCommon")

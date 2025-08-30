@@ -18,7 +18,7 @@ screen.required_textures = {
 screen.ref_h = GUI_REF_H
 
 if KR_TARGET == "console" then
-	screen.ref_res = TEXTURE_SIZE_ALIAS.fullhd / 2
+	screen.ref_res = TEXTURE_SIZE_ALIAS.fullhd * 0.5
 elseif KR_TARGET == "phone" then
 	screen.ref_res = TEXTURE_SIZE_ALIAS.iphone
 else

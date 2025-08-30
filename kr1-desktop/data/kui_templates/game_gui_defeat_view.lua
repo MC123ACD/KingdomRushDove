@@ -7,9 +7,9 @@ return {
 	hidden = false,
 	class = "KView",
 	id = "defeat_view",
-	pos = v(WW / 2, 0),
+	pos = v(WW * 0.5, 0),
 	size = v(WW, WH),
-	anchor = v(WW / 2, 0),
+	anchor = v(WW * 0.5, 0),
 	children = {
 		{
 			image_name = "win_Gnome",
@@ -76,7 +76,7 @@ return {
 			shown_y = 570,
 			class = "KView",
 			id = "defeat_endless_view_quit",
-			pos = v(WW / 2, 520),
+			pos = v(WW * 0.5, 520),
 			children = {
 				{
 					class = "KImageView",
@@ -99,7 +99,7 @@ return {
 			shown_y = 500,
 			class = "KView",
 			id = "defeat_endless_view_try_again",
-			pos = v(WW / 2, 420),
+			pos = v(WW * 0.5, 420),
 			children = {
 				{
 					class = "KImageView",
@@ -121,7 +121,7 @@ return {
 			id = "badge_view",
 			image_name = "victory_shield_endless",
 			class = "KImageView",
-			pos = v(WW / 2, 300),
+			pos = v(WW * 0.5, 300),
 			anchor = v(238, 213.5),
 			children = {
 				{

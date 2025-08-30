@@ -1386,7 +1386,7 @@ function scripts.pirate_exploding_barrel.update(this, store, script)
         local bf = E:create_entity("barrel_fragment")
 
         bf.bullet.from = V.vclone(this.pos)
-        bf.bullet.to = U.point_on_ellipse(center, (50 * math.random() + 45) / 2, angle)
+        bf.bullet.to = U.point_on_ellipse(center, (50 * math.random() + 45) * 0.5, angle)
         bf.bullet.flight_time = U.frandom(fts(16), fts(20))
         bf.render.sprites[1].r = 100 * math.random() * (math.pi / 180)
 
@@ -4766,7 +4766,7 @@ function scripts.eb_elder_shaman.update(this, store)
                     pconf = wave_config.powers_config[aa.power_name]
                     e = E:create_entity(aa.aura)
                     e.aura.duration = pconf.duration + plevel * pconf.durationIncrement
-                    e.aura.radius = pconf.range / 2
+                    e.aura.radius = pconf.range * 0.5
                     api, aspi, ani = tpi, 1, tni
 
                     if aa.node_offset then
@@ -4945,7 +4945,7 @@ function scripts.bomb_cluster.update(this, store)
     end
 
     local pi, ni = this._pred_pi, this._pred_ni
-    local ni_offset = b.fragment_node_spread * math.floor(b.fragment_count / 2)
+    local ni_offset = b.fragment_node_spread * math.floor(b.fragment_count * 0.5)
     local dest = b.to
 
     for i = 1, b.fragment_count do
@@ -4954,7 +4954,7 @@ function scripts.bomb_cluster.update(this, store)
         if pi and ni then
             bf_dest = P:node_pos(pi, 1, ni + ni_offset - i * b.fragment_node_spread)
         else
-            bf_dest = U.point_on_ellipse(dest, (50 * math.random() + 45) / 2, 2 * math.pi * i / b.fragment_count)
+            bf_dest = U.point_on_ellipse(dest, (50 * math.random() + 45) * 0.5, 2 * math.pi * i / b.fragment_count)
         end
 
         bf_dest.x = bf_dest.x + U.frandom(-b.fragment_pos_spread.x, b.fragment_pos_spread.x)
@@ -7719,7 +7719,7 @@ function scripts.enemy_hunter.insert(this, store, script)
         return false
     end
 
-    this.ranged.attacks[1].max_range = this.ranged.attacks[1].max_range + math.random(-70, 30) / 2
+    this.ranged.attacks[1].max_range = this.ranged.attacks[1].max_range + math.random(-70, 30) * 0.5
 
     return true
 end
@@ -9915,7 +9915,7 @@ function scripts.eb_xerxes.update(this, store)
                     local e = E:create_entity(at.aura)
 
                     e.aura.duration = pconf.duration + plevel * pconf.durationIncrement
-                    e.aura.radius = pconf.range / 2
+                    e.aura.radius = pconf.range * 0.5
                     e.aura.targets_count = math.floor(pconf.maxTeleports + plevel * pconf.maxTeleportsIncrement)
                     e.aura.min_jump = pconf.minNodesToTeleport
                     e.aura.max_jump = pconf.maxNodesToTeleport
@@ -9972,7 +9972,7 @@ function scripts.eb_xerxes.update(this, store)
                     log.debug("EB_XERXES: power invisibility starts")
 
                     local pconf = wave_config.powers_config.invisibility
-                    local radius = pconf.range / 2
+                    local radius = pconf.range * 0.5
                     local duration = pconf.duration + plevel * pconf.durationIncrement
                     local targets = table.filter(store.enemies, function(k, e)
                         return not e.pending_removal and e.nav_path and not e.health.dead and
@@ -10267,7 +10267,7 @@ function scripts.eb_alien.update(this, store)
                         b.bullet.target_id = target.id
                         b.bullet.damage_max = pconf.spitMaxDamage
                         b.bullet.damage_min = pconf.spitMinDamage
-                        b.bullet.damage_radius = pconf.spitRange / 2
+                        b.bullet.damage_radius = pconf.spitRange * 0.5
 
                         queue_insert(store, b)
                         U.y_animation_wait_group(this, 1)
@@ -10367,7 +10367,7 @@ function scripts.alien_spit_aura.insert(this, store)
         km.clamp(0, 9000000000, store.wave_group_number - wave_config.powers_config.powerProgressionWaveStart)
 
     this.aura.duration = pconf.duration + plevel * pconf.durationIncrement
-    this.aura.radius = pconf.poisonRange / 2
+    this.aura.radius = pconf.poisonRange * 0.5
 
     if not scripts.aura_apply_mod.insert(this, store) then
         return false
@@ -11931,7 +11931,7 @@ function scripts.umbra_guy.update(this, store, script)
             return
         end
 
-        if last_lives ~= store.lives and store.tick_ts - taunt.ts > taunt.cooldown / 2 then
+        if last_lives ~= store.lives and store.tick_ts - taunt.ts > taunt.cooldown * 0.5 then
             last_lives = store.lives
 
             local i = math.random(taunt.lost_life_idx[1], taunt.lost_life_idx[2])
@@ -12560,7 +12560,7 @@ function scripts.eb_saurian_king.update(this, store, script)
             if ready_to_hammer() then
                 U.y_animation_play(this, ha.animations[1], nil, store.tick_ts)
 
-                for i = 1, #ha.max_damages / 2 do
+                for i = 1, #ha.max_damages * 0.5 do
                     if this.health.dead then
                         goto label_281_1
                     end
@@ -12721,8 +12721,8 @@ scripts.decal_black_dragon = {}
 
 function scripts.decal_black_dragon.update(this, store, script)
     local image_x = 192
-    local start_x = store.visible_coords.left - image_x / 2
-    local end_x = store.visible_coords.right + image_x / 2
+    local start_x = store.visible_coords.left - image_x * 0.5
+    local end_x = store.visible_coords.right + image_x * 0.5
     local wakeup_ts = 0
     local wakeup_cooldown = math.random(this.wakeup_cooldown_min, this.wakeup_cooldown_max)
     local force_wakeup = false
@@ -12953,8 +12953,8 @@ function scripts.button_steal_dragon_gold.update(this, store, script)
                 for i = 1, 10 do
                     local fx = E:create_entity(this.fx)
 
-                    fx.pos.x, fx.pos.y = this.pos.x + this.ui.click_rect.size.x / 2,
-                        this.pos.y + this.ui.click_rect.size.y / 2
+                    fx.pos.x, fx.pos.y = this.pos.x + this.ui.click_rect.size.x * 0.5,
+                        this.pos.y + this.ui.click_rect.size.y * 0.5
                     fx.render.sprites[1].ts = store.tick_ts
                     fx.tween.props[2] = E:clone_c("tween_prop")
                     fx.tween.props[2].name = "offset"
@@ -13072,11 +13072,11 @@ function scripts.sand_worm.update(this, store, script)
     s.hidden = true
 
     while true do
-        U.y_wait(store, a.cooldown / 2)
+        U.y_wait(store, a.cooldown * 0.5)
 
         ::label_145_0::
 
-        U.y_wait(store, a.cooldown / 2)
+        U.y_wait(store, a.cooldown * 0.5)
 
         local best_count = -1
         local target
@@ -13520,7 +13520,7 @@ function scripts.decal_bouncing_bridge.update(this, store, script)
 
         for _, e in pairs(store.entities) do
             if (e.enemy or e.soldier) and not e.health.dead and e.vis and not U.flag_has(e.vis.flags, F_FLYING) and
-                U.is_inside_ellipse(e.pos, this.pos, this.bridge_width / 2) then
+                U.is_inside_ellipse(e.pos, this.pos, this.bridge_width * 0.5) then
                 loaded = true
 
                 break
@@ -14722,7 +14722,7 @@ function scripts.moon_controller.update(this, store)
             if U.y_wait(store, delay - transit_time, fn_new_wave) then
                 -- block empty
             else
-                moon.tween.props[1].keys = {{0, math.pi / 5}, {transit_time, math.pi / 2}}
+                moon.tween.props[1].keys = {{0, math.pi / 5}, {transit_time, math.pi * 0.5}}
                 moon.tween.disabled = nil
                 moon.tween.ts = store.tick_ts
 
@@ -15139,7 +15139,7 @@ function scripts.eb_saurian_king.update(this, store, script)
             if ready_to_hammer() then
                 U.y_animation_play(this, ha.animations[1], nil, store.tick_ts)
 
-                for i = 1, #ha.max_damages / 2 do
+                for i = 1, #ha.max_damages * 0.5 do
                     if this.health.dead then
                         goto label_281_1
                     end
@@ -15907,7 +15907,7 @@ function scripts.voodoo_witch_skull.update(this, store)
 
     local fm = this.force_motion
     local fl_dh = this.max_flight_height - this.min_flight_height
-    local fl_h = this.min_flight_height + fl_dh / 2
+    local fl_h = this.min_flight_height + fl_dh * 0.5
     local fl_step = this.flight_speed * store.tick_length
     local fl_dest = fl_h
     local ps = E:create_entity("ps_voodoo_witch_skull")
@@ -16367,7 +16367,7 @@ function scripts.hero_crab.update(this, store, script)
                         local vx, vy = v.pos.x, v.pos.y
                         local rx, ry = a.damage_size.x, a.damage_size.y
 
-                        if vy >= py - ry / 2 and vy < py + ry / 2 then
+                        if vy >= py - ry * 0.5 and vy < py + ry * 0.5 then
                             if px < vx and vx < px + rx then
                                 table.insert(right_targets, v)
 
@@ -16422,7 +16422,7 @@ function scripts.hero_crab.update(this, store, script)
                         local vx, vy = v.pos.x, v.pos.y
                         local rx, ry = a.damage_size.x, a.damage_size.y
 
-                        if vy >= py - ry / 2 and vy < py + ry / 2 then
+                        if vy >= py - ry * 0.5 and vy < py + ry * 0.5 then
                             if not flip_x and px < vx and vx < px + rx then
                                 return true
                             elseif flip_x and vx < px and vx > px - rx then
@@ -17997,8 +17997,8 @@ function scripts.decal_minidragon_faustus.update(this, store)
     local loop_duration = fts(18)
     local vx = this.motion.real_speed
     local attack_w = loop_duration * vx
-    local emit_x = this.attack_pos.x + (af and 1 or -1) * (attack_w / 2 + this.emit_ox)
-    local cast_x = this.attack_pos.x + (af and 1 or -1) * (attack_w / 2 + this.cast_ox)
+    local emit_x = this.attack_pos.x + (af and 1 or -1) * (attack_w * 0.5 + this.emit_ox)
+    local cast_x = this.attack_pos.x + (af and 1 or -1) * (attack_w * 0.5 + this.cast_ox)
     local emit_ts, cast_ts, emitting, casting
     local dest = V.v(0, this.pos.y)
 
@@ -21640,7 +21640,7 @@ function scripts.eb_drow_queen.update(this, store)
         local af = to.x < from.x
 
         s_flying.r = V.angleTo(to.x - from.x, to.y - from.y)
-        s_flying.flip_y = math.abs(s_flying.r) > math.pi / 2
+        s_flying.flip_y = math.abs(s_flying.r) > math.pi * 0.5
 
         S:queue("ElvesMaliciaTransformIn")
         U.y_animation_play(this, "teleportStart", af, store.tick_ts, 1, sid_body)
@@ -22758,7 +22758,7 @@ function scripts.eb_bajnimen.update(this, store)
                             local i = table.remove(sequence, math.random(1, #sequence))
                             local delay = U.frandom(0, 1 / count)
 
-                            U.y_wait(store, delay / 2)
+                            U.y_wait(store, delay * 0.5)
 
                             if P:is_node_valid(pi, ni + i) then
                                 spawn_meteor(pi, nil, ni + i)
@@ -22766,7 +22766,7 @@ function scripts.eb_bajnimen.update(this, store)
                                 spawn_meteor(pi, nil, ni - i)
                             end
 
-                            U.y_wait(store, delay / 2)
+                            U.y_wait(store, delay * 0.5)
 
                             if P:is_node_valid(pi, ni - i) then
                                 spawn_meteor(pi, nil, ni - i)
@@ -23528,7 +23528,7 @@ function scripts.plant_magic_blossom.update(this, store)
                         this.pos.y + ca.bullet_start_offset.y + math.random(30, 100))
                 end
 
-                b.initial_impulse_angle_abs = math.pi / 2 + U.frandom(-math.pi / 2, math.pi / 2)
+                b.initial_impulse_angle_abs = math.pi * 0.5 + U.frandom(-math.pi * 0.5, math.pi * 0.5)
                 b.initial_impulse = U.frandom(0.3, 1) * b.initial_impulse
 
                 queue_insert(store, b)
@@ -24577,7 +24577,7 @@ function scripts.decal_lilith_soul_eater_ball.update(this, store)
 
         if not hero.health.dead then
             local ma = hero.melee.attacks[1]
-            local hero_damage_avg = (ma.damage_min + ma.damage_max) / 2
+            local hero_damage_avg = (ma.damage_min + ma.damage_max) * 0.5
             local m = E:create_entity(this.hit_mod)
 
             m.pos = hero.pos
@@ -24821,7 +24821,7 @@ function scripts.aura_forest_eerie.insert(this, store)
     local root_rows = math.floor(roots_count / 3)
     local ni_inc = 2
     local pi = this.pos_pi
-    local ni = this.pos_ni + math.floor((ni_inc + 2.5) * root_rows / 2)
+    local ni = this.pos_ni + math.floor((ni_inc + 2.5) * root_rows * 0.5)
 
     for i = 1, roots_count do
         local spi = km.zmod(i, 3)
@@ -25990,7 +25990,7 @@ function scripts.mod_lilith_soul_eater_track.update(this, store)
             if target.health.dead and hero.soul_eater.active and target.melee and target.melee.attacks and
                 not U.flag_has(target.health.last_damage_types, DAMAGE_NO_LIFESTEAL) then
                 local ma = target.melee.attacks[1]
-                local stolen_damage = (ma.damage_min + ma.damage_max) / 2
+                local stolen_damage = (ma.damage_min + ma.damage_max) * 0.5
                 local s = E:create_entity("decal_lilith_soul_eater_ball")
 
                 s.target_id = hero.id
@@ -27030,7 +27030,7 @@ function scripts.power_thunder_control.update(this, store)
 
     local overlay = E:create_entity("overlay_power_thunder_flash")
 
-    overlay.pos.x, overlay.pos.y = REF_W / 2, REF_H / 2
+    overlay.pos.x, overlay.pos.y = REF_W * 0.5, REF_H * 0.5
     overlay.tween.props[2].keys = {{0, 0}, {0.5, this.flash_l2_max_alpha}}
     overlay.tween.props[2].ts = store.tick_ts
 
@@ -28820,7 +28820,7 @@ function scripts.decal_s09_crystal_serpent_attack.update(this, store)
         if i == 1 then
             b.bullet.to = V.v(first_dest.x, first_dest.y)
         else
-            b.bullet.to = V.v((first_dest.x + target.pos.x) / 2, (first_dest.y + target.pos.y) / 2)
+            b.bullet.to = V.v((first_dest.x + target.pos.x) * 0.5, (first_dest.y + target.pos.y) * 0.5)
         end
 
         queue_insert(store, b)
@@ -29262,13 +29262,13 @@ function scripts.simon_controller.update(this, store)
 
             local delay = glow(id, "touch")
 
-            U.y_wait(store, delay / 2)
+            U.y_wait(store, delay * 0.5)
 
             touch_count = touch_count + 1
 
             if id == this.seq[touch_count] then
                 if touch_count == #this.seq then
-                    U.y_wait(store, delay / 2)
+                    U.y_wait(store, delay * 0.5)
                     glow_all("win")
                     S:queue("ElvesSimonActivate", {
                         delay = fts(10)
@@ -29297,7 +29297,7 @@ function scripts.simon_controller.update(this, store)
                     goto label_544_1
                 end
             else
-                U.y_wait(store, delay / 2)
+                U.y_wait(store, delay * 0.5)
                 S:queue("ElvesSimonWrong")
                 U.y_wait(store, glow_all("fail"))
 
@@ -29960,7 +29960,7 @@ function scripts.decal_black_baby_dragon.update(this, store)
 
             U.animation_start(this, "fly", true, store.tick_ts, true, 1)
 
-            local takeoff_dest = V.v(store.visible_coords.right + image_x / 2, this.pos.y + 200)
+            local takeoff_dest = V.v(store.visible_coords.right + image_x * 0.5, this.pos.y + 200)
             local takeoff_duration = 2
 
             U.y_ease_keys(store, {this.pos, this.pos}, {"x", "y"}, {this.pos.x, this.pos.y},
@@ -30002,7 +30002,7 @@ function scripts.decal_black_baby_dragon.update(this, store)
                         U.animation_start(this, "attack", nil, store.tick_ts, true, 1)
 
                         flame_on = true
-                        last_decal_ni = this.nav_path.ni - decal_ni_dist / 2
+                        last_decal_ni = this.nav_path.ni - decal_ni_dist * 0.5
                     elseif flame_on and flame_range and (flame_ni < flame_range[1] or flame_ni > flame_range[2]) then
                         S:stop(this.sound_events.fire_loop)
                         S:queue(this.sound_events.fire_stop)

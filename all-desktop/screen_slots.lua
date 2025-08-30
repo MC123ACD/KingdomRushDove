@@ -325,7 +325,7 @@ function screen:init(w, h, done_callback)
 	GGLabel.static.ref_h = self.ref_h
 
 	local ctx = {
-		left_margin = (self.ref_w - sw) / 2
+		left_margin = (self.ref_w - sw) * 0.5
 	}
 	local tt = kui_db:get_table("screen_slots", ctx)
 	local window = KWindow:new_from_table(tt)
@@ -343,7 +343,7 @@ function screen:init(w, h, done_callback)
 
 	local backImage = window:get_child_by_id("bg_view")
 
-	backImage.pos.x = sw / 2
+	backImage.pos.x = sw * 0.5
 
 	if i18n.current_locale == "zh-Hans" and KR_GAME == "kr2" then
 		window:get_child_by_id("main_menu_subtitle_cn").hidden = false

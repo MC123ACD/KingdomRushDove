@@ -54,13 +54,13 @@ function PopUpView:show()
 
 	if back then
 		back.disabled_tint_color = nil
-		back.pos = V.v(self.sw / 2, self.sh / 2 - 50)
+		back.pos = V.v(self.sw * 0.5, self.sh * 0.5 - 50)
 		back.alpha = 0
 
 		table.insert(_timers, timer:tween(FADE_IN_TIME, back, {
 			alpha = 1,
 			pos = {
-				y = self.sh / 2
+				y = self.sh * 0.5
 			}
 		}, "out-quad"))
 	end
@@ -159,8 +159,8 @@ function VolumeSlider:initialize(style)
 
 	self.button = button
 	button.pos.x = value_bar.pos.x
-	button.pos.y = self.size.y / 2
-	button.anchor.x, button.anchor.y = button.size.x / 2, button.size.y / 2
+	button.pos.y = self.size.y * 0.5
+	button.anchor.x, button.anchor.y = button.size.x * 0.5, button.size.y * 0.5
 
 	function button.on_down(this, button, x, y)
 		this:set_image(this.click_image_name)

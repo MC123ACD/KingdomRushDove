@@ -147,7 +147,7 @@ tt = E:register_t("decal_background", "decal")
 E:add_comps(tt, "editor")
 
 tt.render.sprites[1].animated = false
-tt.pos = v(REF_W / 2, REF_H / 2)
+tt.pos = v(REF_W * 0.5, REF_H * 0.5)
 tt.editor.props = {{"render.sprites[1].name", PT_STRING}, {"render.sprites[1].z", PT_NUMBER, 1},
                    {"render.sprites[1].sort_y", PT_NUMBER, 1}}
 tt = E:register_t("decal_defend_point", "decal_tween")
@@ -219,7 +219,7 @@ tt.main_script.remove = scripts.clickable_hover_controller.remove
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].z = Z_TOWER_BASES - 1
 tt.render.sprites[1].draw_order = -1
-tt.tween.props[1].keys = {{0, HOVER_PULSE_ALPHA_MAX_INGAME}, {HOVER_PULSE_PERIOD / 2, HOVER_PULSE_ALPHA_MIN_INGAME},
+tt.tween.props[1].keys = {{0, HOVER_PULSE_ALPHA_MAX_INGAME}, {HOVER_PULSE_PERIOD * 0.5, HOVER_PULSE_ALPHA_MIN_INGAME},
                           {HOVER_PULSE_PERIOD, HOVER_PULSE_ALPHA_MAX_INGAME}}
 tt.tween.props[1].loop = true
 tt.tween.remove = false

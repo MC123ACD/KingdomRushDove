@@ -106,7 +106,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(12), fts(12)}
     tt.particle_system.emission_rate = 30
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt.particle_system.z = Z_FLYING_HEROES
     tt = E:register_t("ps_bolt_lumenir_mini")
 
@@ -117,7 +117,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(12), fts(12)}
     tt.particle_system.emission_rate = 15
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt = E:register_t("ps_bolt_lumenir_wave")
 
     E:add_comps(tt, "pos", "particle_system")
@@ -169,7 +169,7 @@ return function()
     tt.particle_system.alphas = {255, 255, 50}
     tt.particle_system.scales_x = {1, 1, 1.5}
     tt.particle_system.scales_y = {1, 1, 1.5}
-    tt.particle_system.spin = {-math.pi / 2, math.pi / 2}
+    tt.particle_system.spin = {-math.pi * 0.5, math.pi * 0.5}
     tt.particle_system.sort_y_offsets = {-100, 0}
     tt = E:register_t("ps_minidragon_lumenir_fire", "ps_bullet_liquid_fire_lumenir")
     tt.particle_system.emit_duration = nil
@@ -764,7 +764,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(14), fts(14)}
     tt.particle_system.emission_rate = 20
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt.particle_system.z = Z_FLYING_HEROES
 
     tt = E:register_t("ps_bullet_hero_bird_cluster_bomb")
@@ -776,7 +776,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(15), fts(15)}
     tt.particle_system.emission_rate = 20
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt.particle_system.z = Z_BULLET_PARTICLES
     tt = E:register_t("ps_bullet_hero_bird_cluster_bomb_part")
 
@@ -787,7 +787,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(14), fts(14)}
     tt.particle_system.emission_rate = 20
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt.particle_system.z = Z_BULLET_PARTICLES
     tt = E:register_t("ps_bullet_stage_16_overseer_tentacle_spawn")
 
@@ -798,7 +798,7 @@ return function()
     tt.particle_system.loop = false
     tt.particle_system.particle_lifetime = {fts(10), fts(10)}
     tt.particle_system.emission_rate = 15
-    tt.particle_system.emit_rotation_spread = math.pi / 2
+    tt.particle_system.emit_rotation_spread = math.pi * 0.5
     tt.particle_system.z = Z_BULLET_PARTICLES
     tt = E:register_t("ps_bullet_tower_ray_sheep")
 
@@ -1451,7 +1451,7 @@ return function()
     tt.standing_duration = fts(33)
     tt.initial_impulse = 900
     tt.initial_impulse_duration = fts(10)
-    tt.initial_impulse_angle = {math.pi, math.pi / 2, -math.pi}
+    tt.initial_impulse_angle = {math.pi, math.pi * 0.5, -math.pi}
     tt.initial_destination = {vec_2(-20, 30), vec_2(20, 30), vec_2(0, 50)}
 
     local fly_strenght = 10
@@ -9470,7 +9470,7 @@ return function()
     tt.bullet.use_unit_damage_factor = true
     tt.initial_impulse = 15000
     tt.initial_impulse_duration = 0.15
-    tt.initial_impulse_angle_abs = math.pi / 2
+    tt.initial_impulse_angle_abs = math.pi * 0.5
     tt.force_motion.a_step = 5
     tt.force_motion.max_a = 3000
     tt.force_motion.max_v = 300
@@ -14269,7 +14269,7 @@ return function()
     tt.bullet.min_speed = 30
     tt.initial_impulse = 9000
     tt.initial_impulse_duration = 0.1
-    tt.initial_impulse_angle = math.pi / 2
+    tt.initial_impulse_angle = math.pi * 0.5
     tt.force_motion.a_step = 10
     tt.force_motion.max_a = 1800
     tt.force_motion.max_v = 450
@@ -14491,7 +14491,7 @@ return function()
     tt.force_motion.max_v = 360
     tt.initial_impulse = 9000
     tt.initial_impulse_duration = 0.1
-    tt.initial_impulse_angle = math.pi / 2
+    tt.initial_impulse_angle = math.pi * 0.5
     tt.spawn_time = fts(18)
     tt.sound_events.insert = ""
     tt.shoot_sound = "TowerNecromancerBasicAttack"
@@ -14948,7 +14948,7 @@ return function()
     tt.force_motion.max_v = 360
     tt.initial_impulse = 9000
     tt.initial_impulse_duration = 0.1
-    tt.initial_impulse_angle = math.pi / 2
+    tt.initial_impulse_angle = math.pi * 0.5
     tt.spawn_time = fts(18)
     tt.sound_events.insert = "TowerRayMutationHexCast"
     tt.shoot_sound = nil
@@ -15036,7 +15036,7 @@ return function()
     tt.bullet.align_with_trajectory = true
     tt.initial_impulse = 12000
     tt.initial_impulse_duration = 0.2
-    tt.initial_impulse_angle = math.pi / 2
+    tt.initial_impulse_angle = math.pi * 0.5
     tt.force_motion.a_step = 15
     tt.force_motion.max_a = 1800
     tt.force_motion.max_v = 600

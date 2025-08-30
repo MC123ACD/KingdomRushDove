@@ -35,14 +35,14 @@ local hero_room_view = {
 			image_name = "heroroom_bg",
 			class = "KImageView",
 			size = v(W, H),
-			anchor = v(W / 2, H / 2),
+			anchor = v(W * 0.5, H * 0.5),
 			pos = v(960, 540),
             scale = vscale(1, 1),
 			children = {
 				{
 					text_key = "HERO ROOM",
 					class = "GGPanelHeader",
-					pos = v(W / 2 + 5, 30),
+					pos = v(W * 0.5 + 5, 30),
 					size = v(260, 45),
 					anchor = v(130, 0),
 					colors = {

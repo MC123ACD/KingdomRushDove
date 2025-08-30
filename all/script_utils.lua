@@ -511,7 +511,7 @@ end
 
 local function position_in_parabola(t, from, speed, g)
     local x = speed.x * t + from.x
-    local y = g * t * t / 2 + speed.y * t + from.y
+    local y = g * t * t * 0.5 + speed.y * t + from.y
 
     return x, y
 end

@@ -378,7 +378,7 @@ function level:load_palms(store)
 
 	local function _cc(x, y)
 		local KA = 1.28
-		local OFX = (1100 * KA - 1024) / 2
+		local OFX = (1100 * KA - 1024) * 0.5
 
 		return v(x * KA - OFX, 768 - KA * y)
 	end

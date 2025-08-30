@@ -394,11 +394,11 @@ function level:y_do_sacrifice(store, delay)
 		self.deco_volcano_lava.render.sprites[1].hidden = false
 
 		for _, e in pairs(self.volcano_bubbles) do
-			e.delayed_play.delay = e.delayed_play.delay / 2
+			e.delayed_play.delay = e.delayed_play.delay * 0.5
 
 			local rem = e.render.sprites[1].ts - store.tick_ts
 
-			e.render.sprites[1].ts = store.tick_ts + rem / 2
+			e.render.sprites[1].ts = store.tick_ts + rem * 0.5
 		end
 
 		for _, e in pairs(self.volcano_smokes) do

@@ -165,7 +165,7 @@ tt.pos = vec_2(512, 768)
 tt.particle_system.alphas = {255, 255, 255, 0}
 tt.particle_system.emission_rate = 8
 tt.particle_system.emit_area_spread = vec_2(1200, 10)
-tt.particle_system.emit_direction = 3 * math.pi / 2
+tt.particle_system.emit_direction = 3 * math.pi * 0.5
 tt.particle_system.emit_speed = {30, 40}
 tt.particle_system.emit_spread = math.pi / 8
 tt.particle_system.particle_lifetime = {20, 30}
@@ -2296,7 +2296,7 @@ tt.render.sprites[1].z = Z_OBJECTS
 tt.render.sprites[1].sort_y_offset = -40
 
 tt = E:register_t("decal_palm_land", "decal_tween")
-tt.pos = vec_2(REF_W / 2, REF_H / 2)
+tt.pos = vec_2(REF_W * 0.5, REF_H * 0.5)
 tt.tween.disabled = true
 tt.tween.props[1].keys = {{0, 255}, {0.4, 0}}
 tt.tween.remove = true
@@ -2762,7 +2762,7 @@ tt.particle_system.scale_var = {0.8, 1.2}
 
 tt = E:register_t("moon_controller", "decal_scripted")
 E:add_comps(tt, "tween")
-tt.pos.x = REF_W / 2
+tt.pos.x = REF_W * 0.5
 tt.pos.y = REF_H + 1
 tt.main_script.update = scripts.moon_controller.update
 tt.render.sprites[1] = E:clone_c("sprite")
@@ -2791,7 +2791,7 @@ tt.tween.props[2].sprite_id = 4
 tt.tween.props[2].keys = {{0, 0}, {0.5, 255}}
 
 tt = E:register_t("decal_moon_dark", "decal_tween")
-tt.pos.x = REF_W / 2
+tt.pos.x = REF_W * 0.5
 tt.pos.y = REF_H + 1 + 77 * (IS_PHONE and 1.45 or 1)
 tt.render.sprites[1].name = "moon_0001"
 tt.render.sprites[1].animated = false
@@ -2804,13 +2804,13 @@ tt.tween.disabled = true
 tt.tween.remove = false
 
 tt = E:register_t("decal_moon_light", "decal_tween")
-tt.pos.x = REF_W / 2
+tt.pos.x = REF_W * 0.5
 tt.pos.y = REF_H + 1 + 77 * (IS_PHONE and 1.45 or 1)
 tt.render.sprites[1].name = "moon_0002"
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].loop = false
 tt.render.sprites[1].z = Z_SCREEN_FIXED + 4
-tt.render.sprites[1].r = math.pi / 2
+tt.render.sprites[1].r = math.pi * 0.5
 tt.render.sprites[1].anchor.x = 3.6666666666666665
 tt.render.sprites[1].scale = IS_PHONE and vec_2(1.45, 1.45) or nil
 tt.render.sprites[2] = table.deepclone(tt.render.sprites[1])
@@ -2824,8 +2824,8 @@ tt.tween.reverse = true
 tt.tween.ts = -1
 
 tt = E:register_t("decal_moon_overlay", "decal_tween")
-tt.pos.x = REF_W / 2
-tt.pos.y = REF_H / 2
+tt.pos.x = REF_W * 0.5
+tt.pos.y = REF_H * 0.5
 tt.render.sprites[1].name = "moon_overlay"
 tt.render.sprites[1].animated = false
 tt.render.sprites[1].scale = vec_2(REF_H * MAX_SCREEN_ASPECT * 1.5 / 64, REF_H * 1.5 / 64)
@@ -3164,7 +3164,7 @@ tt.particle_system.particle_lifetime = {fts(9), fts(11)}
 tt.particle_system.alphas = {255, 255, 50}
 tt.particle_system.scales_x = {1, 1, 1.5}
 tt.particle_system.scales_y = {1, 1, 1.5}
-tt.particle_system.spin = {-math.pi / 2, math.pi / 2}
+tt.particle_system.spin = {-math.pi * 0.5, math.pi * 0.5}
 tt.particle_system.sort_y_offsets = {-100, 0}
 tt = E:register_t("ps_minidragon_faustus_fire", "ps_bullet_liquid_fire_faustus")
 tt.particle_system.emit_duration = nil
@@ -9710,7 +9710,7 @@ tt.particle_system.animated = true
 tt.particle_system.loop = false
 tt.particle_system.particle_lifetime = {fts(14), fts(14)}
 tt.particle_system.emission_rate = 20
-tt.particle_system.emit_rotation_spread = math.pi / 2
+tt.particle_system.emit_rotation_spread = math.pi * 0.5
 tt.particle_system.z = Z_FLYING_HEROES
 
 tt = E:register_t("fx_hero_dragon_gem_bolt_hit", "fx5")
@@ -9775,7 +9775,7 @@ tt.particle_system.animated = true
 tt.particle_system.loop = false
 tt.particle_system.emission_rate = 60
 tt.particle_system.particle_lifetime = {fts(5), fts(8)}
-tt.particle_system.emit_rotation_spread = math.pi / 2
+tt.particle_system.emit_rotation_spread = math.pi * 0.5
 
 tt = E:register_t("ps_hero_witch_spark_1")
 E:add_comps(tt, "pos", "particle_system", "main_script")

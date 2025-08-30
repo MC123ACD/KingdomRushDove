@@ -49,8 +49,8 @@ function game:init(screen_w, screen_h, done_callback)
         self.game_scale = screen_h / self.ref_h
     end
 
-    self.game_ref_origin = V.v((screen_w - self.ref_w * self.game_scale) / 2,
-        (screen_h - self.ref_h * self.game_scale) / 2)
+    self.game_ref_origin = V.v((screen_w - self.ref_w * self.game_scale) * 0.5,
+        (screen_h - self.ref_h * self.game_scale) * 0.5)
 
     local panext = self.store.level.pan_extension
     local visible_h = REF_H
@@ -72,8 +72,8 @@ function game:init(screen_w, screen_h, done_callback)
 
     if KR_TARGET == "phone" or KR_TARGET == "tablet" then
         self.camera = {}
-        self.camera.x = screen_w / 2
-        self.camera.y = screen_h / 2
+        self.camera.x = screen_w * 0.5
+        self.camera.y = screen_h * 0.5
         self.camera.damped_x = nil
         self.camera.damped_y = nil
         self.camera.ww = visible_w * self.game_scale
@@ -393,10 +393,10 @@ function game:draw_enemy_pages()
     local sw, sh, scale, origin = SU.clamp_window_aspect(self.screen_w, self.screen_h, self.screen_w, self.screen_h)
 
     G.setColor(0, 0, 0, 100)
-    G.rectangle("fill", origin.x + 5, self.screen_h / 2 - 5, 270, self.screen_h / 3)
+    G.rectangle("fill", origin.x + 5, self.screen_h * 0.5 - 5, 270, self.screen_h / 3)
 
     local names = self.enemy_pages[self.current_enemy_page]
-    local x, y = math.floor(origin.x + 10), self.screen_h / 2
+    local x, y = math.floor(origin.x + 10), self.screen_h * 0.5
 
     G.setFont(F:f("DroidSansMono", 13))
 
@@ -646,7 +646,7 @@ if DEBUG then
             end
         elseif key == "z" then
             if shift then
-                self.DBG_TIME_MULT = km.clamp(1, 64, self.DBG_TIME_MULT / 2)
+                self.DBG_TIME_MULT = km.clamp(1, 64, self.DBG_TIME_MULT * 0.5)
             else
                 self.DBG_TIME_MULT = km.clamp(1, 64, self.DBG_TIME_MULT * 2)
             end
@@ -741,8 +741,8 @@ function game:draw_game()
 
         c:clamp()
 
-        local dox = c.x * c.zoom - self.screen_w / 2
-        local doy = c.y * c.zoom - self.screen_h / 2
+        local dox = c.x * c.zoom - self.screen_w * 0.5
+        local doy = c.y * c.zoom - self.screen_h * 0.5
 
         rox, roy = -dox, -doy
         gs = gs * c.zoom
@@ -1022,8 +1022,8 @@ function game:draw_game()
             G.setColor(GR.grid_colors.path)
 
             for _, n in pairs(GR.waypoints_cache.path_c) do
-                G.rectangle("fill", (n.x - 0.5) * GR.cell_size, (n.y - 0.5) * GR.cell_size, GR.cell_size / 2,
-                    GR.cell_size / 2)
+                G.rectangle("fill", (n.x - 0.5) * GR.cell_size, (n.y - 0.5) * GR.cell_size, GR.cell_size * 0.5,
+                    GR.cell_size * 0.5)
             end
         end
 
@@ -1031,8 +1031,8 @@ function game:draw_game()
             G.setColor(GR.grid_colors.path)
 
             for _, n in pairs(DEBUG_POINTS) do
-                G.rectangle("fill", (n.x - 0.5) * GR.cell_size, (n.y - 0.5) * GR.cell_size, GR.cell_size / 2,
-                    GR.cell_size / 2)
+                G.rectangle("fill", (n.x - 0.5) * GR.cell_size, (n.y - 0.5) * GR.cell_size, GR.cell_size * 0.5,
+                    GR.cell_size * 0.5)
             end
         end
 

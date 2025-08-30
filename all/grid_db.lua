@@ -267,15 +267,15 @@ function grid_db:cell_pos(i, j)
 	local x = i * self.cell_size + self.ox
 	local y = j * self.cell_size + self.oy
 
-	x = x - self.cell_size / 2
-	y = y - self.cell_size / 2
+	x = x - self.cell_size * 0.5
+	y = y - self.cell_size * 0.5
 
 	return x, y
 end
 
 function grid_db:set_grid_size(nw, nh)
-	local dx = math.floor((nw - self.grid_w) / 2)
-	local dy = math.floor((nh - self.grid_h) / 2)
+	local dx = math.floor((nw - self.grid_w) * 0.5)
+	local dy = math.floor((nh - self.grid_h) * 0.5)
 	local og = self.grid
 	local ng = {}
 
@@ -388,8 +388,8 @@ function grid_db:find_waypoints(from, from_fallback, to, valid_terrains, force_r
 			local x = p.x * self.cell_size + self.ox
 			local y = p.y * self.cell_size + self.oy
 
-			x = x - self.cell_size / 2
-			y = y - self.cell_size / 2
+			x = x - self.cell_size * 0.5
+			y = y - self.cell_size * 0.5
 
 			table.insert(result, {
 				x = x,

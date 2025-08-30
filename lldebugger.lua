@@ -19,7 +19,7 @@ local function require(file, ...)
     end
 end
 ____modules = {
-["luafuncs"] = function(...) 
+["luafuncs"] = function(...)
 local ____exports = {}
 if _G.unpack == nil then
     _G.unpack = table.unpack
@@ -96,7 +96,7 @@ function ____exports.luaGetEnv(level, thread)
 end
 return ____exports
  end,
-["path"] = function(...) 
+["path"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaAssert = ____luafuncs.luaAssert
@@ -176,7 +176,7 @@ do
 end
 return ____exports
  end,
-["sourcemap"] = function(...) 
+["sourcemap"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaAssert = ____luafuncs.luaAssert
@@ -195,7 +195,7 @@ do
             for i = 1, 6 do
                 local bit = (sextet % 2) ~= 0
                 table.insert(bits, i, bit)
-                sextet = math.floor(sextet / 2)
+                sextet = math.floor(sextet * 0.5)
             end
             if #bits >= 8 then
                 local value = 0
@@ -221,7 +221,7 @@ do
             for _ = 1, 5 do
                 local bit = (sextet % 2) ~= 0
                 table.insert(bits, bit)
-                sextet = math.floor(sextet / 2)
+                sextet = math.floor(sextet * 0.5)
             end
             local continueBit = (sextet % 2) ~= 0
             if not continueBit then
@@ -407,7 +407,7 @@ do
 end
 return ____exports
  end,
-["breakpoint"] = function(...) 
+["breakpoint"] = function(...)
 local ____exports = {}
 local ____sourcemap = require("sourcemap")
 local SourceMap = ____sourcemap.SourceMap
@@ -503,7 +503,7 @@ do
 end
 return ____exports
  end,
-["format"] = function(...) 
+["format"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaRawLen = ____luafuncs.luaRawLen
@@ -592,7 +592,7 @@ do
 end
 return ____exports
  end,
-["thread"] = function(...) 
+["thread"] = function(...)
 local ____exports = {}
 ____exports.mainThreadName = "main thread"
 function ____exports.isThread(val)
@@ -605,7 +605,7 @@ ____exports.mainThread = (function()
 end)()
 return ____exports
  end,
-["send"] = function(...) 
+["send"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaError = ____luafuncs.luaError
@@ -829,7 +829,7 @@ do
 end
 return ____exports
  end,
-["debugger"] = function(...) 
+["debugger"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaAssert = ____luafuncs.luaAssert
@@ -1911,7 +1911,7 @@ do
 end
 return ____exports
  end,
-["lldebugger"] = function(...) 
+["lldebugger"] = function(...)
 local ____exports = {}
 local ____luafuncs = require("luafuncs")
 local luaAssert = ____luafuncs.luaAssert

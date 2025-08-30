@@ -3,7 +3,7 @@
 local fmod = math.fmod
 local pi = math.pi
 local twopi = 2 * pi
-local pi_2 = pi / 2
+local pi_2 = pi * 0.5
 local pi_4 = pi / 4
 
 local function UNROLL(a)

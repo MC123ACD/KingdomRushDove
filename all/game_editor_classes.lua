@@ -68,10 +68,10 @@ KESep.static.init_arg_names = {
 KESep.static.serialize_children = false
 
 function KESep:initialize(title)
-	KLabel.initialize(self, V.v(PROP_W, PROP_H + PROP_H / 2))
+	KLabel.initialize(self, V.v(PROP_W, PROP_H + PROP_H * 0.5))
 
 	self.text = title
-	self.text_offset = V.v(0, PROP_H / 2)
+	self.text_offset = V.v(0, PROP_H * 0.5)
 	self.font_name = font_name
 	self.font_size = font_size
 end
@@ -95,7 +95,7 @@ function KENum:initialize(style, value, step)
 	local w = PROP_W - PROP_NUM_BTN_W
 
 	if style == "half" then
-		w = PROP_W / 2 - PROP_NUM_BTN_W - 2 * PROP_NUM_SEP
+		w = PROP_W * 0.5 - PROP_NUM_BTN_W - 2 * PROP_NUM_SEP
 	end
 
 	local lv = KLabel:new(V.v(w, PROP_H))
@@ -115,7 +115,7 @@ function KENum:initialize(style, value, step)
 
 	self.lv = lv
 
-	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H / 2 - PROP_NUM_SEP))
+	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H * 0.5 - PROP_NUM_SEP))
 
 	lb.text = "+"
 	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, 0)
@@ -142,10 +142,10 @@ function KENum:initialize(style, value, step)
 
 	self:add_child(lb)
 
-	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H / 2 - PROP_NUM_SEP))
+	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H * 0.5 - PROP_NUM_SEP))
 
 	lb.text = "-"
-	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, PROP_H / 2)
+	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, PROP_H * 0.5)
 	lb.colors.background = {
 		0,
 		0,
@@ -203,7 +203,7 @@ function KEEnum:initialize(style, list, index)
 	local w = PROP_W - PROP_NUM_BTN_W
 
 	if style == "half" then
-		w = PROP_W / 2 - PROP_NUM_BTN_W - 2 * PROP_NUM_SEP
+		w = PROP_W * 0.5 - PROP_NUM_BTN_W - 2 * PROP_NUM_SEP
 	end
 
 	local lv = KLabel:new(V.v(w, PROP_H))
@@ -223,7 +223,7 @@ function KEEnum:initialize(style, list, index)
 
 	self.lv = lv
 
-	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H / 2 - PROP_NUM_SEP))
+	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H * 0.5 - PROP_NUM_SEP))
 
 	lb.text = "+"
 	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, 0)
@@ -240,10 +240,10 @@ function KEEnum:initialize(style, list, index)
 
 	self:add_child(lb)
 
-	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H / 2 - PROP_NUM_SEP))
+	local lb = KButton:new(V.v(PROP_NUM_BTN_W, PROP_H * 0.5 - PROP_NUM_SEP))
 
 	lb.text = "-"
-	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, PROP_H / 2)
+	lb.pos = V.v(lv.pos.x + lv.size.x + PROP_NUM_SEP, PROP_H * 0.5)
 	lb.colors.background = {
 		0,
 		0,
@@ -687,7 +687,7 @@ KECellInfo.static.serialize_children = false
 function KECellInfo:initialize(size)
 	KView.initialize(self, size)
 
-	local lt = KLabel:new(V.v(PROP_W / 2, PROP_H))
+	local lt = KLabel:new(V.v(PROP_W * 0.5, PROP_H))
 
 	lt.text = ""
 	lt.text_align = "left"
@@ -699,11 +699,11 @@ function KECellInfo:initialize(size)
 
 	self.lt = lt
 
-	local gt = KLabel:new(V.v(PROP_W / 2, PROP_H))
+	local gt = KLabel:new(V.v(PROP_W * 0.5, PROP_H))
 
 	gt.text = ""
 	gt.text_align = "right"
-	gt.pos = V.v(PROP_OX + PROP_W / 2, 0)
+	gt.pos = V.v(PROP_OX + PROP_W * 0.5, 0)
 	gt.font_name = font_name
 	gt.font_size = font_size
 

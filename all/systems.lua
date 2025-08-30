@@ -1076,30 +1076,28 @@ function sys.main_script:on_insert(entity, store)
 end
 
 function sys.main_script:on_update(dt, ts, store)
-    for _, e in E:filter_iter(store.entities, "main_script") do
+    local entities_with_main_script_on_update = store.entities_with_main_script_on_update
+    for _, e in pairs(store.entities_with_main_script_on_update) do
         local s = e.main_script
 
-        if not s.update then
-            -- block empty
-        else
-            if not s.co and s.runs ~= 0 then
-                s.runs = s.runs - 1
-                s.co = coroutine.create(s.update)
-            end
+        if not s.co and s.runs ~= 0 then
+            s.runs = s.runs - 1
+            s.co = coroutine.create(s.update)
+        end
 
-            if s.co then
-                -- log.error("Running update coro of entity %s (%s)", e.id, e.template_name)
-                local success, error = coroutine.resume(s.co, e, store, s)
+        if s.co then
+            -- log.error("Running update coro of entity %s (%s)", e.id, e.template_name)
+            local success, error = coroutine.resume(s.co, e, store, s)
 
-                if coroutine.status(s.co) == "dead" or error ~= nil then
-                    if error ~= nil then
-                        log.error("Error running coro: %s", debug.traceback(s.co, error))
-                    end
-
-                    s.co = nil
+            if coroutine.status(s.co) == "dead" or error ~= nil then
+                if error ~= nil then
+                    log.error("Error running coro: %s", debug.traceback(s.co, error))
                 end
+
+                s.co = nil
             end
         end
+
     end
 end
 
@@ -1246,8 +1244,9 @@ function sys.health:on_update(dt, ts, store)
             end
         end
     end
-
-    for _, e in pairs(store.enemies) do
+    local enemies = store.enemies
+    local soldiers = store.soldiers
+    for _, e in pairs(enemies) do
         local h = e.health
 
         if h.hp <= 0 and not h.dead and not h.ignore_damage then
@@ -1288,14 +1287,16 @@ function sys.health:on_update(dt, ts, store)
 
         if not h.dead then
             h.last_damage_types = 0
-        end
-
-        if h.dead and not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+        elseif not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
+
+        -- if h.dead and not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+        --     queue_remove(store, e)
+        -- end
     end
 
-    for _, e in pairs(store.soldiers) do
+    for _, e in pairs(soldiers) do
         local h = e.health
 
         if h.hp <= 0 and not h.dead and not h.ignore_damage then
@@ -1311,12 +1312,15 @@ function sys.health:on_update(dt, ts, store)
 
         if not h.dead then
             h.last_damage_types = 0
-        end
-
-        if h.dead and not e.hero and not h.ignore_delete_after and
+        elseif not e.hero and not h.ignore_delete_after and
             (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
+
+        -- if h.dead and not e.hero and not h.ignore_delete_after and
+        --     (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
+        --     queue_remove(store, e)
+        -- end
     end
 
 end
@@ -1452,7 +1456,8 @@ sys.timed = {}
 sys.timed.name = "timed"
 
 function sys.timed:on_update(dt, ts, store)
-    for _, e in E:filter_iter(store.entities, "timed") do
+    local timed = store.entities_with_timed
+    for _, e in pairs(timed) do
         local s = e.render.sprites[e.timed.sprite_id]
 
         if e.timed.disabled then
@@ -1467,6 +1472,37 @@ end
 
 sys.tween = {}
 sys.tween.name = "tween"
+
+function sys.tween:init(store)
+    self.fns = {
+        step = function(s)
+            return 0
+        end,
+        linear = function(s)
+            return s
+        end,
+        quad = function(s)
+            return s * s
+        end,
+        sine = function(s)
+            return 0.5 * (1 - math.cos(s * math.pi))
+        end
+    }
+    self.lerp = function(a, b, t, fn)
+        local ta = type(a)
+        local f = self.fns[fn or "linear"]
+        if ta == "table" then
+            return {
+                x = a.x + (b.x - a.x) * f(t),
+                y = a.y + (b.y - a.y) * f(t)
+            }
+        elseif ta == "boolean" then
+            return a
+        else
+            return a + (b - a) * f(t)
+        end
+    end
+end
 
 function sys.tween:on_insert(entity, store)
     if entity.tween then
@@ -1500,39 +1536,12 @@ function sys.tween:on_insert(entity, store)
 end
 
 function sys.tween:on_update(dt, ts, store)
-    local fns = {}
+    local fns = self.fns
 
-    function fns.step(s)
-        return 0
-    end
+    local lerp = self.lerp
 
-    function fns.linear(s)
-        return s
-    end
-
-    function fns.quad(s)
-        return s * s
-    end
-
-    function fns.sine(s)
-        return 0.5 * (1 - math.cos(s * math.pi))
-    end
-
-    local function lerp(a, b, t, fn)
-        fn = fn or "linear"
-
-        local ta = type(a)
-
-        if ta == "table" then
-            return V.v(lerp(a.x, b.x, t, fn), lerp(a.y, b.y, t, fn))
-        elseif ta == "boolean" then
-            return a
-        else
-            return a + (b - a) * fns[fn](t)
-        end
-    end
-
-    for _, e in E:filter_iter(store.entities, "tween") do
+    local tween = store.entities_with_tween
+    for _, e in pairs(tween) do
         if e.tween.disabled then
             -- block empty
         else
@@ -1631,7 +1640,8 @@ sys.goal_line = {}
 sys.goal_line.name = "goal_line"
 
 function sys.goal_line:on_update(dt, ts, store)
-    for _, e in pairs(store.enemies) do
+    local enemies = store.enemies
+    for _, e in pairs(enemies) do
         local node_index = e.nav_path.ni
         local end_node = P:get_end_node(e.nav_path.pi)
 
@@ -1685,95 +1695,49 @@ end
 sys.particle_system = {}
 sys.particle_system.name = "particle_system"
 
-function sys.particle_system:on_insert(entity, store)
-    if entity.particle_system then
-        local s = entity.particle_system
-
-        s.emit_ts = (s.emit_ts and s.emit_ts or store.tick_ts) + s.ts_offset
-        s.ts = store.tick_ts
-        s.last_pos = {
-            x = 0,
-            y = 0
+function sys.particle_system:init(store)
+    self.new_frame = function(draw_order, z, sort_y_offset, sort_y)
+        return {
+            ss = nil,
+            flip_x = false,
+            flip_y = false,
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            scale = {
+                x = 1,
+                y = 1
+            },
+            anchor = {
+                x = 0.5,
+                y = 0.5
+            },
+            offset = {
+                x = 0,
+                y = 0
+            },
+            draw_order = draw_order,
+            z = z,
+            sort_y = sort_y,
+            sort_y_offset = sort_y_offset,
+            alpha = 255,
+            hidden = nil
         }
     end
-
-    return true
-end
-
-function sys.particle_system:on_remove(entity, store)
-    if entity.particle_system then
-        local s = entity.particle_system
-
-        for i = #s.particles, 1, -1 do
-            local p = entity.particle_system.particles[i]
-
-            table.removeobject(s.particles, p)
-            -- table.removeobject(store.render_frames, p.f)
-            mark_remove_for_frame(p.f)
-        end
+    self.new_particle = function(ts)
+        return {
+            pos = {x = 0, y = 0},
+            r = 0,
+            speed = {x = 0, y = 0},
+            spin = 0,
+            scale_factor = {x = 1, y = 1},
+            ts = ts,
+            last_ts = ts
+        }
     end
-
-    return true
-end
-
-function sys.particle_system:on_update(dt, ts, store)
-    local function new_frame(draw_order, z, sort_y_offset, sort_y)
-        local f = {}
-
-        f.ss = nil
-        f.flip_x = false
-        f.flip_y = false
-        f.pos = {
-            x = 0,
-            y = 0
-        }
-        f.r = 0
-        f.scale = {
-            x = 1,
-            y = 1
-        }
-        f.anchor = {
-            x = 0.5,
-            y = 0.5
-        }
-        f.offset = {
-            x = 0,
-            y = 0
-        }
-        f.draw_order = draw_order
-        f.z = z
-        f.sort_y = sort_y
-        f.sort_y_offset = sort_y_offset
-        f.alpha = 255
-        f.hidden = nil
-
-        return f
-    end
-
-    local function new_particle(ts)
-        local p = {}
-
-        p.pos = {
-            x = 0,
-            y = 0
-        }
-        p.r = 0
-        p.speed = {
-            x = 0,
-            y = 0
-        }
-        p.spin = 0
-        p.scale_factor = {
-            x = 1,
-            y = 1
-        }
-        p.ts = ts
-        p.last_ts = ts
-
-        return p
-    end
-
-    local function phase_interp(values, phase, default)
+    self.phase_interp = function(values, phase, default)
         if not values or #values == 0 then
             return default
         end
@@ -1808,7 +1772,46 @@ function sys.particle_system:on_update(dt, ts, store)
         end
     end
 
-    for _, e in pairs(store.particle_systems) do
+end
+
+function sys.particle_system:on_insert(entity, store)
+    if entity.particle_system then
+        local s = entity.particle_system
+
+        s.emit_ts = (s.emit_ts and s.emit_ts or store.tick_ts) + s.ts_offset
+        s.ts = store.tick_ts
+        s.last_pos = {
+            x = 0,
+            y = 0
+        }
+    end
+
+    return true
+end
+
+function sys.particle_system:on_remove(entity, store)
+    if entity.particle_system then
+        local s = entity.particle_system
+
+        for i = #s.particles, 1, -1 do
+            local p = entity.particle_system.particles[i]
+
+            table.removeobject(s.particles, p)
+            -- table.removeobject(store.render_frames, p.f)
+            mark_remove_for_frame(p.f)
+        end
+    end
+
+    return true
+end
+
+function sys.particle_system:on_update(dt, ts, store)
+    local new_frame = self.new_frame
+    local new_particle = self.new_particle
+    local phase_interp = self.phase_interp
+
+    local particle_systems = store.particle_systems
+    for _, e in pairs(particle_systems) do
         local s = e.particle_system
         local tl = store.tick_length
         local to_remove = {}
@@ -1880,8 +1883,8 @@ function sys.particle_system:on_update(dt, ts, store)
                 if s.emit_area_spread then
                     local sp = s.emit_area_spread
 
-                    p.pos.x = p.pos.x + U.frandom(-sp.x / 2, sp.x / 2)
-                    p.pos.y = p.pos.y + U.frandom(-sp.y / 2, sp.y / 2)
+                    p.pos.x = p.pos.x + U.frandom(-sp.x * 0.5, sp.x * 0.5)
+                    p.pos.y = p.pos.y + U.frandom(-sp.y * 0.5, sp.y * 0.5)
                 end
 
                 if s.emit_offset then
@@ -2022,6 +2025,28 @@ function sys.render:init(store)
     }
     self._hb_sizes = HEALTH_BAR_SIZES[store.texture_size] or HEALTH_BAR_SIZES.default
     self._hb_colors = HEALTH_BAR_COLORS
+    self.frame_compare_fn = function(f1, f2)
+        if f1.marked_to_remove and not f2.marked_to_remove then
+            return false
+        elseif not f1.marked_to_remove and f2.marked_to_remove then
+            return true
+        end
+        if f1.z ~= f2.z then
+            return f1.z < f2.z
+        end
+
+        local y1 = f1.sort_y or (f1.sort_y_offset or 0) + f1.pos.y
+        local y2 = f2.sort_y or (f2.sort_y_offset or 0) + f2.pos.y
+        if y1 ~= y2 then
+            return y1 > y2
+        end
+
+        if f1.draw_order ~= f2.draw_order then
+            return f1.draw_order < f2.draw_order
+        end
+
+        return f1.pos.x < f2.pos.x
+    end
 end
 
 function sys.render:on_insert(entity, store)
@@ -2100,7 +2125,7 @@ function sys.render:on_insert(entity, store)
 
             fk.bar_width = hbsize.x
             fk.scale = V.v(hbsize.x, hbsize.y)
-            fk.offset.x = fk.offset.x - hbsize.x / 2
+            fk.offset.x = fk.offset.x - hbsize.x * 0.5
         end
 
         local fb = {}
@@ -2127,7 +2152,7 @@ function sys.render:on_insert(entity, store)
 
         fb.bar_width = hbsize.x
         fb.scale = V.v(hbsize.x, hbsize.y)
-        fb.offset.x = fb.offset.x - hbsize.x * fb.ss.ref_scale / 2
+        fb.offset.x = fb.offset.x - hbsize.x * fb.ss.ref_scale * 0.5
 
         local ff = {}
 
@@ -2153,7 +2178,7 @@ function sys.render:on_insert(entity, store)
 
         ff.bar_width = hbsize.x
         ff.scale = V.v(hbsize.x, hbsize.y)
-        ff.offset.x = ff.offset.x - hbsize.x * ff.ss.ref_scale / 2
+        ff.offset.x = ff.offset.x - hbsize.x * ff.ss.ref_scale * 0.5
 
         for i = #hb.frames, 1, -1 do
             -- table.removeobject(store.render_frames, hb.frames[i])
@@ -2203,9 +2228,9 @@ end
 
 function sys.render:on_update(dt, ts, store)
     local d = store
-    local entities = d.entities
+    local entities = d.entities_with_render
 
-    for _, e in E:filter_iter(entities, "render") do
+    for _, e in pairs(entities) do
         for i, s in ipairs(e.render.sprites) do
             local f = e.render.frames[i]
             local last_runs = s.runs
@@ -2298,8 +2323,8 @@ function sys.render:on_update(dt, ts, store)
 
                 fb.pos.x, fb.pos.y = math.floor(e.pos.x), math.ceil(e.pos.y)
                 ff.pos.x, ff.pos.y = math.floor(e.pos.x), math.ceil(e.pos.y)
-                fb.offset.x, fb.offset.y = hb.offset.x - fb.bar_width * fb.ss.ref_scale / 2, hb.offset.y
-                ff.offset.x, ff.offset.y = hb.offset.x - ff.bar_width * ff.ss.ref_scale / 2, hb.offset.y
+                fb.offset.x, fb.offset.y = hb.offset.x - fb.bar_width * fb.ss.ref_scale * 0.5, hb.offset.y
+                ff.offset.x, ff.offset.y = hb.offset.x - ff.bar_width * ff.ss.ref_scale * 0.5, hb.offset.y
                 fb.z = hb.z or Z_OBJECTS
                 ff.z = hb.z or Z_OBJECTS
                 fb.draw_order = (hb.draw_order and 100000 * hb.draw_order + 1 or 200002) + e.id
@@ -2309,7 +2334,7 @@ function sys.render:on_update(dt, ts, store)
 
                 if fk then
                     fk.pos.x, fk.pos.y = math.floor(e.pos.x), math.floor(e.pos.y)
-                    fk.offset.x, fk.offset.y = hb.offset.x - fk.bar_width * fk.ss.ref_scale / 2, hb.offset.y
+                    fk.offset.x, fk.offset.y = hb.offset.x - fk.bar_width * fk.ss.ref_scale * 0.5, hb.offset.y
                     fk.z = hb.z or Z_OBJECTS
                     fk.sort_y_offset = hb.sort_y_offset
                     fk.draw_order = (hb.draw_order and 100000 * hb.draw_order or 200001) + e.id
@@ -2322,33 +2347,7 @@ function sys.render:on_update(dt, ts, store)
         end
     end
 
-    local function sort_frames_optimized(frames)
-        table.sort(frames, function(f1, f2)
-            if f1.marked_to_remove and not f2.marked_to_remove then
-                return false
-            elseif not f1.marked_to_remove and f2.marked_to_remove then
-                return true
-            end
-            if f1.z ~= f2.z then
-                return f1.z < f2.z
-            end
-
-            local y1 = f1.sort_y or (f1.sort_y_offset or 0) + f1.pos.y
-            local y2 = f2.sort_y or (f2.sort_y_offset or 0) + f2.pos.y
-            if y1 ~= y2 then
-                return y1 > y2
-            end
-
-            if f1.draw_order ~= f2.draw_order then
-                return f1.draw_order < f2.draw_order
-            end
-
-            return f1.pos.x < f2.pos.x
-        end)
-    end
-
-    -- 替换最后一行
-    sort_frames_optimized(store.render_frames)
+    table.sort(store.render_frames, self.frame_compare_fn)
 
     for i = #store.render_frames, 1, -1 do
         local f = store.render_frames[i]
@@ -2575,7 +2574,8 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.health.hp_max then
                     entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
                     entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
-                    entity.health.instakill_resistance = entity.health.instakill_resistance + store.endless.enemy_instakill_resistance
+                    entity.health.instakill_resistance = entity.health.instakill_resistance +
+                                                             store.endless.enemy_instakill_resistance
                 end
                 if entity.unit.damage_factor then
                     entity.unit.damage_factor = entity.unit.damage_factor * store.endless.enemy_damage_factor
@@ -2616,7 +2616,7 @@ sys.spatial_index = {}
 sys.spatial_index.name = "spatial_index"
 
 function sys.spatial_index:init(store)
-    store.enemy_spatial_index = SpatialHash:new(store.visible_coords,32)
+    store.enemy_spatial_index = SpatialHash:new(store.visible_coords, 32)
 end
 
 function sys.spatial_index:on_insert(entity, store)
@@ -2731,7 +2731,8 @@ if performance_monitor_enabled then
 
         -- 简单的实体统计
         if store then
-            table.insert(report, string.format("\n实体数: %d | 渲染帧: %d", #store.entities, #store.render_frames))
+            table.insert(report,
+                string.format("\n实体数: %d | 渲染帧: %d", store.entity_count, #store.render_frames))
         end
 
         return table.concat(report, "\n")

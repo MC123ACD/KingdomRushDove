@@ -340,10 +340,10 @@ function ShopItemView:initialize(item_name)
 
 	KView.initialize(self, image.size)
 
-	self.anchor.x, self.anchor.y = self.size.x / 2, self.size.y / 2
+	self.anchor.x, self.anchor.y = self.size.x * 0.5, self.size.y * 0.5
 
 	if KR_TARGET == "phone" then
-		self.pos.x, self.pos.y = self.pos.x + self.size.x / 2 + self.padding.x * -1, self.pos.y + self.size.y / 2 + self.padding.y * -1
+		self.pos.x, self.pos.y = self.pos.x + self.size.x * 0.5 + self.padding.x * -1, self.pos.y + self.size.y * 0.5 + self.padding.y * -1
 	end
 
 	glow.hidden = true
@@ -467,7 +467,7 @@ function ShopBagItemView:buy_fx()
 	local p = BuyFxParticlesView:new("inaps_gemParticle_0001", 1)
 
 	if KR_TARGET == "phone" then
-		p.pos.x, p.pos.y = self.pos.x + self.size.x / 2, self.pos.y + self.size.y / 2
+		p.pos.x, p.pos.y = self.pos.x + self.size.x * 0.5, self.pos.y + self.size.y * 0.5
 	else
 		p.pos.x, p.pos.y = self.pos.x, self.pos.y
 	end
@@ -704,5 +704,5 @@ function BuyFxParticlesView:update(dt)
 end
 
 function BuyFxParticlesView:draw()
-	G.draw(self.particle_system, self.size.x / 2, self.size.y / 2)
+	G.draw(self.particle_system, self.size.x * 0.5, self.size.y * 0.5)
 end

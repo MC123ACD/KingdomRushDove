@@ -9,7 +9,7 @@ return {
 	hidden = true,
 	class = "ShopView",
 	size = v(BG_W, BG_H),
-	anchor = v(BG_W / 2, 0),
+	anchor = v(BG_W * 0.5, 0),
 	children = {
 		{
 			class = "KImageView",
@@ -40,7 +40,7 @@ return {
 		},
 		{
 			class = "KView",
-			pos = v(BG_W / 2 - 10, BG_H / 2 + 20 + OY),
+			pos = v(BG_W * 0.5 - 10, BG_H * 0.5 + 20 + OY),
 			size = v(1024, 768),
 			children = {
 				{
@@ -369,7 +369,7 @@ return {
 					id = "shop_help_view",
 					class = "KView",
 					hidden = true,
-					pos = v(-(BG_W - 568) / 2, 0),
+					pos = v(-(BG_W - 568) * 0.5, 0),
 					size = v(BG_W, BG_H),
 					colors = {
 						background = {

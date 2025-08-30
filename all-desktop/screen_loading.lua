@@ -76,26 +76,26 @@ function screen:init(w, h)
 
 	local img = KImageView:new(self.bg_img_name)
 
-	img.pos.x = sw / 2
-	img.pos.y = sh / 2
-	img.anchor.x = img.size.x / 2
-	img.anchor.y = img.size.y / 2
+	img.pos.x = sw * 0.5
+	img.pos.y = sh * 0.5
+	img.anchor.x = img.size.x * 0.5
+	img.anchor.y = img.size.y * 0.5
 
 	window:add_child(img)
 
 	local vign = KImageView:new("loading_vignette_small")
 
-	vign.pos.x, vign.pos.y = sw / 2, sh / 2
-	vign.anchor.x, vign.anchor.y = vign.size.x / 2, vign.size.y / 2
+	vign.pos.x, vign.pos.y = sw * 0.5, sh * 0.5
+	vign.anchor.x, vign.anchor.y = vign.size.x * 0.5, vign.size.y * 0.5
 	vign.scale = V.v(1.02 * sw / vign.size.x, 1.02 * sh / vign.size.y)
 
 	window:add_child(vign)
 
 	local bar_bg = KImageView:new("loading_barBg_0001")
 
-	bar_bg.anchor.x = bar_bg.size.x / 2
+	bar_bg.anchor.x = bar_bg.size.x * 0.5
 	bar_bg.anchor.y = bar_bg.size.y
-	bar_bg.pos.x, bar_bg.pos.y = bar_bg.size.x / 2, bar_bg.size.y
+	bar_bg.pos.x, bar_bg.pos.y = bar_bg.size.x * 0.5, bar_bg.size.y
 
 	local tips = GGLabel:new(V.v(428, 72))
 
@@ -135,15 +135,15 @@ function screen:init(w, h)
 
 	local bar_outline = KImageView:new("loading_barBg_0002")
 
-	bar_outline.anchor.x = bar_outline.size.x / 2
+	bar_outline.anchor.x = bar_outline.size.x * 0.5
 	bar_outline.anchor.y = bar_outline.size.y
-	bar_outline.pos.x, bar_outline.pos.y = bar_bg.size.x / 2, bar_bg.size.y
+	bar_outline.pos.x, bar_outline.pos.y = bar_bg.size.x * 0.5, bar_bg.size.y
 
 	local bar_view = KView:new(bar_bg.size)
 
-	bar_view.anchor.x = bar_bg.size.x / 2
+	bar_view.anchor.x = bar_bg.size.x * 0.5
 	bar_view.anchor.y = bar_bg.size.y
-	bar_view.pos.x, bar_view.pos.y = sw / 2, sh
+	bar_view.pos.x, bar_view.pos.y = sw * 0.5, sh
 
 	bar_view:add_child(bar_bg)
 	bar_bg:add_child(tips)

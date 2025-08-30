@@ -264,7 +264,7 @@ local function create_binary_heap()
 
         -- 上浮操作
         while pos > 1 do
-            local parent = math.floor(pos / 2)
+            local parent = math.floor(pos * 0.5)
             if self[parent].cost <= self[pos].cost then
                 break
             end
@@ -309,7 +309,7 @@ local function create_binary_heap()
                 local pos = i
                 -- 先尝试上浮
                 while pos > 1 do
-                    local parent = math.floor(pos / 2)
+                    local parent = math.floor(pos * 0.5)
                     if self[parent].cost <= self[pos].cost then
                         break
                     end

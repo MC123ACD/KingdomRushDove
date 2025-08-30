@@ -640,7 +640,7 @@ end
 
 function gui:grid_paint(wx, wy, btn)
 	local s = self.settings.grid
-	local bw = (s.brush_size - 1) / 2
+	local bw = (s.brush_size - 1) * 0.5
 	local temp_brush = s.paint
 
 	if btn == "2" then
@@ -876,7 +876,7 @@ function gui:insert_entity()
 
 	local e = E:create_entity(template)
 
-	e.pos.x, e.pos.y = REF_W / 2, REF_H / 2 - 50
+	e.pos.x, e.pos.y = REF_W * 0.5, REF_H * 0.5 - 50
 
 	LU.queue_insert(self.editor.store, e)
 end
@@ -1066,7 +1066,7 @@ function gui:path_nodes_select(x, y, w, h)
 	if not w or not h then
 		multi = false
 		w, h = NODE_SELECTION_WINDOW, NODE_SELECTION_WINDOW
-		x, y = x - w / 2, y - h / 2
+		x, y = x - w * 0.5, y - h * 0.5
 	end
 
 	local r = V.r(x, y, w, h)

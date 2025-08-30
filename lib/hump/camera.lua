@@ -39,7 +39,7 @@ function camera.smooth.damped(stiffness)
 end
 
 local function new(x, y, zoom, rot, smoother)
-	x, y = x or love.graphics.getWidth() / 2, y or love.graphics.getHeight() / 2
+	x, y = x or love.graphics.getWidth() * 0.5, y or love.graphics.getHeight() * 0.5
 	zoom = zoom or 1
 	rot = rot or 0
 	smoother = smoother or camera.smooth.none()
@@ -102,7 +102,7 @@ function camera:attach(x, y, w, h, noclip)
 		love.graphics.setScissor(x, y, w, h)
 	end
 
-	local cx, cy = x + w / 2, y + h / 2
+	local cx, cy = x + w * 0.5, y + h * 0.5
 
 	love.graphics.push()
 	love.graphics.translate(cx, cy)
@@ -144,7 +144,7 @@ function camera:cameraCoords(x, y, ox, oy, w, h)
 	x, y = x - self.x, y - self.y
 	x, y = c * x - s * y, s * x + c * y
 
-	return x * self.scale + w / 2 + ox, y * self.scale + h / 2 + oy
+	return x * self.scale + w * 0.5 + ox, y * self.scale + h * 0.5 + oy
 end
 
 function camera:worldCoords(x, y, ox, oy, w, h)
@@ -153,7 +153,7 @@ function camera:worldCoords(x, y, ox, oy, w, h)
 
 	local c, s = cos(-self.rot), sin(-self.rot)
 
-	x, y = (x - w / 2 - ox) / self.scale, (y - h / 2 - oy) / self.scale
+	x, y = (x - w * 0.5 - ox) / self.scale, (y - h * 0.5 - oy) / self.scale
 	x, y = c * x - s * y, s * x + c * y
 
 	return x + self.x, y + self.y

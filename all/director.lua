@@ -194,12 +194,12 @@ function director:reset_screen_params(force_scissor)
         self.scissor_w = params.width
         self.scissor_h = params.width / min_aspect
         self.scissor_x = 0
-        self.scissor_y = (params.height - self.scissor_h) / 2
+        self.scissor_y = (params.height - self.scissor_h) * 0.5
         self.scissor_enabled = true
     elseif max_aspect < screen_aspect then
         self.scissor_w = params.height * max_aspect
         self.scissor_h = params.height
-        self.scissor_x = (params.width - self.scissor_w) / 2
+        self.scissor_x = (params.width - self.scissor_w) * 0.5
         self.scissor_y = 0
         self.scissor_enabled = true
     else

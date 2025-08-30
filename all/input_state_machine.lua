@@ -51,7 +51,7 @@ function ism:init(data, window)
 			"righty"
 		}
 	}
-	self.j_pointer_pos = V.v(wi.x * wc.x / 2, wi.y * wc.y / 2)
+	self.j_pointer_pos = V.v(wi.x * wc.x * 0.5, wi.y * wc.y * 0.5)
 	self.j_pointer_active = false
 
 	self:reset_prop_values()

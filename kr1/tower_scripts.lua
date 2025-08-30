@@ -2321,7 +2321,7 @@ scripts.tower_sorcerer = {
 -- 大法
 scripts.tower_archmage = {
     insert = function(this, store, script)
-        this._last_t_angle = math.pi * 3 / 2
+        this._last_t_angle = math.pi * 3 * 0.5
         this._stored_bullets = {}
 
         return true
@@ -2561,7 +2561,7 @@ scripts.tower_necromancer = {
         local pa = this.attacks.list[2]
         local pow_r = this.powers.rider
         local pow_p = this.powers.pestilence
-        local t_angle = math.pi * 3 / 2
+        local t_angle = math.pi * 3 * 0.5
         local hands_raised = false
 
         ba.ts = store.tick_ts

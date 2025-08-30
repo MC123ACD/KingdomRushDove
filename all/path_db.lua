@@ -138,7 +138,7 @@ function path_db:reverse_all_paths()
         for j, subpath in ipairs(path_group) do
             if type(subpath) == "table" then
                 local n = #subpath
-                for k = 1, math.floor(n / 2) do
+                for k = 1, math.floor(n * 0.5) do
                     subpath[k], subpath[n - k + 1] = subpath[n - k + 1], subpath[k]
                 end
             end
@@ -781,8 +781,8 @@ function path_db:generate_paths(pi)
 
 						local w = w1 + (w4 - w1) * t
 						local wx, wy = V.perpendicular(V.normalize(bezier_d:evaluate(t)))
-						local s1x, s1y = V.mul(w / 2, wx, wy)
-						local s2x, s2y = V.mul(-w / 2, wx, wy)
+						local s1x, s1y = V.mul(w * 0.5, wx, wy)
+						local s2x, s2y = V.mul(-w * 0.5, wx, wy)
 
 						table.insert(path_points[2], V.v(km.round(s1x + px), km.round(s1y + py)))
 						table.insert(path_points[3], V.v(km.round(s2x + px), km.round(s2y + py)))

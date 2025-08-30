@@ -438,7 +438,7 @@ function deco_fn.ship.prepare(this)
     this.pos.x, this.pos.y = point.pos.x, point.pos.y
     this.animation = this.animations.down_stopped
     this.ts = 0
-    this.anchor = v(this.size.x / 2, 2 * this.size.y / 3)
+    this.anchor = v(this.size.x * 0.5, 2 * this.size.y / 3)
     this.speed = 50
 end
 

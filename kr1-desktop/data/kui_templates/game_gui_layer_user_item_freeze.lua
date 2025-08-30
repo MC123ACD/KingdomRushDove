@@ -19,28 +19,28 @@ return {
 			class = "KImageView",
 			pos = v(SW, 0),
 			scale = v(1, 1),
-			anchor = v(F * 504 / 2 - 2, F * 4)
+			anchor = v(F * 504 * 0.5 - 2, F * 4)
 		},
 		{
 			image_name = "freeze_gfx_corner",
 			class = "KImageView",
 			pos = v(0, 0),
 			scale = v(-1, 1),
-			anchor = v(F * 504 / 2 - 2, F * 4)
+			anchor = v(F * 504 * 0.5 - 2, F * 4)
 		},
 		{
 			image_name = "freeze_gfx_corner",
 			class = "KImageView",
 			pos = v(SW, WH),
 			scale = v(1, -1),
-			anchor = v(F * 504 / 2 - 2, F * 4)
+			anchor = v(F * 504 * 0.5 - 2, F * 4)
 		},
 		{
 			image_name = "freeze_gfx_corner",
 			class = "KImageView",
 			pos = v(0, WH),
 			scale = v(-1, -1),
-			anchor = v(F * 504 / 2 - 2, F * 4)
+			anchor = v(F * 504 * 0.5 - 2, F * 4)
 		},
 		{
 			image_name = "freeze_gfx_side",

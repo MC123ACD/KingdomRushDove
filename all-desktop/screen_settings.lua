@@ -184,9 +184,9 @@ function screen_settings:init(sw, sh, params, done_callback)
 	local m = 10
 	local back_image = KImageView:new("game_image")
 
-	back_image.anchor.x = back_image.size.x / 2
+	back_image.anchor.x = back_image.size.x * 0.5
 	y = y + h + m
-	back_image.pos = v(sw / 2, y)
+	back_image.pos = v(sw * 0.5, y)
 
 	window:add_child(back_image)
 
@@ -194,7 +194,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 12
 
-	local l_lang = KLabel:new(V.v(sw / 2 - 2 * m, h))
+	local l_lang = KLabel:new(V.v(sw * 0.5 - 2 * m, h))
 
 	l_lang.pos = v(m, y)
 	l_lang.font_name = "sans_bold"
@@ -208,7 +208,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 96
 
-	local sl_lang = SelectList:new(sw / 2 - 2 * m, h)
+	local sl_lang = SelectList:new(sw * 0.5 - 2 * m, h)
 
 	sl_lang.pos = v(m, y)
 
@@ -221,7 +221,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 12
 
-	local l_res = KLabel:new(V.v(sw / 2 - 2 * m, h))
+	local l_res = KLabel:new(V.v(sw * 0.5 - 2 * m, h))
 
 	l_res.pos = v(m, y)
 	l_res.font_name = "sans_bold"
@@ -235,7 +235,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 96
 
-	local sl_res = SelectList:new(sw / 2 - 2 * m, h)
+	local sl_res = SelectList:new(sw * 0.5 - 2 * m, h)
 
 	sl_res.pos = v(m, y)
 
@@ -244,9 +244,9 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = back_image.pos.y + back_image.size.y + m
 	h = 12
 
-	local l_tex = KLabel:new(V.v(sw / 2 - 2 * m, h))
+	local l_tex = KLabel:new(V.v(sw * 0.5 - 2 * m, h))
 
-	l_tex.pos = v(sw / 2 + m, y)
+	l_tex.pos = v(sw * 0.5 + m, y)
 	l_tex.font_name = "sans_bold"
 	l_tex.font_size = 14
 	l_tex.text = _("SETTINGS_IMAGE_QUALITY")
@@ -258,9 +258,9 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 48
 
-	local sl_tex = SelectList:new(sw / 2 - 2 * m, h)
+	local sl_tex = SelectList:new(sw * 0.5 - 2 * m, h)
 
-	sl_tex.pos = v(sw / 2 + m, y)
+	sl_tex.pos = v(sw * 0.5 + m, y)
 
 	for _, r in pairs({
 		{
@@ -280,9 +280,9 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 10
 
-	local l_fps = KLabel:new(V.v(sw / 2 - 2 * m, h))
+	local l_fps = KLabel:new(V.v(sw * 0.5 - 2 * m, h))
 
-	l_fps.pos = v(sw / 2 + m, y)
+	l_fps.pos = v(sw * 0.5 + m, y)
 	l_fps.font_name = "sans_bold"
 	l_fps.font_size = 14
 	l_fps.text = _("SETTINGS_FRAMES_PER_SECOND")
@@ -294,9 +294,9 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 48
 
-	local sl_fps = SelectList:new(sw / 2 - 2 * m, h)
+	local sl_fps = SelectList:new(sw * 0.5 - 2 * m, h)
 
-	sl_fps.pos = v(sw / 2 + m, y)
+	sl_fps.pos = v(sw * 0.5 + m, y)
 
 	for _, r in pairs({
         {
@@ -326,7 +326,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 
 	local c_vsync = CheckBox:new(sw - 2 * m, h, _("SETTINGS_VSYNC"))
 
-	c_vsync.pos = v(sw / 2 + m, y)
+	c_vsync.pos = v(sw * 0.5 + m, y)
 	c_vsync:get_colors().text = colors.text_black
 
 	window:add_child(c_vsync)
@@ -336,7 +336,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 
 	local c_large_pointer = CheckBox:new(sw - 2 * m, h, _("SETTINGS_LARGE_MOUSE_POINTER"))
 
-	c_large_pointer.pos = v(sw / 2 + m, y)
+	c_large_pointer.pos = v(sw * 0.5 + m, y)
 	c_large_pointer:get_colors().text = colors.text_black
 
 	window:add_child(c_large_pointer)
@@ -347,7 +347,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	local c_highdpi
 	local c_fs = CheckBox:new(sw - 2 * m, h, _("SETTINGS_FULLSCREEN"))
 
-	c_fs.pos = v(sw / 2 + m, y)
+	c_fs.pos = v(sw * 0.5 + m, y)
 	c_fs:get_colors().text = colors.text_black
 
 	function c_fs.on_change(this, value)
@@ -370,7 +370,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	y = y + h + m
 	h = 16
 	c_highdpi = CheckBox:new(sw - 2 * m, h, _("Retina display (macOS)"))
-	c_highdpi.pos = v(sw / 2 + m, y)
+	c_highdpi.pos = v(sw * 0.5 + m, y)
 	c_highdpi:get_colors().text = colors.text_black
 	c_highdpi.hidden = love.system.getOS() ~= "OS X"
 
@@ -383,7 +383,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 	local button_offset = 70
 	local b_quit = KColorButton:new(colors.button_default_bg, colors.button_hover_bg, colors.button_click_bg, 120, 45)
 
-	b_quit.pos = v((sw / 2 - b_quit.size.x) / 2, sh - button_offset)
+	b_quit.pos = v((sw * 0.5 - b_quit.size.x) * 0.5, sh - button_offset)
 	b_quit.text = _("QUIT")
 	b_quit.font_name = "sans_bold"
 	b_quit.font_size = 14
@@ -404,7 +404,7 @@ function screen_settings:init(sw, sh, params, done_callback)
 
 	local b_play = KColorButton:new(colors.button_default_bg, colors.button_hover_bg, colors.button_click_bg, 120, 45)
 
-	b_play.pos = v((3 * sw / 2 - b_quit.size.x) / 2, sh - button_offset)
+	b_play.pos = v((3 * sw * 0.5 - b_quit.size.x) * 0.5, sh - button_offset)
 	b_play.text = _("START")
 	b_play.font_name = "sans_bold"
 	b_play.font_size = 14

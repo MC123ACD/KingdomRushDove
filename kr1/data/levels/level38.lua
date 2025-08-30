@@ -244,7 +244,7 @@ function level:load(store)
 		t1.id,
 		t2.id
 	}
-	tl.pos.x, tl.pos.y = REF_W / 2, REF_H / 2
+	tl.pos.x, tl.pos.y = REF_W * 0.5, REF_H * 0.5
 	tl.render.sprites[1].anchor = V.v(0.5, 0.5)
 	tl.render.sprites[1].sort_y = 548
 

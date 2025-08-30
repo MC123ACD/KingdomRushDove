@@ -180,18 +180,18 @@ function screen:start_animation()
 		local imd = G.newImage(imf)
 		local img = KImageView:new(imd)
 
-		img.pos.y = sh / 2
-		img.pos.x = sw / 2
-		img.anchor.x = img.size.x / 2
-		img.anchor.y = img.size.y / 2
+		img.pos.y = sh * 0.5
+		img.pos.x = sw * 0.5
+		img.anchor.x = img.size.x * 0.5
+		img.anchor.y = img.size.y * 0.5
 
 		self.content:add_child(img)
 	end
 
 	if data.text_key then
-		local l = GGLabel:new(V.v(sw / 2, sh / 4))
+		local l = GGLabel:new(V.v(sw * 0.5, sh / 4))
 
-		l.pos = V.v(sw / 2, 4 * sh / 5)
+		l.pos = V.v(sw * 0.5, 4 * sh / 5)
 
 		local text = _(data.text_key)
 
@@ -211,7 +211,7 @@ function screen:start_animation()
 		l.font_name = "sans_bold"
 		l.text_align = "center"
 		l.vertical_align = "middle"
-		l.anchor = V.v(l.size.x / 2, l.size.y / 2)
+		l.anchor = V.v(l.size.x * 0.5, l.size.y * 0.5)
 
 		self.content:add_child(l)
 	end

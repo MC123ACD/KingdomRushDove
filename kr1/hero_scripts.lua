@@ -2010,7 +2010,7 @@ scripts.hero_bolin = {
 scripts.denas_catapult_controller = {
     update = function(this, store)
         local w = store.visible_coords.right - store.visible_coords.left
-        local rock_x = this.pos.x > w / 2 and store.visible_coords.right + this.rock_offset.x or
+        local rock_x = this.pos.x > w * 0.5 and store.visible_coords.right + this.rock_offset.x or
                            store.visible_coords.left - this.rock_offset.x
         local rock_y = this.pos.y + this.rock_offset.y
         local a = this.initial_angle
@@ -3290,7 +3290,7 @@ scripts.hero_van_helsing = {
                             coroutine.yield()
                         end
 
-                        for i = 1, a.loops / 2 do
+                        for i = 1, a.loops * 0.5 do
                             log.paranoid("van_helsing multishoot target:%s (targets: %s)", target.id,
                                 table.concat(table.map(targets, function(k, v)
                                     return v.id
@@ -8311,7 +8311,7 @@ scripts.hero_elves_archer_ultimate = {
                 local i = table.remove(sequence, math.random(1, #sequence))
                 local delay = U.frandom(0, 1 / count)
 
-                U.y_wait(store, delay / 2)
+                U.y_wait(store, delay * 0.5)
 
                 if P:is_node_valid(pi, ni + i) then
                     spawn_arrow(pi, nil, ni + i)
@@ -8319,7 +8319,7 @@ scripts.hero_elves_archer_ultimate = {
                     spawn_arrow(pi, nil, ni - i)
                 end
 
-                U.y_wait(store, delay / 2)
+                U.y_wait(store, delay * 0.5)
 
                 if P:is_node_valid(pi, ni - i) then
                     spawn_arrow(pi, nil, ni - i)
@@ -8409,11 +8409,11 @@ scripts.hero_regson = {
         end
 
         upgrade_skill(this, "blade", function(this, s)
-            this.melee.attacks[4].damage_max = s.damage[s.level] / 2
-            this.melee.attacks[4].damage_min = s.damage[s.level] / 2
+            this.melee.attacks[4].damage_max = s.damage[s.level] * 0.5
+            this.melee.attacks[4].damage_min = s.damage[s.level] * 0.5
             this.melee.attacks[5].chance = s.instakill_chance[s.level]
-            this.melee.attacks[5].damage_max = s.damage[s.level] / 2
-            this.melee.attacks[5].damage_min = s.damage[s.level] / 2
+            this.melee.attacks[5].damage_max = s.damage[s.level] * 0.5
+            this.melee.attacks[5].damage_min = s.damage[s.level] * 0.5
         end)
 
         upgrade_skill(this, "heal", function(this, s)
@@ -12285,7 +12285,7 @@ function scripts.hero_bravebark.update(this, store)
                             decal.tween.ts = store.tick_ts
 
                             queue_insert(store, decal)
-                            spawn_spikes(7, hit_center, a.decal_range / 2, 0, 0, 1)
+                            spawn_spikes(7, hit_center, a.decal_range * 0.5, 0, 0, 1)
                             spawn_spikes(9, hit_center, a.decal_range / 1.25, 0, 0.07, 0.75)
                             spawn_spikes(13, hit_center, a.decal_range, math.pi * 2 / 26, 0.17, 0.5)
 
@@ -13051,7 +13051,7 @@ function scripts.hero_lilith_ultimate.update(this, store)
                 local i = table.remove(seq, math.random(1, #seq))
                 local can_up, can_down = P:is_node_valid(pi, ni + i), P:is_node_valid(pi, ni - i)
 
-                U.y_wait(store, delay / 2)
+                U.y_wait(store, delay * 0.5)
 
                 if can_up then
                     spawn_meteor(pi, nil, ni + i)
@@ -13059,7 +13059,7 @@ function scripts.hero_lilith_ultimate.update(this, store)
                     spawn_meteor(pi, nil, ni - i)
                 end
 
-                U.y_wait(store, delay / 2)
+                U.y_wait(store, delay * 0.5)
 
                 if can_down then
                     spawn_meteor(pi, nil, ni - i)
@@ -16922,8 +16922,8 @@ function scripts.soldier_hero_hunter_beast.update(this, store)
 
             if store.tick_ts - last_time_change_pos >= this.idle_change_pos_cd then
                 last_time_change_pos = store.tick_ts
-                idle_change_pos.x = math.random(0, this.idle_change_pos_offset.x) - this.idle_change_pos_offset.x / 2
-                idle_change_pos.y = math.random(0, this.idle_change_pos_offset.y) - this.idle_change_pos_offset.y / 2
+                idle_change_pos.x = math.random(0, this.idle_change_pos_offset.x) - this.idle_change_pos_offset.x * 0.5
+                idle_change_pos.y = math.random(0, this.idle_change_pos_offset.y) - this.idle_change_pos_offset.y * 0.5
             end
 
             owner_pos.x = this.owner.pos.x + this.owner_offset.x + idle_change_pos.x
@@ -16945,8 +16945,8 @@ function scripts.soldier_hero_hunter_beast.update(this, store)
 
             if store.tick_ts - last_time_change_pos >= this.idle_change_pos_cd then
                 last_time_change_pos = store.tick_ts
-                idle_change_pos.x = math.random(0, this.idle_change_pos_offset.x) - this.idle_change_pos_offset.x / 2
-                idle_change_pos.y = math.random(0, this.idle_change_pos_offset.y) - this.idle_change_pos_offset.y / 2
+                idle_change_pos.x = math.random(0, this.idle_change_pos_offset.x) - this.idle_change_pos_offset.x * 0.5
+                idle_change_pos.y = math.random(0, this.idle_change_pos_offset.y) - this.idle_change_pos_offset.y * 0.5
             end
 
             owner_pos.x = this.owner.pos.x + this.owner_offset.x + idle_change_pos.x

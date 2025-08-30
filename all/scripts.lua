@@ -2170,7 +2170,7 @@ function scripts.arrow.update(this, store, script)
         else
             s.r = V.angleTo(this.pos.x - b.last_pos.x, this.pos.y - b.last_pos.y)
 
-            if b.asymmetrical and math.abs(s.r) > math.pi / 2 then
+            if b.asymmetrical and math.abs(s.r) > math.pi * 0.5 then
                 s.flip_y = true
             end
         end
@@ -2286,7 +2286,7 @@ function scripts.arrow.update(this, store, script)
                 if b.rotation_speed then
                     decal.render.sprites[1].flip_x = b.rotation_speed > 0
                 else
-                    decal.render.sprites[1].r = -math.pi / 2 * (1 + (0.5 - math.random()) * 0.35)
+                    decal.render.sprites[1].r = -math.pi * 0.5 * (1 + (0.5 - math.random()) * 0.35)
                 end
 
                 if b.miss_decal_anchor then
@@ -2829,7 +2829,7 @@ function scripts.missile.update(this, store, script)
                     local mod = E:create_entity(b.mod)
 
                     mod.modifier.target_id = enemy.id
-                    
+
                     queue_insert(store, mod)
                 elseif b.mods then
                     for _, mod_name in pairs(b.mods) do
@@ -6421,7 +6421,7 @@ function scripts.decal_defend_point.insert(this, store)
     for _, item in pairs(nodes_list) do
         local pi, spi, ni, dist = unpack(item, 1, 4)
 
-        if dist < P:path_width(pi) / 2 then
+        if dist < P:path_width(pi) * 0.5 then
             P:set_defend_point_node(pi, ni)
         end
     end

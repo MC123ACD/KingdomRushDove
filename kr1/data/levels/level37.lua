@@ -528,7 +528,7 @@ end
 function level:y_puzzle_complete(store)
 	local boulder_from = v(830 + OX, 626)
 	local boulder_to = v(1071 + OX + 65, 580)
-	local boulder_speed = V.dist(boulder_to.x, boulder_to.y, boulder_from.x, boulder_from.y) / 2.2
+	local boulder_speed = V.dist(boulder_to.x, boulder_to.y, boulder_from.x, boulder_from.y) * 0.5.2
 	local decal_boulder = E:create_entity("decal_indiana_boulder")
 
 	decal_boulder.pos = boulder_from

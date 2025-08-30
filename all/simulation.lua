@@ -21,6 +21,7 @@ function simulation:init(store, system_names)
 	d.paused = false
 	d.step = false
 	d.entities = {}
+    
     -- 优化分类索引
     d.enemies = {}
     d.soldiers = {}
@@ -28,6 +29,11 @@ function simulation:init(store, system_names)
     d.towers = {}
     d.auras = {}
     d.particle_systems = {}
+    d.entities_with_main_script_on_update = {}
+    d.entities_with_timed = {}
+    d.entities_with_tween = {}
+    d.entities_with_render = {}
+
 	d.pending_inserts = {}
 	d.pending_removals = {}
 	d.entity_count = 0
@@ -199,6 +205,20 @@ function simulation:insert_entity(e)
     if e.particle_system then
         d.particle_systems[e.id] = e
     end
+    if e.main_script then
+        if e.main_script.on_update then
+            d.entities_with_main_script_on_update[e.id] = e
+        end
+    end
+    if e.timed then
+        d.entities_with_timed[e.id] = e
+    end
+    if e.tween then
+        d.entities_with_tween[e.id] = e
+    end
+    if e.render then
+        d.entities_with_render[e.id] = e
+    end
 
     if e.motion and e.motion.max_speed ~= 0 then
         e.motion.real_speed = e.motion.max_speed
@@ -240,6 +260,20 @@ function simulation:remove_entity(e)
     end
     if e.particle_system then
         d.particle_systems[e.id] = nil
+    end
+    if e.main_script then
+        if e.main_script.on_update then
+            d.entities_with_main_script_on_update[e.id] = nil
+        end
+    end
+    if e.timed then
+        d.entities_with_timed[e.id] = nil
+    end
+    if e.tween then
+        d.entities_with_tween[e.id] = nil
+    end
+    if e.render then
+        d.entities_with_render[e.id] = nil
     end
 
 	d.entity_count = d.entity_count - 1

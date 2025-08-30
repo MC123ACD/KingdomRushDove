@@ -680,11 +680,11 @@ end
 function image_db:s(name, optional)
 	local s = self.db_atlas[name]
 
-	if DBG_REPLACE_MISSING_TEXTURES and not s then
-		s = self.db_atlas._debug_textures_missing
+	-- if DBG_REPLACE_MISSING_TEXTURES and not s then
+	-- 	s = self.db_atlas._debug_textures_missing
 
-		log.error("DBG_REPLACE_MISSING_TEXTURES: replaced %s", name)
-	end
+	-- 	log.error("DBG_REPLACE_MISSING_TEXTURES: replaced %s", name)
+	-- end
 
 	if not s then
 		if not name and self.missing_sprites["nil"] or self.missing_sprites[name] then

@@ -391,7 +391,7 @@ function LU.insert_background(store, name, z, sort_y, quad_trim)
 	local e = E:create_entity("decal")
 
 	e.name = "background"
-	e.pos.x, e.pos.y = REF_W / 2, REF_H / 2
+	e.pos.x, e.pos.y = REF_W * 0.5, REF_H * 0.5
 	e.render.sprites[1].anchor = V.v(0.5, 0.5)
 	e.render.sprites[1].animated = false
 	e.render.sprites[1].name = name

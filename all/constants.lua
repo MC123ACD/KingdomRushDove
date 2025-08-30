@@ -5,7 +5,7 @@ FPS = 30
 ASPECT = 0.7
 REF_W = 1024
 REF_H = 768
-REF_OX = math.floor((REF_H * 16 / 9 - REF_W) / 2)
+REF_OX = math.floor((REF_H * 16 / 9 - REF_W) * 0.5)
 
 if KR_TARGET == "phone" then
 	GUI_REF_W = 480

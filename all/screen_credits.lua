@@ -90,8 +90,8 @@ function screen:init(w, h, done_callback, ending_version)
 	if not IS_MOBILE and not ending_version then
 		local backImage = KImageView:new("credits_new_bg")
 
-		backImage.anchor = v(backImage.size.x / 2, backImage.size.y / 2)
-		backImage.pos = v(window.size.x / 2, window.size.y / 2)
+		backImage.anchor = v(backImage.size.x * 0.5, backImage.size.y * 0.5)
+		backImage.pos = v(window.size.x * 0.5, window.size.y * 0.5)
 
 		window:add_child(backImage)
 
@@ -114,7 +114,7 @@ function screen:init(w, h, done_callback, ending_version)
 
 		local knife = KImageView:new("credits_knife")
 
-		knife.pos.x, knife.pos.y = backImage.size.x / 2 + 355, -28
+		knife.pos.x, knife.pos.y = backImage.size.x * 0.5 + 355, -28
 
 		backImage:add_child(knife)
 	end
@@ -148,8 +148,8 @@ function screen:init(w, h, done_callback, ending_version)
 		elseif not type or type == "body" then
 			local label = GGLabel:new(V.v(label_w, 15))
 
-			label.pos = v(sw / 2, current_y)
-			label.anchor = v(label.size.x / 2, 0)
+			label.pos = v(sw * 0.5, current_y)
+			label.anchor = v(label.size.x * 0.5, 0)
 			label.font_name = "Comic Book Italic"
 			label.font_size = 15 * font_size_factor
 			label.colors.text = ending_version and {
@@ -178,8 +178,8 @@ function screen:init(w, h, done_callback, ending_version)
 		elseif not type or type == "body_ja" then
 			local label = GGLabel:new(V.v(label_w, 15))
 
-			label.pos = v(sw / 2, current_y)
-			label.anchor = v(label.size.x / 2, 0)
+			label.pos = v(sw * 0.5, current_y)
+			label.anchor = v(label.size.x * 0.5, 0)
 			label.font_name = "NotoSansCJKjp-Regular"
 			label.font_size = 13 * font_size_factor
 			label.line_height = 1.1
@@ -209,8 +209,8 @@ function screen:init(w, h, done_callback, ending_version)
 		elseif type == "h1" then
 			local label = GGLabel:new(V.v(label_w, 15))
 
-			label.pos = v(sw / 2, current_y)
-			label.anchor = v(label.size.x / 2, 0)
+			label.pos = v(sw * 0.5, current_y)
+			label.anchor = v(label.size.x * 0.5, 0)
 			label.font_name = font_name_h
 			label.font_size = 20 * font_size_factor
 			label.colors.text = ending_version and {
@@ -239,8 +239,8 @@ function screen:init(w, h, done_callback, ending_version)
 		elseif type == "h2" then
 			local label = GGLabel:new(V.v(label_w, 15))
 
-			label.pos = v(sw / 2, current_y)
-			label.anchor = v(label.size.x / 2, 0)
+			label.pos = v(sw * 0.5, current_y)
+			label.anchor = v(label.size.x * 0.5, 0)
 			label.font_name = font_name_h
 			label.font_size = 18 * font_size_factor
 			label.colors.text = ending_version and {
@@ -269,8 +269,8 @@ function screen:init(w, h, done_callback, ending_version)
 		elseif type == "h3" then
 			local label = GGLabel:new(V.v(label_w, 15))
 
-			label.pos = v(sw / 2, current_y)
-			label.anchor = v(label.size.x / 2, 0)
+			label.pos = v(sw * 0.5, current_y)
+			label.anchor = v(label.size.x * 0.5, 0)
 			label.font_name = font_name_h
 			label.font_size = 13 * font_size_factor
 			label.colors.text = ending_version and {
@@ -301,8 +301,8 @@ function screen:init(w, h, done_callback, ending_version)
 		else
 			local img = KImageView:new(screen.credits_data[i][1])
 
-			img.anchor = v(img.size.x / 2, 0)
-			img.pos = v(sw / 2, current_y)
+			img.anchor = v(img.size.x * 0.5, 0)
+			img.pos = v(sw * 0.5, current_y)
 
 			container:add_child(img)
 
@@ -342,7 +342,7 @@ function screen:init(w, h, done_callback, ending_version)
 
 		scroller.clip_view = window
 		scroller.size.y = vy + botv.size.y
-		scroller.pos = v(sw / 2, 0)
+		scroller.pos = v(sw * 0.5, 0)
 		scroller.anchor = v(296, 0)
 
 		scroller:add_child(container)
@@ -351,7 +351,7 @@ function screen:init(w, h, done_callback, ending_version)
 
 		scroller.scale = V.v(scale, scale)
 		container.size.y = self.tot_y
-		container.anchor = v(sw / 2, 0)
+		container.anchor = v(sw * 0.5, 0)
 		container.pos.y = container_my
 		container.pos.x = 296
 		container.propagate_on_down = true
@@ -359,14 +359,14 @@ function screen:init(w, h, done_callback, ending_version)
 		container.clip_view = window
 	else
 		container.size.y = self.tot_y + 100
-		container.anchor = v(sw / 2, 0)
+		container.anchor = v(sw * 0.5, 0)
 
 		if IS_TABLET then
 			container.scale = V.v(0.7, 0.7)
 		end
 
 		scroller = container
-		scroller.pos = v(sw / 2, 2 * sh / 3)
+		scroller.pos = v(sw * 0.5, 2 * sh / 3)
 		scroller.clip_view = window
 	end
 
@@ -488,7 +488,7 @@ function screen:init(w, h, done_callback, ending_version)
 		local back_image = IS_MOBILE and "credits_back_" or "credits_back_bg_"
 		local back = GGButton:new(back_image .. "0001", back_image .. "0002")
 
-		back.pos = v(back.size.x / 2, sh)
+		back.pos = v(back.size.x * 0.5, sh)
 		back.anchor.y = back.size.y
 		back.propagate_drag = false
 		back.label.text = _("BACK")
@@ -500,7 +500,7 @@ function screen:init(w, h, done_callback, ending_version)
 		else
 			back.label.pos.x, back.label.pos.y = 142, 80
 			back.label.size.x, back.label.size.y = 142, 54
-			back.label.anchor.x, back.label.anchor.y = back.label.size.x / 2, back.label.size.y / 2
+			back.label.anchor.x, back.label.anchor.y = back.label.size.x * 0.5, back.label.size.y * 0.5
 		end
 
 		back.label.vertical_align = "middle"

@@ -195,7 +195,7 @@ function font_db:create_text_image(text, size, alignment, font_name, font_size, 
 
 	G.setFont(font)
 	G.setColor(color)
-	G.printf(text, padding / 2, vadj + padding / 2, w, alignment)
+	G.printf(text, padding * 0.5, vadj + padding * 0.5, w, alignment)
 	G.setCanvas()
 
 	local image_data = c:newImageData()

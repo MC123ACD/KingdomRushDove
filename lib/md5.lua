@@ -84,7 +84,7 @@ else
 			while n > 0 do
 				last = n % 2
 				tbl[cnt] = last
-				n = (n - last) / 2
+				n = (n - last) * 0.5
 				cnt = cnt + 1
 			end
 
@@ -159,7 +159,7 @@ else
 			local floor = math.floor
 
 			for i = 1, bits do
-				n = n / 2
+				n = n * 0.5
 				n = bit_or(floor(n), high_bit)
 			end
 

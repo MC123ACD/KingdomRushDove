@@ -184,7 +184,7 @@ function level:load(store)
 		local door = E:create_entity("decal_efreeti_door")
 
 		door.pos.x, door.pos.y = 587, 686
-		door.render.sprites[3].offset.x, door.render.sprites[3].offset.y = -587 + REF_W / 2, -686 + REF_H / 2
+		door.render.sprites[3].offset.x, door.render.sprites[3].offset.y = -587 + REF_W * 0.5, -686 + REF_H * 0.5
 		self.door = door
 
 		LU.queue_insert(store, door)

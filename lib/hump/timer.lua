@@ -114,7 +114,7 @@ Timer.tween = setmetatable({
 		return s * s * s * s * s
 	end,
 	sine = function(s)
-		return 1 - math.cos(s * math.pi / 2)
+		return 1 - math.cos(s * math.pi * 0.5)
 	end,
 	expo = function(s)
 		return 2^(10 * (s - 1))

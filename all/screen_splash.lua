@@ -190,10 +190,10 @@ function screen:start_animation()
 	local img = KImageView:new("logo_image")
 	local iso = KImageView:new("logo_text")
 
-	img.pos.y = sh / 2
-	img.anchor.y = img.size.y / 2
-	iso.pos.y = sh / 2
-	iso.anchor.y = iso.size.y / 2
+	img.pos.y = sh * 0.5
+	img.anchor.y = img.size.y * 0.5
+	iso.pos.y = sh * 0.5
+	iso.anchor.y = iso.size.y * 0.5
 
 	self.content:add_child(img)
 	self.content:add_child(iso)
@@ -266,10 +266,10 @@ function screen:start_animation()
 	img.anchor.x = img.size.x
 	iso.anchor.x = 0
 
-	local cx = self.sw / 2 - iw / 2 + img.size.x
-	local pos_img_x_i = cx - img.size.x / 2
+	local cx = self.sw * 0.5 - iw * 0.5 + img.size.x
+	local pos_img_x_i = cx - img.size.x * 0.5
 	local pos_img_x_f = cx - img.size.x * 0.05
-	local pos_iso_x_i = cx + img.size.x / 2
+	local pos_iso_x_i = cx + img.size.x * 0.5
 	local pos_iso_x_f = cx + img.size.x * 0.05
 
 	img.pos.x = pos_img_x_i
@@ -481,7 +481,7 @@ function screen:play_video_sw()
 	end
 
 	self.video.scale = V.v(scale, scale)
-	self.video.pos = V.v((self.sw - self.video.size.x * scale) / 2, (self.sh - self.video.size.y * scale) / 2)
+	self.video.pos = V.v((self.sw - self.video.size.x * scale) * 0.5, (self.sh - self.video.size.y * scale) * 0.5)
 
 	self.video.video:play()
 	self.content:add_child(self.video)

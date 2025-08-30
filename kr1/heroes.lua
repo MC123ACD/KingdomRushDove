@@ -6058,7 +6058,7 @@ local function heroes()
     tt.particle_system.scales_x = {1, 0.2}
     tt.particle_system.scales_y = {1, 0.2}
     tt.particle_system.sort_y_offset = -45
-    tt.particle_system.spin = {-math.pi / 2, math.pi / 2}
+    tt.particle_system.spin = {-math.pi * 0.5, math.pi * 0.5}
 
     tt = E:register_t("hero_elves_archer", "hero")
     E:add_comps(tt, "melee", "ranged", "dodge")
@@ -12082,14 +12082,14 @@ local function heroes()
     tt.impulse_per_distance = 37.5
     tt.initial_impulse = 6000
     tt.initial_impulse_duration = 0.05
-    tt.initial_impulse_angle = 0.75 * math.pi / 2
+    tt.initial_impulse_angle = 0.75 * math.pi * 0.5
     tt.force_motion.a_step = 13
     tt.force_motion.max_a = 1800
     tt.force_motion.max_v = 450
     tt.sound_events.insert = nil
 
     tt = E:register_t("bullet_hero_witch_basic_2", "bullet_hero_witch_basic_1")
-    tt.initial_impulse_angle = 3.5 * math.pi / 2
+    tt.initial_impulse_angle = 3.5 * math.pi * 0.5
 
     tt = E:register_t("bullet_witch_skill_polymorph", "bolt")
     b = balance.heroes.hero_witch
@@ -12116,7 +12116,7 @@ local function heroes()
     tt.force_motion.max_v = 360
     tt.initial_impulse = 9000
     tt.initial_impulse_duration = 0.1
-    tt.initial_impulse_angle = math.pi / 2
+    tt.initial_impulse_angle = math.pi * 0.5
     tt.spawn_time = fts(18)
     tt.sound_events.insert = "HeroWitchVeggiefyIn"
     tt.shoot_sound = nil
