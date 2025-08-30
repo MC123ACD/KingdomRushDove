@@ -21,7 +21,7 @@ function simulation:init(store, system_names)
 	d.paused = false
 	d.step = false
 	d.entities = {}
-    
+
     -- 优化分类索引
     d.enemies = {}
     d.soldiers = {}
@@ -206,7 +206,7 @@ function simulation:insert_entity(e)
         d.particle_systems[e.id] = e
     end
     if e.main_script then
-        if e.main_script.on_update then
+        if e.main_script.update then
             d.entities_with_main_script_on_update[e.id] = e
         end
     end
@@ -227,7 +227,7 @@ function simulation:insert_entity(e)
 	d.entity_count = d.entity_count + 1
 	d.entity_max = d.entity_count >= d.entity_max and d.entity_count or d.entity_max
 
-	log.debug("entity (%s) %s added", e.id, e.template_name)
+	-- log.error("entity (%s) %s added", e.id, e.template_name)
 end
 
 function simulation:remove_entity(e)
@@ -262,7 +262,7 @@ function simulation:remove_entity(e)
         d.particle_systems[e.id] = nil
     end
     if e.main_script then
-        if e.main_script.on_update then
+        if e.main_script.update then
             d.entities_with_main_script_on_update[e.id] = nil
         end
     end

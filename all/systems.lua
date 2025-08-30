@@ -2640,14 +2640,14 @@ function sys.spatial_index:on_update(dt, ts, store)
     -- store.enemy_spatial_index:print_debug_info()
 end
 
-local performance_monitor_enabled = true
+local performance_monitor_enabled = false
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}
     perf.timers = {}
     perf.frame_times = {}
     perf.system_times = {}
-    perf.max_samples = 300 -- 保存最近300帧数据
+    perf.max_samples = 5 / TICK_LENGTH -- 保存最近5秒数据
     perf.report_interval = 5 -- 每5秒输出一次报告
 
     -- 性能计时器函数
@@ -2696,7 +2696,7 @@ if performance_monitor_enabled then
                 end
                 if total_cost > 0 then
                     system_costs[name] = {
-                        total = total_cost * 1000, -- 转换为毫秒
+                        total = total_cost * 1000 / #times, -- 转换为毫秒
                         calls = #times
                     }
                 end
@@ -2718,9 +2718,9 @@ if performance_monitor_enabled then
         end)
 
         -- 输出排序后的结果
-        table.insert(report, "\n系统开销排行 (总耗时ms/调用次数):")
+        table.insert(report, "\n系统开销排行 (平均耗时ms/调用次数):")
         for i, item in ipairs(sorted_costs) do
-            table.insert(report, string.format("%2d. %s: %.1fms (%d次)", i, item.name, item.total, item.calls))
+            table.insert(report, string.format("%5d. %s: %.1fms (%d次)", i, item.name, item.total, item.calls))
 
             -- 只显示前15个最耗时的
             if i >= 15 then
