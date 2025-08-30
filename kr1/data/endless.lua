@@ -244,7 +244,7 @@ local key_desc_map = {
     engineer_aftermath = string.format(
         "火炮，导弹/闪电附带震荡，对附近敌人额外造成%d/15点爆炸/雷电伤害",
         endless.friend_buff.engineer_aftermath),
-    engineer_seek = string.format("使炮塔主动对空，电塔攻击范围提升%d%%",
+    engineer_seek = string.format("使炮塔主动对空，电塔、地震塔攻击范围提升%d%%",
         endless.friend_buff.engineer_seek * 100),
     engineer_fireball = string.format("每次炮弹/雷电攻击额外减少火雨%.2f秒冷却",
         endless.friend_buff.engineer_fireball / 30),

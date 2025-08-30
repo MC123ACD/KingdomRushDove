@@ -2640,7 +2640,7 @@ function sys.spatial_index:on_update(dt, ts, store)
     -- store.enemy_spatial_index:print_debug_info()
 end
 
-local performance_monitor_enabled = false
+local performance_monitor_enabled = true
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}

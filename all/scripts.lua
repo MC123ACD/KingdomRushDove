@@ -2829,8 +2829,18 @@ function scripts.missile.update(this, store, script)
                     local mod = E:create_entity(b.mod)
 
                     mod.modifier.target_id = enemy.id
-
+                    
                     queue_insert(store, mod)
+                elseif b.mods then
+                    for _, mod_name in pairs(b.mods) do
+                        local mod = E:create_entity(mod_name)
+                        mod.modifier.damage_factor = b.damage_factor
+                        mod.modifier.target_id = enemy.id
+                        mod.modifier.source_id = this.id
+                        if U.flags_pass(enemy.vis, mod.modifier) then
+                            queue_insert(store, mod)
+                        end
+                    end
                 end
 
                 -- if shock_and_awe and band(enemy.vis.bans, F_STUN) == 0 and

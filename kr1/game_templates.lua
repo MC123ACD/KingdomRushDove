@@ -48,7 +48,7 @@ tt.particle_system.scales_y = {1, 0.3}
 tt = RT("ps_tesla_overcharge", "particle_system")
 tt.particle_system.name = "decal_tesla_overcharge"
 tt.particle_system.animated = true
-tt.particle_system.particle_lifetime = {0.7, 1}
+tt.particle_system.particle_lifetime = {0.6, 1}
 tt.particle_system.alphas = {0, 255, 255, 0}
 tt.particle_system.scales_x = {1, 0.45}
 tt.particle_system.scales_y = {1, 0.45}
@@ -3112,7 +3112,7 @@ tt.particle_system.emission_rate = 3
 tt.particle_system.anchor.y = 0.28125
 tt.particle_system.loop = false
 tt.particle_system.name = "nav_faerie_particle_red"
-tt.particle_system.particle_lifetime = {fts(12), fts(12)}
+tt.particle_system.particle_lifetime = {fts(10), fts(10)}
 tt.particle_system.z = Z_OBJECTS
 tt = E:register_t("ps_nav_faerie_yellow", "ps_nav_faerie_red")
 tt.particle_system.name = "nav_faerie_particle_yellow"
@@ -9848,6 +9848,7 @@ tt.particle_system.animation_fps = 15
 tt.particle_system.emit_rotation_spread = math.pi * 2
 tt.particle_system.emit_area_spread = vec_2(2, 2)
 tt.particle_system.z = Z_BULLET_PARTICLES
+tt.particle_system.particle_lifetime = {0.75, 0.9}
 
 tt = E:register_t("tower_tricannon_bomb_4_bombardment_trail")
 E:add_comps(tt, "pos", "particle_system")
@@ -9859,6 +9860,7 @@ tt.particle_system.animation_fps = 25
 tt.particle_system.emit_rotation_spread = math.pi * 2
 tt.particle_system.emit_area_spread = vec_2(2, 2)
 tt.particle_system.z = Z_BULLET_PARTICLES
+tt.particle_system.particle_lifetime = {0.75, 0.9}
 
 tt = E:register_t("tower_tricannon_bomb_4_overheated_trail")
 E:add_comps(tt, "pos", "particle_system")
@@ -9869,6 +9871,7 @@ tt.particle_system.emission_rate = 70
 tt.particle_system.emit_rotation_spread = math.pi * 2
 tt.particle_system.emit_area_spread = vec_2(3, 3)
 tt.particle_system.z = Z_BULLET_PARTICLES
+tt.particle_system.particle_lifetime = {0.75, 0.9}
 
 tt = E:register_t("mod_endless_archer_insight", "mod_health_damage_factor_inc")
 -- package.loaded.soldier_enemies = nil

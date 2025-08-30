@@ -726,6 +726,8 @@ function EU.patch_engineer_seek(level)
     t.attacks.list[1].range = t.attacks.list[1].range * (1 + level * friend_buff.engineer_seek)
     t = E:get_template("tower_frankenstein")
     t.attacks.range = t.attacks.range * (1 + level * friend_buff.engineer_seek)
+    t = E:get_template("tower_dwaarp")
+    t.attacks.range = t.attacks.range * (1 + level * friend_buff.engineer_seek)
 end
 
 local function fireball_quick_up(this, store)
@@ -1071,6 +1073,12 @@ function EU.patch_upgrade_in_game(key, store, endless)
                 t.attacks.list[1].range = t.attacks.list[1].range * (1 + friend_buff.engineer_seek)
             elseif t.template_name == "tower_frankenstein" then
                 t.attacks.range = t.attacks.range * (1 + friend_buff.engineer_seek)
+            elseif t.template_name == "tower_dwaarp" then
+                t.attacks.range = t.attacks.range * (1 + friend_buff.engineer_seek)
+            elseif t.template_name == "tower_mech" then
+                for _, s in pairs(t.barrack.soldiers) do
+                    s.attacks.list[1].vis_bans = U.flag_clear(s.attacks.list[1].vis_bans, F_FLYING)
+                end
             end
         end
     elseif key == "engineer_fireball" then

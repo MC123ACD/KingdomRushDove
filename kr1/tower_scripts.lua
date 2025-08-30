@@ -3440,7 +3440,6 @@ scripts.tower_bfg = {
 -- 地震
 scripts.tower_dwaarp = {
     insert = function(this, store, script)
-        this.origin_range = this.attacks.range
         local function fx_points(this)
             local points = {}
             local factor = this.attacks.range / this.origin_range
