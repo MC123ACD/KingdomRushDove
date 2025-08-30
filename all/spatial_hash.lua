@@ -49,7 +49,8 @@ function spatial_hash:_get_cells_in_ellipse_range(x, y, radius)
     local cells = {}
     for row = min_row, max_row do
         for col = min_col, max_col do
-            table.insert(cells, self.cells[row][col])
+            -- 性能敏感，避免 table.insert
+            cells[#cells + 1] = self.cells[row][col]
         end
     end
     return cells
@@ -91,14 +92,15 @@ function spatial_hash:query_entities_in_ellipse(x, y, radius_outer, radius_inner
     local a2_inner = radius_inner * radius_inner
     local r2_inner = a2_inner * b2_inner
 
-    for _, cell in ipairs(cells) do
-        for _, entity in pairs(cell) do
+    for i=1,#cells  do
+        local cell = cells[i]
+        for _,entity in pairs(cell) do
             local r_x2 = (entity.pos.x - x) * (entity.pos.x - x)
             local r_y2 = (entity.pos.y - y) * (entity.pos.y - y)
 
             if r_x2 * b2_outer + r_y2 * a2_outer <= r2_outer and
                 ((radius_inner == 0) or (r_x2 * b2_inner + r_y2 * a2_inner > r2_inner)) and filter_fn(entity) then
-                table.insert(result, entity)
+                result[#result + 1] = entity
             end
         end
     end
@@ -116,7 +118,8 @@ function spatial_hash:query_first_entity_in_ellipse(x, y, radius_outer, radius_i
     local a2_inner = radius_inner * radius_inner
     local r2_inner = a2_inner * b2_inner
 
-    for _, cell in ipairs(cells) do
+    for i=1,#cells do
+        local cell = cells[i]
         for _, entity in pairs(cell) do
             local r_x2 = (entity.pos.x - x) * (entity.pos.x - x)
             local r_y2 = (entity.pos.y - y) * (entity.pos.y - y)
