@@ -1,6 +1,6 @@
 local E = require("entity_db")
 require("constants")
-local UP = require("kr1.upgrades")
+local UP = require("upgrades")
 local U = require("utils")
 local scripts = require("scripts")
 local EL = require("kr1.data.endless")
@@ -28,6 +28,15 @@ local bit = require("bit")
 local band = bit.band
 local bor = bit.bor
 local bnot = bit.bnot
+local function queue_damage(store, damage)
+    store.damage_queue[#store.damage_queue + 1] = damage
+end
+local function queue_insert(store, e)
+    simulation:queue_insert_entity(e)
+end
+local function queue_remove(store, e)
+    simulation:queue_remove_entity(e)
+end
 
 local EU = {}
 
@@ -79,8 +88,8 @@ local function engineer_focus_bomb_update(this, store, script)
     end
     local enemies = U.find_enemies_in_range(store, b.to, 0, dradius, b.damage_flags, b.damage_bans)
     if enemies then
-        for _, enemy in pairs(enemies) do
-
+        for i=1,#enemies do
+            local enemy = enemies[i]
             local d = E:create_entity("damage")
 
             d.damage_type = b.damage_type
@@ -849,8 +858,8 @@ function EU.patch_mage_chain(level)
                             return e.id ~= target.id
                         end)
                     if enemies then
-                        for _, enemy in pairs(enemies) do
-
+                        for i=1, #enemies do
+                            local enemy = enemies[i]
                             local bolt = E:create_entity(this.template_name)
                             bolt.bullet.target_id = enemy.id
                             bolt.bullet.from = V.v(target.pos.x + target.unit.hit_offset.x,

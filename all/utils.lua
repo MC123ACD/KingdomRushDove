@@ -1001,7 +1001,8 @@ function U.find_biggest_enemy(store, origin, min_range, max_range, prediction_ti
 
         return true
     end)
-    for _, e in pairs(enemies) do
+    for i=1,#enemies do
+        local e = enemies[i]
         if e.health.hp > biggest_hp then
             biggest_hp = e.health.hp
             biggest_enemy = e

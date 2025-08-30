@@ -19,6 +19,7 @@ local LU = require("level_utils")
 local W = require("wave_db")
 local S = require("sound_db")
 local simulation = require("simulation")
+
 local function ready_to_attack(attack, store, factor)
     return store.tick_ts - attack.ts > attack.cooldown * (factor or 1)
 end
@@ -52,6 +53,7 @@ local IS_PHONE = KR_TARGET == "phone"
 local IS_PHONE_OR_TABLET = KR_TARGET == "phone" or KR_TARGET == "tablet"
 local IS_CONSOLE = KR_TARGET == "console"
 local a
+local V = require("klua.vector")
 local function v(v1, v2)
     return {
         x = v1,

@@ -30,7 +30,9 @@ local bit = require("bit")
 local band = bit.band
 local bor = bit.bor
 local bnot = bit.bnot
-
+local random = math.random
+local ceil = math.ceil
+local floor = math.floor
 require("constants")
 
 local function queue_insert(store, e)
@@ -95,7 +97,7 @@ function sys.level:init(store)
 
     store.level.co = nil
     store.level.run_complete = nil
-    store.player_gold = math.ceil(W:initial_gold() * store.config.gold_multiplier)
+    store.player_gold = ceil(W:initial_gold() * store.config.gold_multiplier)
     if store.criket and store.criket.on then
         store.player_gold = store.criket.cash
     end
@@ -406,7 +408,7 @@ local function spawner(store, wave, group_id)
 
                 if e then
                     e.nav_path.pi = pi
-                    e.nav_path.spi = s.fixed_sub_path == 1 and s.path or math.random(#path)
+                    e.nav_path.spi = s.fixed_sub_path == 1 and s.path or random(#path)
                     e.nav_path.ni = P:get_start_node(pi)
                     e.spawn_data = s.spawn_data
 
@@ -469,7 +471,7 @@ function sys.wave_spawn:init(store)
             store.wave_group_number = store.endless.wave_group_number
         end
     else
-        -- store.gems_per_wave = math.floor(
+        -- store.gems_per_wave = floor(
         --     GS.gems_per_level[store.level_idx] * GS.gems_factor_per_mode[store.level_mode] / W:waves_count())
         store.wave_group_total = W:groups_count()
     end
@@ -522,8 +524,8 @@ function sys.wave_spawn:init(store)
 
                 if store.level_mode == -1 then
                     -- if store.level_mode == GAME_MODE_ENDLESS then
-                    store.early_wave_reward = math.ceil(remaining_secs * GS.early_wave_reward_per_second *
-                                                            W:get_endless_early_wave_reward_factor())
+                    store.early_wave_reward = ceil(remaining_secs * GS.early_wave_reward_per_second *
+                                                       W:get_endless_early_wave_reward_factor())
 
                     local conf = W:get_endless_score_config()
                     local time_factor = km.clamp(0, 1, remaining_secs / fts(group.interval))
@@ -536,7 +538,7 @@ function sys.wave_spawn:init(store)
                         "ENDLESS: early wave %s reward %s (time_factor:%s scorePerWave:%s scoreNextWaveMultiplier:%s flags:%s",
                         i, score_reward, time_factor, conf.scorePerWave, conf.scoreNextWaveMultiplier, #group.waves)
                 else
-                    store.early_wave_reward = math.ceil(remaining_secs * GS.early_wave_reward_per_second)
+                    store.early_wave_reward = ceil(remaining_secs * GS.early_wave_reward_per_second)
                 end
 
                 store.player_gold = store.player_gold + store.early_wave_reward
@@ -993,27 +995,27 @@ function sys.game_upgrades:on_insert(entity, store)
                 b._orig_damage_min = b.damage_min
                 b._orig_damage_max = b.damage_max
             end
-            b.damage_min = math.ceil(b._orig_damage_min * f)
-            b.damage_max = math.ceil(b._orig_damage_max * f)
+            b.damage_min = ceil(b._orig_damage_min * f)
+            b.damage_max = ceil(b._orig_damage_max * f)
         end
         if not dps._orig_damage_min then
             dps._orig_damage_min = dps.damage_min
             dps._orig_damage_max = dps.damage_max
         end
-        dps.damage_min = math.ceil(dps._orig_damage_min * f)
-        dps.damage_max = math.ceil(dps._orig_damage_max * f)
+        dps.damage_min = ceil(dps._orig_damage_min * f)
+        dps.damage_max = ceil(dps._orig_damage_max * f)
         if not bullet_ray_high_elven._orig_damage_min then
             bullet_ray_high_elven._orig_damage_min = bullet_ray_high_elven.damage_min
             bullet_ray_high_elven._orig_damage_max = bullet_ray_high_elven.damage_max
         end
-        bullet_ray_high_elven.damage_min = math.ceil(bullet_ray_high_elven._orig_damage_min * f)
-        bullet_ray_high_elven.damage_max = math.ceil(bullet_ray_high_elven._orig_damage_max * f)
+        bullet_ray_high_elven.damage_min = ceil(bullet_ray_high_elven._orig_damage_min * f)
+        bullet_ray_high_elven.damage_max = ceil(bullet_ray_high_elven._orig_damage_max * f)
         if not modifier_pixie._orig_damage_min then
             modifier_pixie._orig_damage_min = modifier_pixie.damage_min
             modifier_pixie._orig_damage_max = modifier_pixie.damage_max
         end
-        modifier_pixie.damage_min = math.ceil(modifier_pixie._orig_damage_min * f)
-        modifier_pixie.damage_max = math.ceil(modifier_pixie._orig_damage_max * f)
+        modifier_pixie.damage_min = ceil(modifier_pixie._orig_damage_min * f)
+        modifier_pixie.damage_max = ceil(modifier_pixie._orig_damage_max * f)
 
     end
 
@@ -1038,15 +1040,15 @@ function sys.game_upgrades:on_remove(entity, store)
         for _, bn in pairs(mage_bullet_names) do
             local b = E:get_template(bn).bullet
 
-            b.damage_min = math.ceil(b._orig_damage_min * f)
-            b.damage_max = math.ceil(b._orig_damage_max * f)
+            b.damage_min = ceil(b._orig_damage_min * f)
+            b.damage_max = ceil(b._orig_damage_max * f)
         end
-        dps.damage_min = math.ceil(dps._orig_damage_min * f)
-        dps.damage_max = math.ceil(dps._orig_damage_max * f)
-        bullet_ray_high_elven.damage_min = math.ceil(bullet_ray_high_elven._orig_damage_min * f)
-        bullet_ray_high_elven.damage_max = math.ceil(bullet_ray_high_elven._orig_damage_max * f)
-        modifier_pixie.damage_min = math.ceil(modifier_pixie._orig_damage_min * f)
-        modifier_pixie.damage_max = math.ceil(modifier_pixie._orig_damage_max * f)
+        dps.damage_min = ceil(dps._orig_damage_min * f)
+        dps.damage_max = ceil(dps._orig_damage_max * f)
+        bullet_ray_high_elven.damage_min = ceil(bullet_ray_high_elven._orig_damage_min * f)
+        bullet_ray_high_elven.damage_max = ceil(bullet_ray_high_elven._orig_damage_max * f)
+        modifier_pixie.damage_min = ceil(modifier_pixie._orig_damage_min * f)
+        modifier_pixie.damage_max = ceil(modifier_pixie._orig_damage_max * f)
     end
 
     return true
@@ -1113,6 +1115,7 @@ sys.health.name = "health"
 
 function sys.health:init(store)
     store.damage_queue = {}
+    store.damages_applied = {}
 end
 
 function sys.health:on_insert(entity, store)
@@ -1124,119 +1127,101 @@ function sys.health:on_insert(entity, store)
 end
 
 function sys.health:on_update(dt, ts, store)
+    local new_damage_queue = {}
+    store.damages_applied = {}
     for i = #store.damage_queue, 1, -1 do
         local d = store.damage_queue[i]
 
-        if d.damage_applied ~= nil then
-            table.remove(store.damage_queue, i)
+        local e = store.entities[d.target_id]
+
+        if not e then
+            -- block empty
         else
-            d.damage_applied = 0
+            local h = e.health
 
-            local e = store.entities[d.target_id]
-
-            if not e then
+            if h.dead or band(h.immune_to, d.damage_type) ~= 0 or h.ignore_damage or h.on_damage and
+                not h.on_damage(e, store, d) then
                 -- block empty
             else
-                local h = e.health
+                local starting_hp = h.hp
 
-                if h.dead or band(h.immune_to, d.damage_type) ~= 0 or h.ignore_damage or h.on_damage and
-                    not h.on_damage(e, store, d) then
-                    log_hp.paranoid("entity: (%s) %s dead:%s - ignoring damage: \n%s", e.id, e.template_name,
-                        e.health.dead, getfulldump(d))
+                h.last_damage_types = bor(h.last_damage_types, d.damage_type)
+
+                if band(d.damage_type, DAMAGE_EAT) ~= 0 then
+                    d.damage_applied = h.hp
+                    d.damage_result = bor(d.damage_result, DR_KILL)
+                    h.hp = 0
+                    store.damages_applied[#store.damages_applied + 1] = d
+                elseif band(d.damage_type, DAMAGE_ARMOR) ~= 0 then
+
+                    d.value = d.value * (1 - e.health.armor_resilience)
+
+                    SU.armor_dec(e, d.value)
+                    d.damage_result = bor(d.damage_result, DR_ARMOR)
+                elseif band(d.damage_type, DAMAGE_MAGICAL_ARMOR) ~= 0 then
+                    d.value = d.value * (1 - e.health.armor_resilience)
+
+                    SU.magic_armor_dec(e, d.value)
+                    d.damage_result = bor(d.damage_result, DR_MAGICAL_ARMOR)
                 else
-                    local starting_hp = h.hp
+                    local actual_damage = U.predict_damage(e, d)
 
-                    h.last_damage_types = bor(h.last_damage_types, d.damage_type)
+                    h.hp = h.hp - actual_damage
+                    d.damage_applied = actual_damage
 
-                    log_hp.paranoid("(%s) %s - last_damage_types: %x", e.id, e.template_name, d.damage_type)
-
-                    if band(d.damage_type, DAMAGE_EAT) ~= 0 then
-                        d.damage_applied = h.hp
+                    if starting_hp > 0 and h.hp <= 0 then
                         d.damage_result = bor(d.damage_result, DR_KILL)
-                        h.hp = 0
-                    elseif band(d.damage_type, DAMAGE_ARMOR) ~= 0 then
+                    end
 
-                        d.value = d.value * (1 - e.health.armor_resilience)
+                    if actual_damage > 0 then
+                        d.damage_result = bor(d.damage_result, DR_DAMAGE)
 
-                        SU.armor_dec(e, d.value)
-                        d.damage_result = bor(d.damage_result, DR_ARMOR)
-                    elseif band(d.damage_type, DAMAGE_MAGICAL_ARMOR) ~= 0 then
-
-                        d.value = d.value * (1 - e.health.armor_resilience)
-
-                        SU.magic_armor_dec(e, d.value)
-                        d.damage_result = bor(d.damage_result, DR_MAGICAL_ARMOR)
-                    else
-                        local actual_damage = U.predict_damage(e, d)
-
-                        h.hp = h.hp - actual_damage
-                        d.damage_applied = actual_damage
-
-                        log_hp.paranoid("(%s) %s - damage_applied: %s", e.id, e.template_name, actual_damage)
-
-                        if starting_hp > 0 and h.hp <= 0 then
-                            d.damage_result = bor(d.damage_result, DR_KILL)
+                        if e.regen then
+                            e.regen.last_hit_ts = store.tick_ts
                         end
 
-                        if actual_damage > 0 then
-                            d.damage_result = bor(d.damage_result, DR_DAMAGE)
+                        if d.track_damage then
+                            signal.emit("entity-damaged", e, d)
 
-                            if e.regen then
-                                e.regen.last_hit_ts = store.tick_ts
-                            end
+                            local source = store.entities[d.source_id]
 
-                            if d.track_damage then
-                                signal.emit("entity-damaged", e, d)
-
-                                local source = store.entities[d.source_id]
-
-                                if source and source.track_damage then
-                                    table.insert(source.track_damage.damaged, {e.id, actual_damage})
-                                end
-                            end
-                        end
-
-                        if e and h.spiked_armor > 0 and e.soldier and d.source_id then
-                            local sad_target_id = nil
-                            -- if e.soldier.max_targets then
-                            --     if table.contains(e.soldier.target_ids , d.source_id) then
-                            --         sad_target_id = d.source_id
-                            --     end
-                            -- else
-                            --     if e.soldier.target_id == d.source_id then
-                            --         sad_target_id = d.source_id
-                            --     end
-                            -- end
-
-                            if e.soldier.target_id == d.source_id then
-                                sad_target_id = d.source_id
-                            end
-
-                            if sad_target_id then
-                                local t = store.entities[sad_target_id]
-                                if t and t.health and not t.health.dead then
-                                    local sad = E:create_entity("damage")
-
-                                    sad.damage_type = DAMAGE_TRUE
-                                    sad.value = h.spiked_armor * d.value
-                                    sad.source_id = e.id
-                                    sad.target_id = t.id
-
-                                    table.insert(store.damage_queue, sad)
-                                end
+                            if source and source.track_damage then
+                                table.insert(source.track_damage.damaged, {e.id, actual_damage})
                             end
                         end
                     end
 
-                    if starting_hp > 0 and h.hp <= 0 then
-                        signal.emit("entity-killed", e, d)
+                    if e and h.spiked_armor > 0 and e.soldier and d.source_id then
+                        local sad_target_id = nil
 
-                        if d.track_kills then
-                            local source = store.entities[d.source_id]
+                        if e.soldier.target_id == d.source_id then
+                            sad_target_id = d.source_id
+                        end
 
-                            if source and source.track_kills then
-                                table.insert(source.track_kills.killed, e.id)
+                        if sad_target_id then
+                            local t = store.entities[sad_target_id]
+                            if t and t.health and not t.health.dead then
+                                local sad = E:create_entity("damage")
+
+                                sad.damage_type = DAMAGE_TRUE
+                                sad.value = h.spiked_armor * d.value
+                                sad.source_id = e.id
+                                sad.target_id = t.id
+                                new_damage_queue[#new_damage_queue + 1] = sad
                             end
+                        end
+                    end
+                    store.damages_applied[#store.damages_applied+1] = d
+                end
+
+                if starting_hp > 0 and h.hp <= 0 then
+                    signal.emit("entity-killed", e, d)
+
+                    if d.track_kills then
+                        local source = store.entities[d.source_id]
+
+                        if source and source.track_kills then
+                            table.insert(source.track_kills.killed, e.id)
                         end
                     end
                 end
@@ -1261,27 +1246,6 @@ function sys.health:on_update(dt, ts, store)
             store.player_gold = store.player_gold + e.enemy.gold
 
             signal.emit("got-enemy-gold", e, e.enemy.gold)
-
-            -- if e.enemy and e.enemy.gems > 0 then
-            --     store.gems_collected = store.gems_collected + e.enemy.gems
-
-            --     signal.emit("show-gems-reward", e, e.enemy.gems)
-            -- end
-
-            -- if e.enemy and store.level_mode == GAME_MODE_ENDLESS then
-            --     local conf = W:get_endless_score_config()
-            --     local score = (1 + math.max(h.armor, h.magic_armor)) * h.hp_max * conf.scoreEnemyMultiplier
-
-            --     if e.motion then
-            --         score = score * e.motion.real_speed / FPS
-            --     end
-
-            --     score = km.round(score)
-            --     store.player_score = store.player_score + score
-
-            --     log.debug("ENDLESS: kill score %s (%s)%s - armor:%s magic_armor:%s hp_max:%s speed:%s", score, e.id,
-            --         e.template_name, h.armor, h.magic_armor, h.hp_max, e.motion and e.motion.real_speed or 0)
-            -- end
         end
 
         if not h.dead then
@@ -1289,10 +1253,6 @@ function sys.health:on_update(dt, ts, store)
         elseif not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
-
-        -- if h.dead and not h.ignore_delete_after and (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
-        --     queue_remove(store, e)
-        -- end
     end
 
     for _, e in pairs(soldiers) do
@@ -1315,13 +1275,8 @@ function sys.health:on_update(dt, ts, store)
             (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
             queue_remove(store, e)
         end
-
-        -- if h.dead and not e.hero and not h.ignore_delete_after and
-        --     (h.delete_after and store.tick_ts > h.delete_after or h.delete_now) then
-        --     queue_remove(store, e)
-        -- end
     end
-
+    store.damage_queue = new_damage_queue
 end
 
 sys.count_groups = {}
@@ -1378,8 +1333,9 @@ sys.hero_xp_tracking = {}
 sys.hero_xp_tracking.name = "hero_xp_tracking"
 
 function sys.hero_xp_tracking:on_update(dt, ts, store)
-    for _, d in pairs(store.damage_queue) do
-        if d.xp_gain_factor and d.xp_gain_factor > 0 and d.damage_applied and d.damage_applied > 0 then
+    for i = 1, #store.damages_applied do
+        local d = store.damages_applied[i]
+        if d.xp_gain_factor and d.xp_gain_factor > 0 and d.damage_applied > 0 then
             local id = d.xp_dest_id or d.source_id
             local e = store.entities[id]
 
@@ -1389,14 +1345,6 @@ function sys.hero_xp_tracking:on_update(dt, ts, store)
                 local amount = d.damage_applied * d.xp_gain_factor
 
                 e.hero.xp_queued = e.hero.xp_queued + amount
-
-                if log_xp.level >= log_xp.DEBUG_LEVEL then
-                    local t = store.entities[d.target_id]
-
-                    log_xp.debug("XP QUEUE DAMAGE: (%s)%s xp:%.2f damage:%.2f factor:%.2f to:(%s)%s via:%s", e.id,
-                        e.template_name, amount, d.damage_applied, d.xp_gain_factor, d.target_id,
-                        t and t.template_name or "?", d.source_id)
-                end
             end
         end
     end
@@ -1406,7 +1354,8 @@ sys.pops = {}
 sys.pops.name = "pops"
 
 function sys.pops:on_update(dt, ts, store)
-    for _, d in pairs(store.damage_queue) do
+    for i = 1, #store.damages_applied do
+        local d = store.damages_applied[i]
         if not d.pop or not d.target_id then
             -- block empty
         else
@@ -1422,9 +1371,9 @@ function sys.pops:on_update(dt, ts, store)
                 goto label_37_0
             end
 
-            if (not d.pop_chance or math.random() < d.pop_chance) and
+            if (not d.pop_chance or random() < d.pop_chance) and
                 (not d.pop_conds or band(d.damage_result, d.pop_conds) ~= 0) then
-                local name = d.pop[math.random(1, #d.pop)]
+                local name = d.pop[random(1, #d.pop)]
                 local e = E:create_entity(name)
 
                 if e.pop_over_target and target then
@@ -1440,7 +1389,7 @@ function sys.pops:on_update(dt, ts, store)
                 end
 
                 e.pos.y = e.pos.y + e.pop_y_offset
-                e.render.sprites[1].r = math.random(-21, 21) * math.pi / 180
+                e.render.sprites[1].r = random(-21, 21) * math.pi / 180
                 e.render.sprites[1].ts = store.tick_ts
 
                 queue_insert(store, e)
@@ -1727,11 +1676,20 @@ function sys.particle_system:init(store)
     end
     self.new_particle = function(ts)
         return {
-            pos = {x = 0, y = 0},
+            pos = {
+                x = 0,
+                y = 0
+            },
             r = 0,
-            speed = {x = 0, y = 0},
+            speed = {
+                x = 0,
+                y = 0
+            },
             spin = 0,
-            scale_factor = {x = 1, y = 1},
+            scale_factor = {
+                x = 1,
+                y = 1
+            },
             ts = ts,
             last_ts = ts
         }
@@ -1746,7 +1704,7 @@ function sys.particle_system:init(store)
         end
 
         local intervals = #values - 1
-        local interval = math.floor(phase * intervals)
+        local interval = floor(phase * intervals)
         local interval_phase = phase * intervals - interval
         local a = values[interval + 1]
         local b = values[interval + 2]
@@ -1851,21 +1809,21 @@ function sys.particle_system:on_update(dt, ts, store)
         end
 
         if s.emit and ts - s.emit_ts > 1 / s.emission_rate then
-            local count = math.floor((ts - s.emit_ts) * s.emission_rate)
+            local count = floor((ts - s.emit_ts) * s.emission_rate)
 
             for i = 1, count do
                 local pts = s.emit_ts + i * 1 / s.emission_rate
-                local draw_order = s.draw_order or math.floor(pts * 100)
-                local draw_order = s.draw_order and 100000 * s.draw_order + e.id or math.floor(pts * 100)
+                local draw_order = s.draw_order or floor(pts * 100)
+                local draw_order = s.draw_order and 100000 * s.draw_order + e.id or floor(pts * 100)
                 local f = new_frame(draw_order, s.z, s.sort_y_offset, s.sort_y)
 
-                table.insert(store.render_frames, f)
+                store.render_frames[#store.render_frames + 1] = f
 
                 local p = new_particle(pts)
 
                 f.anchor.x, f.anchor.y = s.anchor.x, s.anchor.y
 
-                table.insert(s.particles, p)
+                s.particles[#s.particles + 1] = p
 
                 p.f = f
                 p.lifetime = U.frandom(s.particle_lifetime[1], s.particle_lifetime[2])
@@ -1927,7 +1885,7 @@ function sys.particle_system:on_update(dt, ts, store)
                         s._last_name_idx = km.zmod(s._last_name_idx + 1, #s.names)
                         p.name_idx = s._last_name_idx
                     else
-                        p.name_idx = math.random(1, #s.names)
+                        p.name_idx = random(1, #s.names)
                     end
                 end
             end
@@ -1935,13 +1893,14 @@ function sys.particle_system:on_update(dt, ts, store)
             s.emit_ts = s.emit_ts + count * 1 / s.emission_rate
         end
 
-        for _, p in pairs(s.particles) do
+        for  i=1,#s.particles do
             do
+                local p = s.particles[i]
                 local tp = ts - p.last_ts
                 local phase = (ts - p.ts) / p.lifetime
 
                 if phase >= 1 then
-                    table.insert(to_remove, p)
+                    to_remove[#to_remove + 1] = p
 
                     goto label_51_0
                 elseif phase < 0 then
@@ -1992,9 +1951,9 @@ function sys.particle_system:on_update(dt, ts, store)
             ::label_51_0::
         end
 
-        for _, p in pairs(to_remove) do
+        for i=1, #to_remove do
+            local p = to_remove[i]
             table.removeobject(s.particles, p)
-            -- table.removeobject(store.render_frames, p.f)
             mark_remove_for_frame(p.f)
         end
 
@@ -2012,7 +1971,7 @@ sys.render = {}
 sys.render.name = "render"
 
 local ffi = require("ffi")
-ffi.cdef[[
+ffi.cdef [[
 typedef struct{
     int z;
     double sort_y;
@@ -2037,7 +1996,7 @@ function sys.render:init(store)
     }
     self._hb_sizes = HEALTH_BAR_SIZES[store.texture_size] or HEALTH_BAR_SIZES.default
     self._hb_colors = HEALTH_BAR_COLORS
-    self.ffi_cmp = function(a,b)
+    self.ffi_cmp = function(a, b)
         if a.marked_to_remove ~= b.marked_to_remove then
             return a.marked_to_remove < b.marked_to_remove
         end
@@ -2056,7 +2015,7 @@ function sys.render:init(store)
         if right - left <= 1 then
             return
         end
-        local mid = math.floor((left + right) / 2)
+        local mid = floor((left + right) / 2)
         ffi_merge_sort(arr, tmp, left, mid)
         ffi_merge_sort(arr, tmp, mid, right)
         local i, j, k = left, mid, left
@@ -2089,8 +2048,10 @@ function sys.render:init(store)
 end
 
 function sys.render:on_insert(entity, store)
+    local render_frames = store.render_frames
     if entity.render then
-        for i, s in ipairs(entity.render.sprites) do
+        for i = 1, #entity.render.sprites do
+            local s = entity.render.sprites[i]
             local f = {}
 
             f.ss = nil
@@ -2132,8 +2093,7 @@ function sys.render:on_insert(entity, store)
             end
 
             entity.render.frames[i] = f
-
-            table.insert(store.render_frames, f)
+            render_frames[#render_frames + 1] = f
         end
     end
 
@@ -2227,13 +2187,13 @@ function sys.render:on_insert(entity, store)
         hb.frames[1] = fb
         hb.frames[2] = ff
 
-        table.insert(store.render_frames, fb)
-        table.insert(store.render_frames, ff)
+        render_frames[#render_frames + 1] = fb
+        render_frames[#render_frames + 1] = ff
 
         if fk then
             hb.frames[3] = fk
 
-            table.insert(store.render_frames, fk)
+            render_frames[#render_frames + 1] = fk
         end
     end
 
@@ -2270,7 +2230,8 @@ function sys.render:on_update(dt, ts, store)
     local entities = d.entities_with_render
 
     for _, e in pairs(entities) do
-        for i, s in ipairs(e.render.sprites) do
+        for i = 1, #e.render.sprites do
+            local s = e.render.sprites[i]
             local f = e.render.frames[i]
             local last_runs = s.runs
             local fn, runs, idx
@@ -2360,8 +2321,8 @@ function sys.render:on_update(dt, ts, store)
                     fk.hidden = false
                 end
 
-                fb.pos.x, fb.pos.y = math.floor(e.pos.x), math.ceil(e.pos.y)
-                ff.pos.x, ff.pos.y = math.floor(e.pos.x), math.ceil(e.pos.y)
+                fb.pos.x, fb.pos.y = floor(e.pos.x), ceil(e.pos.y)
+                ff.pos.x, ff.pos.y = floor(e.pos.x), ceil(e.pos.y)
                 fb.offset.x, fb.offset.y = hb.offset.x - fb.bar_width * fb.ss.ref_scale * 0.5, hb.offset.y
                 ff.offset.x, ff.offset.y = hb.offset.x - ff.bar_width * ff.ss.ref_scale * 0.5, hb.offset.y
                 fb.z = hb.z or Z_OBJECTS
@@ -2372,7 +2333,7 @@ function sys.render:on_update(dt, ts, store)
                 ff.sort_y_offset = hb.sort_y_offset
 
                 if fk then
-                    fk.pos.x, fk.pos.y = math.floor(e.pos.x), math.floor(e.pos.y)
+                    fk.pos.x, fk.pos.y = floor(e.pos.x), floor(e.pos.y)
                     fk.offset.x, fk.offset.y = hb.offset.x - fk.bar_width * fk.ss.ref_scale * 0.5, hb.offset.y
                     fk.z = hb.z or Z_OBJECTS
                     fk.sort_y_offset = hb.sort_y_offset
@@ -2412,7 +2373,7 @@ function sys.render:on_update(dt, ts, store)
         local f = store.render_frames[i]
 
         if f.marked_to_remove then
-            table.remove(store.render_frames, i)
+            store.render_frames[i] = nil
         else
             break
         end
@@ -2631,7 +2592,7 @@ function sys.endless_patch:on_insert(entity, store)
             entity._endless_strengthened = true
             if entity.enemy then
                 if entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.enemy_health_factor)
+                    entity.health.hp_max = ceil(entity.health.hp_max * store.endless.enemy_health_factor)
                     entity.health.damage_factor = entity.health.damage_factor * store.endless.enemy_health_damage_factor
                     entity.health.instakill_resistance = entity.health.instakill_resistance +
                                                              store.endless.enemy_instakill_resistance
@@ -2642,10 +2603,10 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.motion.max_speed then
                     entity.motion.max_speed = entity.motion.max_speed * store.endless.enemy_speed_factor
                 end
-                entity.enemy.gold = math.ceil(entity.enemy.gold * store.endless.enemy_gold_factor)
+                entity.enemy.gold = ceil(entity.enemy.gold * store.endless.enemy_gold_factor)
             elseif entity.soldier then
                 if entity.health and entity.health.hp_max then
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.soldier_health_factor)
+                    entity.health.hp_max = ceil(entity.health.hp_max * store.endless.soldier_health_factor)
                     entity.health.hp = entity.health.hp_max
                     -- entity.health.damage_factor = entity.health.damage_factor * store.endless.soldier_health_damage_factor
                 end
@@ -2658,7 +2619,7 @@ function sys.endless_patch:on_insert(entity, store)
                 if entity.hero then
                     entity.unit.damage_factor = entity.unit.damage_factor * store.endless.hero_damage_factor
                     entity.cooldown_factor = entity.cooldown_factor * store.endless.hero_cooldown_factor
-                    entity.health.hp_max = math.ceil(entity.health.hp_max * store.endless.hero_health_factor)
+                    entity.health.hp_max = ceil(entity.health.hp_max * store.endless.hero_health_factor)
                     entity.health.hp = entity.health.hp_max
                 end
             elseif entity.tower then
@@ -2675,7 +2636,7 @@ sys.spatial_index = {}
 sys.spatial_index.name = "spatial_index"
 
 function sys.spatial_index:init(store)
-    store.enemy_spatial_index = SpatialHash:new(store.visible_coords, 32)
+    store.enemy_spatial_index = SpatialHash:new(50)
 end
 
 function sys.spatial_index:on_insert(entity, store)
@@ -2699,7 +2660,7 @@ function sys.spatial_index:on_update(dt, ts, store)
     -- store.enemy_spatial_index:print_debug_info()
 end
 
-local performance_monitor_enabled = true
+local performance_monitor_enabled = false
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}

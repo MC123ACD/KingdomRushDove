@@ -46,6 +46,12 @@ end
 local function CJK(default, zh, ja, kr)
     return i18n.cjk(i18n, default, zh, ja, kr)
 end
+local function queue_insert(store, e)
+    simulation:queue_insert_entity(e)
+end
+local function queue_remove(store, e)
+    simulation:queue_remove_entity(e)
+end
 
 local IS_KR3 = KR_GAME == "kr3"
 local IS_KR2 = KR_GAME == "kr2"

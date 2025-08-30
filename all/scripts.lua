@@ -32,7 +32,7 @@ local function queue_remove(store, e)
 end
 
 local function queue_damage(store, damage)
-    table.insert(store.damage_queue, damage)
+    store.damage_queue[#store.damage_queue + 1] = damage
 end
 
 local function fts(v)
@@ -2436,8 +2436,8 @@ function scripts.bomb.update(this, store, script)
 
     local enemies = U.find_enemies_in_range(store, b.to, 0, dradius, b.damage_flags, b.damage_bans)
     if enemies then
-        for _, enemy in pairs(enemies) do
-
+        for i=1,#enemies do
+            local enemy = enemies[i]
             local d = E:create_entity("damage")
 
             d.damage_type = b.damage_type
@@ -2804,7 +2804,8 @@ function scripts.missile.update(this, store, script)
         end
         local enemies = U.find_enemies_in_range(store, origin, 0, b.damage_radius, b.damage_flags, b.damage_bans)
         if enemies then
-            for _, enemy in pairs(enemies) do
+            for i=1,#enemies do
+                local enemy = enemies[i]
                 local d = E:create_entity("damage")
 
                 d.source_id = this.id
@@ -7128,7 +7129,8 @@ function scripts.power_fireball.update(this, store, script)
     if enemies then
         local damage_value = b.damage_factor * math.random(b.damage_min, b.damage_max)
 
-        for _, enemy in pairs(enemies) do
+        for i=1,#enemies do
+            local enemy = enemies[i]
             local d = E:create_entity("damage")
 
             d.source_id = this.id

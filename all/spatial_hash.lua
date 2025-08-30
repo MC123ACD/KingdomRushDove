@@ -2,18 +2,18 @@ require("constants")
 local spatial_hash = {}
 local aspect = ASPECT
 spatial_hash.__index = spatial_hash
-function spatial_hash:new(visible_coords, cell_size)
+local ceil = math.ceil
+local floor = math.floor
+local max = math.max
+local min = math.min
+function spatial_hash:new(cell_size)
     local hash = {
         cell_size = cell_size,
         _cell_size_factor = 1.0 / cell_size,
-        cols = math.ceil((visible_coords.right - visible_coords.left) / cell_size),
-        rows = math.ceil((visible_coords.top - visible_coords.bottom) / cell_size),
-        min_col = math.floor(visible_coords.left / cell_size),
-        min_row = math.floor(visible_coords.bottom / cell_size),
-        max_col = math.floor(visible_coords.right / cell_size),
-        max_row = math.floor(visible_coords.top / cell_size),
-        col_offset = 1 - math.floor(visible_coords.left / cell_size),
-        row_offset = 1 - math.floor(visible_coords.bottom / cell_size),
+        cols = ceil((IN_GAME_X_MAX-IN_GAME_X_MIN) / cell_size),
+        rows = ceil((IN_GAME_Y_MAX-IN_GAME_Y_MIN) / cell_size),
+        col_offset = 1 - floor(IN_GAME_X_MIN / cell_size),
+        row_offset = 1 - floor(IN_GAME_Y_MIN / cell_size),
         cells = {},
         entity_cells = {} -- entity id -> cell
     }
@@ -28,23 +28,23 @@ function spatial_hash:new(visible_coords, cell_size)
 end
 
 function spatial_hash:_x_to_col(x)
-    return math.floor(x * self._cell_size_factor) + self.col_offset
+    return floor(x * self._cell_size_factor) + self.col_offset
 end
 
 function spatial_hash:_y_to_row(y)
-    return math.floor(y * self._cell_size_factor) + self.row_offset
+    return floor(y * self._cell_size_factor) + self.row_offset
 end
 
 function spatial_hash:_get_cell(x, y)
-    return self.cells[self._y_to_row[y]][self._x_to_col[x]]
+    return self.cells[self:_y_to_row(y)][self:_x_to_col(x)]
 end
 
 function spatial_hash:_get_cells_in_ellipse_range(x, y, radius)
-    local min_col = math.max(1, self._x_to_col(x - radius))
-    local max_col = math.min(self.cols, self._x_to_col(x + radius))
+    local min_col = max(1, self:_x_to_col(x - radius))
+    local max_col = min(self.cols, self:_x_to_col(x + radius))
     local b = radius * aspect
-    local min_row = math.max(1, self._y_to_row(y - b))
-    local max_row = math.min(self.rows, self._y_to_row(y + b))
+    local min_row = max(1, self:_y_to_row(y - b))
+    local max_row = min(self.rows, self:_y_to_row(y + b))
 
     local cells = {}
     for row = min_row, max_row do
@@ -158,10 +158,10 @@ end
 --         if count > 0 then
 --             occupied_cells = occupied_cells + 1
 --             total_entities = total_entities + count
---             max_entities_per_cell = math.max(max_entities_per_cell, count)
+--             max_entities_per_cell = max(max_entities_per_cell, count)
 
 --             -- 计算网格坐标
---             local row = math.floor(key / self.cols)
+--             local row = floor(key / self.cols)
 --             local col = key % self.cols
 
 --             print(string.format("Cell[%d,%d] (key=%d): %d entities -> %s", row, col, key, count,

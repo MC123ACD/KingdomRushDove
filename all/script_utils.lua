@@ -32,7 +32,7 @@ local function queue_remove(store, e)
 end
 
 local function queue_damage(store, damage)
-    table.insert(store.damage_queue, damage)
+    store.damage_queue[#store.damage_queue + 1] = damage
 end
 
 local function fts(v)

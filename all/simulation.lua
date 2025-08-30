@@ -106,21 +106,50 @@ function simulation:do_tick()
 	d.tick = d.tick + 1
 	d.tick_ts = d.tick_ts + TICK_LENGTH
 
-	while #d.pending_inserts > 0 do
-		local e = table.remove(d.pending_inserts, 1)
+	-- while #d.pending_inserts > 0 do
+	-- 	local e = table.remove(d.pending_inserts, 1)
 
-		self:insert_entity(e)
-	end
+	-- 	self:insert_entity(e)
+	-- end
 
-	while #d.pending_removals > 0 do
-		local e = table.remove(d.pending_removals, 1)
+	-- while #d.pending_removals > 0 do
+	-- 	local e = table.remove(d.pending_removals, 1)
 
-		self:remove_entity(e)
-	end
+	-- 	self:remove_entity(e)
+	-- end
 
-	for _, sys in ipairs(self.systems_on_update) do
-		sys:on_update(TICK_LENGTH, d.tick_ts, d)
-	end
+	-- for _, sys in ipairs(self.systems_on_update) do
+	-- 	sys:on_update(TICK_LENGTH, d.tick_ts, d)
+	-- end
+
+    -- 批量插入
+    local last_count = #d.pending_inserts
+    for i = last_count, 1, -1 do
+        self:insert_entity(d.pending_inserts[i])
+    end
+    -- 清理前 last_count 个元素
+    for i = 1, #d.pending_inserts - last_count do
+        d.pending_inserts[i] = d.pending_inserts[i + last_count]
+    end
+    for i = #d.pending_inserts, #d.pending_inserts - last_count + 1, -1 do
+        d.pending_inserts[i] = nil
+    end
+
+    last_count = #d.pending_removals
+    -- 批量移除
+    for i = last_count, 1, -1 do
+        self:remove_entity(d.pending_removals[i])
+    end
+    for i = 1, #d.pending_removals - last_count do
+        d.pending_removals[i] = d.pending_removals[i + last_count]
+    end
+    for i = #d.pending_removals, #d.pending_removals - last_count + 1, -1 do
+        d.pending_removals[i] = nil
+    end
+
+    for i = 1, #self.systems_on_update do
+        self.systems_on_update[i]:on_update(TICK_LENGTH, d.tick_ts, d)
+    end
 end
 
 function simulation:queue_insert_entity(e)
@@ -136,7 +165,7 @@ function simulation:queue_insert_entity(e)
 
 	e.pending_removal = nil
 
-	table.insert(d.pending_inserts, e)
+    d.pending_inserts[#d.pending_inserts + 1] = e
 end
 
 function simulation:queue_remove_entity(e)
@@ -158,7 +187,7 @@ function simulation:queue_remove_entity(e)
 
 	e.pending_removal = true
 
-	table.insert(self.store.pending_removals, e)
+    self.store.pending_removals[#self.store.pending_removals + 1] = e
 end
 
 function simulation:insert_entity(e)

@@ -6,7 +6,10 @@ ASPECT = 0.7
 REF_W = 1024
 REF_H = 768
 REF_OX = math.floor((REF_H * 16 / 9 - REF_W) * 0.5)
-
+IN_GAME_X_MAX = 1500
+IN_GAME_X_MIN = -400
+IN_GAME_Y_MIN = -250
+IN_GAME_Y_MAX = 1000
 if KR_TARGET == "phone" then
 	GUI_REF_W = 480
 	GUI_REF_H = 320
