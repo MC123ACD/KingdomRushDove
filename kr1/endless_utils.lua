@@ -645,11 +645,19 @@ function EU.patch_engineer_focus(level)
     tower = E:get_template("tower_frankenstein")
     tower.tower.damage_factor = tower.tower.damage_factor + level * friend_buff.engineer_focus * 0.8
     local missile = E:get_template("missile_bfg")
-    missile.bullet.damage_min = missile.bullet.damage_min * (1 + 0.8 * friend_buff.engineer_focus) ^ level
-    missile.bullet.damage_max = missile.bullet.damage_max * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+    if not missile.bullet._engineer_focus_damage_min then
+        missile.bullet._engineer_focus_damage_min = missile.bullet.damage_min
+        missile.bullet._engineer_focus_damage_max = missile.bullet.damage_max
+    end
+    missile.bullet.damage_min = missile.bullet._engineer_focus_damage_min * (1 + 0.8 * friend_buff.engineer_focus * level)
+    missile.bullet.damage_max = missile.bullet._engineer_focus_damage_max * (1 + 0.8 * friend_buff.engineer_focus * level)
     missile = E:get_template("missile_mecha")
-    missile.bullet.damage_min = missile.bullet.damage_min * (1 + 0.8 * friend_buff.engineer_focus) ^ level
-    missile.bullet.damage_max = missile.bullet.damage_max * (1 + 0.8 * friend_buff.engineer_focus) ^ level
+    if not missile.bullet._engineer_focus_damage_min then
+        missile.bullet._engineer_focus_damage_min = missile.bullet.damage_min
+        missile.bullet._engineer_focus_damage_max = missile.bullet.damage_max
+    end
+    missile.bullet.damage_min = missile.bullet._engineer_focus_damage_min * (1 + 0.8 * friend_buff.engineer_focus * level)
+    missile.bullet.damage_max = missile.bullet._engineer_focus_damage_max * (1 + 0.8 * friend_buff.engineer_focus * level)
 end
 
 local function endless_engineer_aftermath_ray_remove(this, store)
