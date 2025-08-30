@@ -1097,7 +1097,6 @@ function sys.main_script:on_update(dt, ts, store)
                 s.co = nil
             end
         end
-
     end
 end
 
@@ -2012,9 +2011,22 @@ end
 sys.render = {}
 sys.render.name = "render"
 
+local ffi = require("ffi")
+ffi.cdef[[
+typedef struct{
+    int z;
+    double sort_y;
+    int draw_order;
+    double pos_x;
+    int marked_to_remove;
+    int lua_index;
+} RenderFrameFFI;
+]]
+
 function sys.render:init(store)
     store.render_frames = {}
-
+    store.render_frames_ffi = ffi.new("RenderFrameFFI[8192]") -- preallocate for 8192 frames
+    store.render_frames_ffi_count = 0
     local hb_quad = love.graphics.newQuad(unpack(HEALTH_BAR_CORNER_DOT_QUAD))
 
     self._hb_ss = {
@@ -2025,28 +2037,55 @@ function sys.render:init(store)
     }
     self._hb_sizes = HEALTH_BAR_SIZES[store.texture_size] or HEALTH_BAR_SIZES.default
     self._hb_colors = HEALTH_BAR_COLORS
-    self.frame_compare_fn = function(f1, f2)
-        if f1.marked_to_remove and not f2.marked_to_remove then
-            return false
-        elseif not f1.marked_to_remove and f2.marked_to_remove then
-            return true
+    self.ffi_cmp = function(a,b)
+        if a.marked_to_remove ~= b.marked_to_remove then
+            return a.marked_to_remove < b.marked_to_remove
         end
-        if f1.z ~= f2.z then
-            return f1.z < f2.z
+        if a.z ~= b.z then
+            return a.z < b.z
         end
-
-        local y1 = f1.sort_y or (f1.sort_y_offset or 0) + f1.pos.y
-        local y2 = f2.sort_y or (f2.sort_y_offset or 0) + f2.pos.y
-        if y1 ~= y2 then
-            return y1 > y2
+        if a.sort_y ~= b.sort_y then
+            return a.sort_y > b.sort_y
         end
-
-        if f1.draw_order ~= f2.draw_order then
-            return f1.draw_order < f2.draw_order
+        if a.draw_order ~= b.draw_order then
+            return a.draw_order < b.draw_order
         end
-
-        return f1.pos.x < f2.pos.x
+        return a.pos_x < b.pos_x
     end
+    local function ffi_merge_sort(arr, tmp, left, right)
+        if right - left <= 1 then
+            return
+        end
+        local mid = math.floor((left + right) / 2)
+        ffi_merge_sort(arr, tmp, left, mid)
+        ffi_merge_sort(arr, tmp, mid, right)
+        local i, j, k = left, mid, left
+        while i < mid and j < right do
+            if self.ffi_cmp(arr[i], arr[j]) then
+                ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+                i = i + 1
+            else
+                ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+                j = j + 1
+            end
+            k = k + 1
+        end
+        while i < mid do
+            ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+            i = i + 1
+            k = k + 1
+        end
+        while j < right do
+            ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+            j = j + 1
+            k = k + 1
+        end
+        for l = left, right - 1 do
+            ffi.copy(arr + l, tmp + l, ffi.sizeof("RenderFrameFFI"))
+        end
+    end
+    self.ffi_sort = ffi_merge_sort
+
 end
 
 function sys.render:on_insert(entity, store)
@@ -2347,7 +2386,27 @@ function sys.render:on_update(dt, ts, store)
         end
     end
 
-    table.sort(store.render_frames, self.frame_compare_fn)
+    -- FFI同步
+    local n = #store.render_frames
+    store.render_frames_ffi_count = n
+    for i = 1, n do
+        local f = store.render_frames[i]
+        local ffi_f = store.render_frames_ffi[i - 1]
+        ffi_f.z = f.z or 0
+        ffi_f.sort_y = f.sort_y or (f.sort_y_offset or 0) + (f.pos and f.pos.y or 0)
+        ffi_f.draw_order = f.draw_order or 0
+        ffi_f.pos_x = f.pos and f.pos.x or 0
+        ffi_f.marked_to_remove = f.marked_to_remove and 1 or 0
+        ffi_f.lua_index = i
+    end
+    self.ffi_sort(store.render_frames_ffi, ffi.new("RenderFrameFFI[?]", n), 0, n)
+    local new_frames = {}
+    for i = 0, n - 1 do
+        local ffi_f = store.render_frames_ffi[i]
+        local f = store.render_frames[ffi_f.lua_index]
+        new_frames[i + 1] = f
+    end
+    store.render_frames = new_frames
 
     for i = #store.render_frames, 1, -1 do
         local f = store.render_frames[i]
@@ -2640,7 +2699,7 @@ function sys.spatial_index:on_update(dt, ts, store)
     -- store.enemy_spatial_index:print_debug_info()
 end
 
-local performance_monitor_enabled = false
+local performance_monitor_enabled = true
 if performance_monitor_enabled then
     -- 在文件开头添加性能监控模块
     local perf = {}
@@ -2720,7 +2779,7 @@ if performance_monitor_enabled then
         -- 输出排序后的结果
         table.insert(report, "\n系统开销排行 (平均耗时ms/调用次数):")
         for i, item in ipairs(sorted_costs) do
-            table.insert(report, string.format("%5d. %s: %.1fms (%d次)", i, item.name, item.total, item.calls))
+            table.insert(report, string.format("%4d. %s: %.4fms (%d次)", i, item.name, item.total, item.calls))
 
             -- 只显示前15个最耗时的
             if i >= 15 then

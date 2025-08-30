@@ -2189,18 +2189,6 @@ local function y_soldier_do_single_melee_attack(store, this, target, attack)
     return attack_done
 end
 
-local function soldier_attract_enemies(store, this)
-    if this.soldier.attractive then
-        local enemies = U.find_enemies_in_range(store, this.pos, 0, this.melee.range, F_BLOCK, F_CLIFF,
-            function(e)
-                return #e.enemy.blockers == 0 and e.enemy.attract_source_id == nil
-            end)
-        for _, enemy in pairs(enemies) do
-            enemy.enemy.attract_source_id = this.id
-        end
-    end
-end
-
 local function soldier_pick_melee_target(store, this)
     local target
 

@@ -307,6 +307,10 @@ function screen_settings:init(sw, sh, params, done_callback)
             "120",
             120
         },
+        {
+            "90",
+            90
+        },
 		{
 			"60",
 			60
