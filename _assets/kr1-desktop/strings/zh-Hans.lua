@@ -2,6 +2,7 @@
 local balance = require("kr1.data.balance")
 local endless = require("kr1.data.endless")
 local kr1 = {
+    ENEMY_SARELGAS_BIG_NAME = "萨雷格兹主母",
     LEVEL_1000_TITLE = "斗蛐蛐专用关卡1",
     LEVEL_1000_HISTORY = "注二号路径为下面的直线",
     CREDITS_TITLE_16 = "质量检验与测试",

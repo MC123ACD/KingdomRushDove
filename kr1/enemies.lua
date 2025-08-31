@@ -7057,6 +7057,96 @@ local function enemies()
     tt.unit.size = UNIT_SIZE_MEDIUM
     tt.vis.bans = bor(F_TELEPORT, F_POLYMORPH)
     tt.vis.flags = bor(F_ENEMY, F_BOSS)
+
+    -- 萨雷格兹主母
+    tt = RT("enemy_sarelgaz_big", "enemy")
+    AC(tt, "melee", "timed_attacks", "auras")
+    anchor_y = 0.1484375
+    anchor_x = 0.5
+    image_y = 128
+    image_x = 220
+    tt.enemy.gold = 145
+    tt.enemy.lives_cost = 5
+    tt.enemy.melee_slot = vec_2(70, 0)
+    tt.health.dead_lifetime = 8
+    tt.health.hp_max = 2900
+    tt.health.magic_armor = 0.3
+    tt.health.armor = 0.6
+    tt.health_bar.type = HEALTH_BAR_SIZE_MEDIUM_LARGE
+    tt.health_bar.offset = vec_2(0, 82)
+    tt.info.i18n_key = "ENEMY_SARELGAS_BIG"
+    tt.info.enc_icon = 35
+    tt.info.portrait = IS_PHONE_OR_TABLET and "portraits_sc_0057" or "info_portraits_sc_0057"
+    tt.main_script.insert = scripts.enemy_basic.insert
+    tt.main_script.update = scripts.enemy_spider_big.update
+    tt.melee.attacks[1].cooldown = 0.5
+    tt.melee.attacks[1].damage_max = 125
+    tt.melee.attacks[1].damage_min = 100
+    tt.melee.attacks[1].hit_time = fts(15)
+    tt.melee.attacks[1].damage_type = DAMAGE_TRUE
+    tt.melee.attacks[1].sound = "SpiderAttack"
+    tt.timed_attacks.list[1] = E:clone_c("bullet_attack")
+    tt.timed_attacks.list[1].bullet = "enemy_sarelgaz_bigger_egg"
+    tt.timed_attacks.list[1].max_cooldown = 17
+    tt.timed_attacks.list[1].max_count = 15
+    tt.timed_attacks.list[1].min_cooldown = 9
+    tt.auras.list[1] = E:clone_c("aura_attack")
+    tt.auras.list[1].name = "enemy_sarelgaz_big_aura"
+    tt.auras.list[1].cooldown = 0
+    tt.motion.max_speed = 0.4 * FPS
+    tt.render.sprites[1].anchor = vec_2(anchor_x, anchor_y)
+    tt.render.sprites[1].scale = vec_1(0.75)
+    tt.render.sprites[1].prefix = "eb_sarelgaz"
+    tt.render.sprites[1].angles_stickiness = {
+        walk = 10
+    }
+    tt.render.sprites[1].angles = {
+        walk = { "walkingRightLeft", "walkingUp", "walkingDown" }
+    }
+    tt.ui.click_rect = r(-45, 0, 90, 80)
+    tt.unit.blood_color = BLOOD_GREEN
+    tt.unit.fade_time_after_death = 2
+    tt.unit.hit_offset = vec_2(0, 45)
+    tt.unit.marker_hidden = true
+    tt.unit.marker_offset = vec_2(0, 0)
+    tt.unit.mod_offset = vec_2(0, 45)
+    tt.unit.size = UNIT_SIZE_LARGE
+    tt.vis.bans = bor(F_THORN)
+    tt.vis.flags = F_ENEMY
+
+    tt = RT("enemy_sarelgaz_big_aura", "aura")
+    tt.aura.duration = -1
+    tt.aura.mod = "mod_enemy_sarelgaz_big"
+    tt.aura.cycle_time = fts(10)
+    tt.aura.track_source = true
+    tt.aura.radius = 70
+    tt.aura.excluded_templates = { "enemy_sarelgaz_big" }
+    tt.main_script.insert = scripts.aura_apply_mod.insert
+    tt.main_script.update = scripts.aura_apply_mod.update
+
+    tt = RT("mod_enemy_sarelgaz_big", "mod_slow")
+    tt.slow.factor = 1.35
+    tt.modifier.duration = fts(12)
+
+    tt = E:register_t("enemy_sarelgaz_bigger_egg", "decal_scripted")
+    E:add_comps(tt, "render", "spawner", "tween")
+    tt.main_script.update = scripts.enemies_spawner.update
+    tt.render.sprites[1].anchor.y = 0.22
+    tt.render.sprites[1].scale = vec_1(1.75)
+    tt.render.sprites[1].prefix = "enemy_spider_egg"
+    tt.render.sprites[1].loop = false
+    tt.render.sprites[1].color = { 0, 80, 255 }
+    tt.spawner.count = 1
+    tt.spawner.cycle_time = fts(6)
+    tt.spawner.entity = "enemy_sarelgaz_small"
+    tt.spawner.node_offset = 5
+    tt.spawner.pos_offset = vec_2(0, 1)
+    tt.spawner.allowed_subpaths = { 1, 2, 3 }
+    tt.spawner.random_subpath = false
+    tt.spawner.animation_start = "start"
+    tt.tween.disabled = true
+    tt.tween.props[1].keys = { { 0, 255 }, { 4, 0 } }
+    tt.tween.remove = true
 end
 
 return enemies

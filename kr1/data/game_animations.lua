@@ -3123,6 +3123,11 @@ local kr1_a = {
         to = 20,
         from = 1
     },
+    eb_sarelgaz_walkingUp = {
+        prefix = "boss_sarelgaz",
+        to = 20,
+        from = 1
+    },
     eb_gulthak_attack = {
         prefix = "boss_GulThak",
         to = 53,

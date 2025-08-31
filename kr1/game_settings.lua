@@ -99,9 +99,17 @@ GS.level3_count = GS.level3_from + GS.last_level3
 
 GS.extra_level1_from = 70
 GS.extra_level1 = 1
+GS.extra_level2_from = 89
+GS.extra_level2 = 1
+GS.extra_level3_from = 109
+GS.extra_level3 = 0
 
 GS.custom_level1_from = 999
 GS.custom_level1 = 1
+GS.custom_level2_from = 1999
+GS.custom_level2 = 0
+GS.custom_level3_from = 2999
+GS.custom_level3 = 0
 
 GS.endless_levels_count = 1
 
@@ -145,8 +153,8 @@ GS.level_ranges1 = { { 1, 12 }, { 13 }, { 14 }, {
 }, { 16, 17 }, { 18, 19 }, { 20, 21 }, { 23, 26 }, { 71 }, { 1000 }}
 GS.level_ranges2 = { { 27, 41 }, { 42, 44 }, { 45, 47 }, {
 	48
-} }
-GS.level_ranges3 = { { 49, 63 }, { 64, 66 }, { 67, 68 }, { 69, 70 } }
+}, {90}  }
+GS.level_ranges3 = { { 49, 63 }, { 64, 66 }, { 67, 68 }, { 69, 70 }}
 
 GS.default_hero = nil
 GS.hero_xp_thresholds = {

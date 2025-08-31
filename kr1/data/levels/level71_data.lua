@@ -562,6 +562,6 @@ return {
         "go_stages_grass",
         "go_stages_ice",
         "go_stage71_bg",
-        "go_stages_blackburn"
+        "go_stages_flag"
     }
 }

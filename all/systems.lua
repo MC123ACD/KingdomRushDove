@@ -1643,7 +1643,42 @@ end
 sys.particle_system = {}
 sys.particle_system.name = "particle_system"
 
+local Pool = require("pool")
+
 function sys.particle_system:init(store)
+    local function create_particle(ts)
+        return {
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            speed = {
+                x = 0,
+                y = 0
+            },
+            spin = 0,
+            scale_factor = {
+                x = 1,
+                y = 1
+            },
+            ts = ts,
+            last_ts = ts
+        }
+    end
+    local function reset_particle(p, ts)
+        -- p.pos.x = 0
+        -- p.pos.y = 0
+        -- p.r = 0
+        -- p.speed.x = 0
+        -- p.speed.y = 0
+        -- p.spin = 0
+        -- p.scale_factor.x = 1
+        -- p.scale_factor.y = 1
+        p.ts = ts
+        p.last_ts = ts
+    end
+    self.pool = Pool:new(create_particle, reset_particle, 2048)
     self.new_frame = function(draw_order, z, sort_y_offset, sort_y)
         return {
             ss = nil,
@@ -1728,7 +1763,6 @@ function sys.particle_system:init(store)
             return default
         end
     end
-
 end
 
 function sys.particle_system:on_insert(entity, store)
@@ -1766,6 +1800,9 @@ function sys.particle_system:on_update(dt, ts, store)
     local new_frame = self.new_frame
     local new_particle = self.new_particle
     local phase_interp = self.phase_interp
+    local pool = self.pool
+    local get_particle = pool.get
+    local release_particle = pool.release
 
     local particle_systems = store.particle_systems
     for _, e in pairs(particle_systems) do
@@ -1812,14 +1849,15 @@ function sys.particle_system:on_update(dt, ts, store)
             local count = floor((ts - s.emit_ts) * s.emission_rate)
 
             for i = 1, count do
-                local pts = s.emit_ts + i * 1 / s.emission_rate
-                local draw_order = s.draw_order or floor(pts * 100)
+                local pts = s.emit_ts + i / s.emission_rate
+ 
                 local draw_order = s.draw_order and 100000 * s.draw_order + e.id or floor(pts * 100)
                 local f = new_frame(draw_order, s.z, s.sort_y_offset, s.sort_y)
 
                 store.render_frames[#store.render_frames + 1] = f
 
                 local p = new_particle(pts)
+                -- local p = get_particle(pool,pts)
 
                 f.anchor.x, f.anchor.y = s.anchor.x, s.anchor.y
 
@@ -1954,6 +1992,7 @@ function sys.particle_system:on_update(dt, ts, store)
         for i=1, #to_remove do
             local p = to_remove[i]
             table.removeobject(s.particles, p)
+            -- release_particle(pool, p)
             mark_remove_for_frame(p.f)
         end
 
@@ -2661,15 +2700,14 @@ function sys.spatial_index:on_update(dt, ts, store)
     -- store.enemy_spatial_index:print_debug_info()
 end
 
-local performance_monitor_enabled = false
-if performance_monitor_enabled then
+if PERFORMANCE_MONITOR_ENABLED then
     -- 在文件开头添加性能监控模块
     local perf = {}
     perf.timers = {}
     perf.frame_times = {}
     perf.system_times = {}
-    perf.max_samples = 5 / TICK_LENGTH -- 保存最近5秒数据
     perf.report_interval = 5 -- 每5秒输出一次报告
+    perf.max_samples = perf.report_interval / TICK_LENGTH -- 保存最近5秒数据
 
     -- 性能计时器函数
     function perf.start_timer(name)

@@ -138,7 +138,7 @@ end
 function entity_db:clone_entity(e)
 	local out = copy(e)
 
-	e.id = self.last_id
+	out.id = self.last_id
 	self.last_id = self.last_id + 1
 
 	return out

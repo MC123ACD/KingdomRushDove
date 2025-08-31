@@ -154,6 +154,19 @@ local function get_hero_stats(p)
     return out, h
 end
 
+-- 判断是否为额外关卡
+local function is_extra_level(level, num)
+    local e = "extra_level" .. num
+    local efrom = GS[e .. "_from"]
+    local eto = efrom + GS[e]
+
+    local c = "custom_level" .. num
+    local cfrom = GS[c .. "_from"]
+    local cto = cfrom + GS[c]
+
+    return level > efrom and level <= eto or level > cfrom and level <= cto
+end
+
 screen_map.signal_handlers = {
     [SGN_SHOP_GEMS_CHANGED] = function()
         screen_map:update_gems()
@@ -312,8 +325,8 @@ function screen_map:init(w, h, done_callback)
     local map_scroll_hotspots_l = KView:new(V.v(100, sh))
 
     map_scroll_hotspots_l.propagate_on_click = true
-    map_scroll_hotspots_l.anchor = v(0, sh * 0.5)
-    map_scroll_hotspots_l.pos = v(0, sh * 0.5)
+    map_scroll_hotspots_l.anchor = v(0, sh / 2)
+    map_scroll_hotspots_l.pos = v(0, sh / 2)
 
     function map_scroll_hotspots_l.on_enter()
         map.scrolling_dir = 1
@@ -329,8 +342,8 @@ function screen_map:init(w, h, done_callback)
     local map_scroll_hotspots_r = KView:new(V.v(100, sh - 184))
 
     map_scroll_hotspots_r.propagate_on_click = true
-    map_scroll_hotspots_r.anchor = v(100, sh * 0.5)
-    map_scroll_hotspots_r.pos = v(sw, sh * 0.5)
+    map_scroll_hotspots_r.anchor = v(100, sh / 2)
+    map_scroll_hotspots_r.pos = v(sw, sh / 2)
 
     function map_scroll_hotspots_r.on_enter()
         map.scrolling_dir = -1
@@ -345,7 +358,7 @@ function screen_map:init(w, h, done_callback)
 
     local o_button = KImageButton:new("map_configBtn_0001", "map_configBtn_0002", "map_configBtn_0003")
 
-    o_button.anchor = v(o_button.size.x * 0.5, o_button.size.y * 0.5)
+    o_button.anchor = v(o_button.size.x / 2, o_button.size.y / 2)
     o_button.pos = v(80, 70)
 
     function o_button.on_click(this, button, x, y)
@@ -357,7 +370,7 @@ function screen_map:init(w, h, done_callback)
 
     local a_button = GGButton:new("mapButtons-notxt_0004", "mapButtons-notxt_0005")
 
-    a_button.anchor = v(a_button.size.x * 0.5, a_button.size.y * 0.5)
+    a_button.anchor = v(a_button.size.x / 2, a_button.size.y / 2)
     a_button.pos = v(sw - 100, sh - 90)
 
     function a_button.on_click(this, button, x, y)
@@ -379,7 +392,7 @@ function screen_map:init(w, h, done_callback)
 
     local e_button = GGButton:new("mapButtons-notxt_0007", "mapButtons-notxt_0008")
 
-    e_button.anchor = v(e_button.size.x * 0.5, e_button.size.y * 0.5)
+    e_button.anchor = v(e_button.size.x / 2, e_button.size.y / 2)
     e_button.pos = v(a_button.pos.x - 170, sh - 90)
 
     function e_button.on_click(this, button, x, y)
@@ -398,7 +411,7 @@ function screen_map:init(w, h, done_callback)
     self.window:add_child(e_button)
 
     local change_button = GGButton:new("mapButtons-notxt_0011", "mapButtons-notxt_0012")
-    change_button.anchor = v(change_button.size.x * 0.5, change_button.size.y * 0.5)
+    change_button.anchor = v(change_button.size.x / 2, change_button.size.y / 2)
     change_button.pos = v(a_button.pos.x - 900, sh - 90)
 
     function change_button.on_click(this, button, x, y)
@@ -437,7 +450,7 @@ function screen_map:init(w, h, done_callback)
 
     local u_button = GGButton:new("mapButtons-notxt_0010", "mapButtons-notxt_0011")
 
-    u_button.anchor = v(u_button.size.x * 0.5, u_button.size.y * 0.5)
+    u_button.anchor = v(u_button.size.x / 2, u_button.size.y / 2)
     u_button.pos = v(e_button.pos.x - 170, sh - 90)
 
     function u_button.on_click(this, button, x, y)
@@ -461,7 +474,7 @@ function screen_map:init(w, h, done_callback)
 
     if DBG_SHOW_BALLOONS or self.unlock_data.new_level == 2 then
         self.upgradeTip = KImageView:new("mapBaloon_buyUpgrade_notxt")
-        self.upgradeTip.anchor = v(self.upgradeTip.size.x * 0.5, self.upgradeTip.size.y)
+        self.upgradeTip.anchor = v(self.upgradeTip.size.x / 2, self.upgradeTip.size.y)
         self.upgradeTip.pos = v(e_button.pos.x - 120, sh - 160)
 
         self.window:add_child(self.upgradeTip)
@@ -494,7 +507,7 @@ function screen_map:init(w, h, done_callback)
     end
 
     self.upgrade_star = KImageView:new("mapUpgradePointsAvailable")
-    self.upgrade_star.anchor = v(self.upgrade_star.size.x * 0.5, self.upgrade_star.size.y * 0.5)
+    self.upgrade_star.anchor = v(self.upgrade_star.size.x / 2, self.upgrade_star.size.y / 2)
     self.upgrade_star.pos = v(u_button.pos.x + 20, u_button.pos.y - 50)
     self.upgrade_star.scale = v(0.85, 0.85)
     self.upgrade_star.propagate_on_click = true
@@ -516,7 +529,7 @@ function screen_map:init(w, h, done_callback)
 
     local h_button = GGButton:new("mapButtons-notxt_0001", "mapButtons-notxt_0002")
 
-    h_button.anchor = v(h_button.size.x * 0.5, u_button.size.y * 0.5)
+    h_button.anchor = v(h_button.size.x / 2, u_button.size.y / 2)
     h_button.pos = v(u_button.pos.x - 170, sh - 90)
 
     function h_button.on_click(this, button, x, y)
@@ -546,7 +559,7 @@ function screen_map:init(w, h, done_callback)
 
     if DBG_SHOW_BALLOONS or table.contains(hero_unlock_levels, self.unlock_data.last_finished_level) then
         self.heroTip = KImageView:new("mapBalloon_heroUnlocked_notxt")
-        self.heroTip.anchor = v(self.heroTip.size.x * 0.5, self.heroTip.size.y)
+        self.heroTip.anchor = v(self.heroTip.size.x / 2, self.heroTip.size.y)
         self.heroTip.pos = v(h_button.pos.x, sh - 165)
 
         self.window:add_child(self.heroTip)
@@ -579,7 +592,7 @@ function screen_map:init(w, h, done_callback)
     h_button:add_child(self.hero_icon_portrait)
 
     self.skill_star = KImageView:new("mapButtons_portrait_hero_points")
-    self.skill_star.anchor = v(self.skill_star.size.x * 0.5, self.skill_star.size.y * 0.5)
+    self.skill_star.anchor = v(self.skill_star.size.x / 2, self.skill_star.size.y / 2)
     self.skill_star.pos = v(h_button.pos.x + 40, h_button.pos.y - 45)
     self.skill_star.propagate_on_click = true
     self.skill_star.hidden = true
@@ -600,7 +613,7 @@ function screen_map:init(w, h, done_callback)
 
     if self.is_premium then
         local s_button = GGButton:new("mapButtons-notxt_0013", "mapButtons-notxt_0014")
-        s_button.anchor = v(s_button.size.x * 0.5, s_button.size.y * 0.5)
+        s_button.anchor = v(s_button.size.x / 2, s_button.size.y / 2)
         s_button.pos = v(h_button.pos.x - 170, sh - 90)
 
         function s_button.on_click(this, button, x, y)
@@ -672,7 +685,7 @@ function screen_map:init(w, h, done_callback)
     local tt = kui_db:get_table("hero_room_view", ctx)
 
     hero_room = HeroRoomViewKR1:new_from_table(tt)
-    hero_room.pos = v((sw - hero_room.size.x) * 0.5, 0)
+    hero_room.pos = v((sw - hero_room.size.x) / 2, 0)
 
     self.hero_room = hero_room
 
@@ -715,7 +728,7 @@ function screen_map:init(w, h, done_callback)
 
         self.window:add_child(shop_view)
 
-        shop_view.pos.x = sw * 0.5
+        shop_view.pos.x = sw / 2
         self.shop_view = shop_view
     end
 
@@ -1104,7 +1117,7 @@ function MapView:initialize(screen_w, screen_h)
             local vl, vr = -1 * self.pos.x, -1 * self.pos.x + self.screen_w
 
             if vl > last_flag.pos.x or vr < last_flag.pos.x then
-                self.pos.x = -(last_flag.pos.x - self.screen_w * 0.5)
+                self.pos.x = -(last_flag.pos.x - self.screen_w / 2)
                 self.pos.x = km.clamp(self.screen_w - self.size.x, 0, self.pos.x)
             end
         end
@@ -1162,7 +1175,7 @@ function MapView:initialize(screen_w, screen_h)
             local vl, vr = -1 * self.pos.x, -1 * self.pos.x + self.screen_w
 
             if vl > last_flag.pos.x or vr < last_flag.pos.x then
-                self.pos.x = -(last_flag.pos.x - self.screen_w * 0.5)
+                self.pos.x = -(last_flag.pos.x - self.screen_w / 2)
                 self.pos.x = km.clamp(self.screen_w - self.size.x, 0, self.pos.x)
             end
         end
@@ -1220,7 +1233,7 @@ function MapView:initialize(screen_w, screen_h)
             local vl, vr = -1 * self.pos.x, -1 * self.pos.x + self.screen_w
 
             if vl > last_flag.pos.x or vr < last_flag.pos.x then
-                self.pos.x = -(last_flag.pos.x - self.screen_w * 0.5)
+                self.pos.x = -(last_flag.pos.x - self.screen_w / 2)
                 self.pos.x = km.clamp(self.screen_w - self.size.x, 0, self.pos.x)
             end
         end
@@ -1271,7 +1284,7 @@ function MapView:load_map_animations(num)
 
             v = v or KView:new()
             v.pos = V.vclone(ani.pos)
-            v.anchor = ani.anchor and V.vclone(ani.anchor) or V.v(v.size.x * 0.5, v.size.y * 0.5)
+            v.anchor = ani.anchor and V.vclone(ani.anchor) or V.v(v.size.x / 2, v.size.y / 2)
             v.loop = ani.loop
 
             if ani.fns then
@@ -1290,7 +1303,7 @@ function MapView:load_map_animations(num)
             local f1 = string.format("%s_%04d", ani.animation.prefix, ani.animation.from)
 
             av = KImageView:new(f1)
-            av.anchor = v(av.size.x * 0.5, av.size.y * 0.5)
+            av.anchor = v(av.size.x / 2, av.size.y / 2)
 
             if ani.scale then
                 av.scale = ani.scale
@@ -1550,7 +1563,7 @@ function MapView:load_level_decos(i)
 
         v.id = d.id
         v.pos = V.vclone(d.pos)
-        v.anchor = d.anchor and V.vclone(d.anchor) or V.v(v.size.x * 0.5, v.size.y * 0.5)
+        v.anchor = d.anchor and V.vclone(d.anchor) or V.v(v.size.x / 2, v.size.y / 2)
         v.animations = d.animations
         v.loop = d.loop
         v.hidden = d.hidden
@@ -1645,7 +1658,7 @@ function MapView:show_flags(num)
                         self.points_layer:add_child(pointt)
                         table.insert(self.point_groups[i], pointt)
 
-                        pointt.anchor = v(pointt.size.x * 0.5, pointt.size.y - 4)
+                        pointt.anchor = v(pointt.size.x / 2, pointt.size.y - 4)
                         pointt.propagate_on_click = true
 
                         if table.contains(ud.unlocked_levels, i + jnum) then
@@ -1715,7 +1728,7 @@ function MapView:show_flags(num)
                     wing:order_below(flag)
 
                     wing.pos = v(flag_pos.x - 3, flag_pos.y)
-                    wing.anchor = v(wing.size.x * 0.5, wing.size.y * 0.5)
+                    wing.anchor = v(wing.size.x / 2, wing.size.y / 2)
                     wing.hidden = ud.heroic_level == i + jnum
                 end
 
@@ -1901,7 +1914,7 @@ function MapView:show_flags(num)
         if DBG_SHOW_BALLOONS or #screen_map.user_data.levels == 1 then
             local start_here = KImageView:new("mapBalloon_starthere_notxt")
 
-            start_here.anchor = v(start_here.size.x * 0.5, start_here.size.y)
+            start_here.anchor = v(start_here.size.x / 2, start_here.size.y)
 
             if KR_GAME == "kr1" then
                 start_here.pos = v(292, 775)
@@ -1970,7 +1983,7 @@ function LevelFlagView:initialize(level_num)
 
     self.star_pos = { v(12, 12), v(28, 12), v(43, 12) }
     self.star_views = {}
-    self.anchor = v(self.size.x * 0.5, self.size.y * 0.5)
+    self.anchor = v(self.size.x / 2, self.size.y / 2)
     self.mode = "default"
     self.animations = {}
     self.level_num = level_num
@@ -2094,7 +2107,7 @@ function EndlessLevelFlagView:initialize(level_num)
     KImageButton.initialize(self, "mapFlag_endless_desktop_0001", "mapFlag_endless_desktop_0002",
         "mapFlag_endless_desktop_0002")
 
-    self.anchor = v(self.size.x * 0.5, self.size.y * 0.5)
+    self.anchor = v(self.size.x / 2, self.size.y / 2)
     self.level_num = level_num
 end
 
@@ -2124,14 +2137,14 @@ StarsBanner = class("StarsBanner", KImageView)
 function StarsBanner:initialize()
     KImageView.initialize(self, "mapStarsContainer")
 
-    self.anchor = v(self.size.x * 0.5, 0)
+    self.anchor = v(self.size.x / 2, 0)
 
     self:set_value(screen_map.total_stars, GS.max_stars)
 end
 
 function StarsBanner:set_value(got_value, of_value)
     local aux = tostring(got_value):reverse()
-    local half_moved = self.size.x * 0.5 - 25
+    local half_moved = self.size.x / 2 - 25
     local posx = half_moved - 5
 
     for digit in aux.gmatch(aux, "%d") do
@@ -2143,8 +2156,8 @@ function StarsBanner:set_value(got_value, of_value)
             digit_image = KImageView:new("mapStarsContainer_numbers_000" .. digit)
         end
 
-        digit_image.pos = v(posx - 20, self.size.y * 0.5)
-        digit_image.anchor = v(digit_image.size.x * 0.5, digit_image.size.y * 0.5)
+        digit_image.pos = v(posx - 20, self.size.y / 2)
+        digit_image.anchor = v(digit_image.size.x / 2, digit_image.size.y / 2)
 
         self:add_child(digit_image)
 
@@ -2153,8 +2166,8 @@ function StarsBanner:set_value(got_value, of_value)
 
     local slash_image = KImageView:new("mapStarsContainer_numbers_0011")
 
-    slash_image.anchor = v(slash_image.size.x * 0.5, slash_image.size.y * 0.5)
-    slash_image.pos = v(half_moved, self.size.y * 0.5)
+    slash_image.anchor = v(slash_image.size.x / 2, slash_image.size.y / 2)
+    slash_image.pos = v(half_moved, self.size.y / 2)
 
     self:add_child(slash_image)
 
@@ -2171,8 +2184,8 @@ function StarsBanner:set_value(got_value, of_value)
             digit_image = KImageView:new("mapStarsContainer_numbers_000" .. digit)
         end
 
-        digit_image.pos = v(posx + 20, self.size.y * 0.5)
-        digit_image.anchor = v(digit_image.size.x * 0.5, digit_image.size.y * 0.5)
+        digit_image.pos = v(posx + 20, self.size.y / 2)
+        digit_image.anchor = v(digit_image.size.x / 2, digit_image.size.y / 2)
 
         self:add_child(digit_image)
 
@@ -2184,8 +2197,8 @@ local ls_page_l_x = 214
 local ls_page_r_x = 690
 local ls_page_w = 360
 local ls_page_y = 104
-local ls_page_l_m = ls_page_l_x + ls_page_w * 0.5
-local ls_page_r_m = ls_page_r_x + ls_page_w * 0.5
+local ls_page_l_m = ls_page_l_x + ls_page_w / 2
+local ls_page_r_m = ls_page_r_x + ls_page_w / 2
 
 local function add_level_title(parent, text, style, y)
     local px, pm, py, fs, lines
@@ -2220,7 +2233,7 @@ local function add_level_title(parent, text, style, y)
     local title = GGLabel:new(V.v(ls_page_w - 120, lines * 40))
 
     title.pos = v(px + 60, py)
-    title.anchor.y = title.size.y * 0.5
+    title.anchor.y = title.size.y / 2
     title.font_name = "h_book"
     title.font_size = fs
     title.font_align = "center"
@@ -2245,16 +2258,16 @@ local function add_level_title(parent, text, style, y)
     local dn = "levelSelect_volutas_0001"
 
     d = KImageView:new(dn)
-    d.pos = v(pm - title_w * 0.5 - 8, deco_y)
-    d.anchor = v(0, d.size.y * 0.5)
+    d.pos = v(pm - title_w / 2 - 8, deco_y)
+    d.anchor = v(0, d.size.y / 2)
     d.scale.x = -1
     d.alpha = style == "sub" and 0.5 or 1
 
     parent:add_child(d)
 
     d = KImageView:new(dn)
-    d.pos = v(pm + title_w * 0.5 + 10, deco_y)
-    d.anchor = v(0, d.size.y * 0.5)
+    d.pos = v(pm + title_w / 2 + 10, deco_y)
+    d.anchor = v(0, d.size.y / 2)
     d.alpha = style == "sub" and 0.5 or 1
 
     parent:add_child(d)
@@ -2457,8 +2470,8 @@ local function add_level_rules(parent, level_num, y)
 
     local upg_label = GGLabel:new(V.v(90, upg_icon.size.y))
 
-    upg_label.pos = v(upg_icon.pos.x + upg_icon.size.x, upg_icon.pos.y + upg_icon.size.y * 0.5)
-    upg_label.anchor.y = upg_label.size.y * 0.5
+    upg_label.pos = v(upg_icon.pos.x + upg_icon.size.x, upg_icon.pos.y + upg_icon.size.y / 2)
+    upg_label.anchor.y = upg_label.size.y / 2
     upg_label.font_name = "body"
     upg_label.font_size = 11
     upg_label.text_align = "center"
@@ -2470,14 +2483,14 @@ local function add_level_rules(parent, level_num, y)
 
     local hero_icon = KImageView:new(has_hero and "levelSelect_modeRules_0011" or "levelSelect_modeRules_0009")
 
-    hero_icon.pos = v(ls_page_r_x + ls_page_w * 0.5 + 20, y)
+    hero_icon.pos = v(ls_page_r_x + ls_page_w / 2 + 20, y)
 
     parent:add_child(hero_icon)
 
     local hero_label = GGLabel:new(V.v(90, hero_icon.size.y))
 
-    hero_label.pos = v(hero_icon.pos.x + hero_icon.size.x, hero_icon.pos.y + hero_icon.size.y * 0.5)
-    hero_label.anchor.y = hero_label.size.y * 0.5
+    hero_label.pos = v(hero_icon.pos.x + hero_icon.size.x, hero_icon.pos.y + hero_icon.size.y / 2)
+    hero_label.anchor.y = hero_label.size.y / 2
     hero_label.font_name = "body"
     hero_label.font_size = 11
     hero_label.text_align = "center"
@@ -2538,7 +2551,7 @@ local function add_level_tab(parent, mode, y, stars)
 
         local l = GGLabel:new(V.v(68, 10))
 
-        l.anchor = v(l.size.x * 0.5, l.size.y * 0.5)
+        l.anchor = v(l.size.x / 2, l.size.y / 2)
         l.font_name = CJK("body", nil, nil, "h_noti")
         l.font_size = 13
         l.font_align = "center"
@@ -2553,7 +2566,7 @@ local function add_level_tab(parent, mode, y, stars)
         if i_n then
             local l = GGLabel:new(V.v(68, 10))
 
-            l.anchor = v(l.size.x * 0.5, l.size.y * 0.5)
+            l.anchor = v(l.size.x / 2, l.size.y / 2)
             l.font_name = CJK("body", nil, nil, "h_noti")
             l.font_size = 13
             l.font_align = "center"
@@ -2595,7 +2608,7 @@ local function add_level_tab(parent, mode, y, stars)
         if i_s then
             local l = GGLabel:new(V.v(68, 10))
 
-            l.anchor = v(l.size.x * 0.5, l.size.y * 0.5)
+            l.anchor = v(l.size.x / 2, l.size.y / 2)
             l.font_name = CJK("body", nil, nil, "h_noti")
             l.font_size = 13
             l.font_align = "center"
@@ -2671,18 +2684,18 @@ LevelSelectView = class("LevelSelectView", PopUpView)
 function LevelSelectView:initialize(sw, sh, level_num, stars, heroic, iron, slot_data)
     PopUpView.initialize(self, V.v(sw, sh))
 
-    if screen_map.kr2_map then
-        level_num = level_num + 26
-    elseif screen_map.kr3_map then
-        level_num = level_num + 26 + 22
+    if screen_map.kr2_map and not is_extra_level(level_num, 2) then
+        level_num = level_num + GS.level2_from
+    elseif screen_map.kr3_map and not is_extra_level(level_num, 3) then
+        level_num = level_num + GS.level3_from
     end
 
     local level_string = string.format("%02i", level_num)
     local level_data = screen_map.level_data[level_num]
 
     self.back = KImageView:new("levelSelect_background")
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5 - 15, sh * 0.5 - 50)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2 - 15, sh / 2 - 50)
 
     self:add_child(self.back)
 
@@ -2768,7 +2781,7 @@ function LevelSelectView:initialize(sw, sh, level_num, stars, heroic, iron, slot
 
     local rbg = KImageView:new("levelSelect_modebg_notxt_0001")
 
-    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) * 0.5, rules_y + 20)
+    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) / 2, rules_y + 20)
 
     self.heroic:add_child(rbg)
     add_level_title(self.heroic, _("Heroic"), "right")
@@ -2797,13 +2810,13 @@ function LevelSelectView:initialize(sw, sh, level_num, stars, heroic, iron, slot
 
     local rbg = KImageView:new("levelSelect_modebg_notxt_0001")
 
-    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) * 0.5, rules_y + 20)
+    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) / 2, rules_y + 20)
 
     self.iron:add_child(rbg)
 
     local rbbg = KImageView:new("levelSelect_modebg_notxt_0002")
 
-    rbbg.pos = v(ls_page_r_x + (ls_page_w - rbbg.size.x) * 0.5, rules_y + 90)
+    rbbg.pos = v(ls_page_r_x + (ls_page_w - rbbg.size.x) / 2, rules_y + 90)
 
     self.iron:add_child(rbbg)
     add_level_title(self.iron, _("Iron"), "right")
@@ -2940,8 +2953,8 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
     local level_data = screen_map.level_data[level_num]
 
     self.back = KImageView:new("levelSelect_background")
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5 - 15, sh * 0.5 - 50)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2 - 15, sh / 2 - 50)
 
     self:add_child(self.back)
 
@@ -2983,7 +2996,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
 
     local w = KImageView:new("levelSelect_waves")
 
-    w.anchor = v(w.size.x * 0.5, w.size.y * 0.5)
+    w.anchor = v(w.size.x / 2, w.size.y / 2)
     w.pos = v(290, 485)
 
     self.back:add_child(w)
@@ -3007,7 +3020,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
 
     wd.text = _("ENDLESS_LEVEL_SELECT_SURVIVED")
     wd.pos = v(w.pos.x, w.pos.y + 55)
-    wd.anchor = v(wd.size.x * 0.5, wd.size.y * 0.5)
+    wd.anchor = v(wd.size.x / 2, wd.size.y / 2)
     wd.font_name = "body"
     wd.font_size = 16
     wd.text_align = "center"
@@ -3018,7 +3031,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
 
     local s = KImageView:new("levelSelect_maxScore")
 
-    s.anchor = v(s.size.x * 0.5, s.size.y * 0.5)
+    s.anchor = v(s.size.x / 2, s.size.y / 2)
     s.pos = v(480, 487)
 
     self.back:add_child(s)
@@ -3043,7 +3056,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
 
     sd.text = _("ENDLESS_LEVEL_SELECT_MAX_SCORE")
     sd.pos = v(s.pos.x, s.pos.y + 55)
-    sd.anchor = v(sd.size.x * 0.5, sd.size.y * 0.5)
+    sd.anchor = v(sd.size.x / 2, sd.size.y / 2)
     sd.font_name = "body"
     sd.font_size = 16
     sd.text_align = "center"
@@ -3062,7 +3075,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
     local rules_y = 320
     local rbg = KImageView:new("levelSelect_modebg_notxt_0001")
 
-    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) * 0.5, rules_y + 20)
+    rbg.pos = v(ls_page_r_x + (ls_page_w - rbg.size.x) / 2, rules_y + 20)
 
     right_page:add_child(rbg)
     add_level_title(right_page, _("Challenge Rules"), "sub", rules_y)
@@ -3077,15 +3090,15 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
 
     local skull_icon = KImageView:new("levelSelect_modeRules_endless_0002")
 
-    skull_icon.pos = v(ls_page_r_x + ls_page_w * 0.5 + 20, rules_y)
+    skull_icon.pos = v(ls_page_r_x + ls_page_w / 2 + 20, rules_y)
 
     right_page:add_child(skull_icon)
 
     local heart_label = GGLabel:new(V.v(90, heart_icon.size.y))
 
     heart_label.text = _("ENDLESS_LEVEL_SELECT_LIVES_INFO")
-    heart_label.pos = v(heart_icon.pos.x + heart_icon.size.x, heart_icon.pos.y + heart_icon.size.y * 0.5)
-    heart_label.anchor.y = heart_label.size.y * 0.5
+    heart_label.pos = v(heart_icon.pos.x + heart_icon.size.x, heart_icon.pos.y + heart_icon.size.y / 2)
+    heart_label.anchor.y = heart_label.size.y / 2
     heart_label.font_name = "body"
     heart_label.font_size = 13
     heart_label.text_align = "center"
@@ -3097,8 +3110,8 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
     local skull_label = GGLabel:new(V.v(90, skull_icon.size.y))
 
     skull_label.text = _("ENDLESS_LEVEL_SELECT_WAVES_INFO")
-    skull_label.pos = v(skull_icon.pos.x + skull_icon.size.x, skull_icon.pos.y + skull_icon.size.y * 0.5)
-    skull_label.anchor.y = skull_label.size.y * 0.5
+    skull_label.pos = v(skull_icon.pos.x + skull_icon.size.x, skull_icon.pos.y + skull_icon.size.y / 2)
+    skull_label.anchor.y = skull_label.size.y / 2
     skull_label.font_name = "body"
     skull_label.font_size = 13
     skull_label.text_align = "center"
@@ -3123,7 +3136,7 @@ function EndlessLevelSelectView:initialize(sw, sh, level_num, slot_data)
     local r = KImageButton("levelSelect_rankings_0001", "levelSelect_rankings_0002", "levelSelect_rankings_0002")
 
     r.pos = v(720, 550)
-    r.anchor = v(r.size.x * 0.5, r.size.y * 0.5)
+    r.anchor = v(r.size.x / 2, r.size.y / 2)
     r.alpha = ps_ld and ps_ld:get_status() and 1 or 0.5
 
     function r.on_click()
@@ -3168,8 +3181,8 @@ function UpgradesView:initialize(sw, sh)
     PopUpView.initialize(self, V.v(sw, sh))
 
     self.back = KImageView:new("Upgrades_BG_notxt")
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5 - 15, sh * 0.5 - 50)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2 - 15, sh / 2 - 50)
 
     self:add_child(self.back)
 
@@ -3210,8 +3223,8 @@ function UpgradesView:initialize(sw, sh)
 
     self.back:add_child(self.star_container)
 
-    self.stars_label = KLabel:new(V.v(self.star_container.size.x * 0.5, self.star_container.size.y))
-    self.stars_label.pos = v(85 + self.star_container.size.x * 0.5, 648)
+    self.stars_label = KLabel:new(V.v(self.star_container.size.x / 2, self.star_container.size.y))
+    self.stars_label.pos = v(85 + self.star_container.size.x / 2, 648)
     self.stars_label.font = F:f("Comic Book Italic", "32")
     self.stars_label.colors.text = { 231, 222, 175 }
     self.stars_label.text = "0"
@@ -3552,8 +3565,8 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     self.over_circle = KImageView:new("Upgrades_Icons_over", nil, scale)
     self.over_circle.size.x = self.over_circle.size.x * scale
     self.over_circle.size.y = self.over_circle.size.y * scale
-    self.over_circle.anchor = v(self.over_circle.size.x * 0.5, self.over_circle.size.y * 0.5)
-    self.over_circle.pos = v(self.size.x * 0.5, self.size.y * 0.5)
+    self.over_circle.anchor = v(self.over_circle.size.x / 2, self.over_circle.size.y / 2)
+    self.over_circle.pos = v(self.size.x / 2, self.size.y / 2)
     self.over_circle.propagate_on_click = true
 
     self:add_child(self.over_circle)
@@ -3561,8 +3574,8 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     self.bought_circle = KImageView:new("Upgrades_Icons_Bought", nil, scale)
     self.bought_circle.size.x = self.bought_circle.size.x * scale
     self.bought_circle.size.y = self.bought_circle.size.y * scale
-    self.bought_circle.anchor = v(self.bought_circle.size.x * 0.5, self.bought_circle.size.y * 0.5)
-    self.bought_circle.pos = v(self.size.x * 0.5, self.size.y * 0.5)
+    self.bought_circle.anchor = v(self.bought_circle.size.x / 2, self.bought_circle.size.y / 2)
+    self.bought_circle.pos = v(self.size.x / 2, self.size.y / 2)
 
     self:add_child(self.bought_circle)
 
@@ -3576,8 +3589,8 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
     local price_value = KImageView:new("Upgrades_Icons_PriceTag_Nm_000" .. data_values.price, nil, scale)
     price_value.size.x = price_value.size.x * scale
     price_value.size.y = price_value.size.y * scale
-    price_value.anchor = v(price_value.size.x * 0.5, price_value.size.y * 0.5)
-    price_value.pos = v(self.cost_panel.size.x * 0.5 + 4 * scale, self.cost_panel.size.y * 0.5)
+    price_value.anchor = v(price_value.size.x / 2, price_value.size.y / 2)
+    price_value.pos = v(self.cost_panel.size.x / 2 + 4 * scale, self.cost_panel.size.y / 2)
 
     self.cost_panel:add_child(price_value)
 
@@ -3592,8 +3605,8 @@ function UpgradeButtons:initialize(sprite, data_values, my_id, scale)
         scale)
     disabled_price_value.size.x = disabled_price_value.size.x * scale
     disabled_price_value.size.y = disabled_price_value.size.y * scale
-    disabled_price_value.anchor = v(disabled_price_value.size.x * 0.5, disabled_price_value.size.y * 0.5)
-    disabled_price_value.pos = v(self.cost_panel.size.x * 0.5 + 4 * scale, self.cost_panel.size.y * 0.5)
+    disabled_price_value.anchor = v(disabled_price_value.size.x / 2, disabled_price_value.size.y / 2)
+    disabled_price_value.pos = v(self.cost_panel.size.x / 2 + 4 * scale, self.cost_panel.size.y / 2)
 
     self.disabled_cost_panel:add_child(disabled_price_value)
 
@@ -3690,7 +3703,7 @@ function EncyclopediaTabLabel:initialize(text, selected, rotation)
     self.font_name = CJK("body", nil, nil, "h_noti")
     self.font_size = 16
     self.font_align = "center"
-    self.anchor.x, self.anchor.y = self.size.x * 0.5, self.size.y * 0.5
+    self.anchor.x, self.anchor.y = self.size.x / 2, self.size.y / 2
     self.r = rotation or 4 * math.pi / 180
     self.text = text
     self.fit_lines = 1
@@ -3718,13 +3731,13 @@ function EncyclopediaView:initialize(sw, sh)
     self.scale = vec_1(1.2)
     self.back = KView:new(V.v(sw, sh))
     self.back.pos = v(0, 0)
-    self.back.anchor = v(sw * 0.5, sh * 0.5)
+    self.back.anchor = v(sw / 2, sh / 2)
 
     self:add_child(self.back)
 
     self.back.alpha = 0
 
-    local hf = sw * 0.5 - 700
+    local hf = sw / 2 - 700
 
     self.hf = hf
     self.tower_button = KImageButton:new("encyclopedia_buttons_notxt_0002", "encyclopedia_buttons_notxt_0003",
@@ -3808,8 +3821,8 @@ function EncyclopediaView:initialize(sw, sh)
     self.enemies_selected:add_child(tl)
 
     self.backback = KImageView:new("encyclopedia_bg")
-    self.backback.anchor = v(self.backback.size.x * 0.5, self.backback.size.y * 0.5)
-    self.backback.pos = v(sw * 0.5, sh * 0.5)
+    self.backback.anchor = v(self.backback.size.x / 2, self.backback.size.y / 2)
+    self.backback.pos = v(sw / 2, sh / 2)
 
     self.back:add_child(self.backback)
 
@@ -3854,7 +3867,7 @@ function EncyclopediaView:load_towers()
         self.towers.hidden = false
         self.over_sprite = KImageView:new("encyclopedia_tower_thumbs_0022")
         self.over_sprite.hidden = true
-        self.over_sprite.anchor = v(self.over_sprite.size.x * 0.5, self.over_sprite.size.y * 0.5)
+        self.over_sprite.anchor = v(self.over_sprite.size.x / 2, self.over_sprite.size.y / 2)
         self.over_sprite.propagate_on_click = true
 
         self.towers:add_child(self.over_sprite)
@@ -3886,15 +3899,15 @@ function EncyclopediaView:load_towers()
     local deco_y = 60
     local left_deco = KImageView:new("encyclopedia_rightArt")
 
-    left_deco.pos = v(self.towers.size.x * 0.5 - title_w * 0.5 - 10, deco_y)
-    left_deco.anchor = v(left_deco.size.x, left_deco.size.y * 0.5)
+    left_deco.pos = v(self.towers.size.x / 2 - title_w / 2 - 10, deco_y)
+    left_deco.anchor = v(left_deco.size.x, left_deco.size.y / 2)
 
     self.towers:add_child(left_deco)
 
     local right_deco = KImageView:new("encyclopedia_rightArt")
 
-    right_deco.pos = v(self.towers.size.x * 0.5 + title_w * 0.5 + 13, deco_y)
-    right_deco.anchor = v(right_deco.size.x, right_deco.size.y * 0.5)
+    right_deco.pos = v(self.towers.size.x / 2 + title_w / 2 + 13, deco_y)
+    right_deco.anchor = v(right_deco.size.x, right_deco.size.y / 2)
     right_deco.scale.x = -1
 
     self.towers:add_child(right_deco)
@@ -3922,13 +3935,13 @@ function EncyclopediaView:load_towers()
     self.towers:add_child(self.over_sprite)
 
     self.over_sprite.hidden = true
-    self.over_sprite.anchor = v(self.over_sprite.size.x * 0.5, self.over_sprite.size.y * 0.5)
+    self.over_sprite.anchor = v(self.over_sprite.size.x / 2, self.over_sprite.size.y / 2)
     self.over_sprite.propagate_on_click = true
 
     self.towers:add_child(self.select_sprite)
 
     self.select_sprite.pos = v(50, 120)
-    self.select_sprite.anchor = v(self.select_sprite.size.x * 0.5, self.select_sprite.size.y * 0.5)
+    self.select_sprite.anchor = v(self.select_sprite.size.x / 2, self.select_sprite.size.y / 2)
     self.select_sprite.hidden = false
 
     self:detail_tower(1)
@@ -3940,7 +3953,7 @@ function EncyclopediaView:create_tower(icon, pos, information, enabled)
 
         tower:set_image(icon)
 
-        tower.anchor = v(tower.size.x * 0.5, tower.size.y * 0.5)
+        tower.anchor = v(tower.size.x / 2, tower.size.y / 2)
         tower.pos = pos
 
         self.towers:add_child(tower)
@@ -3960,7 +3973,7 @@ function EncyclopediaView:create_tower(icon, pos, information, enabled)
     else
         local tower = KImageView:new("encyclopedia_tower_thumbs_0021")
 
-        tower.anchor = v(tower.size.x * 0.5, tower.size.y * 0.5)
+        tower.anchor = v(tower.size.x / 2, tower.size.y / 2)
         tower.pos = pos
 
         self.towers:add_child(tower)
@@ -3991,7 +4004,7 @@ function EncyclopediaView:detail_tower(index)
     end
 
     self.right_panel = KView:new(V.v(600, 700))
-    self.right_panel.pos = v(self.sw * 0.5 - 30, 200)
+    self.right_panel.pos = v(self.sw / 2 - 30, 200)
     self.right_panel.propagate_on_click = true
 
     self.back:add_child(self.right_panel)
@@ -4002,7 +4015,7 @@ function EncyclopediaView:detail_tower(index)
     local title_label = GGLabel:new(V.v(280, 50))
 
     title_label.pos = v(300, 44)
-    title_label.anchor.x = title_label.size.x * 0.5
+    title_label.anchor.x = title_label.size.x / 2
     title_label.font_name = "h_book"
     title_label.font_size = 22
     title_label.colors.text = { 148, 94, 58 }
@@ -4016,16 +4029,16 @@ function EncyclopediaView:detail_tower(index)
 
     local left_decoration = KImageView:new("encyclopedia_rightArt")
 
-    left_decoration.pos = v(300 - title_width * 0.5 - 10, 60)
-    left_decoration.anchor = v(left_decoration.size.x, left_decoration.size.y * 0.5)
+    left_decoration.pos = v(300 - title_width / 2 - 10, 60)
+    left_decoration.anchor = v(left_decoration.size.x, left_decoration.size.y / 2)
     left_decoration.scale.x = 0.7
 
     self.right_panel:add_child(left_decoration)
 
     local right_decoration = KImageView:new("encyclopedia_rightArt")
 
-    right_decoration.pos = v(300 + title_width * 0.5 + 10, 60)
-    right_decoration.anchor = v(left_decoration.size.x, right_decoration.size.y * 0.5)
+    right_decoration.pos = v(300 + title_width / 2 + 10, 60)
+    right_decoration.anchor = v(left_decoration.size.x, right_decoration.size.y / 2)
     right_decoration.scale.x = -0.7
 
     self.right_panel:add_child(right_decoration)
@@ -4039,7 +4052,7 @@ function EncyclopediaView:detail_tower(index)
     end
     local portrait = KImageView:new(string.format(tower_fmt, screen_map.tower_data[index].icon))
 
-    portrait.anchor = v(portrait.size.x * 0.5, portrait.size.y * 0.5)
+    portrait.anchor = v(portrait.size.x / 2, portrait.size.y / 2)
     portrait.pos = v(300, 175)
     portrait.scale = v(0.7, 0.708)
 
@@ -4047,7 +4060,7 @@ function EncyclopediaView:detail_tower(index)
 
     local over_portrait = KImageView:new("encyclopedia_frame")
 
-    over_portrait.anchor = v(over_portrait.size.x * 0.5, over_portrait.size.y * 0.5)
+    over_portrait.anchor = v(over_portrait.size.x / 2, over_portrait.size.y / 2)
     over_portrait.pos = v(300, 175)
 
     self.right_panel:add_child(over_portrait)
@@ -4068,7 +4081,7 @@ function EncyclopediaView:detail_tower(index)
 
     local frame = KImageView:new("encyclopedia_rightPages_0001")
 
-    frame.anchor = v(frame.size.x * 0.5, 0)
+    frame.anchor = v(frame.size.x / 2, 0)
     frame.pos = v(305, 352)
 
     self.right_panel:add_child(frame)
@@ -4099,7 +4112,7 @@ function EncyclopediaView:detail_tower(index)
         local icon = KImageView:new("encyclopedia_icons_00" .. string.format("%02i", icons_list[v]))
 
         icon.pos = V.v(mx, my)
-        icon.anchor = V.v(icon.size.x * 0.5, icon.size.y * 0.5)
+        icon.anchor = V.v(icon.size.x / 2, icon.size.y / 2)
 
         self.right_panel:add_child(icon)
 
@@ -4143,7 +4156,7 @@ function EncyclopediaView:detail_tower(index)
         local specials = GGLabel:new(V.v(190, 26))
 
         specials.pos = v(300, 462)
-        specials.anchor.x = specials.size.x * 0.5
+        specials.anchor.x = specials.size.x / 2
         specials.text = _("Specials")
         specials.font_name = "h_book"
         specials.font_size = 20
@@ -4156,8 +4169,8 @@ function EncyclopediaView:detail_tower(index)
         local title_w = specials:get_text_width(specials.text)
         local left_deco = KImageView:new("encyclopedia_rightArt")
 
-        left_deco.pos = v(self.right_panel.size.x * 0.5 - title_w * 0.5 - 10, specials.pos.y + 16)
-        left_deco.anchor = v(left_deco.size.x, left_deco.size.y * 0.5)
+        left_deco.pos = v(self.right_panel.size.x / 2 - title_w / 2 - 10, specials.pos.y + 16)
+        left_deco.anchor = v(left_deco.size.x, left_deco.size.y / 2)
         left_deco.alpha = 0.6
         left_deco.scale.x = 0.7
 
@@ -4165,8 +4178,8 @@ function EncyclopediaView:detail_tower(index)
 
         local right_deco = KImageView:new("encyclopedia_rightArt")
 
-        right_deco.pos = v(self.right_panel.size.x * 0.5 + title_w * 0.5 + 13, specials.pos.y + 16)
-        right_deco.anchor = v(right_deco.size.x, right_deco.size.y * 0.5)
+        right_deco.pos = v(self.right_panel.size.x / 2 + title_w / 2 + 13, specials.pos.y + 16)
+        right_deco.anchor = v(right_deco.size.x, right_deco.size.y / 2)
         right_deco.alpha = 0.6
         right_deco.scale.x = -0.7
 
@@ -4185,7 +4198,7 @@ function EncyclopediaView:detail_tower(index)
 
         for i, k in pairs(power_names) do
             local power = dt.powers[k]
-            local px = 120 + (2 * i - 1) * iw * 0.5
+            local px = 120 + (2 * i - 1) * iw / 2
             local tower_specials_fmt
             if index <= 8 then
                 tower_specials_fmt = GS.encyclopedia_tower_specials_fmt
@@ -4197,14 +4210,14 @@ function EncyclopediaView:detail_tower(index)
             local icon = KImageView:new(string.format(tower_specials_fmt, power.enc_icon))
 
             icon.pos = v(px, 515)
-            icon.anchor = v(icon.size.x * 0.5, icon.size.y * 0.5)
+            icon.anchor = v(icon.size.x / 2, icon.size.y / 2)
 
             self.right_panel:add_child(icon)
 
             local label = GGLabel:new(V.v(tw / #power_names, 50))
 
             label.pos = v(px, 535)
-            label.anchor = v(label.size.x * 0.5, 0)
+            label.anchor = v(label.size.x / 2, 0)
             label.font_name = "body"
             label.font_size = 14
             label.line_height = 0.85
@@ -4252,15 +4265,15 @@ function EncyclopediaView:load_creeps(index)
     local deco_y = 60
     local left_deco = KImageView:new("encyclopedia_rightArt")
 
-    left_deco.pos = v(self.creep.size.x * 0.5 - title_w * 0.5 - 10, deco_y)
-    left_deco.anchor = v(left_deco.size.x, left_deco.size.y * 0.5)
+    left_deco.pos = v(self.creep.size.x / 2 - title_w / 2 - 10, deco_y)
+    left_deco.anchor = v(left_deco.size.x, left_deco.size.y / 2)
 
     self.creep:add_child(left_deco)
 
     local right_deco = KImageView:new("encyclopedia_rightArt")
 
-    right_deco.pos = v(self.creep.size.x * 0.5 + title_w * 0.5 + 13, deco_y)
-    right_deco.anchor = v(right_deco.size.x, right_deco.size.y * 0.5)
+    right_deco.pos = v(self.creep.size.x / 2 + title_w / 2 + 13, deco_y)
+    right_deco.anchor = v(right_deco.size.x, right_deco.size.y / 2)
     right_deco.scale.x = -1
 
     self.creep:add_child(right_deco)
@@ -4298,12 +4311,12 @@ function EncyclopediaView:load_creeps(index)
     self.creep:add_child(self.over_sprite)
 
     self.over_sprite.hidden = true
-    self.over_sprite.anchor = v(self.over_sprite.size.x * 0.5, self.over_sprite.size.y * 0.5)
+    self.over_sprite.anchor = v(self.over_sprite.size.x / 2, self.over_sprite.size.y / 2)
     self.over_sprite.propagate_on_click = true
     self.over_sprite.scale = v(0.75, 0.75)
     self.creep:add_child(self.select_sprite2)
 
-    self.select_sprite2.anchor = v(self.select_sprite2.size.x * 0.5, self.select_sprite2.size.y * 0.5)
+    self.select_sprite2.anchor = v(self.select_sprite2.size.x / 2, self.select_sprite2.size.y / 2)
     self.select_sprite2.hidden = false
     self.select_sprite2.pos = v(35, 140)
     self.select_sprite2.scale = v(0.75, 0.75)
@@ -4311,13 +4324,13 @@ function EncyclopediaView:load_creeps(index)
 
     local total_pages = math.ceil(max_creeps / creeps_per_page)
     local boffset = 40
-    local bx, by = 192 - 40 * (total_pages - 1) * 0.5, 530
+    local bx, by = 192 - 40 * (total_pages - 1) / 2, 530
 
     for i = 1, total_pages do
         if i == index then
             local b = KImageView:new("encyclopedia_pageNbrSelected_000" .. i)
 
-            b.anchor = v(b.size.x * 0.5, b.size.y * 0.5)
+            b.anchor = v(b.size.x / 2, b.size.y / 2)
             b.pos = v(bx + boffset * (i - 1), by)
 
             self.creep:add_child(b)
@@ -4326,7 +4339,7 @@ function EncyclopediaView:load_creeps(index)
             local b = KImageButton:new("encyclopedia_pageNbr_000" .. i, "encyclopedia_pageNbrOver_000" .. i,
                 "encyclopedia_pageNbrSelected_000" .. i)
 
-            b.anchor = v(b.size.x * 0.5, b.size.y * 0.5)
+            b.anchor = v(b.size.x / 2, b.size.y / 2)
             b.pos = v(bx + boffset * (i - 1), by)
 
             function b.on_click(this, button, x, y)
@@ -4363,7 +4376,7 @@ function EncyclopediaView:create_creep(icon, pos, information, enabled)
 
         b:set_image(icon)
 
-        b.anchor = v(b.size.x * 0.5, b.size.y * 0.5)
+        b.anchor = v(b.size.x / 2, b.size.y / 2)
         b.pos = pos
         b.scale = V.v(0.75, 0.75)
         self.creep:add_child(b)
@@ -4383,7 +4396,7 @@ function EncyclopediaView:create_creep(icon, pos, information, enabled)
     else
         local b = KImageView:new("encyclopedia_creep_thumbs_0049")
         b.scale = V.v(0.75, 0.75)
-        b.anchor = v(b.size.x * 0.5, b.size.y * 0.5)
+        b.anchor = v(b.size.x / 2, b.size.y / 2)
         b.pos = pos
 
         self.creep:add_child(b)
@@ -4406,7 +4419,7 @@ function EncyclopediaView:detail_creep(index)
 
     self.right_panel = KView:new(V.v(600, 700))
     self.right_panel.propagate_on_click = true
-    self.right_panel.pos = v(self.sw * 0.5 - 30, 200)
+    self.right_panel.pos = v(self.sw / 2 - 30, 200)
 
     self.back:add_child(self.right_panel)
 
@@ -4416,7 +4429,7 @@ function EncyclopediaView:detail_creep(index)
     local title_label = GGLabel:new(V.v(280, 50))
 
     title_label.pos = v(300, 44)
-    title_label.anchor.x = title_label.size.x * 0.5
+    title_label.anchor.x = title_label.size.x / 2
     title_label.font_name = "h_book"
     title_label.font_size = 22
     title_label.colors.text = { 148, 94, 58 }
@@ -4430,16 +4443,16 @@ function EncyclopediaView:detail_creep(index)
 
     local left_decoration = KImageView:new("encyclopedia_rightArt")
 
-    left_decoration.pos = v(300 - title_width * 0.5 - 10, 60)
-    left_decoration.anchor = v(left_decoration.size.x, left_decoration.size.y * 0.5)
+    left_decoration.pos = v(300 - title_width / 2 - 10, 60)
+    left_decoration.anchor = v(left_decoration.size.x, left_decoration.size.y / 2)
     left_decoration.scale.x = 0.7
 
     self.right_panel:add_child(left_decoration)
 
     local right_decoration = KImageView:new("encyclopedia_rightArt")
 
-    right_decoration.pos = v(300 + title_width * 0.5 + 10, 60)
-    right_decoration.anchor = v(left_decoration.size.x, right_decoration.size.y * 0.5)
+    right_decoration.pos = v(300 + title_width / 2 + 10, 60)
+    right_decoration.anchor = v(left_decoration.size.x, right_decoration.size.y / 2)
     right_decoration.scale.x = -0.7
 
     self.right_panel:add_child(right_decoration)
@@ -4458,7 +4471,7 @@ function EncyclopediaView:detail_creep(index)
 
     local portrait = KImageView:new(string.format(enemy_fmt, ce.info.enc_icon))
 
-    portrait.anchor = v(portrait.size.x * 0.5, portrait.size.y * 0.5)
+    portrait.anchor = v(portrait.size.x / 2, portrait.size.y / 2)
     portrait.pos = v(300, 175)
     portrait.scale = v(0.7, 0.708)
 
@@ -4466,7 +4479,7 @@ function EncyclopediaView:detail_creep(index)
 
     local over_portrait = KImageView:new("encyclopedia_frame")
 
-    over_portrait.anchor = v(over_portrait.size.x * 0.5, over_portrait.size.y * 0.5)
+    over_portrait.anchor = v(over_portrait.size.x / 2, over_portrait.size.y / 2)
     over_portrait.pos = v(300, 175)
 
     self.right_panel:add_child(over_portrait)
@@ -4487,7 +4500,7 @@ function EncyclopediaView:detail_creep(index)
 
     local frame = KImageView:new("encyclopedia_rightPages_0002")
 
-    frame.anchor = v(frame.size.x * 0.5, 0)
+    frame.anchor = v(frame.size.x / 2, 0)
     frame.pos = v(305, 360)
 
     self.right_panel:add_child(frame)
@@ -4530,7 +4543,7 @@ function EncyclopediaView:detail_creep(index)
 
     local special_frame = KImageView:new("encyclopedia_rightPages_0004")
 
-    special_frame.anchor.x = special_frame.size.x * 0.5
+    special_frame.anchor.x = special_frame.size.x / 2
     special_frame.pos = v(300, 390)
     special_frame.scale = v(0.75, 0.75)
 
@@ -4543,7 +4556,7 @@ function EncyclopediaView:detail_creep(index)
     local desc_label = GGLabel:new(V.v(400, 22))
 
     desc_label.pos = v(300, 506)
-    desc_label.anchor = v(desc_label.size.x * 0.5, 0)
+    desc_label.anchor = v(desc_label.size.x / 2, 0)
     desc_label.font_name = "body"
     desc_label.font_size = 15
     desc_label.text = special
@@ -5074,8 +5087,8 @@ function OptionsView:initialize(sw, sh)
 
     self.back = KImageView:new("options_bg_notxt")
     self.pos = v(0, 0)
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5, sh * 0.5 - 50)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2 - 50)
 
     self:add_child(self.back)
 
@@ -5094,8 +5107,8 @@ function OptionsView:initialize(sw, sh)
     title.text = _("SFX")
     title.text_align = "center"
     title.fit_lines = 1
-    title.anchor.x = title.size.x * 0.5
-    title.pos = V.v(self.back.size.x * 0.5, y)
+    title.anchor.x = title.size.x / 2
+    title.pos = V.v(self.back.size.x / 2, y)
     title.vertical_align = "middle"
 
     self.back:add_child(title)
@@ -5104,8 +5117,8 @@ function OptionsView:initialize(sw, sh)
 
     local s_sfx = VolumeSlider:new("options_sounds_0004", "options_sounds_0005", "options_sounds_0006")
 
-    s_sfx.pos = V.v(self.back.size.x * 0.5, y)
-    s_sfx.anchor.x = s_sfx.size.x * 0.5
+    s_sfx.pos = V.v(self.back.size.x / 2, y)
+    s_sfx.anchor.x = s_sfx.size.x / 2
 
     function s_sfx:on_change(value)
         S:set_main_gain_fx(value)
@@ -5120,8 +5133,8 @@ function OptionsView:initialize(sw, sh)
     title.text = _("Music")
     title.text_align = "center"
     title.fit_lines = 1
-    title.pos = V.v(self.back.size.x * 0.5, y)
-    title.anchor.x = title.size.x * 0.5
+    title.pos = V.v(self.back.size.x / 2, y)
+    title.anchor.x = title.size.x / 2
     title.vertical_align = "middle"
 
     self.back:add_child(title)
@@ -5134,8 +5147,8 @@ function OptionsView:initialize(sw, sh)
         S:set_main_gain_music(value)
     end
 
-    s_music.pos = V.v(self.back.size.x * 0.5, y)
-    s_music.anchor.x = s_music.size.x * 0.5
+    s_music.pos = V.v(self.back.size.x / 2, y)
+    s_music.anchor.x = s_music.size.x / 2
     s_music.id = "s_music"
 
     self.back:add_child(s_music)
@@ -5145,8 +5158,8 @@ function OptionsView:initialize(sw, sh)
     title.text = _("Difficulty")
     title.text_align = "center"
     title.vertical_align = CJK("middle-caps", "middle", nil, nil)
-    title.pos = V.v(self.back.size.x * 0.5, y)
-    title.anchor.x = title.size.x * 0.5
+    title.pos = V.v(self.back.size.x / 2, y)
+    title.anchor.x = title.size.x / 2
     title.propagate_on_click = true
     title.fit_size = true
 
@@ -5164,14 +5177,14 @@ function OptionsView:initialize(sw, sh)
 
     local diff_bg = KImageView:new("difficulty_select_bg")
 
-    diff_bg.anchor.x = diff_bg.size.x * 0.5
-    diff_bg.pos = v(self.back.size.x * 0.5, y)
+    diff_bg.anchor.x = diff_bg.size.x / 2
+    diff_bg.pos = v(self.back.size.x / 2, y)
 
     self.back:add_child(diff_bg)
 
     self.difficulty = GGLabel:new(V.v(220, 46))
-    self.difficulty.pos = v(self.back.size.x * 0.5, y)
-    self.difficulty.anchor.x = self.difficulty.size.x * 0.5
+    self.difficulty.pos = v(self.back.size.x / 2, y)
+    self.difficulty.anchor.x = self.difficulty.size.x / 2
     self.difficulty.vertical_align = CJK("middle-caps", "middle", nil, nil)
     self.difficulty.text_align = "center"
     self.difficulty.font_name = CJK("body", nil, nil, "h")
@@ -5281,12 +5294,12 @@ function DifficultyButton:initialize(label_text, desc_text, difficulty)
 
     self.scale = V.v(1, 1)
     self.on_down_scale = 0.98
-    self.anchor.x, self.anchor.y = self.size.x * 0.5, self.size.y * 0.5
+    self.anchor.x, self.anchor.y = self.size.x / 2, self.size.y / 2
 
     local illus = KImageView:new("difficulty_btns_ilustraciones_000" .. difficulty)
 
-    illus.anchor.x, illus.anchor.y = illus.size.x * 0.5, illus.size.y * 0.5
-    illus.pos.x, illus.pos.y = self.size.x * 0.5, self.size.y * 0.5
+    illus.anchor.x, illus.anchor.y = illus.size.x / 2, illus.size.y / 2
+    illus.pos.x, illus.pos.y = self.size.x / 2, self.size.y / 2
 
     self:add_child(illus)
 
@@ -5325,8 +5338,8 @@ function DifficultyButton:initialize(label_text, desc_text, difficulty)
         thickness = 1.6,
         glow_color = { 0, 0, 0, 0.6 }
     } }
-    label.anchor = v(label.size.x * 0.5, label.size.y)
-    label.pos = v(self.size.x * 0.5, 272)
+    label.anchor = v(label.size.x / 2, label.size.y)
+    label.pos = v(self.size.x / 2, 272)
 
     self:add_child(label)
 
@@ -5345,8 +5358,8 @@ function DifficultyButton:initialize(label_text, desc_text, difficulty)
     desc.propagate_on_click = true
     desc.text = desc_text
     desc.fit_lines = 3
-    desc.anchor = v(desc.size.x * 0.5, 0)
-    desc.pos = v(self.size.x * 0.5, 280)
+    desc.anchor = v(desc.size.x / 2, 0)
+    desc.pos = v(self.size.x / 2, 280)
 
     self:add_child(desc)
 
@@ -5414,8 +5427,8 @@ function DifficultyView:initialize(sw, sh)
     local impo = GS.max_difficulty > DIFFICULTY_HARD
 
     self.back = KImageView:new(impo and "difficulty_bg_wide_notxt" or "difficulty_bg_notxt")
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5, sh * 0.5)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2)
 
     self:add_child(self.back)
 
@@ -5425,26 +5438,26 @@ function DifficultyView:initialize(sw, sh)
     if IS_KR3 then
         local header_bg = KImageView("kr3_title_bg")
 
-        header_bg.anchor.x = km.round(header_bg.size.x * 0.5)
-        header_bg.pos = v(km.round(self.back.size.x * 0.5), -30)
+        header_bg.anchor.x = km.round(header_bg.size.x / 2)
+        header_bg.pos = v(km.round(self.back.size.x / 2), -30)
 
         self.back:add_child(header_bg)
     end
 
     local header = GGPanelHeader:new(_("DIFFICULTY LEVEL"), 260)
 
-    header.pos = V.v(sw * 0.5, 29 + (IS_KR3 and -34 or 0))
+    header.pos = V.v(sw / 2, 29 + (IS_KR3 and -34 or 0))
     header.anchor.x = 130
 
     self.back:add_child(header)
 
     local campaign_done = #screen_map.user_data.levels > GS.main_campaign_levels
-    local b_y = sh * 0.5 + (impo and -20 or 0)
+    local b_y = sh / 2 + (impo and -20 or 0)
     local offset = 90
     local aw = self.back.size.x - 2 * offset
     local sep = impo and -15 or 0
-    local b_xs = impo and { sw * 0.5 - 400, sw * 0.5 - 133.33333333333334, sw * 0.5 + 133.33333333333334, sw * 0.5 + 400 } or
-        { sw * 0.5 - 330, sw * 0.5, sw * 0.5 + 330 }
+    local b_xs = impo and { sw / 2 - 400, sw / 2 - 133.33333333333334, sw / 2 + 133.33333333333334, sw / 2 + 400 } or
+        { sw / 2 - 330, sw / 2, sw / 2 + 330 }
     local b_texts = { { _("LEVEL_SELECT_DIFFICULTY_CASUAL"), _("For beginners to strategy games!") },
         { _("LEVEL_SELECT_DIFFICULTY_NORMAL"),  _("A good challenge!") },
         { _("LEVEL_SELECT_DIFFICULTY_VETERAN"), _("Hardcore! play at your own risk!") } }
@@ -5467,9 +5480,9 @@ function DifficultyView:initialize(sw, sh)
         local x
 
         if impo then
-            x = sw * 0.5 + (2 * i - 5) * (bw * 0.5 + sep * 0.5)
+            x = sw / 2 + (2 * i - 5) * (bw / 2 + sep / 2)
         else
-            x = sw * 0.5 + (i - 2) * (bw + sep)
+            x = sw / 2 + (i - 2) * (bw + sep)
         end
 
         b.pos = V.v(x, b_y)
@@ -5514,8 +5527,8 @@ function AchievementsView:initialize(sw, sh)
     PopUpView.initialize(self, V.v(sw, sh))
 
     self.back = KImageView:new("Achievements_BG_notxt")
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5 - 15, sh * 0.5)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2 - 15, sh / 2)
 
     self:add_child(self.back)
 
@@ -5525,8 +5538,8 @@ function AchievementsView:initialize(sw, sh)
     if IS_KR3 then
         local header_bg = KImageView("kr3_title_bg")
 
-        header_bg.anchor.x = km.round(header_bg.size.x * 0.5)
-        header_bg.pos = v(km.round(self.back.size.x * 0.5) - 10, -24)
+        header_bg.anchor.x = km.round(header_bg.size.x / 2)
+        header_bg.pos = v(km.round(self.back.size.x / 2) - 10, -24)
 
         self.back:add_child(header_bg)
     end
@@ -5557,8 +5570,8 @@ function AchievementsView:initialize(sw, sh)
     for i = 1, self.items_per_page do
         local ach = KImageView:new("Achievements_Box_Large")
 
-        ach.anchor = v(math.floor(ach.size.x * 0.5), math.floor(ach.size.y * 0.5))
-        ach.pos = v(self.back.size.x * 0.5, 173 + math.floor((i - 1) * 0.5) * 108)
+        ach.anchor = v(math.floor(ach.size.x / 2), math.floor(ach.size.y / 2))
+        ach.pos = v(self.back.size.x / 2, 173 + math.floor((i - 1) / 2) * 108)
 
         if i % 2 == 0 then
             ach.pos.x = ach.pos.x + 230
@@ -5567,7 +5580,7 @@ function AchievementsView:initialize(sw, sh)
         end
 
         ach.img = KImageView:new("achievement_icons_0001")
-        ach.img.anchor = v(math.floor(ach.img.size.x * 0.5), math.floor(ach.img.size.y * 0.5))
+        ach.img.anchor = v(math.floor(ach.img.size.x / 2), math.floor(ach.img.size.y / 2))
         ach.img.pos = IS_KR3 and v(59, 53) or v(57, 49)
 
         ach:add_child(ach.img)
@@ -5599,7 +5612,7 @@ function AchievementsView:initialize(sw, sh)
     end
 
     local button_w = 45
-    local start_x = math.floor(self.back.size.x * 0.5 - button_w * self.max_pages * 0.5)
+    local start_x = math.floor(self.back.size.x / 2 - button_w * self.max_pages / 2)
     local ox = start_x
 
     for i = 1, self.max_pages do
@@ -5908,8 +5921,8 @@ function BooleanPanelView:initialize(sw, sh, title)
 
     self.back = KImageView:new("options_bg_notxt")
     self.pos = v(0, 0)
-    self.back.anchor = v(self.back.size.x * 0.5, self.back.size.y * 0.5)
-    self.back.pos = v(sw * 0.5, sh * 0.5 - 50)
+    self.back.anchor = v(self.back.size.x / 2, self.back.size.y / 2)
+    self.back.pos = v(sw / 2, sh / 2 - 50)
     self.header = title
     self:add_child(self.back)
 
@@ -5921,7 +5934,7 @@ function BooleanPanelView:initialize(sw, sh, title)
 
     -- 创建配置组
     self.data_group = BooleanToggleGroup:new(V.v(400, 300))
-    self.data_group.pos = V.v(self.back.size.x * 0.5 - 200, 120)
+    self.data_group.pos = V.v(self.back.size.x / 2 - 200, 120)
 
     -- 设置数据改变回调
     self.data_group:set_on_data_change_callback(function(key, value, all_data)
@@ -5934,8 +5947,8 @@ function BooleanPanelView:initialize(sw, sh, title)
     local y = 420
 
     local b = GGOptionsButton:new(_("BUTTON_DONE"))
-    b.anchor.x = b.size.x * 0.5
-    b.pos = V.v(self.back.size.x * 0.5, y)
+    b.anchor.x = b.size.x / 2
+    b.pos = V.v(self.back.size.x / 2, y)
 
     function b.on_click()
         S:queue("GUIButtonCommon")

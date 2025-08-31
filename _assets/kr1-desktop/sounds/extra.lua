@@ -917,6 +917,9 @@ local kr2_groups = {
     music_stage48 = {
         sounds = {"MusicBattlePrep_48", "MusicBattle_48", "MusicBossFight"}
     },
+    music_stage90 = {
+        sounds = { "MusicBattlePrep_90", "MusicBattle_90", "MusicBossFight" }
+    },
     common = {
         append = true,
         sounds = {"MeleeSword"}
@@ -1173,6 +1176,13 @@ local kr2_sounds = {
         stream = true,
         files = {"Underground_Prep.mp3"}
     },
+    MusicBattlePrep_90 = {
+        source_group = "MUSIC",
+        gain = 0.7,
+        loop = true,
+        stream = true,
+        files = { "savage_music_jungle_preparation.mp3" }
+    },
     MusicBattle_27 = {
         source_group = "MUSIC",
         gain = 0.4,
@@ -1326,6 +1336,13 @@ local kr2_sounds = {
         loop = true,
         stream = true,
         files = {"Underground_Battle.mp3"}
+    },
+    MusicBattle_90 = {
+        source_group = "MUSIC",
+        gain = 0.7,
+        loop = true,
+        stream = true,
+        files = { "Jungle_Battle.mp3" }
     },
     MusicHalloweenMoon = {
         source_group = "MUSIC",

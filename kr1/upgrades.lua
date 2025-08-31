@@ -650,6 +650,7 @@ function upgrades:patch_templates(max_level)
         local at
         at = T("tower_entwood").attacks.list[2]
         at.cooldown_factor = at.cooldown_factor * u.cooldown_factor
+        at.cooldown = at.cooldown * u.cooldown_factor
         at = T("tower_bfg").attacks.list[2]
         at.cooldown_base = at.cooldown_base * u.cooldown_factor
         at.cooldown_mixed_base = at.cooldown_mixed_base * u.cooldown_factor

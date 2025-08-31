@@ -1902,6 +1902,16 @@ return {
             "artillery"
         }
     },
+	[90] = {
+		upgrades = {
+			heroe = true,
+			level = 5
+		},
+		iron = {
+			"archers",
+			"artillery"
+		}
+	},
 	[1000] = {
 		upgrades = {
 			heroe = true,
