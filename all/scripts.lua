@@ -3378,14 +3378,13 @@ function scripts.bolt_blast.update(this, store, script)
     U.animation_start(this, "hit", nil, store.tick_ts, 1)
 
     local d_value = U.frandom(dmin, dmax)
-
-    for _, v in pairs(store.enemies) do
-        if not v.health.dead and band(v.vis.flags, b.damage_bans) == 0 and band(v.vis.bans, b.damage_flags) == 0 and
-            U.is_inside_ellipse(v.pos, explode_pos, dradius) then
+    local enemies = U.find_enemies_in_range(store, explode_pos, 0, dradius, b.damage_flags, b.damage_bans)
+    if enemies then
+        for _, enemy in pairs(enemies) do
             local d = E:create_entity("damage")
 
             d.source_id = this.id
-            d.target_id = v.id
+            d.target_id = enemy.id
             d.value = d_value
             d.damage_type = b.damage_type
             d.track_damage = true

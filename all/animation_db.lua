@@ -91,7 +91,7 @@ function animation_db:load()
                 table.insert(deleted_keys, k)
             end
 
-            table.insert(expanded_keys, k)
+            -- table.insert(expanded_keys, k)
         end
     end
 
@@ -99,55 +99,9 @@ function animation_db:load()
         self.db[k] = v
     end
 
-    for k, v in pairs(deleted_keys) do
+    for _, k in pairs(deleted_keys) do
         self.db[k] = nil
     end
-
-    -- log.debug("finished loading animations")
-
-    -- if DEBUG then
-    -- 	package.loaded["data.game_animations"] = nil
-    -- end
-
-    -- local a = require("data.game_animations")
-
-    -- self.db = table.clone(a.animations)
-
-    -- local expanded_keys = {}
-    -- local deleted_keys = {}
-
-    -- for k, v in pairs(self.db) do
-    -- 	if v.layer_from and v.layer_to and v.layer_prefix then
-    -- 		for i = v.layer_from, v.layer_to do
-    -- 			local nk = string.gsub(k, "layerX", "layer" .. i)
-    -- 			local nv = {
-    -- 				pre = v.pre,
-    -- 				post = v.post,
-    -- 				from = v.from,
-    -- 				to = v.to,
-    -- 				ranges = v.ranges,
-    -- 				frames = v.frames,
-    -- 				prefix = string.format(v.layer_prefix, i)
-    -- 			}
-
-    -- 			expanded_keys[nk] = nv
-
-    -- 			table.insert(deleted_keys, k)
-    -- 		end
-
-    -- 		table.insert(expanded_keys, k)
-    -- 	end
-    -- end
-
-    -- for k, v in pairs(expanded_keys) do
-    -- 	self.db[k] = v
-    -- end
-
-    -- for k, v in pairs(deleted_keys) do
-    -- 	self.db[k] = nil
-    -- end
-
-    -- log.debug("finished loading animations")
 
     self:prebuild_frames()
 end
@@ -155,51 +109,7 @@ end
 -- added: 预构建所有动画的帧数组 frames
 function animation_db:prebuild_frames()
     for name, a in pairs(self.db) do
-        if not a.frames then
-            local frames = {}
-
-            if a.ranges then
-                for _, range in pairs(a.ranges) do
-                    if #range == 2 then
-                        local from, to = unpack(range)
-                        local inc = to < from and -1 or 1
-
-                        for i = from, to, inc do
-                            table.insert(frames, i)
-                        end
-                    else
-                        table.append(frames, range)
-                    end
-                end
-            else
-                if a.pre then
-                    table.append(frames, a.pre)
-                end
-
-                if a.from and a.to then
-                    local inc = a.from > a.to and -1 or 1
-
-                    for i = a.from, a.to, inc do
-                        table.insert(frames, i)
-                    end
-                end
-
-                if a.post then
-                    table.append(frames, a.post)
-                end
-            end
-
-            a.frames = frames
-
-            -- 新增：预构建帧名称
-            if a.prefix then
-                a.frame_names = {}
-                for i, frame in ipairs(frames) do
-                    a.frame_names[i] = string.format("%s_%04i", a.prefix, frame)
-                end
-            end
-
-        end
+        self:generate_frames(a)
     end
 end
 
@@ -226,6 +136,47 @@ function animation_db:fn(animation_name, time_offset, loop, fps)
     return self:fni(a, time_offset, loop, fps)
 end
 
+-- 完成动画 frames 和 frame_names 的生成
+function animation_db:generate_frames(a)
+    local frames = a.frames
+    if not frames then
+        frames = {}
+        if a.ranges then
+            for _, range in pairs(a.ranges) do
+                if #range == 2 then
+                    local from, to = unpack(range)
+                    local inc = to < from and -1 or 1
+                    for i = from, to, inc do
+                        table.insert(frames, i)
+                    end
+                else
+                    table.append(frames, range)
+                end
+            end
+        else
+            if a.pre then
+                table.append(frames, a.pre)
+            end
+            if a.from and a.to then
+                local inc = a.from > a.to and -1 or 1
+                for i = a.from, a.to, inc do
+                    table.insert(frames, i)
+                end
+            end
+            if a.post then
+                table.append(frames, a.post)
+            end
+        end
+        a.frames = frames
+        if a.prefix then
+            a.frame_names = {}
+            for i, frame in ipairs(frames) do
+                a.frame_names[i] = string.format("%s_%04i", a.prefix, frame)
+            end
+        end
+    end
+end
+
 function animation_db:fni(animation, time_offset, loop, fps, tick_length)
     local a = animation
 
@@ -233,43 +184,13 @@ function animation_db:fni(animation, time_offset, loop, fps, tick_length)
     tick_length = tick_length or self.tick_length
 
     local frames = a.frames
-
-    -- if not frames then
-    --     frames = {}
-
-    --     if a.ranges then
-    --         for _, range in pairs(a.ranges) do
-    --             if #range == 2 then
-    --                 local from, to = unpack(range)
-    --                 local inc = to < from and -1 or 1
-
-    --                 for i = from, to, inc do
-    --                     table.insert(frames, i)
-    --                 end
-    --             else
-    --                 table.append(frames, range)
-    --             end
-    --         end
-    --     else
-    --         if a.pre then
-    --             table.append(frames, a.pre)
-    --         end
-
-    --         if a.from and a.to then
-    --             local inc = a.from > a.to and -1 or 1
-
-    --             for i = a.from, a.to, inc do
-    --                 table.insert(frames, i)
-    --             end
-    --         end
-
-    --         if a.post then
-    --             table.append(frames, a.post)
-    --         end
-    --     end
-
-    --     a.frames = frames
-    -- end
+    if not frames then
+        for k, v in pairs(a) do
+            if type(v) ~= "table" then
+                log.error("%s = %s", k, v)
+            end
+        end
+    end
 
     local eps = 1e-09
     local len = #frames

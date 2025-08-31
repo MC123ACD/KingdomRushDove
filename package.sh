@@ -22,9 +22,6 @@ if [ "$patch" -ge 10 ]; then
 fi
 new_id="$major.$minor.$patch"
 
-# 更新 version.lua
-sed -i "s/version\.id = \".*\"/version.id = \"$new_id\"/" "$VERSION_FILE"
-
 # 压缩包名用新 id
 OUTPUT_ZIP="../Kingdom Rush_${current_id}.zip"
 
@@ -78,3 +75,6 @@ echo "$current_commit" > "$COMMIT_FILE"
 
 # 把日志文件打包进压缩包
 zip "$OUTPUT_ZIP" "$LOG_FILE"
+
+# 更新 version.lua
+sed -i "s/version\.id = \".*\"/version.id = \"$new_id\"/" "$VERSION_FILE"

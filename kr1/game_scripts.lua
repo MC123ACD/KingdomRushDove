@@ -486,11 +486,9 @@ function scripts.necromancer_aura.update(this, store, script)
             if max_spawns < 1 then
                 -- block empty
             else
-                local dead_enemies = table.filter(store.enemies, function(k, v)
-                    return v.enemy and v.vis and v.health and v.health.dead and
-                               band(v.health.last_damage_types, bor(DAMAGE_EAT)) == 0 and band(v.vis.bans, F_SKELETON) ==
-                               0 and store.tick_ts - v.health.death_ts >= v.health.dead_lifetime - this.aura.cycle_time and
-                               U.is_inside_ellipse(v.pos, this.pos, source.attacks.range)
+                local dead_enemies = store.enemy_spatial_index:query_entities_in_ellipse(this.pos.x, this.pos.y, source.attacks.range, 0, function(v)
+                    return v.health.dead and band(v.health.last_damage_types, bor(DAMAGE_EAT)) == 0 and band(v.vis.bans, F_SKELETON) ==
+                               0 and store.tick_ts - v.health.death_ts >= v.health.dead_lifetime - this.aura.cycle_time
                 end)
 
                 dead_enemies = table.slice(dead_enemies, 1, max_spawns)
@@ -8062,13 +8060,11 @@ function scripts.enemy_shaman_necro.update(this, store, script)
         else
             if ready_to_cast() then
                 na.ts = store.tick_ts
-
-                local dead_enemies = table.filter(store.enemies, function(_, e)
+                local dead_enemies = store.enemy_spatial_index:query_entities_in_ellipse(this.pos.x, this.pos.y, na.max_range, 0, function(e)
                     return e.health.dead and e.unit and not e.unit.hide_after_death and band(e.health.last_damage_types,
                         bor(DAMAGE_EAT, DAMAGE_INSTAKILL, DAMAGE_DISINTEGRATE, DAMAGE_EXPLOSION, DAMAGE_FX_EXPLODE)) ==
                                0 and band(e.vis.bans, F_UNDEAD) == 0 and
-                               table.contains(na.allowed_templates, e.template_name) and
-                               U.is_inside_ellipse(e.pos, this.pos, na.max_range)
+                               table.contains(na.allowed_templates, e.template_name)
                 end)
 
                 if #dead_enemies == 0 then
@@ -29559,7 +29555,7 @@ function scripts.faerie_trails.update(this, store)
         end
 
         local enemies = table.filter(store.enemies, function(_, e)
-            return e and e.enemy and not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
+            return  not e.health.dead and e.main_script and e.main_script.co ~= nil and e.nav_path and
                        is_inside_section(e.nav_path.pi, e.nav_path.ni)
         end)
 

@@ -2237,6 +2237,7 @@ function sys.render:on_update(dt, ts, store)
             local fn, runs, idx
 
             if s.animation then
+                A:generate_frames(s.animation)
                 fn, runs, idx = A:fni(s.animation, ts - s.ts + s.time_offset, s.loop, s.fps)
                 s.runs = runs
                 s.frame_idx = idx
