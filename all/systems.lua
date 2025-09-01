@@ -2191,39 +2191,39 @@ function sys.render:init(store)
         ffi_quicksort(arr, i + 1, right)
     end
 
-    -- local function ffi_merge_sort(arr, tmp, left, right)
-    --     if right - left <= 1 then
-    --         return
-    --     end
-    --     local mid = floor((left + right) / 2)
-    --     ffi_merge_sort(arr, tmp, left, mid)
-    --     ffi_merge_sort(arr, tmp, mid, right)
-    --     local i, j, k = left, mid, left
-    --     while i < mid and j < right do
-    --         if self.ffi_cmp(arr[i], arr[j]) then
-    --             ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
-    --             i = i + 1
-    --         else
-    --             ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
-    --             j = j + 1
-    --         end
-    --         k = k + 1
-    --     end
-    --     while i < mid do
-    --         ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
-    --         i = i + 1
-    --         k = k + 1
-    --     end
-    --     while j < right do
-    --         ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
-    --         j = j + 1
-    --         k = k + 1
-    --     end
-    --     for l = left, right - 1 do
-    --         ffi.copy(arr + l, tmp + l, ffi.sizeof("RenderFrameFFI"))
-    --     end
-    -- end
-    self.ffi_sort = ffi_quicksort
+    local function ffi_merge_sort(arr, tmp, left, right)
+        if right - left <= 1 then
+            return
+        end
+        local mid = floor((left + right) / 2)
+        ffi_merge_sort(arr, tmp, left, mid)
+        ffi_merge_sort(arr, tmp, mid, right)
+        local i, j, k = left, mid, left
+        while i < mid and j < right do
+            if self.ffi_cmp(arr[i], arr[j]) then
+                ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+                i = i + 1
+            else
+                ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+                j = j + 1
+            end
+            k = k + 1
+        end
+        while i < mid do
+            ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+            i = i + 1
+            k = k + 1
+        end
+        while j < right do
+            ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+            j = j + 1
+            k = k + 1
+        end
+        for l = left, right - 1 do
+            ffi.copy(arr + l, tmp + l, ffi.sizeof("RenderFrameFFI"))
+        end
+    end
+    self.ffi_sort = ffi_merge_sort
 
 end
 
@@ -2533,23 +2533,24 @@ function sys.render:on_update(dt, ts, store)
     -- FFI同步
     local render_frames = store.render_frames
     local render_frames_ffi = store.render_frames_ffi
-    local render_frames_ffi_count = 0
+    local n = 0
     for i = 1, #render_frames do
         local f = render_frames[i]
         if not f.marked_to_remove then
-            render_frames_ffi_count = render_frames_ffi_count + 1
-            local ffi_f = render_frames_ffi[i - 1]
+            local ffi_f = render_frames_ffi[n]
             ffi_f.z = f.z
             ffi_f.sort_y = f.sort_y or (f.sort_y_offset or 0) + f.pos.y
             ffi_f.draw_order = f.draw_order
             ffi_f.pos_x = f.pos.x
             ffi_f.lua_index = i
+            n = n + 1
         end
     end
+    self.ffi_sort(store.render_frames_ffi, ffi.new("RenderFrameFFI[?]", n), 0, n)
 
-    self.ffi_sort(render_frames_ffi, 0, render_frames_ffi_count - 1)
+    -- self.ffi_sort(render_frames_ffi, 0, render_frames_ffi_count - 1)
     local new_frames = {}
-    for i = 0, render_frames_ffi_count - 1 do
+    for i = 0, n - 1 do
         local ffi_f = render_frames_ffi[i]
         local f = render_frames[ffi_f.lua_index]
         new_frames[i + 1] = f
