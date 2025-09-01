@@ -2120,7 +2120,6 @@ typedef struct{
     double sort_y;
     int draw_order;
     double pos_x;
-    int marked_to_remove;
     int lua_index;
 } RenderFrameFFI;
 ]]
@@ -2128,7 +2127,6 @@ typedef struct{
 function sys.render:init(store)
     store.render_frames = {}
     store.render_frames_ffi = ffi.new("RenderFrameFFI[8192]") -- preallocate for 8192 frames
-    store.render_frames_ffi_count = 0
     local hb_quad = love.graphics.newQuad(unpack(HEALTH_BAR_CORNER_DOT_QUAD))
 
     self._hb_ss = {
@@ -2140,9 +2138,6 @@ function sys.render:init(store)
     self._hb_sizes = HEALTH_BAR_SIZES[store.texture_size] or HEALTH_BAR_SIZES.default
     self._hb_colors = HEALTH_BAR_COLORS
     self.ffi_cmp = function(a, b)
-        if a.marked_to_remove ~= b.marked_to_remove then
-            return a.marked_to_remove < b.marked_to_remove
-        end
         if a.z ~= b.z then
             return a.z < b.z
         end
@@ -2154,39 +2149,81 @@ function sys.render:init(store)
         end
         return a.pos_x < b.pos_x
     end
-    local function ffi_merge_sort(arr, tmp, left, right)
-        if right - left <= 1 then
+    -- 使用快速排序（不稳定但更快）
+    local function ffi_quicksort(arr, left, right)
+        if left >= right then
             return
         end
+
+        -- 三数取中选择枢轴
         local mid = floor((left + right) / 2)
-        ffi_merge_sort(arr, tmp, left, mid)
-        ffi_merge_sort(arr, tmp, mid, right)
-        local i, j, k = left, mid, left
-        while i < mid and j < right do
-            if self.ffi_cmp(arr[i], arr[j]) then
-                ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+        if self.ffi_cmp(arr[right], arr[left]) then
+            arr[left], arr[right] = arr[right], arr[left]
+        end
+        if self.ffi_cmp(arr[mid], arr[left]) then
+            arr[left], arr[mid] = arr[mid], arr[left]
+        end
+        if self.ffi_cmp(arr[right], arr[mid]) then
+            arr[mid], arr[right] = arr[right], arr[mid]
+        end
+
+        local pivot = arr[mid]
+        arr[mid] = arr[right - 1]
+        arr[right - 1] = pivot
+
+        local i, j = left, right - 1
+        while true do
+            repeat
                 i = i + 1
-            else
-                ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
-                j = j + 1
+            until not self.ffi_cmp(arr[i], pivot)
+            repeat
+                j = j - 1
+            until not self.ffi_cmp(pivot, arr[j])
+            if i >= j then
+                break
             end
-            k = k + 1
+            arr[i], arr[j] = arr[j], arr[i]
         end
-        while i < mid do
-            ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
-            i = i + 1
-            k = k + 1
-        end
-        while j < right do
-            ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
-            j = j + 1
-            k = k + 1
-        end
-        for l = left, right - 1 do
-            ffi.copy(arr + l, tmp + l, ffi.sizeof("RenderFrameFFI"))
-        end
+
+        arr[i], arr[right - 1] = arr[right - 1], arr[i]
+
+        ffi_quicksort(arr, left, i - 1)
+        ffi_quicksort(arr, i + 1, right)
     end
-    self.ffi_sort = ffi_merge_sort
+
+    -- local function ffi_merge_sort(arr, tmp, left, right)
+    --     if right - left <= 1 then
+    --         return
+    --     end
+    --     local mid = floor((left + right) / 2)
+    --     ffi_merge_sort(arr, tmp, left, mid)
+    --     ffi_merge_sort(arr, tmp, mid, right)
+    --     local i, j, k = left, mid, left
+    --     while i < mid and j < right do
+    --         if self.ffi_cmp(arr[i], arr[j]) then
+    --             ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+    --             i = i + 1
+    --         else
+    --             ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+    --             j = j + 1
+    --         end
+    --         k = k + 1
+    --     end
+    --     while i < mid do
+    --         ffi.copy(tmp + k, arr + i, ffi.sizeof("RenderFrameFFI"))
+    --         i = i + 1
+    --         k = k + 1
+    --     end
+    --     while j < right do
+    --         ffi.copy(tmp + k, arr + j, ffi.sizeof("RenderFrameFFI"))
+    --         j = j + 1
+    --         k = k + 1
+    --     end
+    --     for l = left, right - 1 do
+    --         ffi.copy(arr + l, tmp + l, ffi.sizeof("RenderFrameFFI"))
+    --     end
+    -- end
+    self.ffi_sort = ffi_quicksort
 
 end
 
@@ -2195,27 +2232,27 @@ function sys.render:on_insert(entity, store)
     if entity.render then
         for i = 1, #entity.render.sprites do
             local s = entity.render.sprites[i]
-            local f = {}
-
-            f.ss = nil
-            f.flip_x = false
-            f.flip_y = false
-            f.pos = {
-                x = 0,
-                y = 0
+            local f = {
+                ss = nil,
+                flip_x = false,
+                flip_y = false,
+                pos = {
+                    x = 0,
+                    y = 0
+                },
+                anchor = {
+                    x = 0,
+                    y = 0
+                },
+                offset = {
+                    x = 0,
+                    y = 0
+                },
+                draw_order = 100000 * (s.draw_order or i) + entity.id,
+                z = s.z or Z_OBJECTS,
+                sort_y = s.sort_y,
+                sort_y_offset = s.sort_y_offset
             }
-            f.anchor = {
-                x = 0,
-                y = 0
-            }
-            f.offset = {
-                x = 0,
-                y = 0
-            }
-            f.draw_order = 100000 * (s.draw_order or i) + entity.id
-            f.z = s.z or Z_OBJECTS
-            f.sort_y = s.sort_y
-            f.sort_y_offset = s.sort_y_offset
 
             if s.random_ts then
                 s.ts = U.frandom(-1 * s.random_ts, 0)
@@ -2231,8 +2268,7 @@ function sys.render:on_insert(entity, store)
             end
 
             if entity.render.frames[i] then
-                -- table.removeobject(store.render_frames, entity.render.frames[i])
-                mark_remove_for_frame(entity.render.frames[i])
+                entity.render.frames[i].marked_to_remove = true
             end
 
             entity.render.frames[i] = f
@@ -2242,89 +2278,70 @@ function sys.render:on_insert(entity, store)
 
     if store.config and store.config.show_health_bar and entity.health_bar then
         local hb = entity.health_bar
-        local fk = hb.black_bar_hp and {} or nil
-
-        if fk then
-            fk.flip_x = false
-            fk.pos = {
-                x = 0,
-                y = 0
-            }
-            fk.r = 0
-            fk.alpha = 255
-            fk.anchor = {
-                x = 0,
-                y = 0
-            }
-            fk.offset = V.vclone(hb.offset)
-            fk.draw_order = (hb.draw_order and 100000 * hb.draw_order or 200001) + entity.id
-            fk.z = Z_OBJECTS
-            fk.sort_y_offset = hb.sort_y_offset
-            fk.ss = self._hb_ss
-            fk.color = hb.colors and hb.colors.black or self._hb_colors.black
-
-            local hbsize = self._hb_sizes[hb.type]
-
-            fk.bar_width = hbsize.x
-            fk.scale = V.v(hbsize.x, hbsize.y)
-            fk.offset.x = fk.offset.x - hbsize.x * 0.5
-        end
-
-        local fb = {}
-
-        fb.flip_x = false
-        fb.pos = {
-            x = 0,
-            y = 0
-        }
-        fb.r = 0
-        fb.alpha = 255
-        fb.anchor = {
-            x = 0,
-            y = 0
-        }
-        fb.offset = V.vclone(hb.offset)
-        fb.draw_order = (hb.draw_order and 100000 * hb.draw_order + 1 or 200002) + entity.id
-        fb.z = Z_OBJECTS
-        fb.sort_y_offset = hb.sort_y_offset
-        fb.ss = self._hb_ss
-        fb.color = hb.colors and hb.colors.bg or self._hb_colors.bg
-
         local hbsize = self._hb_sizes[hb.type]
 
-        fb.bar_width = hbsize.x
-        fb.scale = V.v(hbsize.x, hbsize.y)
+        local fb = {
+            flip_x = false,
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            alpha = 255,
+            anchor = {
+                x = 0,
+                y = 0
+            },
+            offset = {
+                x = hb.offset.x,
+                y = hb.offset.y
+            },
+            draw_order = (hb.draw_order and 100000 * hb.draw_order + 1 or 200002) + entity.id,
+            z = Z_OBJECTS,
+            sort_y_offset = hb.sort_y_offset,
+            ss = self._hb_ss,
+            color = hb.colors and hb.colors.bg or self._hb_colors.bg,
+            bar_width = hbsize.x,
+            scale = {
+                x = hbsize.x,
+                y = hbsize.y
+            }
+        }
+
         fb.offset.x = fb.offset.x - hbsize.x * fb.ss.ref_scale * 0.5
 
-        local ff = {}
-
-        ff.flip_x = false
-        ff.pos = {
-            x = 0,
-            y = 0
+        local ff = {
+            flip_x = false,
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            alpha = 255,
+            anchor = {
+                x = 0,
+                y = 0
+            },
+            offset = {
+                x = hb.offset.x,
+                y = hb.offset.y
+            },
+            draw_order = (hb.draw_order and 100000 * hb.draw_order + 2 or 200003) + entity.id,
+            z = Z_OBJECTS,
+            sort_y_offset = hb.sort_y_offset,
+            ss = self._hb_ss,
+            color = hb.colors and hb.colors.fg or self._hb_colors.fg,
+            bar_width = hbsize.x,
+            scale = {
+                x = hbsize.x,
+                y = hbsize.y
+            }
         }
-        ff.r = 0
-        ff.alpha = 255
-        ff.anchor = {
-            x = 0,
-            y = 0
-        }
-        ff.offset = V.vclone(hb.offset)
-        ff.draw_order = (hb.draw_order and 100000 * hb.draw_order + 2 or 200003) + entity.id
-        ff.z = Z_OBJECTS
-        ff.sort_y_offset = hb.sort_y_offset
-        ff.ss = self._hb_ss
-        ff.color = hb.colors and hb.colors.fg or self._hb_colors.fg
 
-        local hbsize = self._hb_sizes[hb.type]
-
-        ff.bar_width = hbsize.x
-        ff.scale = V.v(hbsize.x, hbsize.y)
         ff.offset.x = ff.offset.x - hbsize.x * ff.ss.ref_scale * 0.5
 
         for i = #hb.frames, 1, -1 do
-            -- table.removeobject(store.render_frames, hb.frames[i])
-            mark_remove_for_frame(hb.frames[i])
+            hb.frames[i].marked_to_remove = true
         end
 
         hb.frames[1] = fb
@@ -2333,7 +2350,34 @@ function sys.render:on_insert(entity, store)
         render_frames[#render_frames + 1] = fb
         render_frames[#render_frames + 1] = ff
 
-        if fk then
+        if hb.black_bar_hp then
+            local fk = {
+                flip_x = false,
+                pos = {
+                    x = 0,
+                    y = 0
+                },
+                r = 0,
+                alpha = 255,
+                anchor = {
+                    x = 0,
+                    y = 0
+                },
+                offset = {
+                    x = hb.offset.x - hbsize.x * 0.5,
+                    y = hb.offset.y
+                },
+                draw_order = (hb.draw_order and 100000 * hb.draw_order or 200001) + entity.id,
+                z = Z_OBJECTS,
+                sort_y_offset = hb.sort_y_offset,
+                ss = self._hb_ss,
+                color = hb.colors and hb.colors.black or self._hb_colors.black,
+                bar_width = hbsize.x,
+                scale = {
+                    x = hbsize.x,
+                    y = hbsize.y
+                }
+            }
             hb.frames[3] = fk
 
             render_frames[#render_frames + 1] = fk
@@ -2347,10 +2391,7 @@ function sys.render:on_remove(entity, store)
     if entity.render then
         for i = #entity.render.frames, 1, -1 do
             local f = entity.render.frames[i]
-
-            -- table.removeobject(store.render_frames, f)
-            mark_remove_for_frame(f)
-
+            f.marked_to_remove = true
             entity.render.frames[i] = nil
         end
     end
@@ -2358,9 +2399,7 @@ function sys.render:on_remove(entity, store)
     if store.config and store.config.show_health_bar and entity.health_bar then
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
-
-            -- table.removeobject(store.render_frames, f)
-            mark_remove_for_frame(f)
+            f.marked_to_remove = true
             entity.health_bar.frames[i] = nil
         end
     end
@@ -2466,11 +2505,11 @@ function sys.render:on_update(dt, ts, store)
                 end
 
                 fb.pos.x, fb.pos.y = floor(e.pos.x), ceil(e.pos.y)
-                ff.pos.x, ff.pos.y = floor(e.pos.x), ceil(e.pos.y)
+                ff.pos.x, ff.pos.y = fb.pos.x, fb.pos.y
                 fb.offset.x, fb.offset.y = hb.offset.x - fb.bar_width * fb.ss.ref_scale * 0.5, hb.offset.y
                 ff.offset.x, ff.offset.y = hb.offset.x - ff.bar_width * ff.ss.ref_scale * 0.5, hb.offset.y
                 fb.z = hb.z or Z_OBJECTS
-                ff.z = hb.z or Z_OBJECTS
+                ff.z = fb.z
                 fb.draw_order = (hb.draw_order and 100000 * hb.draw_order + 1 or 200002) + e.id
                 ff.draw_order = (hb.draw_order and 100000 * hb.draw_order + 2 or 200003) + e.id
                 fb.sort_y_offset = hb.sort_y_offset
@@ -2492,36 +2531,30 @@ function sys.render:on_update(dt, ts, store)
     end
 
     -- FFI同步
-    local n = #store.render_frames
-    store.render_frames_ffi_count = n
-    for i = 1, n do
-        local f = store.render_frames[i]
-        local ffi_f = store.render_frames_ffi[i - 1]
-        ffi_f.z = f.z or 0
-        ffi_f.sort_y = f.sort_y or (f.sort_y_offset or 0) + (f.pos and f.pos.y or 0)
-        ffi_f.draw_order = f.draw_order or 0
-        ffi_f.pos_x = f.pos and f.pos.x or 0
-        ffi_f.marked_to_remove = f.marked_to_remove and 1 or 0
-        ffi_f.lua_index = i
+    local render_frames = store.render_frames
+    local render_frames_ffi = store.render_frames_ffi
+    local render_frames_ffi_count = 0
+    for i = 1, #render_frames do
+        local f = render_frames[i]
+        if not f.marked_to_remove then
+            render_frames_ffi_count = render_frames_ffi_count + 1
+            local ffi_f = render_frames_ffi[i - 1]
+            ffi_f.z = f.z
+            ffi_f.sort_y = f.sort_y or (f.sort_y_offset or 0) + f.pos.y
+            ffi_f.draw_order = f.draw_order
+            ffi_f.pos_x = f.pos.x
+            ffi_f.lua_index = i
+        end
     end
-    self.ffi_sort(store.render_frames_ffi, ffi.new("RenderFrameFFI[?]", n), 0, n)
+
+    self.ffi_sort(render_frames_ffi, 0, render_frames_ffi_count - 1)
     local new_frames = {}
-    for i = 0, n - 1 do
-        local ffi_f = store.render_frames_ffi[i]
-        local f = store.render_frames[ffi_f.lua_index]
+    for i = 0, render_frames_ffi_count - 1 do
+        local ffi_f = render_frames_ffi[i]
+        local f = render_frames[ffi_f.lua_index]
         new_frames[i + 1] = f
     end
     store.render_frames = new_frames
-
-    for i = #store.render_frames, 1, -1 do
-        local f = store.render_frames[i]
-
-        if f.marked_to_remove then
-            store.render_frames[i] = nil
-        else
-            break
-        end
-    end
 end
 
 sys.sound_events = {}
