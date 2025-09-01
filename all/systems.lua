@@ -47,6 +47,10 @@ local function fts(v)
     return v / FPS
 end
 
+local function mark_remove_for_frame(f)
+    f.marked_to_remove = true
+end
+
 -- 在文件开头添加性能监控模块
 local perf = {}
 perf.timers = {}
@@ -125,7 +129,7 @@ function perf.generate_report(store)
     -- 输出排序后的结果
     table.insert(report, "\n系统开销排行 (总耗时ms/调用次数):")
     for i, item in ipairs(sorted_costs) do
-        table.insert(report, string.format("%4d. %s: %.2fms (%d次)", i, item.name, item.total, item.calls))
+        table.insert(report, string.format("%4d. %s: %.4fms (%d次)", i, item.name, item.total, item.calls))
 
         -- 只显示前15个最耗时的
         if i >= 15 then
@@ -1739,10 +1743,92 @@ end
 sys.particle_system = {}
 sys.particle_system.name = "particle_system"
 
-function sys.particle_system:init(store)
-    self.particle_pool = {}
-    self.pending_pool = {}
+local Pool = require("pool")
 
+function sys.particle_system:init(store)
+    local function create_particle(ts)
+        return {
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            speed = {
+                x = 0,
+                y = 0
+            },
+            spin = 0,
+            scale_factor = {
+                x = 1,
+                y = 1
+            },
+            ts = ts,
+            last_ts = ts
+        }
+    end
+    local function reset_particle(p, ts)
+        -- p.pos.x = 0
+        -- p.pos.y = 0
+        -- p.r = 0
+        -- p.speed.x = 0
+        -- p.speed.y = 0
+        -- p.spin = 0
+        -- p.scale_factor.x = 1
+        -- p.scale_factor.y = 1
+        p.ts = ts
+        p.last_ts = ts
+    end
+    self.pool = Pool:new(create_particle, reset_particle, 2048)
+    self.new_frame = function(draw_order, z, sort_y_offset, sort_y)
+        return {
+            ss = nil,
+            flip_x = false,
+            flip_y = false,
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            scale = {
+                x = 1,
+                y = 1
+            },
+            anchor = {
+                x = 0.5,
+                y = 0.5
+            },
+            offset = {
+                x = 0,
+                y = 0
+            },
+            draw_order = draw_order,
+            z = z,
+            sort_y = sort_y,
+            sort_y_offset = sort_y_offset,
+            alpha = 255,
+            hidden = nil
+        }
+    end
+    self.new_particle = function(ts)
+        return {
+            pos = {
+                x = 0,
+                y = 0
+            },
+            r = 0,
+            speed = {
+                x = 0,
+                y = 0
+            },
+            spin = 0,
+            scale_factor = {
+                x = 1,
+                y = 1
+            },
+            ts = ts,
+            last_ts = ts
+        }
+    end
     self.phase_interp = function(values, phase, default)
         if not values or #values == 0 then
             return default
@@ -1777,7 +1863,6 @@ function sys.particle_system:init(store)
             return default
         end
     end
-    self.to_remove = {}
 end
 
 function sys.particle_system:on_insert(entity, store)
@@ -1796,16 +1881,15 @@ function sys.particle_system:on_insert(entity, store)
 end
 
 function sys.particle_system:on_remove(entity, store)
-    local pending_pool = self.pending_pool
     if entity.particle_system then
         local s = entity.particle_system
 
         for i = #s.particles, 1, -1 do
             local p = s.particles[i]
             p.f.marked_to_remove = true
-            pending_pool[#pending_pool + 1] = p
             s.particles[i] = nil
         end
+
     end
 
     return true
@@ -1815,16 +1899,17 @@ function sys.particle_system:on_update(dt, ts, store)
     local new_frame = self.new_frame
     local new_particle = self.new_particle
     local phase_interp = self.phase_interp
-    local particle_pool = self.particle_pool
-    local pending_pool = self.pending_pool
-    local particle_systems = store.particle_systems
-    local to_remove = self.to_remove
+    local pool = self.pool
+    local get_particle = pool.get
+    local release_particle = pool.release
 
+    local particle_systems = store.particle_systems
     for _, e in pairs(particle_systems) do
         local s = e.particle_system
         local tl = store.tick_length
-
+        local to_remove = {}
         local target, target_rot
+
         if s.track_id then
             target = store.entities[s.track_id]
 
@@ -1855,91 +1940,29 @@ function sys.particle_system:on_update(dt, ts, store)
             end
         end
 
-        local time_gap = 1 / s.emission_rate
-
         if not s.emit then
             s.emit_ts = store.tick_ts + s.ts_offset
-        elseif ts - s.emit_ts > time_gap then
+        end
+
+        if s.emit and ts - s.emit_ts > 1 / s.emission_rate then
             local count = floor((ts - s.emit_ts) * s.emission_rate)
-            local pts = s.emit_ts
-            local s_draw_order = s.draw_order and 100000 * s.draw_order + e.id or nil
 
             for i = 1, count do
-                pts = pts + time_gap
+                local pts = s.emit_ts + i / s.emission_rate
 
-                local draw_order = s_draw_order or floor(pts * 100)
-                local p
-                if #particle_pool > 0 then
-                    p = particle_pool[#particle_pool]
-                    p.ts = pts
-                    p.last_ts = pts
-                    p.name_idx = nil
-                    local p_f = p.f
-                    p_f.draw_order = draw_order
-                    p_f.z = s.z
-                    p_f.sort_y_offset = s.sort_y_offset
-                    p_f.sort_y = s.sort_y
-                    p_f.marked_to_remove = nil
-                    -- p_f.flip_x = false
-                    -- p_f.flip_y = false
-                    -- p_f.offset.x = 0
-                    -- p_f.offset.y = 0
-                    particle_pool[#particle_pool] = nil
-                else
-                    p = {
-                        pos = {
-                            x = 0,
-                            y = 0
-                        },
-                        r = 0,
-                        speed = {
-                            x = 0,
-                            y = 0
-                        },
-                        spin = 0,
-                        scale_factor = {
-                            x = 1,
-                            y = 1
-                        },
-                        ts = pts,
-                        last_ts = pts,
-                        f = {
-                            ss = nil,
-                            flip_x = false,
-                            flip_y = false,
-                            pos = {
-                                x = 0,
-                                y = 0
-                            },
-                            r = 0,
-                            scale = {
-                                x = 1,
-                                y = 1
-                            },
-                            anchor = {
-                                x = 0.5,
-                                y = 0.5
-                            },
-                            offset = {
-                                x = 0,
-                                y = 0
-                            },
-                            draw_order = draw_order,
-                            z = s.z,
-                            sort_y = s.sort_y,
-                            sort_y_offset = s.sort_y_offset,
-                            alpha = 255,
-                            hidden = nil
-                        }
-                    }
-                end
-                s.particles[#s.particles + 1] = p
+                local draw_order = s.draw_order and 100000 * s.draw_order + e.id or floor(pts * 100)
+                local f = new_frame(draw_order, s.z, s.sort_y_offset, s.sort_y)
 
-                local f = p.f
                 store.render_frames[#store.render_frames + 1] = f
+
+                local p = new_particle(pts)
+                -- local p = get_particle(pool,pts)
 
                 f.anchor.x, f.anchor.y = s.anchor.x, s.anchor.y
 
+                s.particles[#s.particles + 1] = p
+
+                p.f = f
                 p.lifetime = U.frandom(s.particle_lifetime[1], s.particle_lifetime[2])
 
                 if s.track_id then
@@ -1983,10 +2006,7 @@ function sys.particle_system:on_update(dt, ts, store)
                 if s.scale_var then
                     local factor = U.frandom(s.scale_var[1], s.scale_var[2])
 
-                    p.scale_factor = {
-                        x = factor,
-                        y = factor
-                    }
+                    p.scale_factor = V.v(factor, factor)
 
                     if not s.scale_same_aspect then
                         p.scale_factor.y = U.frandom(s.scale_var[1], s.scale_var[2])
@@ -2007,7 +2027,7 @@ function sys.particle_system:on_update(dt, ts, store)
                 end
             end
 
-            s.emit_ts = pts
+            s.emit_ts = s.emit_ts + count * 1 / s.emission_rate
         end
 
         for i = 1, #s.particles do
@@ -2068,9 +2088,8 @@ function sys.particle_system:on_update(dt, ts, store)
             ::label_51_0::
         end
 
-        for i = #to_remove, 1, -1 do
+        for i = 1, #to_remove do
             local p = to_remove[i]
-            pending_pool[#pending_pool + 1] = p
 
             for j = 1, #s.particles do
                 if s.particles[j] == p then
@@ -2079,7 +2098,6 @@ function sys.particle_system:on_update(dt, ts, store)
                 end
             end
             p.f.marked_to_remove = true
-            to_remove[i] = nil
         end
 
         if s.source_lifetime and ts - s.ts > s.source_lifetime then
@@ -2089,10 +2107,6 @@ function sys.particle_system:on_update(dt, ts, store)
                 queue_remove(store, e)
             end
         end
-    end
-    for i = #pending_pool, 1, -1 do
-        particle_pool[#particle_pool + 1] = pending_pool[i]
-        pending_pool[i] = nil
     end
 end
 
@@ -2181,27 +2195,27 @@ function sys.render:on_insert(entity, store)
     if entity.render then
         for i = 1, #entity.render.sprites do
             local s = entity.render.sprites[i]
-            local f = {
-                ss = nil,
-                flip_x = false,
-                flip_y = false,
-                pos = {
-                    x = 0,
-                    y = 0
-                },
-                anchor = {
-                    x = 0,
-                    y = 0
-                },
-                offset = {
-                    x = 0,
-                    y = 0
-                },
-                draw_order = 100000 * (s.draw_order or i) + entity.id,
-                z = s.z or Z_OBJECTS,
-                sort_y = s.sort_y,
-                sort_y_offset = s.sort_y_offset
+            local f = {}
+
+            f.ss = nil
+            f.flip_x = false
+            f.flip_y = false
+            f.pos = {
+                x = 0,
+                y = 0
             }
+            f.anchor = {
+                x = 0,
+                y = 0
+            }
+            f.offset = {
+                x = 0,
+                y = 0
+            }
+            f.draw_order = 100000 * (s.draw_order or i) + entity.id
+            f.z = s.z or Z_OBJECTS
+            f.sort_y = s.sort_y
+            f.sort_y_offset = s.sort_y_offset
 
             if s.random_ts then
                 s.ts = U.frandom(-1 * s.random_ts, 0)
@@ -2218,7 +2232,7 @@ function sys.render:on_insert(entity, store)
 
             if entity.render.frames[i] then
                 -- table.removeobject(store.render_frames, entity.render.frames[i])
-                entity.render.frames[i].marked_to_remove = true
+                mark_remove_for_frame(entity.render.frames[i])
             end
 
             entity.render.frames[i] = f
@@ -2309,7 +2323,8 @@ function sys.render:on_insert(entity, store)
         ff.offset.x = ff.offset.x - hbsize.x * ff.ss.ref_scale * 0.5
 
         for i = #hb.frames, 1, -1 do
-            hb.frames[i].marked_to_remove = true
+            -- table.removeobject(store.render_frames, hb.frames[i])
+            mark_remove_for_frame(hb.frames[i])
         end
 
         hb.frames[1] = fb
@@ -2332,7 +2347,10 @@ function sys.render:on_remove(entity, store)
     if entity.render then
         for i = #entity.render.frames, 1, -1 do
             local f = entity.render.frames[i]
-            f.marked_to_remove = true
+
+            -- table.removeobject(store.render_frames, f)
+            mark_remove_for_frame(f)
+
             entity.render.frames[i] = nil
         end
     end
@@ -2341,7 +2359,8 @@ function sys.render:on_remove(entity, store)
         for i = #entity.health_bar.frames, 1, -1 do
             local f = entity.health_bar.frames[i]
 
-            f.marked_to_remove = true
+            -- table.removeobject(store.render_frames, f)
+            mark_remove_for_frame(f)
             entity.health_bar.frames[i] = nil
         end
     end

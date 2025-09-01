@@ -132,7 +132,9 @@ function animation_db:fn(animation_name, time_offset, loop, fps)
 
         return nil
     end
-
+    if not a.frame_names then
+        log.error("animation %s has no frame_names", animation_name)
+    end
     return self:fni(a, time_offset, loop, fps)
 end
 
@@ -184,13 +186,6 @@ function animation_db:fni(animation, time_offset, loop, fps, tick_length)
     tick_length = tick_length or self.tick_length
 
     local frames = a.frames
-    if not frames then
-        for k, v in pairs(a) do
-            if type(v) ~= "table" then
-                log.error("%s = %s", k, v)
-            end
-        end
-    end
 
     local eps = 1e-09
     local len = #frames
@@ -205,9 +200,6 @@ function animation_db:fni(animation, time_offset, loop, fps, tick_length)
         idx = km.clamp(1, len, elapsed_frames)
     end
 
-    -- local frame = frames[idx]
-
-    -- return string.format("%s_%04i", a.prefix, frame), runs, idx
     return a.frame_names[idx], runs, idx
 end
 
